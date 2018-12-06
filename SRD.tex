@@ -1,4 +1,3 @@
-
 \documentclass[10pt, a4paper]{article}
 \usepackage{float} % display graphics at the demanded place
 \usepackage{hyperref} % display table des matières
@@ -23,7 +22,7 @@
 \author{Huward Maxence, Boonen Jacques\\
 		Pham Hong Phuc, Duc Nguyen, Caroline Forest\\
 		Antunes Andre, Romain Mardulyn}
-\date{}
+\date{17 Décembre 2018}
 \begin{document}
 	\maketitle
 	\tableofcontents %do a table of content automatically	
@@ -54,15 +53,76 @@ En plus du jeu usuel 8x8, nous allons aussi inclure les variantes de : AliceChes
 	\section{Besoins utilisateurs}
 		\subsection{Fonctionnels}
 		
-\begin{figure}[h]
+%pas sure qu'on le garde, ou le mettre, tout ca.
+%Je pense que le main menu est mieux finalement
+\begin{figure}[ht]
 \centering
-\includegraphics[scale=0.4]{Use_Case.png}
+\includegraphics[scale=0.4]{UC_useractions.png}
 \caption{Diagramme de \textit{use case} des actions possibles d'un utilisateur}
 \label{UC_act} %UseCase_actions
 \end{figure}
-		
-		\subsection{Connexion}
 
+\begin{figure}[ht]
+\centering
+\includegraphics[scale=0.4]{UC_mainmenu.png}
+\caption{Diagramme de \textit{use case} des actions possibles d'un utilisateur}
+\label{UC_menu} %UseCase_menu
+\end{figure}
+
+\subsubsection{Connection}
+Sera détaillé en \ref{connexion}.
+
+\subsubsection{Voir les Règles}
+\textbf{Acteur :} \textit{User}.\\
+\textbf{Relations avec d'autres cas d'utilisation :} Néant.\\
+\textbf{Pré-conditions :} Le \textit{user} doit avoir sélectionné l'option \textit{View Rules} dans le menu principal du jeu.\\
+\textbf{Post-conditions :} Le \textit{user} accède aux règles de jeu.\\
+\textbf{Cas général :} Le \textit{user} peut consulter les règles de jeu en envoyant une requête au serveur.\\
+\textbf{Cas exceptionnels :} Néant.
+
+\subsubsection{Voir les Statistiques Personnelles}
+\textbf{Acteur :} \textit{User}.\\
+\textbf{Relations avec d'autres cas d'utilisation :} Néant.\\
+\textbf{Pré-conditions :} Le \textit{user} doit avoir sélectionné l'option \textit{View Statistics} dans le menu principal du jeu.\\
+\textbf{Post-conditions :} Le \textit{user} accède à ses statistiques personnelles.\\
+\textbf{Cas général :} Le \textit{user} peut consulter ses statistiques en envoyant une requête au serveur.\\
+\textbf{Cas exceptionnels :} Néant.
+
+\subsubsection{Voir le Classement}
+
+\textbf{Acteur :} \textit{User}.\\
+\textbf{Relations avec d'autres cas d'utilisation :} Néant.\\
+\textbf{Pré-conditions :} Le \textit{user} doit avoir sélectionné l'option \textit{View Ranking} dans le menu principal du jeu.\\
+\textbf{Post-conditions :} Le \textit{user} accède au classement global des joueurs (\textit{user} et \textit{others}).\\
+\textbf{Cas général :} Le \textit{user} peut consulter le classement global des joueurs (\textit{user} et \textit{others}) en envoyant une requête au serveur.\\
+\textbf{Cas exceptionnels :} Néant.
+
+\subsubsection{Jouer}
+
+\textbf{Acteur :} \textit{User}.\\
+\textbf{Relations avec d'autres cas d'utilisation :} Modes de jeu proposés (\textit{Classic},\textit{Alice}, \textit{Dark} ou \textit{Horde}).\\
+\textbf{Pré-conditions :} Le \textit{user} doit avoir sélectionné l'option \textit{Game} dans le menu principal du jeu.\\
+\textbf{Post-conditions :} Le \textit{user} selectionne un mode de jeu parmi ceux proposés(\textit{Classic},\textit{Alice}, \textit{Dark} ou \textit{Horde}).\\
+\textbf{Cas général :} Le \textit{user} peut sélectionner un mode de jeu parmi ceux proposés(\textit{Classic},\textit{Alice}, \textit{Dark} ou \textit{Horde}), ce qui lance une requête de \textit{matchmaking} (voir \ref{matchmaker}) au serveur.\\
+\textbf{Cas exceptionnels :} Néant.
+
+\subsubsection{Liste d'Amis}
+
+\textbf{Acteur :} \textit{User}.\\
+\textbf{Relations avec d'autres cas d'utilisation :} \textit{Chat}.\\
+\textbf{Pré-conditions :} Le \textit{user} doit avoir sélectionné l'option \textit{Liste d'Amis} dans le menu principal du jeu.\\
+\textbf{Post-conditions :} Le \textit{user} accède à sa liste d'utilisateurs 'amis', avec lesquels il peut choisir de discuter, via l'option \textit{chat}.\\
+\textbf{Cas général :} Le \textit{user} peut consulter sa liste d'utilisateurs 'amis' en envoyant une requête au serveur. Il peut aussi discuter avec eux via messages instantanés et le serveur.\\
+\textbf{Cas exceptionnels :} Néant.
+		
+		\subsection{Connection}
+\label{connexion}
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.4]{UC_connexion.png}
+\caption{Diagramme de \textit{use case} de connexion d'un utilisateur}
+\label{UC_co} %UseCase_connection
+\end{figure}
 
 		\subsection{Durant une partie}
 		
@@ -73,14 +133,22 @@ En plus du jeu usuel 8x8, nous allons aussi inclure les variantes de : AliceChes
 		\subsubsection{Connexion au serveur}
 		
 		\subsubsection{Partie joueur vs. joueur}
+		\label{matchmaker}
+		
+\begin{figure}[ht]
+\centering
+\includegraphics[scale=0.45]{SequenceDiagramMatchmaking.PNG}
+\caption{Diagramme de séquence pour le \textit{Matchmaking}}
+\label{SD_matchmaker} %SequenceDiagram_matchmaking
+\end{figure}
 		
 		\subsection{Non-fonctionnel}
 		
 	\section{Design du système}
 	
-\begin{figure}[h]
+\begin{figure}[ht]
 \centering
-\includegraphics[scale=0.45]{ClassDiagram.png}
+\includegraphics[scale=0.4]{ClassDiagram.png}
 \caption{Diagramme de classes général}
 \label{CD} %ClassDiagram
 \end{figure}
