@@ -1,14 +1,14 @@
 \documentclass[10pt, a4paper]{article}
 \usepackage{float} % display graphics at the demanded place
-\usepackage{hyperref} % display table des matiËres
+\usepackage{hyperref} % display table des mati√®res
 \usepackage{subcaption} % authorize subfigure
 \usepackage{booktabs}
-%\usepackage[utf8]{inputenc}
+\usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage[french]{babel} %casse tout chez moi
 \usepackage{graphicx}
 
-%Èlargi un peu pour que les diagrammes soient pas minuscules ou mal alignÈs
+%√©largi un peu pour que les diagrammes soient pas minuscules ou mal align√©s
 \evensidemargin=0in
 \oddsidemargin=0in
 \textwidth=6.5in
@@ -19,10 +19,10 @@
 \title{\LARGE{INFO-F-109 : Projet d'informatique 2 }\\
        \textbf{Software requirement document\\
 	   Pawn Hub}}
-\author{Huward Maxence, Boonen Jacques\\
+\author{Huwart Maxence, Boonen Jacques\\
 		Pham Hong Phuc, Duc Nguyen, Caroline Forest\\
 		Antunes Andre, Romain Mardulyn}
-\date{17 DÈcembre 2018}
+\date{17 D√©cembre 2018}
 \begin{document}
 	\maketitle
 	\newpage
@@ -30,23 +30,23 @@
 	\newpage
 	\section{Introduction}
 		\subsection{Description du projet}
-			\paragraph{}Ce projet aura pour but de recrÈer un grand classique des jeux de plateau: les Èchecs. Le jeu sera jouable via un mode multijoueurs. Le joueur pourra jouer au mode classique ou ‡ ses variantes telles que  {\itshape AliceChess, DarkChess et HordeChess}. De plus, il aura Ègalement la possibilitÈ de crÈer un compte ‡ partir duquel il pourra effectuer plusieurs actions qui seront dÈtaillÈes ci-dessous. NÈanmoins, le joueur pourra lancer une partie en tant que {\itshape visiteur} mais ne bÈnÈficiera pas des avantages liÈs ‡ la possession d'un compte.
+			\paragraph{}Ce projet aura pour but de recr√©er un grand classique des jeux de plateau: les √©checs. Le jeu sera jouable via un mode multijoueurs. Le joueur pourra jouer au mode classique ou √† ses variantes telles que  {\itshape AliceChess, DarkChess et HordeChess}. De plus, il aura √©galement la possibilit√© de cr√©er un compte √† partir duquel il pourra effectuer plusieurs actions qui seront d√©taill√©es ci-dessous. N√©anmoins, le joueur pourra lancer une partie en tant que {\itshape visiteur} mais ne b√©n√©ficiera pas des avantages li√©s √† la possession d'un compte.
 			
-			\subsubsection{FonctionnalitÈs pour joueur {\itshape  visiteur} et {\itshape utilisateur}}Depuis le menu principal, les joueurs pourront accÈder ‡ l'option {\itshape View Rules} ‡ travers lequel ils pourront lire en dÈtail les rËgles du jeu d'Èchecs et de ses variantes Les joueurs lanceront une partie via l'option {\itshape Game}.Lors d'une partie, ils pourront s'envoyer des messages via un chat dÈdiÈ.
+			\subsubsection{Fonctionnalit√©s pour joueur {\itshape  visiteur} et {\itshape utilisateur}}Depuis le menu principal, les joueurs pourront acc√©der √† l'option {\itshape View Rules} √† travers lequel ils pourront lire en d√©tail les r√®gles du jeu d'√©checs et de ses variantes Les joueurs lanceront une partie via l'option {\itshape Game}.Lors d'une partie, ils pourront s'envoyer des messages via un chat d√©di√©.
 			
-			\subsubsection{FonctionnalitÈs pour joueur {\itshape utilisateur}}Les joueurs pourront communiquer via un chat global. Dans le systËme de matchmaking, ils auront le choix entre affronter un ami ou un joueur alÈatoire parmi ceux qui sont connectÈs et libre\footnote{qui n'est pas en partie.}. A travers le menu principal, les utilisateurs accËderont ‡ plusieurs sous-menus tels que {\itshape View Ranking, View Rules, View Statistics, Friends List}.%rajouter d'autres fonctionnalitÈs au besoin.
+			\subsubsection{Fonctionnalit√©s pour joueur {\itshape utilisateur}}Les joueurs pourront communiquer via un chat global. Dans le syst√®me de matchmaking, ils auront le choix entre affronter un ami ou un joueur al√©atoire parmi ceux qui sont connect√©s et libre\footnote{qui n'est pas en partie.}. A travers le menu principal, les utilisateurs acc√®deront √† plusieurs sous-menus tels que {\itshape View Ranking, View Rules, View Statistics, Friends List}.%rajouter d'autres fonctionnalit√©s au besoin.
 			
 			
 			
 
-		\subsection{Glossaire}\\ Par soucis de clartÈ et de lisibilitÈ, toutes les informations relatives aux rËgles et au fonctionnement officiels des Èchecs et de ses variantes ne seront pas parcourues ci-dessous. 
+		\subsection{Glossaire}\\ Par soucis de clart√© et de lisibilit√©, toutes les informations relatives aux r√®gles et au fonctionnement officiels des √©checs et de ses variantes ne seront pas parcourues ci-dessous. 
 		\begin{description}
-		\item[Un joueur visiteur :] Joueur ne s'Ètant pas identifiÈ au systËme via un compte.
-		\item[Un joueur utilisateur :] Joueur s'Ètant identifiÈ au sytËme via un compte.
-		\item[Matchmaking :] SystËme qui met en relation 2 joueurs avant le lancement d'une partie.
-		\item[AliceChess :] Variante du jeu d'Èchec jouÈe en utilisant 2 plateaux. Lorsqu'un coup est jouÈ, la piËce est dÈplacÈe ‡ la case correspondante mais dans l'autre plateau. A part cela, Le jeu se dÈroule selon les rËgles habituelles du jeu d'Èchecs .
-		\item[DarkChess :] Variante du jeu d'Èchec o˘ le joueur ne voit que ses propres piËces et les cases o˘ il peut lÈgalement les dÈplacer.
-		\item[HordeChess :] Variante du jeu d'Èchec o˘ un joueur possËde 32 pions et l'autre la collection standard du jeu d'Èchec traditionnel.
+		\item[Un joueur visiteur :] Joueur ne s'√©tant pas identifi√© au syst√®me via un compte.
+		\item[Un joueur utilisateur :] Joueur s'√©tant identifi√© au syt√®me via un compte.
+		\item[Matchmaking :] Syst√®me qui met en relation 2 joueurs avant le lancement d'une partie.
+		\item[AliceChess :] Variante du jeu d'√©chec jou√©e en utilisant 2 plateaux. Lorsqu'un coup est jou√©, la pi√®ce est d√©plac√©e √† la case correspondante mais dans l'autre plateau. A part cela, Le jeu se d√©roule selon les r√®gles habituelles du jeu d'√©checs .
+		\item[DarkChess :] Variante du jeu d'√©chec o√π le joueur ne voit que ses propres pi√®ces et les cases o√π il peut l√©galement les d√©placer.
+		\item[HordeChess :] Variante du jeu d'√©chec o√π un joueur poss√®de 32 pions et l'autre la collection standard du jeu d'√©chec traditionnel.
 		\end{description}
 
 		\subsection{Historique des modifications}
@@ -56,9 +56,10 @@
 			\begin{tabular}{|c|c|c|p{50mm}|}
 				\hline
 				 \textbf{version} & \textbf{date} & \textbf{auteur}  & \textbf{description} \\ \hline
-				 1 & 4/12 & Pham Hong Phuc & CrÈation du SRD en LaTex\\ \hline
+				 1 & 4/12 & Pham Hong Phuc & Cr√©ation du SRD en LaTex\\ \hline
 				 1.1 & 6/12 & Caroline Forest & Ajout de diagrammes UML\\ \hline
 				 1.2 & 8/12 & Boonen Jacques & 1.Introduction\\ \hline 
+				 1.3 & 11/12 & Huwart Maxence & Besoins syst√®mes\\ \hline
 \end{tabular}
 			\caption*{Historique des modifications}
 			\end{table}
@@ -73,25 +74,27 @@
 
 \begin{figure}
 \includegraphics[scale=0.5]{Diagrammes_UC_connexion.png}
-\caption{Diagramme de \textit{use case} des actions possibles d'un utilisateur}
+\caption{Diagramme de \textit{use case} des actions possibles d'un utilisateur quant √† son identification}
 \label{UC_menu} %UseCase_menu
 \end{figure}
 
 \subsubsection{S'identifier}
 \textbf{Acteur :} \textit{User}.\\
-\textbf{Relations avec d'autres cas d'utilisation :} NÈant.\\
-\textbf{PrÈ-conditions :} Le \textit{user} doit avoir sÈlectionnÈ le sous-menu \textit{Connexion} puis l'option {\itshape Log In} dans le menu principal du jeu.\\
-\textbf{Post-conditions :} Le \textit{user} doit encoder un nom d'utilisateur et un mot de passe d'un compte dÈja existant dans le systËme \\
-\textbf{Cas gÈnÈral :} AprËs s'Ítre identifiÈ, le \textit{user} peut profiter de tous les sous-menus menu principal\\
-\textbf{Cas exceptionnels :} Si un utilisateur est dÈja connectÈ sur un compte, un autre joueur ne peut se connecter sur ce compte. Egalement, si l'utilisateur encode mal ses identifiants, le systËme lui renvoie un message d'erreur afin qu'il les rÈÈcrivent correctement.
+\textbf{Relations avec d'autres cas d'utilisation :} N√©ant.\\
+\textbf{Pr√©-conditions :} Le \textit{user} doit avoir s√©lectionn√© le sous-menu \textit{Connexion} puis l'option {\itshape Log In} dans le menu principal du jeu.\\
+\textbf{Post-conditions :} Le \textit{user} doit encoder un nom d'utilisateur et un mot de passe d'un compte d√©ja existant dans le syst√®me \\
+\textbf{Cas g√©n√©ral :} Apr√®s s'√™tre identifi√©, le \textit{user} peut profiter de tous les sous-menus menu principal\\
+\textbf{Cas exceptionnels :} Si un utilisateur est d√©ja connect√© sur un compte, un autre joueur ne peut se connecter sur ce compte. Egalement, si l'utilisateur encode mal ses identifiants, le syst√®me lui renvoie un message d'erreur afin qu'il les r√©√©crivent correctement.
 
-\subsubsection{CrÈer un compte}
+
+
+\subsubsection{Cr√©er un compte}
 \textbf{Acteur :} \textit{User}.\\
-\textbf{Relations avec d'autres cas d'utilisation :}NÈant.\\
-\textbf{PrÈ-conditions :} Le \textit{user} doit avoir sÈlectionnÈ le sous-menu \textit{Connexion} puis l'option {\itshape Create} dans le menu principal du jeu.\\
-\textbf{Post-conditions :} Le \textit{user} doit encoder un nom d'utilisateur et un mot de passe afin de crÈer son compte\\
-\textbf{Cas gÈnÈral :} Un nom d'utilisateur et un mot de passe correspondant est encodÈ dans la base de donnÈes du systËme\\
-\textbf{Cas exceptionnels :} Si le nom d'utilisateur encodÈ est dÈja dans la base de donnÈes, l'utilisateur doit en rÈencoder un nouveau.
+\textbf{Relations avec d'autres cas d'utilisation :}N√©ant.\\
+\textbf{Pr√©-conditions :} Le \textit{user} doit avoir s√©lectionn√© le sous-menu \textit{Connexion} puis l'option {\itshape Create} dans le menu principal du jeu.\\
+\textbf{Post-conditions :} Le \textit{user} doit encoder un nom d'utilisateur et un mot de passe afin de cr√©er son compte\\
+\textbf{Cas g√©n√©ral :} Un nom d'utilisateur et un mot de passe correspondant est encod√© dans la base de donn√©es du syst√®me\\
+\textbf{Cas exceptionnels :} Si le nom d'utilisateur encod√© est d√©ja dans la base de donn√©es, l'utilisateur doit en r√©encoder un nouveau.
 
 
 
@@ -107,92 +110,177 @@
 
 \subsubsection{Jouer}
 \textbf{Acteur :} \textit{User}.\\
-\textbf{Relations avec d'autres cas d'utilisation :} Modes de jeu proposÈs (\textit{Classic},\textit{Alice}, \textit{Dark} ou \textit{Horde}).\\
-\textbf{PrÈ-conditions :} Le \textit{user} doit avoir sÈlectionnÈ l'option \textit{Game} dans le menu principal du jeu.\\
-\textbf{Post-conditions :} Le \textit{user} selectionne un mode de jeu parmi ceux proposÈs(\textit{Classic},\textit{Alice}, \textit{Dark} ou \textit{Horde}).\\
-\textbf{Cas gÈnÈral :} Le \textit{user} peut sÈlectionner un mode de jeu parmi ceux proposÈs(\textit{Classic},\textit{Alice}, \textit{Dark} ou \textit{Horde}), ce qui lance une requÍte de \textit{matchmaking} (voir \ref{matchmaker}) au serveur.\\
-\textbf{Cas exceptionnels :} NÈant.
+\textbf{Relations avec d'autres cas d'utilisation :} Modes de jeu propos√©s (\textit{Classic},\textit{Alice}, \textit{Dark} ou \textit{Horde}).\\
+\textbf{Pr√©-conditions :} Le \textit{user} doit avoir s√©lectionn√© l'option \textit{Game} dans le menu principal du jeu.\\
+\textbf{Post-conditions :} Le \textit{user} selectionne un mode de jeu parmi ceux propos√©s(\textit{Classic},\textit{Alice}, \textit{Dark} ou \textit{Horde}).\\
+\textbf{Cas g√©n√©ral :} Le \textit{user} peut s√©lectionner un mode de jeu parmi ceux propos√©s(\textit{Classic},\textit{Alice}, \textit{Dark} ou \textit{Horde}), ce qui lance une requ√™te de \textit{matchmaking} (voir \ref{matchmaker}) au serveur.\\
+\textbf{Cas exceptionnels :} N√©ant.
 
 
 
-\subsubsection{Voir les RËgles}
+\subsubsection{Voir les R√®gles}
 \textbf{Acteur :} \textit{User}.\\
-\textbf{Relations avec d'autres cas d'utilisation :} NÈant.\\
-\textbf{PrÈ-conditions :} Le \textit{user} doit avoir sÈlectionnÈ l'option \textit{View Rules} dans le menu principal du jeu.\\
-\textbf{Post-conditions :} Le \textit{user} accËde aux rËgles de jeu.\\
-\textbf{Cas gÈnÈral :} Le \textit{user} peut consulter les rËgles de jeu en envoyant une requÍte au serveur.\\
-\textbf{Cas exceptionnels :} NÈant.
+\textbf{Relations avec d'autres cas d'utilisation :} N√©ant.\\
+\textbf{Pr√©-conditions :} Le \textit{user} doit avoir s√©lectionn√© l'option \textit{View Rules} dans le menu principal du jeu.\\
+\textbf{Post-conditions :} Le \textit{user} acc√®de aux r√®gles de jeu.\\
+\textbf{Cas g√©n√©ral :} Le \textit{user} peut consulter les r√®gles de jeu en envoyant une requ√™te au serveur.\\
+\textbf{Cas exceptionnels :} N√©ant.
 
 \subsubsection{Voir les Statistiques Personnelles}
 \textbf{Acteur :} \textit{User}.\\
-\textbf{Relations avec d'autres cas d'utilisation :} NÈant.\\
-\textbf{PrÈ-conditions :} Le \textit{user} doit avoir sÈlectionnÈ l'option \textit{View Statistics} dans le menu principal du jeu.\\
-\textbf{Post-conditions :} Le \textit{user} accËde ‡ ses statistiques personnelles.\\
-\textbf{Cas gÈnÈral :} Le \textit{user} peut consulter ses statistiques en envoyant une requÍte au serveur.\\
-\textbf{Cas exceptionnels :} NÈant.
+\textbf{Relations avec d'autres cas d'utilisation :} N√©ant.\\
+\textbf{Pr√©-conditions :} Le \textit{user} doit avoir s√©lectionn√© l'option \textit{View Statistics} dans le menu principal du jeu.\\
+\textbf{Post-conditions :} Le \textit{user} acc√®de √† ses statistiques personnelles.\\
+\textbf{Cas g√©n√©ral :} Le \textit{user} peut consulter ses statistiques en envoyant une requ√™te au serveur.\\
+\textbf{Cas exceptionnels :} N√©ant.
 
 \subsubsection{Voir le Classement}
 \textbf{Acteur :} \textit{User}.\\
-\textbf{Relations avec d'autres cas d'utilisation :} NÈant.\\
-\textbf{PrÈ-conditions :} Le \textit{user} doit avoir sÈlectionnÈ l'option \textit{View Ranking} dans le menu principal du jeu.\\
-\textbf{Post-conditions :} Le \textit{user} accËde au classement global des joueurs (\textit{user} et \textit{others}).\\
-\textbf{Cas gÈnÈral :} Le \textit{user} peut consulter le classement global des joueurs (\textit{user} et \textit{others}) en envoyant une requÍte au serveur.\\
-\textbf{Cas exceptionnels :} NÈant.
+\textbf{Relations avec d'autres cas d'utilisation :} N√©ant.\\
+\textbf{Pr√©-conditions :} Le \textit{user} doit avoir s√©lectionn√© l'option \textit{View Ranking} dans le menu principal du jeu.\\
+\textbf{Post-conditions :} Le \textit{user} acc√®de au classement global des joueurs (\textit{user} et \textit{others}).\\
+\textbf{Cas g√©n√©ral :} Le \textit{user} peut consulter le classement global des joueurs (\textit{user} et \textit{others}) en envoyant une requ√™te au serveur.\\
+\textbf{Cas exceptionnels :} N√©ant.
 
 \subsubsection{Voir sa Liste d'Amis}
 \textbf{Acteur :} \textit{User}.\\
 \textbf{Relations avec d'autres cas d'utilisation :} \textit{Chat}.\\
-\textbf{PrÈ-conditions :} Le \textit{user} doit avoir sÈlectionnÈ l'option \textit{Friends List} dans le menu principal du jeu.\\
-\textbf{Post-conditions :} Le \textit{user} accËde ‡ sa liste d'utilisateurs 'amis', avec lesquels il peut choisir de discuter, via l'option \textit{chat}.\\
-\textbf{Cas gÈnÈral :} Le \textit{user} peut consulter sa liste d'utilisateurs 'amis' en envoyant une requÍte au serveur. Il peut aussi discuter avec eux via messages instantanÈs et le serveur.\\
-\textbf{Cas exceptionnels :} NÈant.
+\textbf{Pr√©-conditions :} Le \textit{user} doit avoir s√©lectionn√© l'option \textit{Friends List} dans le menu principal du jeu.\\
+\textbf{Post-conditions :} Le \textit{user} acc√®de √† sa liste d'utilisateurs 'amis', avec lesquels il peut choisir de discuter, via l'option \textit{chat}.\\
+\textbf{Cas g√©n√©ral :} Le \textit{user} peut consulter sa liste d'utilisateurs 'amis' en envoyant une requ√™te au serveur. Il peut aussi discuter avec eux via messages instantan√©s et le serveur.\\
+\textbf{Cas exceptionnels :} N√©ant.
 		
 
 \subsection{Durant une partie}
 
 \subsubsection{Avancer un pion}
 \textbf{Acteur :} \textit{User}.\\
-\textbf{Relations avec d'autres cas d'utilisation :} ‡ complÈter\\
-\textbf{PrÈ-conditions :} ‡ complÈter.\\
-\textbf{Post-conditions :} ‡ complÈter\\
-\textbf{Cas gÈnÈral :} ‡ complÈter\\
-\textbf{Cas exceptionnels :}‡ complÈter.
+\textbf{Relations avec d'autres cas d'utilisation :} √† compl√©ter\\
+\textbf{Pr√©-conditions :} √† compl√©ter.\\
+\textbf{Post-conditions :} √† compl√©ter\\
+\textbf{Cas g√©n√©ral :} √† compl√©ter\\
+\textbf{Cas exceptionnels :}√† compl√©ter.
 
 \subsubsection{Discuter dans le chat}
 \textbf{Acteur :} \textit{User}.\\
-\textbf{Relations avec d'autres cas d'utilisation :} ‡ complÈter\\
-\textbf{PrÈ-conditions :} ‡ complÈter.\\
-\textbf{Post-conditions :} ‡ complÈter\\
-\textbf{Cas gÈnÈral :} ‡ complÈter\\
-\textbf{Cas exceptionnels :}‡ complÈter.
+\textbf{Relations avec d'autres cas d'utilisation :} √† compl√©ter\\
+\textbf{Pr√©-conditions :} √† compl√©ter.\\
+\textbf{Post-conditions :} √† compl√©ter\\
+\textbf{Cas g√©n√©ral :} √† compl√©ter\\
+\textbf{Cas exceptionnels :}√† compl√©ter.
 
 \section{Besoins utilisateurs : Non-fonctionnels}\\
-Afin d'avoir des parties de jeux dynamiques, les joueurs se verront imposer une limite de temps pour pouvoir jouer leur tour.
+Afin d'avoir des parties de jeux dynamiques, les joueurs se verront imposer une limite de temps pour pouvoir jouer leur tour. \\
 		
-\section{Besoins systËmes}
+\section{Besoins syst√®mes : Fonctionnels}
 
-\subsection{Fonctionnels}
+\subsection{Connexion au serveur}
+\textbf{Acteur :} \textit{Serveur}. \\
+\textbf{Relations avec d'autres cas d'utilisation :} S'identifier. \\
+\textbf{Pr√©-conditions :} \textit{Serveur} en ligne et r√©ception du signal correspondant. \\
+\textbf{Post-conditions :} utilisateur connect√©, redirection vers le menu principal, sous-menus r√©serv√©s aux utilisateurs d√©bloqu√©s, remplacement du sous-menu \textit{Identification/Create an account} par \textit{disconnection}. \\
+\textbf{Cas g√©n√©ral :} Utilisateur connect√©. \\
+\textbf{Cas exceptionnels :} Si un utilisateur est d√©j√† connect√© sur un compte, un autre joueur ne peut se connecter sur ce compte. Egalement, si l‚Äôutilisateur encode mal ses identifiants, le syst√®me lui renvoie un message d‚Äôerreur afin qu‚Äôil les r√©√©crivent correctement. \\
 
-\subsubsection{Connexion au serveur}
+\subsection{Enregistrement d'un nouveau compte}
+\textbf{Acteur :} \textit{Server}. \\
+\textbf{Relations avec d'autres cas d'utilisation :} Cr√©er un compte. \\
+\textbf{Pr√©-conditions :} \textit{Server} en ligne et r√©ception du signal correspondant. \\
+\textbf{Post-conditions :} Compte enregistr√©, message de succ√®s de cr√©ation de compte envoy√© √† l'utilisateur. \\
+\textbf{Cas g√©n√©ral :} Compte enregistr√©. \\
+\textbf{Cas exceptionnels :} Si le compte est d√©j√† existant, un message d'erreur est envoy√© √† l'utilisateur. \\
 		
-\subsubsection{Partie joueur vs. joueur}
+\subsection{Cr√©ation d'une partie}
+\textbf{Acteur :} \textit{Server}. \\
+\textbf{Relations avec d'autres cas d'utilisation :} Choisir un mode de jeu. \\
+\textbf{Pr√©-conditions :} \textit{Server} en ligne et r√©ception du signal correspondant. \\
+\textbf{Post-conditions :} Check dans la file d'attente si un joueur dans la m√™me fourchette de classement et d√©sirant jouer au m√™me mode est disponible. Si oui, le \textit{Server} cr√©e la partie. Si non, l'utilisateur est mit en file d'attente. \\
+\textbf{Cas g√©n√©ral :} Utilisateur mit en file d'attente si aucun adversaire trouv√©, sinon une partie est cr√©e. \\
+\textbf{Cas exceptionnels :} N√©ant. \\
+
+\subsection{Voir les Statistiques Personnelles}
+\textbf{Acteur :} \textit{Server} \\
+\textbf{Relations avec d'autres cas d'utilisation :} Voir les Statistiques Personnelles. \\
+\textbf{Pr√©-conditions :} \textit{Server} en ligne et r√©ception du signal correspondant. \\
+\textbf{Post-conditions :} Envois des statistiques personnelles √† l'utilisateur correspondant. \\
+\textbf{Cas g√©n√©ral :} Envois des statistiques personnelles de l'utilisateur. \\
+\textbf{Cas exceptionnels :} N√©ant. \\
+
+\subsection{Voir le classement}
+\textbf{Acteur :} \textit{Server} \\
+\textbf{Relations avec d'autres cas d'utilisation :} Voir le classement. \\
+\textbf{Pr√©-conditions :} \textit{Server} en ligne et r√©ception du signal correspondant. \\
+\textbf{Post-conditions :} Envois du classement. \\
+\textbf{Cas g√©n√©ral :} Envois du classement. \\
+\textbf{Cas exceptionnels :} N√©ant. \\
+
+\subsection{Gestion d'une partie}
+
+\subsubsection{Premier √† jouer}
+Le joueur blanc commence.
+
+\subsubsection{D√©placer une pi√®ce}
+\textbf{Acteur :} \textit{Server} \\
+\textbf{Relations avec d'autres cas d'utilisation :} Avancer un pion. \\
+\textbf{Pr√©-conditions :} r√©ception du signal correspondant, coup valide (pas de pi√®ces qui bloquent, etc). \\
+\textbf{Post-conditions :} Pi√®ce d√©plac√©e. \\
+\textbf{Cas g√©n√©ral :} Pi√®ce d√©plac√©e. \\
+\textbf{Cas exceptionnels :} Pi√®ces qui bloquent ou une pi√®ce est d√©j√† sur la case. Dans tous ces cas : On redemande au joueur de faire d√©placer une de ses pi√®ces. \\
+
+\subsubsection{Promotion}
+\textbf{Acteur :} \textit{Server} \\
+\textbf{Relations avec d'autres cas d'utilisation :} Avancer un pion. \\
+\textbf{Pr√©-conditions :} Un pion est arriv√© √† l'autre bout du plateau. \\
+\textbf{Post-conditions :} Pion promu en reine, fou, cavalier ou tour au choix du joueur qui poss√®de le pion en question. \\
+\textbf{Cas g√©n√©ral :} Pion promu. \\
+\textbf{Cas exceptionnels :} N√©ant. \\
+
+\subsubsection{Roque}
+\textbf{Acteur :} \textit{Server} \\
+\textbf{Relations avec d'autres cas d'utilisation :} Avancer un pion. \\
+\textbf{Pr√©-conditions :} Un joueur d√©place une tour sur une case provoquant le roque, le roi et la tour en question n'ont pas boug√© depuis le d√©but de la partie. Aucune pi√®ce ne bloque. \\
+\textbf{Post-conditions :} Tour d√©plac√©e, position du roi mise √† jour, marqu√© le roi et la tour comme "ayant d√©j√† boug√©". \\
+\textbf{Cas g√©n√©ral :} Roque effectu√©. \\
+\textbf{Cas exceptionnels :} Si l'une des pr√©-conditions n'est pas respect√©e, on redemande au joueur de faire d√©placer une de ses pi√®ces. \\
+
+\subsubsection{D√©roulement d'un tour}
+Voici le d√©roulement d'un tour de jeu repr√©sent√© √† l'aide d'un sequence diagram : \\
+
+\begin{figure}
+%\centering
+\includegraphics[scale=0.45]{Diagrammes_SequenceDiagramClassicChessTurn.png}
+\caption{Diagramme de s√©quences d'un tour de jeu}
+\label{CD} %ClassDiagram
+\end{figure}
+
+
+\subsubsection{Fin de la partie}
+A la fin de chaque tour, on v√©rifie si il y a un gagnant ou si l'on a affaire √† un Pat. Si oui, le r√©sultat est envoy√© √† chacun des joueurs et la partie se termine.
+
 		
 \label{matchmaker}
 		
 \begin{figure}[ht]
 \centering
-\includegraphics[scale=0.45]{SequenceDiagramMatchmaking.png}
-\caption{Diagramme de sÈquence pour le \textit{Matchmaking}}
+\includegraphics[scale=0.5]{Diagrammes_SequenceDiagramMatchmaking.PNG}
+\caption{Diagramme de s√©quence pour le \textit{Matchmaking}}
 \label{SD_matchmaker} %SequenceDiagram_matchmaking
 \end{figure}
-		
 
-\section{Design du systËme}
+\section{Besoins syst√®mes : non-Fonctionnels}
+
+\subsection{Syst√®me d'exploitation}
+Le programme doit √™tre capable de tourner sous Unix. \\
+
+\subsection{R√©seau}
+Le jeu se joue en r√©seau. Une connexion internet est donc requise. \\
+
+\section{Design du syst√®me}
 	
 \begin{figure}
 %\centering
-\includegraphics[scale=1]{Diagrammes_ClassDiagram.png}
-\caption{Diagramme de classes gÈnÈral}
+\includegraphics[scale=0.5]{Diagrammes_ClassDiagram.png}
+\caption{Diagramme de classes g√©n√©ral}
 \label{CD} %ClassDiagram
 \end{figure}
 		
@@ -200,18 +288,11 @@ Afin d'avoir des parties de jeux dynamiques, les joueurs se verront imposer une 
 		
 \subsection{Les actions du joueur}
 
-\begin{figure}
-%\centering
-\includegraphics[scale=1]{Diagrammes_SequenceDiagramClassicChessTurn.png}
-\caption{Diagramme de classes d'un tour de jeu}
-\label{CD} %ClassDiagram
-\end{figure}
-
 \subsection{Client-Serveur}
-\paragraph{}Le serveur aura une copie du board et se t‚chera de devoir vÈrifier les diffÈrentes actions des joueurs. Il veillera Ègalement ‡  mettre ‡ jour les board des joueurs.
+\paragraph{}Le serveur aura une copie du board et se t√¢chera de devoir v√©rifier les diff√©rentes actions des joueurs. Il veillera √©galement √†  mettre √† jour les board des joueurs.
 
 \subsection{Les modes de jeu}
-\paragraph{}Quatre modes sont proposÈs:
+\paragraph{}Quatre modes sont propos√©s:
 		
 \subsection{Menu}
 		
@@ -224,3 +305,4 @@ Afin d'avoir des parties de jeux dynamiques, les joueurs se verront imposer une 
 		
 
 \end{document}
+
