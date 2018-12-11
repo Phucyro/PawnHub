@@ -200,7 +200,7 @@ Afin d'avoir des parties de jeux dynamiques, les joueurs se verront imposer une 
 
 \subsection{Voir les Statistiques Personnelles}
 \textbf{Acteur :} \textit{Server} \\
-\textbf{Relations avec d'autres cas d'utilisation :} Voir les Statistiques Personnelles. \\
+\textbf{Relations avec d'autres cas d'utilisation :} Néant. \\
 \textbf{Pré-conditions :} \textit{Server} en ligne et réception du signal correspondant. \\
 \textbf{Post-conditions :} Envois des statistiques personnelles à l'utilisateur correspondant. \\
 \textbf{Cas général :} Envois des statistiques personnelles de l'utilisateur. \\
@@ -208,10 +208,26 @@ Afin d'avoir des parties de jeux dynamiques, les joueurs se verront imposer une 
 
 \subsection{Voir le classement}
 \textbf{Acteur :} \textit{Server} \\
-\textbf{Relations avec d'autres cas d'utilisation :} Voir le classement. \\
+\textbf{Relations avec d'autres cas d'utilisation :} Néant. \\
 \textbf{Pré-conditions :} \textit{Server} en ligne et réception du signal correspondant. \\
 \textbf{Post-conditions :} Envois du classement. \\
 \textbf{Cas général :} Envois du classement. \\
+\textbf{Cas exceptionnels :} Néant. \\
+
+\subsection{Voir sa Liste d'Amis}
+\textbf{Acteur :} \textit{Server} \\
+\textbf{Relations avec d'autres cas d'utilisation :} Envois de messages. \\
+\textbf{Pré-conditions :} \textit{Server} en ligne et réception du signal correspondant. \\
+\textbf{Post-conditions :} Envois de la liste d'amis de l'utilisateur en question. \\
+\textbf{Cas général :} L'utilisateur reçoit sa liste d'amis et peut interagir avec elle via des requêtes serveur (ajout d'un ami, suppression, etc).
+\textbf{Cas exceptionnels :} Néant. \\
+
+\subsection{Envois de messages}
+\textbf{Acteur :} \textit{Server} \\
+\textbf{Relations avec d'autres cas d'utilisation :} Voir sa Liste d'Amis, jouer. \\
+\textbf{Pré-conditions :} \textit{Server} en ligne et réception du message à envoyer. \\
+\textbf{Post-conditions :} Envois du message. \\
+\textbf{Cas général :} Les utilisateurs peuvent s'envoyer des messages en partie et si ils sont amis, en dehors d'une partie aussi. \\
 \textbf{Cas exceptionnels :} Néant. \\
 
 \subsection{Gestion d'une partie}
