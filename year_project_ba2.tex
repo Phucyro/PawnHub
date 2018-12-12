@@ -189,7 +189,7 @@ Afin d'avoir des parties de jeux dynamiques, les joueurs se verront imposer une 
 \textbf{Post-conditions :} Compte enregistré, message de succès de création de compte envoyé à l'utilisateur. \\
 \textbf{Cas général :} Compte enregistré. \\
 \textbf{Cas exceptionnels :} Si le compte est déjà existant, un message d'erreur est envoyé à l'utilisateur. \\
-		
+
 \subsection{Création d'une partie}
 \textbf{Acteur :} \textit{Server}. \\
 \textbf{Relations avec d'autres cas d'utilisation :} Choisir un mode de jeu. \\
@@ -293,6 +293,8 @@ Le programme doit être capable de tourner sous Unix. \\
 Le jeu se joue en réseau. Une connexion internet est donc requise. \\
 
 \section{Design du système}
+
+\subsection{Les différentes classes}
 	
 \begin{figure}
 %\centering
@@ -310,7 +312,15 @@ Le jeu se joue en réseau. Une connexion internet est donc requise. \\
 \paragraph{}Le serveur aura une copie du board et se tâchera de devoir vérifier les différentes actions des joueurs. Il veillera également à  mettre à jour les board des joueurs.
 
 \subsection{Les modes de jeu}
-\paragraph{}Quatre modes sont proposés:
+\subsubsection{Classique}
+\paragraph{}Le jeu d'échec classique, où le but est de mettre le roi adverse en échec sans qu'il ai la possibilité au tour suivant de ne plus l'être.
+\subsubsection{Alice chess}
+\paragraph{}Variante du jeu d'échec jouée en utilisant 2 board. Après chaque coup, la pièce déplacée est téléportée sur la case où elle à été placée mais de l'autre board. Un coup n'est valide que si la case où doit se téléporté la pièce ne comporte aucune pièce. A part cela, le jeu se déroule selon les règles habituelles du jeu d'échecs.
+\subsubsection{Dark chess}
+\paragraph{}Variante du jeu d'échec où le joueur ne voit que ses propres pièces et les cases où il peut légalement les déplacer. Le but des joueur est de prendre le roi adverse. Contrairement au règle classique, le roi d'un joueur peut être en échec à la fin de son tour. De plus il n'y a pas de prise en passant possible. A part cela, le jeu se déroule selon les règles habituelles du jeu d'échecs.
+
+\subsubsection{Horde chess}
+\paragraph{} Variante du jeu d'échec où le joueur noir possède 32 pions et l'autre la collection standard du jeu d'échec traditionnel. Le but du joueur noir est le but du jeu classique mais le but du joueur blanc est de prendre tout les pions du joueur noir. Le placement de départ des pièces du joueur noir est: un pion sur chaque case des lignes 5,6,7 et 8 sauf d8 et e8 ainsi qu'un pion sur d4 et un autre sur e4. Pour le joueur noir, seul les pions de la ligne 7 ont la possibilité de se déplacé de 2 case dans le cas où il n'a pas encore bougé. A part cela, le jeu se déroule selon les règles habituelles du jeu d'échecs.
 		
 \subsection{Menu}
 		
