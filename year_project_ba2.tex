@@ -32,7 +32,7 @@
 		\subsection{Description du projet}
 			\paragraph{}Ce projet aura pour but de recréer un grand classique des jeux de plateau: les échecs. Le jeu sera jouable via un mode multijoueurs. Le joueur pourra jouer au mode classique ou à ses variantes telles que  {\itshape AliceChess, DarkChess et HordeChess}. De plus, il aura également la possibilité de créer un compte à partir duquel il pourra effectuer plusieurs actions qui seront détaillées ci-dessous. Néanmoins, le joueur pourra lancer une partie en tant que {\itshape visiteur} mais ne bénéficiera pas des avantages liés à la possession d'un compte.
 			
-			\subsubsection{Fonctionnalités pour joueur {\itshape  visiteur} et {\itshape utilisateur}}Depuis le menu principal, les joueurs pourront accéder à l'option {\itshape View Rules} à travers lequel ils pourront lire en détail les règles du jeu d'échecs et de ses variantes Les joueurs lanceront une partie via l'option {\itshape Game}.Lors d'une partie, ils pourront s'envoyer des messages via un chat dédié.
+			\subsubsection{Fonctionnalités pour joueur {\itshape  visiteur} et {\itshape utilisateur}}Depuis le menu principal, les joueurs pourront accéder à l'option {\itshape View Rules} à travers lequel ils pourront lire en détail les règles du jeu d'échecs et de ses variantes. Les joueurs lanceront une partie via l'option {\itshape Game}.Lors d'une partie, ils pourront s'envoyer des messages via un chat dédié.
 			
 			\subsubsection{Fonctionnalités pour joueur {\itshape utilisateur}}Les joueurs pourront communiquer via un chat global. Dans le système de matchmaking, ils auront le choix entre affronter un ami ou un joueur aléatoire parmi ceux qui sont connectés et libre\footnote{qui n'est pas en partie.}. A travers le menu principal, les utilisateurs accèderont à plusieurs sous-menus tels que {\itshape View Ranking, View Rules, View Statistics, Friends List}.%rajouter d'autres fonctionnalités au besoin.
 			
@@ -85,7 +85,7 @@
 \textbf{Relations avec d'autres cas d'utilisation :} Néant.\\
 \textbf{Pré-conditions :} Le \textit{user} doit avoir sélectionné le sous-menu \textit{Connexion} puis l'option {\itshape Log In} dans le menu principal du jeu.\\
 \textbf{Post-conditions :} Le \textit{user} doit encoder un nom d'utilisateur et un mot de passe d'un compte déja existant dans le système \\
-\textbf{Cas général :} Après s'être identifié, le \textit{user} peut profiter de tous les sous-menus menu principal\\
+\textbf{Cas général :} Après s'être identifié, le \textit{user} peut profiter de tous les sous-menus du menu principal\\
 \textbf{Cas exceptionnels :} Si un utilisateur est déja connecté sur un compte, un autre joueur ne peut se connecter sur ce compte. Egalement, si l'utilisateur encode mal ses identifiants, le système lui renvoie un message d'erreur afin qu'il les réécrivent correctement.
 
 
@@ -204,31 +204,31 @@ Afin d'avoir des parties de jeux dynamiques, les joueurs se verront imposer une 
 \textbf{Acteur :} \textit{Server} \\
 \textbf{Relations avec d'autres cas d'utilisation :} Néant. \\
 \textbf{Pré-conditions :} \textit{Server} en ligne et réception du signal correspondant. \\
-\textbf{Post-conditions :} Envois des statistiques personnelles à l'utilisateur correspondant. \\
-\textbf{Cas général :} Envois des statistiques personnelles de l'utilisateur. \\
+\textbf{Post-conditions :} Envoi des statistiques personnelles à l'utilisateur correspondant. \\
+\textbf{Cas général :} Envoi des statistiques personnelles de l'utilisateur. \\
 \textbf{Cas exceptionnels :} Néant. \\
 
 \subsection{Voir le classement}
 \textbf{Acteur :} \textit{Server} \\
 \textbf{Relations avec d'autres cas d'utilisation :} Néant. \\
 \textbf{Pré-conditions :} \textit{Server} en ligne et réception du signal correspondant. \\
-\textbf{Post-conditions :} Envois du classement. \\
-\textbf{Cas général :} Envois du classement. \\
+\textbf{Post-conditions :} Envoi du classement. \\
+\textbf{Cas général :} Envoi du classement. \\
 \textbf{Cas exceptionnels :} Néant. \\
 
 \subsection{Voir sa Liste d'Amis}
 \textbf{Acteur :} \textit{Server} \\
-\textbf{Relations avec d'autres cas d'utilisation :} Envois de messages. \\
+\textbf{Relations avec d'autres cas d'utilisation :} {\itshape Envoi de messages}. \\
 \textbf{Pré-conditions :} \textit{Server} en ligne et réception du signal correspondant. \\
-\textbf{Post-conditions :} Envois de la liste d'amis de l'utilisateur en question. \\
-\textbf{Cas général :} L'utilisateur reçoit sa liste d'amis et peut interagir avec elle via des requêtes serveur (ajout d'un ami, suppression, etc).
+\textbf{Post-conditions :} Envoi de la liste d'amis de l'utilisateur en question. \\
+\textbf{Cas général :} L'utilisateur reçoit sa liste d'amis et peut interagir avec elle via des requêtes serveur (ajout d'un ami, suppression, etc).\\
 \textbf{Cas exceptionnels :} Néant. \\
 
-\subsection{Envois de messages}
+\subsection{Envoi de messages}
 \textbf{Acteur :} \textit{Server} \\
 \textbf{Relations avec d'autres cas d'utilisation :} Voir sa Liste d'Amis, jouer. \\
 \textbf{Pré-conditions :} \textit{Server} en ligne et réception du message à envoyer. \\
-\textbf{Post-conditions :} Envois du message. \\
+\textbf{Post-conditions :} Envoi du message. \\
 \textbf{Cas général :} Les utilisateurs peuvent s'envoyer des messages en partie et si ils sont amis, en dehors d'une partie aussi. \\
 \textbf{Cas exceptionnels :} Néant. \\
 
@@ -239,7 +239,7 @@ Le joueur blanc commence.
 
 \subsubsection{Déplacer une pièce}
 \textbf{Acteur :} \textit{Server} \\
-\textbf{Relations avec d'autres cas d'utilisation :} Avancer un pion. \\
+\textbf{Relations avec d'autres cas d'utilisation :} {\itshape Avancer un pion}. \\
 \textbf{Pré-conditions :} réception du signal correspondant, coup valide (pas de pièces qui bloquent, etc). \\
 \textbf{Post-conditions :} Pièce déplacée. \\
 \textbf{Cas général :} Pièce déplacée. \\
@@ -247,7 +247,7 @@ Le joueur blanc commence.
 
 \subsubsection{Promotion}
 \textbf{Acteur :} \textit{Server} \\
-\textbf{Relations avec d'autres cas d'utilisation :} Avancer un pion. \\
+\textbf{Relations avec d'autres cas d'utilisation :} {\itshape Avancer un pion}. \\
 \textbf{Pré-conditions :} Un pion est arrivé à l'autre bout du plateau. \\
 \textbf{Post-conditions :} Pion promu en dame, fou, cavalier ou tour au choix du joueur qui possède le pion en question. \\
 \textbf{Cas général :} Pion promu. \\
@@ -255,14 +255,14 @@ Le joueur blanc commence.
 
 \subsubsection{Roque}
 \textbf{Acteur :} \textit{Server} \\
-\textbf{Relations avec d'autres cas d'utilisation :} Avancer un pion. \\
+\textbf{Relations avec d'autres cas d'utilisation :} {\itshape Avancer un pion}. \\
 \textbf{Pré-conditions :} Un joueur déplace le roi sur une case provoquant le roque, le roi et la tour en question n'ont pas bougé depuis le début de la partie. Aucune pièce ne bloque. \\
 \textbf{Post-conditions :} Tour déplacée, position du roi mise à jour, marqué le roi et la tour comme "ayant déjà bougé". \\
 \textbf{Cas général :} Roque effectué. \\
 \textbf{Cas exceptionnels :} Si l'une des pré-conditions n'est pas respectée, on redemande au joueur de faire déplacer une de ses pièces. \\
 
 \subsubsection{Déroulement de la partie}
-Voici le déroulement de la partie représenté à l'aide d'un sequence diagram : \\
+Voici le déroulement de la partie représentée à l'aide d'un sequence diagram : \\
 
 \begin{figure}
 %\centering
@@ -311,18 +311,18 @@ Le jeu se joue en réseau. Une connexion internet est donc requise. \\
 \subsection{Les actions du joueur}
 
 \subsection{Client-Serveur}
-\paragraph{}Le serveur aura une copie du board et se tâchera de devoir vérifier les différentes actions des joueurs. Il veillera également à  mettre à jour les board des joueurs.
+\paragraph{}Le serveur aura une copie du board et se tâchera de devoir vérifier les différentes actions des joueurs. Il veillera également à mettre à jour les board des joueurs.
 
 \subsection{Les modes de jeu}
 \subsubsection{Classique}
-\paragraph{}Le jeu d'échec classique, où le but est de mettre le roi adverse en échec sans qu'il ai la possibilité au tour suivant de ne plus l'être.
+\paragraph{}Le jeu d'échec classique, où le but est de mettre le roi adverse en échec sans qu'il ait la possibilité au tour suivant de ne plus l'être.
 \subsubsection{Alice chess}
 \paragraph{}Variante du jeu d'échec jouée en utilisant 2 board. Après chaque coup, la pièce déplacée est téléportée sur la case où elle à été placée mais de l'autre board. Un coup n'est valide que si la case où doit se téléporté la pièce ne comporte aucune pièce. A part cela, le jeu se déroule selon les règles habituelles du jeu d'échecs.
 \subsubsection{Dark chess}
 \paragraph{}Variante du jeu d'échec où le joueur ne voit que ses propres pièces et les cases où il peut légalement les déplacer. Le but des joueur est de prendre le roi adverse. Contrairement au règle classique, le roi d'un joueur peut être en échec à la fin de son tour. De plus il n'y a pas de prise en passant possible. A part cela, le jeu se déroule selon les règles habituelles du jeu d'échecs.
 
 \subsubsection{Horde chess}
-\paragraph{} Variante du jeu d'échec où le joueur noir possède 32 pions et l'autre la collection standard du jeu d'échec traditionnel. Le but du joueur noir est le but du jeu classique mais le but du joueur blanc est de prendre tout les pions du joueur noir. Le placement de départ des pièces du joueur noir est: un pion sur chaque case des lignes 5,6,7 et 8 sauf d8 et e8 ainsi qu'un pion sur d4 et un autre sur e4. Pour le joueur noir, seul les pions de la ligne 7 ont la possibilité de se déplacé de 2 case dans le cas où il n'a pas encore bougé. A part cela, le jeu se déroule selon les règles habituelles du jeu d'échecs.
+\paragraph{} Variante du jeu d'échec où le joueur noir possède 32 pions et l'autre la collection standard du jeu d'échec traditionnel. Le but du joueur noir est le but du jeu classique mais le but du joueur blanc est de prendre tous les pions du joueur noir. Le placement de départ des pièces du joueur noir est: un pion sur chaque case des lignes 5,6,7 et 8 sauf d8 et e8 ainsi qu'un pion sur d4 et un autre sur e4. Pour le joueur noir, seul les pions de la ligne 7 ont la possibilité de se déplacer de 2 cases dans le cas où il n'a pas encore bougé. A part cela, le jeu se déroule selon les règles habituelles du jeu d'échecs.
 		
 \subsection{Menu}
 		
