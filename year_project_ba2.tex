@@ -30,7 +30,7 @@
 	\newpage
 	\section{Introduction}
 		\subsection{Description du projet}
-			\paragraph{}Ce projet aura pour but de recréer un grand classique des jeux de plateau: les échecs. Le jeu sera jouable via un mode multijoueurs. Le joueur pourra jouer au mode classique ou à ses variantes telles que  {\itshape AliceChess, DarkChess et HordeChess}. De plus, il aura également la possibilité de créer un compte à partir duquel il pourra effectuer plusieurs actions qui seront détaillées ci-dessous. Néanmoins, le joueur pourra lancer une partie en tant que {\itshape visiteur} mais ne bénéficiera pas des avantages liés à la possession d'un compte.
+			\paragraph{}Ce projet aura pour but de recréer un grand classique des jeux de plateau: les échecs. Le jeu sera jouable via un mode multijoueurs. Le joueur pourra jouer au mode classique ou à ses variantes telles que  {\itshape AliceChess, DarkChess et HordeChess} que nous décrivons plus tard. De plus, il aura également la possibilité de créer un compte à partir duquel il pourra effectuer plusieurs actions qui seront détaillées ci-dessous. Néanmoins, le joueur pourra lancer une partie en tant que {\itshape visiteur} mais ne bénéficiera pas des avantages liés à la possession d'un compte.
 			
 			\subsubsection{Fonctionnalités pour joueur {\itshape  visiteur} et {\itshape utilisateur}}Depuis le menu principal, les joueurs pourront accéder à l'option {\itshape View Rules} à travers lequel ils pourront lire en détail les règles du jeu d'échecs et de ses variantes. Les joueurs lanceront une partie via l'option {\itshape Game}.Lors d'une partie, ils pourront s'envoyer des messages via un chat dédié.
 			
@@ -48,11 +48,14 @@
 		\item[DarkChess :] Variante du jeu d'échec où le joueur ne voit que ses propres pièces et les cases où il peut légalement les déplacer.
 		\item[HordeChess :] Variante du jeu d'échec où un joueur possède 32 pions et l'autre la collection standard du jeu d'échec traditionnel.
 		\end{description}
-
+		\clearpage
+		
 		\subsection{Historique des modifications}
 		
 		\begin{table}[h!]
+			
 			\centering
+			
 			\begin{tabular}{|c|c|c|p{50mm}|}
 				\hline
 				 \textbf{version} & \textbf{date} & \textbf{auteur}  & \textbf{description} \\ \hline
@@ -61,6 +64,7 @@
 				 1.2 & 8/12 & Boonen Jacques & 1.Introduction\\ \hline 
 				 1.3 & 11/12 & Huwart Maxence & Besoins systèmes\\ \hline
 				 1.4 & 12/12 & Mardulyn Romain & Explication des différent modes de jeu\\ \hline
+				 1.5 & 12/12 & Antunes André & Explication des options durant une partie\\ \hline
 \end{tabular}
 			\caption*{Historique des modifications}
 			\end{table}
@@ -155,7 +159,7 @@
 
 \subsection{Durant une partie}
 
-\subsubsection{Avancer un pion}
+\subsubsection{Avancer un pièce}
 \textbf{Acteur :} \textit{User}.\\
 \textbf{Relations avec d'autres cas d'utilisation :} à compléter\\
 \textbf{Pré-conditions :} à compléter.\\
@@ -165,11 +169,19 @@
 
 \subsubsection{Discuter dans le chat}
 \textbf{Acteur :} \textit{User}.\\
-\textbf{Relations avec d'autres cas d'utilisation :} à compléter\\
-\textbf{Pré-conditions :} à compléter.\\
-\textbf{Post-conditions :} à compléter\\
-\textbf{Cas général :} à compléter\\
-\textbf{Cas exceptionnels :}à compléter.
+\textbf{Relations avec d'autres cas d'utilisation :} Liste d'Amis\\
+\textbf{Pré-conditions :} Avoir un ami "ou adversaire" et qu'il soit connecté\\ %TODO
+\textbf{Post-conditions :} Néant\\
+\textbf{Cas général :} Le \textit{user} ouvre avec un boutton "à définir" le chat et peut ecrire sur un textfield pour comuniquer avec les autres personnes.\\ %TODO
+\textbf{Cas exceptionnels :} Néant.
+
+\subsubsection{Déclarer forfait}
+\textbf{Acteur :} \textit{User}.\\
+\textbf{Relations avec d'autres cas d'utilisation :} Néant\\
+\textbf{Pré-conditions :} Il faut que le \textit{user} soit dans un jeu. \\
+\textbf{Post-conditions :} Informer l'adversaire sur la déclaration de forfait et terminer le jeu.\\
+\textbf{Cas général :} Lorsque le joueur veut terminer la partie .\\
+\textbf{Cas exceptionnels :} Lorsque le joueur perd la connect le joueur déclare automatiquement forfait .%TODO ceci peut changer au cour de developement
 
 \section{Besoins utilisateurs : Non-fonctionnels}
 Afin d'avoir des parties de jeux dynamiques, les joueurs se verront imposer une limite de temps pour pouvoir jouer leur tour. \\
@@ -288,6 +300,7 @@ A la fin de chaque tour, on vérifie si il y a un gagnant ou si l'on a affaire �
 \end{figure}
 
 \section{Besoins systèmes : non-Fonctionnels}
+
 
 \subsection{Système d'exploitation}
 Le programme doit être capable de tourner sous Unix. \\
