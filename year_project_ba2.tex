@@ -163,15 +163,15 @@
 
 \subsubsection{Avancer un Pièce}
 \textbf{Acteur :} \textit{User}.\\
-\textbf{Relations avec d'autres cas d'utilisation :} à compléter\\
-\textbf{Pré-conditions :} à compléter.\\
-\textbf{Post-conditions :} à compléter\\
-\textbf{Cas général :} à compléter\\
-\textbf{Cas exceptionnels :}à compléter.
+\textbf{Relations avec d'autres cas d'utilisation :}\\ %TODO
+\textbf{Pré-conditions :}\\ %TODO
+\textbf{Post-conditions :}\\ %TODO
+\textbf{Cas général :}\\ %TODO
+\textbf{Cas exceptionnels :}\\ %TODO
 
 \subsubsection{Discuter dans le Chat}
 \textbf{Acteur :} \textit{User}.\\
-\textbf{Relations avec d'autres cas d'utilisation :} Liste d'Amis\\
+\textbf{Relations avec d'autres cas d'utilisation :} \textit{Friends List}.\\
 \textbf{Pré-conditions :} Avoir un ami "ou adversaire" et qu'il soit connecté\\ %TODO
 \textbf{Post-conditions :} Néant\\
 \textbf{Cas général :} Le \textit{user} ouvre avec un boutton "à définir" le chat et peut ecrire sur un textfield pour comuniquer avec les autres personnes.\\ %TODO
@@ -183,7 +183,8 @@
 \textbf{Pré-conditions :} Il faut que le \textit{user} soit dans un jeu. \\
 \textbf{Post-conditions :} Informer l'adversaire sur la déclaration de forfait et terminer le jeu.\\
 \textbf{Cas général :} Lorsque le joueur veut terminer la partie .\\
-\textbf{Cas exceptionnels :} Lorsque le joueur perd la connect le joueur déclare automatiquement forfait .%TODO ceci peut changer au cour de developement
+\textbf{Cas exceptionnels :} Lorsque le joueur perd la connect le joueur déclare automatiquement forfait. %TODO
+%ceci peut changer au cour de developement
 
 \section{Besoins Utilisateurs : Non-Fonctionnels}
 Afin d'avoir des parties de jeux dynamiques, les joueurs se verront imposer une limite de temps pour pouvoir jouer leur tour. \\
@@ -192,11 +193,11 @@ Afin d'avoir des parties de jeux dynamiques, les joueurs se verront imposer une 
 
 \subsection{Connection au Serveur}
 \textbf{Acteur :} \textit{Serveur}. \\
-\textbf{Relations avec d'autres cas d'utilisation :} S'identifier. \\
-\textbf{Pré-conditions :} \textit{Serveur} en ligne et réception du signal correspondant. \\
-\textbf{Post-conditions :} utilisateur connecté, redirection vers le menu principal, sous-menus réservés aux utilisateurs débloqués, remplacement du sous-menu \textit{Identification/Create an account} par \textit{disconnection}. \\
+\textbf{Relations avec d'autres cas d'utilisation :} \textit{Log In}. \\
+\textbf{Pré-conditions :} \textit{Server} en ligne et réception du signal correspondant. \\
+\textbf{Post-conditions :} Utilisateur connecté, redirection vers le menu principal, sous-menus réservés aux utilisateurs débloqués, remplacement du sous-menu \textit{Log In/Create an account} par \textit{Log Out}. \\
 \textbf{Cas général :} Utilisateur connecté. \\
-\textbf{Cas exceptionnels :} Si un utilisateur est déjà connecté sur un compte, un autre joueur ne peut se connecter sur ce compte. Egalement, si l’utilisateur encode mal ses identifiants, le système lui renvoie un message d’erreur afin qu’il les réécrivent correctement. \\
+\textbf{Cas exceptionnels :} Si un utilisateur est déjà connecté sur un compte, un autre joueur ne peut se connecter sur ce compte. Également, si l’utilisateur encode mal ses identifiants, le système lui renvoie un message d’erreur afin qu’il les réécrive correctement. \\
 
 \subsection{Enregistrement d'un Nouveau Compte}
 \textbf{Acteur :} \textit{Server}. \\
@@ -210,8 +211,8 @@ Afin d'avoir des parties de jeux dynamiques, les joueurs se verront imposer une 
 \textbf{Acteur :} \textit{Server}. \\
 \textbf{Relations avec d'autres cas d'utilisation :} Choisir un mode de jeu. \\
 \textbf{Pré-conditions :} \textit{Server} en ligne et réception du signal correspondant. \\
-\textbf{Post-conditions :} Check dans la file d'attente si un joueur dans la même fourchette de classement et désirant jouer au même mode est disponible. Si oui, le \textit{Server} crée la partie. Si non, l'utilisateur est mit en file d'attente. \\
-\textbf{Cas général :} Utilisateur mit en file d'attente si aucun adversaire trouvé, sinon une partie est crée. \\
+\textbf{Post-conditions :} Vérifie dans la file d'attente si un joueur dans la même fourchette de classement et désirant jouer au même mode est disponible. Si oui, le \textit{Server} crée la partie. Si non, l'utilisateur est mis en file d'attente. \\
+\textbf{Cas général :} Utilisateur mis en file d'attente si aucun adversaire n'est trouvé, sinon une partie est créée. \\
 \textbf{Cas exceptionnels :} Néant. \\
 
 \subsection{Voir les Statistiques Personnelles}
@@ -238,12 +239,12 @@ Afin d'avoir des parties de jeux dynamiques, les joueurs se verront imposer une 
 \textbf{Cas général :} L'utilisateur reçoit sa liste d'amis et peut interagir avec elle via des requêtes serveur (ajout d'un ami, suppression, etc).\\
 \textbf{Cas exceptionnels :} Néant. \\
 
-\subsection{Envoi de messages}
+\subsection{Envoi de Messages}
 \textbf{Acteur :} \textit{Server} \\
-\textbf{Relations avec d'autres cas d'utilisation :} Voir sa Liste d'Amis, jouer. \\
+\textbf{Relations avec d'autres cas d'utilisation :} \textit{Friends List}, jouer. \\
 \textbf{Pré-conditions :} \textit{Server} en ligne et réception du message à envoyer. \\
 \textbf{Post-conditions :} Envoi du message. \\
-\textbf{Cas général :} Les utilisateurs peuvent s'envoyer des messages en partie et si ils sont amis, en dehors d'une partie aussi. \\
+\textbf{Cas général :} Les utilisateurs peuvent s'envoyer des messages en partie et s'ils sont amis, en dehors d'une partie aussi. \\
 \textbf{Cas exceptionnels :} Néant. \\
 
 \subsection{Gestion d'une Partie}
@@ -271,12 +272,12 @@ Le joueur blanc commence.
 \textbf{Acteur :} \textit{Server} \\
 \textbf{Relations avec d'autres cas d'utilisation :} {\itshape Avancer un pion}. \\
 \textbf{Pré-conditions :} Un joueur déplace le roi sur une case provoquant le roque, le roi et la tour en question n'ont pas bougé depuis le début de la partie. Aucune pièce ne bloque. \\
-\textbf{Post-conditions :} Tour déplacée, position du roi mise à jour, marqué le roi et la tour comme "ayant déjà bougé". \\
+\textbf{Post-conditions :} Tour déplacée, position du roi mise à jour, le roi et la tour marqués comme "ayant déjà bougé". \\
 \textbf{Cas général :} Roque effectué. \\
 \textbf{Cas exceptionnels :} Si l'une des pré-conditions n'est pas respectée, on redemande au joueur de faire déplacer une de ses pièces. \\
 
 \subsubsection{Déroulement de la Partie}
-Voici le déroulement de la partie représentée à l'aide d'un sequence diagram : \\
+Voici le déroulement de la partie représentée à l'aide d'un diagramme de séquences : \\
 
 \begin{figure}[ht]
 %\centering
@@ -289,7 +290,7 @@ Voici le déroulement de la partie représentée à l'aide d'un sequence diagram
 
 
 \subsubsection{Fin de la Partie}
-A la fin de chaque tour, on vérifie si il y a un gagnant ou si l'on a affaire à un Pat. Si oui, le résultat est envoyé à chacun des joueurs et la partie se termine.
+A la fin de chaque tour, on vérifie s'il y a un gagnant ou si l'on a affaire à un Pat. Si oui, le résultat est envoyé à chacun des joueurs et la partie se termine.
 
 		
 \begin{figure}[ht]
@@ -325,15 +326,15 @@ Le jeu se joue en réseau. Une connection internet est donc requise. \\
 \subsection{Les Actions du Joueur}
 
 \subsection{Client-Serveur}
-\paragraph{}Le serveur aura une copie du board et se tâchera de devoir vérifier les différentes actions des joueurs. Il veillera également à mettre à jour les board des joueurs.
+\paragraph{}Le serveur aura une copie du board et se tâchera de devoir vérifier les différentes actions des joueurs. Il veillera également à mettre à jour le board de chacun des joueurs.
 
 \subsection{Les Modes de Jeu}
 \subsubsection{Classique}
 \paragraph{}Le jeu d'échec classique, où le but est de mettre le roi adverse en échec sans qu'il ait la possibilité au tour suivant de ne plus l'être.
 \subsubsection{Alice Chess}
-\paragraph{}Variante du jeu d'échec jouée en utilisant 2 board. Après chaque coup, la pièce déplacée est téléportée sur la case où elle à été placée mais de l'autre board. Un coup n'est valide que si la case où doit se téléporté la pièce ne comporte aucune pièce. A part cela, le jeu se déroule selon les règles habituelles du jeu d'échecs.
+\paragraph{}Variante du jeu d'échec jouée en utilisant 2 board. Après chaque coup, la pièce déplacée est téléportée sur la case où elle à été placée mais de l'autre board. Un coup n'est valide que si la case où doit se téléporter la pièce ne comporte aucune pièce. A part cela, le jeu se déroule selon les règles habituelles du jeu d'échecs.
 \subsubsection{Dark Chess}
-\paragraph{}Variante du jeu d'échec où le joueur ne voit que ses propres pièces et les cases où il peut légalement les déplacer. Le but des joueur est de prendre le roi adverse. Contrairement au règle classique, le roi d'un joueur peut être en échec à la fin de son tour. De plus il n'y a pas de prise en passant possible. A part cela, le jeu se déroule selon les règles habituelles du jeu d'échecs.
+\paragraph{}Variante du jeu d'échec où le joueur ne voit que ses propres pièces et les cases où il peut légalement les déplacer. Le but des joueur est de prendre le roi adverse. Contrairement au règle classique, le roi d'un joueur peut être en échec à la fin de son tour. De plus il n'y a pas de prise en passant possible. À part cela, le jeu se déroule selon les règles habituelles du jeu d'échecs.
 
 \subsubsection{Horde Chess}
 \paragraph{} Variante du jeu d'échec où le joueur noir possède 32 pions et l'autre la collection standard du jeu d'échec traditionnel. Le but du joueur noir est le but du jeu classique mais le but du joueur blanc est de prendre tous les pions du joueur noir. Le placement de départ des pièces du joueur noir est: un pion sur chaque case des lignes 5,6,7 et 8 sauf d8 et e8 ainsi qu'un pion sur d4 et un autre sur e4. Pour le joueur noir, seul les pions de la ligne 7 ont la possibilité de se déplacer de 2 cases dans le cas où il n'a pas encore bougé. A part cela, le jeu se déroule selon les règles habituelles du jeu d'échecs.
