@@ -39,7 +39,7 @@
 			
 			
 
-		\subsection{Glossaire}\\ Par soucis de clarté et de lisibilité, toutes les informations relatives aux règles et au fonctionnement officiels des échecs et de ses variantes ne seront pas parcourues ci-dessous. 
+		\subsection{Glossaire} Par soucis de clarté et de lisibilité, toutes les informations relatives aux règles et au fonctionnement officiels des échecs et de ses variantes ne seront pas parcourues ci-dessous. 
 		\begin{description}
 		\item[Un joueur visiteur :] Joueur ne s'étant pas identifié au système via un compte.
 		\item[Un joueur utilisateur :] Joueur s'étant identifié au sytème via un compte.
@@ -73,7 +73,7 @@
 \subsection{Connexion}
 
 \begin{figure}
-\includegraphics[scale=0.5]{Diagrammes_UC_connexion.png}
+\includegraphics[scale=0.5]{UC_connexion.png}
 \caption{Diagramme de \textit{use case} des actions possibles d'un utilisateur quant à son identification}
 \label{UC_menu} %UseCase_menu
 \end{figure}
@@ -102,7 +102,7 @@
 
 \begin{figure}
 \begin{center}
-\includegraphics[scale=0.5]{Diagrammes_UC_mainmenu.png}
+\includegraphics[scale=0.5]{UC_mainmenu.png}
 \caption{Diagramme de \textit{use case} des actions possibles d'un utilisateur}
 \label{UC_menu} %UseCase_menu
 \end{center}
@@ -169,7 +169,7 @@
 \textbf{Cas général :} à compléter\\
 \textbf{Cas exceptionnels :}à compléter.
 
-\section{Besoins utilisateurs : Non-fonctionnels}\\
+\section{Besoins utilisateurs : Non-fonctionnels}
 Afin d'avoir des parties de jeux dynamiques, les joueurs se verront imposer une limite de temps pour pouvoir jouer leur tour. \\
 		
 \section{Besoins systèmes : Fonctionnels}
@@ -247,27 +247,28 @@ Le joueur blanc commence.
 \textbf{Acteur :} \textit{Server} \\
 \textbf{Relations avec d'autres cas d'utilisation :} Avancer un pion. \\
 \textbf{Pré-conditions :} Un pion est arrivé à l'autre bout du plateau. \\
-\textbf{Post-conditions :} Pion promu en reine, fou, cavalier ou tour au choix du joueur qui possède le pion en question. \\
+\textbf{Post-conditions :} Pion promu en dame, fou, cavalier ou tour au choix du joueur qui possède le pion en question. \\
 \textbf{Cas général :} Pion promu. \\
 \textbf{Cas exceptionnels :} Néant. \\
 
 \subsubsection{Roque}
 \textbf{Acteur :} \textit{Server} \\
 \textbf{Relations avec d'autres cas d'utilisation :} Avancer un pion. \\
-\textbf{Pré-conditions :} Un joueur déplace une tour sur une case provoquant le roque, le roi et la tour en question n'ont pas bougé depuis le début de la partie. Aucune pièce ne bloque. \\
+\textbf{Pré-conditions :} Un joueur déplace le roi sur une case provoquant le roque, le roi et la tour en question n'ont pas bougé depuis le début de la partie. Aucune pièce ne bloque. \\
 \textbf{Post-conditions :} Tour déplacée, position du roi mise à jour, marqué le roi et la tour comme "ayant déjà bougé". \\
 \textbf{Cas général :} Roque effectué. \\
 \textbf{Cas exceptionnels :} Si l'une des pré-conditions n'est pas respectée, on redemande au joueur de faire déplacer une de ses pièces. \\
 
-\subsubsection{Déroulement d'un tour}
-Voici le déroulement d'un tour de jeu représenté à l'aide d'un sequence diagram : \\
+\subsubsection{Déroulement de la partie}
+Voici le déroulement de la partie représenté à l'aide d'un sequence diagram : \\
 
 \begin{figure}
 %\centering
-\includegraphics[scale=0.45]{Diagrammes_SequenceDiagramClassicChessTurn.png}
+\includegraphics[scale=0.45]{SequenceDiagramClassicChessTurn.png}
 \caption{Diagramme de séquences d'un tour de jeu}
 \label{CD} %ClassDiagram
 \end{figure}
+\clearpage
 
 
 \subsubsection{Fin de la partie}
@@ -278,7 +279,7 @@ A la fin de chaque tour, on vérifie si il y a un gagnant ou si l'on a affaire �
 		
 \begin{figure}[ht]
 \centering
-\includegraphics[scale=0.5]{Diagrammes_SequenceDiagramMatchmaking.PNG}
+\includegraphics[scale=0.5]{SequenceDiagramMatchmaking.PNG}
 \caption{Diagramme de séquence pour le \textit{Matchmaking}}
 \label{SD_matchmaker} %SequenceDiagram_matchmaking
 \end{figure}
@@ -295,10 +296,11 @@ Le jeu se joue en réseau. Une connexion internet est donc requise. \\
 	
 \begin{figure}
 %\centering
-\includegraphics[scale=0.5]{Diagrammes_ClassDiagram.png}
+\includegraphics[scale=0.5]{ClassDiagram.png}
 \caption{Diagramme de classes général}
 \label{CD} %ClassDiagram
 \end{figure}
+\clearpage
 		
 \subsection{Connexion du joueur}
 		
