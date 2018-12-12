@@ -26,20 +26,36 @@
 \begin{document}
 	\maketitle
 	\newpage
-	\tableofcontents %do a table of content automatically	
+	\tableofcontents %do a table of content automatically
 	\newpage
 	\section{Introduction}
+		\subsection{Description du projet}
+			\paragraph{}Ce projet aura pour but de recréer un grand classique des jeux de plateau: les échecs. Le jeu sera jouable via un mode multijoueurs. Le joueur pourra jouer au mode classique ou à ses variantes telles que  {\itshape AliceChess, DarkChess et HordeChess} que nous décrivons plus tard. De plus, il aura également la possibilité de créer un compte à partir duquel il pourra effectuer plusieurs actions qui seront détaillées ci-dessous. Néanmoins, le joueur pourra lancer une partie en tant que {\itshape visiteur} mais ne bénéficiera pas des avantages liés à la possession d'un compte.
+			\subsection{Les modes de jeu}
+				\subsubsection{Classique}
+					\paragraph{}Le jeu d'échec classique, où le but est de mettre le roi adverse en échec sans qu'il ait la possibilité au tour suivant de ne plus l'être.
+				\subsubsection{Alice chess}
+					\paragraph{}Variante du jeu d'échec jouée en utilisant 2 board. Après chaque coup, la pièce déplacée est téléportée sur la case où elle à été placée mais de l'autre board. Un coup n'est valide que si la case où doit se téléporté la pièce ne comporte aucune pièce. A part cela, le jeu se déroule selon les règles habituelles du jeu d'échecs.
+				\subsubsection{Dark chess}
+					\paragraph{}Variante du jeu d'échec où le joueur ne voit que ses propres pièces et les cases où il peut légalement les déplacer. Le but des joueur est de prendre le roi adverse. Contrairement au règle classique, le roi d'un joueur peut être en échec à la fin de son tour. De plus il n'y a pas de prise en passant possible. A part cela, le jeu se déroule selon les règles habituelles du jeu d'échecs.
+				\subsubsection{Horde chess}
+					\paragraph{} Variante du jeu d'échec où le joueur noir possède 32 pions et l'autre la collection standard du jeu d'échec traditionnel. Le but du joueur noir est le but du jeu classique mais le but du joueur blanc est de prendre tous les pions du joueur noir. A part cela, le jeu se déroule selon les règles habituelles du jeu d'échecs.
+
+			\subsection{Fonctionnalités pour joueur {\itshape  visiteur} et {\itshape utilisateur}}Depuis le menu principal, les joueurs pourront accéder à l'option {\itshape View Rules} à travers lequel ils pourront lire en détail les règles du jeu d'échecs et de ses variantes. Les joueurs lanceront une partie via l'option {\itshape Game}.Lors d'une partie, ils pourront s'envoyer des messages via un chat dédié.
+
+			\subsection{Fonctionnalités pour joueur {\itshape utilisateur}}Les joueurs pourront communiquer via un chat global. Dans le système de matchmaking, ils auront le choix entre affronter un ami ou un joueur aléatoire parmi ceux qui sont connectés et libre\footnote{qui n'est pas en partie.}. A travers le menu principal, les utilisateurs accèderont à plusieurs sous-menus tels que {\itshape View Ranking, View Rules, View Statistics, Friends List}.%rajouter d'autres fonctionnalités au besoin.
+
 		\subsection{Description du Projet}
 			\paragraph{}Ce projet aura pour but de recréer un grand classique des jeux de plateau: les échecs. Le jeu sera jouable via un mode multijoueurs. Le joueur pourra jouer au mode classique ou à ses variantes telles que  {\itshape AliceChess, DarkChess} et {\itshape HordeChess} que nous décrivons plus tard. De plus, il aura également la possibilité de créer un compte à partir duquel il pourra effectuer plusieurs actions qui seront détaillées ci-dessous. Néanmoins, le joueur pourra lancer une partie en tant que visiteur mais ne bénéficiera pas des avantages liés à la possession d'un compte.
-			
-			\subsubsection{Fonctionnalités pour Utilisateur Non-Enregistré et Utilisateur Enregistré}Depuis le menu principal, les joueurs pourront accéder à l'option {\itshape View Rules} à travers lequel ils pourront lire en détail les règles du jeu d'échecs et de ses variantes. Les joueurs lanceront une partie via l'option {\itshape Game}. Lors d'une partie, ils pourront s'envoyer des messages via un chat dédié.
-			
-			\subsubsection{Fonctionnalités pour Utilisateur Enregistré}Les joueurs pourront communiquer via un chat global. Dans le système de matchmaking, ils auront le choix entre affronter un ami ou un joueur aléatoire parmi ceux qui sont connectés et libres\footnote{ne se trouvant pas en partie.}. À travers le menu principal, les utilisateurs accèderont à plusieurs sous-menus tels que {\itshape View Ranking, View Rules, View Statistics, Friends List}.%rajouter d'autres fonctionnalités au besoin.
-			
-			
-			
 
-		\subsection{Glossaire} Par souci de clarté et de lisibilité, toutes les informations relatives aux règles et au fonctionnement officiels des échecs et de ses variantes ne seront pas parcourues ci-dessous. 
+			\subsubsection{Fonctionnalités pour Utilisateur Non-Enregistré et Utilisateur Enregistré}Depuis le menu principal, les joueurs pourront accéder à l'option {\itshape View Rules} à travers lequel ils pourront lire en détail les règles du jeu d'échecs et de ses variantes. Les joueurs lanceront une partie via l'option {\itshape Game}. Lors d'une partie, ils pourront s'envoyer des messages via un chat dédié.
+
+			\subsubsection{Fonctionnalités pour Utilisateur Enregistré}Les joueurs pourront communiquer via un chat global. Dans le système de matchmaking, ils auront le choix entre affronter un ami ou un joueur aléatoire parmi ceux qui sont connectés et libres\footnote{ne se trouvant pas en partie.}. À travers le menu principal, les utilisateurs accèderont à plusieurs sous-menus tels que {\itshape View Ranking, View Rules, View Statistics, Friends List}.%rajouter d'autres fonctionnalités au besoin.
+
+
+
+
+		\subsection{Glossaire} Par souci de clarté et de lisibilité, toutes les informations relatives aux règles et au fonctionnement officiels des échecs et de ses variantes ne seront pas parcourues ci-dessous.
 		\begin{description}
 		\item[Un utilisateur non-enregistré :] Joueur ne s'étant pas identifié au système via un compte.
 		\item[Un utilisateur enregistré :] Joueur s'étant identifié au sytème via un compte.
@@ -51,19 +67,19 @@
 		\item[HordeChess :] Variante du jeu d'échec où un joueur possède 32 pions et l'autre la collection standard du jeu d'échec traditionnel.
 		\end{description}
 		\clearpage
-		
+
 		\subsection{Historique des Modifications}
-		
+
 		\begin{table}[h!]
-			
+
 			\centering
-			
+
 			\begin{tabular}{|c|c|c|p{50mm}|}
 				\hline
 				 \textbf{version} & \textbf{date} & \textbf{auteur}  & \textbf{description} \\ \hline
 				 1 & 4/12 & Pham Hong Phuc & Création du SRD en LaTex\\ \hline
 				 1.1 & 6/12 & Caroline Forest & Ajout de diagrammes UML\\ \hline
-				 1.2 & 8/12 & Boonen Jacques & 1.Introduction\\ \hline 
+				 1.2 & 8/12 & Boonen Jacques & 1.Introduction\\ \hline
 				 1.3 & 11/12 & Huwart Maxence & Besoins systèmes\\ \hline
 				 1.4 & 12/12 & Mardulyn Romain & Explication des différent modes de jeu\\ \hline
 				 1.5 & 12/12 & Antunes André & Explication des options durant une partie\\ \hline
@@ -76,8 +92,8 @@
 %BESOINS UTILISATEURS%
 
 \section{Besoins Utilisateurs : Fonctionnels}
-		
-		
+
+
 \subsection{Connection}
 
 \begin{figure}[ht]
@@ -157,7 +173,7 @@
 \textbf{Post-conditions :} Le \textit{user} accède à sa liste d'utilisateurs 'amis', avec lesquels il peut choisir de discuter, via l'option \textit{chat}.\\
 \textbf{Cas général :} Le \textit{user} peut consulter sa liste d'utilisateurs 'amis' en envoyant une requête au serveur. Il peut aussi discuter avec eux via messages instantanés et le serveur.\\
 \textbf{Cas exceptionnels :} Néant.
-		
+
 
 \subsection{Durant une Partie}
 
@@ -188,7 +204,7 @@
 
 \section{Besoins Utilisateurs : Non-Fonctionnels}
 Afin d'avoir des parties de jeux dynamiques, les joueurs se verront imposer une limite de temps pour pouvoir jouer leur tour. \\
-		
+
 \section{Besoins Systèmes : Fonctionnels}
 
 \subsection{Connection au Serveur}
@@ -292,7 +308,7 @@ Voici le déroulement de la partie représentée à l'aide d'un diagramme de sé
 \subsubsection{Fin de la Partie}
 A la fin de chaque tour, on vérifie s'il y a un gagnant ou si l'on a affaire à un Pat. Si oui, le résultat est envoyé à chacun des joueurs et la partie se termine.
 
-		
+
 \begin{figure}[ht]
 \centering
 \includegraphics[scale=0.4]{SequenceDiagramMatchmaking.PNG}
@@ -312,7 +328,7 @@ Le jeu se joue en réseau. Une connection internet est donc requise. \\
 \section{Design du Système}
 
 \subsection{Les Différentes Classes}
-	
+
 \begin{figure}[p]
 %\centering
 \includegraphics[scale=0.5]{ClassDiagram.png}
@@ -320,34 +336,22 @@ Le jeu se joue en réseau. Une connection internet est donc requise. \\
 \label{CD} %ClassDiagram
 \end{figure}
 
-		
+
 \subsection{Connection du Joueur}
-		
+
 \subsection{Les Actions du Joueur}
 
 \subsection{Client-Serveur}
-\paragraph{}Le serveur aura une copie du board et se tâchera de devoir vérifier les différentes actions des joueurs. Il veillera également à mettre à jour le board de chacun des joueurs.
+\paragraph{}Le serveur aura une copie du board et se tâchera de devoir vérifier les différentes actions des joueurs. Il veillera également à mettre à jour les board des joueurs.
 
-\subsection{Les Modes de Jeu}
-\subsubsection{Classique}
-\paragraph{}Le jeu d'échec classique, où le but est de mettre le roi adverse en échec sans qu'il ait la possibilité au tour suivant de ne plus l'être.
-\subsubsection{Alice Chess}
-\paragraph{}Variante du jeu d'échec jouée en utilisant 2 board. Après chaque coup, la pièce déplacée est téléportée sur la case où elle à été placée mais de l'autre board. Un coup n'est valide que si la case où doit se téléporter la pièce ne comporte aucune pièce. A part cela, le jeu se déroule selon les règles habituelles du jeu d'échecs.
-\subsubsection{Dark Chess}
-\paragraph{}Variante du jeu d'échec où le joueur ne voit que ses propres pièces et les cases où il peut légalement les déplacer. Le but des joueur est de prendre le roi adverse. Contrairement au règle classique, le roi d'un joueur peut être en échec à la fin de son tour. De plus il n'y a pas de prise en passant possible. À part cela, le jeu se déroule selon les règles habituelles du jeu d'échecs.
-
-\subsubsection{Horde Chess}
-\paragraph{} Variante du jeu d'échec où le joueur noir possède 32 pions et l'autre la collection standard du jeu d'échec traditionnel. Le but du joueur noir est le but du jeu classique mais le but du joueur blanc est de prendre tous les pions du joueur noir. Le placement de départ des pièces du joueur noir est: un pion sur chaque case des lignes 5,6,7 et 8 sauf d8 et e8 ainsi qu'un pion sur d4 et un autre sur e4. Pour le joueur noir, seul les pions de la ligne 7 ont la possibilité de se déplacer de 2 cases dans le cas où il n'a pas encore bougé. A part cela, le jeu se déroule selon les règles habituelles du jeu d'échecs.
-		
 \subsection{Menu}
-		
+
 \section{Annexe}
-	
-	
-		
-		
-		
-		
+
+
+
+
+
+
 
 \end{document}
-
