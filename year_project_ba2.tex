@@ -7,6 +7,7 @@
 \usepackage[T1]{fontenc}
 %\usepackage[french]{babel} %casse tout chez moi
 \usepackage{graphicx}
+\usepackage{rotating}
 
 %élargi un peu pour que les diagrammes soient pas minuscules ou mal alignés
 \evensidemargin=0in
@@ -30,20 +31,20 @@
 	\newpage
 	\section{Introduction}
 		\subsection{Description du projet}
-			\paragraph{}Ce projet aura pour but de recréer un grand classique des jeux de plateau: les échecs. Le jeu sera jouable via un mode multijoueurs. Le joueur pourra jouer au mode classique ou à ses variantes telles que  {\itshape AliceChess, DarkChess et HordeChess} que nous décrivons plus tard. De plus, il aura également la possibilité de créer un compte à partir duquel il pourra effectuer plusieurs actions qui seront détaillées ci-dessous. Néanmoins, le joueur pourra lancer une partie en tant que {\itshape visiteur} mais ne bénéficiera pas des avantages liés à la possession d'un compte.
+			\paragraph{}Ce projet aura pour but de recréer un grand classique des jeux de plateau: les échecs. Le jeu sera jouable via un mode multijoueurs. Le joueur pourra jouer au mode classique ou à ses variantes telles que  {\itshape AliceChess, DarkChess} et {\itshape HordeChess} que nous décrivons plus tard. De plus, il aura également la possibilité de créer un compte à partir duquel il pourra effectuer plusieurs actions qui seront détaillées ci-dessous. Néanmoins, le joueur pourra lancer une partie en tant que {\itshape visiteur} mais ne bénéficiera pas des avantages liés à la possession d'un compte.
 			\subsection{Les modes de jeu}
 				\subsubsection{Classique}
-					\paragraph{}Le jeu d'échec classique, où le but est de mettre le roi adverse en échec sans qu'il ait la possibilité au tour suivant de ne plus l'être.
+					\paragraph{}Le jeu d'échecs classique, où le but est de mettre le roi adverse en échec sans qu'il ait la possibilité au tour suivant de ne plus l'être.
 				\subsubsection{Alice chess}
-					\paragraph{}Variante du jeu d'échec jouée en utilisant 2 board. Après chaque coup, la pièce déplacée est téléportée sur la case où elle à été placée mais de l'autre board. Un coup n'est valide que si la case où doit se téléporté la pièce ne comporte aucune pièce. A part cela, le jeu se déroule selon les règles habituelles du jeu d'échecs.
+					\paragraph{}Variante du jeu d'échecs jouée en utilisant 2 boards. Après chaque coup, la pièce déplacée est téléportée sur la case où elle a été placée mais de l'autre board. Un coup n'est valide que si la case où doit se téléporter la pièce ne comporte aucune pièce. À part cela, le jeu se déroule selon les règles habituelles du jeu d'échecs.
 				\subsubsection{Dark chess}
-					\paragraph{}Variante du jeu d'échec où le joueur ne voit que ses propres pièces et les cases où il peut légalement les déplacer. Le but des joueur est de prendre le roi adverse. Contrairement au règle classique, le roi d'un joueur peut être en échec à la fin de son tour. De plus il n'y a pas de prise en passant possible. A part cela, le jeu se déroule selon les règles habituelles du jeu d'échecs.
+					\paragraph{}Variante du jeu d'échecs où le joueur ne voit que ses propres pièces et les cases où il peut légalement les déplacer. Le but des joueurs est de prendre le roi adverse. Contrairement aux règles classiques, le roi d'un joueur peut être en échec à la fin de son tour. De plus il n'y a pas de prises en passant possible. À part cela, le jeu se déroule selon les règles habituelles du jeu d'échecs.
 				\subsubsection{Horde chess}
-					\paragraph{} Variante du jeu d'échec où le joueur noir possède 32 pions et l'autre la collection standard du jeu d'échec traditionnel. Le but du joueur noir est le but du jeu classique mais le but du joueur blanc est de prendre tous les pions du joueur noir. A part cela, le jeu se déroule selon les règles habituelles du jeu d'échecs.
+					\paragraph{} Variante du jeu d'échecs où le joueur noir possède 32 pions et l'autre la collection standard du jeu d'échecs traditionnel. Le but du joueur noir est le but du jeu classique mais le but du joueur blanc est de prendre tous les pions du joueur noir. À part cela, le jeu se déroule selon les règles habituelles du jeu d'échecs.
 
-			\subsection{Fonctionnalités pour joueur {\itshape  visiteur} et {\itshape utilisateur}}Depuis le menu principal, les joueurs pourront accéder à l'option {\itshape View Rules} à travers lequel ils pourront lire en détail les règles du jeu d'échecs et de ses variantes. Les joueurs lanceront une partie via l'option {\itshape Game}.Lors d'une partie, ils pourront s'envoyer des messages via un chat dédié.
+			\subsection{Fonctionnalités pour joueur {\itshape  visiteur} et {\itshape utilisateur}}Depuis le menu principal, les joueurs pourront accéder à l'option {\itshape View Rules} à travers lequel ils pourront lire en détail les règles du jeu d'échecs et de ses variantes. Les joueurs lanceront une partie via l'option {\itshape Game}. Lors d'une partie, ils pourront s'envoyer des messages via un chat dédié.
 
-			\subsection{Fonctionnalités pour joueur {\itshape utilisateur}}Les joueurs pourront communiquer via un chat global. Dans le système de matchmaking, ils auront le choix entre affronter un ami ou un joueur aléatoire parmi ceux qui sont connectés et libre\footnote{qui n'est pas en partie.}. A travers le menu principal, les utilisateurs accèderont à plusieurs sous-menus tels que {\itshape View Ranking, View Rules, View Statistics, Friends List}.%rajouter d'autres fonctionnalités au besoin.
+			\subsection{Fonctionnalités pour joueur {\itshape utilisateur}}Les joueurs pourront communiquer via un chat global. Dans le système de matchmaking, ils auront le choix entre affronter un ami ou un joueur aléatoire parmi ceux qui sont connectés et libres\footnote{ne se trouvant pas en partie.}. À travers le menu principal, les utilisateurs accèderont à plusieurs sous-menus tels que {\itshape View Ranking, View Rules, View Statistics, Friends List}.%rajouter d'autres fonctionnalités au besoin.
 
 		\subsection{Description du Projet}
 			\paragraph{}Ce projet aura pour but de recréer un grand classique des jeux de plateau: les échecs. Le jeu sera jouable via un mode multijoueurs. Le joueur pourra jouer au mode classique ou à ses variantes telles que  {\itshape AliceChess, DarkChess} et {\itshape HordeChess} que nous décrivons plus tard. De plus, il aura également la possibilité de créer un compte à partir duquel il pourra effectuer plusieurs actions qui seront détaillées ci-dessous. Néanmoins, le joueur pourra lancer une partie en tant que visiteur mais ne bénéficiera pas des avantages liés à la possession d'un compte.
@@ -61,7 +62,7 @@
 		\item[Un utilisateur enregistré :] Joueur s'étant identifié au sytème via un compte.
 		\item[Joueur :] Utilisateur en partie.
 		\item[Matchmaking :] Système qui met en relation 2 joueurs avant le lancement d'une partie.
-		\item[Chat :] Système de communication par messages isntantanés entre deux joueurs.
+		\item[Chat :] Système de communication par messages instantanés entre deux joueurs.
 		\item[AliceChess :] Variante du jeu d'échec jouée en utilisant 2 plateaux. Lorsqu'un coup est joué, la pièce est déplacée à la case correspondante mais dans l'autre plateau. À part cela, le jeu se déroule selon les règles habituelles du jeu d'échecs .
 		\item[DarkChess :] Variante du jeu d'échec où le joueur ne voit que ses propres pièces et les cases où il peut légalement les déplacer.
 		\item[HordeChess :] Variante du jeu d'échec où un joueur possède 32 pions et l'autre la collection standard du jeu d'échec traditionnel.
@@ -83,6 +84,7 @@
 				 1.3 & 11/12 & Huwart Maxence & Besoins systèmes\\ \hline
 				 1.4 & 12/12 & Mardulyn Romain & Explication des différent modes de jeu\\ \hline
 				 1.5 & 12/12 & Antunes André & Explication des options durant une partie\\ \hline
+                 1.6 & 12/12 & Nguyen Duc & Modification des diagrammes de séquence\\ \hline
 \end{tabular}
 			\caption*{Historique des modifications}
 			\end{table}
@@ -108,7 +110,7 @@
 \textbf{Pré-conditions :} Le \textit{user} doit avoir sélectionné le sous-menu \textit{Connexion} puis l'option {\itshape Log In} dans le menu principal du jeu.\\
 \textbf{Post-conditions :} Le \textit{user} doit encoder un nom d'utilisateur et un mot de passe d'un compte déjà existant dans le système. \\
 \textbf{Cas général :} Après s'être identifié, le \textit{user} peut profiter de tous les sous-menus du menu principal.\\
-\textbf{Cas exceptionnels :} Si un utilisateur est déjà connecté sur un compte, un autre joueur ne peut se connecter sur ce compte. Egalement, si l'utilisateur encode mal ses identifiants, le système lui renvoie un message d'erreur afin qu'il les réécrive correctement.
+\textbf{Cas exceptionnels :} Si un utilisateur est déjà connecté sur un compte, un autre joueur ne peut se connecter sur ce compte. Également, si l'utilisateur encode mal ses identifiants, le système lui renvoie un message d'erreur afin qu'il les réécrive correctement.
 
 
 
@@ -117,7 +119,7 @@
 \textbf{Relations avec d'autres cas d'utilisation :} Néant.\\
 \textbf{Pré-conditions :} Le \textit{user} doit avoir sélectionné le sous-menu \textit{Connexion} puis l'option {\itshape Create} dans le menu principal du jeu.\\
 \textbf{Post-conditions :} Le \textit{user} doit encoder un nom d'utilisateur et un mot de passe afin de créer son compte.\\
-\textbf{Cas général :} Un nom d'utilisateur et un mot de passe correspondant est encodé dans la base de données du système.\\
+\textbf{Cas général :} Un nom d'utilisateur et un mot de passe correspondant sont encodés dans la base de données du système.\\
 \textbf{Cas exceptionnels :} Si le nom d'utilisateur encodé est déjà dans la base de données, l'utilisateur doit en réencoder un nouveau.
 
 
@@ -177,7 +179,7 @@
 
 \subsection{Durant une Partie}
 
-\subsubsection{Avancer un Pièce}
+\subsubsection{Avancer une Pièce}
 \textbf{Acteur :} \textit{User}.\\
 \textbf{Relations avec d'autres cas d'utilisation :}\\ %TODO
 \textbf{Pré-conditions :}\\ %TODO
@@ -188,18 +190,18 @@
 \subsubsection{Discuter dans le Chat}
 \textbf{Acteur :} \textit{User}.\\
 \textbf{Relations avec d'autres cas d'utilisation :} \textit{Friends List}.\\
-\textbf{Pré-conditions :} Avoir un ami "ou adversaire" et qu'il soit connecté\\ %TODO
-\textbf{Post-conditions :} Néant\\
-\textbf{Cas général :} Le \textit{user} ouvre avec un boutton "à définir" le chat et peut ecrire sur un textfield pour comuniquer avec les autres personnes.\\ %TODO
+\textbf{Pré-conditions :} Avoir un ami "ou adversaire" et qu'il soit connecté.\\ %TODO
+\textbf{Post-conditions :} Néant.\\
+\textbf{Cas général :} Le \textit{user} ouvre avec un bouton "à définir" le chat et peut écrire sur un textfield pour communiquer avec les autres personnes.\\ %TODO
 \textbf{Cas exceptionnels :} Néant.
 
 \subsubsection{Déclarer Forfait}
 \textbf{Acteur :} \textit{User}.\\
-\textbf{Relations avec d'autres cas d'utilisation :} Néant\\
+\textbf{Relations avec d'autres cas d'utilisation :} Néant.\\
 \textbf{Pré-conditions :} Il faut que le \textit{user} soit dans un jeu. \\
 \textbf{Post-conditions :} Informer l'adversaire sur la déclaration de forfait et terminer le jeu.\\
 \textbf{Cas général :} Lorsque le joueur veut terminer la partie .\\
-\textbf{Cas exceptionnels :} Lorsque le joueur perd la connect le joueur déclare automatiquement forfait. %TODO
+\textbf{Cas exceptionnels :} Lorsque le joueur perd la connection le joueur déclare automatiquement forfait. %TODO
 %ceci peut changer au cour de developement
 
 \section{Besoins Utilisateurs : Non-Fonctionnels}
@@ -232,7 +234,7 @@ Afin d'avoir des parties de jeux dynamiques, les joueurs se verront imposer une 
 \textbf{Cas exceptionnels :} Néant. \\
 
 \subsection{Voir les Statistiques Personnelles}
-\textbf{Acteur :} \textit{Server} \\
+\textbf{Acteur :} \textit{Server}. \\
 \textbf{Relations avec d'autres cas d'utilisation :} Néant. \\
 \textbf{Pré-conditions :} \textit{Server} en ligne et réception du signal correspondant. \\
 \textbf{Post-conditions :} Envoi des statistiques personnelles à l'utilisateur correspondant. \\
@@ -240,7 +242,7 @@ Afin d'avoir des parties de jeux dynamiques, les joueurs se verront imposer une 
 \textbf{Cas exceptionnels :} Néant. \\
 
 \subsection{Voir le Classement}
-\textbf{Acteur :} \textit{Server} \\
+\textbf{Acteur :} \textit{Server}. \\
 \textbf{Relations avec d'autres cas d'utilisation :} Néant. \\
 \textbf{Pré-conditions :} \textit{Server} en ligne et réception du signal correspondant. \\
 \textbf{Post-conditions :} Envoi du classement. \\
@@ -248,7 +250,7 @@ Afin d'avoir des parties de jeux dynamiques, les joueurs se verront imposer une 
 \textbf{Cas exceptionnels :} Néant. \\
 
 \subsection{Voir sa Liste d'Amis}
-\textbf{Acteur :} \textit{Server} \\
+\textbf{Acteur :} \textit{Server}. \\
 \textbf{Relations avec d'autres cas d'utilisation :} {\itshape Envoi de messages}. \\
 \textbf{Pré-conditions :} \textit{Server} en ligne et réception du signal correspondant. \\
 \textbf{Post-conditions :} Envoi de la liste d'amis de l'utilisateur en question. \\
@@ -256,7 +258,7 @@ Afin d'avoir des parties de jeux dynamiques, les joueurs se verront imposer une 
 \textbf{Cas exceptionnels :} Néant. \\
 
 \subsection{Envoi de Messages}
-\textbf{Acteur :} \textit{Server} \\
+\textbf{Acteur :} \textit{Server}. \\
 \textbf{Relations avec d'autres cas d'utilisation :} \textit{Friends List}, jouer. \\
 \textbf{Pré-conditions :} \textit{Server} en ligne et réception du message à envoyer. \\
 \textbf{Post-conditions :} Envoi du message. \\
@@ -269,7 +271,7 @@ Afin d'avoir des parties de jeux dynamiques, les joueurs se verront imposer une 
 Le joueur blanc commence.
 
 \subsubsection{Déplacer une Pièce}
-\textbf{Acteur :} \textit{Server} \\
+\textbf{Acteur :} \textit{Server}. \\
 \textbf{Relations avec d'autres cas d'utilisation :} {\itshape Avancer un pion}. \\
 \textbf{Pré-conditions :} réception du signal correspondant, coup valide (pas de pièces qui bloquent, etc). \\
 \textbf{Post-conditions :} Pièce déplacée. \\
@@ -277,7 +279,7 @@ Le joueur blanc commence.
 \textbf{Cas exceptionnels :} Pièces qui bloquent ou une pièce est déjà sur la case. Dans tous ces cas : On redemande au joueur de faire déplacer une de ses pièces. \\
 
 \subsubsection{Promotion}
-\textbf{Acteur :} \textit{Server} \\
+\textbf{Acteur :} \textit{Server}. \\
 \textbf{Relations avec d'autres cas d'utilisation :} {\itshape Avancer un pion}. \\
 \textbf{Pré-conditions :} Un pion est arrivé à l'autre bout du plateau. \\
 \textbf{Post-conditions :} Pion promu en dame, fou, cavalier ou tour au choix du joueur qui possède le pion en question. \\
@@ -285,7 +287,7 @@ Le joueur blanc commence.
 \textbf{Cas exceptionnels :} Néant. \\
 
 \subsubsection{Roque}
-\textbf{Acteur :} \textit{Server} \\
+\textbf{Acteur :} \textit{Server}. \\
 \textbf{Relations avec d'autres cas d'utilisation :} {\itshape Avancer un pion}. \\
 \textbf{Pré-conditions :} Un joueur déplace le roi sur une case provoquant le roque, le roi et la tour en question n'ont pas bougé depuis le début de la partie. Aucune pièce ne bloque. \\
 \textbf{Post-conditions :} Tour déplacée, position du roi mise à jour, le roi et la tour marqués comme "ayant déjà bougé". \\
@@ -298,7 +300,7 @@ Voici le déroulement de la partie représentée à l'aide d'un diagramme de sé
 \begin{figure}[ht]
 %\centering
 \includegraphics[scale=0.53]{SequenceDiagramClassicChessTurn.png}
-\caption{Diagramme de séquences d'une partie}
+\caption{Diagramme de séquence d'une partie}
 \label{SD_classicgame}
 \end{figure}
 \clearpage
@@ -306,7 +308,7 @@ Voici le déroulement de la partie représentée à l'aide d'un diagramme de sé
 
 
 \subsubsection{Fin de la Partie}
-A la fin de chaque tour, on vérifie s'il y a un gagnant ou si l'on a affaire à un Pat. Si oui, le résultat est envoyé à chacun des joueurs et la partie se termine.
+À la fin de chaque tour, on vérifie s'il y a un gagnant ou si l'on a affaire à un Pat. Si oui, le résultat est envoyé à chacun des joueurs et la partie se termine.
 
 
 \begin{figure}[ht]
@@ -329,20 +331,22 @@ Le jeu se joue en réseau. Une connection internet est donc requise. \\
 
 \subsection{Les Différentes Classes}
 
-\begin{figure}[p]
+
+\begin{sidewaysfigure}[ph]
 %\centering
 \includegraphics[scale=0.5]{ClassDiagram.png}
 \caption{Diagramme de classes général}
 \label{CD} %ClassDiagram
-\end{figure}
+\end{sidewaysfigure}
 
+\newpage
 
 \subsection{Connection du Joueur}
 
 \subsection{Les Actions du Joueur}
 
 \subsection{Client-Serveur}
-\paragraph{}Le serveur aura une copie du board et se tâchera de devoir vérifier les différentes actions des joueurs. Il veillera également à mettre à jour les board des joueurs.
+\paragraph{}Le serveur aura une copie du board et tâchera de devoir vérifier les différentes actions des joueurs. Il veillera également à mettre à jour les board des joueurs.
 
 \subsection{Menu}
 
