@@ -30,8 +30,8 @@
 	\tableofcontents %do a table of content automatically
 	\newpage
 	\section{Introduction}
-		\subsection{Description du projet}
-			\paragraph{}Ce projet aura pour but de recréer un grand classique des jeux de plateau: les échecs. Le jeu sera jouable via un mode multijoueurs. Le joueur pourra jouer au mode classique ou à ses variantes telles que  {\itshape AliceChess, DarkChess} et {\itshape HordeChess} que nous décrivons plus tard. De plus, il aura également la possibilité de créer un compte à partir duquel il pourra effectuer plusieurs actions qui seront détaillées ci-dessous. Néanmoins, le joueur pourra lancer une partie en tant que {\itshape visiteur} mais ne bénéficiera pas des avantages liés à la possession d'un compte.
+		\subsection{Description du Projet}
+			\paragraph{}Ce projet aura pour but de recréer un grand classique des jeux de plateau: les échecs. Le jeu sera jouable via un mode multijoueurs. Le joueur pourra jouer au mode classique ou à une de ses variantes telles que  {\itshape AliceChess, DarkChess} et {\itshape HordeChess} que nous décrivons plus tard. De plus, il aura également la possibilité de créer un compte à partir duquel il pourra effectuer plusieurs actions qui seront détaillées ci-dessous. Néanmoins, le joueur pourra lancer une partie en tant que {\itshape visiteur} mais ne bénéficiera pas des avantages liés à la possession d'un compte.
 			\subsection{Les Modes de Jeu}
 				\subsubsection{Classique}
 					\paragraph{}Le jeu d'échecs classique, où le but est de mettre le roi adverse en échec sans qu'il ait la possibilité au tour suivant de ne plus l'être.
@@ -75,6 +75,7 @@
 				 1.4 & 12/12 & Mardulyn Romain & Explication des différent modes de jeu\\ \hline
 				 1.5 & 12/12 & Antunes André & Explication des options durant une partie\\ \hline
                  1.6 & 12/12 & Nguyen Duc & Modification des diagrammes de séquence\\ \hline
+                 1.7 & 13/12 & Pham Hong Phuc & Correction typos et resizing des diagrammes \\ \hline
 \end{tabular}
 			\caption*{Historique des modifications}
 			\end{table}
@@ -94,7 +95,7 @@
 \label{UC_co} %UseCase_connexion
 \end{figure}
 
-\subsubsection{S'Identifier}
+\subsubsection{S'identifier}
 \textbf{Acteur :} \textit{User}.\\
 \textbf{Relations avec d'autres cas d'utilisation :} Néant.\\
 \textbf{Pré-conditions :} Le \textit{user} doit avoir sélectionné le sous-menu \textit{Connexion} puis l'option {\itshape Log In} dans le menu principal du jeu.\\
@@ -162,7 +163,7 @@
 \textbf{Acteur :} \textit{User}.\\
 \textbf{Relations avec d'autres cas d'utilisation :} \textit{Chat}.\\
 \textbf{Pré-conditions :} Le \textit{user} doit avoir sélectionné l'option \textit{Friends List} dans le menu principal du jeu.\\
-\textbf{Post-conditions :} Le \textit{user} accède à sa liste d'utilisateurs 'amis', avec lesquels il peut choisir de discuter, via l'option \textit{chat}.\\
+\textbf{Post-conditions :} Le \textit{user} accède à sa liste d'utilisateurs 'amis', avec lesquels il peut choisir de discuter via l'option \textit{chat}.\\
 \textbf{Cas général :} Le \textit{user} peut consulter sa liste d'utilisateurs 'amis' en envoyant une requête au serveur. Il peut aussi discuter avec eux via messages instantanés et le serveur.\\
 \textbf{Cas exceptionnels :} Néant.
 
@@ -171,11 +172,11 @@
 
 \subsubsection{Avancer une Pièce}
 \textbf{Acteur :} \textit{User}.\\
-\textbf{Relations avec d'autres cas d'utilisation :}\\ %TODO
-\textbf{Pré-conditions :}\\ %TODO
-\textbf{Post-conditions :}\\ %TODO
-\textbf{Cas général :}\\ %TODO
-\textbf{Cas exceptionnels :}\\ %TODO
+\textbf{Relations avec d'autres cas d'utilisation :} Néant \\
+\textbf{Pré-conditions :} C'est au tour du \textit{user} de jouer. Il doit préalablement choisir une pièce et indiquer un déplacement possible et valide. \\
+\textbf{Post-conditions :} La pièce se retrouve à la position désignée par l' \textit{user} après déplacement. \\
+\textbf{Cas général :} L'\textit{user} doit déplacer un pion lorsque c'est à son tour de jouer. Il envoit ainsi une requête de déplacement au serveur qui vérifiera à son tour la validité ou non du coup. \\
+\textbf{Cas exceptionnels :} Le coup enregistré par l'\textit{user} n'est pas valide. Il doit donc rejouer son tour. \\
 
 \subsubsection{Discuter dans le Chat}
 \textbf{Acteur :} \textit{User}.\\
@@ -192,7 +193,7 @@
 \textbf{Post-conditions :} Informer l'adversaire sur la déclaration de forfait et terminer le jeu.\\
 \textbf{Cas général :} Lorsque le joueur veut terminer la partie .\\
 \textbf{Cas exceptionnels :} Lorsque le joueur perd la connection le joueur déclare automatiquement forfait. %TODO
-%ceci peut changer au cour de developement
+%ceci peut changer en cours de developement
 
 \section{Besoins Utilisateurs : Non-Fonctionnels}
 Afin d'avoir des parties de jeux dynamiques, les joueurs se verront imposer une limite de temps pour pouvoir jouer leur tour. \\
@@ -205,7 +206,7 @@ Afin d'avoir des parties de jeux dynamiques, les joueurs se verront imposer une 
 \textbf{Pré-conditions :} \textit{Server} en ligne et réception du signal correspondant. \\
 \textbf{Post-conditions :} Utilisateur connecté, redirection vers le menu principal, sous-menus réservés aux utilisateurs débloqués, remplacement du sous-menu \textit{Log In/Create an account} par \textit{Log Out}. \\
 \textbf{Cas général :} Utilisateur connecté. \\
-\textbf{Cas exceptionnels :} Si un utilisateur est déjà connecté sur un compte, un autre joueur ne peut se connecter sur ce compte. Également, si l’utilisateur encode mal ses identifiants, le système lui renvoie un message d’erreur afin qu’il les réécrive correctement. \\
+\textbf{Cas exceptionnels :} Si un utilisateur est déjà connecté sur un compte, un autre joueur ne peut se connecter sur ce compte. De même, si l’utilisateur encode mal ses identifiants, le système lui renvoie un message d’erreur afin qu’il les réécrive correctement. \\
 
 \subsection{Enregistrement d'un Nouveau Compte}
 \textbf{Acteur :} \textit{Server}. \\
@@ -219,7 +220,7 @@ Afin d'avoir des parties de jeux dynamiques, les joueurs se verront imposer une 
 \textbf{Acteur :} \textit{Server}. \\
 \textbf{Relations avec d'autres cas d'utilisation :} Choisir un mode de jeu. \\
 \textbf{Pré-conditions :} \textit{Server} en ligne et réception du signal correspondant. \\
-\textbf{Post-conditions :} Vérifie dans la file d'attente si un joueur dans la même fourchette de classement et désirant jouer au même mode est disponible. Si oui, le \textit{Server} crée la partie. Si non, l'utilisateur est mis en file d'attente. \\
+\textbf{Post-conditions :} Vérifie dans la file d'attente si un joueur dans la même fourchette de classement et désirant jouer au même mode est disponible. Si oui, le \textit{Server} crée la partie. Sinon, l'utilisateur est mis en file d'attente. \\
 \textbf{Cas général :} Utilisateur mis en file d'attente si aucun adversaire n'est trouvé, sinon une partie est créée. \\
 \textbf{Cas exceptionnels :} Néant. \\
 
@@ -252,7 +253,7 @@ Afin d'avoir des parties de jeux dynamiques, les joueurs se verront imposer une 
 \textbf{Relations avec d'autres cas d'utilisation :} \textit{Friends List}, jouer. \\
 \textbf{Pré-conditions :} \textit{Server} en ligne et réception du message à envoyer. \\
 \textbf{Post-conditions :} Envoi du message. \\
-\textbf{Cas général :} Les utilisateurs peuvent s'envoyer des messages en partie et s'ils sont amis, en dehors d'une partie aussi. \\
+\textbf{Cas général :} Les utilisateurs peuvent s'envoyer des messages durant une partie mais également en dehors d'une partie s'ils sont amis. \\
 \textbf{Cas exceptionnels :} Néant. \\
 
 \subsection{Gestion d'une Partie}
@@ -284,12 +285,13 @@ Le joueur blanc commence.
 \textbf{Cas général :} Roque effectué. \\
 \textbf{Cas exceptionnels :} Si l'une des pré-conditions n'est pas respectée, on redemande au joueur de faire déplacer une de ses pièces. \\
 
+
 \subsubsection{Déroulement de la Partie}
 Voici le déroulement de la partie représentée à l'aide d'un diagramme de séquences : \\
 
 \begin{figure}[ht]
-%\centering
-\includegraphics[scale=0.53]{SequenceDiagramClassicChessTurn.png}
+\centering
+\includegraphics[scale=0.8]{SequenceDiagramClassicChessTurn.png}
 \caption{Diagramme de séquence d'une partie}
 \label{SD_classicgame}
 \end{figure}
@@ -303,7 +305,7 @@ Voici le déroulement de la partie représentée à l'aide d'un diagramme de sé
 
 \begin{figure}[ht]
 \centering
-\includegraphics[scale=0.4]{SequenceDiagramMatchmaking.PNG}
+\includegraphics[scale=0.72]{SequenceDiagramMatchmaking.PNG}
 \caption{Diagramme de séquence pour le \textit{Matchmaking}}
 \label{SD_matchmaker} %SequenceDiagram_matchmaking
 \end{figure}
