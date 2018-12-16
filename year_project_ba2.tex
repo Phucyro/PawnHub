@@ -32,7 +32,7 @@
 	\newpage
 	\section{Introduction}
 		\subsection{Description du Projet}
-			\paragraph{}Ce projet aura pour but de recréer un grand classique des jeux de plateau: les échecs. Le jeu sera jouable via un mode multijoueurs. Le joueur pourra jouer au mode classique ou à une de ses variantes telles que  {\itshape AliceChess, DarkChess} et {\itshape HordeChess} que nous décrivons plus tard. De plus, il aura également la possibilité de créer un compte à partir duquel il pourra effectuer plusieurs actions qui seront détaillées ci-dessous. Néanmoins, le joueur pourra lancer une partie en tant que {\itshape visiteur} mais ne bénéficiera pas des avantages liés à la possession d'un compte.
+			\paragraph{}Ce projet aura pour but de recréer un grand classique des jeux de plateau: les échecs. Le jeu sera jouable via un mode multijoueurs. Le joueur pourra jouer au mode classique ou à une de ses variantes telles que  {\itshape AliceChess, DarkChess} et {\itshape HordeChess} que nous décrirons plus tard. De plus, il aura également la possibilité de créer un compte à partir duquel il pourra effectuer plusieurs actions qui seront détaillées ci-dessous. Néanmoins, le joueur pourra lancer une partie en tant que {\itshape visiteur} mais ne bénéficiera pas des avantages liés à la possession d'un compte.
 			\subsection{Les Modes de Jeu}
 				\subsubsection{Classique}
 					\paragraph{}Le jeu d'échecs classique, où le but est de mettre le roi adverse en échec sans qu'il ait la possibilité au tour suivant de ne plus l'être.
@@ -140,8 +140,8 @@
 \textbf{Acteur :} \textit{User}.\\
 \textbf{Relations avec d'autres cas d'utilisation :} Néant.\\
 \textbf{Pré-conditions :} Le \textit{user} doit avoir sélectionné l'option \textit{View Rules} dans le menu principal du jeu.\\
-\textbf{Post-conditions :} Le \textit{user} accède aux règles de jeu.\\
-\textbf{Cas général :} Le \textit{user} peut consulter les règles de jeu en envoyant une requête au serveur.\\
+\textbf{Post-conditions :} Le \textit{user} accède aux règles du jeu.\\
+\textbf{Cas général :} Le \textit{user} peut consulter les règles du jeu en envoyant une requête au serveur.\\
 \textbf{Cas exceptionnels :} Néant.
 
 \subsubsection{Voir les Statistiques Personnelles}
@@ -164,8 +164,8 @@
 \textbf{Acteur :} \textit{User}.\\
 \textbf{Relations avec d'autres cas d'utilisation :} \textit{Chat}.\\
 \textbf{Pré-conditions :} Le \textit{user} doit avoir sélectionné l'option \textit{Friends List} dans le menu principal du jeu.\\
-\textbf{Post-conditions :} Le \textit{user} accède à sa liste d'utilisateurs 'amis', avec lesquels il peut choisir de discuter via l'option \textit{chat}.\\
-\textbf{Cas général :} Le \textit{user} peut consulter sa liste d'utilisateurs 'amis' en envoyant une requête au serveur. Il peut aussi discuter avec eux via messages instantanés et le serveur.\\
+\textbf{Post-conditions :} Le \textit{user} accède à sa liste d'utilisateurs "amis", avec lesquels il peut choisir de discuter via l'option \textit{chat}.\\
+\textbf{Cas général :} Le \textit{user} peut consulter sa liste d'utilisateurs "amis" en envoyant une requête au serveur. Il peut aussi discuter avec eux via messages instantanés et le serveur.\\
 \textbf{Cas exceptionnels :} Néant.
 
 
@@ -175,9 +175,9 @@
 \textbf{Acteur :} \textit{User}.\\
 \textbf{Relations avec d'autres cas d'utilisation :} Néant \\
 \textbf{Pré-conditions :} C'est au tour du \textit{user} de jouer. Il doit préalablement choisir une pièce et indiquer un déplacement possible et valide. \\
-\textbf{Post-conditions :} La pièce se retrouve à la position désignée par l' \textit{user} après déplacement. \\
-\textbf{Cas général :} L'\textit{user} doit déplacer un pion lorsque c'est à son tour de jouer. Il envoit ainsi une requête de déplacement au serveur qui vérifiera à son tour la validité ou non du coup. \\
-\textbf{Cas exceptionnels :} Le coup enregistré par l'\textit{user} n'est pas valide. Il doit donc rejouer son tour. \\
+\textbf{Post-conditions :} La pièce se retrouve à la position désignée par le \textit{user} après déplacement. \\
+\textbf{Cas général :} Le \textit{user} doit déplacer un pion lorsque c'est à son tour de jouer. Il envoit ainsi une requête de déplacement au serveur qui vérifiera à son tour la validité ou non du coup. \\
+\textbf{Cas exceptionnels :} Le coup enregistré par le \textit{user} n'est pas valide. Il doit donc rejouer son tour. \\
 
 \subsubsection{Discuter dans le Chat}
 \textbf{Acteur :} \textit{User}.\\
@@ -192,7 +192,7 @@
 \textbf{Relations avec d'autres cas d'utilisation :} Néant.\\
 \textbf{Pré-conditions :} Il faut que le \textit{user} soit dans un jeu. \\
 \textbf{Post-conditions :} Informer l'adversaire sur la déclaration de forfait et terminer le jeu.\\
-\textbf{Cas général :} Lorsque le joueur veut terminer la partie .\\
+\textbf{Cas général :} Lorsque le joueur veut terminer la partie.\\
 \textbf{Cas exceptionnels :} Lorsque le joueur perd la connexion le joueur déclare automatiquement forfait. %TODO
 %ceci peut changer en cours de developement
 
@@ -265,7 +265,7 @@ Le joueur blanc commence. Celui-ci est déterminé aléatoirement au début de l
 \subsubsection{Déplacer une Pièce}
 \textbf{Acteur :} \textit{Server}. \\
 \textbf{Relations avec d'autres cas d'utilisation :} {\itshape Avancer un pion}. \\
-\textbf{Pré-conditions :} réception du signal correspondant, coup valide (pas de pièces qui bloquent, etc). \\
+\textbf{Pré-conditions :} Réception du signal correspondant, coup valide (pas de pièces qui bloquent, etc). \\
 \textbf{Post-conditions :} Pièce déplacée. \\
 \textbf{Cas général :} Pièce déplacée. \\
 \textbf{Cas exceptionnels :} Pièces qui bloquent ou une pièce est déjà sur la case. Dans tous ces cas : On redemande au joueur de faire déplacer une de ses pièces. \\
@@ -288,7 +288,7 @@ Le joueur blanc commence. Celui-ci est déterminé aléatoirement au début de l
 
 
 \subsubsection{Déroulement de la Partie}
-Voici le déroulement de la partie représentée à l'aide d'un diagramme de séquences : \\
+Voici le déroulement de la partie représentée à l'aide d'un diagramme de séquence : \\
 
 \begin{figure}[ht]
 \centering
@@ -337,7 +337,7 @@ Le jeu se joue en réseau. Une connexion internet est donc requise. \\
 \subsection{Les Actions du Joueur}
 
 \subsection{Client-Serveur}
-\paragraph{}Le serveur aura une copie du board et tâchera de devoir vérifier les différentes actions des joueurs. Il veillera également à mettre à jour les board des joueurs.
+\paragraph{}Le serveur aura une copie du board et tâchera de vérifier les différentes actions des joueurs. Il veillera également à mettre à jour les board des joueurs.
 
 \subsection{Menu}
 
