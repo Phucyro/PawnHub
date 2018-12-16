@@ -44,12 +44,12 @@
 
 			\subsection{Fonctionnalités pour Utilisateur Enregistré et Utilisateur Non-Enregistré}Depuis le menu principal, les joueurs pourront accéder à l'option {\itshape View Rules} à travers lequel ils pourront lire en détail les règles du jeu d'échecs et de ses variantes. Les joueurs lanceront une partie via l'option {\itshape Game}. Lors d'une partie, ils pourront s'envoyer des messages via un chat dédié.
 
-			\subsection{Fonctionnalités pour Utilisateur Enregistré}Les joueurs pourront communiquer via un chat global. Dans le système de matchmaking, ils auront le choix entre affronter un ami ou un joueur aléatoire parmi ceux qui sont connectés et libres\footnote{ne se trouvant pas en partie.}. À travers le menu principal, les utilisateurs accèderont à plusieurs sous-menus tels que {\itshape View Ranking, View Rules, View Statistics, Friends List}.%rajouter d'autres fonctionnalités au besoin.
+			\subsection{Fonctionnalités pour Utilisateur Enregistré}Les joueurs pourront communiquer via un chat global. Dans le système de matchmaking, ils auront le choix entre affronter un ami ou un joueur aléatoire parmi ceux qui sont connectés et libres\footnote{ne se trouvant pas en partie.}. À travers le menu principal, les utilisateurs accéderont à plusieurs sous-menus tels que {\itshape View Ranking, View Rules, View Statistics, Friends List}.%rajouter d'autres fonctionnalités au besoin.
 
 		\subsection{Glossaire} Par souci de clarté et de lisibilité, toutes les informations relatives aux règles et au fonctionnement officiels des échecs et de ses variantes ne seront pas parcourues ci-dessous.
 		\begin{description}
 		\item[Un utilisateur non-enregistré :] Joueur ne s'étant pas identifié au système via un compte.
-		\item[Un utilisateur enregistré :] Joueur s'étant identifié au sytème via un compte.
+		\item[Un utilisateur enregistré :] Joueur s'étant identifié au système via un compte.
 		\item[Joueur :] Utilisateur en partie.
 		\item[Matchmaking :] Système qui met en relation 2 joueurs avant le lancement d'une partie.
 		\item[Chat :] Système de communication par messages instantanés entre deux joueurs.
@@ -87,7 +87,7 @@
 \section{Besoins Utilisateurs : Fonctionnels}
 
 
-\subsection{Connexion}
+\subsection{Connection}
 
 \begin{figure}[ht]
 \includegraphics[scale=0.5]{UC_connexion.png}
@@ -129,7 +129,7 @@
 \textbf{Acteur :} \textit{User}.\\
 \textbf{Relations avec d'autres cas d'utilisation :} Modes de jeu proposés (\textit{Classic}, \textit{Alice}, \textit{Dark} ou \textit{Horde}).\\
 \textbf{Pré-conditions :} Le \textit{user} doit avoir sélectionné l'option \textit{Game} dans le menu principal du jeu.\\
-\textbf{Post-conditions :} Le  \textit{user} selectionne un mode de jeu parmi ceux proposés (\textit{Classic},\textit{Alice}, \textit{Dark} ou \textit{Horde}).\\
+\textbf{Post-conditions :} Le  \textit{user} sélectionne un mode de jeu parmi ceux proposés (\textit{Classic},\textit{Alice}, \textit{Dark} ou \textit{Horde}).\\
 \textbf{Cas général :} Le  \textit{user} peut sélectionner un mode de jeu parmi ceux proposés (\textit{Classic},\textit{Alice}, \textit{Dark} ou \textit{Horde}), ce qui lance une requête de \textit{matchmaking} (voir Figure \ref{SD_matchmaker}) au serveur.\\
 \textbf{Cas exceptionnels :} Néant.
 
@@ -192,7 +192,7 @@
 \textbf{Pré-conditions :} Il faut que le \textit{user} soit dans un jeu. \\
 \textbf{Post-conditions :} Informer l'adversaire sur la déclaration de forfait et terminer le jeu.\\
 \textbf{Cas général :} Lorsque le joueur veut terminer la partie .\\
-\textbf{Cas exceptionnels :} Lorsque le joueur perd la connexion le joueur déclare automatiquement forfait. %TODO
+\textbf{Cas exceptionnels :} Lorsque le joueur perd la connection le joueur déclare automatiquement forfait. %TODO
 %ceci peut changer en cours de developement
 
 \section{Besoins Utilisateurs : Non-Fonctionnels}
@@ -200,7 +200,7 @@ Afin d'avoir des parties de jeux dynamiques, les joueurs se verront imposer une 
 
 \section{Besoins Systèmes : Fonctionnels}
 
-\subsection{Connexion au Serveur}
+\subsection{Connection au Serveur}
 \textbf{Acteur :} \textit{Serveur}. \\
 \textbf{Relations avec d'autres cas d'utilisation :} \textit{Log In}. \\
 \textbf{Pré-conditions :} \textit{Server} en ligne et réception du signal correspondant. \\
@@ -259,7 +259,7 @@ Afin d'avoir des parties de jeux dynamiques, les joueurs se verront imposer une 
 \subsection{Gestion d'une Partie}
 
 \subsubsection{Premier à Jouer}
-Le joueur blanc commence.
+Le joueur blanc commence. Celui-ci est déterminé aléatoirement au début de la partie. \\
 
 \subsubsection{Déplacer une Pièce}
 \textbf{Acteur :} \textit{Server}. \\
@@ -351,3 +351,5 @@ Le jeu se joue en réseau. Une connexion internet est donc requise. \\
 
 
 \end{document}
+
+
