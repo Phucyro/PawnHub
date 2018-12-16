@@ -27,6 +27,7 @@
 \begin{document}
 	\maketitle
 	\newpage
+	\renewcommand{\contentsname}{Table des Matières}
 	\tableofcontents %do a table of content automatically
 	\newpage
 	\section{Introduction}
@@ -303,13 +304,6 @@ Voici le déroulement de la partie représentée à l'aide d'un diagramme de sé
 À la fin de chaque tour, on vérifie s'il y a un gagnant ou si l'on a affaire à un Pat. Si oui, le résultat est envoyé à chacun des joueurs et la partie se termine.
 
 
-\begin{figure}[ht]
-\centering
-\includegraphics[scale=0.72]{SequenceDiagramMatchmaking.PNG}
-\caption{Diagramme de séquence pour le \textit{Matchmaking}}
-\label{SD_matchmaker} %SequenceDiagram_matchmaking
-\end{figure}
-
 \section{Besoins Systèmes : Non-Fonctionnels}
 
 
@@ -321,8 +315,13 @@ Le jeu se joue en réseau. Une connexion internet est donc requise. \\
 
 \section{Design du Système}
 
+\begin{figure}[ht]
+\centering
+\includegraphics[scale=0.72]{SequenceDiagramMatchmaking.PNG}
+\caption{Diagramme de séquence pour le \textit{Matchmaking}}
+\label{SD_matchmaker} %SequenceDiagram_matchmaking
+\end{figure}
 \subsection{Les Différentes Classes}
-
 
 \begin{sidewaysfigure}[ph]
 %\centering
