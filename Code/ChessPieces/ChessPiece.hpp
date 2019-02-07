@@ -1,6 +1,6 @@
 #ifndef CHESSPIECE_HPP
 #define CHESSPIECE_HPP
-#endif
+
 
 class ChessPiece {
 
@@ -18,3 +18,5 @@ class ChessPiece {
 		virtual ~ChessPiece() noexcept {}
 		char getColor() const {return _color;}
 };
+
+#endif
