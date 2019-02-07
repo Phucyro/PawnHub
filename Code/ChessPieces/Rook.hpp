@@ -1,5 +1,5 @@
-#ifndef CHESSPIECE_HPP
-#define CHESSPIECE_HPP
+#ifndef __ROOK__HPP__
+#define __ROOK__HPP__ 
 #endif
 
 #include "ChessPiece.hpp"

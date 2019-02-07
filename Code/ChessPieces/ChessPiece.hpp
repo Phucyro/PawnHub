@@ -1,5 +1,5 @@
-#ifndef CHESSPIECE_HPP
-#define CHESSPIECE_HPP
+#ifndef __CHESSPIECE__HPP__
+#define __CHESSPIECE__HPP__
 #endif
 
 class ChessPiece {

@@ -1,5 +1,5 @@
-#ifndef CHESSPIECE_HPP
-#define CHESSPIECE_HPP
+#ifndef __BISHOP__HPP__ 
+#define __BISHOP__HPP__
 #endif
 
 #include "ChessPiece.hpp"

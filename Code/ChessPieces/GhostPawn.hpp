@@ -1,5 +1,5 @@
-#ifdef PAWN_HPP
-#define PAWN_HPP
+#ifdef  __GHOSTPAWN__HPP__
+#define __GHOSTPAWN__HPP__
 #endif
 
 #include "Pawn.hpp"
