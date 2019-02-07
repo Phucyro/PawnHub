@@ -1,15 +1,18 @@
-#ifndef BISHOP_HPP
-#define BISHOP_HPP
+#ifndef CHESSPIECE_HPP
+#define CHESSPIECE_HPP
+#endif
 
-#include "Knight.hpp"
+#include "ChessPiece.hpp"
 
 class Bishop : public ChessPiece {
 
-	public :
-	
-		constexpr Bishop(const char& color, char& x, unsigned& y) noexcept : ChessPiece(color, x, y) {}
-		virtual ~Bishop() noexcept = default;
-		virtual bool checkMove() const = 0; 	//A voir comment on implémente
-}
+	protected :
+		bool _moved;
 
-#endif
+	public :
+
+		Bishop(const char& color, char& x, unsigned& y) noexcept : ChessPiece(color,x,y){}
+		virtual ~Bishop() noexcept = default;
+		bool hasMoved() const {return _moved;}
+		virtual bool checkMove() const = 0; 	//A voir comment on implémente
+};
