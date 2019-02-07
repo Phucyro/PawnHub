@@ -1,6 +1,5 @@
 #ifndef __PAWN__HPP__ 
 #define __PAWN__HPP__
-#endif
 
 #include "ChessPiece.hpp"
 
@@ -16,3 +15,5 @@ class Pawn : public ChessPiece {
 		bool hasMoved() const {return _moved;}
 		virtual bool checkMove() const = 0; 	//A voir comment on implémente
 };
+
+#endif

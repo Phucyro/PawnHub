@@ -1,6 +1,5 @@
-#ifdef  __GHOSTPAWN__HPP__
+#ifndef __GHOSTPAWN__HPP__
 #define __GHOSTPAWN__HPP__
-#endif
 
 #include "Pawn.hpp"
 
@@ -13,3 +12,5 @@ class GhostPawn : public Pawn{
         bool isActive();
 
 };
+
+#endif

@@ -1,6 +1,5 @@
 #ifndef __KING__HPP__
 #define __KING__HPP__
-#endif
 
 #include "ChessPiece.hpp"
 
@@ -16,3 +15,5 @@ class King : public ChessPiece {
 		bool hasMoved() const {return _moved;}
 		virtual bool checkMove() const = 0; 	//A voir comment on implémente
 };
+
+#endif
