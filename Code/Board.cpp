@@ -11,10 +11,10 @@ Board::Board(unsigned column, unsigned row):
 	_state(nullptr)
 {
 	_state = new Piece**[this->getColumn()];
-	for (int i = 0, i < this->getColumn(), i++)
+	for (int i = 0; i < this->getColumn(); i++)
 	{
 		_state[i] = new Piece*[this->getRow()];
-		for (int j = 0, j < this->getRow(), j++)
+		for (int j = 0; j < this->getRow(); j++)
 		{
 			_state[i][j] = nullptr;
 		}
@@ -23,7 +23,7 @@ Board::Board(unsigned column, unsigned row):
 
 
 //copy
-Board:Board(const Board& original):
+Board::Board(const Board& original):
 	_column(original.getColumn()),
 	_row(original.getRow()),
 	_state(nullptr)
@@ -33,7 +33,7 @@ Board:Board(const Board& original):
 
 
 //transfert
-Board:Board(Board&& original):
+Board::Board(Board&& original):
 	_column(original.getColumn()),
 	_row(original.getRow()),
 	_state(original._state)
@@ -67,7 +67,7 @@ Board& Board::operator= (Board&& original)
 {
 	_column = original.getColumn();
 	_row = original.getRow();
-	_state = originale._state;
+	_state = original._state;
 	original._state = nullptr;
 	return *this;
 }
@@ -100,7 +100,7 @@ Free the place taken by _state and change it to nullptr
 postcondition: _state == nullptr
 */
 {
-	for (int i; i < this->getColumn, i++)
+	for (int i; i < this->getColumn(); i++)
 	{
 		delete _state[i];
 	}
@@ -120,12 +120,12 @@ Piece* Board::getCase(Coordinate& place)
 Piece* Board::movePiece(Coordinate& start, Coordinate& end)
 {
 	Piece* eaten = this->getCase(end);
-	this->setCase(end, this->getCase(start))
+	this->setCase(end, this->getCase(start));
 	return eaten;
 }
 
 
-void Board::setPiece(Piece* piece, Coordinate& place)
+void Board::setCase(Coordinate& place, Piece* piece)
 {
 	_state[place.getRealColumn()][place.getRealRow()] = piece;
 }
