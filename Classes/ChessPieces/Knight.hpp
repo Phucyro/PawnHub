@@ -1,13 +1,18 @@
-#ifndef KNIGHT_HPP
-#define KNIGHT_HPP
+#ifndef CHESSPIECE_HPP
+#define CHESSPIECE_HPP
+#endif
+
+#include "ChessPiece.hpp"
 
 class Knight : public ChessPiece {
 
-	public :
-	
-		constexpr Knight(const char& color, char& x, unsigned& y) noexcept : ChessPiece(color, x, y) {}
-		virtual ~Knight() noexcept = default;
-		virtual bool checkMove() const = 0; 	//A voir comment on implémente
-}
+	protected :
+		bool _moved;
 
-#endif
+	public :
+
+		Knight(const char& color, char& x, unsigned& y) noexcept : ChessPiece(color, x, y) {}
+		virtual ~Knight() noexcept = default;
+		bool hasMoved() const {return _moved;}
+		virtual bool checkMove() const = 0; 	//A voir comment on implémente
+};
