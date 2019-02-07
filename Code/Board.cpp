@@ -111,21 +111,22 @@ postcondition: _state == nullptr
 
 
 
-Piece* Board::getCase(Coordinate& place)
+Piece* Board::getCase(Coordinate place)
 {
 	return _state[place.getRealColumn()][place.getRealRow()];
 }
 
 
-Piece* Board::movePiece(Coordinate& start, Coordinate& end)
+Piece* Board::movePiece(Coordinate start, Coordinate end)
 {
 	Piece* eaten = this->getCase(end);
 	this->setCase(end, this->getCase(start));
+	this->setCase(start, nullptr);
 	return eaten;
 }
 
 
-void Board::setCase(Coordinate& place, Piece* piece)
+void Board::setCase(Coordinate place, Piece* piece)
 {
 	_state[place.getRealColumn()][place.getRealRow()] = piece;
 }

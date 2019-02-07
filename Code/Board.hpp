@@ -3,6 +3,7 @@
 
 #include"Coordinate.hpp"
 #include"Piece.hpp" 
+class TestBoard;
 
 class Board
 {
@@ -24,9 +25,11 @@ class Board
 	
 	unsigned getColumn() const {return _column;}
 	unsigned getRow() const {return _row;}
-	Piece* getCase(Coordinate&);
-	Piece* movePiece(Coordinate&, Coordinate&);
-	void setCase(Coordinate&, Piece*);
+	Piece* getCase(Coordinate);
+	Piece* movePiece(Coordinate, Coordinate);
+	void setCase(Coordinate, Piece*);
+	
+	friend TestBoard;
 };
 
 #endif

@@ -24,8 +24,8 @@ class TestCoordinate: public CPPUNIT_NS::TestFixture
 	void testGetAbstractRow(void);
 	
 	public:
-	void setUp (void);
-	void tearDown (void);
+	void setUp(void);
+	void tearDown(void);
 };
 
 #endif
