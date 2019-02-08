@@ -13,8 +13,10 @@ public:
   ~Socket();
 
   int getFileDescriptor();
-  void connectToServer(sockaddr_in serv_addr);
+  void connectToServer(char* ip_addr);
 
+  void sendMessage(char* msg);
+  char* receiveMessage();
 };
 
 #endif

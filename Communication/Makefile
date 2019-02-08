@@ -3,7 +3,7 @@ FLAGS= -std=c++14 -ggdb3 -Wpedantic -Wall -Wextra -Wconversion -Weffc++ -Wstrict
 CXX= g++
 
 CONFIG= config.hpp
-SOCKETS= Socket.o TalkSocket.o BindSocket.o
+SOCKETS= Socket.o BindSocket.o
 
 all: server client clean
 
