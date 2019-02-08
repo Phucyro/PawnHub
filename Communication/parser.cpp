@@ -15,17 +15,15 @@ int main(){
   pieceName['q'] = "Queen";
   pieceName['K'] = "King";
 
-
   unsigned int a = 0;
 
   while (msg[a] != '!'){
     std::cout << "Piece : " << pieceName[msg[a]] << std::endl;
     std::cout << "Position : " << msg[a+1] << "-" << msg[a+2] << std::endl;
+    std::cout << "Couleur : a preciser" << std::endl; 
     std::cout << std::endl;
     a += 3;
   }
-
-
 
   return 0;
 }
