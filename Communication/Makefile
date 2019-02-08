@@ -4,7 +4,7 @@ CXX= g++
 
 CONFIG= config.hpp
 
-all: run
+all: server client
 
 run: server client
 	./$<
@@ -12,5 +12,5 @@ run: server client
 client: client.cpp $(CONFIG)
 	$(CXX) $(FLAGS) $< -o $@
 
-server: serveur.cpp $(CONFIG)
+server: server.cpp $(CONFIG)
 	$(CXX) $(FLAGS) $< -o $@
