@@ -3,7 +3,7 @@
 #include <map>
 
 int main(){
-  // Message recu
+  // Message Recu (piece : symbol, pos, pos, color)
   std::string msg = "pa2Bka4Nr5dBqc9BKe1Nbf8B!";
 
   // Dictionnaire clé : Symbole et valeur = Nom piece
