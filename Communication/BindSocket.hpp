@@ -9,7 +9,7 @@ public:
   ~BindSocket();
 
   void activate();
-  TalkSocket* createTalkSocket();
+  TalkSocket createTalkSocket(sockaddr_in their_addr);
 };
 
 #endif

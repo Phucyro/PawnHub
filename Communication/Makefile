@@ -3,14 +3,18 @@ FLAGS= -std=c++14 -ggdb3 -Wpedantic -Wall -Wextra -Wconversion -Weffc++ -Wstrict
 CXX= g++
 
 CONFIG= config.hpp
+SOCKETS= Socket.o TalkSocket.o BindSocket.o
 
 all: server client
 
 run: server client
 	./$<
 
-client: client.cpp $(CONFIG)
-	$(CXX) $(FLAGS) $< -o $@
+client: client.o $(SOCKETS) $(CONFIG)
+	$(CXX) $(FLAGS) -o $@ $^
 
-server: server.cpp $(CONFIG)
-	$(CXX) $(FLAGS) $< -o $@
+server: server.o $(SOCKETS) $(CONFIG)
+	$(CXX) $(FLAGS) -o $@ $^
+
+%.o: %.cpp %.hpp
+	$(CXX) $(FLAGS) -c -o $@ $<

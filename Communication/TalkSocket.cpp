@@ -3,9 +3,7 @@
 
 TalkSocket::TalkSocket(int fd): Socket(fd) {}
 
-TalkSocket::~TalkSocket() {
-  Socket::~Socket();
-}
+TalkSocket::~TalkSocket() {}
 
 void TalkSocket::sendMessage() {}
 

@@ -13,6 +13,7 @@ public:
   ~Socket();
 
   int getFileDescriptor();
+  void connectToServer(sockaddr_in serv_addr);
 
 };
 
