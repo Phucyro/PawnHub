@@ -5,10 +5,10 @@ CXX= g++
 CONFIG= config.hpp
 SOCKETS= Socket.o TalkSocket.o BindSocket.o
 
-all: server client
+all: server client clean
 
-run: server client
-	./$<
+run: all
+	./server
 
 client: client.o $(SOCKETS) $(CONFIG)
 	$(CXX) $(FLAGS) -o $@ $^
@@ -18,3 +18,6 @@ server: server.o $(SOCKETS) $(CONFIG)
 
 %.o: %.cpp %.hpp
 	$(CXX) $(FLAGS) -c -o $@ $<
+
+clean:
+	rm -f *.o
