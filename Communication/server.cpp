@@ -18,6 +18,14 @@ int main(){
   my_addr.sin_addr.s_addr = INADDR_ANY;
   memset(&(my_addr.sin_zero), '\0', 8);
 
+  // Permet a plusieurs socket de bind() sur le meme port
+  int yes = 1;
+
+  if (setsockopt(sockfd, SOL_SOCKET, SO_REUSEADDR, &yes, sizeof(int)) == -1) {
+  	perror("[Error] Setsockopt");
+    exit(1);
+  }
+
   // Lier socket au port et a l'adresse
   if (bind(sockfd, (struct sockaddr*)&my_addr, sizeof(struct sockaddr)) == -1){
     cerr << "[Error] Bind" << std::endl;
