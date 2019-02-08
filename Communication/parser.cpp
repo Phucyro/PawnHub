@@ -3,8 +3,8 @@
 #include <map>
 
 int main(){
-  // Message Recu (piece : symbol, pos, pos, color)
-  std::string msg = "pa2Bka4Nr5dBqc9BKe1Nbf8B!";
+  // Message Recu (piece : symbole, pos, pos)
+  std::string msg = "pa2ka4r5dqc9Ke1bf8!";
 
   // Dictionnaire clé : Symbole et valeur = Nom piece
   std::map<char, std::string> pieceName;
@@ -19,10 +19,9 @@ int main(){
 
   while (msg[a] != '!'){
     std::cout << "Piece : " << pieceName[msg[a]] << std::endl;
-    std::cout << "Position : " << msg[a+1] << "-" << msg[a+2] << std::endl;
-    std::string pieceColor = (msg[a+3] == 'B') ? "Blanc" : "Noir";
-    std::cout << "Couleur : " << pieceColor << std::endl << std::endl;
-    a += 4;
+    std::cout << "Position : " << msg[a+1] << "-" << msg[a+2] << std::endl
+    << std::endl;
+    a += 3;
   }
 
   return 0;
