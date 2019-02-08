@@ -6,15 +6,13 @@
 class Socket {
 private:
   int file_descriptor;
-  sockaddr_in my_addr;
 
 public:
   Socket();
-  Socket(std::string ip_addr);
+  Socket(int fd);
   ~Socket();
 
   int getFileDescriptor();
-  sockaddr_in getAddress();
 
 };
 
