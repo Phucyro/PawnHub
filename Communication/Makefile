@@ -22,5 +22,5 @@ server: server.o $(SOCKETS) $(CONFIG)
 clean:
 	rm -f *.o
 
-deepclean:
+deepclean: clean
 	rm -f server client
