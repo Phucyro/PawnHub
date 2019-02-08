@@ -102,9 +102,9 @@ postcondition: _state == nullptr
 {
 	for (int i; i < this->getColumn(); i++)
 	{
-		delete _state[i];
+		delete[] _state[i];
 	}
-	delete _state;
+	delete[] _state;
 	_state = nullptr;
 }
 
