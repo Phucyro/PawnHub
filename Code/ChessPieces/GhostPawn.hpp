@@ -1,9 +1,9 @@
 #ifndef __GHOSTPAWN__HPP__
 #define __GHOSTPAWN__HPP__
 
-#include "Pawn.hpp"
+#include "ChessPiece.hpp"
 
-class GhostPawn : public Pawn{
+class GhostPawn : public ChessPiece{
 
     protected : 
         unsigned creationTurn;
