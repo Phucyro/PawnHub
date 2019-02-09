@@ -9,14 +9,14 @@ private:
 
 public:
   Socket();
-  Socket(int fd);
+  Socket(int);
   ~Socket();
 
   int getFileDescriptor();
-  void connectToServer(char* ip_addr);
+  void connectToServer(std::string);
 
-  void sendMessage(char* msg);
-  char* receiveMessage();
+  void sendMessage(std::string);
+  std::string receiveMessage();
 };
 
 #endif

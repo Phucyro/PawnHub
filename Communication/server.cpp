@@ -16,6 +16,10 @@ int main(){
     if (!fork()){
       std::cout << "Connected to " << talking_socket.getFileDescriptor() << std::endl;
       // Operation serveur
+      talking_socket.sendMessage("Hello");
+
+      std::string message = talking_socket.receiveMessage();
+      std::cout << message << std::endl;
     }
   }
 
