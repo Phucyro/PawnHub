@@ -3,48 +3,50 @@
 #include <queue>
 #include <thread>
 
-void startParty(int fd1, int fd2){
-  // Lance une partie
-  std::cout << "La partie commence" << std::endl;
-  std::cout << "Joueur 1 " << fd1 << std::endl;
-  std::cout << "Joueur 2 " << fd2 << std::endl;
+void startParty(int player1, int player2, int server){
+  /*
+    Lance la partie entre deux joueurs
+    int player1 : File descriptor du premier joueur
+    int player2 : File descriptor du deuxieme joueur
+    int server  : File descriptor du serveur
+  */
+  std::cout << "La partie commence :" << std::endl;
+  std::cout << "Joueur 1 (Blanc) fd : " << fd1 << std::endl;
+  std::cout << "Joueur 2 (Noir) fd : " << fd2 << std::endl;
+
+  int turn = 1;
+  int turn_color = 0; // 0 : blanc | 1 : noir
 
   while (true){
-    // Demande input
+    // Envoie le nombre de tour + tour couleur : format tour-couleur
+    server.sendMessage(std::to_string(turn) + "-" + std::to_string(turn_color));
+    turn_color = (turn_color == 0)
+    ++turn;
   }
 }
 
 
 int main(){
   // Initialisation socket serveur
-  sockaddr_in my_addr;
-  my_addr.sin_family = AF_INET;
-  my_addr.sin_port = htons(MYPORT);
-  my_addr.sin_addr.s_addr = INADDR_ANY;
-  memset(&(my_addr.sin_zero), '\0', 8);
-  BindSocket binding_socket(my_addr);
+  BindSocket binding_socket;
 
   // Met le socket serveur en attente de connexions
   binding_socket.activate();
 
   while (true){
-    std::queue<int> players; // Vecteur filedescriptors des joueurs connectes
-    sockaddr_in their_addr;
-    Socket client_socket = binding_socket.createSocket(their_addr);
-    players.push(client_socket.getFileDescriptor()); // Ajoute le joueur
-    std::cout << players.size() << std::endl;
+    // Accepte les joueurs dans le serveur
+    Socket client_socket = binding_socket.createSocket();
 
-    // Gere la demande du client avec des threads
-    std::cout << "Connexion de " << inet_ntoa(their_addr.sin_addr) << std::endl;
-    std::cout << "Connected to " << client_socket.getFileDescriptor() << std::endl;
+    std::queue<int> players; // File de filedescriptors des joueurs connectes
+    players.push(client_socket.getFileDescriptor()); // Ajoute joueur dans file
 
-    // Lance une partie avec les deux premiers joueurs arrives
-    if (players.size() >= 1){
-      int player1 = players.front();
+    // Lance une partie avec les deux premiers joueurs arrives via thread
+    if (players.size() >= 1){ // 2 ne marche pas pour le moment
+      int player_fd1 = players.front();
       players.pop();
-      int player2 = players.front();
+      int player_fd2 = players.front();
       players.pop();
-      std::thread partyThread(startParty, player1, player2);
+      std::thread partyThread(startParty, player_fd1, player_fd2, binding_socket.getFileDescriptor());
       partyThread.join();
     }
 
