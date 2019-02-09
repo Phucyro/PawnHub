@@ -16,6 +16,12 @@ int main(){
   socket.connectToServer(their_addr);
 
   // Operations avec le serveur
+  bool connected = true;
+
+  while (connected){
+    
+  }
+
 
   return 0;
 }
