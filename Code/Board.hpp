@@ -17,7 +17,7 @@ class Board
 	public:
 	Board(unsigned = 8, unsigned = 8);
 	Board(const Board&);
-	Board(Board&&);
+	constexpr Board(Board&&);
 	~Board();
 	
 	Board& operator= (const Board&);
@@ -25,7 +25,7 @@ class Board
 	
 	unsigned getColumn() const {return _column;}
 	unsigned getRow() const {return _row;}
-	Piece* getCase(Coordinate);
+	Piece* getCase(Coordinate) const;
 	Piece* movePiece(Coordinate, Coordinate);
 	void setCase(Coordinate, Piece*);
 	
