@@ -13,8 +13,8 @@ int main(){
   bool connected = true;
 
   while (connected){
+    //
   }
-
 
   return 0;
 }

@@ -3,14 +3,20 @@
 #include <queue>
 #include <thread>
 
-void startParty(Socket socket1, Socket socket2){
+void startParty(Socket white_player, Socket black_player){
   // Lance une partie
   std::cout << "La partie commence" << std::endl;
-  std::cout << "Joueur 1 " << socket1.getFileDescriptor() << std::endl;
-  std::cout << "Joueur 2 " << socket2.getFileDescriptor() << std::endl;
+  std::cout << "Joueur 1 " << white_player.getFileDescriptor() << std::endl;
+  std::cout << "Joueur 2 " << black_player.getFileDescriptor() << std::endl;
+
+  int turn = 1;
+  int turn_color = 0;
 
   while (true){
-    // Demande input
+    // Envoie le nombre de tour + tour couleur : format tour-couleur
+    white_player.sendMessage(std::to_string(turn) + "-" + std::to_string(turn_color));
+    turn_color = (turn_color == 0)
+    ++turn;
   }
 }
 
@@ -23,16 +29,14 @@ int main(){
   binding_socket.activate();
 
   while (true){
-    std::queue<int> players; // Vecteur filedescriptors des joueurs connectes
+    // Accepte les joueurs dans le serveur
     Socket client_socket = binding_socket.createSocket();
-    players.push(client_socket.getFileDescriptor()); // Ajoute le joueur
-    std::cout << players.size() << std::endl;
 
-    // Gere la demande du client avec des threads
-    std::cout << "Connected to " << client_socket.getFileDescriptor() << std::endl;
+    std::queue<int> players; // File de filedescriptors des joueurs connectes
+    players.push(client_socket.getFileDescriptor()); // Ajoute joueur dans file
 
-    // Lance une partie avec les deux premiers joueurs arrives
-    if (players.size() >= 1){
+    // Lance une partie avec les deux premiers joueurs arrives via thread
+    if (players.size() >= 1){ // 2 ne marche pas pour le moment
       Socket player1 = Socket(players.front());
       players.pop();
       Socket player2 = Socket(players.front());

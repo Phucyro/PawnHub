@@ -7,6 +7,7 @@ class Socket {
 private:
   int file_descriptor;
 
+public:
   void sendMessage(std::string);
   std::string receiveMessage();
 
