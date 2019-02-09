@@ -50,3 +50,37 @@ std::string Socket::receiveMessage() {
   std::string message = receiving_buffer;
   return message;
 }
+
+void Socket::sendBoard() {
+  /*
+  board sent as list of piece and position, white then black
+  each piece 3 characters: representation symbol + position in two characters
+  separation for white and black by !
+  padding with #
+  */
+
+  // should be able to send matrix and converted to format here
+  std::string msg = "pa2ka4r5dqc9Ke1bf8!";
+  sendMessage(msg);
+}
+void Socket::receiveBoard() {
+  std::string msg = receiveMessage();
+
+  unsigned int a = 0;
+  while (msg[a] != '!'){
+    std::cout << "Piece : " << pieceName[msg[a]];
+    std::cout << ", Position : " << msg[a+1] << msg[a+2];
+    std::cout << ", is white." << std::endl;
+    a += 3;
+  }
+  a += 1;
+  while (msg[a] != '#'){
+    std::cout << "Piece : " << pieceName[msg[a]];
+    std::cout << ", Position : " << msg[a+1] << msg[a+2];
+    std::cout << ", is black." << std::endl;
+    a += 3;
+  }
+}
+
+void Socket::sendMove() {}
+void Socket::receiveMove() {}
