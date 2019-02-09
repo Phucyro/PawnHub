@@ -14,7 +14,7 @@ client: client.o $(SOCKETS) $(CONFIG)
 	$(CXX) $(FLAGS) -o $@ $^
 
 server: server.o $(SOCKETS) $(CONFIG)
-	$(CXX) $(FLAGS) -o $@ $^
+	$(CXX) $(FLAGS) -o $@ $^ -lpthread
 
 %.o: %.cpp %.hpp
 	$(CXX) $(FLAGS) -c -o $@ $<

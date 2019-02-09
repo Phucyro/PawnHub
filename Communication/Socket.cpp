@@ -63,24 +63,24 @@ void Socket::sendBoard() {
   std::string msg = "pa2ka4r5dqc9Ke1bf8!";
   sendMessage(msg);
 }
-void Socket::receiveBoard() {
-  std::string msg = receiveMessage();
-
-  unsigned int a = 0;
-  while (msg[a] != '!'){
-    std::cout << "Piece : " << pieceName[msg[a]];
-    std::cout << ", Position : " << msg[a+1] << msg[a+2];
-    std::cout << ", is white." << std::endl;
-    a += 3;
-  }
-  a += 1;
-  while (msg[a] != '#'){
-    std::cout << "Piece : " << pieceName[msg[a]];
-    std::cout << ", Position : " << msg[a+1] << msg[a+2];
-    std::cout << ", is black." << std::endl;
-    a += 3;
-  }
-}
+// void Socket::receiveBoard() {
+//   std::string msg = receiveMessage();
+//
+//   unsigned int a = 0;
+//   while (msg[a] != '!'){
+//     std::cout << "Piece : " << pieceName[msg[a]];
+//     std::cout << ", Position : " << msg[a+1] << msg[a+2];
+//     std::cout << ", is white." << std::endl;
+//     a += 3;
+//   }
+//   a += 1;
+//   while (msg[a] != '#'){
+//     std::cout << "Piece : " << pieceName[msg[a]];
+//     std::cout << ", Position : " << msg[a+1] << msg[a+2];
+//     std::cout << ", is black." << std::endl;
+//     a += 3;
+//   }
+// }
 
 void Socket::sendMove() {}
 void Socket::receiveMove() {}

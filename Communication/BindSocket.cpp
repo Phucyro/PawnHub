@@ -11,7 +11,7 @@ BindSocket::BindSocket(): Socket() {
   // Permet a plusieurs socket de bind() sur le meme port
   int yes = 1;
   if (setsockopt(getFileDescriptor(), SOL_SOCKET, SO_REUSEADDR, &yes, sizeof(int)) < 0) {
-    std::cout << "[Error] Setsockopt" << std::endl;
+    std::cerr << "[Error] Setsockopt" << std::endl;
   }
 
   // Lier socket au port et a l'adresse
@@ -24,7 +24,7 @@ BindSocket::~BindSocket() {}
 
 void BindSocket::activate() {
   if (listen(getFileDescriptor(), BACKLOG) < 0) {
-    std::cout << "[Error] Listen" << std::endl;
+    std::cerr << "[Error] Listen" << std::endl;
   }
 }
 
@@ -33,7 +33,7 @@ Socket BindSocket::createSocket() {
   socklen_t their_size = sizeof(their_addr);
   int new_fd = accept(getFileDescriptor(), (struct sockaddr*)&their_addr, &their_size);
   if (new_fd < 0) {
-    std::cout << "[Error] Accept" << std::endl;
+    std::cerr << "[Error] Accept" << std::endl;
   }
   std::cout << "Connexion de " << inet_ntoa(their_addr.sin_addr) << std::endl;
   return Socket(new_fd);
