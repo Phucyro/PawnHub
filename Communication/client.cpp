@@ -16,6 +16,7 @@ int main(){
   socket.connectToServer("127.0.0.1");
 
   // Operations avec le serveur
-  
+  socket.receiveBoard();
+
   return 0;
 }

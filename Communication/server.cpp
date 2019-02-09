@@ -36,6 +36,7 @@ int main(){
     }
 
     // Operation serveur
+    client_socket.sendBoard();
   }
 
   return 0;
