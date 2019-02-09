@@ -16,7 +16,7 @@ int main(){
 
   while (true){
     sockaddr_in their_addr;
-    TalkSocket talking_socket = binding_socket.createTalkSocket(their_addr);
+    Socket talking_socket = binding_socket.createSocket(their_addr);
 
     // Fork et traite la demande du client
     if (!fork()){

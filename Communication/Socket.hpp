@@ -14,6 +14,8 @@ public:
 
   int getFileDescriptor();
   void connectToServer(sockaddr_in serv_addr);
+  void sendMessage(std::string msg);
+  std::string receiveMessage();
 
 };
 

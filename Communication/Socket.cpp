@@ -25,3 +25,11 @@ void Socket::connectToServer(sockaddr_in serv_addr) {
   }
   else std::cout << "Connected to server!" << std::endl;
 }
+
+void Socket::sendMessage(std::string msg) {
+  // Envoie d'un message
+}
+
+std::string Socket::receiveMessage() {
+  // Renvoie le message recu
+}

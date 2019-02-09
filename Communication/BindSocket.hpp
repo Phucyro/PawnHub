@@ -1,4 +1,4 @@
-#include "TalkSocket.hpp"
+#include "Socket.hpp"
 
 #ifndef  _BINDSOCK_H_
 #define  _BINDSOCK_H_
@@ -9,7 +9,7 @@ public:
   ~BindSocket();
 
   void activate();
-  TalkSocket createTalkSocket(sockaddr_in their_addr);
+  Socket createSocket(sockaddr_in their_addr);
 };
 
 #endif
