@@ -3,21 +3,59 @@
 #include <queue>
 #include <thread>
 
-void startParty(Socket white_player, Socket black_player){
+void startParty(Socket* white_player, Socket* black_player){
   // Lance une partie
-  std::cout << "La partie commence" << std::endl;
-  std::cout << "Joueur 1 " << white_player.getFileDescriptor() << std::endl;
-  std::cout << "Joueur 2 " << black_player.getFileDescriptor() << std::endl;
+  std::cout << "La partie commence : " << std::endl;
 
-  int turn = 1;
-  int turn_color = 0;
+  unsigned int turn = 0; // Numero du tour actuel
+  bool valid_move;
+
+  // Le joueur blanc commence en premier (0)
+  white_player->sendMessage("0");
+  black_player->sendMessage("1");
+
+  // Envoie le plateau aux deux joueurs
+  white_player->sendBoard();
+  black_player->sendBoard();
 
   while (true){
-    // Envoie le nombre de tour + tour couleur : format tour-couleur
-    white_player.sendMessage(std::to_string(turn) + "-" + std::to_string(turn_color));
-    turn_color = (turn_color == 0)
+    // Envoie information sur le tour (couleur qui joue et numero)
+    white_player->sendMessage(std::to_string(turn) + " " + "B");
+    black_player->sendMessage(std::to_string(turn) + " " + "B");
+
+    while (true){ // while (move pas valide && temps < limite)
+      white_player->receiveMove();
+      // Verifie si move valid_move et sors de la boucle si valide
+      white_player->sendMessage(/*Move valide ou pas*/)
+    }
+
+    // Update le plateau
+    white_player->sendBoard();
+    black_player->sendBoard();
+
+    // Verifie checkmate ou draw ?
+    // if (checkmate || draw){ break; }
+
+    // Envoie information sur le tour (couleur qui joue et numero)
+    white_player->sendMessage(std::to_string(turn) + " " + "N");
+    black_player->sendMessage(std::to_string(turn) + " " + "N");
+
+    while (true){ // while (move pas valide && temps < limite)
+      black_player->receiveMove();
+    }
+
+    // Update le plateau
+    white_player->sendBoard();
+    black_player->sendBoard();
+
+    // Verifie checkmate ou draw ?
+    // if (checkmate || draw){ break; }
+
     ++turn;
   }
+
+  std::cout << "Fin de la partie" << std::endl;
+  // Determiner le vainqueur
 }
 
 
@@ -37,11 +75,12 @@ int main(){
 
     // Lance une partie avec les deux premiers joueurs arrives via thread
     if (players.size() >= 1){ // 2 ne marche pas pour le moment
+      std::cout << "Cree une nouvelle partie" << std::endl;
       Socket player1 = Socket(players.front());
       players.pop();
       Socket player2 = Socket(players.front());
       players.pop();
-      std::thread partyThread(startParty, player1, player2);
+      std::thread partyThread(startParty, &player1, new Socket());
       partyThread.join();
     }
 
