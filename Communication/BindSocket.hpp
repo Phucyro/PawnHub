@@ -5,11 +5,11 @@
 
 class BindSocket : public Socket {
 public:
-  BindSocket(sockaddr_in this_addr);
+  BindSocket();
   ~BindSocket();
 
   void activate();
-  Socket createSocket(sockaddr_in their_addr);
+  Socket createSocket();
 };
 
 #endif

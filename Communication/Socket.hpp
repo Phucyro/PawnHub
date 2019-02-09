@@ -7,16 +7,22 @@ class Socket {
 private:
   int file_descriptor;
 
+  void sendMessage(std::string);
+  std::string receiveMessage();
+
 public:
   Socket();
-  Socket(int fd);
+  Socket(int);
   ~Socket();
 
   int getFileDescriptor();
-  void connectToServer(sockaddr_in serv_addr);
-  void sendMessage(std::string msg);
-  std::string receiveMessage();
+  void connectToServer(std::string);
 
+  void sendBoard();
+  void receiveBoard();
+
+  void sendMove();
+  void receiveMove();
 };
 
 #endif

@@ -10,3 +10,4 @@
 
 #define MYPORT 5555
 #define BACKLOG 20
+#define MSG_LENGTH 20
