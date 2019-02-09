@@ -20,13 +20,9 @@ Game::Game(Game&& original):
 	_player1(original._player1),
 	_player2(original._player2),
 	_winner(original._winner),
-	original._player1 = nullptr;
-	original._player2 = nullptr;
-	original._winner = nullptr;
 	_turn(original._turn),
 	_board(original._board),
 	_pieces(original._pieces),
-	original._pieces = nullptr;
 	_piecesAmount(original._piecesAmount){}
 
 
@@ -49,13 +45,9 @@ Game& Game::operator= (Game&& original)
 	_player1 = original._player1;
 	_player2 = original._player2;
 	_winner = original._winner;
-	original._player1 = nullptr;
-	original._player2 = nullptr;
-	original._winner = nullptr;
 	_turn = original._turn;
 	_board = original._board;
 	_pieces = original._pieces;
-	original._pieces = nullptr;
 	_piecesAmount = original._piecesAmount;
 	return *this;
 }
