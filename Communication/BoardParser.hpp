@@ -18,20 +18,24 @@ std::map<char, std::string> pieceMap = {
   {'K', "King"}
 };
 
+void separatePieces(unsigned int a, std::string message, std::string colour) {
+  std::cout << "Piece : " << pieceMap[message[a]];
+  std::cout << ", Position : " << message[a+1] << message[a+2];
+  std::cout << ", is " << colour << "." << std::endl;
+}
 
 void stringToBoard(std::string message) {
+
   unsigned int a = 0;
+  std::string colour = "white";
   while (message[a] != '!'){
-    std::cout << "Piece : " << pieceMap[message[a]];
-    std::cout << ", Position : " << message[a+1] << message[a+2];
-    std::cout << ", is white." << std::endl;
+    separatePieces(a, message, colour);
     a += 3;
   }
   a += 1;
+  colour = "black";
   while (message[a] != '#'){
-    std::cout << "Piece : " << pieceMap[message[a]];
-    std::cout << ", Position : " << message[a+1] << message[a+2];
-    std::cout << ", is black." << std::endl;
+    separatePieces(a, message, colour);
     a += 3;
   }
 }

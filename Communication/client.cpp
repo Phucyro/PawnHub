@@ -10,11 +10,12 @@ int main(){
   socket.connectToServer("127.0.0.1");
 
   // Operations avec le serveur
-  bool connected = true;
-
-  while (connected){
-    //
-  }
+  socket.receiveBoard();
+  // bool connected = true;
+  //
+  // while (connected){
+  //   //
+  // }
 
   return 0;
 }
