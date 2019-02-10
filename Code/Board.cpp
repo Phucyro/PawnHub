@@ -33,7 +33,7 @@ Board::Board(const Board& original):
 
 
 //transfert
-constexpr Board::Board(Board&& original):
+Board::Board(Board&& original):
 	_column(original._column),
 	_row(original._row),
 	_state(original._state)
