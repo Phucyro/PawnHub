@@ -56,3 +56,5 @@ bool Classic::_isFinish() const {
 	if (Game::_winner != nullptr) return true;
 	else return false;
 }
+
+#endif
