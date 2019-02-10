@@ -3,30 +3,13 @@
 
 #include"Coordinate.hpp"
 
-//constructor with real coordinate
-Coordinate::Coordinate(unsigned column, unsigned row):
-	_column(column),
-	_row(row){}
 
-//constructor with real coordinate
-Coordinate::Coordinate(int column, int row):
-	Coordinate(unsigned(column), unsigned(row)){}
-
-//constructor with abstract coordinate
-Coordinate::Coordinate(char column, char row):
-	_column(column - 'A'),
-	_row(row - '1'){}
-
-
-
-
-
-bool Coordinate::operator== (const Coordinate& other)
+bool Coordinate::operator== (const Coordinate& other) const
 {
-	return this->getRealColumn() == other.getRealColumn() && this->getRealRow() == other.getRealRow();
+	return _column == other._column && _row == other._row;
 }
 
-bool Coordinate::operator!= (const Coordinate& other)
+bool Coordinate::operator!= (const Coordinate& other) const
 {
 	return !(*this == other);
 }
@@ -36,13 +19,13 @@ bool Coordinate::operator!= (const Coordinate& other)
 
 char Coordinate::getAbstractColumn() const
 {
-	return char(this->getRealColumn()+'A');
+	return char(_column+'A');
 }
 
 
 char Coordinate::getAbstractRow() const
 {
-	return char(this->getRealRow()+'1');
+	return char(_row+'1');
 }
 
 #endif
