@@ -20,11 +20,11 @@ int main(){
     players.push(client_socket); // Ajoute socket joueur dans file
 
     // Lance une partie avec les deux premiers joueurs arrives via thread
-    if (players.size() >= 2) {
+    if (players.size() >= 1) {
       std::cout << "Cree une nouvelle partie" << std::endl;
-      Socket player1 = Socket(players.front());
+      Socket player1 = players.front();
       players.pop();
-      Socket player2 = Socket(players.front());
+      Socket player2 = players.front();
       players.pop();
 
       //std::thread partyThread(startPartyServer, &player1, new Socket());
