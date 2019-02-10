@@ -24,13 +24,26 @@ class ChessPiece {
 			_str[COL] = coords.getAbstractColumn();
 			_str[PAI] = color;
 		}
+		
+		ChessPiece(const ChessPiece& original) : _color(original._color), _coords(original._coords), _isTaken(original._isTaken), _str(char[4]) {
+			for (int i = 0; i < 4; i++){
+				_str[i] = original._str[i];
+			}
+		}
+		
+		ChessPiece(ChessPiece&& original) : _color(original._color), _coords(original._coords), _isTaken(original._isTaken), _str(original._str) {
+			original._str = nullptr;
+		}
+		
+		
+		
 		virtual bool _checkMove() = 0;
 
 	public :
-
-    bool move(Coordinate end,Board board,Game game){
-			_checkMove();
-		}
+		
+		ChessPiece& operator= (const ChessPiece&);
+		ChessPiece& operator= (ChessPiece&&);
+    bool move(Coordinate, Board*, Game);
 		virtual ~ChessPiece() = default;
 		char getColor() const {return _color;}
     virtual char[]  toString {return _str}
