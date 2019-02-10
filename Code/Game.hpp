@@ -13,9 +13,9 @@ class Game
 	Piece* _pieces;
 	unsigned _piecesAmount;
 	
-	void _initBoard();
-	void _nextTurn();
-	bool _isFinish() const;
+	virtual void _initBoard() = 0;
+	virtual void _nextTurn() = 0;
+	virtual bool _isFinish() = 0;
 	
 	Game(Piece*, unsigned);
 	Game(const Game&) = delete;
