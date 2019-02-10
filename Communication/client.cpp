@@ -1,5 +1,6 @@
 #include "config.hpp"
 #include "Socket.hpp"
+// #include "StartPartyClient.hpp"
 
 
 int main(){
@@ -10,12 +11,9 @@ int main(){
   socket.connectToServer("127.0.0.1");
 
   // Operations avec le serveur
-  socket.receiveBoard();
-  // bool connected = true;
-  //
-  // while (connected){
-  //   //
-  // }
+  bool connected = true;
+  
+  // StartPartyClient(&socket);
 
   return 0;
 }
