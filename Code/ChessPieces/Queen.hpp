@@ -6,14 +6,17 @@
 class Queen : public Piece {
 
 	protected :
-		bool _moved;
+		bool _checkMove(Coordinate, Board*, Game&) override;
 
 	public :
 
-		Queen(const char& color, char& x, unsigned& y) noexcept : Piece(color, x, y) {}
+		constexpr Queen(const char& color, Coordinate coords) noexcept : Piece(color, coords){
+			_str[TYP] = 'q';
+		}
+		Queen(const Queen& original) noexcept : Piece(original){}
 		virtual ~Queen() noexcept = default;
-		bool hasMoved() const {return _moved;}
-		virtual bool checkMove() const = 0; 	//A voir comment on implémente
+		
+		Queen& operator= (const Queen&);
 };
 
 #endif

@@ -16,10 +16,7 @@ class Bishop : public Piece {
 		Bishop(const Bishop& original) noexcept : Piece(original){}
 		virtual ~Bishop() noexcept = default;
 		
-		Bishop& operator= (const Bishop&);
-		
-		
-		
+		Bishop& operator= (const Bishop&);	
 };
 
 

@@ -7,13 +7,19 @@ class King : public Piece {
 
 	protected :
 		bool _moved;
+		bool _checkMove(Coordinate, Board*, Game&) override;
 
 	public :
-
-	    King(const char& color, char& x, unsigned& y) noexcept : Piece(color, x, y) {}
+		King(const char& color, Coordinate coords) noexcept : Piece(color, coords), _moved(false) {
+			_str[TYP] = 'k';
+		}
+		King(const King& original) noexcept : Piece(original), _moved(original.hasMoved()) {}
 		virtual ~King() noexcept = default;
+		
+		King& operator= (const King&);
+		
 		bool hasMoved() const {return _moved;}
-		virtual bool checkMove() const = 0; 	//A voir comment on implémente
+		bool move(Coordinate, Board*, Game&) override;
 };
 
 #endif
