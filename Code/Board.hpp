@@ -17,7 +17,7 @@ class Board
 	public:
 	Board(unsigned = 8, unsigned = 8);
 	Board(const Board&);
-	constexpr Board(Board&&);
+	Board(Board&&);
 	~Board();
 	
 	Board& operator= (const Board&);
