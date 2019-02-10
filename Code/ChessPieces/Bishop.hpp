@@ -5,21 +5,19 @@
 
 
 class Bishop : public Piece {
-
+	
 	protected :
-		bool _checkMove(){
-
-		}
+		bool _checkMove(Coordinate, Board*, Game&) override;
+		
 	public :
-		Bishop(const char& color, Coordinate coords) noexcept : Piece(color, coords){
-			_str[TYP] = 'b'
+		constexpr Bishop(const char& color, Coordinate coords) noexcept : Piece(color, coords){
+			_str[TYP] = 'b';
 		}
 		Bishop(const Bishop& original) noexcept : Piece(original){}
 		Bishop(Bishop&& original) noexcept : Piece(original){}
 		virtual ~Bishop() noexcept = default;
 		
 		Bishop& operator= (const Bishop&);
-		Bishop& operator= (Bishop&&);
 		
 		
 		
