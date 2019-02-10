@@ -25,7 +25,7 @@ bool Pawn::_checkMove(Coordinate end, Board* board, Game& game){
 			if (this->hasMoved()) return false;
 			if (board->getCase(end)) return false;
 		}
-		if (board->getCase(Coordinate(0u, _coords.getRealRow()+1))) return false;
+		if (board->getCase(Coordinate(_coords.getRealColumn(), _coords.getRealRow()+1))) return false;
 	}
 	return true;
 }
