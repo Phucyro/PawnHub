@@ -6,6 +6,7 @@
 
 Pawn& Pawn::operator= (const Pawn& original){
 	this->Piece::operator= (original);
+	_moved = original._moved;
 	return *this;
 }
 
@@ -16,7 +17,7 @@ bool Pawn::_checkMove(Coordinate end, Board* board, Game& game){
 	if (std::abs(columnMove) > 1) return false;
 	if (std::abs(columnMove) == 1){
 		if (rowMove != 1) return false;
-		if (board->getCase(end)->getColor() == _color) return false;
+		if (board->getCase(end)->getColor() == this->getColor()) return false;
 	}
 	else{
 		if (rowMove > 2 || rowMove < 1) return false;

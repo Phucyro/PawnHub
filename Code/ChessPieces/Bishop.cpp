@@ -27,7 +27,7 @@ bool Bishop::_checkMove(Coordinate end, Board* board, Game& game){
 		column += columnDirection;
 	}
 	
-	if (board->getCase(end) && board->getCase(end)->getColor() == _color) return false;
+	if (board->getCase(end) && board->getCase(end)->getColor() == this->getColor()) return false;
 	return true;
 }
 #endif

@@ -6,14 +6,17 @@
 class Knight : public Piece {
 
 	protected :
-		bool _moved;
+		bool _checkMove(Coordinate, Board*, Game&) override;
 
 	public :
 
-		Knight(const char& color, char& x, unsigned& y) noexcept : Piece(color, x, y) {}
+		Knight(const char& color, Coordinate coords) noexcept : Piece(color, coords){
+			_str[TYP] = 'h';
+		}
+		Knight(const Knight& original) : Piece(original){}
 		virtual ~Knight() noexcept = default;
-		bool hasMoved() const {return _moved;}
-		virtual bool checkMove() const = 0; 	//A voir comment on implémente
+		
+		Knight& operator= (const Knight&);
 };
 
 #endif

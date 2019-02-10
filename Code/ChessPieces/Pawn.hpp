@@ -15,10 +15,9 @@ class Pawn : public Piece {
 			_str[TYP] = 'p';
 		}
 		Pawn(const Pawn& original) noexcept : Piece(original), _moved(original.hasMoved()) {}
-		
+		virtual ~Pawn() noexcept = default;
 		Pawn& operator= (const Pawn&);
 		
-		virtual ~Pawn() noexcept = default;
 		bool hasMoved() const {return _moved;}
 		bool move(Coordinate, Board*, Game&) override;
 };

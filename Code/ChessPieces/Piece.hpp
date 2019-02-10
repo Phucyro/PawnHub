@@ -39,7 +39,7 @@ class Piece {
 		Piece& operator= (const Piece&);
     virtual bool move(Coordinate, Board*, Game&);
 		virtual ~Piece() = default;
-		char getColor() const {return _color;}
+		inline char getColor() const {return _color;}
     virtual char* toString() {return _str;}
 		virtual void changeIsTaken(){_isTaken = !_isTaken;}
 		bool isTaken() const {return _isTaken;}
