@@ -1,5 +1,5 @@
-#ifdef  __CHESSPIECE__HPP__
-#define __CHESSPIECE__HPP__
+#ifdef  __PIECE__HPP__
+#define __PIECE__HPP__
 
 #include "Coordinate.hpp"
 #include "Board.hpp"
@@ -10,7 +10,7 @@
 #define PAI 2 // color
 #define TYP 3 // type
 
-class ChessPiece {
+class Piece {
 
 	protected :
 
@@ -19,19 +19,19 @@ class ChessPiece {
     bool 				_isTaken; 	// tells if piece has been taken
 		char 				_str[4]	; 	// string containing info about piece
 
-		constexpr ChessPiece(const char color,Coordinate coords) : _color(color),_coords(coords),_isTaken(false),_str(char[4]) {
+		constexpr Piece(const char color,Coordinate coords) : _color(color),_coords(coords),_isTaken(false),_str(char[4]) {
 			_str[ROW] = coords.getAbstractRow();
 			_str[COL] = coords.getAbstractColumn();
 			_str[PAI] = color;
 		}
 		
-		ChessPiece(const ChessPiece& original) : _color(original._color), _coords(original._coords), _isTaken(original._isTaken), _str(char[4]) {
+		Piece(const Piece& original) : _color(original._color), _coords(original._coords), _isTaken(original._isTaken), _str(char[4]) {
 			for (int i = 0; i < 4; i++){
 				_str[i] = original._str[i];
 			}
 		}
 		
-		ChessPiece(ChessPiece&& original) : _color(original._color), _coords(original._coords), _isTaken(original._isTaken), _str(original._str) {
+		Piece(Piece&& original) : _color(original._color), _coords(original._coords), _isTaken(original._isTaken), _str(original._str) {
 			original._str = nullptr;
 		}
 		
@@ -41,10 +41,10 @@ class ChessPiece {
 
 	public :
 		
-		ChessPiece& operator= (const ChessPiece&);
-		ChessPiece& operator= (ChessPiece&&);
+		Piece& operator= (const Piece&);
+		Piece& operator= (Piece&&);
     bool move(Coordinate, Board*, Game);
-		virtual ~ChessPiece() = default;
+		virtual ~Piece() = default;
 		char getColor() const {return _color;}
     virtual char[]  toString {return _str}
 		virtual void changeIsTaken(){_isTaken = !_isTaken;}

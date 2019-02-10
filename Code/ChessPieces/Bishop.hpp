@@ -1,19 +1,28 @@
 #ifndef __BISHOP__HPP__
 #define __BISHOP__HPP__
 
-#include "ChessPiece.hpp"
+#include "Piece.hpp"
 
 
-class Bishop : public ChessPiece {
+class Bishop : public Piece {
 
 	protected :
-		virtual bool checkMove(){
+		bool _checkMove(){
 
 		}
 	public :
-		Bishop(const char& color, Coordinate coords) noexcept : ChessPiece(color, coords), _moved(false){_str[TYP] = 'b'}
+		Bishop(const char& color, Coordinate coords) noexcept : Piece(color, coords){
+			_str[TYP] = 'b'
+		}
+		Bishop(const Bishop& original) noexcept : Piece(original){}
+		Bishop(Bishop&& original) noexcept : Piece(original){}
 		virtual ~Bishop() noexcept = default;
-			//A voir comment on implémente
+		
+		Bishop& operator= (const Bishop&);
+		Bishop& operator= (Bishop&&);
+		
+		
+		
 };
 
 

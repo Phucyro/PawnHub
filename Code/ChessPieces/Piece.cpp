@@ -1,7 +1,7 @@
-#ifdef  __CHESSPIECE__CPP__
-#define __CHESSPIECE__CPP__
+#ifdef  __PIECE__CPP__
+#define __PIECE__CPP__
 
-ChessPiece& ChessPiece::operator= (const ChessPiece& original){
+Piece& Piece::operator= (const Piece& original){
 	_color = original._color;
 	_coords = original._coords;
 	_isTaken = original._isTaken;
@@ -11,7 +11,7 @@ ChessPiece& ChessPiece::operator= (const ChessPiece& original){
 			return *this;
 }
 
-ChessPiece& ChessPiece::operator= (ChessPiece&&){
+Piece& Piece::operator= (Piece&&){
 	_color = original._color;
 	_coords = original._coords;
 	_isTaken = original._isTaken;
@@ -21,10 +21,10 @@ ChessPiece& ChessPiece::operator= (ChessPiece&&){
 }
 
 
-bool ChessPiece::move(Coordinate end, Board* board, Game game){
+bool Piece::move(Coordinate end, Board* board, Game game){
 /*Move this piece to the correct location on the board and return true if the move is possible. Else return false and leave the board unchanged*/
 	if(this->_checkMove()){
-		ChessPiece *takenPiece;
+		Piece *takenPiece;
 		takenPiece = board->movePiece(_coords, end);
 		takenPiece.changeIsTaken();
 		
