@@ -1,5 +1,4 @@
 #include "Socket.hpp"
-#include "BoardParser.hpp"
 
 Socket::Socket() : file_descriptor(0) {
   file_descriptor = socket(AF_INET, SOCK_STREAM, 0);
@@ -51,16 +50,3 @@ std::string Socket::receiveMessage() {
   std::string message = receiving_buffer;
   return message;
 }
-
-void Socket::sendBoard() {
-  std::string msg = boardToString();
-  sendMessage(msg);
-}
-
-void Socket::receiveBoard() {
-  std::string msg = receiveMessage();
-  stringToBoard(msg);
-}
-
-void Socket::sendMove() {}
-void Socket::receiveMove() {}
