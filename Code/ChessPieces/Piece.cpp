@@ -1,5 +1,7 @@
-#ifdef  __PIECE__CPP__
+#ifndef  __PIECE__CPP__
 #define __PIECE__CPP__
+
+#include "Piece.hpp"
 
 Piece& Piece::operator= (const Piece& original){
 	_color = original._color;
@@ -11,27 +13,18 @@ Piece& Piece::operator= (const Piece& original){
 			return *this;
 }
 
-Piece& Piece::operator= (Piece&&){
-	_color = original._color;
-	_coords = original._coords;
-	_isTaken = original._isTaken;
-	_str = original._str;
-	original._str = nullptr;
-	return *this;
-}
 
-
-bool Piece::move(Coordinate end, Board* board, Game game){
+bool Piece::move(Coordinate end, Board* board, Game& game){
 /*Move this piece to the correct location on the board and return true if the move is possible. Else return false and leave the board unchanged*/
-	if(this->_checkMove()){
+	if(this->_checkMove(end, board, game)){
 		Piece *takenPiece;
 		takenPiece = board->movePiece(_coords, end);
-		takenPiece.changeIsTaken();
+		takenPiece->changeIsTaken();
 		
 		if(game.testCheck()){
 			board->movePiece(end, _coords);
 			board->setCase(end, takenPiece);
-			takenPiece.changeIsTaken();
+			takenPiece->changeIsTaken();
 			return false;
 		}
 		else{

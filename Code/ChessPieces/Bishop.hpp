@@ -14,7 +14,6 @@ class Bishop : public Piece {
 			_str[TYP] = 'b';
 		}
 		Bishop(const Bishop& original) noexcept : Piece(original){}
-		Bishop(Bishop&& original) noexcept : Piece(original){}
 		virtual ~Bishop() noexcept = default;
 		
 		Bishop& operator= (const Bishop&);

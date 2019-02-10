@@ -7,13 +7,20 @@ class Pawn : public Piece {
 
 	protected :
 		bool _moved;
+		bool _checkMove(Coordinate, Board*, Game&) override;
 
 	public :
 
-		Pawn(const char& color, char& x, unsigned& y) noexcept : Piece(color, x, y) {}
+		Pawn(const char& color, Coordinate coords) noexcept : Piece(color, coords), _moved(false) {
+			_str[TYP] = 'p';
+		}
+		Pawn(const Pawn& original) noexcept : Piece(original), _moved(original.hasMoved()) {}
+		
+		Pawn& operator= (const Pawn&);
+		
 		virtual ~Pawn() noexcept = default;
 		bool hasMoved() const {return _moved;}
-		virtual bool checkMove() const = 0; 	//A voir comment on implémente
+		bool move(Coordinate, Board*, Game&) override;
 };
 
 #endif
