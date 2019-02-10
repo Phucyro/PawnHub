@@ -15,17 +15,12 @@ int main(){
     // Accepte les joueurs dans le serveur
     Socket client_socket = binding_socket.createSocket();
 
-    std::queue<int> players; // File de filedescriptors des joueurs connectes
+    std::queue<Socket> players; // Socket des joueurs connectes
 
-    // Duc:
-    // Ici on a un probleme, parce que c'est stupide comme operation:
-    // tu gardes juste le int du file decriptor, pour plus tard re-creer un Socket
-    // sachant qu'on veut un Socket, afin d' envoyer/recevoir des messages etc
-    // apparemment push ne marche pas avec des objets, donc essaie de voir si tu as une autre solution?
-    players.push(client_socket.getFileDescriptor()); // Ajoute joueur dans file
+    players.push(client_socket); // Ajoute socket joueur dans file
 
     // Lance une partie avec les deux premiers joueurs arrives via thread
-    if (players.size() >= 1) { // 2 ne marche pas pour le moment
+    if (players.size() >= 2) {
       std::cout << "Cree une nouvelle partie" << std::endl;
       Socket player1 = Socket(players.front());
       players.pop();
