@@ -2,6 +2,8 @@
 #include "BindSocket.hpp"
 #include <queue>
 #include <thread>
+#include "LoginServer.hpp"
+
 // #include "startPartyServer.hpp"
 
 int main(){
@@ -12,24 +14,14 @@ int main(){
   binding_socket.activate();
 
   while (true){
-    // Accepte les joueurs dans le serveur
+    // Accepte l'utilisateur dans le serveur
     Socket client_socket = binding_socket.createSocket();
 
-    std::queue<Socket> players; // Socket des joueurs connectes
+    // Demande a l'identifiant de se connecter ou de s'inscrire
+    treatConnection(&client_socket);
 
-    players.push(client_socket); // Ajoute socket joueur dans file
+    std::cout << "La demande a ete traitee" << std::endl;
 
-    // Lance une partie avec les deux premiers joueurs arrives via thread
-    if (players.size() >= 1) {
-      std::cout << "Cree une nouvelle partie" << std::endl;
-      Socket player1 = players.front();
-      players.pop();
-      Socket player2 = players.front();
-      players.pop();
-
-      //std::thread partyThread(startPartyServer, &player1, new Socket());
-      // partyThread.join();
-    }
   }
 
   return 0;
