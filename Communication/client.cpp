@@ -12,8 +12,8 @@ int main(){
   socket.connectToServer("127.0.0.1");
 
   // Le joueur s'est connecte au serveur
-  bool connected = true;
-  bool sign_in = false;
+  // bool connected = true;
+  // bool sign_in = false;
 
   // L'utilisateur doit s'identifier ou creer un compte
   connectRegister(&socket);

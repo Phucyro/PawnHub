@@ -20,8 +20,8 @@ void startPartyServer(Socket* white_player, Socket* black_player){
   black_player->sendMessage("0");
 
   // 2.Envoie le plateau aux deux joueurs
-  white_player->sendBoard();
-  black_player->sendBoard();
+  white_player->sendMessage("board");
+  black_player->sendMessage("board");
 
   while (true){
     // 3.Envoie le numero du tour actuel au deux joueurs
@@ -30,20 +30,20 @@ void startPartyServer(Socket* white_player, Socket* black_player){
 
     // 4.Le joueur blanc peut jouer
     while (!valid_move){
-      white_player->receiveMove();
+      std::string move = white_player->receiveMessage();
       /* Verifie si le move est correcte */
-      white_player->sendMessage(/* Dis si move ok ou non*/);
+      white_player->sendMessage("confirmation"/* Dis si move ok ou non*/);
     }
 
     valid_move = false; // Met move = false pour le joueur noir
 
     // 5.Update le plateau chez les deux joueurs
-    white_player->sendBoard();
-    black_player->sendBoard();
+    white_player->sendMessage("board");
+    black_player->sendMessage("board");
 
     // 6.Verifie si checkmate ou partie nulle
-    white_player->sendMessage(/* Partie se termine ? */);
-    black_player->sendMessage(/* Partie se termine ? */);
+    white_player->sendMessage("status update"/* Partie se termine ? */);
+    black_player->sendMessage("status update"/* Partie se termine ? */);
     if (/* checkmate || draw */) { break; }
 
 
@@ -55,16 +55,16 @@ void startPartyServer(Socket* white_player, Socket* black_player){
 
     // 8.Le joueur noir peut jouer
     while (!valid_move){
-      black_player->receiveMove();
+      std::string move = black_player->receiveMessage();
       /* Verifie si le move est correcte */
-      black_player->sendMessage(/* Dis si move ok ou non*/);
+      black_player->sendMessage("confirmation"/* Dis si move ok ou non*/);
     }
 
     valid_move = false; // Met move = false pour le joueur noir
 
     // 9.Update le plateau chez les deux joueurs
-    white_player->sendBoard();
-    black_player->sendBoard();
+    white_player->sendMessage("board");
+    black_player->sendMessage("board");
 
     // 10.Verifie si checkmate ou partie nulle
     if (/* checkmate || draw */){ break; }
@@ -73,8 +73,8 @@ void startPartyServer(Socket* white_player, Socket* black_player){
   }
 
   // 11.Envoi des résultats
-  white_player->sendMessage(/* Envoie le gagnant */);
-  black_player->sendMessage(/* Envoie le gagnant */);
+  white_player->sendMessage("winner"/* Envoie le gagnant */);
+  black_player->sendMessage("winner"/* Envoie le gagnant */);
 
   std::cout << "Fin de la partie !" << std::endl;
 }

@@ -14,7 +14,7 @@ int main(){
   binding_socket.activate();
 
   while (true){
-    // Accepte l'utilisateur dans le serveur
+    // Accepte l'utilisateur dans le serveur et lui asssocie un socket
     Socket client_socket = binding_socket.createSocket();
 
     // Demande a l'identifiant de se connecter ou de s'inscrire
