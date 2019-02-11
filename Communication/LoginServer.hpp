@@ -51,29 +51,24 @@ void addData(const std::string file_path, std::string username, std::string pswd
 void treatConnection(Socket* socket){
   bool connected = false;
 
-  //while (!connected){
+  while (!connected){
     std::map<std::string, std::string> users_data = readData("database.txt");
-
-    for (auto elem : users_data){
-      std::cout << "Key : " << elem.first << std::endl;
-    }
 
     // Reception du type de service
     char service = socket->receiveMessage()[0];
+
+    // Reception du nom et mot de passe de l'utilisateur
     std::string username = socket->receiveMessage();
     std::string password = socket->receiveMessage();
 
-    std::cout << "Le serveur a recu la demande" << service << std::endl;
-    std::cout << "Nom recu : " << username << std::endl;
-    std::cout << "Mot de passe recu : " << password << std::endl;
 
+    // Traite la demande l'utilisateur
     switch (service){
       case '0' : // L'utilisateur veut se connecter
         if (users_data.find(username) == users_data.end()){
           socket->sendMessage("1"); // Compte inexistant
         }
-        break;
-        if (users_data[username] == password){
+        else if (users_data[username] == password){
           socket->sendMessage("0"); // Le joueur se connecte
           connected = true;
         }
@@ -82,7 +77,7 @@ void treatConnection(Socket* socket){
         }
         break;
       case '1' : // L'utilisateur veut s'inscrire
-        if (users_data.find("username") == users_data.end()){
+        if (users_data.find(username) == users_data.end()){
           // Si le nom de compte est disponible, cree le compte
           users_data[username] = password;
           addData("database.txt", username, password);
@@ -93,7 +88,7 @@ void treatConnection(Socket* socket){
           socket->sendMessage("1");
         }
     }
-  //}
+  }
 }
 
 #endif
