@@ -4,16 +4,17 @@ CXX= g++
 
 CONFIG= config.hpp
 SOCKETS= Socket.o BindSocket.o
+LOGIN= LoginServer.hpp LoginClient.hpp
 
 all: server client clean
 
 run: all
 	./server
 
-client: client.o $(SOCKETS) $(CONFIG)
+client: client.o $(SOCKETS) $(LOGIN) $(CONFIG)
 	$(CXX) $(FLAGS) -o $@ $^
 
-server: server.o $(SOCKETS) $(CONFIG)
+server: server.o $(SOCKETS) $(LOGIN) $(CONFIG)
 	$(CXX) $(FLAGS) -o $@ $^ -lpthread
 
 %.o: %.cpp %.hpp
