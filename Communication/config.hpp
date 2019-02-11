@@ -1,4 +1,6 @@
 #include <iostream>
+#include <cstring>
+
 #include <sys/socket.h>
 #include <sys/stat.h>
 #include <unistd.h>
@@ -9,3 +11,4 @@
 
 #define MYPORT 5555
 #define BACKLOG 20
+#define MSG_LENGTH 100    // 32*3+2 & extra

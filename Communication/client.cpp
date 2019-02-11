@@ -1,9 +1,12 @@
 #include "config.hpp"
+#include "Socket.hpp"
+#include "LoginClient.hpp"
+// #include "StartPartyClient.hpp"
 
 
 int main(){
   // Initialisation socket
-  int sockfd = socket(AF_INET, SOCK_STREAM, 0);
+  Socket socket;
 
   if (sockfd == -1){
     std::cerr << "[Error] Socket" << std::endl;
