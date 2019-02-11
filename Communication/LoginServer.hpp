@@ -56,11 +56,12 @@ void treatConnection(Socket* socket){
 
     // Reception du type de service
     char service = socket->receiveMessage()[0];
-
-    // Reception du nom et mot de passe de l'utilisateur
     std::string username = socket->receiveMessage();
     std::string password = socket->receiveMessage();
 
+    std::cout << "Le serveur a recu la demande" << service << std::endl;
+    std::cout << "Nom recu : " << username << std::endl;
+    std::cout << "Mot de passe recu : " << password << std::endl;
 
     // Traite la demande l'utilisateur
     switch (service){
