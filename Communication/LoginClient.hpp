@@ -5,20 +5,20 @@
 #include "Socket.hpp"
 
 
-void login(Socket* socket, std::string username, std::string pswd){
+void login(Socket* socket, std::string username, std::string password){
   /*
   Identification du joueur pour lui permettre de joueur
   Socket socket : socket du joueur qui veut se connecter
   string username : nom de compte du joueur
-  string pswd : mot de passe du compte du joueur
+  string password : mot de passe du compte du joueur
   */
-
-  // Envoie le nom et le mot de passe de l'utilisateur
-  socket->sendMessage(username);
-  socket->sendMessage(pswd);
 
   // Envoie du type de service 0 : Identification
   socket->sendMessage("0");
+
+  // Envoie le nom et le mot de passe de l'utilisateur
+  socket->sendMessage(username);
+  socket->sendMessage(password);
 
   // Recois la reponse du serveur
   char answer = socket->receiveMessage()[0];
@@ -77,9 +77,8 @@ void connectRegister(Socket* socket){
   std::string password1;
   std::string password2;
 
-
-  while (!connected){
-    std::cout << "[Option] 0 : Connexion |1 : Inscription" << std::endl;
+  //while (!connected){
+    std::cout << "[Option] 0) Connexion | 1) Inscription : ";
     std::cin >> service;
 
     switch (service){
@@ -92,16 +91,16 @@ void connectRegister(Socket* socket){
         break;
 
       case 1 : // Demande de creation d'un compte
-        std::cout << "Username :" << std::endl;
+        std::cout << "Username : ";
         std::cin >> username;
-        std::cout << "Password :" << std::endl;
+        std::cout << "Password : ";
         std::cin >> password1;
-        std::cout << "Password (confirmation):" << std::endl;
+        std::cout << "Password (confirmation) : ";
         std::cin >> password2;
         createAccount(socket, username, password1, password2);
         break;
     }
-  }
+  //}
 }
 
 

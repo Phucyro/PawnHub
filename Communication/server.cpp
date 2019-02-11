@@ -19,8 +19,7 @@ int main(){
 
     // Demande a l'identifiant de se connecter ou de s'inscrire
     treatConnection(&client_socket);
-
-    std::cout << "La demande a ete traitee" << std::endl;
+    std::cout << "Un joueur s'est identifie" << std::endl;
 
   }
 
