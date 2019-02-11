@@ -78,7 +78,7 @@ void connectRegister(Socket* socket){
   std::string password2;
 
 
-  while (!connected){
+  //while (!connected){
     std::cout << "[Option] 0 : Connexion |1 : Inscription" << std::endl;
     std::cin >> service;
 
@@ -101,7 +101,7 @@ void connectRegister(Socket* socket){
         createAccount(socket, username, password1, password2);
         break;
     }
-  }
+  //}
 }
 
 
