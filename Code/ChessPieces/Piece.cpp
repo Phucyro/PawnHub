@@ -24,7 +24,7 @@ bool Piece::move(Coordinate end, Board* board, Game& game){
 	if(game.testCheck()){
 		board->movePiece(end, _coords);
 		board->setCase(end, takenPiece);
-		takenPiece->changeIsTaken(game.getTurn(), this);
+		takenPiece->changeIsTaken(game.getTurn(), this, board);
 		return false;
 	}
 	_coords = end;
