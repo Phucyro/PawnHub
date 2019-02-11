@@ -8,6 +8,7 @@ each piece 3 characters: representation symbol + position in two characters
 separation for white and black by !
 padding with #
 */
+#define CHAR_NUM 3
 
 std::map<char, std::string> pieceMap = {
   {'p', "Pawn"},
@@ -30,13 +31,13 @@ void stringToBoard(std::string message) {
   std::string colour = "white";
   while (message[a] != '!'){
     separatePieces(a, message, colour);
-    a += 3;
+    a += CHAR_NUM;
   }
   a += 1;
   colour = "black";
   while (message[a] != '#'){
     separatePieces(a, message, colour);
-    a += 3;
+    a += CHAR_NUM;
   }
 }
 

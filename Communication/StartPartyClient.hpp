@@ -19,7 +19,7 @@ void startPartyClient(Socket* player){
   play_first = (player->receiveMessage() == "1");
 
   // 2.Recois le plateau
-  player->receiveBoard();
+  std::string board = player->receiveMessage();
 
   while (true){
     // 3.Recupere le numero du tour actuel
@@ -29,7 +29,7 @@ void startPartyClient(Socket* player){
     if (turn % 2 == play_first){
       // 4.Le joueur peut jouer
       while (!valid_move){
-        player->sendMessage(/* Move du joueur*/);
+        player->sendMessage("move"/* Move du joueur*/);
         valid_move = (player->receiveMessage() == "1");
       }
 
@@ -37,7 +37,7 @@ void startPartyClient(Socket* player){
     }
 
     // 5.Update le plateau du joueurs
-    player->receiveBoard();
+    std::string board = player->receiveMessage();
 
     // 6.Verifie s'il y a eu checkmate ou partie nouvelle
     if (player->receiveMessage() == "1"){ break; }

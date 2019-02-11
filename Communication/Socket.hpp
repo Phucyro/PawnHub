@@ -8,10 +8,6 @@ private:
   int file_descriptor;
 
 public:
-  void sendMessage(std::string);
-  std::string receiveMessage();
-
-public:
   Socket();
   Socket(int);
   ~Socket();
@@ -19,11 +15,8 @@ public:
   int getFileDescriptor();
   void connectToServer(std::string);
 
-  void sendBoard();
-  void receiveBoard();
-
-  void sendMove();
-  void receiveMove();
+  void sendMessage(std::string);
+  std::string receiveMessage();
 };
 
 #endif
