@@ -18,8 +18,9 @@ int main(){
     Socket client_socket = binding_socket.createSocket();
 
     // Demande a l'identifiant de se connecter ou de s'inscrire
-    treatConnection(&client_socket);
-    std::cout << "Un joueur s'est identifie" << std::endl;
+    std::thread connection_thread(treatConnection, &client_socket);
+    connection_thread.join();
+    std::cout << "Un joueur s'est identifi'e" << std::endl;
 
   }
 
