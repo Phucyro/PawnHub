@@ -4,11 +4,11 @@
 #include <ncurses.h>
 #include <iostream>
 #include "constants.hpp"
+#include <string>
 
 /**
 TO DO:
 -Tour du joueur
--Envoi mouvement (position debut/fin)
 -Parseur positions pions
 -Mise a jour du board
 **/
@@ -17,9 +17,6 @@ class Board
 {
 
 protected:
-  WINDOW* game_win;
-  WINDOW* vcoord_win;
-  WINDOW* hcoord_win;
   WINDOW* infos_win;
 
   void draw_rectangle(int x1, int y1, int x2, int y2);
@@ -35,6 +32,11 @@ public:
 
   void init_ncurses();
   void init_windows();
+
+  void move(int x1, int y1, int x2, int y2, std::string pawn_type);
+  void update_board(std::string pawns_list);
+
+  void refresh_board();
 
 
 private:

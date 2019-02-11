@@ -1,20 +1,18 @@
 #include "board.hpp"
 
-Board::Board(): game_win(nullptr), vcoord_win(nullptr), hcoord_win(nullptr), infos_win(nullptr), columns(8), lines(8)
+Board::Board(): infos_win(nullptr), columns(8), lines(8)
 {
 
 }
 
-Board::Board(int line_count, int col_count): game_win(nullptr), vcoord_win(nullptr), hcoord_win(nullptr), infos_win(nullptr), columns(col_count), lines(line_count)
+Board::Board(int line_count, int col_count): infos_win(nullptr), columns(col_count), lines(line_count)
 {
 
 }
 
 Board::~Board()
 {
-  delwin(game_win);
-  delwin(vcoord_win);
-  delwin(hcoord_win);
+
   delwin(infos_win);
 
   endwin();
@@ -55,6 +53,12 @@ void Board::init_windows()
 
   refresh();
   wrefresh(infos_win);
+  getch();
+  endwin();
+
+  move(0,0,0,2, "T");
+
+  refresh_board();
   getch();
   endwin();
 }
@@ -137,7 +141,6 @@ void Board::draw_pieces()
 
 }
 
-
 void Board::draw_rectangle(int x1, int y1, int x2, int y2)
 /** permet de dessiner des rectangles de (x1,y1) vers (x2, y2) **/
 {
@@ -149,4 +152,28 @@ void Board::draw_rectangle(int x1, int y1, int x2, int y2)
   mvaddch(y2, x1, ACS_LLCORNER);
   mvaddch(y1, x2, ACS_URCORNER);
   mvaddch(y2, x2, ACS_LRCORNER);
+}
+
+void Board::move(int x1, int y1, int x2, int y2, std::string pawn_type)
+{
+  mvprintw(1+3*x1, 1+3*y1, " ");
+
+  const char* pawn = pawn_type.c_str();
+
+  mvprintw(1+3*y2, 1+3*x2, pawn);
+
+  refresh_board();
+}
+
+
+void Board::update_board(std::string pawns_list)
+{
+
+}
+
+void Board::refresh_board()
+/** refresh le board (a faire apres chaque modification) **/
+{
+  refresh();
+  wrefresh(infos_win);
 }
