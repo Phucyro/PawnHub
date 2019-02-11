@@ -10,12 +10,17 @@ class Knight : public Piece {
 
 	public :
 
-		Knight(const char& color, Coordinate coords) noexcept : Piece(color, coords){
+		Knight(const char& color, Coordinate& coords) noexcept : Piece(color, coords){
 			_str[TYP] = 'h';
 		}
+		constexpr Knight(const char color, const char column , const char row) : Piece(color,column,row){
+			_str[TYP] = 'h';
+		}
+
+
 		Knight(const Knight& original) : Piece(original){}
 		virtual ~Knight() noexcept = default;
-		
+
 		Knight& operator= (const Knight&);
 };
 

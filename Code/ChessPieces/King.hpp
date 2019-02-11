@@ -10,14 +10,18 @@ class King : public Piece {
 		bool _checkMove(Coordinate, Board*, Game&) override;
 
 	public :
-		King(const char& color, Coordinate coords) noexcept : Piece(color, coords), _moved(false) {
+		King(const char& color, Coordinate& coords) noexcept : Piece(color, coords), _moved(false) {
 			_str[TYP] = 'k';
 		}
+		constexpr King(const char color, const char column , const char row) : Piece(color,column,row), _moved(false){
+			_str[TYP] = 'k';
+		}
+
 		King(const King& original) noexcept : Piece(original), _moved(original.hasMoved()) {}
 		virtual ~King() noexcept = default;
-		
+
 		King& operator= (const King&);
-		
+
 		bool hasMoved() const {return _moved;}
 		bool move(Coordinate, Board*, Game&) override;
 };
