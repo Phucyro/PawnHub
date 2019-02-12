@@ -10,14 +10,14 @@ class Game
 	Player *_player1, *_player2, *_winner;
 	unsigned _turn;
 	Board _board;
-	Piece* _pieces;
+	Piece** _pieces;
 	unsigned _piecesAmount;
 	
 	virtual void _initBoard() = 0;
 	virtual void _nextTurn() = 0;
 	virtual bool _isFinish() = 0;
 	
-	Game(Piece*, unsigned);
+	Game(Piece**, unsigned);
 	Game(const Game&) = delete;
 	Game(Game&&);
 	
