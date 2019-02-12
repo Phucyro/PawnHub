@@ -25,17 +25,24 @@ bool Pawn::_checkMove(Coordinate end, Board* board, Game& game){
 			if (this->hasMoved()) return false;
 			if (board->getCase(end)) return false;
 		}
-		if (board->getCase(Coordinate(_coords.getRealColumn(), _coords.getRealRow()+1))) return false;
+		if (board->getCase(Coordinate(_coords.getRealColumn(), _coords.getRealRow() + 1))) return false;
 	}
 	return true;
 }
 
 bool Pawn::move(Coordinate end, Board* board, Game& game){
-	if(this->Piece::move(end, board, game)){
+	if (this->Piece::move(end, board, game)){
+		int rowMove = int(end.getRealRow()) - int(_coords.getRealRow());
+		if (rowMove == 2) _ghost = new GhostPawn(getColor(), Coordinate(_coords.getRealColumn(), _coords.getRealRow() - 1), game.getTurn(), this);
+		if (_coords.getRealRow() == 0 || _coords.getRealRow() == board->getRow() - 1) _promote();
 		_moved = true;
 		return true;
 	}
 	else return false;
+}
+
+void Pawn::_promote(){
+	//TODO
 }
 
 #endif
