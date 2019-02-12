@@ -2,6 +2,7 @@
 #define __BISHOP__HPP__
 
 #include "Piece.hpp"
+#include "Pawn.hpp"
 
 
 class Bishop : public Piece {
