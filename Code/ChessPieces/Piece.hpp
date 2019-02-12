@@ -44,7 +44,7 @@ class Piece {
 		virtual ~Piece() = default;
 		inline char getColor() const {return _color;}
     virtual char* toString() {return _str;}
-		virtual void changeIsTaken(unsigned turn, Piece*){_isTaken = !_isTaken;}
+		virtual void changeIsTaken(unsigned turn, Piece*, Board*){_isTaken = !_isTaken;}
 		bool isTaken() const {return _isTaken;}
 
 };
