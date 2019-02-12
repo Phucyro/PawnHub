@@ -37,6 +37,10 @@ std::map<std::string, std::string> readData(const std::string file_path){
 }
 
 void addData(const std::string file_path, std::string username, std::string pswd){
+  /*
+  Ajoute de nouvelles donnees (username, password) dans le fichier text
+  */
+
   std::ofstream filestream(file_path.c_str(), std::ios::app);
 
   if (filestream){
@@ -49,19 +53,15 @@ void addData(const std::string file_path, std::string username, std::string pswd
 
 
 void treatConnection(Socket* socket){
-  bool connected = false;
+  bool user_connected = false; // L'utilisateur s'est identifie
 
-  while (!connected){
+  while (!user_connected){
     std::map<std::string, std::string> users_data = readData("database.txt");
 
     // Reception du type de service
     char service = socket->receiveMessage()[0];
     std::string username = socket->receiveMessage();
     std::string password = socket->receiveMessage();
-
-    std::cout << "Le serveur a recu la demande" << service << std::endl;
-    std::cout << "Nom recu : " << username << std::endl;
-    std::cout << "Mot de passe recu : " << password << std::endl;
 
     // Traite la demande l'utilisateur
     switch (service){
@@ -71,7 +71,7 @@ void treatConnection(Socket* socket){
         }
         else if (users_data[username] == password){
           socket->sendMessage("0"); // Le joueur se connecte
-          connected = true;
+          user_connected = true;
         }
         else {
           socket->sendMessage("2"); // Mauvais mot de passe
@@ -90,6 +90,7 @@ void treatConnection(Socket* socket){
         }
     }
   }
+  std::cout << "Un utilisateur s'est identifie" << std::endl;
 }
 
 #endif
