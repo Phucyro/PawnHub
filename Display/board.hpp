@@ -6,6 +6,11 @@
 #include "constants.hpp"
 #include <string>
 
+// permet de pas faire +3 tout le temps
+// bonus: plus facile a changer si on veut modifier la taille
+#define SIDE_LENGTH 2   //seule utilisation: dans init_windows, appel de draw_rectangle
+#define OFFSET (SIDE_LENGTH+1)
+
 /**
 TO DO:
 -Tour du joueur

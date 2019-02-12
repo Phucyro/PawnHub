@@ -1,4 +1,5 @@
 #include "board.hpp"
+#include "BoardParsing.hpp"
 
 Board::Board(): infos_win(nullptr), columns(8), lines(8)
 {
@@ -31,20 +32,19 @@ void Board::init_ncurses()
 }
 
 
-
 void Board::init_windows()
 /**Initialise le board**/
 {
-  int board_height = lines*3;
-  int board_width = columns*3;
+  int board_height = lines*OFFSET;
+  int board_width = columns*OFFSET;
 
   infos_win = newwin(board_height/2, board_width, 0, board_width+4);
   box(infos_win,0,0);
 
-  for (int i=0; i<24; i+=3)
-    for (int j=0; j<24; j+=3)
+  for (int i=0; i<24; i+=OFFSET)
+    for (int j=0; j<24; j+=OFFSET)
     {
-      draw_rectangle(i,j,i+2,j+2);
+      draw_rectangle(i,j,i+SIDE_LENGTH,j+SIDE_LENGTH);
     }
 
   draw_pieces();
@@ -85,23 +85,31 @@ void Board::draw_coordinates()
 {
   for (int i=0; i<lines; i++)
   {
-    mvprintw(1+3*i,25 , "%d", i+1);
+    mvprintw(1+(OFFSET*i),25 , "%d", i+1);
   }
 
-  mvprintw(24, 1, "A");
-  mvprintw(24, 4, "B");
-  mvprintw(24, 7, "C");
-  mvprintw(24, 10, "C");
-  mvprintw(24, 13, "D");
-  mvprintw(24, 16, "E");
-  mvprintw(24, 19, "F");
-  mvprintw(24, 22, "G");
+  for (int i=0; i<columns; i++)
+  {
+    mvprintw(24, 1+(OFFSET*i), "%c", 'A'+i);
+  }
+
+  // mvprintw(24, 1, "A");
+  // mvprintw(24, 4, "B");
+  // mvprintw(24, 7, "C");
+  // mvprintw(24, 10, "C");
+  // mvprintw(24, 13, "D");
+  // mvprintw(24, 16, "E");
+  // mvprintw(24, 19, "F");
+  // mvprintw(24, 22, "G");
 
 }
 
 void Board::draw_pieces()
 /** Dessine les pions sur le board de depart **/
 {
+  // J'ai un affichage vaguement chelou mais j'y suis presque!
+  // std::string test = boardToString();
+  // stringToBoard(test);
 
   mvprintw(1,1, "T");
   mvprintw(1,4, "K");

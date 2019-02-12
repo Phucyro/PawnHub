@@ -1,7 +1,9 @@
 #include <iostream>
 #include <string>
 #include <map>
+#include <ncurses.h>
 #include "Coordinate.hpp"
+#include "board.hpp"
 
 
 #ifndef _BOARDPARSE_H_
@@ -14,21 +16,27 @@ padding with #
 */
 #define CHAR_NUM 3
 
-std::map<char, std::string> pieceMap = {
-  {'p', "P"},
-  {'r', "R"},
-  {'h', "H"},
-  {'b', "B"},
-  {'q', "Q"},
-  {'k', "K"}
+std::map<const char,const char> pieceMap = {
+  {'p', 'P'},
+  {'r', 'R'},
+  {'h', 'H'},
+  {'b', 'B'},
+  {'q', 'Q'},
+  {'k', 'K'}
 };
 
 void separatePieces(unsigned int a, std::string message, std::string colour) {
-  std::cout << "Piece : " << pieceMap[message[a]];
+  // std::cout << "Piece : " << pieceMap[message[a]];
+  // Coordinate coor(message[a+1], message[a+2]);
+  // std::cout << ", Position : " << coor.getAbstractColumn() << coor.getAbstractRow();
+  // std::cout << ", Position : " << coor.getRealColumn() << coor.getRealRow();
+  // std::cout << ", is " << colour << "." << std::endl;
+  const char piece = pieceMap[message[a]];
+  const char* piecename = &piece;
   Coordinate coor(message[a+1], message[a+2]);
-  std::cout << ", Position : " << coor.getAbstractColumn() << coor.getAbstractRow();
-  std::cout << ", Position : " << coor.getRealColumn() << coor.getRealRow();
-  std::cout << ", is " << colour << "." << std::endl;
+  int column = coor.getRealColumn();
+  int line = coor.getRealRow();
+  mvprintw(1+(line*OFFSET), 1+(column*OFFSET), piecename);
 }
 
 void stringToBoard(std::string message) {
@@ -48,7 +56,7 @@ void stringToBoard(std::string message) {
 }
 
 std::string boardToString() {
-  std::string msg = "pA2hA4rD5qC9kE1bF8!bA8qG4kD7#";
+  std::string msg = "pA2hA4rD5qC7kE1bF8!bA8qG4kD7#";
   return msg;
 }
 
