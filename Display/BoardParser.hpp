@@ -13,10 +13,10 @@ padding with #
 std::map<char, std::string> pieceMap = {
   {'p', "Pawn"},
   {'r', "Rook"},
-  {'k', "Knight"},
+  {'h', "Knight"},
   {'b', "Bishop"},
   {'q', "Queen"},
-  {'K', "King"}
+  {'k', "King"}
 };
 
 void separatePieces(unsigned int a, std::string message, std::string colour) {
