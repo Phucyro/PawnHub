@@ -7,8 +7,7 @@
 
 #define ROW 0 // row
 #define COL 1 // column
-#define PAI 2 // color
-#define TYP 3 // type
+#define TYP 2 // type
 
 class Piece {
 
@@ -17,31 +16,35 @@ class Piece {
 		char 				_color  ;		// 'w' ou 'b'
 	  Coordinate 	_coords ; 	// coords of Piece
     bool 				_isTaken; 	// tells if piece has been taken
-		char 				_str[4]	; 	// string containing info about piece
+		char 				_str[3]	; 	// string containing info about piece
 
-		constexpr Piece(const char color,Coordinate coords) : _color(color),_coords(coords),_isTaken(false),_str() {
+		constexpr Piece(const char color, const char column, const char row) : _color(color), _coords(column, row){
 			_str[ROW] = coords.getAbstractRow();
 			_str[COL] = coords.getAbstractColumn();
-			_str[PAI] = color;
 		}
-		
+
+		Piece(const char& color,Coordinate& coords) : _color(color),_coords(coords),_isTaken(false),_str() {
+			_str[ROW] = coords.getAbstractRow();
+			_str[COL] = coords.getAbstractColumn();
+		}
+
 		Piece(const Piece& original) : _color(original._color), _coords(original._coords), _isTaken(original._isTaken), _str() {
 			for (int i = 0; i < 4; i++){
 				_str[i] = original._str[i];
 			}
 		}
-		
-		
+
+
 		virtual bool _checkMove(Coordinate, Board*, Game&) = 0;
 
 	public :
-		
+
 		Piece& operator= (const Piece&);
     virtual bool move(Coordinate, Board*, Game&);
 		virtual ~Piece() = default;
 		inline char getColor() const {return _color;}
     virtual char* toString() {return _str;}
-		virtual void changeIsTaken(){_isTaken = !_isTaken;}
+		virtual void changeIsTaken(unsigned turn, Piece*, Board*){_isTaken = !_isTaken;}
 		bool isTaken() const {return _isTaken;}
 
 };
