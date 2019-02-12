@@ -10,7 +10,7 @@ GhostPawn& GhostPawn::operator= (const GhostPawn& original){
   _target = original._target;
 }
 
-void GhostPawn::changeIsTaken(unsigned turn,Piece taker){
+void GhostPawn::changeIsTaken(unsigned turn,Piece taker, Board* board){
   if (_isActive(turn) && dynamic_cast<Pawn*>(taker)){
     if(!_isTaken){
 
