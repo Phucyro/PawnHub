@@ -1,5 +1,5 @@
 #ifndef __ROOK__CPP__
-#define __ROOK__CPP__ 
+#define __ROOK__CPP__
 
 #include <cmath>
 #include "Rook.hpp"
@@ -15,10 +15,10 @@ bool Rook::_checkMove(Coordinate end, Board* board, Game& game){
 	int rowDirection = rowMove/std::abs(rowMove);
 	int columnMove = int(end.getRealColumn()) - int(_coords.getRealColumn());
 	int columnDirection = columnMove/std::abs(columnMove);
-	
+
 	if (rowMove){
 		if (columnMove) return false;
-		
+
 		// check if there is no piece in the way
 		for (int i = int(_coords.getRealRow()) + rowDirection; i != end.getRealRow(); i += rowDirection){
 			if (board->getCase(Coordinate(end.getRealColumn(), unsigned(i)))) return false;

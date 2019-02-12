@@ -7,7 +7,7 @@ class King : public Piece {
 
 	protected :
 		bool _moved;
-		bool _checkMove(Coordinate, Board*, Game&) override;
+		bool _check;
 
 	public :
 		King(const char& color, Coordinate& coords) noexcept : Piece(color, coords), _moved(false) {
@@ -24,6 +24,7 @@ class King : public Piece {
 
 		bool hasMoved() const {return _moved;}
 		bool move(Coordinate, Board*, Game&) override;
+		bool _checkMove(Coordinate, Board*, Game&) override;
 };
 
 #endif
