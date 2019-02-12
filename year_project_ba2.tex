@@ -33,6 +33,23 @@
 	\section{Introduction}
 		\subsection{Description du Projet}
 			\paragraph{}Ce projet aura pour but de recréer un grand classique des jeux de plateau: les échecs. Le jeu sera jouable via un mode multijoueurs. Le joueur pourra jouer au mode classique ou à une de ses variantes telles que  {\itshape AliceChess, DarkChess} et {\itshape HordeChess} que nous décrirons plus tard. De plus, il aura également la possibilité de créer un compte à partir duquel il pourra effectuer plusieurs actions qui seront détaillées ci-dessous. Néanmoins, le joueur pourra lancer une partie en tant que {\itshape visiteur} mais ne bénéficiera pas des avantages liés à la possession d'un compte.
+			\subsection{Fonctionnement du Jeu d'Échec}
+			\subsubsection{Règles du Jeu\footnote{Wikipedia}} Chaque joueur possède au départ un roi, une dame, deux tours, deux fous, deux cavaliers et huit pions. Le but du jeu est d'infliger à son adversaire un échec et mat, une situation dans laquelle le roi d'un joueur est en prise sans qu'il soit possible d'y remédier.
+			\subsubsection{Les Pièces}
+			\begin{description}
+		  \item[Le Pion :] Depuis sa position initiale, le pion peut avancer d'une ou 2 cases en avant, ensuite d'une case en avant uniquement. Néanmoins, le pion prend une autre pièce en diagonale. Également, lorsque le pion arrive à la dernière rangée, il effectue une promotion et est remplacé par n'importe quelle autre pièce, à part le roi, au choix du joueur. De plus, il peut également effectuer la prise en passant qui est expliquée dans le glossaire.
+			\item[La Tour :] La tour peut se déplacer d'un nombre quelconque de cases sur les rangées et les colonnes.
+			\item[Le Fou :] Le fou peut se déplacer uniquement en diagonale d'un nombre quelconque de cases.
+			\item[La Reine :] La reine peut se déplacer dans toutes les directions d'un nombre quelconque de cases.
+			\item[Le Roi :] Le roi peut se déplacer dans toutes les directions d'une case uniquement. Il peut également effectuer un roque qui est expliqué dans le glossaire.
+			\item[Le Cavalier :] Le cavalier se déplace en "L", voir image ci-dessous.
+			\begin{figure}[b]
+			\includegraphics[scale=0.50]{pieces_move.png}
+			\caption{Image provenant de Wikipedia}
+			\end{figure}
+			\end{description}
+			\clearpage
+			
 			\subsection{Les Modes de Jeu}
 				\subsubsection{Classique}
 					\paragraph{}Le jeu d'échecs classique, où le but est de mettre le roi adverse en échec sans qu'il ait la possibilité au tour suivant de ne plus l'être.
@@ -57,6 +74,14 @@
 		\item[AliceChess :] Variante du jeu d'échec jouée en utilisant 2 plateaux. Lorsqu'un coup est joué, la pièce est déplacée à la case correspondante mais dans l'autre plateau. À part cela, le jeu se déroule selon les règles habituelles du jeu d'échecs .
 		\item[DarkChess :] Variante du jeu d'échec où le joueur ne voit que ses propres pièces et les cases où il peut légalement les déplacer.
 		\item[HordeChess :] Variante du jeu d'échec où un joueur possède 32 pions et l'autre la collection standard du jeu d'échec traditionnel.
+		\item[Le Roque :] Le roque consiste à déplacer en un seul coup le roi et l'une des tours. On déplace d'abord le roi de deux cases vers la tour puis, avec la même main, on fait passer la tour de l'autre côté, juste à côté du roi (voir le diagramme ci-dessous). Les conditions suivantes sont nécessaires pour pouvoir roquer : aucune pièce ne se trouve entre le roi et la tour concernée, le roi et la tour concernée n'ont encore jamais joué et le roi n'est pas en échec ;
+la case traversée par le roi n'est contrôlée par aucune pièce adverse\footnote{source Wikipedia}.
+		\item[La Prise en Passant:] Au jeu d’échecs, la prise en passant est une possibilité particulière de capturer un pion. Lorsqu’un pion se trouve sur la cinquième rangée1 et que l’adversaire avance de deux cases un pion d’une colonne voisine (les deux pions se retrouvent alors côte-à-côte sur la même rangée), le premier pion peut prendre le second. Pour effectuer la prise en passant, le joueur avance son pion en diagonale sur la sixième rangée et la colonne du pion adverse, et ôte ce dernier de l’échiquier\footnote{source Wikipedia}
+		\begin{figure}[b]
+		\includegraphics[scale=1]{roque_prise_passant.png}
+		\caption{Image provenant de Wikipedia}
+		\end{figure}
+		
 		\end{description}
 		\clearpage
 
@@ -352,3 +377,4 @@ Le jeu se joue en réseau. Une connexion internet est donc requise. \\
 \end{document}
 
 
+o
