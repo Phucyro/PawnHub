@@ -2,21 +2,23 @@ FLAGS= -std=c++14 -ggdb3 -Wpedantic -Wall -Wextra -Wconversion -Wstrict-null-sen
 
 all: mainTest
 
-mainTest: testCoordinate.o Game.o testBoard.o Board.o Coordinate.o mainTest.cpp Piece.hpp Player.hpp
-	g++ $(FLAGS) testBoard.o Piece.hpp Coordinate.o Board.o Game.o Player.hpp testCoordinate.o mainTest.cpp -o mainTest -lcppunit
+mainTest: testCoordinate.o testBoard.o Board.o Coordinate.o Game.o mainTest.cpp PieceTest.hpp Player.hpp
+	g++ $(FLAGS) testBoard.o PieceTest.hpp Coordinate.o Board.o Player.hpp testCoordinate.o Game.o mainTest.cpp -o mainTest -lcppunit
 
 testCoordinate.o: testCoordinate.cpp testCoordinate.hpp Coordinate.hpp
 	g++ -c $(FLAGS) testCoordinate.cpp -lcppunit
 
-testBoard.o: testBoard.cpp testBoard.hpp Piece.hpp Board.hpp Coordinate.hpp
+testBoard.o: testBoard.cpp testBoard.hpp PieceTest.hpp Board.hpp Coordinate.hpp
 	g++ -c $(FLAGS) testBoard.cpp -lcppunit
 
 
 Coordinate.o: Coordinate.cpp Coordinate.hpp
 	g++ -c $(FLAGS) Coordinate.cpp
 
-Board.o: Board.cpp Board.hpp Coordinate.hpp Piece.hpp
+Board.o: Board.cpp Board.hpp Coordinate.hpp PieceTest.hpp
 	g++ -c $(FLAGS) Board.cpp
 
-Game.o: Board.hpp Coordinate.hpp Piece.hpp Player.hpp Game.hpp Game.cpp
+Game.o: Board.hpp Coordinate.hpp PieceTest.hpp Player.hpp Game.hpp Game.cpp
 	g++ -c $(FLAGS) Game.cpp
+
+

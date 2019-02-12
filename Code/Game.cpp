@@ -4,7 +4,7 @@
 #include"Game.hpp"
 
 //constructor
-Game::Game(Piece* pieces, unsigned piecesAmount):
+Game::Game(Piece** pieces, unsigned piecesAmount):
 	_player1(nullptr),
 	_player2(nullptr),
 	_winner(nullptr),

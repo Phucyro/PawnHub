@@ -2,6 +2,7 @@
 #define __BISHOP__HPP__
 
 #include "Piece.hpp"
+#include "Pawn.hpp"
 
 
 class Bishop : public Piece {
@@ -17,6 +18,9 @@ class Bishop : public Piece {
 			_str[TYP] = 'b';
 		}
 		Bishop(const Bishop& original) noexcept : Piece(original){}
+		explicit Bishop(const Pawn& original) noexcept : Piece(original){
+			_str[TYP] = 'b';
+		}
 		virtual ~Bishop() noexcept = default;
 
 		Bishop& operator= (const Bishop&);

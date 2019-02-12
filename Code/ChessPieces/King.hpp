@@ -2,6 +2,7 @@
 #define __KING__HPP__
 
 #include "Piece.hpp"
+#include "Pawn.hpp"
 
 class King : public Piece {
 
@@ -18,6 +19,9 @@ class King : public Piece {
 		}
 
 		King(const King& original) noexcept : Piece(original), _moved(original.hasMoved()) {}
+		explicit King(const Pawn& original) noexcept : Piece(original), _moved(original.hasMoved(){
+			_str[TYP] = 'k';
+		}
 		virtual ~King() noexcept = default;
 
 		King& operator= (const King&);

@@ -3,6 +3,14 @@
 
 #include "Classic.hpp"
 
+Classic::~Classic(){
+	for(int i = _piecesAmount - 1; i>=0; i--)
+	{
+		delete _pieces[i];
+	}
+	delete[] _pieces;
+}
+
 void Classic::_initBoard() {
 
 	//White part
