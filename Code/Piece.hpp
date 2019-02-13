@@ -36,8 +36,8 @@ class Piece {
 		}
 
 		virtual bool _checkMove(Coordinate, Board*, Game&) = 0;
-		virtual void _doMove(Coordinate, Board*);
-		virtual void _reverseMove(Coordinate, Board*, Piece*);
+		virtual Piece* _doMove(Coordinate, Board*,Game&);
+		virtual void _reverseMove(Coordinate, Board*, Game&, Piece*);
 		inline bool _isPlaceFree(Coordinate place ,Board* board){Piece* piece = board->getCase(place); return (!piece) || piece->_str[TYP] == 'g';}
 
 	public :

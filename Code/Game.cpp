@@ -9,9 +9,12 @@ Game::Game(Piece** pieces, unsigned piecesAmount):
 	_player2(nullptr),
 	_winner(nullptr),
 	_turn(0),
-	_board(Board()),
+	_board(nullptr),
 	_pieces(pieces),
-	_piecesAmount(piecesAmount){}
+	_piecesAmount(piecesAmount)
+{
+	_board = new Board();
+}
 
 
 
@@ -23,7 +26,10 @@ Game::Game(Game&& original):
 	_turn(original._turn),
 	_board(original._board),
 	_pieces(original._pieces),
-	_piecesAmount(original._piecesAmount){}
+	_piecesAmount(original._piecesAmount)
+{
+	original._board = nullptr;
+}
 
 
 
@@ -34,6 +40,7 @@ Game::~Game()
 	_player2 = nullptr;
 	_winner = nullptr;
 	_pieces = nullptr;
+	delete _board;
 }
 
 
@@ -45,6 +52,7 @@ Game& Game::operator= (Game&& original)
 	_winner = original._winner;
 	_turn = original._turn;
 	_board = original._board;
+	original._board = nullptr;
 	_pieces = original._pieces;
 	_piecesAmount = original._piecesAmount;
 	return *this;
