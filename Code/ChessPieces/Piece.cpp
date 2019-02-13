@@ -14,17 +14,26 @@ Piece& Piece::operator= (const Piece& original){
 }
 
 
-bool Piece::move(Coordinate end, Board* board, Game& game){
-/*Move this piece to the correct location on the board and return true if the move is possible. Else return false and leave the board unchanged*/
-	if(!(this->_checkMove(end, board, game))) return false;
+Piece* Piece::_doMove(Coordinate end, Board* board){
 	Piece *takenPiece;
 	takenPiece = board->movePiece(_coords, end);
 	takenPiece->changeIsTaken();
+	return takenPiece
+}
+
+void Piece::_reverseMove(Coordinate end, Board* board, Piece* takenPiece){
+	board->movePiece(end, _coords);
+	board->setCase(end, takenPiece);
+	takenPiece->changeIsTaken(game.getTurn(), this, board);
+}
+
+bool Piece::move(Coordinate end, Board* board, Game& game){
+/*Move this piece to the correct location on the board and return true if the move is possible. Else return false and leave the board unchanged*/
+	if(!(this->_checkMove(end, board, game))) return false;
+	Piece* takenPiece = this->_doMove(end, board);
 
 	if(game.testCheck()){
-		board->movePiece(end, _coords);
-		board->setCase(end, takenPiece);
-		takenPiece->changeIsTaken(game.getTurn(), this, board);
+		this->_reverseMove(end, board, takenPiece);
 		return false;
 	}
 	_coords = end;
