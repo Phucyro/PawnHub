@@ -1,9 +1,7 @@
 #include "config.hpp"
 #include "BindSocket.hpp"
-#include <queue>
 #include <thread>
-#include <mutex>
-#include "LoginServer.hpp"
+#include "treatConnection.hpp"
 
 // #include "startPartyServer.hpp"
 
@@ -18,12 +16,9 @@ int main(){
     // Accepte l'utilisateur dans le serveur et lui asssocie un socket
     Socket client_socket = binding_socket.createSocket();
 
-    //Mutex pour l'adcces au fichier database.txt
-    /* std::mutex mutex; */
-
     // Demande a l'identifiant de se connecter ou de s'inscrire
     std::thread thread(treatConnection, &client_socket);
-    thread.join();
+    thread.join(); // a deplacer ou meme enlever si possible
   }
 
   return 0;
