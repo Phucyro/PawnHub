@@ -36,6 +36,8 @@ class Piece {
 
 
 		virtual bool _checkMove(Coordinate, Board*, Game&) = 0;
+		virtual void _doMove(Coordinate, Board*);
+		virtual void _reverseMove(Coordinate, Board*, Piece*);
 
 	public :
 
