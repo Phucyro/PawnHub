@@ -13,7 +13,7 @@ Pawn& Pawn::operator= (const Pawn& original){
 bool Pawn::_checkMove(Coordinate end, Board* board, Game& game){
 	int rowMove = int(end.getRealRow()) - int(_coords.getRealRow());
 	int columnMove = int(end.getRealColumn()) - int(_coords.getRealColumn());
-
+	
 	if (std::abs(columnMove) > 1) return false;
 	if (std::abs(columnMove) == 1){
 		if (rowMove != 1) return false;
