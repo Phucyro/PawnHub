@@ -2,9 +2,9 @@ FLAGS= -std=c++17 -ggdb3 -Wpedantic -Wall -Wextra -Wconversion -Wstrict-null-sen
 FLAGS2= -std=c++17 -masm=intel -fconcepts -mlong-double-128 -ggdb3 -Wpedantic -Wall -Wextra -Wconversion -Wsign-conversion -Weffc++ -Wstrict-null-sentinel -Wold-style-cast -Wnoexcept -Wctor-dtor-privacy -Woverloaded-virtual -Wsign-promo -Wzero-as-null-pointer-constant -Wsuggest-final-types -Wsuggest-final-methods -Wsuggest-override -lquadmath
 
 
-all: mainTest
-mainTest: testBishop.o testCoordinate.o testBoard.o Board.o Coordinate.o Game.o mainTest.cpp Piece.o Player.hpp Bishop.o Piece.o
-	g++ $(FLAGS) testBoard.o Piece.o Coordinate.o Board.o Player.hpp testCoordinate.o testBishop.o Game.o Bishop.o Piece.o mainTest.cpp -o mainTest -lcppunit
+all: mainTest clean run
+mainTest: testBishop.o testCoordinate.o testBoard.o Board.o Coordinate.o Game.o mainTest.cpp Piece.o Player.hpp Bishop.o
+	g++ $(FLAGS) testBoard.o Piece.o Coordinate.o Board.o Player.hpp testCoordinate.o testBishop.o Game.o Bishop.o mainTest.cpp -o mainTest -lcppunit
 
 testCoordinate.o: testCoordinate.cpp testCoordinate.hpp Coordinate.hpp
 	g++ -c $(FLAGS) testCoordinate.cpp -lcppunit
@@ -29,3 +29,12 @@ Bishop.o: Bishop.cpp Bishop.hpp Game.hpp Board.hpp Coordinate.hpp Piece.hpp Piec
 
 Game.o: Board.hpp Coordinate.hpp Piece.hpp Player.hpp Game.hpp Game.cpp
 	g++ -c $(FLAGS) Game.cpp
+
+run : mainTest
+	./$<
+clean:
+	rm *.o
+
+mrproper: clean
+	rm -f test
+.PHONY : clean
