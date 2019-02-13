@@ -65,4 +65,45 @@ bool Classic::_isFinish() const {
 	else return false;
 }
 
+bool Classic::testCheck(const char& color) const {
+	if (color == 'w' || color == 'a'){	//White part (a = all)
+		for (unsigned i = 1; _pieces[4]->getCoord()->getRealRow()+i <= 7; ++i){	//Right
+			Piece* tmpPiece = board->getCase(Coordinate(_pieces[4]->getCoord()->getRealColumn(), _pieces[4]->getCoord()->getRealRow()+i))
+			if (tmpPiece){
+				if (tmpPiece->getColor() == 'w') break;
+				if (tmpPiece->getType() == 'p' || tmpPiece->getType() == 'k' || tmpPiece->getType() == 'b') break;
+				if (i != 1 && tmpPiece->getType() == 'K') break;
+				return true;
+			}
+		}
+		for (unsigned i = 1; _pieces[4]->getCoord()->getRealColumn()+i <= 7; ++i){	//Top
+			Piece* tmpPiece = board->getCase(Coordinate(_pieces[4]->getCoord()->getRealColumn()+i, _pieces[4]->getCoord()->getRealRow()))
+			if (tmpPiece){
+				if (tmpPiece->getColor() == 'w') break;
+				if (tmpPiece->getType() == 'p' || tmpPiece->getType() == 'k' || tmpPiece->getType() == 'b') break;
+				if (i != 1 && tmpPiece->getType() == 'K') break;
+				return true;
+			}
+		}
+		for (unsigned i = 1; _pieces[4]->getCoord()->getRealRow()-i >= 0; ++i){	//Left
+			Piece* tmpPiece = board->getCase(Coordinate(_pieces[4]->getCoord()->getRealColumn(), _pieces[4]->getCoord()->getRealRow()-i))
+			if (tmpPiece){
+				if (tmpPiece->getColor() == 'w') break;
+				if (tmpPiece->getType() == 'p' || tmpPiece->getType() == 'k' || tmpPiece->getType() == 'b') break;
+				if (i != 1 && tmpPiece->getType() == 'K') break;
+				return true;
+			}
+		}
+		for (unsigned i = 1; _pieces[4]->getCoord()->getRealColumn()+i <= 7; ++i){	//Bottom
+			Piece* tmpPiece = board->getCase(Coordinate(_pieces[4]->getCoord()->getRealColumn(), _pieces[4]->getCoord()->getRealRow()+i))
+			if (tmpPiece){
+				if (tmpPiece->getColor() == 'w') break;
+				if (tmpPiece->getType() == 'p' || tmpPiece->getType() == 'k' || tmpPiece->getType() == 'b') break;
+				if (i != 1 && tmpPiece->getType() == 'K') break;
+				return true;
+			}
+		}
+	}
+}
+
 #endif
