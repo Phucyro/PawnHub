@@ -12,8 +12,8 @@ Game::Game(Piece** pieces, unsigned piecesAmount):
 	_board(Board()),
 	_pieces(pieces),
 	_piecesAmount(piecesAmount){}
-	
-	
+
+
 
 //transfert
 Game::Game(Game&& original):
@@ -37,8 +37,6 @@ Game::~Game()
 }
 
 
-
-
 //=transfert
 Game& Game::operator= (Game&& original)
 {
@@ -53,8 +51,6 @@ Game& Game::operator= (Game&& original)
 }
 
 
-
-
 Player* Game::start(Player* player1, Player* player2)
 {
 	_player1 = player1;
@@ -65,57 +61,8 @@ Player* Game::start(Player* player1, Player* player2)
 		this->_nextTurn();
 	}
 	while(! this->_isFinish());
-	
+
 	return _winner;
 }
 
 #endif
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

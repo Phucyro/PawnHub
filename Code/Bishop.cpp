@@ -21,12 +21,12 @@ bool Bishop::_checkMove(Coordinate end, Board* board, Game& game){
 	//test if there is no piece in the way
 	int row = _coords.getRealRow(), column = _coords.getRealColumn();
 	while(row != end.getRealRow()){
-		if (board->getCase(Coordinate(column, row))) return false;
+		if (_isPlaceFree(Coordinate(column, row), board)) return false;
 		row += rowDirection;
 		column += columnDirection;
 	}
 
-	if (board->getCase(end) && board->getCase(end)->getColor() == this->getColor()) return false;
+	if ((!_isPlaceFree(end, board)) && board->getCase(end)->getColor() == this->getColor()) return false;
 	return true;
 }
 #endif

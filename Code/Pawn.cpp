@@ -1,4 +1,4 @@
-#ifndef __PAWN__CPP__ 
+#ifndef __PAWN__CPP__
 #define __PAWN__CPP__
 
 #include <cmath>
@@ -7,13 +7,23 @@
 Pawn& Pawn::operator= (const Pawn& original){
 	this->Piece::operator= (original);
 	_moved = original._moved;
+	_ghost = new GhostPawn(original._ghost);
+	return *this;
+}
+
+Pawn& Pawn::operator= (Pawn&& original){
+	this->Piece::operator= (original);
+	_moved = original._moved;
+	_ghost = original._ghost;
+	original._ghost = nullptr;
 	return *this;
 }
 
 bool Pawn::_checkMove(Coordinate end, Board* board, Game& game){
 	int rowMove = int(end.getRealRow()) - int(_coords.getRealRow());
 	int columnMove = int(end.getRealColumn()) - int(_coords.getRealColumn());
-	
+
+	//TODO add possibility to jump even if a gostpawn is on the way
 	if (std::abs(columnMove) > 1) return false;
 	if (std::abs(columnMove) == 1){
 		if (rowMove != 1) return false;
