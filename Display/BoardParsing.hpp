@@ -26,20 +26,11 @@ std::map<const char,const char> pieceMap = {
 };
 
 void separatePieces(unsigned int a, std::string message, std::string colour) {
-  // std::cout << "Piece : " << pieceMap[message[a]];
-  // Coordinate coor(message[a+1], message[a+2]);
-  // std::cout << ", Position : " << coor.getAbstractColumn() << coor.getAbstractRow();
-  // std::cout << ", Position : " << coor.getRealColumn() << coor.getRealRow();
-  // std::cout << ", is " << colour << "." << std::endl;
   const char piece = pieceMap[message[a]];
-  const char* piecename = &piece;
   Coordinate coor(message[a+1], message[a+2]);
   int column = coor.getRealColumn();
   int line = coor.getRealRow();
-  // std::cout << piece << std::endl;
-  // std::cout << "Original line: " << line << ", modified: " << 1+(line*OFFSET) << std::endl;
-  // std::cout << "Original column: " << column << ", modified: " << 1+(column*OFFSET) << std::endl << std::endl;
-  mvprintw(1+(line*OFFSET), 1+(column*OFFSET), piecename);
+  mvprintw(1+(line*OFFSET), 1+(column*OFFSET), "%c", piece);
 }
 
 void stringToBoard(std::string message) {

@@ -107,11 +107,9 @@ void Board::draw_coordinates()
 void Board::draw_pieces()
 /** Dessine les pions sur le board de depart **/
 {
-  // J'ai un affichage vaguement chelou mais j'y suis presque!
+  // Ca maaarche
   // std::string test = boardToString();
   // stringToBoard(test);
-
-  // mvprintw(19, 7, "Q");
 
   mvprintw(1,1, "T");
   mvprintw(1,4, "K");
@@ -121,7 +119,7 @@ void Board::draw_pieces()
   mvprintw(1,16, "B");
   mvprintw(1,19, "K");
   mvprintw(1,22, "T");
-  //
+
   mvprintw(4,1, "P");
   mvprintw(4,4, "P");
   mvprintw(4,7, "P");
