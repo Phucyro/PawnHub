@@ -59,7 +59,7 @@ void TestBishop :: tearDown()
   delete bishopL;
   delete bishopM;
   delete game;
-  delete board
+  delete board;
 }
 
 

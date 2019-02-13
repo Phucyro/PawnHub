@@ -20,8 +20,8 @@ class Piece {
 		char 				_str[3]	; 	// string containing info about piece
 
 		constexpr Piece(const char color, const char column, const char row) : _color(color), _coords(column, row){
-			_str[ROW] = coords.getAbstractRow();
-			_str[COL] = coords.getAbstractColumn();
+			_str[ROW] = _coords.getAbstractRow();
+			_str[COL] = _coords.getAbstractColumn();
 		}
 
 		Piece(const char& color,Coordinate& coords) : _color(color),_coords(coords),_isTaken(false),_str() {

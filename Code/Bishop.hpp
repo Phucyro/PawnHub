@@ -12,7 +12,7 @@ class Bishop : public Piece {
 		bool _checkMove(Coordinate, Board*, Game&) override;
 
 	public :
-		Bishop(const char& color, Coordinate& coords) noexcept : Piece(color, coords){
+		Bishop(const char color, Coordinate coords) noexcept : Piece(color, coords){
 			_str[TYP] = 'b';
 		}
 		constexpr Bishop(const char color, const char column , const char row) : Piece(color,column,row)const char{
