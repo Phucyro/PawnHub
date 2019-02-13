@@ -2,6 +2,7 @@
 #define __TEST__BISHOP__CPP__
 
 #include <exception>
+#include <iostream>
 #include "testBishop.hpp"
 #include "Coordinate.hpp"
 #include "Board.hpp"
@@ -15,31 +16,48 @@ void TestBishop :: setUp()
   board = new Board();
   //black eats white
 	bishopA = new Bishop('b',Coordinate('A','1'));
+  board->setCase(Coordinate('A','1'), bishopA);
   bishopG = new Bishop('w',Coordinate('B','2'));
+  board->setCase(Coordinate('B','2'),bishopG);
 
   //black tries to eat black
   bishopB = new Bishop('b',Coordinate('B','1'));
+  board->setCase(Coordinate('B','1'), bishopB);
   bishopC = new Bishop('b',Coordinate('C','2'));
+  board->setCase(Coordinate('C','2'),bishopC);
+
 
   //piece in the way
   bishopD = new Bishop('b',Coordinate('D','1'));
+  board->setCase(Coordinate('D','1'), bishopD);
 
   //wrong move
   bishopE = new Bishop('b',Coordinate('E','2'));
+  board->setCase(Coordinate('E','2'),bishopE);
+
 
   //wrong move due to check
   bishopF = new Bishop('w',Coordinate('E','4'));
+  board->setCase(Coordinate('E','4'), bishopF);
   bishopM = new Bishop('b',Coordinate('F','5'));
+  board->setCase(Coordinate('F','5'),bishopM);
+
 
   //good move
   bishopH = new Bishop('w',Coordinate('C','7'));
+  board->setCase(Coordinate('C','7'), bishopH);
   bishopI = new Bishop('w',Coordinate('H','2'));
+  board->setCase(Coordinate('H','2'),bishopI);
+
   bishopJ = new Bishop('w',Coordinate('E','7'));
+  board->setCase(Coordinate('E','7'), bishopJ);
   bishopL = new Bishop('w',Coordinate('B','4'));
+  board->setCase(Coordinate('B','4'),bishopL);
+
 
   //out of bounds move
   bishopK = new Bishop('w',Coordinate('E','1'));
-
+  board->setCase(Coordinate('E','1'),bishopK);
 }
 
 
@@ -79,7 +97,7 @@ void TestBishop :: testMove()
   CPPUNIT_ASSERT(bishopC->_coords == Coordinate('C','2'));//checks coords of BishopC
 
   //piece in the way
-  CPPUNIT_ASSERT_EQUAL(bishopD->move(Coordinate('F','3'), board, *game), false);//checks if BishopD can pass over the place of BishopE
+  CPPUNIT_ASSERT_EQUAL(bishopD->move(Coordinate('F','3'), board, *game), false);//checks if BishopD cant pass over the place of BishopE
   CPPUNIT_ASSERT(bishopD->_coords == Coordinate('D','1'));//checks coords of BishopD
   CPPUNIT_ASSERT(board->getCase(Coordinate('F','3')) == nullptr); //checks if bishopD is not in F3
   CPPUNIT_ASSERT(board->getCase(Coordinate('D','1')) == bishopD); //checks if bishopD is in D1
@@ -111,10 +129,6 @@ void TestBishop :: testMove()
   CPPUNIT_ASSERT(board->getCase(Coordinate('B','4')) == nullptr); //checks if bishopL is not in B4
   CPPUNIT_ASSERT(bishopL->_coords == Coordinate('D','6')); //checks coords of BishopL
 
-
-  //out of bounds
-  CPPUNIT_ASSERT_THROW(bishopK->move(Coordinate('I','5'), board, *game), std::out_of_range); // make bishopK move to I5
-
   //wrong move due to check
   game->changeTestCheck();
 
@@ -123,6 +137,10 @@ void TestBishop :: testMove()
   CPPUNIT_ASSERT(board->getCase(Coordinate('F','5')) == bishopM); //checks if bishopC is in F5
   CPPUNIT_ASSERT(bishopF->_coords == Coordinate('E','4'));//checks coords of BishopF
   CPPUNIT_ASSERT(bishopM->_coords == Coordinate('F','5'));//checks coords of BishopM
+
+  game->changeTestCheck();
+  //out of bounds
+  CPPUNIT_ASSERT_THROW(bishopK->move(Coordinate('I','5'), board, *game), std::out_of_range); // make bishopK move to I5
 
 }
 
@@ -145,10 +163,6 @@ void TestBishop:: testCheckMove()
   CPPUNIT_ASSERT_EQUAL(bishopI->_checkMove(Coordinate('G','3'), board, *game), true);
   CPPUNIT_ASSERT_EQUAL(bishopJ->_checkMove(Coordinate('G','5'), board, *game), true);
   CPPUNIT_ASSERT_EQUAL(bishopL->_checkMove(Coordinate('D','6'), board, *game), true);
-
-  //wrong move due to check
-  game->changeTestCheck();
-  CPPUNIT_ASSERT_EQUAL(bishopF->_checkMove(Coordinate('F','5'), board, *game), false);
 }
 
 #endif

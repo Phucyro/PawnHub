@@ -7,7 +7,7 @@ Piece& Piece::operator= (const Piece& original){
 	_color = original._color;
 	_coords = original._coords;
 	_isTaken = original._isTaken;
-	for (int i = 0; i < 3; i++){
+	for (int i = 0; i < 4; i++){
 				_str[i] = original._str[i];
 			}
 			return *this;
@@ -16,7 +16,7 @@ Piece& Piece::operator= (const Piece& original){
 Piece* Piece::_doMove(Coordinate end, Board* board, Game& game){
 	Piece *takenPiece;
 	takenPiece = board->movePiece(_coords, end);
-	takenPiece->changeIsTaken(game.getTurn(),takenPiece,board);
+	if (takenPiece) takenPiece->changeIsTaken(game.getTurn(),takenPiece,board);
 	return takenPiece;
 }
 

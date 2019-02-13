@@ -16,12 +16,13 @@ bool Bishop::_checkMove(Coordinate end, Board* board, Game& game){
 	int columnDirection = columnMove/std::abs(columnMove);
 
 	if (end == _coords) return false;
+
 	if (std::abs(rowMove) != std::abs(columnMove)) return false; //test if the move normal for a bishop
 
 	//test if there is no piece in the way
-	int row = _coords.getRealRow(), column = _coords.getRealColumn();
+	int row = _coords.getRealRow()+rowDirection, column = _coords.getRealColumn()+columnDirection;
 	while(row != end.getRealRow()){
-		if (_isPlaceFree(Coordinate(column, row), board)) return false;
+		if (!_isPlaceFree(Coordinate(column, row), board)) return false;
 		row += rowDirection;
 		column += columnDirection;
 	}
