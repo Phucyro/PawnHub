@@ -2,7 +2,7 @@
 #define __GAME__HPP__
 
 #include"Player.hpp"
-#include"Board.hpp"
+class Board;
 
 class Game
 {
@@ -31,4 +31,5 @@ class Game
 	virtual bool testCheck(const char& color) const = 0;
 };
 
+#include "Board.hpp"
 #endif

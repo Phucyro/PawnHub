@@ -24,7 +24,7 @@ class Piece {
 			_str[COL] = _coords.getAbstractColumn();
 		}
 
-		Piece(const char& color,Coordinate& coords) : _color(color),_coords(coords),_isTaken(false),_str() {
+		Piece(const char color,Coordinate coords) : _color(color),_coords(coords),_isTaken(false),_str() {
 			_str[ROW] = coords.getAbstractRow();
 			_str[COL] = coords.getAbstractColumn();
 		}
