@@ -52,7 +52,7 @@ void addData(const std::string file_path, std::string username, std::string pswd
 }
 
 
-void treatConnection(Socket* socket){
+void treatAuthentification(Socket* socket){
   bool user_connected = false; // L'utilisateur s'est identifie
 
   while (!user_connected){
