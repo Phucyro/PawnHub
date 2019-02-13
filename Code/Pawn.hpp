@@ -23,7 +23,7 @@ class Pawn : public Piece {
 		}
 
 		Pawn(const Pawn& original) noexcept : Piece(original), _moved(original.hasMoved()), _ghost(nullptr) {
-			_ghost = new GhostPawn(original._ghost);
+			_ghost = new GhostPawn(*(original._ghost));
 		}
 
 		Pawn(Pawn&& original) noexcept : Piece(original), _moved(original.hasMoved()), _ghost(original._ghost) {

@@ -6,13 +6,29 @@
 #include "Bishop.hpp"
 #include "Coordinate.hpp"
 #include "Game.hpp"
-class SimpleGame;
+
+class SimpleGame: public Game
+{
+	private:
+	bool _testCheck;
+
+	protected:
+		void _initBoard() override{}
+		void _nextTurn() override{}
+		bool _isFinish() override{return true;}
+
+	public:
+	SimpleGame() : Game(nullptr, 0), _testCheck(false){}
+	bool changeTestCheck(){_testCheck = !_testCheck;}
+	bool testCheck(const char& color) const override {return _testCheck;}
+
+};
 
 class TestBishop: public CPPUNIT_NS::TestFixture
 {
 	CPPUNIT_TEST_SUITE (TestBishop);
 	CPPUNIT_TEST (testMove);
-	CPPUNIT_TEST (testMoveCheck);
+	CPPUNIT_TEST (testCheckMove);
 	CPPUNIT_TEST_SUITE_END ();
 
 	private:
@@ -43,21 +59,6 @@ class TestBishop: public CPPUNIT_NS::TestFixture
 	void tearDown();
 };
 
-class SimpleGame: public Game
-{
-	private:
-	bool _testCheck;
 
-	protected:
-		void _initBoard() override{}
-		void _nextTurn() override{}
-		bool _isFinish() override{return true;}
-
-	public:
-	SimpleGame() : Game(nullptr, 0), _testCheck(false){}
-	bool changeTestCheck(){_testCheck = !_testCheck;}
-	bool testCheck(){return _testCheck;}
-
-};
 
 #endif

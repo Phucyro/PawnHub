@@ -2,7 +2,7 @@
 #define __GHOSTPAWN__HPP__
 
 #include "Piece.hpp"
-class GhostPawn;
+class Pawn;
 
 class GhostPawn : public Piece{
 
