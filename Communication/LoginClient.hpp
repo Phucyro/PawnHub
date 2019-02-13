@@ -75,7 +75,7 @@ bool createAccount(Socket* socket, std::string username, std::string pswd1, std:
   return false;
 }
 
-void connectRegister(Socket* socket){
+void authentification(Socket* socket){
   /*
   Demande a l'utilisateur s'il veut se connecter ou s'enregistrer et traite sa
   demande.
