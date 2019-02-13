@@ -19,8 +19,9 @@ class Classic : public Game {
 	public :
 
 		constexpr Classic() noexcept : Game(nullptr, 32) {Pieces();}
-		virtual ~Classic() noexcept;
+		virtual ~Classic() noexcept = default;
 		Classic& operator=(const Classic&) = delete;
+		bool testCheck(const char& color) const override;
 }
 
 constexpr void Pieces() {

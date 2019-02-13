@@ -65,45 +65,188 @@ bool Classic::_isFinish() const {
 	else return false;
 }
 
-bool Classic::testCheck(const char& color) const {
-	if (color == 'w' || color == 'a'){	//White part (a = all)
-		for (unsigned i = 1; _pieces[4]->getCoord()->getRealRow()+i <= 7; ++i){	//Right
-			Piece* tmpPiece = board->getCase(Coordinate(_pieces[4]->getCoord()->getRealColumn(), _pieces[4]->getCoord()->getRealRow()+i))
+bool testCheck(const char& color) const {
+	if (color == 'w' || color == 'a'){	//White		//a = all
+		for (unsigned i = unsigned(_pieces[4]->getCoord().getRealRow())+1; i <= 7; ++i){	//Right
+			Piece* tmpPiece = board->getCase(Coordinate(_pieces[4]->getCoord().getRealColumn(), i));
 			if (tmpPiece){
 				if (tmpPiece->getColor() == 'w') break;
-				if (tmpPiece->getType() == 'p' || tmpPiece->getType() == 'k' || tmpPiece->getType() == 'b') break;
-				if (i != 1 && tmpPiece->getType() == 'K') break;
+				if (tmpPiece->getType() == 'k' || tmpPiece->getType() == 'p' || tmpPiece->getType() == 'b') break;
+				if (i > _pieces[4]->getCoord().getRealRow()+1 && tmpPiece->getType() == 'K') break;
 				return true;
 			}
 		}
-		for (unsigned i = 1; _pieces[4]->getCoord()->getRealColumn()+i <= 7; ++i){	//Top
-			Piece* tmpPiece = board->getCase(Coordinate(_pieces[4]->getCoord()->getRealColumn()+i, _pieces[4]->getCoord()->getRealRow()))
+		for (int i = int(_pieces[4]->getCoord().getRealRow())-1; i >= 0; --i){	//Left
+			Piece* tmpPiece = board->getCase(Coordinate(_pieces[4]->getCoord().getRealColumn(), unsigned(i)));
 			if (tmpPiece){
 				if (tmpPiece->getColor() == 'w') break;
-				if (tmpPiece->getType() == 'p' || tmpPiece->getType() == 'k' || tmpPiece->getType() == 'b') break;
-				if (i != 1 && tmpPiece->getType() == 'K') break;
+				if (tmpPiece->getType() == 'k' || tmpPiece->getType() == 'p' || tmpPiece->getType() == 'b') break;
+				if (i < _pieces[4]->getCoord().getRealRow()-1 && tmpPiece->getType() == 'K') break;
 				return true;
 			}
 		}
-		for (unsigned i = 1; _pieces[4]->getCoord()->getRealRow()-i >= 0; ++i){	//Left
-			Piece* tmpPiece = board->getCase(Coordinate(_pieces[4]->getCoord()->getRealColumn(), _pieces[4]->getCoord()->getRealRow()-i))
+		for (unsigned i = unsigned_pieces[4]->getCoord().getRealColumn())+1; i <= 7; ++i){	//Top
+			Piece* tmpPiece = board->getCase(Coordinate(i, _pieces[4]->getCoord().getRealRow()));
 			if (tmpPiece){
 				if (tmpPiece->getColor() == 'w') break;
-				if (tmpPiece->getType() == 'p' || tmpPiece->getType() == 'k' || tmpPiece->getType() == 'b') break;
-				if (i != 1 && tmpPiece->getType() == 'K') break;
+				if (tmpPiece->getType() == 'k' || tmpPiece->getType() == 'p' || tmpPiece->getType() == 'b') break;
+				if (i > _pieces[4]->getCoord().getRealColumn()+1 && tmpPiece->getType() == 'K') break;
 				return true;
 			}
 		}
-		for (unsigned i = 1; _pieces[4]->getCoord()->getRealColumn()+i <= 7; ++i){	//Bottom
-			Piece* tmpPiece = board->getCase(Coordinate(_pieces[4]->getCoord()->getRealColumn(), _pieces[4]->getCoord()->getRealRow()+i))
+		for (int i = int(_pieces[4]->getCoord().getRealColumn())-1; i >= 0; --i){	//Bottom
+			Piece* tmpPiece = board->getCase(Coordinate(unsigned(i), _pieces[4]->getCoord().getRealRow()));
 			if (tmpPiece){
 				if (tmpPiece->getColor() == 'w') break;
-				if (tmpPiece->getType() == 'p' || tmpPiece->getType() == 'k' || tmpPiece->getType() == 'b') break;
-				if (i != 1 && tmpPiece->getType() == 'K') break;
+				if (tmpPiece->getType() == 'k' || tmpPiece->getType() == 'p' || tmpPiece->getType() == 'b') break;
+				if (i < _pieces[4]->getCoord().getRealColumn()-1 && tmpPiece->getType() == 'K') break;
 				return true;
 			}
 		}
+		for (unsigned i = 1; i + _pieces[4]->getCoord().getRealColumn() <= 7 && i + _pieces[4]->getCoord().getRealRow() <= 7; ++i){	//Diag TopRight
+			Piece* tmpPiece = board->getCase(Coordinate(_pieces[4]->getCoord().getRealColumn()+i, _pieces[4]->getCoord().getRealRow()+i))
+			if (tmpPiece){
+				if (tmpPiece->getColor() == 'w') break;
+				if (tmpPiece->getType() == 'k' || tmpPiece->getType() == 'r') break;
+				if (i != 1 && (tmpPiece->getType() == 'p' || tmpPiece->getType() == 'K')) break;
+				return true;
+			}
+		}
+		for (unsigned i = 1; i + _pieces[4]->getCoord().getRealColumn() <= 7 && _pieces[4]->getCoord().getRealRow() - i >= 0; ++i){	//Diag TopLeft
+			Piece* tmpPiece = board->getCase(Coordinate(_pieces[4]->getCoord().getRealColumn()+i, _pieces[4]->getCoord().getRealRow()-i))
+			if (tmpPiece){
+				if (tmpPiece->getColor() == 'w') break;
+				if (tmpPiece->getType() == 'k' || tmpPiece->getType() == 'r') break;
+				if (i != 1 && (tmpPiece->getType() == 'p' || tmpPiece->getType() == 'K')) break;
+				return true;
+			}
+		}
+		for (unsigned i = 1; _pieces[4]->getCoord().getRealColumn() - i >= 0 && _pieces[4]->getCoord().getRealRow() - i >= 0; ++i){	//Diag BottomLeft
+			Piece* tmpPiece = board->getCase(Coordinate(_pieces[4]->getCoord().getRealColumn()-i, _pieces[4]->getCoord().getRealRow()-i))
+			if (tmpPiece){
+				if (tmpPiece->getColor() == 'w') break;
+				if (tmpPiece->getType() == 'p' || tmpPiece->getType() == 'k' || tmpPiece->getType() == 'r') break;
+				if (i != 1 && (tmpPiece->getType() == 'K')) break;
+				return true;
+			}
+		}
+		for (unsigned i = 1; _pieces[4]->getCoord().getRealColumn() - i >= 0 && _pieces[4]->getCoord().getRealRow() + i <= 7; ++i){	//Diag BottomRight
+			Piece* tmpPiece = board->getCase(Coordinate(_pieces[4]->getCoord().getRealColumn()-i, _pieces[4]->getCoord().getRealRow()+i))
+			if (tmpPiece){
+				if (tmpPiece->getColor() == 'w') break;
+				if (tmpPiece->getType() == 'p' || tmpPiece->getType() == 'k' || tmpPiece->getType() == 'r') break;
+				if (i != 1 && (tmpPiece->getType() == 'K')) break;
+				return true;
+			}
+		}		//Check knight
+		Piece* tmpPiece = board->getCase(Coordinate(_pieces[4]->getCoord().getRealColumn()+2, _pieces[4]->getCoord().getRealRow()+1));
+		if (tmpPiece && tmpPiece->getColor() == 'b' && tmpPiece->getType() == 'k') return true;
+		tmpPiece = board->getCase(Coordinate(_pieces[4]->getCoord().getRealColumn()+2, _pieces[4]->getCoord().getRealRow()-1));
+		if (tmpPiece && tmpPiece->getColor() == 'b' && tmpPiece->getType() == 'k') return true;
+		tmpPiece = board->getCase(Coordinate(_pieces[4]->getCoord().getRealColumn()+1, _pieces[4]->getCoord().getRealRow()-2));
+		if (tmpPiece && tmpPiece->getColor() == 'b' && tmpPiece->getType() == 'k') return true;
+		tmpPiece = board->getCase(Coordinate(_pieces[4]->getCoord().getRealColumn()-1, _pieces[4]->getCoord().getRealRow()-2));
+		if (tmpPiece && tmpPiece->getColor() == 'b' && tmpPiece->getType() == 'k') return true;
+		tmpPiece = board->getCase(Coordinate(_pieces[4]->getCoord().getRealColumn()-2, _pieces[4]->getCoord().getRealRow()-1));
+		if (tmpPiece && tmpPiece->getColor() == 'b' && tmpPiece->getType() == 'k') return true;
+		tmpPiece = board->getCase(Coordinate(_pieces[4]->getCoord().getRealColumn()-2, _pieces[4]->getCoord().getRealRow()+1));
+		if (tmpPiece && tmpPiece->getColor() == 'b' && tmpPiece->getType() == 'k') return true;
+		tmpPiece = board->getCase(Coordinate(_pieces[4]->getCoord().getRealColumn()-1, _pieces[4]->getCoord().getRealRow()+2));
+		if (tmpPiece && tmpPiece->getColor() == 'b' && tmpPiece->getType() == 'k') return true;
+		tmpPiece = board->getCase(Coordinate(_pieces[4]->getCoord().getRealColumn()+1, _pieces[4]->getCoord().getRealRow()+2));
+		if (tmpPiece && tmpPiece->getColor() == 'b' && tmpPiece->getType() == 'k') return true;
 	}
+	if (color == 'b' || color == 'a'){	//Black
+		for (unsigned i = unsigned(_pieces[4]->getCoord().getRealRow())+1; i <= 7; ++i){	//Right
+			Piece* tmpPiece = board->getCase(Coordinate(_pieces[4]->getCoord().getRealColumn(), i));
+			if (tmpPiece){
+				if (tmpPiece->getColor() == 'b') break;
+				if (tmpPiece->getType() == 'k' || tmpPiece->getType() == 'p' || tmpPiece->getType() == 'b') break;
+				if (i > _pieces[4]->getCoord().getRealRow()+1 && tmpPiece->getType() == 'K') break;
+				return true;
+			}
+		}
+		for (int i = int(_pieces[4]->getCoord().getRealRow())-1; i >= 0; --i){	//Left
+			Piece* tmpPiece = board->getCase(Coordinate(_pieces[4]->getCoord().getRealColumn(), unsigned(i)));
+			if (tmpPiece){
+				if (tmpPiece->getColor() == 'b') break;
+				if (tmpPiece->getType() == 'k' || tmpPiece->getType() == 'p' || tmpPiece->getType() == 'b') break;
+				if (i < _pieces[4]->getCoord().getRealRow()-1 && tmpPiece->getType() == 'K') break;
+				return true;
+			}
+		}
+		for (unsigned i = unsigned_pieces[4]->getCoord().getRealColumn())+1; i <= 7; ++i){	//Top
+			Piece* tmpPiece = board->getCase(Coordinate(i, _pieces[4]->getCoord().getRealRow()));
+			if (tmpPiece){
+				if (tmpPiece->getColor() == 'b') break;
+				if (tmpPiece->getType() == 'k' || tmpPiece->getType() == 'p' || tmpPiece->getType() == 'b') break;
+				if (i > _pieces[4]->getCoord().getRealColumn()+1 && tmpPiece->getType() == 'K') break;
+				return true;
+			}
+		}
+		for (int i = int(_pieces[4]->getCoord().getRealColumn())-1; i >= 0; --i){	//Bottom
+			Piece* tmpPiece = board->getCase(Coordinate(unsigned(i), _pieces[4]->getCoord().getRealRow()));
+			if (tmpPiece){
+				if (tmpPiece->getColor() == 'b') break;
+				if (tmpPiece->getType() == 'k' || tmpPiece->getType() == 'p' || tmpPiece->getType() == 'b') break;
+				if (i < _pieces[4]->getCoord().getRealColumn()-1 && tmpPiece->getType() == 'K') break;
+				return true;
+			}
+		}
+		for (unsigned i = 1; i + _pieces[4]->getCoord().getRealColumn() <= 7 && i + _pieces[4]->getCoord().getRealRow() <= 7; ++i){	//Diag TopRight
+			Piece* tmpPiece = board->getCase(Coordinate(_pieces[4]->getCoord().getRealColumn()+i, _pieces[4]->getCoord().getRealRow()+i))
+			if (tmpPiece){
+				if (tmpPiece->getColor() == 'b') break;
+				if (tmpPiece->getType() == 'p' || tmpPiece->getType() == 'k' || tmpPiece->getType() == 'r') break;
+				if (i != 1 && tmpPiece->getType() == 'K') break;
+				return true;
+			}
+		}
+		for (unsigned i = 1; i + _pieces[4]->getCoord().getRealColumn() <= 7 && _pieces[4]->getCoord().getRealRow() - i >= 0; ++i){	//Diag TopLeft
+			Piece* tmpPiece = board->getCase(Coordinate(_pieces[4]->getCoord().getRealColumn()+i, _pieces[4]->getCoord().getRealRow()-i))
+			if (tmpPiece){
+				if (tmpPiece->getColor() == 'b') break;
+				if (tmpPiece->getType() == 'p' || tmpPiece->getType() == 'k' || tmpPiece->getType() == 'r') break;
+				if (i != 1 && tmpPiece->getType() == 'K') break;
+				return true;
+			}
+		}
+		for (unsigned i = 1; _pieces[4]->getCoord().getRealColumn() - i >= 0 && _pieces[4]->getCoord().getRealRow() - i >= 0; ++i){	//Diag BottomLeft
+			Piece* tmpPiece = board->getCase(Coordinate(_pieces[4]->getCoord().getRealColumn()-i, _pieces[4]->getCoord().getRealRow()-i))
+			if (tmpPiece){
+				if (tmpPiece->getColor() == 'b') break;
+				if (tmpPiece->getType() == 'k' || tmpPiece->getType() == 'r') break;
+				if (i != 1 && (tmpPiece->getType() == 'p' || tmpPiece->getType() == 'K')) break;
+				return true;
+			}
+		}
+		for (unsigned i = 1; _pieces[4]->getCoord().getRealColumn() - i >= 0 && _pieces[4]->getCoord().getRealRow() + i <= 7; ++i){	//Diag BottomRight
+			Piece* tmpPiece = board->getCase(Coordinate(_pieces[4]->getCoord().getRealColumn()-i, _pieces[4]->getCoord().getRealRow()+i))
+			if (tmpPiece){
+				if (tmpPiece->getColor() == 'b') break;
+				if (tmpPiece->getType() == 'k' || tmpPiece->getType() == 'r') break;
+				if (i != 1 && (tmpPiece->getType() == 'p' || tmpPiece->getType() == 'K')) break;
+				return true;
+			}
+		}		//Check knight
+		Piece* tmpPiece = board->getCase(Coordinate(_pieces[4]->getCoord().getRealColumn()+2, _pieces[4]->getCoord().getRealRow()+1));
+		if (tmpPiece && tmpPiece->getColor() == 'w' && tmpPiece->getType() == 'k') return true;
+		tmpPiece = board->getCase(Coordinate(_pieces[4]->getCoord().getRealColumn()+2, _pieces[4]->getCoord().getRealRow()-1));
+		if (tmpPiece && tmpPiece->getColor() == 'w' && tmpPiece->getType() == 'k') return true;
+		tmpPiece = board->getCase(Coordinate(_pieces[4]->getCoord().getRealColumn()+1, _pieces[4]->getCoord().getRealRow()-2));
+		if (tmpPiece && tmpPiece->getColor() == 'w' && tmpPiece->getType() == 'k') return true;
+		tmpPiece = board->getCase(Coordinate(_pieces[4]->getCoord().getRealColumn()-1, _pieces[4]->getCoord().getRealRow()-2));
+		if (tmpPiece && tmpPiece->getColor() == 'w' && tmpPiece->getType() == 'k') return true;
+		tmpPiece = board->getCase(Coordinate(_pieces[4]->getCoord().getRealColumn()-2, _pieces[4]->getCoord().getRealRow()-1));
+		if (tmpPiece && tmpPiece->getColor() == 'w' && tmpPiece->getType() == 'k') return true;
+		tmpPiece = board->getCase(Coordinate(_pieces[4]->getCoord().getRealColumn()-2, _pieces[4]->getCoord().getRealRow()+1));
+		if (tmpPiece && tmpPiece->getColor() == 'w' && tmpPiece->getType() == 'k') return true;
+		tmpPiece = board->getCase(Coordinate(_pieces[4]->getCoord().getRealColumn()-1, _pieces[4]->getCoord().getRealRow()+2));
+		if (tmpPiece && tmpPiece->getColor() == 'w' && tmpPiece->getType() == 'k') return true;
+		tmpPiece = board->getCase(Coordinate(_pieces[4]->getCoord().getRealColumn()+1, _pieces[4]->getCoord().getRealRow()+2));
+		if (tmpPiece && tmpPiece->getColor() == 'w' && tmpPiece->getType() == 'k') return true;
+	}
+	return false;
 }
 
 #endif

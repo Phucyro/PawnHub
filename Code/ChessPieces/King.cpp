@@ -24,7 +24,7 @@ bool _checkmove(Coordinate end, Board* board, Game& game){
     if (!(this->hasMoved()) && !(this->isCheck())){   //King moved or is checked ?
       if (rowMove == 2) {Coordinate tmpcoord = Coordinate(end.getRealColumn(), end.getRealRow()+1);} //Roque
       else {Coordinate tmpcoord = Coordinate(end.getRealColumn(), end.getRealRow()-2);} //Grand roque
-      if (!(dynamic_cast<*Rook>(board->getCase(tmpcoord))->hasMoved())){ //Is the Rook validate ?  //vérifier que la pièce n'aie jamais bougée est suffisant
+      if (!(dynamic_cast<Rook*>(board->getCase(tmpcoord))->hasMoved())){ //Is the Rook validate ?  //vérifier que la pièce n'aie jamais bougée est suffisant
         if (rowMove == 2){  //check if there is no piece in the way + if the king will not be checked in the way
           if (board->getCase(Coordinate(_coords.getRealColumn(), _coords.getRealRow()+1))) return false;
           board->setCase(Coordinate(_coords.getRealColumn(), _coords.getRealRow()+1), this);  //Ca me parait lourd comme démarche, a voir une fois testcheck ready
@@ -57,7 +57,7 @@ bool _checkmove(Coordinate end, Board* board, Game& game){
         }
         board->setCase(_coords, this);
         if (board->getCase(tmpcoord)->move(coordRook, board, game)) return true;  //move Rook then return true
-        else std::cerr << "[Error] move Rook to roque" << std::cout;
+        else return false;
       }
       else return false
     }

@@ -41,8 +41,9 @@ class Piece {
 
 		Piece& operator= (const Piece&);
     virtual bool move(Coordinate, Board*, Game&);
-		virtual ~Piece() = default;
-		inline char getColor() const {return _color;}
+		virtual ~Piece() noexcept = default;
+		char getColor() const {return _color;}
+		char getType() const {return _str[TYP];}
     virtual char* toString() {return _str;}
 		virtual void changeIsTaken(unsigned turn, Piece*, Board*){_isTaken = !_isTaken;}
 		bool isTaken() const {return _isTaken;}

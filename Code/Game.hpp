@@ -12,23 +12,23 @@ class Game
 	Board _board;
 	Piece** _pieces;
 	unsigned _piecesAmount;
-	
+
 	virtual void _initBoard() = 0;
 	virtual void _nextTurn() = 0;
 	virtual bool _isFinish() = 0;
-	
+
 	Game(Piece**, unsigned);
 	Game(const Game&) = delete;
 	Game(Game&&);
-	
+
 	public:
 	virtual ~Game();
-	
+
 	Game& operator= (const Game&) = delete;
 	Game& operator= (Game&&);
-	
+
 	Player* start(Player*, Player*);
-	virtual bool testCheck() = 0;
+	virtual bool testCheck(const char& color) const = 0;
 };
 
 #endif
