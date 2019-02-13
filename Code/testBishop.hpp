@@ -6,6 +6,7 @@
 #include "Bishop.hpp"
 #include "Coordinate.hpp"
 #include "Game.hpp"
+class SimpleGame;
 
 class TestBishop: public CPPUNIT_NS::TestFixture
 {

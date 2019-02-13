@@ -27,7 +27,7 @@ bool Pawn::_checkMove(Coordinate end, Board* board, Game& game){
 	if (std::abs(columnMove) > 1) return false;
 	if (std::abs(columnMove) == 1){
 		if (rowMove != 1) return false;
-		if (board->getCase(end)->getColor() == this->getColor()) return false;
+		if ( board->getCase(end)->getColor() == this->getColor()) return false;
 	}
 	else{
 		if (rowMove > 2 || rowMove < 1) return false;
@@ -53,6 +53,7 @@ bool Pawn::move(Coordinate end, Board* board, Game& game){
 
 void Pawn::_promote(){
 	//TODO
+
 }
 
 #endif

@@ -2,14 +2,14 @@
 #define __PAWN__HPP__
 
 #include "Piece.hpp"
-class GhostPawn;
+#include "GhostPawn.hpp"
 
 class Pawn : public Piece {
 
 	protected :
 		bool _moved;
 		bool _checkMove(Coordinate, Board*, Game&) override;
-		GhostPawn _ghost;
+		GhostPawn *_ghost;
 
 		void _promote();
 
@@ -38,5 +38,4 @@ class Pawn : public Piece {
 		bool move(Coordinate, Board*, Game&) override;
 };
 
-#include "GhostPawn.hpp"
 #endif
