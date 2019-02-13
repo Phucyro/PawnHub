@@ -4,16 +4,19 @@
 #include"Game.hpp"
 
 //constructor
-Game::Game(Piece* pieces, unsigned piecesAmount):
+Game::Game(Piece** pieces, unsigned piecesAmount):
 	_player1(nullptr),
 	_player2(nullptr),
 	_winner(nullptr),
 	_turn(0),
-	_board(Board()),
+	_board(nullptr),
 	_pieces(pieces),
-	_piecesAmount(piecesAmount){}
-	
-	
+	_piecesAmount(piecesAmount)
+{
+	_board = new Board();
+}
+
+
 
 //transfert
 Game::Game(Game&& original):
@@ -23,7 +26,10 @@ Game::Game(Game&& original):
 	_turn(original._turn),
 	_board(original._board),
 	_pieces(original._pieces),
-	_piecesAmount(original._piecesAmount){}
+	_piecesAmount(original._piecesAmount)
+{
+	original._board = nullptr;
+}
 
 
 
@@ -34,9 +40,8 @@ Game::~Game()
 	_player2 = nullptr;
 	_winner = nullptr;
 	_pieces = nullptr;
+	delete _board;
 }
-
-
 
 
 //=transfert
@@ -47,12 +52,11 @@ Game& Game::operator= (Game&& original)
 	_winner = original._winner;
 	_turn = original._turn;
 	_board = original._board;
+	original._board = nullptr;
 	_pieces = original._pieces;
 	_piecesAmount = original._piecesAmount;
 	return *this;
 }
-
-
 
 
 Player* Game::start(Player* player1, Player* player2)
@@ -65,57 +69,8 @@ Player* Game::start(Player* player1, Player* player2)
 		this->_nextTurn();
 	}
 	while(! this->_isFinish());
-	
+
 	return _winner;
 }
 
 #endif
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

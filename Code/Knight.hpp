@@ -2,6 +2,7 @@
 #define __KNIGHT__HPP__
 
 #include "Piece.hpp"
+#include "Pawn.hpp"
 
 class Knight : public Piece {
 
@@ -10,12 +11,20 @@ class Knight : public Piece {
 
 	public :
 
-		Knight(const char& color, Coordinate coords) noexcept : Piece(color, coords){
+		Knight(const char& color, Coordinate& coords) noexcept : Piece(color, coords){
 			_str[TYP] = 'h';
 		}
+		constexpr Knight(const char color, const char column , const char row) : Piece(color,column,row){
+			_str[TYP] = 'h';
+		}
+
+
 		Knight(const Knight& original) : Piece(original){}
+		explicit Knight(const Pawn& original) noexcept : Piece(original){
+			_str[TYP] = 'h';
+		}
 		virtual ~Knight() noexcept = default;
-		
+
 		Knight& operator= (const Knight&);
 };
 

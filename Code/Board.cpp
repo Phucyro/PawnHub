@@ -113,7 +113,12 @@ postcondition: _state == nullptr
 
 Piece* Board::getCase(Coordinate place) const
 {
-	return _state[place.getRealColumn()][place.getRealRow()];
+	try{
+		return _state[place.getRealColumn()][place.getRealRow()];
+	}
+	catch (int e){
+		return nullptr;
+	}
 }
 
 
@@ -132,58 +137,3 @@ void Board::setCase(Coordinate place, Piece* piece)
 }
 
 #endif
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

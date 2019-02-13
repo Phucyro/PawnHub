@@ -1,9 +1,10 @@
-FLAGS= -std=c++14 -ggdb3 -Wpedantic -Wall -Wextra -Wconversion -Wstrict-null-sentinel -Wold-style-cast -Weffc++ -Wnoexcept -Wctor-dtor-privacy -Woverloaded-virtual -Wsign-promo -Wzero-as-null-pointer-constant -Wsuggest-final-types -Wsuggest-final-methods -Wsuggest-override -Woverloaded-virtual -Winline
+FLAGS= -std=c++17 -ggdb3 -Wpedantic -Wall -Wextra -Wconversion -Wstrict-null-sentinel -Wold-style-cast -Weffc++ -Wnoexcept -Wctor-dtor-privacy -Woverloaded-virtual -Wsign-promo -Wzero-as-null-pointer-constant -Wsuggest-final-types -Wsuggest-final-methods -Wsuggest-override -Woverloaded-virtual -Winline
+FLAGS2= -std=c++17 -masm=intel -fconcepts -mlong-double-128 -ggdb3 -Wpedantic -Wall -Wextra -Wconversion -Wsign-conversion -Weffc++ -Wstrict-null-sentinel -Wold-style-cast -Wnoexcept -Wctor-dtor-privacy -Woverloaded-virtual -Wsign-promo -Wzero-as-null-pointer-constant -Wsuggest-final-types -Wsuggest-final-methods -Wsuggest-override -lquadmath
 
-all: mainTest
 
-mainTest: testCoordinate.o Game.o testBoard.o Board.o Coordinate.o mainTest.cpp Piece.hpp Player.hpp
-	g++ $(FLAGS) testBoard.o Piece.hpp Coordinate.o Board.o Game.o Player.hpp testCoordinate.o mainTest.cpp -o mainTest -lcppunit
+all: mainTest clean run
+mainTest: testBishop.o testCoordinate.o testBoard.o Board.o Coordinate.o Game.o mainTest.cpp Piece.o Player.hpp Bishop.o
+	g++ $(FLAGS) testBoard.o Piece.o Coordinate.o Board.o Player.hpp testCoordinate.o testBishop.o Game.o Bishop.o mainTest.cpp -o mainTest -lcppunit
 
 testCoordinate.o: testCoordinate.cpp testCoordinate.hpp Coordinate.hpp
 	g++ -c $(FLAGS) testCoordinate.cpp -lcppunit
@@ -11,12 +12,29 @@ testCoordinate.o: testCoordinate.cpp testCoordinate.hpp Coordinate.hpp
 testBoard.o: testBoard.cpp testBoard.hpp Piece.hpp Board.hpp Coordinate.hpp
 	g++ -c $(FLAGS) testBoard.cpp -lcppunit
 
+testBishop.o : testBishop.cpp testBishop.hpp Piece.hpp Board.hpp Game.hpp
+	g++ -c $(FLAGS) testBishop.cpp -lcppunit
 
 Coordinate.o: Coordinate.cpp Coordinate.hpp
 	g++ -c $(FLAGS) Coordinate.cpp
 
-Board.o: Board.cpp Board.hpp Coordinate.hpp Piece.hpp
+Board.o: Game.hpp Board.hpp Coordinate.hpp Board.cpp Board.hpp Coordinate.hpp Piece.hpp
 	g++ -c $(FLAGS) Board.cpp
+
+Piece.o : Game.hpp Board.hpp Coordinate.hpp Piece.hpp Piece.cpp
+	g++ -c $(FLAGS) Piece.cpp
+
+Bishop.o: Bishop.cpp Bishop.hpp Game.hpp Board.hpp Coordinate.hpp Piece.hpp Piece.cpp Pawn.hpp GhostPawn.hpp
+	g++ -c $(FLAGS) Bishop.cpp
 
 Game.o: Board.hpp Coordinate.hpp Piece.hpp Player.hpp Game.hpp Game.cpp
 	g++ -c $(FLAGS) Game.cpp
+
+run : mainTest
+	./$<
+clean:
+	rm *.o
+
+mrproper: clean
+	rm -f test
+.PHONY : clean
