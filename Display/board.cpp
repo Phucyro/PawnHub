@@ -85,7 +85,7 @@ void Board::draw_coordinates()
 {
   for (int i=0; i<lines; i++)
   {
-    mvprintw(1+(OFFSET*i),25 , "%d", i+1);
+    mvprintw(1+(OFFSET*i), 25 , "%d", i+1);
   }
 
   for (int i=0; i<columns; i++)
@@ -111,6 +111,8 @@ void Board::draw_pieces()
   // std::string test = boardToString();
   // stringToBoard(test);
 
+  // mvprintw(19, 7, "Q");
+
   mvprintw(1,1, "T");
   mvprintw(1,4, "K");
   mvprintw(1,7, "B");
@@ -119,7 +121,7 @@ void Board::draw_pieces()
   mvprintw(1,16, "B");
   mvprintw(1,19, "K");
   mvprintw(1,22, "T");
-
+  //
   mvprintw(4,1, "P");
   mvprintw(4,4, "P");
   mvprintw(4,7, "P");

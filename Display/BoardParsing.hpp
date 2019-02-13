@@ -36,6 +36,9 @@ void separatePieces(unsigned int a, std::string message, std::string colour) {
   Coordinate coor(message[a+1], message[a+2]);
   int column = coor.getRealColumn();
   int line = coor.getRealRow();
+  // std::cout << piece << std::endl;
+  // std::cout << "Original line: " << line << ", modified: " << 1+(line*OFFSET) << std::endl;
+  // std::cout << "Original column: " << column << ", modified: " << 1+(column*OFFSET) << std::endl << std::endl;
   mvprintw(1+(line*OFFSET), 1+(column*OFFSET), piecename);
 }
 
