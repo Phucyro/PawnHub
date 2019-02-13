@@ -387,7 +387,7 @@ Le système se doit de mettre assez rapidement à jour les statistiques personne
 
 \item \textit{Affichage de l'échiquier} \\
 \textbf{Mise en pratique :} Le serveur envoie le plateau aux joueurs. \\
-\textbf{Protocole :} Le message est une suite de toutes les pièces présentes sur l'échiquier, chacune représentée par 3 caractères. Le premier caractère est une lettre désignant le type de la pièce considérée. Les 2 autres, sa position, en commençant par la colonne, selon la réprésentation classique d'un échiquier, c'est à dire, les rangées sont numérotées de 1 à 9 et les colonnes de "A" à "H". Les pions blancs sont séparés des noirs par '!' et à la fin des pions noirs, on ajoute un '#'. Exemple : pA2hA4rD5qC7kE1bF8!bA8qG4kD7#. L'envoi d'un plateau contenant toutes les pieces classiques est donc de 98 octets: 1 octet par caractere, 3 caracteres par pieces, 32 pieces sur un plateau, soit 3*32=96, plus les 2 symboles de separation.   
+\textbf{Protocole :} Le message est une suite de toutes les pièces présentes sur l'échiquier, chacune représentée par 3 caractères. Le premier caractère est une lettre désignant le type de la pièce considérée. Les 2 autres, sa position, en commençant par la colonne, selon la réprésentation classique d'un échiquier, c'est à dire, les rangées sont numérotées de 1 à 9 et les colonnes de "A" à "H". Les pions blancs sont séparés des noirs par '!' et à la fin des pions noirs, on ajoute un '#'. Exemple : pA2hA4rD5qC7kE1bF8!bA8qG4kD7#. L'envoi d'un plateau contenant toutes les pièces classiques est donc de 98 octets: 1 octet par caractère, 3 caractères par pièces, 32 pièces sur un plateau, soit 3*32=96, plus les 2 symboles de séparation.   
 
 \item \textit{Numéro du tour de jeu} \\
 \textbf{Mise en pratique :} Le serveur envoie le numéro du tour actuel de jeu aux joueurs.  \\
@@ -395,7 +395,7 @@ Le système se doit de mettre assez rapidement à jour les statistiques personne
 
 \item \textit{Tour du joueur} \\
 \textbf{Mise en pratique :} Chaque client vérifie si c'est bien au tour de son joueur de jouer, si oui, celui-ci envoie en message le mouvement de la pièce au serveur. \\
-\textbf{Protocole :} Le message est composé de 4 caractères, les 2 premiers sont l'emplacement du début de tour de la pièce et les 2 derniers sont la position future de la pièce demandé par le joueur.
+\textbf{Protocole :} Le message est composé de 4 caractères, les 2 premiers sont l'emplacement du début de tour de la pièce et les 2 derniers sont la position future de la pièce demandée par le joueur.
 
 \item \textit{Mouvement de la pièce} \\
 \textbf{Mise en pratique :} Après avoir reçu la position future de la pièce indiquée par le joueur, le serveur vérifie sa validité et envoie son résultat au client. Tant que la position n'est pas validée par le serveur, le client doit renvoyer une position au serveur. Lorsque que celle-ci est validée, le serveur envoie aux 2 clients l'échiquier mis à jour.  \\
