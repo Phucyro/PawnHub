@@ -47,6 +47,9 @@ std::string Socket::receiveMessage() {
   if (bytes_received < 0) {
     std::cout << "[Error] Recv" << std::endl;
   }
+  else if (bytes_received == 0) { // L'utilisateur s'est deconnecte
+    throw std::string("[Error] Receive Socket shutdown");
+  }
   std::string message = receiving_buffer;
   return message;
 }
