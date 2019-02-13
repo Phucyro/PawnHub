@@ -373,7 +373,7 @@ Le système se doit de mettre assez rapidement à jour les statistiques personne
 \begin{enumerate}
 \item Comme la plupart des tâches effectuées par nos programmes se font à l'aide de chaînes de caractères et par soucis d'homogénéité, il est préferable et plus simple que l'échange d'information entre le serveur et le client se fasse également sous cette forme.
 \item Une chaîne de caractère n'a pas besoin d'être traduite en binaire, ce qui diminue la complexité et le temps d'exécution de nos programmes.
-\item "<plus grand message actuel: envoi du plateau, 98 bytes max (taille ridicule)"> à formuler
+\item La taille du message envoyée n'est pas un probleme, car une taille de 100 octets suffit pour envoyer toutes les informations d'un message. Le plus grand message actuel est le plateau, qui ne consiste que de 98 octets lorsqu'il est complet (voir 6.5.2)
 \end{enumerate}
 \paragraph{}Le serveur aura une copie du board et tâchera de vérifier les différentes actions des joueurs. Il veillera également à mettre à jour les board des joueurs.
 
@@ -386,8 +386,8 @@ Le système se doit de mettre assez rapidement à jour les statistiques personne
 \textbf{Protocole :} Le serveur envoie '1' pour la couleur 'blanc' et '0' pour 'noir'. Pour l'instant, le premier connecté reçoit la couleur 'blanc'.  
 
 \item \textit{Affichage de l'échiquier} \\
-\textbf{Mise en pratique :} Le serveur envoie le plateau aux joueurs \\
-\textbf{Protocole :} Le message est composé de string de 3 caractères chacun. Le premier caractère est une lettre désignant le type de la pièce considérée. Les 2 autres, sa position, en commençant par la colonne, selon la réprésentation classique d'un échiquier, c'est à dire, les rangées sont numérotées de 1 à 9 et les colonnes de "A" à "H". Les pions blancs sont séparés des noirs par '!' et à la fin des pions noirs, on ajoute un '#'. Exemple : pA2hA4rD5qC7kE1bF8!bA8qG4kD7#    
+\textbf{Mise en pratique :} Le serveur envoie le plateau aux joueurs. \\
+\textbf{Protocole :} Le message est une suite de toutes les pièces présentes sur l'échiquier, chacune représentée par 3 caractères. Le premier caractère est une lettre désignant le type de la pièce considérée. Les 2 autres, sa position, en commençant par la colonne, selon la réprésentation classique d'un échiquier, c'est à dire, les rangées sont numérotées de 1 à 9 et les colonnes de "A" à "H". Les pions blancs sont séparés des noirs par '!' et à la fin des pions noirs, on ajoute un '#'. Exemple : pA2hA4rD5qC7kE1bF8!bA8qG4kD7#. L'envoi d'un plateau contenant toutes les pieces classiques est donc de 98 octets: 1 octet par caractere, 3 caracteres par pieces, 32 pieces sur un plateau, soit 3*32=96, plus les 2 symboles de separation.   
 
 \item \textit{Numéro du tour de jeu} \\
 \textbf{Mise en pratique :} Le serveur envoie le numéro du tour actuel de jeu aux joueurs.  \\
@@ -395,10 +395,10 @@ Le système se doit de mettre assez rapidement à jour les statistiques personne
 
 \item \textit{Tour du joueur} \\
 \textbf{Mise en pratique :} Chaque client vérifie si c'est bien au tour de son joueur de jouer, si oui, celui-ci envoie en message le mouvement de la pièce au serveur. \\
-\textbf{Protocole :} Le message est composé de 4 caractères, les 2 premiers sont l'emplacement du début et les 2 derniers de fin de tour. 
+\textbf{Protocole :} Le message est composé de 4 caractères, les 2 premiers sont l'emplacement du début de tour de la pièce et les 2 derniers sont la position future de la pièce demandé par le joueur.
 
 \item \textit{Mouvement de la pièce} \\
-\textbf{Mise en pratique :} Après avoir reçu la position future de la pièce indiquée par le joueur, le serveur vérifie sa validité et envoie son résultat au client. Tant que la position n'est pas validée par le serveur, le client doit renvoyer une position au serveur. Lorsque que celle-ci est validée, le serveur envoie au client l'échiquier mis à jour.  \\
+\textbf{Mise en pratique :} Après avoir reçu la position future de la pièce indiquée par le joueur, le serveur vérifie sa validité et envoie son résultat au client. Tant que la position n'est pas validée par le serveur, le client doit renvoyer une position au serveur. Lorsque que celle-ci est validée, le serveur envoie aux 2 clients l'échiquier mis à jour.  \\
 \textbf{Protocole :} Le serveur renvoie un boolée True/False. 
 
 \item \textit{État de la partie} \\
