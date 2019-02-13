@@ -16,7 +16,7 @@ class GhostPawn : public Piece{
         bool _checkMove(Coordinate, Board*, Game&) override {return false;}
 
     public :
-        GhostPawn(const char& color, Coordinate coords, unsigned turn, Pawn* target) : Piece(color, coords) _creationTurn(turn), _target(target) {
+        GhostPawn(const char color, Coordinate coords, unsigned turn, Pawn* target) : Piece(color, coords) _creationTurn(turn), _target(target) {
           _str[TYP] = "g";
         }
         GhostPawn(const GhostPawn& original) : Piece(original), _creationTurn(original._turn), _target(original._target) {}

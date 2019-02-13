@@ -19,7 +19,7 @@ class Piece {
     bool 				_isTaken; 	// tells if piece has been taken
 		char 				_str[3]	; 	// string containing info about piece
 
-		constexpr Piece(const char color, const char column, const char row) : _color(color), _coords(column, row){
+		constexpr Piece(const char color, const char column, const char row) : _color(color), _coords(column, row),_isTaken(false),_str(){
 			_str[ROW] = _coords.getAbstractRow();
 			_str[COL] = _coords.getAbstractColumn();
 		}
@@ -35,17 +35,16 @@ class Piece {
 			}
 		}
 
-
 		virtual bool _checkMove(Coordinate, Board*, Game&) = 0;
 		virtual void _doMove(Coordinate, Board*);
 		virtual void _reverseMove(Coordinate, Board*, Piece*);
+		inline bool _isPlaceFree(Coordinate ,Board*){return (!board->getCase(place)) || dynamic_cast<GhostPawn>(board->getCase(place));}
 
 	public :
-
 		Piece& operator= (const Piece&);
     virtual bool move(Coordinate, Board*, Game&);
 		virtual ~Piece() = default;
-		inline char getColor() const {return _color;}
+		char getColor() const {return _color;}
     virtual char* toString() {return _str;}
 		virtual void changeIsTaken(unsigned turn, Piece*, Board*){_isTaken = !_isTaken;}
 		bool isTaken() const {return _isTaken;}

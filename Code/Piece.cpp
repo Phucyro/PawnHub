@@ -13,7 +13,6 @@ Piece& Piece::operator= (const Piece& original){
 			return *this;
 }
 
-
 Piece* Piece::_doMove(Coordinate end, Board* board){
 	Piece *takenPiece;
 	takenPiece = board->movePiece(_coords, end);
