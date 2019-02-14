@@ -18,7 +18,7 @@ class Queen : public Piece {
 			_str[TYP] = 'q';
 		}
 
-		constexpr Queen(const char color, const char column , const char row) : Piece(color,column,row){
+		constexpr Queen(const char& color, const char& column , const char& row) : Piece(color,column,row){
 			_str[TYP] = 'q';
 		}
 

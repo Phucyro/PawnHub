@@ -5,10 +5,10 @@
 #include "Pawn.hpp"
 
 class King : public Piece {
-	
+
 	protected :
 		bool _moved;
-		
+
 		void _doMove(Coordinate, Board*) override;
 		void _reverseMove(Coordinate, Board*, Piece*)override;
 
@@ -16,7 +16,7 @@ class King : public Piece {
 		King(const char& color, Coordinate& coords) noexcept : Piece(color, coords), _moved(false) {
 			_str[TYP] = 'k';
 		}
-		constexpr King(const char color, const char column , const char row) : Piece(color,column,row), _moved(false){
+		constexpr King(const char& color, const char& column , const char& row) : Piece(color,column,row), _moved(false){
 			_str[TYP] = 'k';
 		}
 

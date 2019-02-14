@@ -18,7 +18,7 @@ class Pawn : public Piece {
 		Pawn(const char color, Coordinate coords) noexcept : Piece(color, coords), _moved(false), _ghost(nullptr) {
 			_str[TYP] = 'p';
 		}
-		constexpr Pawn(const char color, const char column , const char row) : Piece(color,column,row), _moved(false), _ghost(nullptr) {
+		constexpr Pawn(const char& color, const char& column , const char& row) : Piece(color,column,row), _moved(false), _ghost(nullptr) {
 			_str[TYP] = 'p';
 		}
 
