@@ -5,7 +5,7 @@
 #include "Pawn.hpp"
 
 class King : public Piece {
-	
+
 	protected :
 		bool _moved;
 		

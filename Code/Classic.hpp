@@ -37,6 +37,7 @@ class Classic : public Game {
 	void _nextTurn() override;
 	bool _isFinish() override;
 	Classic(const Classic&) = delete;
+	using Game::_pieces;
 
 	public :
 

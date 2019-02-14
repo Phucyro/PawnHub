@@ -16,8 +16,6 @@ class Rook : public Piece {
 			_str[TYP] = 'r';
 		}
 		Rook(const char color, const char column , const char row) : Piece(color,column,row), _moved(false){
-			_str[TYP] = 'r';
-		}
 
 
 		Rook(const Rook& original) noexcept : Piece(original), _moved(original.hasMoved()) {}

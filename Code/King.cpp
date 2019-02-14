@@ -59,7 +59,7 @@ bool _checkmove(Coordinate end, Board* board, Game& game){
     Coordinate tmpcoord; //coords of he rook
     if (columnMove == 2) tmpcoord = Coordinate(end.getRealColumn()+1, end.getRealRow()); //Petit Roque
     else tmpcoord = Coordinate(end.getRealColumn()-2, end.getRealRow()); //Grand roque
-    Piece* rook = dynamic_cast<*Rook>(board->getCase(tmpcoord));
+    Piece* rook = dynamic_cast<Rook*>(board->getCase(tmpcoord));
     if (rook->hasMoved() || !rook) return false; //Is the Rook validate ?
 
 		//check if there is no piece in the way + if the king will not be checked in the way
