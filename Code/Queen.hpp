@@ -7,8 +7,8 @@
 class Queen : public Piece {
 
 	protected :
-		bool _checkMoveRook(Coordinate, Board*, Game&) override;
-		bool _checkMoveBishop(Coordinate, Board*, Game&) override;
+		bool _checkMoveRook(Coordinate, Board*, Game&);
+		bool _checkMoveBishop(Coordinate, Board*, Game&);
 		bool _checkMove(Coordinate, Board*, Game&) override;
 
 
@@ -18,7 +18,7 @@ class Queen : public Piece {
 			_str[TYP] = 'q';
 		}
 
-		constexpr Queen(const char color, const char column , const char row) : Piece(color,column,row){
+		Queen(const char color, const char column , const char row) : Piece(color,column,row){
 			_str[TYP] = 'q';
 		}
 

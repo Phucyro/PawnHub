@@ -15,7 +15,7 @@ class Rook : public Piece {
 		Rook(const char& color, Coordinate& coords) noexcept : Piece(color, coords), _moved(false) {
 			_str[TYP] = 'r';
 		}
-		constexpr Rook(const char color, const char column , const char row) : Piece(color,column,row)const char&, _moved(false){
+		Rook(const char color, const char column , const char row) : Piece(color,column,row), _moved(false){
 			_str[TYP] = 'r';
 		}
 

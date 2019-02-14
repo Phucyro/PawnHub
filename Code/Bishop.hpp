@@ -15,7 +15,7 @@ class Bishop : public Piece {
 		Bishop(const char color, Coordinate coords) noexcept : Piece(color, coords){
 			_str[TYP] = 'b';
 		}
-		constexpr Bishop(const char color, const char column , const char row) : Piece(color,column,row){
+		Bishop(const char color, const char column , const char row) : Piece(color,column,row){
 			_str[TYP] = 'b';
 		}
 		Bishop(const Bishop& original) noexcept : Piece(original){}
