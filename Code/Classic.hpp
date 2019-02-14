@@ -11,6 +11,8 @@ class Classic : public Game {
 
 	protected :
 
+		using Game::_pieces;
+
 		void _initBoard() override;
 		void _nextTurn() override;
 		bool _isFinish() const override;
