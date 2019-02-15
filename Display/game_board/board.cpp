@@ -105,7 +105,7 @@ void Board::draw_pieces()
 {
   // Ca maaarche
   // std::string test = boardToString();
-  // stringToBoard(test);
+  // stringToBoard(test); 
 
   mvprintw(1,1, "T");
   mvprintw(1,4, "K");

@@ -15,7 +15,7 @@ public:
   Menu();
   ~Menu();
 
-  std::string Menu::get_user_input();
+  std::string get_user_input();
 };
 
 #endif
