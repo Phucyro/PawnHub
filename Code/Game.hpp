@@ -30,7 +30,7 @@ class Game
 	Game& operator= (Game&&);
 
 	Player* start(Player*, Player*);
-	virtual bool testCheck(const char color) const = 0;
+	virtual bool testCheck(const char color) = 0;
 	unsigned getTurn() const {return _turn;}
 };
 #include "Piece.hpp"

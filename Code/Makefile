@@ -3,8 +3,8 @@ FLAGS2= -std=c++17 -masm=intel -fconcepts -mlong-double-128 -ggdb3 -Wpedantic -W
 
 
 all: mainTest clean run
-mainTest: testBishop.o testCoordinate.o testBoard.o Board.o Coordinate.o Game.o mainTest.cpp Piece.o Player.hpp Bishop.o
-	g++ $(FLAGS) testBoard.o Piece.o Coordinate.o Board.o Player.hpp testCoordinate.o testBishop.o Game.o Bishop.o mainTest.cpp -o mainTest -lcppunit
+mainTest: testBishop.o testCoordinate.o testBoard.o Board.o Coordinate.o Game.o mainTest.cpp Piece.o Player.hpp Bishop.o testKnight.o Knight.o Classic.o
+	g++ $(FLAGS) testBoard.o Piece.o Coordinate.o Board.o Player.hpp testCoordinate.o testBishop.o Game.o Bishop.o testKnight.o Knight.o Classic.o mainTest.cpp -o mainTest -lcppunit
 
 testCoordinate.o: testCoordinate.cpp testCoordinate.hpp Coordinate.hpp
 	g++ -c $(FLAGS) testCoordinate.cpp -lcppunit
@@ -14,6 +14,9 @@ testBoard.o: testBoard.cpp testBoard.hpp Piece.hpp Board.hpp Coordinate.hpp
 
 testBishop.o : testBishop.cpp testBishop.hpp Piece.hpp Board.hpp Game.hpp
 	g++ -c $(FLAGS) testBishop.cpp -lcppunit
+	
+testKnight.o : testKnight.cpp testKnight.hpp Piece.hpp Board.hpp Game.hpp
+	g++ -c $(FLAGS) testKnight.cpp -lcppunit
 
 Coordinate.o: Coordinate.cpp Coordinate.hpp
 	g++ -c $(FLAGS) Coordinate.cpp
@@ -27,8 +30,14 @@ Piece.o : Game.hpp Board.hpp Coordinate.hpp Piece.hpp Piece.cpp
 Bishop.o: Bishop.cpp Bishop.hpp Game.hpp Board.hpp Coordinate.hpp Piece.hpp Piece.cpp Pawn.hpp GhostPawn.hpp
 	g++ -c $(FLAGS) Bishop.cpp
 
+Knight.o: Knight.cpp Knight.hpp Game.hpp Board.hpp Coordinate.hpp Piece.hpp Piece.cpp Pawn.hpp GhostPawn.hpp
+	g++ -c $(FLAGS) Knight.cpp
+
 Game.o: Board.hpp Coordinate.hpp Piece.hpp Player.hpp Game.hpp Game.cpp
 	g++ -c $(FLAGS) Game.cpp
+
+Classic.o: Board.hpp Coordinate.hpp Piece.hpp Player.hpp Game.hpp Classic.hpp Classic.cpp
+	g++ -c $(FLAGS) Classic.cpp
 
 run : mainTest
 	./$<

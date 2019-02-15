@@ -1,14 +1,14 @@
 #ifndef _CLASSIC_HPP_
 #define _CLASSIC_HPP_
 
-#include "Game.hpp"
 #include "includesPieceHPP.hpp"
+#include "Game.hpp"
 
 class Classic : public Game {
 
 	private :
 
-	void Pieces();
+	void _Pieces();
 		
 	Player* _getCurrentPlayer(){
 		if(_turn%2) return _player1;
@@ -34,13 +34,13 @@ class Classic : public Game {
 
 	public :
 
-	Classic() noexcept : Game(nullptr, 32) {Pieces();}
+	Classic() noexcept : Game(nullptr, 32) {_Pieces();}
 	virtual ~Classic();
 	Classic& operator=(const Classic&) = delete;
-	bool testCheck(const char color) const override;
+	bool testCheck(const char color) override;
 };
 
-void Classic::Pieces() {
+void Classic::_Pieces() {
 
 	_pieces[0] = new Rook('w', 'A', '1');		//0 -> 7 : pièces fortes blanches
 	_pieces[1] = new Knight('w', 'B', '1');

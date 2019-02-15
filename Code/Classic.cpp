@@ -115,7 +115,7 @@ bool Classic::_isCheckmate(char playerColor){
 			int row = 0, column = 0;
 			while(std::abs(row) < std::abs(rowMove)){
 				for (int i = 16-offset; i < 32 - offset; i++){
-					if ((!_pieces[i]->isTaken()) && _isMovePossible(column, row, _pieces[i])) return false;
+					if ((!_pieces[i]->isTaken()) && _pieces[i]->_isMovePossible(column, row, _board, *this)) return false;
 					row += rowDirection;
 					column += columnDirection;
 				}
@@ -140,7 +140,7 @@ bool Classic::_isCheckmate(char playerColor){
 		//knight case
 		else{
 			for (int i = 16-offset; i < 32 - offset; i++){
-				if ((!_pieces[i]->isTaken()) && _pieces[i]->_isMovePossible(0, j, _board, *this)) return false;
+				if ((!_pieces[i]->isTaken()) && _pieces[i]->_isMovePossible(0, 0, _board, *this)) return false;
 			}
 		}
 	}
@@ -150,17 +150,17 @@ bool Classic::_isCheckmate(char playerColor){
 bool Classic::_isStalemate(char playerColor){
 	int offset = _calculOffset(playerColor);
 	for (int i = offset; i < offset+16; i++){
-		if ((!_pieces[i]->isTaken()) && _pieces[i]->canMove()) return false;
+		if ((!_pieces[i]->isTaken()) && _pieces[i]->canMove(_board, *this)) return false;
 	}
-	return true
+	return true;
 }
 
 bool Classic::_notEnoughtPieces(){
 	char type;
 	Piece* lastPieceButKing = nullptr;
 	bool doubleBishop = false;
-	for (int i = 0, i < 32, i++){
-		type = _piece[i]->isTaken() ? '!' : _pieces[i]->getType;
+	for (int i = 0; i < 32; i++){
+		type = _pieces[i]->isTaken() ? '!' : _pieces[i]->getType();
 		switch(type){
 			case '!': break;
 			case 'k': break;
@@ -168,16 +168,16 @@ bool Classic::_notEnoughtPieces(){
 			case 'q': return false;
 			case 'r': return false;
 			case 'h':{if (lastPieceButKing) return false;
-				  lastPieceButKing = _piece[i];
+				  lastPieceButKing = _pieces[i];
 				  break;
 				 }
 			case 'b':{if (doubleBishop) return false;
-				  if (lastPieceButKing && _board->getCaseColor(_piece[i]->getCoord()) == _board->getCaseColor(lastPieceButKing->getCoord())){
-				  	doubleBishop == true;
+				  if (lastPieceButKing && _board->getCaseColor(_pieces[i]->getCoord()) == _board->getCaseColor(lastPieceButKing->getCoord())){
+				  	doubleBishop = true;
 				  	break;
 				  }
 				  if (!lastPieceButKing){
-				  	lastPieceButKing = _piece[i];
+				  	lastPieceButKing = _pieces[i];
 				  	break;
 				  }
 				  return false;
@@ -199,7 +199,7 @@ bool Classic::_isFinish() {
 	return this->_notEnoughtPieces();
 }
 
-bool Classic::testCheck(const char color) const {
+bool Classic::testCheck(const char color) {
 	if (color == 'w' || color == 'a'){	//White		//a = all
 
 		//strong pieces
@@ -213,10 +213,11 @@ bool Classic::testCheck(const char color) const {
 		if (_pieces[23]->_checkMove(_pieces[KING_INDEX]->getCoord(), Game::_board, *this)) return true;
 
 		//Pawn
-		Piece* MaybePawn = Game::_board->getCase(_pieces[KING_INDEX]->getCoord()->getRealColumn()+1, _pieces[KING_INDEX]->getCoord()->getRealRow()+1);
+		Piece* MaybePawn = Game::_board->getCase(Coordinate(_pieces[KING_INDEX]->getCoord().getRealColumn()+1, _pieces[KING_INDEX]->getCoord().getRealRow()+1));
 		if (MaybePawn && MaybePawn->getColor() == 'b' && MaybePawn->getType() == 'p') return true;
-		Piece* MaybePawn = Game::_board->getCase(_pieces[KING_INDEX]->getCoord()->getRealColumn()+1, _pieces[KING_INDEX]->getCoord()->getRealRow()-1);
+		MaybePawn = Game::_board->getCase(Coordinate(_pieces[KING_INDEX]->getCoord().getRealColumn()+1, _pieces[KING_INDEX]->getCoord().getRealRow()-1));
 		if (MaybePawn && MaybePawn->getColor() == 'b' && MaybePawn->getType() == 'p') return true;
+	}
 
 	if (color == 'b' || color == 'a'){	//Black		//a = all
 
@@ -231,11 +232,12 @@ bool Classic::testCheck(const char color) const {
 		if (_pieces[7]->_checkMove(_pieces[16+KING_INDEX]->getCoord(), Game::_board, *this)) return true;
 
 		//Pawn
-		Piece* MaybePawn = Game::_board->getCase(_pieces[16+KING_INDEX]->getCoord()->getRealColumn()-1, _pieces[16+KING_INDEX]->getCoord()->getRealRow()+1);
+		Piece* MaybePawn = Game::_board->getCase(Coordinate(_pieces[16+KING_INDEX]->getCoord().getRealColumn()-1, _pieces[16+KING_INDEX]->getCoord().getRealRow()+1));
 		if (MaybePawn && MaybePawn->getColor() == 'w' && MaybePawn->getType() == 'p') return true;
-		Piece* MaybePawn = Game::_board->getCase(_pieces[16+KING_INDEX]->getCoord()->getRealColumn()-1, _pieces[16+KING_INDEX]->getCoord()->getRealRow()-1);
+		MaybePawn = Game::_board->getCase(Coordinate(_pieces[16+KING_INDEX]->getCoord().getRealColumn()-1, _pieces[16+KING_INDEX]->getCoord().getRealRow()-1));
 		if (MaybePawn && MaybePawn->getColor() == 'w' && MaybePawn->getType() == 'p') return true;
+	}
 
 	return false;
-
+}
 #endif

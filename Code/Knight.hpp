@@ -3,6 +3,7 @@
 
 #include "Piece.hpp"
 #include "Pawn.hpp"
+class TestKnight;
 
 class Knight : public Piece {
 
@@ -11,7 +12,7 @@ class Knight : public Piece {
 
 	public :
 
-		Knight(const char& color, Coordinate& coords) noexcept : Piece(color, coords){
+		Knight(const char color, Coordinate coords) noexcept : Piece(color, coords){
 			_str[TYP] = 'h';
 		}
 		Knight(const char color, const char column , const char row) : Piece(color,column,row){
@@ -28,6 +29,8 @@ class Knight : public Piece {
 		bool canMove(Board*, Game&) override;
 
 		Knight& operator= (const Knight&);
+		
+		friend TestKnight;
 };
 
 #endif

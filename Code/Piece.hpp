@@ -35,7 +35,6 @@ class Piece {
 			}
 		}
 
-		virtual bool _checkMove(Coordinate, Board*, Game&) = 0;
 		virtual Piece* _doMove(Coordinate, Board*,Game&);
 		virtual void _reverseMove(Coordinate, Board*, Game&, Piece*);
 		inline bool _isPlaceFree(Coordinate place ,Board* board)
@@ -47,6 +46,7 @@ class Piece {
 	public :
 		Piece& operator= (const Piece&);
     virtual bool move(Coordinate, Board*, Game&);
+    virtual bool _checkMove(Coordinate, Board*, Game&) = 0;
     virtual bool canMove(Board*, Game&) = 0;
 		virtual ~Piece() noexcept = default;
 		char getType() const {return _str[TYP];}
