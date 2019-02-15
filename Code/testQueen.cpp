@@ -89,6 +89,7 @@ void TestQueen :: tearDown()
 
 void TestQueen :: testMove()
 {
+  //TODO ROOK PART
   //Bishop part
 
   //black eats white
