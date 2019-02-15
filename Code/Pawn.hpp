@@ -36,6 +36,7 @@ class Pawn : public Piece {
 
 		bool hasMoved() const {return _moved;}
 		bool move(Coordinate, Board*, Game&) override;
+		bool canMove(Board*, Game&) override;
 };
 
 #endif

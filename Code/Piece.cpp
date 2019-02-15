@@ -39,5 +39,13 @@ bool Piece::move(Coordinate end, Board* board, Game& game){
 	return true;
 }
 
+bool Piece::_isMovePossible(Coordinate dest, Board* board, Game& game){
+	Coordinate start = this->getCoord();
+	Piece* takenPiece = board->getCase(dest);
+	if (!this->move(dest, board, game))return false;
+	board->movePiece(dest, start);
+	board->setCase(dest, takenPiece);
+	return true;
+}
 
 #endif

@@ -29,6 +29,8 @@ class Queen : public Piece {
 		virtual ~Queen() noexcept = default;
 
 		Queen& operator= (const Queen&);
+		
+		bool canMove(Board*, Game&) override;
 };
 
 #endif

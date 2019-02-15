@@ -25,6 +25,8 @@ class Bishop : public Piece {
 		virtual ~Bishop() noexcept = default;
 
 		Bishop& operator= (const Bishop&);
+		
+		bool canMove(Board*, Game&) override;
 
 		friend TestBishop;
 };

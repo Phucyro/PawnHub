@@ -14,6 +14,7 @@ class P: public Piece{
 		P() :Piece('w',Coordinate('A','1')){}
 
 		bool _checkMove(Coordinate, Board*, Game&) override {return true;}
+		bool canMove(Board*, Game&) override {return true;}
 };
 
 class TestBoard: public CPPUNIT_NS::TestFixture

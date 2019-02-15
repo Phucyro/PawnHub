@@ -64,4 +64,16 @@ bool Queen::_checkMove(Coordinate end, Board* board, Game& game){
   }
 }
 
+bool Queen::canMove(Board* board, Game& game){
+	if (this->_isMovePossible(1, 1, board, game)) return false;
+	if (this->_isMovePossible(0, 1, board, game)) return false;
+	if (this->_isMovePossible(-1, 1, board, game)) return false;
+	if (this->_isMovePossible(1, 0, board, game)) return false;
+	if (this->_isMovePossible(-1, 0, board, game)) return false;
+	if (this->_isMovePossible(1, -1, board, game)) return false;
+	if (this->_isMovePossible(0, -1, board, game)) return false;
+	if (this->_isMovePossible(-1, -1, board, game)) return false;
+	return true;
+}
+
 #endif

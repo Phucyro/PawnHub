@@ -25,6 +25,7 @@ class GhostPawn : public Piece{
       GhostPawn& operator= (const GhostPawn&);
 
       void changeIsTaken(unsigned, Piece*, Board*) override;
+      bool canMove(Board*, Game&) override{return false;}
 };
 
 #include "Pawn.hpp"

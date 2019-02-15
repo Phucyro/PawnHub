@@ -17,4 +17,16 @@ bool Knight::_checkMove(Coordinate end, Board* board, Game& game){
 	&& board->getCase(end)->getColor() != this->getColor(); //true if the color of the piece taken is not the same
 }
 
+bool Knight::canMove(Board* board, Game& game){
+	if (this->_isMovePossible(1, 2, board, game)) return false;
+	if (this->_isMovePossible(1, -2, board, game)) return false;
+	if (this->_isMovePossible(-1, 2, board, game)) return false;
+	if (this->_isMovePossible(-1, -2, board, game)) return false;
+	if (this->_isMovePossible(2, 1, board, game)) return false;
+	if (this->_isMovePossible(2, -1, board, game)) return false;
+	if (this->_isMovePossible(-2, 1, board, game)) return false;
+	if (this->_isMovePossible(-2, -1, board, game)) return false;
+	return true;
+}
+
 #endif

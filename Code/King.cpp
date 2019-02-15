@@ -4,7 +4,7 @@
 #include <cmath>
 #include "King.hpp"
 
-Piece* _doMove(Coordinate end, Board* board){
+Piece* King::_doMove(Coordinate end, Board* board){
 	int columnMove = int(end.getRealColumn()) - int(_coords.getRealColumn());
 
 	if (columnMove == 2){
@@ -20,7 +20,7 @@ Piece* _doMove(Coordinate end, Board* board){
 	return this->Piece::_doMove(end, board);
 }
 
-Piece* _reverseMove(Coordinate end, Board* board, Piece* takenPiece){
+Piece* King::_reverseMove(Coordinate end, Board* board, Piece* takenPiece){
 	int columnMove = int(end.getRealColumn()) - int(_coords.getRealColumn());
 
 	if (columnMove == 2){
@@ -36,7 +36,7 @@ Piece* _reverseMove(Coordinate end, Board* board, Piece* takenPiece){
 	this->Piece::_reverseMove(end, board, takenPiece);
 }
 
-bool move(Coordinate end, Board* board, Game& game) {
+bool King::move(Coordinate end, Board* board, Game& game) {
   if (this->Piece::move(end, board, game)){
 		_moved = true;
 		return true;
@@ -44,7 +44,7 @@ bool move(Coordinate end, Board* board, Game& game) {
 	else return false;
 }
 
-bool _checkmove(Coordinate end, Board* board, Game& game){
+bool King::_checkmove(Coordinate end, Board* board, Game& game){
   int rowMove = int(end.getRealRow()) - int(_coords.getRealRow());
   int columnMove = int(end.getRealColumn()) - int(_coords.getRealColumn());
   int absColumnMove = std::abs(columnMove);
@@ -81,6 +81,18 @@ bool _checkmove(Coordinate end, Board* board, Game& game){
   //test if there is a Piece of the same color to the destination
   if (board->getCase(end) && board->getCase(end)->getColor() == this->getColor()) return false;
   return true;
+}
+
+bool King::canMove(Board* board, Game& game){
+	if (this->_isMovePossible(1, 1, board, game)) return false;
+	if (this->_isMovePossible(0, 1, board, game)) return false;
+	if (this->_isMovePossible(-1, 1, board, game)) return false;
+	if (this->_isMovePossible(1, 0, board, game)) return false;
+	if (this->_isMovePossible(-1, 0, board, game)) return false;
+	if (this->_isMovePossible(1, -1, board, game)) return false;
+	if (this->_isMovePossible(0, -1, board, game)) return false;
+	if (this->_isMovePossible(-1, -1, board, game)) return false;
+	return true;
 }
 
 #endif

@@ -47,16 +47,18 @@ class Piece {
 	public :
 		Piece& operator= (const Piece&);
     virtual bool move(Coordinate, Board*, Game&);
+    virtual bool canMove(Board*, Game&) = 0;
 		virtual ~Piece() noexcept = default;
 		char getType() const {return _str[TYP];}
 		Coordinate getCoord() const {return _coords;}
 		char getColor() const {return _color;}
-		Coordinate getPlace() {return _coords;}
 		unsigned getRow() {return _coords.getRealRow();}
 		unsigned getColumn() {return _coords.getRealColumn();}
     virtual char* toString() {return _str;}
 		virtual void changeIsTaken(unsigned turn, Piece*, Board*){_isTaken = !_isTaken;}
 		bool isTaken() const {return _isTaken;}
+		bool _isMovePossible(Coordinate, Board*, Game&);
+		bool _isMovePossible(int column, int row, Board* board, Game& game){return _isMovePossible(Coordinate(int (this->getColumn()) + column, int(this->getRow()) + row), board, game);}
 
 };
 

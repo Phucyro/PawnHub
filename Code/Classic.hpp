@@ -18,18 +18,11 @@ class Classic : public Game {
 	
 	bool _executeMove(Coordinate, Coordinate, char);
 	bool _isCheckmate(char);
-	bool _checkPieceMove(int column, int row, Piece* king){//to implement in Piece?
-		return  _checkPieceMove(Coordinate(int (king->getColumn()) + column, int(king->getRow()) + row), king);
-	}
+	bool _isStalemate(char);
+	bool _notEnoughtPieces();
 	
-	bool _checkPieceMove(Coordinate dest, Piece* king){//to implement in Piece?
-		Coordinate start = king->getPlace();
-		Piece* takenPiece = _board->getCase(dest);
-		if (!king->move(dest, _board, *this))return false;
-		_board->movePiece(dest, start);
-		_board->setCase(dest, takenPiece);
-		return true;
-	}
+	int _calculOffset(char playerColor){return playerColor == 'w' ? 0 : 16;}
+	
 
 	protected :
 

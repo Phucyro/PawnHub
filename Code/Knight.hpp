@@ -24,6 +24,8 @@ class Knight : public Piece {
 			_str[TYP] = 'h';
 		}
 		virtual ~Knight() noexcept = default;
+		
+		bool canMove(Board*, Game&) override;
 
 		Knight& operator= (const Knight&);
 };

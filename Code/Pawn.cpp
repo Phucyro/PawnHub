@@ -51,6 +51,13 @@ bool Pawn::move(Coordinate end, Board* board, Game& game){
 	else return false;
 }
 
+bool Pawn::canMove(Board* board, Game& game){
+	if (this->_isMovePossible(1, 1, board, game)) return false;
+	if (this->_isMovePossible(0, 1, board, game)) return false;
+	if (this->_isMovePossible(-1, 1, board, game)) return false;
+	return true;
+}
+
 void Pawn::_promote(){
 	//TODO
 

@@ -43,4 +43,12 @@ bool Rook::move(Coordinate end, Board* board, Game& game){
 	else return false;
 }
 
+bool Rook::canMove(Board* board, Game& game){
+	if (this->_isMovePossible(0, 1, board, game)) return false;
+	if (this->_isMovePossible(1, 0, board, game)) return false;
+	if (this->_isMovePossible(-1, 0, board, game)) return false;
+	if (this->_isMovePossible(0, -1, board, game)) return false;
+	return true;
+}
+
 #endif

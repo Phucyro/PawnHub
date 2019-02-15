@@ -30,4 +30,12 @@ bool Bishop::_checkMove(Coordinate end, Board* board, Game& game){
 	if ((!_isPlaceFree(end, board)) && board->getCase(end)->getColor() == this->getColor()) return false;
 	return true;
 }
+
+bool Bishop::canMove(Board* board, Game& game){
+	if (this->_isMovePossible(1, 1, board, game)) return false;
+	if (this->_isMovePossible(-1, 1, board, game)) return false;
+	if (this->_isMovePossible(1, -1, board, game)) return false;
+	if (this->_isMovePossible(-1, -1, board, game)) return false;
+	return true;
+}
 #endif
