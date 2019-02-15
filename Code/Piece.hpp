@@ -3,8 +3,8 @@
 
 #include "Coordinate.hpp"
 #include "Board.hpp"
-#include "Game.hpp"
 
+class Game;
 #define TYP 0 // type
 #define ROW 1 // row
 #define COL 2 // column
@@ -61,5 +61,5 @@ class Piece {
 		bool _isMovePossible(int column, int row, Board* board, Game& game){return _isMovePossible(Coordinate(int (this->getColumn()) + column, int(this->getRow()) + row), board, game);}
 
 };
-
+#include "Game.hpp"
 #endif

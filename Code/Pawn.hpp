@@ -8,7 +8,6 @@ class Pawn : public Piece {
 
 	protected :
 		bool _moved;
-		bool _checkMove(Coordinate, Board*, Game&) override;
 		GhostPawn *_ghost;
 
 		void _promote();
@@ -37,6 +36,7 @@ class Pawn : public Piece {
 		bool hasMoved() const {return _moved;}
 		bool move(Coordinate, Board*, Game&) override;
 		bool canMove(Board*, Game&) override;
+		bool _checkMove(Coordinate, Board*, Game&) override;
 };
 
 #endif

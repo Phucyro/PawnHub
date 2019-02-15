@@ -1,8 +1,9 @@
 #ifndef __GAME__HPP__
 #define __GAME__HPP__
 
-#include "Player.hpp"
 #include "Coordinate.hpp"
+
+class Player;
 class Piece;
 class Board;
 
@@ -35,4 +36,5 @@ class Game
 };
 #include "Piece.hpp"
 #include"Board.hpp"
+#include "Player.hpp"
 #endif
