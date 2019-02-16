@@ -1,26 +1,33 @@
-#ifndef _TREATCONNECTION_H_
-#define _TREATCONNECTION_H_
+#ifndef _SERVERRECEIVEHANDLER_H_
+#define _SERVERRECEIVEHANDLER_H_
 
 #include "LoginServer.hpp"
-#include <thread>
+#include "SplitString.hpp"
+#include "Data.hpp"
+#include <vector>
+#include <string>
 
-void treatConnection(Socket* client_socket){
-  // Demande a l'utilisatuer de s'identifier
+
+void receiveMessageHandler(Socket* client_socket, Data* data){
+  bool quit = false;
+  std::vector<std::string> message;
+
   try {
-    treatAuthentification(client_socket);
+    while (!quit){
+      message = splitString(client_socket->receiveMessage(), ' ');
 
-    /*
-    TODO :
-    Initialiser chat
-    Boucle attendre demande client (jouer, checker statistique, classement, ...)
-    Bouton quitter
-    Bouton chercher une partie
-    */
+      switch (message[0][0]){
+        case '0' :
+          quit = true;
+          break;
+
+        // Etc
+      }
+    }
 
   }
   catch (std::string const& error){
     std::cout << error << std::endl;
-    std::cout << "Fin du thread" << std::endl;
   }
 }
 
