@@ -1,96 +1,119 @@
-#ifndef _LOGINSERVER_H_
-#define _LOGINSERVER_H_
+#ifndef _LOGINCLIENT_H_
+#define _LOGINCLIENT_H_
 
-#include <iostream>
-#include <fstream>
 #include <string>
-#include <map>
-#include <vector>
-#include "SplitString.hpp"
+#include <iostream>
 #include "Socket.hpp"
 
-std::map<std::string, std::string> readData(const std::string file_path){
+
+bool signIn(Socket* socket, std::string username, std::string password){
   /*
-  Lit le fichier qui se trouve a la position donnee par file_path et renvoie
-  un dictionnaire contenant les informations des utilisateurs qui possedent
-  deja un compte
-  map <string nomUtilisateur, string motDePasse>
+  Identification du joueur pour lui permettre de joueur
+  Socket socket : socket du joueur qui veut se connecter
+  string username : nom de compte du joueur
+  string password : mot de passe du compte du joueur
+  Renvoie true si l'utilisateur a reussi a s'identifier
   */
 
-  std::ifstream filestream(file_path.c_str());
-  std::map<std::string, std::string> users_data;
+  // Envoie du type de service 0 : Identification
+  socket->sendMessage("0");
 
-  if (filestream){
-    std::string text_line;
+  // Envoie le nom et le mot de passe de l'utilisateur
+  socket->sendMessage(username);
+  socket->sendMessage(password);
 
-    // Lecture du fichier ligne par ligne et stock info dans dictionnaire
-    while (getline(filestream, text_line)){
-      std::vector<std::string> data = splitString(text_line, ' ');
-      users_data[data[0]] = data[1];
+  // Recois la reponse du serveur
+  char answer = socket->receiveMessage()[0];
+
+  switch (answer){
+    case '0' :
+      std::cout << "Vous venez de vous connecter" << std::endl;
+      return true;
+    case '1' :
+      std::cout << "Compte utilisateur inexistant" << std::endl;
+      break;
+    case '2' :
+      std::cout << "Mauvais mot de passe" << std::endl;
+  }
+
+  return false;
+}
+
+
+bool signUp(Socket* socket, std::string username, std::string pswd1, std::string pswd2){
+  /*
+  Permet de joueur au joueur de s'inscrire et donc d'avoir un compte
+  Socket socket : socket du joueur qui veut se connecter
+  string username : nom de compte du joueur
+  string pswd1 : mot de passe du compte du joueur
+  string pswd2 : mot de passe du compte du joueur (confirmation)
+  Renvoie true si le compte a ete cree correctement
+  */
+
+  if (pswd1 != pswd2){
+    std::cout << "Les mots de passes ne correspondent pas" << std::endl;
+  }
+  else {
+    // Envoie du type de service 1 : inscription
+    socket->sendMessage("1");
+
+    // Envoie le nom et le mot de passe de l'utilisateur
+    socket->sendMessage(username);
+    socket->sendMessage(pswd1);
+
+    char answer = socket->receiveMessage()[0];
+
+    switch (answer){
+      case '0' :
+        std::cout << "Compte cree avec succes" <<  std::endl;
+        signIn(socket, username, pswd1);
+        return true;
+      case '1' :
+        std::cout << "Nom de compte existant" << std::endl;
     }
   }
-  else {
-    std::cerr << "[Error] Ouverture fichier en mode lecture" << std::endl;
-  }
 
-  return users_data;
+  return false;
 }
 
-void addData(const std::string file_path, std::string username, std::string pswd){
+void authentification(Socket* socket){
   /*
-  Ajoute de nouvelles donnees (username, password) dans le fichier text
+  Demande a l'utilisateur s'il veut se connecter ou s'enregistrer et traite sa
+  demande.
+  Socket* socket : pointer vers le socket de l'utilisateurs
   */
 
-  std::ofstream filestream(file_path.c_str(), std::ios::app);
-
-  if (filestream){
-    filestream << username + " " << pswd << std::endl;
-  }
-  else {
-    std::cerr << "[Error] Ecriture fichier" << std::endl;
-  }
-}
-
-
-void treatAuthentification(Socket* socket){
-  bool user_connected = false; // L'utilisateur s'est identifie
+  bool user_connected = false;
+  int service;
+  std::string username;
+  std::string password1;
+  std::string password2;
 
   while (!user_connected){
-    std::map<std::string, std::string> users_data = readData("database.txt");
+    std::cout << "[Option] 0) Connexion | 1) Inscription : ";
+    std::cin >> service;
 
-    // Reception du type de service
-    char service = socket->receiveMessage()[0];
-    std::string username = socket->receiveMessage();
-    std::string password = socket->receiveMessage();
-
-    // Traite la demande l'utilisateur
     switch (service){
-      case '0' : // L'utilisateur veut se connecter
-        if (users_data.find(username) == users_data.end()){
-          socket->sendMessage("1"); // Compte inexistant
-        }
-        else if (users_data[username] == password){
-          socket->sendMessage("0"); // Le joueur se connecte
+      case 0 : // Demande de connection
+        std::cout << "Username : ";
+        std::cin >> username;
+        std::cout << "Password : ";
+        std::cin >> password1;
+        if (signIn(socket, username, password1))
           user_connected = true;
-        }
-        else {
-          socket->sendMessage("2"); // Mauvais mot de passe
-        }
         break;
-      case '1' : // L'utilisateur veut s'inscrire
-        if (users_data.find(username) == users_data.end()){
-          // Si le nom de compte est disponible, cree le compte
-          users_data[username] = password;
-          addData("database.txt", username, password);
-          socket->sendMessage("0");
-        }
-        else {
-          // Le nom de compte existe deja
-          socket->sendMessage("1");
-        }
+      case 1 : // Demande de creation d'un compte
+        std::cout << "Username : ";
+        std::cin >> username;
+        std::cout << "Password : ";
+        std::cin >> password1;
+        std::cout << "Password (confirmation) : ";
+        std::cin >> password2;
+        if (signUp(socket, username, password1, password2))
+          user_connected = true;
+        break;
     }
   }
-  std::cout << "Un utilisateur s'est identifie" << std::endl;
 }
 
 #endif
