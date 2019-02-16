@@ -7,7 +7,7 @@ LFLAGS= -pthread -lncurses
 
 all: board.o main.out
 
-board.o: board.cpp board.hpp
+board.o: board.cpp board.hpp BoardParsing.hpp Coordinate.hpp Coordinate.cpp
 	g++ $(FLAGS) $< -c -o $@ $(LFLAGS)
 
 main.out: main.cpp board.o
