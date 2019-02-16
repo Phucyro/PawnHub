@@ -1,20 +1,23 @@
-FLAGS= -std=c++14 -ggdb3 -Wpedantic -Wall -Wextra -Wconversion -Weffc++ -Wstrict-null-sentinel -Wnoexcept -Wctor-dtor-privacy -Woverloaded-virtual -Wsign-promo -Wzero-as-null-pointer-constant -Wsuggest-final-types -Wsuggest-final-methods -Wsuggest-override
+FLAGS= -std=c++17 -ggdb3 -Wpedantic -Wall -Wextra -Wconversion -Weffc++ -Wstrict-null-sentinel -Wnoexcept -Wctor-dtor-privacy -Woverloaded-virtual -Wsign-promo -Wzero-as-null-pointer-constant -Wsuggest-final-types -Wsuggest-final-methods -Wsuggest-override
 
 CXX= g++
 
 CONFIG= config.hpp
 SOCKETS= Socket.o BindSocket.o
-LOGIN= LoginServer.hpp LoginClient.hpp
+LOGIN_CLIENT= LoginClient.hpp
+LOGIN_SERVER= LoginServer.hpp treatConnection.hpp Data.o SplitString.hpp
+GAME_CLIENT= StartPartyClient.hpp
+GAME_SERVER= StartPartyServer.hpp
 
 all: server client clean
 
 run: all
 	./server
 
-client: client.o $(SOCKETS) $(LOGIN) $(CONFIG)
+client: client.o $(SOCKETS) $(LOGIN_CLIENT) $(CONFIG)
 	$(CXX) $(FLAGS) -o $@ $^
 
-server: server.o $(SOCKETS) $(LOGIN) $(CONFIG)
+server: server.o $(SOCKETS) $(LOGIN_SERVER) $(CONFIG)
 	$(CXX) $(FLAGS) -o $@ $^ -lpthread
 
 %.o: %.cpp %.hpp

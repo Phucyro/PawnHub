@@ -1,5 +1,5 @@
 #include "Data.hpp"
-
+#include "SplitString.hpp"
 
 Data::Data(std::string path) : _data({}), _path(path) {}
 

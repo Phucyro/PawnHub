@@ -5,7 +5,6 @@
 #include <vector>
 #include <fstream>
 #include <iostream>
-#include "SplitString.hpp"
 
 class Data {
 private:
