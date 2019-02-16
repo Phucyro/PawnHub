@@ -1,7 +1,7 @@
 #include "board.hpp"
 #include "BoardParsing.hpp"
 
-Board::Board(): infos_win(nullptr), columns(8), lines(8), running(false)
+Board::Board(): infos_win(nullptr), columns(BOARD_COLS), lines(BOARD_LINES), running(false)
 {
 
 }
@@ -89,60 +89,12 @@ void Board::draw_coordinates()
     mvprintw(24, 1+(OFFSET*i), "%c", 'A'+i);
   }
 
-  // mvprintw(24, 1, "A");
-  // mvprintw(24, 4, "B");
-  // mvprintw(24, 7, "C");
-  // mvprintw(24, 10, "C");
-  // mvprintw(24, 13, "D");
-  // mvprintw(24, 16, "E");
-  // mvprintw(24, 19, "F");
-  // mvprintw(24, 22, "G");
-
 }
 
-void Board::draw_pieces()
+void Board::draw_pieces(std::string board)
 /** Dessine les pions sur le board de depart **/
 {
-  // Ca maaarche
-  // std::string test = boardToString();
-  // stringToBoard(test); 
-
-  mvprintw(1,1, "T");
-  mvprintw(1,4, "K");
-  mvprintw(1,7, "B");
-  mvprintw(1,10, "Q");
-  mvprintw(1,13, "R");
-  mvprintw(1,16, "B");
-  mvprintw(1,19, "K");
-  mvprintw(1,22, "T");
-
-  mvprintw(4,1, "P");
-  mvprintw(4,4, "P");
-  mvprintw(4,7, "P");
-  mvprintw(4,10, "P");
-  mvprintw(4,13, "P");
-  mvprintw(4,16, "P");
-  mvprintw(4,19, "P");
-  mvprintw(4,22, "P");
-
-  mvprintw(22,1, "T");
-  mvprintw(22,4, "K");
-  mvprintw(22,7, "B");
-  mvprintw(22,10, "Q");
-  mvprintw(22,13, "R");
-  mvprintw(22,16, "B");
-  mvprintw(22,19, "K");
-  mvprintw(22,22, "T");
-
-  mvprintw(19,1, "P");
-  mvprintw(19,4, "P");
-  mvprintw(19,7, "P");
-  mvprintw(19,10, "P");
-  mvprintw(19,13, "P");
-  mvprintw(19,16, "P");
-  mvprintw(19,19, "P");
-  mvprintw(19,22, "P");
-
+  stringToBoard(board);
 }
 
 void Board::draw_rectangle(int x1, int y1, int x2, int y2)
@@ -158,20 +110,20 @@ void Board::draw_rectangle(int x1, int y1, int x2, int y2)
   mvaddch(y2, x2, ACS_LRCORNER);
 }
 
-void Board::move_pawn(int x1, int y1, int x2, int y2, std::string pawn_type)
+void Board::move_piece(int x1, int y1, int x2, int y2, std::string piece_type)
 /** permet de bouger un pion de la position (x1,y1) vers (x2,y2) **/
 {
   mvprintw(1+3*x1, 1+3*y1, " ");
 
-  const char* pawn = pawn_type.c_str();
+  const char* piece = piece_type.c_str();
 
-  mvprintw(1+3*y2, 1+3*x2, pawn);
+  mvprintw(1+3*y2, 1+3*x2, piece);
 
   refresh_board();
 }
 
 
-void Board::update_board(std::string pawns_list)
+void Board::update_board(std::string piece_list)
 {
 
 }

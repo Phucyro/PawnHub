@@ -31,6 +31,7 @@ void separatePieces(unsigned int a, std::string message, std::string colour) {
   int column = coor.getRealColumn();
   int line = coor.getRealRow();
   mvprintw(1+(line*OFFSET), 1+(column*OFFSET), "%c", piece);
+  // still need to set colour;
 }
 
 void stringToBoard(std::string message) {

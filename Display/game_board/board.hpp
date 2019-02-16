@@ -6,11 +6,6 @@
 #include "constants.hpp"
 #include <string>
 
-// permet de pas faire +3 tout le temps
-// bonus: plus facile a changer si on veut modifier la taille
-#define SIDE_LENGTH 2   //seule utilisation: dans init_windows, appel de draw_rectangle
-#define OFFSET (SIDE_LENGTH+1)
-
 /**
 TO DO:
 -Tour du joueur
@@ -27,7 +22,7 @@ protected:
   void init_windows();
 
   void draw_rectangle(int x1, int y1, int x2, int y2);
-  void draw_pieces();
+  void draw_pieces(std::string);
   void draw_coordinates();
   void draw_infos();
 
@@ -43,9 +38,9 @@ public:
 
   void init_ncurses();
 
-  void move_pawn(int x1, int y1, int x2, int y2, std::string pawn_type);
+  void move_piece(int, int, int, int, std::string);
 
-  void update_board(std::string pawns_list);
+  void update_board(std::string);
   void refresh_board();
 
   int get_movement();
