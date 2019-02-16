@@ -13,7 +13,7 @@ bool Knight::_checkMove(Coordinate end, Board* board, Game& game){
 	int rowMove = int(end.getRealRow()) - int(_coords.getRealRow());
 	int columnMove = int(end.getRealColumn()) - int(_coords.getRealColumn());
 
-	if (end.getRealRow() < 0 || end.getRealRow() > 7 || end.getRealColumn() < 0 || end.getRealColumn() > 7) return false;
+	if ( end.getRealRow() > 7 || end.getRealColumn() > 7) return false;
 
 	return ((std::abs(columnMove) == 2 && std::abs(rowMove) == 1)  ||  (std::abs(columnMove) == 1 && std::abs(rowMove) == 2)) // true if the move is normal for the knight
 	&& (board->getCase(end) ? board->getCase(end)->getColor() != this->getColor() : true); //true if the color of the piece taken is not the same

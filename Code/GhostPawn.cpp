@@ -8,6 +8,7 @@ GhostPawn& GhostPawn::operator= (const GhostPawn& original){
   this->Piece::operator= (original);
   _creationTurn = original._creationTurn;
   _target = original._target;
+  return *this;
 }
 
 void GhostPawn::changeIsTaken(unsigned turn, Piece* taker, Board* board){

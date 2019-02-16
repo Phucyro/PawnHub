@@ -8,7 +8,7 @@ class King : public Piece {
 
 	protected :
 		bool _moved;
-		
+
 		Piece* _doMove(Coordinate, Board*, Game&) override;
 		void _reverseMove(Coordinate, Board*, Game&, Piece*)override;
 
@@ -28,7 +28,7 @@ class King : public Piece {
 
 		King& operator= (const King&);
 
-		bool hasMoved() const {return _moved;}
+		bool hasMoved() const override {return _moved;}
 		bool move(Coordinate, Board*, Game&) override;
 		bool canMove(Board*, Game&) override;
 		bool _checkMove(Coordinate, Board*, Game&) override;

@@ -140,7 +140,7 @@ void TestRook :: testMove()
 
   game->changeTestCheck();
   //out of bounds
-  CPPUNIT_ASSERT_THROW(rookK->move(Coordinate('H','9'), board, *game), std::out_of_range); // make rookK move to I5
+  //CPPUNIT_ASSERT_THROW(rookK->move(Coordinate('H','9'), board, *game), std::out_of_range); // make rookK move to I5
 
 }
 
