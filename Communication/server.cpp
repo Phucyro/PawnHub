@@ -1,6 +1,6 @@
 #include "config.hpp"
 #include "BindSocket.hpp"
-#include "ServerReceiveHandler.hpp"
+// #include "ServerReceiveHandler.hpp"
 #include <map>
 #include <thread>
 #include "Data.hpp"
@@ -19,8 +19,8 @@ int main(){
     Socket* client_socket = binding_socket.createSocket();
 
     // Traite la demande de connexion
-    std::thread thread(serverReceiveHandler, client_socket, &data);
-    thread.detach();
+    // std::thread thread(serverReceiveHandler, client_socket, &data);
+    // thread.detach();
   }
 
   return 0;

@@ -1,0 +1,37 @@
+serveur: toute la logique du jeu
+client: affichage et envoi des requetes de mouvement du joueur
+
+format de l'information envoyee entre clients/serveur: chaines de caracteres
+--> plus facile car deja le format existant pour certains des messages
+--> pas necessaire de transformer en binaire
+--> plus grand message actuel: envoi du plateau, 98 bytes max (taille ridicule)
+
+protocole:
+- serveur envoie la couleur des joueurs (blanc ou noir)
+--> message reel: 1 pour blanc, 0 pour noir (pour le moment, 1er connect'e premier servi)
+- serveur envoie le plateau aux joueurs
+--> message reel: string de caracteres, 3 pour chaque piece dans le jeu
+--> caractere de designation (une lettre), 2 caracteres de position (representation classique d'echecs)
+--> tous les pions blancs en jeu, symbole de separation (!), tous les pions noirs en jeu, symbole de fin (#)
+- boucle de jeu:
++ serveur envoie le tour de jeu aux joueurs
+--> message reel: chiffre
++ chaque client determine si c'est son tour (risque de changer), et joueur dont c'est le tour envoie son mouvement
+--> message reel: 4 caracteres, emplacement de debut et emplacement de fin d'une piece (representation classique d'echecs)
++ serveur verifie la validit'e et envoie confirmation (ou pas)
+--> message reel: chiffre true/false
++ boucle sur le client jusqu'a ce que son move soit valide
++ serveur envoie le plateau mis a jour
++ serveur envoie message de statut (fin de jeu/match nul ou continue)
+--> message reel: chiffre true/false (true pour fin du jeu)
++ client suivant envoie son mouvement (re: boucle de validation et messages qui suivent jusque statut)
+- fin du jeu: serveur envoie le message de fin (gagnant, match nul)
+
+- deconnexion (pour le moment, puisque pas de menu encore)
+
+
+NOTE: on envisage de changer les messages et mettre un header
+et donc un interpreteur derriere qui envoie la bonne fonction
+pour chaque message, comme ca on peut envoyer les messages dans
+l'ordre qui nous arrange s'il y a des imprevus
+(donc ce protocole n'est pas definitif)
