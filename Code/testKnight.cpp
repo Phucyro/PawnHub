@@ -108,6 +108,7 @@ void TestKnight :: testMove()
   CPPUNIT_ASSERT(board->getCase(Coordinate('E','2')) == knightE); //checks if knightE is in E2
 
   //good move
+
   CPPUNIT_ASSERT_EQUAL(knightH->move(Coordinate('A','5'), board, *game), true); // make knightA move to A5 -2 -1
   CPPUNIT_ASSERT(board->getCase(Coordinate('A','5')) == knightH); //checks if knightH is in A5
   CPPUNIT_ASSERT(board->getCase(Coordinate('C','6')) == nullptr); //checks if knightH is not in C6
@@ -127,22 +128,22 @@ void TestKnight :: testMove()
   CPPUNIT_ASSERT(board->getCase(Coordinate('D','5')) == knightL); //checks if knightL is in D5
   CPPUNIT_ASSERT(board->getCase(Coordinate('B','4')) == nullptr); //checks if knightL is not in B4
   CPPUNIT_ASSERT(knightL->_coords == Coordinate('D','5')); //checks coords of KnightL
-  
+
   CPPUNIT_ASSERT_EQUAL(knightD->move(Coordinate('B','6'), board, *game), true); // make knightD move to B6  1  2
   CPPUNIT_ASSERT(board->getCase(Coordinate('B','6')) == knightD); //checks if knightD is in B6
   CPPUNIT_ASSERT(board->getCase(Coordinate('A','4')) == nullptr); //checks if knightD is not in A4
   CPPUNIT_ASSERT(knightD->_coords == Coordinate('B','6')); //checks coords of KnightD
-  
+
   CPPUNIT_ASSERT_EQUAL(knightN->move(Coordinate('B','7'), board, *game), true); // make knightN move to B7 -2  1
   CPPUNIT_ASSERT(board->getCase(Coordinate('B','7')) == knightN); //checks if knightN is in B7
   CPPUNIT_ASSERT(board->getCase(Coordinate('D','6')) == nullptr); //checks if knightN is not in D6
   CPPUNIT_ASSERT(knightN->_coords == Coordinate('B','7')); //checks coords of KnightN
-  
+
   CPPUNIT_ASSERT_EQUAL(knightO->move(Coordinate('F','4'), board, *game), true); // make knightO move to F4 -1 -2
   CPPUNIT_ASSERT(board->getCase(Coordinate('F','4')) == knightO); //checks if knightO is in F4
   CPPUNIT_ASSERT(board->getCase(Coordinate('G','6')) == nullptr); //checks if knightO is not in G6
   CPPUNIT_ASSERT(knightO->_coords == Coordinate('F','4')); //checks coords of knightO
-  
+
   CPPUNIT_ASSERT_EQUAL(knightP->move(Coordinate('H','1'), board, *game), true); // make knightP move to H1 2 -1
   CPPUNIT_ASSERT(board->getCase(Coordinate('H','1')) == knightP); //checks if knightP is in H1
   CPPUNIT_ASSERT(board->getCase(Coordinate('F','2')) == nullptr); //checks if knightP is not in F2

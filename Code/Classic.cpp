@@ -67,7 +67,7 @@ void Classic::_nextTurn() {
 	++_turn;
 	Player *currentPlayer = _getCurrentPlayer();
 	char playerColor = currentPlayer == _player1 ? 'w':'b';
-	
+
 	bool isMoveValid = false;
 	char* playerMove;
 	while(!isMoveValid){
@@ -103,13 +103,13 @@ bool Classic::_isCheckmate(char playerColor){
 	}
 	if (!dangerousPiece) return false;
 	if (king->canMove(_board, *this)) return false;
-	
+
 	if (!moreThan2){
 		int rowMove = int(dangerousPiece->getRow()) - int(king->getRow());
 		int rowDirection = rowMove/std::abs(rowMove);
 		int columnMove = int(dangerousPiece->getColumn()) - int(king->getColumn());
 		int columnDirection = columnMove/std::abs(columnMove);
-		
+
 		//bishop or pawn or queen case
 		if (std::abs(rowMove) == std::abs(columnMove)){
 			int row = 0, column = 0;
@@ -203,14 +203,10 @@ bool Classic::testCheck(const char color) {
 	if (color == 'w' || color == 'a'){	//White		//a = all
 
 		//strong pieces
-		if (_pieces[16]->_checkMove(_pieces[KING_INDEX]->getCoord(), Game::_board, *this)) return true;
-		if (_pieces[17]->_checkMove(_pieces[KING_INDEX]->getCoord(), Game::_board, *this)) return true;
-		if (_pieces[18]->_checkMove(_pieces[KING_INDEX]->getCoord(), Game::_board, *this)) return true;
-		if (_pieces[19]->_checkMove(_pieces[KING_INDEX]->getCoord(), Game::_board, *this)) return true;
-		if (_pieces[20]->_checkMove(_pieces[KING_INDEX]->getCoord(), Game::_board, *this)) return true;
-		if (_pieces[21]->_checkMove(_pieces[KING_INDEX]->getCoord(), Game::_board, *this)) return true;
-		if (_pieces[22]->_checkMove(_pieces[KING_INDEX]->getCoord(), Game::_board, *this)) return true;
-		if (_pieces[23]->_checkMove(_pieces[KING_INDEX]->getCoord(), Game::_board, *this)) return true;
+		for (unsigned i = 16; i <= 23; ++i){
+			if (!_pieces[i]->isTaken())
+				if (_pieces[i]->_checkMove(_pieces[KING_INDEX]->getCoord(), Game::_board, *this)) return true;
+		}
 
 		//Pawn
 		Piece* MaybePawn = Game::_board->getCase(Coordinate(_pieces[KING_INDEX]->getCoord().getRealColumn()+1, _pieces[KING_INDEX]->getCoord().getRealRow()+1));
@@ -222,14 +218,10 @@ bool Classic::testCheck(const char color) {
 	if (color == 'b' || color == 'a'){	//Black		//a = all
 
 		//strong pieces
-		if (_pieces[0]->_checkMove(_pieces[16+KING_INDEX]->getCoord(), Game::_board, *this)) return true;
-		if (_pieces[1]->_checkMove(_pieces[16+KING_INDEX]->getCoord(), Game::_board, *this)) return true;
-		if (_pieces[2]->_checkMove(_pieces[16+KING_INDEX]->getCoord(), Game::_board, *this)) return true;
-		if (_pieces[3]->_checkMove(_pieces[16+KING_INDEX]->getCoord(), Game::_board, *this)) return true;
-		if (_pieces[4]->_checkMove(_pieces[16+KING_INDEX]->getCoord(), Game::_board, *this)) return true;
-		if (_pieces[5]->_checkMove(_pieces[16+KING_INDEX]->getCoord(), Game::_board, *this)) return true;
-		if (_pieces[6]->_checkMove(_pieces[16+KING_INDEX]->getCoord(), Game::_board, *this)) return true;
-		if (_pieces[7]->_checkMove(_pieces[16+KING_INDEX]->getCoord(), Game::_board, *this)) return true;
+		for (unsigned i = 0; i <= 7; ++i){
+			if (!_pieces[i]->isTaken())
+				if (_pieces[i]->_checkMove(_pieces[KING_INDEX]->getCoord(), Game::_board, *this)) return true;
+		}
 
 		//Pawn
 		Piece* MaybePawn = Game::_board->getCase(Coordinate(_pieces[16+KING_INDEX]->getCoord().getRealColumn()-1, _pieces[16+KING_INDEX]->getCoord().getRealRow()+1));

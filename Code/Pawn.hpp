@@ -33,7 +33,7 @@ class Pawn : public Piece {
 		Pawn& operator= (const Pawn&);
 		Pawn& operator= (Pawn&&);
 
-		bool hasMoved() const {return _moved;}
+		bool hasMoved() const override {return _moved;}
 		bool move(Coordinate, Board*, Game&) override;
 		bool canMove(Board*, Game&) override;
 		bool _checkMove(Coordinate, Board*, Game&) override;

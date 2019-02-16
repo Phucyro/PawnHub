@@ -10,6 +10,7 @@ class Bishop : public Piece {
 
 	protected :
 		bool _checkMove(Coordinate, Board*, Game&) override;
+		bool hasMoved() const override {return false;}
 
 	public :
 		Bishop(const char color, Coordinate coords) noexcept : Piece(color, coords){
@@ -25,7 +26,7 @@ class Bishop : public Piece {
 		virtual ~Bishop() noexcept = default;
 
 		Bishop& operator= (const Bishop&);
-		
+
 		bool canMove(Board*, Game&) override;
 
 		friend TestBishop;

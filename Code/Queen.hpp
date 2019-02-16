@@ -10,6 +10,7 @@ class Queen : public Piece {
 		bool _checkMoveRook(Coordinate, Board*, Game&);
 		bool _checkMoveBishop(Coordinate, Board*, Game&);
 		bool _checkMove(Coordinate, Board*, Game&) override;
+		bool hasMoved() const override {return true;}
 
 
 	public :
@@ -29,7 +30,7 @@ class Queen : public Piece {
 		virtual ~Queen() noexcept = default;
 
 		Queen& operator= (const Queen&);
-		
+
 		bool canMove(Board*, Game&) override;
 };
 

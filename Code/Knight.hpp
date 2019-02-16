@@ -9,6 +9,7 @@ class Knight : public Piece {
 
 	protected :
 		bool _checkMove(Coordinate, Board*, Game&) override;
+		bool hasMoved() const override {return true;}
 
 	public :
 
@@ -25,11 +26,11 @@ class Knight : public Piece {
 			_str[TYP] = 'h';
 		}
 		virtual ~Knight() noexcept = default;
-		
+
 		bool canMove(Board*, Game&) override;
 
 		Knight& operator= (const Knight&);
-		
+
 		friend TestKnight;
 };
 

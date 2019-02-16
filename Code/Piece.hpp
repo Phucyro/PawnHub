@@ -35,6 +35,12 @@ class Piece {
 			}
 		}
 
+		Piece(const Piece* original) : _color(original->_color), _coords(original->_coords), _isTaken(original->_isTaken), _str() {
+			for (int i = 0; i < 4; i++){
+				_str[i] = original->_str[i];
+			}
+		}
+
 		virtual Piece* _doMove(Coordinate, Board*,Game&);
 		virtual void _reverseMove(Coordinate, Board*, Game&, Piece*);
 		inline bool _isPlaceFree(Coordinate place ,Board* board)
@@ -45,16 +51,18 @@ class Piece {
 
 	public :
 		Piece& operator= (const Piece&);
+		virtual bool hasMoved() const = 0;
     virtual bool move(Coordinate, Board*, Game&);
     virtual bool _checkMove(Coordinate, Board*, Game&) = 0;
     virtual bool canMove(Board*, Game&) = 0;
-		virtual ~Piece() noexcept = default;
+		virtual ~Piece() noexcept {}
 		char getType() const {return _str[TYP];}
 		Coordinate getCoord() const {return _coords;}
 		char getColor() const {return _color;}
 		unsigned getRow() {return _coords.getRealRow();}
 		unsigned getColumn() {return _coords.getRealColumn();}
     virtual char* toString() {return _str;}
+		void changeIsTaken(){_isTaken = !_isTaken;}
 		virtual void changeIsTaken(unsigned turn, Piece*, Board*){_isTaken = !_isTaken;}
 		bool isTaken() const {return _isTaken;}
 		bool _isMovePossible(Coordinate, Board*, Game&);

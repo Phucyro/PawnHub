@@ -20,12 +20,14 @@ class GhostPawn : public Piece{
         _str[TYP] = 'g';
       }
       GhostPawn(const GhostPawn& original) : Piece(original), _creationTurn(original._creationTurn), _target(original._target) {}
-      virtual ~GhostPawn();
+      virtual ~GhostPawn() noexcept = default;
 
       GhostPawn& operator= (const GhostPawn&);
+      GhostPawn(const GhostPawn* ghost) : Piece(static_cast<const Piece*>(ghost)), _creationTurn(ghost->_creationTurn), _target(ghost->_target) {}
 
       void changeIsTaken(unsigned, Piece*, Board*) override;
       bool canMove(Board*, Game&) override{return false;}
+      bool hasMoved() const override {return false;}
 };
 
 #include "Pawn.hpp"

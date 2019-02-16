@@ -29,7 +29,7 @@ class Rook : public Piece {
 
 		Rook& operator= (const Rook&);
 
-		bool hasMoved() const {return _moved;}
+		bool hasMoved() const override {return _moved;}
 		bool move(Coordinate, Board*, Game&) override;
 		bool canMove(Board*, Game&) override;
 

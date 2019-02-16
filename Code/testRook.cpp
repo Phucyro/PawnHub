@@ -110,24 +110,24 @@ void TestRook :: testMove()
 
   //good move
   CPPUNIT_ASSERT_EQUAL(rookH->move(Coordinate('F','6'), board, *game), true); // make rookA move to F7
-  CPPUNIT_ASSERT(board->getCase(Coordinate('F','7')) == rookH); //checks if rookH is in F7
-  CPPUNIT_ASSERT(board->getCase(Coordinate('F','6')) == nullptr); //checks if rookH is not in F6
-  CPPUNIT_ASSERT(rookH->_coords == Coordinate('F','7')); //checks coords of RookH
+  CPPUNIT_ASSERT(board->getCase(Coordinate('F','6')) == rookH); //checks if rookH is in F7
+  CPPUNIT_ASSERT(board->getCase(Coordinate('F','7')) == nullptr); //checks if rookH is not in F6
+  CPPUNIT_ASSERT(rookH->_coords == Coordinate('F','6')); //checks coords of RookH
 
   CPPUNIT_ASSERT_EQUAL(rookI->move(Coordinate('G','3'), board, *game), true); // make rookH move to G3
-  CPPUNIT_ASSERT(board->getCase(Coordinate('G','2')) == rookI); //checks if rookH is in G2
-  CPPUNIT_ASSERT(board->getCase(Coordinate('G','3')) == nullptr); //checks if rookH is not in G3
-  CPPUNIT_ASSERT(rookI->_coords == Coordinate('G','2')); //checks coords of RookH
+  CPPUNIT_ASSERT(board->getCase(Coordinate('G','3')) == rookI); //checks if rookH is in G2
+  CPPUNIT_ASSERT(board->getCase(Coordinate('G','2')) == nullptr); //checks if rookH is not in G3
+  CPPUNIT_ASSERT(rookI->_coords == Coordinate('G','3')); //checks coords of RookH
 
   CPPUNIT_ASSERT_EQUAL(rookJ->move(Coordinate('G','4'), board, *game), true); // make rookJ move to G4
-  CPPUNIT_ASSERT(board->getCase(Coordinate('F','4')) == rookJ); //checks if rookJ is in F4
-  CPPUNIT_ASSERT(board->getCase(Coordinate('G','4')) == nullptr); //checks if rookJ is not in G4
-  CPPUNIT_ASSERT(rookJ->_coords == Coordinate('F','4')); //checks coords of RookJ
+  CPPUNIT_ASSERT(board->getCase(Coordinate('G','4')) == rookJ); //checks if rookJ is in F4
+  CPPUNIT_ASSERT(board->getCase(Coordinate('F','4')) == nullptr); //checks if rookJ is not in G4
+  CPPUNIT_ASSERT(rookJ->_coords == Coordinate('G','4')); //checks coords of RookJ
 
   CPPUNIT_ASSERT_EQUAL(rookL->move(Coordinate('F','5'), board, *game), true); // make rookL move to F5
-  CPPUNIT_ASSERT(board->getCase(Coordinate('G','5')) == rookL); //checks if rookL is in G5
-  CPPUNIT_ASSERT(board->getCase(Coordinate('F','5')) == nullptr); //checks if rookL is not in F5
-  CPPUNIT_ASSERT(rookL->_coords == Coordinate('G','5')); //checks coords of RookL
+  CPPUNIT_ASSERT(board->getCase(Coordinate('F','5')) == rookL); //checks if rookL is in G5
+  CPPUNIT_ASSERT(board->getCase(Coordinate('G','5')) == nullptr); //checks if rookL is not in F5
+  CPPUNIT_ASSERT(rookL->_coords == Coordinate('F','5')); //checks coords of RookL
 
   //wrong move due to check
   game->changeTestCheck();

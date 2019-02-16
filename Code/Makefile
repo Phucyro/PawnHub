@@ -16,7 +16,7 @@ testBoard.o: testBoard.cpp testBoard.hpp Piece.hpp Board.hpp Coordinate.hpp
 
 testBishop.o : testBishop.cpp testBishop.hpp Piece.hpp Board.hpp Game.hpp
 	g++ -c $(FLAGS) testBishop.cpp -lcppunit
-	
+
 testKnight.o : testKnight.cpp testKnight.hpp Piece.hpp Board.hpp Game.hpp
 	g++ -c $(FLAGS) testKnight.cpp -lcppunit
 
