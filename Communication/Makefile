@@ -4,8 +4,8 @@ CXX= g++
 
 CONFIG= config.hpp
 SOCKETS= Socket.o BindSocket.o
-LOGIN_CLIENT= LoginClient.hpp
-LOGIN_SERVER= LoginServer.hpp treatConnection.hpp Data.o SplitString.hpp
+LOGIN_CLIENT= LoginClient.hpp ClientMessageHandler.hpp
+LOGIN_SERVER= LoginServer.hpp ServerMessageHandler.hpp Data.o SplitString.hpp
 GAME_CLIENT= StartPartyClient.hpp
 GAME_SERVER= StartPartyServer.hpp
 
