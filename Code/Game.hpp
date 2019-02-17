@@ -1,6 +1,7 @@
 #ifndef __GAME__HPP__
 #define __GAME__HPP__
 
+#include <string>
 #include "Coordinate.hpp"
 
 class Player;
