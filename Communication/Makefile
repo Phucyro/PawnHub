@@ -4,8 +4,8 @@ CXX= g++
 
 CONFIG= config.hpp
 SOCKETS= Socket.o BindSocket.o
-LOGIN_CLIENT= LoginClient.hpp ClientMessageHandler.hpp SplitString.o
-LOGIN_SERVER= LoginServer.hpp ServerMessageHandler.hpp Data.o SplitString.o
+LOGIN_CLIENT= ClientMessageHandler.hpp ClientFunctions.hpp SplitString.o
+LOGIN_SERVER= ServerMessageHandler.hpp Data.o SplitString.o
 GAME_CLIENT= StartPartyClient.hpp
 GAME_SERVER= StartPartyServer.hpp
 
@@ -15,7 +15,7 @@ run: all
 	./server
 
 client: client.o $(SOCKETS) $(LOGIN_CLIENT) $(CONFIG)
-	$(CXX) $(FLAGS) -o $@ $^
+	$(CXX) $(FLAGS) -o $@ $^ -lpthread
 
 server: server.o $(SOCKETS) $(LOGIN_SERVER) $(CONFIG)
 	$(CXX) $(FLAGS) -o $@ $^ -lpthread

@@ -1,27 +1,38 @@
 #ifndef _SERVERRECEIVEHANDLER_H_
 #define _SERVERRECEIVEHANDLER_H_
 
-#include "LoginServer.hpp"
 #include "SplitString.hpp"
+#include "ServerHandler.hpp"
 #include "Data.hpp"
 #include <vector>
 #include <string>
+#include <iostream>
+#include <map>
+
+typedef std::map<std::string, Socket*> SocketsMap;
 
 
-void receiveMessageHandler(Socket* client_socket, Data* data){
+void receiveMessageHandler(Socket* socket, Data* data, SocketsMap* sockets_map){
   bool quit = false;
-  std::vector<std::string> message;
+  std::vector<std::string> msg;
 
   try {
     while (!quit){
-      message = splitString(client_socket->receiveMessage(), ' ');
+      msg = splitString(socket->receiveMessage(), ' ');
 
-      switch (message[0][0]){
-        case '0' :
-          quit = true;
+      switch (msg[0][0]){
+        case '0' : // [0]
+          disconnect(&quit);
           break;
-
-        // Etc
+        case '1' : // [1] [username] [password]
+          signUpHandler(socket, data, msg[1], msg[2]);
+          break;
+        case '2' : // [2] [username] [password]
+          signInHandler(socket, sockets_map, data, msg[1], msg[2]);
+          break;
+        case '3' : // [3] [vecteur] (target, texte)
+          chatHandler(sockets_map, msg[1], vectorToString(msg, 2));
+          break;
       }
     }
 
@@ -29,6 +40,16 @@ void receiveMessageHandler(Socket* client_socket, Data* data){
   catch (std::string const& error){
     std::cout << error << std::endl;
   }
+
+  // Supprime entree username : socket du client deconnecte
+  for (auto elem : *sockets_map){
+    if (elem.second == socket) sockets_map->erase(elem.first);
+  }
+
+  delete socket;
+
+  std::cout << "Un client se deconnecte" << std::endl;
+
 }
 
 #endif

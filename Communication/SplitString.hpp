@@ -6,4 +6,6 @@
 
 std::vector<std::string> splitString(std::string, char);
 
+std::string vectorToString(std::vector<std::string> vect, unsigned int start);
+
 #endif

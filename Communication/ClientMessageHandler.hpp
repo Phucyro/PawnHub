@@ -5,40 +5,51 @@
 #include <string>
 #include "Socket.hpp"
 #include "SplitString.hpp"
-#include "LoginClient.hpp"
+#include "ClientFunctions.hpp"
+#include "ClientHandler.hpp"
 
 void receiveMessageHandler(Socket* socket){
-  std::vector<std::string> message;
+  std::vector<std::string> msg;
 
   while (true){
-    message = splitString(socket->receiveMessage(), ' ');
+    msg = splitString(socket->receiveMessage(), ' ');
 
-    switch(message[0][0]){
-      case '1' :
+    switch(msg[0][0]){
+      case '1' : // [1] [resultat]
+        signUpHandler(msg[1][0]);
+        break;
+      case '2' : // [2] [resultat]
+        signInHandler(msg[1][0]);
+        break;
+      case '3' :
+        chatHandler(msg[1], vectorToString(msg, 2));
         break;
     }
   }
 }
 
 void sendMessageHandler(Socket* socket){
-  bool quit = false;
+  bool leave_game = false;
   std::string input;
-  std::vector<std::string> message;
+  std::vector<std::string> msg;
 
-  while (!quit){
+  while (!leave_game){
     std::cout << "Message : " << std::endl;
-    std::cin >> input;
-    message = splitString(input, ' ');
+    std::getline(std::cin, input);
+    msg = splitString(input, ' ');
 
-    switch(message[0][0]){
+    switch (msg[0][0]){
       case '0' : // 0 : quitter
-        quit = true;
+        quit(socket, &leave_game);
         break;
       case '1' : // 1 [name] [mdp1] [mdp2] : register
-        signUp(socket, message[1], message[2], message[3]);
+        signUp(socket, msg[1], msg[2], msg[3]);
         break;
       case '2' : // 2 [name] [mdp] : login
-        signIn(socket, message[1], message[2]);
+        signIn(socket, msg[1], msg[2]);
+        break;
+      case '3' : // 3 [cible] [texte]
+        chat(socket, msg[1], vectorToString(msg, 2));
         break;
     }
   }

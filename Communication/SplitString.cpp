@@ -26,3 +26,19 @@ std::vector<std::string> splitString(std::string text, char delimiter){
 
   return res;
 }
+
+
+std::string vectorToString(std::vector<std::string> vect, unsigned int start){
+  std::string text;
+
+  for (unsigned int a = start; a < vect.size(); ++a){
+    if (a == vect.size()){
+      text += vect[a];
+    }
+    else {
+      text += (vect[a] + " ");
+    }
+  }
+
+  return text;
+}

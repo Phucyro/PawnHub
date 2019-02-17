@@ -5,9 +5,14 @@
 #include <thread>
 #include "Data.hpp"
 
+typedef std::map<std::string, Socket*> SocketsMap;
+
+
 int main(){
   Data data("database.txt"); // bug makefile
   data.load();
+
+  SocketsMap sockets_map;
 
   BindSocket binding_socket;
 
@@ -19,7 +24,7 @@ int main(){
     Socket* client_socket = binding_socket.createSocket();
 
     // Traite la demande de connexion
-    std::thread thread(receiveMessageHandler, client_socket, &data);
+    std::thread thread(receiveMessageHandler, client_socket, &data, &sockets_map);
     thread.detach();
   }
 
