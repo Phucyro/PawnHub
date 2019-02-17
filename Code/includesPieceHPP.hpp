@@ -7,5 +7,4 @@
 #include "Rook.hpp"
 #include "GhostPawn.cpp"
 #include "King.cpp"
-#include "Pawn.cpp"
 #include "Queen.cpp"
