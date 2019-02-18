@@ -7,6 +7,7 @@
 
 int main(){
   Socket socket;
+  std::string client_username;
 
   // Demande de connexion au serveur
   socket.connectToServer("127.0.0.1");
@@ -16,7 +17,7 @@ int main(){
   receive_thread.detach();
 
   // Gere messages envoyes envoye par le client
-  sendMessageHandler(&socket);
+  sendMessageHandler(&socket, &client_username);
 
   // handleMessage(socket);
 

@@ -5,3 +5,6 @@
 #include "Queen.hpp"
 #include "Knight.hpp"
 #include "Rook.hpp"
+#include "GhostPawn.cpp"
+#include "King.cpp"
+#include "Queen.cpp"

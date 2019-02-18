@@ -25,17 +25,33 @@ bool Pawn::_checkMove(Coordinate end, Board* board, Game& game){
 
 	//TODO add possibility to jump even if a gostpawn is on the way
 	if (std::abs(columnMove) > 1) return false;
-	if (std::abs(columnMove) == 1){
-		if (rowMove != 1) return false;
-		if ( board->getCase(end)->getColor() == this->getColor()) return false;
-	}
-	else{
-		if (rowMove > 2 || rowMove < 1) return false;
-		if (rowMove == 2){
-			if (this->hasMoved()) return false;
-			if (board->getCase(end)) return false;
+	if (this->getColor() == 'w'){
+		if (std::abs(columnMove) == 1){
+			if (rowMove != 1) return false;
+			if (board->getCase(end) && board->getCase(end)->getColor() == 'w') return false;
 		}
-		if (board->getCase(Coordinate(_coords.getRealColumn(), _coords.getRealRow() + 1))) return false;
+		else{
+			if (rowMove > 2 || rowMove < 1) return false;
+			if (rowMove == 2){
+				if (this->hasMoved()) return false;
+				if (board->getCase(end)) return false;
+			}
+			if (board->getCase(Coordinate(_coords.getRealColumn(), _coords.getRealRow() + 1))) return false;
+		}
+	}
+	else {
+		if (std::abs(columnMove) == 1){
+			if (rowMove != -1) return false;
+			if (board->getCase(end) && board->getCase(end)->getColor() == 'b') return false;
+		}
+		else{
+			if (rowMove < -2 || rowMove > -1) return false;
+			if (rowMove == -2){
+				if (this->hasMoved()) return false;
+				if (board->getCase(end)) return false;
+			}
+			if (board->getCase(Coordinate(_coords.getRealColumn(), _coords.getRealRow() - 1))) return false;
+		}
 	}
 	return true;
 }
@@ -49,6 +65,13 @@ bool Pawn::move(Coordinate end, Board* board, Game& game){
 		return true;
 	}
 	else return false;
+}
+
+bool Pawn::canMove(Board* board, Game& game){
+	if (this->_isMovePossible(1, 1, board, game)) return false;
+	if (this->_isMovePossible(0, 1, board, game)) return false;
+	if (this->_isMovePossible(-1, 1, board, game)) return false;
+	return true;
 }
 
 void Pawn::_promote(){

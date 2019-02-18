@@ -1,30 +1,48 @@
 #ifndef _CLASSIC_HPP_
 #define _CLASSIC_HPP_
 
+#include <string>
+#include "includesPieceHPP.hpp"
 #include "Game.hpp"
 
 class Classic : public Game {
 
 	private :
 
-		constexpr void Pieces();
+	void _Pieces();
+		
+	Player* _getCurrentPlayer(){
+		if(_turn%2) return _player1;
+		else return _player2;
+	}
+	bool _fitInBoard(char* playerMove){return playerMove[0] < 'A' && playerMove[0] > 'H' && playerMove[1] < '1' && playerMove[1] > '8' && playerMove[2] < 'A' && playerMove[2] > 'H' && playerMove[3] < '1' && playerMove[3] > '8';}
+	
+	bool _executeMove(Coordinate, Coordinate, char);
+	bool _isCheckmate(char);
+	bool _isStalemate(char);
+	bool _notEnoughtPieces();
+	void _boardState(std::string&);
+	
+	int _calculOffset(char playerColor){return playerColor == 'w' ? 0 : 16;}
+	
 
 	protected :
 
-		void _initBoard() override;
-		void _nextTurn() override;
-		bool _isFinish() const override;
-		Classic(const Classic&) = delete;
+	void _initBoard() override;
+	void _nextTurn() override;
+	bool _isFinish() override;
+	Classic(const Classic&) = delete;
+	using Game::_pieces;
 
 	public :
 
-		constexpr Classic() noexcept : Game(nullptr, 32) {Pieces();}
-		virtual ~Classic() noexcept = default;
-		Classic& operator=(const Classic&) = delete;
-		bool testCheck(const char& color) const override;
-}
+	Classic() noexcept : Game(nullptr, 32) {_Pieces();}
+	virtual ~Classic();
+	Classic& operator=(const Classic&) = delete;
+	bool testCheck(const char color) override;
+};
 
-constexpr void Pieces() {
+void Classic::_Pieces() {
 
 	_pieces[0] = new Rook('w', 'A', '1');		//0 -> 7 : pièces fortes blanches
 	_pieces[1] = new Knight('w', 'B', '1');

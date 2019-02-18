@@ -1,9 +1,9 @@
-#ifndef __TEST__BISHOP__HPP__
-#define __TEST__BISHOP__HPP__
+#ifndef __TEST__ROOK__HPP__
+#define __TEST__ROOK__HPP__
 
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
-#include "Bishop.hpp"
+#include "Rook.hpp"
 #include "Coordinate.hpp"
 #include "Game.hpp"
 
@@ -24,27 +24,27 @@ class SimpleGame: public Game
 
 };
 
-class TestBishop: public CPPUNIT_NS::TestFixture
+class TestRook: public CPPUNIT_NS::TestFixture
 {
-	CPPUNIT_TEST_SUITE (TestBishop);
+	CPPUNIT_TEST_SUITE (TestRook);
 	CPPUNIT_TEST (testMove);
 	CPPUNIT_TEST (testCheckMove);
 	CPPUNIT_TEST_SUITE_END ();
 
 	private:
-	Bishop *bishopA;
-  Bishop *bishopB;
-	Bishop *bishopC;
-	Bishop *bishopD;
-	Bishop *bishopE;
-	Bishop *bishopF;
-	Bishop *bishopG;
-	Bishop *bishopH;
-	Bishop *bishopI;
-	Bishop *bishopJ;
-	Bishop *bishopK;
-	Bishop *bishopL;
-	Bishop *bishopM;
+	Rook *rookA;
+  Rook *rookB;
+	Rook *rookC;
+	Rook *rookD;
+	Rook *rookE;
+	Rook *rookF;
+	Rook *rookG;
+	Rook *rookH;
+	Rook *rookI;
+	Rook *rookJ;
+	Rook *rookK;
+	Rook *rookL;
+	Rook *rookM;
 
 
 	SimpleGame *game;

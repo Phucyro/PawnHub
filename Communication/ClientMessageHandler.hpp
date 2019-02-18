@@ -21,14 +21,14 @@ void receiveMessageHandler(Socket* socket){
       case '2' : // [2] [resultat]
         signInHandler(msg[1][0]);
         break;
-      case '3' :
-        chatHandler(msg[1], vectorToString(msg, 2));
+      case '3' : // [3] [sender] [target] [text]
+        chatHandler(msg[1], msg[2], vectorToString(msg, 2));
         break;
     }
   }
 }
 
-void sendMessageHandler(Socket* socket){
+void sendMessageHandler(Socket* socket, std::string* client_username){
   bool leave_game = false;
   std::string input;
   std::vector<std::string> msg;
@@ -46,10 +46,10 @@ void sendMessageHandler(Socket* socket){
         signUp(socket, msg[1], msg[2], msg[3]);
         break;
       case '2' : // 2 [name] [mdp] : login
-        signIn(socket, msg[1], msg[2]);
+        signIn(socket, msg[1], msg[2], client_username);
         break;
-      case '3' : // 3 [cible] [texte]
-        chat(socket, msg[1], vectorToString(msg, 2));
+      case '3' : // 3 [sender] [target] [msg]
+        chat(socket, *client_username, msg[1], vectorToString(msg, 2));
         break;
     }
   }

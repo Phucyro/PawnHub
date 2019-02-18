@@ -22,13 +22,14 @@ void signUp(Socket* socket, std::string username, std::string pswd1, std::string
 }
 
 
-void signIn(Socket* socket, std::string username, std::string pswd){
+void signIn(Socket* socket, std::string username, std::string pswd, std::string* client_username){
   socket->sendMessage(std::string("2") + " " + username + " " + pswd);
+  *client_username = username;
 }
 
 
-void chat(Socket *socket, std::string target, std::string text){
-  socket->sendMessage(std::string("3") + " " + target + " " + text);
+void chat(Socket *socket, std::string sender, std::string target, std::string text){
+  socket->sendMessage(std::string("3") + " " + sender + " " + target + " " + text);
 }
 
 

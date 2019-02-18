@@ -30,12 +30,11 @@ void receiveMessageHandler(Socket* socket, Data* data, SocketsMap* sockets_map){
         case '2' : // [2] [username] [password]
           signInHandler(socket, sockets_map, data, msg[1], msg[2]);
           break;
-        case '3' : // [3] [vecteur] (target, texte)
-          chatHandler(sockets_map, msg[1], vectorToString(msg, 2));
+        case '3' : // [3] [sender] [target] [text]
+          chatHandler(sockets_map, msg[1], msg[2], vectorToString(msg, 3));
           break;
       }
     }
-
   }
   catch (std::string const& error){
     std::cout << error << std::endl;
@@ -48,7 +47,7 @@ void receiveMessageHandler(Socket* socket, Data* data, SocketsMap* sockets_map){
 
   delete socket;
 
-  std::cout << "Un client se deconnecte" << std::endl;
+  std::cout << "Un client s'est deconnecte sans quit (0)" << std::endl;
 
 }
 

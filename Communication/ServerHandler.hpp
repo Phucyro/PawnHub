@@ -35,18 +35,18 @@ void signInHandler(Socket* socket, SocketsMap*sockets_map, Data* data, std::stri
   }
 }
 
-void chatHandler(SocketsMap* sockets_map, std::string target, std::string text){
-  if (target == "all"){
+void chatHandler(SocketsMap* sockets_map, std::string sender, std::string target, std::string text){
+  if (target == "all"){ // Envoie le message a tous ceux connecte
     for (auto elem : *sockets_map){
-      elem.second->sendMessage(std::string("3 all ") + text);
+      elem.second->sendMessage(std::string("3 ") + sender + " " + target + " " + text);
     }
   }
   else {
-    if (sockets_map->find(target) != sockets_map->end()){
-      (*sockets_map)[target]->sendMessage(std::string("3 ? ") + text);
+    if (sockets_map->find(target) != sockets_map->end()){ // Utilisateur connecte
+      (*sockets_map)[target]->sendMessage(std::string("3 ") + sender + " " + text);
     }
-    else {
-      std::cout << "Message pas envoye target disconnected" << std::endl;
+    else { // Envoie msg pour dire que la cible est deconnecte
+      (*sockets_map)[sender]->sendMessage(std::string("3 server ") + target);
     }
   }
 }

@@ -1,8 +1,10 @@
 #ifndef __GAME__HPP__
 #define __GAME__HPP__
 
-#include "Player.hpp"
+#include <string>
 #include "Coordinate.hpp"
+
+class Player;
 class Piece;
 class Board;
 
@@ -30,9 +32,10 @@ class Game
 	Game& operator= (Game&&);
 
 	Player* start(Player*, Player*);
-	virtual bool testCheck(const char color) const = 0;
+	virtual bool testCheck(const char color) = 0;
 	unsigned getTurn() const {return _turn;}
 };
 #include "Piece.hpp"
 #include"Board.hpp"
+#include "Player.hpp"
 #endif
