@@ -24,7 +24,7 @@ int main(){
 
   while (true){
     // Accepte l'utilisateur dans le serveur et lui asssocie un socket
-    Socket client_socket = binding_socket.createSocket();
+    Socket* client_socket = binding_socket.createSocket();
 
     // Traite la demande de connexion
     std::thread thread(receiveMessageHandler, client_socket, &data, &players_map);

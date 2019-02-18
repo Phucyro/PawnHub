@@ -65,7 +65,7 @@ Game& Game::operator= (Game&& original)
 }
 
 
-Player* Game::start()
+void Game::start()
 {
 	this->_initBoard();
 	do
@@ -74,7 +74,7 @@ Player* Game::start()
 	}
 	while(! this->_isFinish());
 
-	return _winner;
+
 }
 
 void promote(Piece* pawn)
