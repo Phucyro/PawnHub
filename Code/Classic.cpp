@@ -63,7 +63,6 @@ bool Classic::_executeMove(Coordinate start, Coordinate end, char playerColor){
 }
 
 void Classic::_nextTurn() {
-
 	++_turn;
 	Player *currentPlayer = _getCurrentPlayer();
 	char playerColor = currentPlayer == _player1 ? 'w':'b';
@@ -77,8 +76,10 @@ void Classic::_nextTurn() {
 			isMoveValid = this->_executeMove(start, end, playerColor);
 		}
 	}
-	_player1->showBoard(_board);
-	_player2->showBoard(_board);
+	std::string state;
+	this->_boardState(state);
+	_player1->showBoard(state);
+	_player2->showBoard(state);
 }
 
 bool Classic::_isCheckmate(char playerColor){
@@ -199,7 +200,18 @@ bool Classic::_isFinish() {
 	return this->_notEnoughtPieces();
 }
 
-bool Classic::testCheck(const char color, const unsigned promote) {
+void Classic::_boardState(std::string& state){
+	int i = 0;
+	for (; i < 16; i++){
+		state += _pieces[i]->toString();
+	}
+	state += "!";
+	for (; i < 32; i++){
+		state += _pieces[i]->toString();
+	}
+
+
+bool Classic::testCheck(const char color) {
 	if (color == 'w' || color == 'a'){	//White		//a = all
 
 		//Pawn

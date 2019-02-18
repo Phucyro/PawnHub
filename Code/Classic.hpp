@@ -1,6 +1,7 @@
 #ifndef _CLASSIC_HPP_
 #define _CLASSIC_HPP_
 
+#include <string>
 #include "includesPieceHPP.hpp"
 #include "Game.hpp"
 
@@ -20,6 +21,7 @@ class Classic : public Game {
 	bool _isCheckmate(char);
 	bool _isStalemate(char);
 	bool _notEnoughtPieces();
+	void _boardState(std::string&);
 	
 	int _calculOffset(char playerColor){return playerColor == 'w' ? 0 : 16;}
 	
