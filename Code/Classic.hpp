@@ -10,21 +10,21 @@ class Classic : public Game {
 	private :
 
 	void _Pieces();
-		
+
 	Player* _getCurrentPlayer(){
 		if(_turn%2) return _player1;
 		else return _player2;
 	}
 	bool _fitInBoard(char* playerMove){return playerMove[0] < 'A' && playerMove[0] > 'H' && playerMove[1] < '1' && playerMove[1] > '8' && playerMove[2] < 'A' && playerMove[2] > 'H' && playerMove[3] < '1' && playerMove[3] > '8';}
-	
+
 	bool _executeMove(Coordinate, Coordinate, char);
 	bool _isCheckmate(char);
 	bool _isStalemate(char);
 	bool _notEnoughtPieces();
 	void _boardState(std::string&);
-	
+
 	int _calculOffset(char playerColor){return playerColor == 'w' ? 0 : 16;}
-	
+
 
 	protected :
 
@@ -33,6 +33,8 @@ class Classic : public Game {
 	bool _isFinish() override;
 	Classic(const Classic&) = delete;
 	using Game::_pieces;
+
+	void _changePawn(Piece*, Piece*) override;
 
 	public :
 
