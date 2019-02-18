@@ -28,7 +28,7 @@ void BindSocket::activate() {
   }
 }
 
-Socket* BindSocket::createSocket() {
+Socket BindSocket::createSocket() {
   sockaddr_in their_addr;
   socklen_t their_size = sizeof(their_addr);
   int new_fd = accept(getFileDescriptor(), (struct sockaddr*)&their_addr, &their_size);
@@ -36,5 +36,5 @@ Socket* BindSocket::createSocket() {
     std::cerr << "[Error] Accept" << std::endl;
   }
   std::cout << "Connexion de " << inet_ntoa(their_addr.sin_addr) << std::endl;
-  return new Socket(new_fd);
+  return Socket(new_fd);
 }
