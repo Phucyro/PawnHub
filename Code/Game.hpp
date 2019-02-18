@@ -16,12 +16,16 @@ class Game
 	Board *_board;
 	Piece** _pieces;
 	unsigned _piecesAmount;
+	unsigned _lastStrongPiecesWhite;
+	unsigned _lastStrongPieceBlack;
 
 	virtual void _initBoard() = 0;
 	virtual void _nextTurn() = 0;
 	virtual bool _isFinish() = 0;
+	virtual Player* _getCurrentPlayer() = 0;
+	virtual void _changePawn(Piece*, Piece*) = 0;
 
-	Game(Piece**, unsigned);
+	Game(Piece**, unsigned, Player*, Player*, unsigned lastStrongPiecesWhite, unsigned lastStrongPieceBlack);
 	Game(const Game&) = delete;
 	Game(Game&&);
 
@@ -31,9 +35,11 @@ class Game
 	Game& operator= (const Game&) = delete;
 	Game& operator= (Game&&);
 
-	Player* start(Player*, Player*);
+	Player* start();
 	virtual bool testCheck(const char color) = 0;
 	unsigned getTurn() const {return _turn;}
+	void promote(Piece* pawn);
+
 };
 #include "Piece.hpp"
 #include"Board.hpp"
