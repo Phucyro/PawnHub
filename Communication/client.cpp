@@ -1,6 +1,7 @@
 #include "config.hpp"
 #include "Socket.hpp"
 #include "ClientMessageHandler.hpp"
+#include "MessageParser.hpp"
 #include <thread>
 
 
@@ -17,6 +18,8 @@ int main(){
 
   // Gere messages envoyes envoye par le client
   sendMessageHandler(&socket, &client_username);
+
+  // handleMessage(socket);
 
   return 0;
 }
