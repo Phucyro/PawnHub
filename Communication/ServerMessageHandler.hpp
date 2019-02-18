@@ -35,7 +35,6 @@ void receiveMessageHandler(Socket* socket, Data* data, SocketsMap* sockets_map){
           break;
       }
     }
-
   }
   catch (std::string const& error){
     std::cout << error << std::endl;
@@ -48,7 +47,7 @@ void receiveMessageHandler(Socket* socket, Data* data, SocketsMap* sockets_map){
 
   delete socket;
 
-  std::cout << "Un client se deconnecte" << std::endl;
+  std::cout << "Un client s'est deconnecte sans quit (0)" << std::endl;
 
 }
 
