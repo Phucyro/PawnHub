@@ -128,9 +128,9 @@ void TestKing :: testMove()
 
   //roque success
   CPPUNIT_ASSERT_EQUAL(kingI->move(Coordinate('G','1'), board, *game), true); // make kingH move to G4 -1  2
-  //CPPUNIT_ASSERT(board->getCase(Coordinate('G','1')) == nullptr); //checks if kingH is in G
-  CPPUNIT_ASSERT(board->getCase(Coordinate('E','1')) == kingI); //checks if kingH is not in H2
-  CPPUNIT_ASSERT(kingI->getCoord() == Coordinate('E','1')); //checks coords of KingH
+  CPPUNIT_ASSERT(board->getCase(Coordinate('G','1')) == kingI); //checks if kingH is in G
+  CPPUNIT_ASSERT(board->getCase(Coordinate('E','1')) == nullptr); //checks if kingH is not in H2
+  CPPUNIT_ASSERT(kingI->getCoord() == Coordinate('G','1')); //checks coords of KingH
   CPPUNIT_ASSERT(board->getCase(Coordinate('F','1')) == Rook1); //checks if Rook is in f5
   CPPUNIT_ASSERT(board->getCase(Coordinate('H','1')) == nullptr); //checks if Rook is not in E7
   CPPUNIT_ASSERT(Rook1->getCoord() == Coordinate('F','1')); //checks coords of KingJ
