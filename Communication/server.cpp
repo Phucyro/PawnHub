@@ -4,15 +4,17 @@
 #include <map>
 #include <thread>
 #include "Data.hpp"
+#include "../Code/Player.hpp"
 
-typedef std::map<std::string, Socket*> SocketsMap;
+
+typedef std::map<std::string, Player*> PlayersMap;
 
 
 int main(){
   Data data("database.txt"); // bug makefile
   data.load();
 
-  SocketsMap sockets_map;
+  PlayersMap players_map;
 
   BindSocket binding_socket;
 
@@ -24,7 +26,7 @@ int main(){
     Socket* client_socket = binding_socket.createSocket();
 
     // Traite la demande de connexion
-    std::thread thread(receiveMessageHandler, client_socket, &data, &sockets_map);
+    std::thread thread(receiveMessageHandler, client_socket, &data, &players_map);
     thread.detach();
   }
 
