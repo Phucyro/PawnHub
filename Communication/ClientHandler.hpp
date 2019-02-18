@@ -30,15 +30,15 @@ void signInHandler(char msg){ // Fonction bool
 }
 
 
-void chatHandler(std::string sender, std::string text){
-  if (sender == "all"){
-    std::cout << "[All->Me] " << text << std::endl;
+void chatHandler(std::string sender, std::string target, std::string text){
+  if (target == "all"){
+    std::cout << "[" << sender << "->all] " << text << std::endl;
   }
-  else if (sender != "0"){
-    std::cout << "[?->Me] " << text << std::endl;
+  else if (sender == "server"){
+    std::cout << target << " est deconnecte" << std::endl;
   }
   else {
-    std::cout << "Cette personne n'est pas en ligne" << std::endl;
+    std::cout << "[" << sender << "->me] " << text << std::endl;
   }
 }
 
