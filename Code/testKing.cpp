@@ -202,9 +202,6 @@ void TestKing:: testCheckMove()
   //good move
   CPPUNIT_ASSERT_EQUAL(kingE->_checkMove(Coordinate('E','3'), board, *game), true);
   CPPUNIT_ASSERT_EQUAL(kingI->_checkMove(Coordinate('G','1'), board, *game), true);
-
-
-  CPPUNIT_ASSERT_EQUAL(kingL->_checkMove(Coordinate('C','8'), board, *game), false);
   CPPUNIT_ASSERT_EQUAL(kingL->_checkMove(Coordinate('C','8'), board, *game), true);
 }
 
