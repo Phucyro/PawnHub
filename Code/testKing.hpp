@@ -4,6 +4,8 @@
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
 #include "King.hpp"
+#include "Pawn.hpp"
+#include "Rook.hpp"
 #include "Coordinate.hpp"
 #include "Game.hpp"
 
@@ -20,7 +22,7 @@ class SimpleGame: public Game
 	public:
 	SimpleGame() : Game(nullptr, 0), _testCheck(false){}
 	bool changeTestCheck(){_testCheck = !_testCheck;}
-	bool testCheck(const char color) override {return _testCheck;}
+  bool testCheck(const char& color, const unsigned& promote) override {return _testCheck;}
 
 };
 
@@ -32,22 +34,16 @@ class TestKing: public CPPUNIT_NS::TestFixture
 	CPPUNIT_TEST_SUITE_END ();
 
 	private:
-	King *knightA;
-	King *knightB;
-	King *knightC;
-	King *knightD;
-	King *knightE;
-	King *knightF;
-	King *knightG;
-	King *knightH;
-	King *knightI;
-	King *knightJ;
-	King *knightK;
-	King *knightL;
-	King *knightM;
-	King *knightN;
-	King *knightO;
-	King *knightP;
+	King *kingA;
+	King *kingB;
+	Pawn *pawnC;
+	King *kingE;
+	Pawn *pawnG;
+	King *kingH;
+	King *kingI;
+	King *kingL;
+	Rook *Rook1;
+  Rook *Rook2;
 
 
 	SimpleGame *game;
