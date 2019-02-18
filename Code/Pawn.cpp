@@ -74,9 +74,8 @@ bool Pawn::canMove(Board* board, Game& game){
 	return true;
 }
 
-void Pawn::_promote(){
-	//TODO
-
+void Pawn::_promote(Game& game){
+	game.promote(this);
 }
 
 #endif

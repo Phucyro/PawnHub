@@ -10,7 +10,7 @@ class Pawn : public Piece {
 		bool _moved;
 		GhostPawn *_ghost;
 
-		void _promote();
+		void _promote(Game&);
 
 	public :
 
