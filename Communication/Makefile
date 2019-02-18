@@ -8,16 +8,17 @@ LOGIN_CLIENT= ClientMessageHandler.hpp ClientFunctions.hpp SplitString.o
 LOGIN_SERVER= ServerMessageHandler.hpp Data.o SplitString.o
 GAME_CLIENT= StartPartyClient.hpp
 GAME_SERVER= StartPartyServer.hpp
+MSG_PARSER= MessageParser.hpp
 
-all: server client clean
+all: clean server client
 
 run: all
 	./server
 
-client: client.o $(SOCKETS) $(LOGIN_CLIENT) $(CONFIG)
+client: client.o $(SOCKETS) $(LOGIN_CLIENT) $(CONFIG) $(MSG_PARSER)
 	$(CXX) $(FLAGS) -o $@ $^ -lpthread
 
-server: server.o $(SOCKETS) $(LOGIN_SERVER) $(CONFIG)
+server: server.o $(SOCKETS) $(LOGIN_SERVER) $(CONFIG) $(MSG_PARSER)
 	$(CXX) $(FLAGS) -o $@ $^ -lpthread
 
 %.o: %.cpp %.hpp

@@ -9,7 +9,7 @@ public:
   ~BindSocket();
 
   void activate();
-  Socket* createSocket();
+  Socket createSocket();
 };
 
 #endif
