@@ -8,7 +8,6 @@ class Pawn : public Piece {
 
 	protected :
 		bool _moved;
-		bool _checkMove(Coordinate, Board*, Game&) override;
 		GhostPawn *_ghost;
 
 		void _promote();
@@ -18,7 +17,7 @@ class Pawn : public Piece {
 		Pawn(const char color, Coordinate coords) noexcept : Piece(color, coords), _moved(false), _ghost(nullptr) {
 			_str[TYP] = 'p';
 		}
-		constexpr Pawn(const char color, const char column , const char row) : Piece(color,column,row), _moved(false), _ghost(nullptr) {
+		Pawn(const char color, const char column , const char row) : Piece(color,column,row), _moved(false), _ghost(nullptr) {
 			_str[TYP] = 'p';
 		}
 
@@ -34,8 +33,10 @@ class Pawn : public Piece {
 		Pawn& operator= (const Pawn&);
 		Pawn& operator= (Pawn&&);
 
-		bool hasMoved() const {return _moved;}
+		bool hasMoved() const override {return _moved;}
 		bool move(Coordinate, Board*, Game&) override;
+		bool canMove(Board*, Game&) override;
+		bool _checkMove(Coordinate, Board*, Game&) override;
 };
 
 #endif

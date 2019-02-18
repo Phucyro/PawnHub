@@ -12,9 +12,9 @@ Rook& Rook::operator= (const Rook& original){
 
 bool Rook::_checkMove(Coordinate end, Board* board, Game& game){
 	int rowMove = int(end.getRealRow()) - int(_coords.getRealRow());
-	int rowDirection = rowMove/std::abs(rowMove);
+	int rowDirection = rowMove == 0 ? 0 : rowMove/std::abs(rowMove);
 	int columnMove = int(end.getRealColumn()) - int(_coords.getRealColumn());
-	int columnDirection = columnMove/std::abs(columnMove);
+	int columnDirection = columnMove == 0 ? 0 : columnMove/std::abs(columnMove);
 
 	if (rowMove){
 		if (columnMove) return false;
@@ -31,7 +31,7 @@ bool Rook::_checkMove(Coordinate end, Board* board, Game& game){
 		}
 	}
 	else return false;
-	if (board->getCase(end)->getColor() == this->getColor()) return false;
+	if (board->getCase(end) && board->getCase(end)->getColor() == this->getColor()) return false;
 	return true;
 }
 
@@ -41,6 +41,14 @@ bool Rook::move(Coordinate end, Board* board, Game& game){
 		return true;
 	}
 	else return false;
+}
+
+bool Rook::canMove(Board* board, Game& game){
+	if (this->_isMovePossible(0, 1, board, game)) return false;
+	if (this->_isMovePossible(1, 0, board, game)) return false;
+	if (this->_isMovePossible(-1, 0, board, game)) return false;
+	if (this->_isMovePossible(0, -1, board, game)) return false;
+	return true;
 }
 
 #endif

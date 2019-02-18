@@ -100,7 +100,7 @@ Free the place taken by _state and change it to nullptr
 postcondition: _state == nullptr
 */
 {
-	for (int i; i < this->_column; i++)
+	for (unsigned i; i < this->_column; i++)
 	{
 		delete[] _state[i];
 	}
