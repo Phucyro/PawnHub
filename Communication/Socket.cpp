@@ -31,25 +31,64 @@ void Socket::connectToServer(std::string ip_addr) {
   else std::cout << "Connected to server!" << std::endl;
 }
 
+
+// Might break but my balmer peak state says it's perfect
 void Socket::sendMessage(std::string message) {
+  size_t message_size = message.length();
+  if ((message_size % MSG_LENGTH) == 0) {
+    message = message.append(std::string(MSG_LENGTH, PADDING));
+  }
+  else message = message.append(std::string(MSG_LENGTH - (message_size % MSG_LENGTH), PADDING));
+  const char* str_ptr = message.c_str();
+
   if (message.length() < MSG_LENGTH) {
-    const char* buffer = message.c_str();
-    if (send(getFileDescriptor(), buffer, MSG_LENGTH, 0) < 0) {
+    if (send(getFileDescriptor(), str_ptr, MSG_LENGTH, 0) < 0) {
       std::cout << "[Error] Send" << std::endl;
     }
   }
-  else std::cout << "Send: message too long" << std::endl;
+  else {
+    ssize_t bytes_sent;
+    size_t total_sent = 0;
+
+    while (total_sent < message_size) {
+      str_ptr += total_sent;
+      bytes_sent = send(getFileDescriptor(), str_ptr, (message_size - total_sent), 0);
+      if (bytes_sent < 0) {
+        std::cout << "[Error] Send" << std::endl;
+        break;
+      }
+      total_sent += bytes_sent;
+    }
+  }
 }
 
+bool Socket::parseBuffer(std::string& message) {
+  for (int i = 0; i < MSG_LENGTH; ++i) {
+    if (recv_buffer[i] == PADDING) {
+      return true;
+    }
+    else message += recv_buffer[i];
+  }
+  return false;
+}
+
+// Need to get around to raising exceptions
 std::string Socket::receiveMessage() {
-  char receiving_buffer[MSG_LENGTH];
-  ssize_t bytes_received = recv(getFileDescriptor(), receiving_buffer, MSG_LENGTH, 0);
-  if (bytes_received < 0) {
-    std::cout << "[Error] Recv" << std::endl;
+  std::string message;
+  bool message_done = false;
+  while (!message_done) {
+    ssize_t bytes_received = recv(getFileDescriptor(), recv_buffer, MSG_LENGTH, 0);
+    if (bytes_received < 0) {
+      std::cout << "[Error] Recv" << std::endl;
+      return "";  // crashes at message handler in MessageParser.hpp
+    }
+    else if (bytes_received == 0) { // L'utilisateur s'est deconnecte
+      throw std::string("[Error] Receive Socket shutdown");
+      return "";
+    }
+    else {
+      message_done = parseBuffer(message);
+    }
   }
-  else if (bytes_received == 0) { // L'utilisateur s'est deconnecte
-    throw std::string("[Error] Receive Socket shutdown");
-  }
-  std::string message = receiving_buffer;
   return message;
 }
