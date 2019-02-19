@@ -3,9 +3,9 @@
 
 #include"Player.hpp"
 
-void askMoveToClient(Socket*, int){}//TODO by comm
-void sendBoard(Socket*, std::string){}//TODO by comm
-void askPromotionToClient(Socket*, int){}//TODO by comm
+void askMoveToClient(Socket*){}
+void sendBoard(Socket*, std::string){}
+void askPromotionToClient(Socket*){}
 
 Player& Player::operator= (Player&& original) {
 		_sock = original._sock;
@@ -17,9 +17,9 @@ Player& Player::operator= (Player&& original) {
 
 
 std::string Player::askMove(){
-	askMoveToClient(_sock, _pipe[0]);
+	askMoveToClient(_sock);
 	char res[5];
-	read(_pipe[1], &res, sizeof(char)*4);
+	read(_pipe[0], &res, sizeof(char)*4);
 	res[4] = '\0';
 	return std::string(res);
 }
@@ -29,9 +29,9 @@ void Player::showBoard(std::string board){
 }
 
 char Player::askPromotion(){
-	askPromotionToClient(_sock, _pipe[0]);
+	askPromotionToClient(_sock);
 	char res;
-	read(_pipe[1], &res, sizeof(char));
+	read(_pipe[0], &res, sizeof(char));
 	return res;
 }
 
@@ -49,6 +49,18 @@ void Player::setName(std::string name){
 
 void Player::setSocket(Socket* socket){
 	_sock = socket;
+}
+
+void Player::reciveMove(std::string& message){
+	char str[message.length()+1];
+	std::strcpy(str, message.c_str());
+	write(_pipe[1], str, 4*sizeof(char));
+}
+
+void Player::recivePromotion(std::string& message){
+	char str[message.length()+1];
+	std::strcpy(str, message.c_str());
+	write(_pipe[1], str, sizeof(char));
 }
 
 #endif

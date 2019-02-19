@@ -45,6 +45,8 @@ class Player{
 	Socket* getSocket() const;
 	void setName(std::string);
 	void setSocket(Socket*);
+	void reciveMove(std::string&);
+	void recivePromotion(std::string&);
 };
 
 #endif
