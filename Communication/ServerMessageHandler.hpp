@@ -52,7 +52,7 @@ void receiveMessageHandler(Socket socket, Data* data, PlayersMap* players_map, M
   // Supprime l'entrée username : Player()
   std::cout << "Deconnexion de " << player.getName() << std::endl;
   if (player.getQueueNumber() != -1) matchmaking->removePlayer(&player);
-  close(player.getSocket()->getFileDescriptor());
+  player.getSocket()->closeSocket();
   players_map->erase(player.getName());
 }
 

@@ -15,6 +15,7 @@ public:
 
   int getFileDescriptor();
   void connectToServer(std::string);
+  void closeSocket();
 
   void sendMessage(std::string);
   bool parseBuffer(std::string&);

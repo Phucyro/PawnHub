@@ -10,7 +10,6 @@ Socket::Socket() : file_descriptor(0) {
 Socket::Socket(int fd) : file_descriptor(fd) {}
 
 Socket::~Socket() {
-  close(file_descriptor);
 }
 
 int Socket::getFileDescriptor() {
@@ -30,6 +29,10 @@ void Socket::connectToServer(std::string hostname) {
     std::cout << "[Error] Connect" << std::endl;
   }
   else std::cout << "Connected to server!" << std::endl;
+}
+
+void Socket::closeSocket() {
+  close(getFileDescriptor());
 }
 
 

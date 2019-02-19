@@ -3,9 +3,15 @@
 #include <functional>
 
 #include "Socket.hpp"
+#include "SplitString.hpp"
+#include "ServerHandler.hpp"
 
 #ifndef _MSGPARSER_H_
 #define _MSGPARSER_H_
+
+// how to differentiate between different games?
+// - pass identifier into string? need global objects for identification
+// - pass as attribute into receive functions
 
 /*
 IN-GAME
@@ -27,7 +33,13 @@ std::map<std::string, std::string> headerSendMap = {
  {"colour", "P"},
  {"turn", "T"},
  {"movecheck", "C"},
- {"move", "M"}
+ {"move", "M"},
+ {"quit", "0"},
+ {"register", "1"},
+ {"login", "2"},
+ {"chat", "3"},
+ {"play", "4"},
+ {"leave", "5"}
 };
 
 // Send Functions
@@ -61,6 +73,36 @@ void sendMove(Socket socket, std::string move) {
   socket.sendMessage(header + move);
 }
 
+void sendQuit(Socket socket) {
+  std::string header = headerSendMap["quit"];
+  socket.sendMessage(header);
+}
+
+void sendRegister(Socket socket, std::string username, std::string password) {
+  std::string header = headerSendMap["register"];
+  socket.sendMessage(header + username + " " + password);
+}
+
+void sendLogin(Socket socket, std::string username, std::string password) {
+  std::string header = headerSendMap["login"];
+  socket.sendMessage(header + username + " " + password);
+}
+
+void sendPlayRequest(Socket socket, unsigned int game_type) {
+  std::string header = headerSendMap["play"];
+  socket.sendMessage(header + std::to_string(game_type));
+}
+
+void sendLeaveQueue(Socket socket) {
+  std::string header = headerSendMap["leave"];
+  socket.sendMessage(header);
+}
+
+void sendChat(Socket socket, std::string sender, std::string target, std::string text) {
+  std::string header = headerSendMap["chat"];
+  socket.sendMessage(header + " " + sender + " " + target + " " + text);
+}
+
 // Receive Functions
 void receiveBoard(std::string message) {std::cout << message << std::endl;}
 void receiveUpdate(std::string message) {std::cout << message << std::endl;}
@@ -68,6 +110,15 @@ void receivePlayerColour(std::string message) {std::cout << message << std::endl
 void receiveTurn(std::string message) {std::cout << message << std::endl;}
 void receiveCheckResult(std::string message) {std::cout << message << std::endl;}
 void receiveMove(std::string message) {std::cout << message << std::endl;}
+void receiveQuit(std::string message) {}
+void receiveRegister(std::string message) {
+  std::vector<std::string> user_info = splitString(message, ' ');
+  signUpHandler(&client_socket);
+}
+void receiveLogin(std::string message) {}
+void receivePlayRequest(std::string message) {}
+void receiveLeaveQueue(std::string message) {}
+void receiveChat(std::string message) {}
 
 std::map<char, std::function<void(std::string)>> headerReceiveMap = {
   {'B', &receiveBoard},
@@ -75,7 +126,13 @@ std::map<char, std::function<void(std::string)>> headerReceiveMap = {
   {'P', &receivePlayerColour},
   {'T', &receiveTurn},
   {'C', &receiveCheckResult},
-  {'M', &receiveMove}
+  {'M', &receiveMove},
+  {"0", &receiveQuit},
+  {"1", &receiveRegister},
+  {"2", &receiveLogin},
+  {"3", &receivePlayRequest},
+  {"4", &receiveLeaveQueue},
+  {"5", &receiveChat},
 };
 
 // Receive Parser
