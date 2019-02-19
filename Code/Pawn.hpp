@@ -1,8 +1,8 @@
 #ifndef __PAWN__HPP__
 #define __PAWN__HPP__
 
-#include "Piece.hpp"
 #include "GhostPawn.hpp"
+#include "Piece.hpp"
 
 class Pawn : public Piece {
 
@@ -32,7 +32,6 @@ class Pawn : public Piece {
 		virtual ~Pawn() noexcept {delete _ghost;}
 		Pawn& operator= (const Pawn&);
 		Pawn& operator= (Pawn&&);
-		explicit operator Queen(const Pawn&)
 
 		bool hasMoved() const override {return _moved;}
 		bool move(Coordinate, Board*, Game&) override;

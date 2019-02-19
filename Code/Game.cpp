@@ -2,6 +2,7 @@
 #define __GAME__CPP__
 
 #include"Game.hpp"
+#include "includesPieceHPP.hpp"
 
 //constructor
 Game::Game(Piece** pieces, unsigned piecesAmount, Player* player1, Player* player2, unsigned lastStrongPiecesWhite, unsigned lastStrongPieceBlack):

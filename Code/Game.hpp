@@ -48,5 +48,4 @@ class Game
 #include "Piece.hpp"
 #include"Board.hpp"
 #include "Player.hpp"
-#include "includesPieceHPP.hpp"
 #endif

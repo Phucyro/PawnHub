@@ -2,7 +2,6 @@
 #define __KNIGHT__HPP__
 
 #include "Piece.hpp"
-#include "Pawn.hpp"
 class TestKnight;
 
 class Knight : public Piece {
@@ -22,7 +21,7 @@ class Knight : public Piece {
 
 
 		Knight(const Knight& original) : Piece(original){}
-		explicit Knight(const Pawn& original) noexcept : Piece(original){
+		explicit Knight(const Piece& original) noexcept : Piece(original){
 			_str[TYP] = 'h';
 		}
 		virtual ~Knight() noexcept = default;
