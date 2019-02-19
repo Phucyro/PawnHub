@@ -3,6 +3,7 @@
 
 #include "Piece.hpp"
 #include "Pawn.hpp"
+#include "Rook.hpp"
 
 class King : public Piece {
 
@@ -33,5 +34,6 @@ class King : public Piece {
 		bool canMove(Board*, Game&) override;
 		bool _checkMove(Coordinate, Board*, Game&) override;
 };
+
 
 #endif

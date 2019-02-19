@@ -55,17 +55,17 @@ void Classic::_initBoard() {
 	Game::_board->setCase(Coordinate('H', '7'), Game::_pieces[31]);
 }
 
-void _changePawn(Piece *pawn, Piece* promotedPawn){
-	int i, end;
+void Classic::_changePawn(Piece *pawn, Piece* promotedPawn){
+	int start, i, end;
 	if (pawn->getColor() == 'w'){
-		start = _lastStrongPiecesWhite;
-		i = _lastStrongPiecesWhite;
+		int start = _lastStrongPiecesWhite;
+		int i = _lastStrongPiecesWhite;
 		_lastStrongPiecesWhite ++;
 		end = 16;
 	}else{
-		start = _lastStrongPiecesBlack;
-		i = _lastStrongPiecesBlack;
-		_lastStrongPiecesBlack ++;
+		start = _lastStrongPieceBlack;
+		i = _lastStrongPieceBlack;
+		_lastStrongPieceBlack ++;
 		end = 32;
 	}
 
@@ -95,7 +95,7 @@ void Classic::_nextTurn() {
 	std::string playerMove;
 	while(!isMoveValid){
 		playerMove = currentPlayer->askMove();
-		if (_fitInBoard(playerMove)){
+		if (this->_fitInBoard(playerMove)){
 			Coordinate start = Coordinate(playerMove[0], playerMove[1]), end = Coordinate(playerMove[2], playerMove[3]);
 			isMoveValid = this->_executeMove(start, end, playerColor);
 		}

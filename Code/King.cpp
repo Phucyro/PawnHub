@@ -3,6 +3,7 @@
 
 #include <cmath>
 #include "King.hpp"
+#include "Rook.hpp"
 
 Piece* King::_doMove(Coordinate end, Board* board, Game& game){
 	int columnMove = int(end.getRealColumn()) - int(_coords.getRealColumn());

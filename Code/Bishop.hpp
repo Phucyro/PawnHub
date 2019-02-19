@@ -32,5 +32,4 @@ class Bishop : public Piece {
 		friend TestBishop;
 };
 
-
 #endif

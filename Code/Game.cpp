@@ -30,7 +30,7 @@ Game::Game(Game&& original):
 	_pieces(original._pieces),
 	_piecesAmount(original._piecesAmount),
 	_lastStrongPiecesWhite(original._lastStrongPiecesWhite),
-	_lastStrongPieceBlack(original.__lastStrongPieceBlack)
+	_lastStrongPieceBlack(original._lastStrongPieceBlack)
 {
 	original._board = nullptr;
 }
@@ -60,7 +60,7 @@ Game& Game::operator= (Game&& original)
 	_pieces = original._pieces;
 	_piecesAmount = original._piecesAmount;
 	_lastStrongPiecesWhite = original._lastStrongPiecesWhite;
-	_lastStrongPieceBlack = original.__lastStrongPieceBlack;
+	_lastStrongPieceBlack = original._lastStrongPieceBlack;
 	return *this;
 }
 
@@ -77,33 +77,35 @@ Player* Game::start()
 	return _winner;
 }
 
-void promote(Piece* pawn)
+void Game::promote(Piece* piece)
 {
 	char type = this->_getCurrentPlayer()->askPromotion();
+	Pawn *pawn = dynamic_cast<Pawn*>(piece);
+	if (!pawn) throw std::string("the piece to promote is not a pawn");
 	Piece* promotedPawn;
 	switch (type) {
-		case 'q': {
+		case 'q': 
 			promotedPawn = new Queen(*pawn);
 			break;
-		}
+		
 
-		case 'b':{
+		case 'b':
 			promotedPawn = new Bishop(*pawn);
 			break;
-		}
+		
 
 		case 'h':
 			promotedPawn = new Knight(*pawn);
 			break;
-		}
+		
 
-		case 'r':{
+		case 'r':
 			promotedPawn = new Rook(*pawn);
 			break;
-		}
+		
 
 	}
-	this->changePawn(pawn, promotedPawn)
+	this->_changePawn(pawn, promotedPawn);
 	delete pawn;
 
 }
