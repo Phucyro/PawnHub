@@ -14,24 +14,24 @@
 typedef std::map<std::string, Player*> PlayersMap;
 
 
-void receiveMessageHandler(Socket* socket, Data* data, PlayersMap* players_map, Matchmaking* matchmaking){
+void receiveMessageHandler(Socket socket, Data* data, PlayersMap* players_map, Matchmaking* matchmaking){
   bool quit = false;
   std::vector<std::string> msg;
   Player player;
 
   try {
     while (!quit){
-      msg = splitString(socket->receiveMessage(), ' ');
+      msg = splitString(socket.receiveMessage(), ' ');
 
       switch (msg[0][0]){
         case '0' : // [0]
           disconnect(&quit);
           break;
         case '1' : // [1] [username] [password]
-          signUpHandler(socket, data, msg[1], msg[2]);
+          signUpHandler(&socket, data, msg[1], msg[2]);
           break;
         case '2' : // [2] [username] [password]
-          signInHandler(socket, players_map, data, &player, msg[1], msg[2]);
+          signInHandler(&socket, players_map, data, &player, msg[1], msg[2]);
           break;
         case '3' : // [3] [sender] [target] [text]
           chatHandler(players_map, msg[1], msg[2], vectorToString(msg, 3));
@@ -51,7 +51,8 @@ void receiveMessageHandler(Socket* socket, Data* data, PlayersMap* players_map, 
 
   // Supprime l'entrée username : Player()
   std::cout << "Deconnexion de " << player.getName() << std::endl;
-  if (player.getQueueNumber() != 4) matchmaking->removePlayer(&player);
+  if (player.getQueueNumber() != -1) matchmaking->removePlayer(&player);
+  close(player.getSocket()->getFileDescriptor());
   players_map->erase(player.getName());
 }
 
