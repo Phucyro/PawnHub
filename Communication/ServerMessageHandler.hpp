@@ -3,6 +3,7 @@
 
 #include "SplitString.hpp"
 #include "ServerHandler.hpp"
+#include "Matchmaking.hpp"
 #include "Data.hpp"
 #include "../Code/Player.hpp"
 #include <vector>
@@ -13,7 +14,7 @@
 typedef std::map<std::string, Player*> PlayersMap;
 
 
-void receiveMessageHandler(Socket* socket, Data* data, PlayersMap* players_map){
+void receiveMessageHandler(Socket* socket, Data* data, PlayersMap* players_map, Matchmaking* matchmaking){
   bool quit = false;
   std::vector<std::string> msg;
   Player player;
@@ -35,6 +36,12 @@ void receiveMessageHandler(Socket* socket, Data* data, PlayersMap* players_map){
         case '3' : // [3] [sender] [target] [text]
           chatHandler(players_map, msg[1], msg[2], vectorToString(msg, 3));
           break;
+        case '4' :
+          playGameHandler(matchmaking, &player, msg[1]);
+          break;
+        case '5' :
+          leaveQueueHandler(matchmaking, &player);
+          break;
       }
     }
   }
@@ -44,6 +51,7 @@ void receiveMessageHandler(Socket* socket, Data* data, PlayersMap* players_map){
 
   // Supprime l'entrée username : Player()
   std::cout << "Deconnexion de " << player.getName() << std::endl;
+  if (player.getQueueNumber() != 4) matchmaking->removePlayer(&player);
   players_map->erase(player.getName());
 }
 

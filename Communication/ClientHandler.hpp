@@ -42,5 +42,13 @@ void chatHandler(std::string sender, std::string target, std::string text){
   }
 }
 
+void playGameHandler(){
+  std::cout << "Vous avez rejoins une file d'attente" << std::endl;
+}
+
+void leaveQueueHandler(){
+  std::cout << "Vous avez quitte une file d'attente" << std::endl;
+}
+
 
 #endif

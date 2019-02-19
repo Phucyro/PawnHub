@@ -24,6 +24,12 @@ void receiveMessageHandler(Socket* socket){
       case '3' : // [3] [sender] [target] [text]
         chatHandler(msg[1], msg[2], vectorToString(msg, 2));
         break;
+      case '4' :
+        playGameHandler();
+        break;
+      case '5' :
+        leaveQueueHandler();
+        break;
     }
   }
 }
@@ -50,6 +56,12 @@ void sendMessageHandler(Socket* socket, std::string* client_username){
         break;
       case '3' : // 3 [sender] [target] [msg]
         chat(socket, *client_username, msg[1], vectorToString(msg, 2));
+        break;
+      case '4' : // 4 [gamemode]
+        playGame(socket, msg[1]);
+        break;
+      case '5' :
+        leaveQueue(socket);
         break;
     }
   }

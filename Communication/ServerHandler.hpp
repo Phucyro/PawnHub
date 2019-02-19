@@ -4,6 +4,7 @@
 #include "Data.hpp"
 #include "Socket.hpp"
 #include "../Code/Player.hpp"
+#include "Matchmaking.hpp"
 
 typedef std::map<std::string, Player*> PlayersMap;
 
@@ -54,5 +55,13 @@ void chatHandler(PlayersMap* players_map, std::string sender, std::string target
   }
 }
 
+void playGameHandler(Matchmaking* matchmaking, Player* player, std::string game_mode){
+  matchmaking->addPlayer(player, static_cast<unsigned int>(atoi(game_mode.c_str())));
+  player->getSocket()->sendMessage("4");
+}
 
+void leaveQueueHandler(Matchmaking* matchmaking, Player* player){
+  matchmaking->removePlayer(player);
+  player->getSocket()->sendMessage("5");
+}
 #endif

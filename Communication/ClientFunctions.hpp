@@ -32,5 +32,12 @@ void chat(Socket *socket, std::string sender, std::string target, std::string te
   socket->sendMessage(std::string("3") + " " + sender + " " + target + " " + text);
 }
 
+void playGame(Socket* socket, std::string game_mode){
+  socket->sendMessage(std::string("4") + " " + game_mode);
+}
+
+void leaveQueue(Socket* socket){
+  socket->sendMessage("5");
+}
 
 #endif
