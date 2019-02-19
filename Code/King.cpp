@@ -3,6 +3,7 @@
 
 #include <cmath>
 #include "King.hpp"
+#include <iostream>
 
 Piece* King::_doMove(Coordinate end, Board* board, Game& game){
 	int columnMove = int(end.getRealColumn()) - int(_coords.getRealColumn());
@@ -10,12 +11,12 @@ Piece* King::_doMove(Coordinate end, Board* board, Game& game){
 	if (columnMove == 2){
 		Coordinate startRook = Coordinate(end.getRealColumn()+1u, end.getRealRow());
 		Coordinate endRook = Coordinate(end.getRealColumn()-1, end.getRealRow());
-		board->movePiece(startRook, endRook);
+		board->getCase(startRook)->move(endRook, board, game);
 	}
 	else if (columnMove == -2) {
 		Coordinate startRook = Coordinate(end.getRealColumn()-2, end.getRealRow());
 		Coordinate endRook = Coordinate(end.getRealColumn()+1u, end.getRealRow());
-		board->movePiece(startRook, endRook);
+		board->getCase(startRook)->move(endRook, board, game);
 	}
 	return this->Piece::_doMove(end, board, game);
 }
@@ -61,19 +62,17 @@ bool King::_checkMove(Coordinate end, Board* board, Game& game){
     //else tmpcoord = Coordinate(end.getRealColumn()-2, end.getRealRow()); //Grand roque
     Piece* rook = dynamic_cast<Rook*>(board->getCase(tmpcoord));
     if (!rook || rook->hasMoved()) return false; //Is the Rook validate ?
-
 		//check if there is no piece in the way + if the king will not be checked in the way
 		bool res = true;
     Coordinate middleCoord = Coordinate(_coords.getRealColumn() + unsigned(1*columnDirection), _coords.getRealRow());
     if (board->getCase(middleCoord)) return false;
     board->movePiece(_coords, middleCoord);  //Ca me parait lourd comme démarche, a voir une fois testcheck ready
     if (game.testCheck(this->getColor(), 0)) res = false;	//0 a changer
-
     if (board->getCase(end)) return false;
     board->movePiece(middleCoord, end);
     if (game.testCheck(this->getColor(), 0))res = false;	//0 a changer
-
     board->movePiece(end, _coords);
+		//columnMove == 2 ? rook->move(Coordinate(_coords.getRealColumn()+1, _coords.getRealRow()), board, game) : rook->move(Coordinate(_coords.getRealColumn()-1, _coords.getRealRow()), board, game);
     if (board->getCase(Coordinate(tmpcoord.getRealColumn() - 1*columnDirection, tmpcoord.getRealRow()))) return false; //test if the case next to the rook is empty
     return res;
   }
