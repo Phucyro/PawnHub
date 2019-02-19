@@ -19,7 +19,7 @@ int main(){
 
   BindSocket binding_socket;
 
-  // Met le socket rveur en attente de connexions
+  // Met le socket serveur en attente de connexions
   binding_socket.activate();
 
   while (true){
@@ -30,6 +30,7 @@ int main(){
     std::thread thread(receiveMessageHandler, &client_socket, &data, &players_map);
     thread.detach();
     // sendBoard(client_socket, "hola");
+
   }
 
   return 0;

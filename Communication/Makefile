@@ -10,7 +10,7 @@ GAME_CLIENT= StartPartyClient.hpp
 GAME_SERVER= StartPartyServer.hpp
 MSG_PARSER= MessageParser.hpp
 
-all: clean server client
+all: server client clean
 
 run: all
 	./server

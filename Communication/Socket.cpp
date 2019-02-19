@@ -41,7 +41,7 @@ void Socket::sendMessage(std::string message) {
   else message = message.append(std::string(MSG_LENGTH - (message_size % MSG_LENGTH), PADDING));
   const char* str_ptr = message.c_str();
 
-  if (message.length() < MSG_LENGTH) {
+  if (message.length() == MSG_LENGTH) {
     if (send(getFileDescriptor(), str_ptr, MSG_LENGTH, 0) < 0) {
       std::cout << "[Error] Send" << std::endl;
     }
@@ -50,7 +50,7 @@ void Socket::sendMessage(std::string message) {
     ssize_t bytes_sent;
     size_t total_sent = 0;
 
-    while (total_sent < message_size) {
+    while (total_sent <= message_size) {
       str_ptr += total_sent;
       bytes_sent = send(getFileDescriptor(), str_ptr, (message_size - total_sent), 0);
       if (bytes_sent < 0) {
