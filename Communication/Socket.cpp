@@ -17,12 +17,13 @@ int Socket::getFileDescriptor() {
   return file_descriptor;
 }
 
-void Socket::connectToServer(std::string ip_addr) {
-  const char* converted_addr = ip_addr.c_str();
+void Socket::connectToServer(std::string hostname) {
+  // const char* converted_name = hostname.c_str();
+  hostent* host_addr = gethostbyname(hostname.c_str());
   sockaddr_in serv_addr;
   serv_addr.sin_family = AF_INET;
   serv_addr.sin_port = htons(MYPORT);
-  serv_addr.sin_addr.s_addr = inet_addr(converted_addr); // Addresse IP a remplacer
+  serv_addr.sin_addr.s_addr = *((in_addr_t*) host_addr->h_addr); // Addresse IP a remplacer
   memset(&(serv_addr.sin_zero), '\0', 8);
 
   if (connect(getFileDescriptor(), (sockaddr*)&serv_addr, sizeof(serv_addr)) < 0) {

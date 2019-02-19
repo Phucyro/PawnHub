@@ -15,6 +15,10 @@ int main(){
   Data data("database.txt"); // bug makefile
   data.load();
 
+  char hostname[50];
+  gethostname(hostname, 50);
+  std::cout << "Hostname: " << hostname << std::endl;
+
   PlayersMap players_map;
 
   BindSocket binding_socket;
