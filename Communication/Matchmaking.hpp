@@ -9,7 +9,7 @@
 
 class Matchmaking {
 private:
-  std::map<unsigned int, std::vector<Player*>> _queues;
+  std::map<int, std::vector<Player*>> _queues;
 
 public:
   Matchmaking(unsigned int number_of_queues);

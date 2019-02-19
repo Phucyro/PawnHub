@@ -16,16 +16,17 @@ void Matchmaking::addPlayer(Player* player, unsigned int queue_number){
 void Matchmaking::removePlayer(Player* player){
   std::vector<Player*> *queue = &(_queues[player->getQueueNumber()]);
   queue->erase(std::remove(queue->begin(), queue->end(), player), queue->end());
+  player->setQueueNumber(-1);
 }
 
 void Matchmaking::check(unsigned int queue_number){
   if (_queues[queue_number].size() >= 2){
     Player* player1 = _queues[queue_number][0];
-    player1->setQueueNumber(4);
+    player1->setQueueNumber(-1);
     _queues[queue_number].erase(_queues[queue_number].begin());
 
     Player* player2 = _queues[queue_number][0];
-    player2->setQueueNumber(4);
+    player2->setQueueNumber(-1);
     _queues[queue_number].erase(_queues[queue_number].begin());
 
     createGame(player1, player2, queue_number);
