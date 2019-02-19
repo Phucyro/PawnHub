@@ -31,7 +31,7 @@ bool Piece::move(Coordinate end, Board* board, Game& game){
 	if(!(this->_checkMove(end, board, game))) return false;
 	Piece* takenPiece = this->_doMove(end, board, game);
 
-	if(game.testCheck(this->getColor(), 0)){		//0 a changer
+	if(game.testCheck(this->getColor())){		//0 a changer
 		this->_reverseMove(end, board, game, takenPiece);
 		return false;
 	}

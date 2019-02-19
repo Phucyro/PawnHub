@@ -45,7 +45,7 @@ class Classic : public Game {
 	Classic& operator=(const Classic&) = delete;
 
 
-	bool testCheck(const char& color, const unsigned& promote) override {
+	bool testCheck(const char color) override {
 		if (color == 'w' || color == 'a'){	//White		//a = all
 
 		//Pawn
@@ -55,7 +55,7 @@ class Classic : public Game {
 		if (MaybePawn && MaybePawn->getColor() == 'b' && (MaybePawn->getType() == 'p' || MaybePawn->getType() == 'b' || MaybePawn->getType() == 'q' || MaybePawn->getType() == 'K')) return true;
 
 		//strong pieces
-		for (unsigned i = 16; i <= 23+promote; ++i){
+		for (unsigned i = 16; i <= _lastStrongPieceBlack; ++i){
 			if (!_pieces[i]->isTaken())
 				if (_pieces[i]->_checkMove(_pieces[KING_INDEX]->getCoord(), Game::_board, *this)) return true;
 		}
@@ -70,7 +70,7 @@ class Classic : public Game {
 			if (MaybePawn && MaybePawn->getColor() == 'w' && (MaybePawn->getType() == 'p' || MaybePawn->getType() == 'b' || MaybePawn->getType() == 'q' || MaybePawn->getType() == 'K')) return true;
 
 			//strong pieces
-			for (unsigned i = 0; i <= 7+promote; ++i){
+			for (unsigned i = 0; i <= _lastStrongPiecesWhite; ++i){
 				if (!_pieces[i]->isTaken())
 					if (_pieces[i]->_checkMove(_pieces[KING_INDEX+16]->getCoord(), Game::_board, *this)) return true;
 			}

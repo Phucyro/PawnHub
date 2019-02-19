@@ -22,7 +22,7 @@ class SimpleGame: public Game
 	public:
 	SimpleGame() : Game(nullptr, 0, nullptr, nullptr, 0, 0), _testCheck(false){}
 	bool changeTestCheck(){_testCheck = !_testCheck;}
-	bool testCheck(const char& color, const unsigned& promote) override {return _testCheck;}
+	bool testCheck(const char color) override {return _testCheck;}
 
 };
 
