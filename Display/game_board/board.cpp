@@ -1,20 +1,20 @@
 #include "board.hpp"
+#include "BoardParsing.hpp"
 
-Board::Board(): game_win(nullptr), vcoord_win(nullptr), hcoord_win(nullptr), infos_win(nullptr), columns(8), lines(8)
+Board::Board(): infos_win(nullptr), columns(8), lines(8), running(false)
 {
 
 }
 
-Board::Board(int line_count, int col_count): game_win(nullptr), vcoord_win(nullptr), hcoord_win(nullptr), infos_win(nullptr), columns(col_count), lines(line_count)
+
+Board::Board(int line_count, int col_count): infos_win(nullptr), columns(col_count), lines(line_count), running(false)
 {
 
 }
 
 Board::~Board()
 {
-  delwin(game_win);
-  delwin(vcoord_win);
-  delwin(hcoord_win);
+
   delwin(infos_win);
 
   endwin();
@@ -26,37 +26,37 @@ void Board::init_ncurses()
   initscr();
   cbreak();
   noecho();
-  keypad(stdscr, TRUE);
+  keypad(stdscr, TRUE); //utilisation du keypad
   curs_set(1);
 
   init_windows();
-}
 
+}
 
 
 void Board::init_windows()
 /**Initialise le board**/
 {
-  int board_height = lines*3;
-  int board_width = columns*3;
+  int board_height = lines*OFFSET;
+  int board_width = columns*OFFSET;
 
   infos_win = newwin(board_height/2, board_width, 0, board_width+4);
   box(infos_win,0,0);
 
-  for (int i=0; i<24; i+=3)
-    for (int j=0; j<24; j+=3)
+  for (int i=0; i<24; i+=OFFSET)
+    for (int j=0; j<24; j+=OFFSET)
     {
-      draw_rectangle(i,j,i+2,j+2);
+      draw_rectangle(i,j,i+SIDE_LENGTH,j+SIDE_LENGTH);
     }
 
   draw_pieces();
   draw_coordinates();
   draw_infos();
 
-  refresh();
-  wrefresh(infos_win);
+  refresh_board();
   getch();
   endwin();
+
 }
 
 void Board::draw_infos()
@@ -81,23 +81,31 @@ void Board::draw_coordinates()
 {
   for (int i=0; i<lines; i++)
   {
-    mvprintw(1+3*i,25 , "%d", i+1);
+    mvprintw(1+(OFFSET*i), 25 , "%d", i+1);
   }
 
-  mvprintw(24, 1, "A");
-  mvprintw(24, 4, "B");
-  mvprintw(24, 7, "C");
-  mvprintw(24, 10, "C");
-  mvprintw(24, 13, "D");
-  mvprintw(24, 16, "E");
-  mvprintw(24, 19, "F");
-  mvprintw(24, 22, "G");
+  for (int i=0; i<columns; i++)
+  {
+    mvprintw(24, 1+(OFFSET*i), "%c", 'A'+i);
+  }
+
+  // mvprintw(24, 1, "A");
+  // mvprintw(24, 4, "B");
+  // mvprintw(24, 7, "C");
+  // mvprintw(24, 10, "C");
+  // mvprintw(24, 13, "D");
+  // mvprintw(24, 16, "E");
+  // mvprintw(24, 19, "F");
+  // mvprintw(24, 22, "G");
 
 }
 
 void Board::draw_pieces()
 /** Dessine les pions sur le board de depart **/
 {
+  // Ca maaarche
+  // std::string test = boardToString();
+  // stringToBoard(test); 
 
   mvprintw(1,1, "T");
   mvprintw(1,4, "K");
@@ -137,7 +145,6 @@ void Board::draw_pieces()
 
 }
 
-
 void Board::draw_rectangle(int x1, int y1, int x2, int y2)
 /** permet de dessiner des rectangles de (x1,y1) vers (x2, y2) **/
 {
@@ -149,4 +156,51 @@ void Board::draw_rectangle(int x1, int y1, int x2, int y2)
   mvaddch(y2, x1, ACS_LLCORNER);
   mvaddch(y1, x2, ACS_URCORNER);
   mvaddch(y2, x2, ACS_LRCORNER);
+}
+
+void Board::move_pawn(int x1, int y1, int x2, int y2, std::string pawn_type)
+/** permet de bouger un pion de la position (x1,y1) vers (x2,y2) **/
+{
+  mvprintw(1+3*x1, 1+3*y1, " ");
+
+  const char* pawn = pawn_type.c_str();
+
+  mvprintw(1+3*y2, 1+3*x2, pawn);
+
+  refresh_board();
+}
+
+
+void Board::update_board(std::string pawns_list)
+{
+
+}
+
+void Board::refresh_board()
+/** refresh le board (a faire apres chaque modification) **/
+{
+  refresh();
+  wrefresh(infos_win);
+}
+
+
+bool Board::isRunning()
+{
+  return running;
+}
+
+int Board::get_movement()
+{
+  int choice = getch();
+
+  //switch des choix a faire?
+
+  return choice;
+}
+
+void Board::exit()
+{
+  delwin(infos_win);
+
+  endwin();
 }
