@@ -2,7 +2,9 @@
 #include "SplitString.hpp"
 
 
-Data::Data(std::string path) : _data({}), _path(path) {}
+Data::Data(std::string path) : _data({}), _path(path) {
+  load();
+}
 
 
 void Data::load(){
