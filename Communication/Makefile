@@ -5,12 +5,12 @@ CXX= g++
 CONFIG= config.hpp
 SOCKETS= Socket.o BindSocket.o
 LOGIN_CLIENT= ClientMessageHandler.hpp ClientFunctions.hpp SplitString.o
-LOGIN_SERVER= ServerMessageHandler.hpp Data.o SplitString.o ../Code/Player.o
+LOGIN_SERVER= ServerMessageHandler.hpp Data.o SplitString.o ../Code/Player.o Matchmaking.o
 GAME_CLIENT= StartPartyClient.hpp
 GAME_SERVER= StartPartyServer.hpp
 MSG_PARSER= MessageParser.hpp
 
-all: server client clean
+all: clean server client
 
 run: all
 	./server
