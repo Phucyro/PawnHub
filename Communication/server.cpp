@@ -15,11 +15,15 @@ int main(){
   Data data("database.txt"); // bug makefile
   data.load();
 
+  char hostname[50];
+  gethostname(hostname, 50);
+  std::cout << "Hostname: " << hostname << std::endl;
+
   PlayersMap players_map;
 
   BindSocket binding_socket;
 
-  // Met le socket rveur en attente de connexions
+  // Met le socket serveur en attente de connexions
   binding_socket.activate();
 
   while (true){
@@ -27,9 +31,10 @@ int main(){
     Socket client_socket = binding_socket.createSocket();
 
     // Traite la demande de connexion
-    std::thread thread(receiveMessageHandler, client_socket, &data, &players_map);
+    std::thread thread(receiveMessageHandler, &client_socket, &data, &players_map);
     thread.detach();
     // sendBoard(client_socket, "hola");
+
   }
 
   return 0;

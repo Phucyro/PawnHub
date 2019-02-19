@@ -35,10 +35,14 @@ class Game
 	Game& operator= (const Game&) = delete;
 	Game& operator= (Game&&);
 
-	Player* start();
+	void start();
 	virtual bool testCheck(const char color) = 0;
 	unsigned getTurn() const {return _turn;}
 	void promote(Piece* pawn);
+
+	Player* getWinner(){return _winner;}
+	Player* getPlayer1(){return _player1;}
+	Player* getPlayer2(){return _player2;}
 
 };
 #include "Piece.hpp"
