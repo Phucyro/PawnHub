@@ -10,7 +10,11 @@ int main(){
   std::string client_username;
 
   // Demande de connexion au serveur
-  socket.connectToServer("frawni-thinks");
+  std::string hostname;
+  std::cout << "Please enter hostname: ";
+  std::cin >> hostname;
+  std::cout << std::endl;
+  socket.connectToServer(hostname);
 
   // Thread gere messages recus
   std::thread receive_thread(receiveMessageHandler, &socket);
