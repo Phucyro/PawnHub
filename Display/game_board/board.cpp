@@ -1,5 +1,6 @@
 #include "board.hpp"
 #include "BoardParsing.hpp"
+#include "MoveParsing.hpp"
 
 Board::Board(): infos_win(nullptr), columns(BOARD_COLS), lines(BOARD_LINES), running(false)
 {
@@ -138,18 +139,22 @@ bool Board::isRunning()
 
 void Board::get_movement()
 {
-  mvprintw(15, 30, "%s", "State initial piece position: ");
-  int i_letter = getch();
-  mvprintw(15, 60, "%c", i_letter);
-  int i_number = getch();
-  mvprintw(15, 61, "%c", i_number);
+  int move[4];
 
-  mvprintw(16, 30, "%s", "State final piece position: ");
-  int f_letter = getch();
-  mvprintw(16, 60, "%c", f_letter);
-  int f_number = getch();
-  mvprintw(16, 61, "%c", f_number);
-  
+  for (int i = 0; i < 4; ++i) {
+    if (i == 0) {
+      mvprintw(15, 30, "%s", "State initial piece position: ");
+    }
+    else if (i == 2) {
+      mvprintw(16, 30, "%s", "State moved piece position: ");
+    }
+    move[i] = getch();
+    mvprintw(15 + (i/2), 60 + (i%2), "%c", move[i]);
+  }
+
+  std::string effective_move = moveToString(move);
+  const char* this_move = effective_move.c_str();
+  mvprintw(18, 30, "%s", this_move);
   //switch des choix a faire?
 }
 
