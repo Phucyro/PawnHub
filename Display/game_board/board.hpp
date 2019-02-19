@@ -40,10 +40,9 @@ public:
 
   void move_piece(int, int, int, int, std::string);
 
-  void update_board(std::string);
   void refresh_board();
 
-  int get_movement();
+  void get_movement();
 
   bool isRunning();
 

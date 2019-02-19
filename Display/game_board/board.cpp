@@ -49,11 +49,11 @@ void Board::init_windows()
       draw_rectangle(i,j,i+SIDE_LENGTH,j+SIDE_LENGTH);
     }
 
-  draw_pieces();
   draw_coordinates();
   draw_infos();
 
   refresh_board();
+  get_movement();
   getch();
   endwin();
 
@@ -81,7 +81,7 @@ void Board::draw_coordinates()
 {
   for (int i=0; i<lines; i++)
   {
-    mvprintw(1+(OFFSET*i), 25 , "%d", i+1);
+    mvprintw(1+(OFFSET*i), 25 , "%d", lines-i);
   }
 
   for (int i=0; i<columns; i++)
@@ -113,20 +113,15 @@ void Board::draw_rectangle(int x1, int y1, int x2, int y2)
 void Board::move_piece(int x1, int y1, int x2, int y2, std::string piece_type)
 /** permet de bouger un pion de la position (x1,y1) vers (x2,y2) **/
 {
-  mvprintw(1+3*x1, 1+3*y1, " ");
+  mvprintw(1+OFFSET*x1, 1+OFFSET*y1, " ");
 
   const char* piece = piece_type.c_str();
 
-  mvprintw(1+3*y2, 1+3*x2, piece);
+  mvprintw(1+OFFSET*y2, 1+OFFSET*x2, piece);
 
   refresh_board();
 }
 
-
-void Board::update_board(std::string piece_list)
-{
-
-}
 
 void Board::refresh_board()
 /** refresh le board (a faire apres chaque modification) **/
@@ -141,13 +136,21 @@ bool Board::isRunning()
   return running;
 }
 
-int Board::get_movement()
+void Board::get_movement()
 {
-  int choice = getch();
+  mvprintw(15, 30, "%s", "State initial piece position: ");
+  int i_letter = getch();
+  mvprintw(15, 60, "%c", i_letter);
+  int i_number = getch();
+  mvprintw(15, 61, "%c", i_number);
 
+  mvprintw(16, 30, "%s", "State final piece position: ");
+  int f_letter = getch();
+  mvprintw(16, 60, "%c", f_letter);
+  int f_number = getch();
+  mvprintw(16, 61, "%c", f_number);
+  
   //switch des choix a faire?
-
-  return choice;
 }
 
 void Board::exit()
