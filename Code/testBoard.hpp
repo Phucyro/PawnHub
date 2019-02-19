@@ -3,7 +3,20 @@
 
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
-#include"Board.hpp"
+#include "Board.hpp"
+#include "Game.hpp"
+#include "Piece.hpp"
+
+class P: public Piece{
+	protected:
+
+	public:
+		P() :Piece('w',Coordinate('A','1')){}
+
+		bool _checkMove(Coordinate, Board*, Game&) override {return true;}
+		bool canMove(Board*, Game&) override {return true;}
+		bool hasMoved() const override {return true;}
+};
 
 class TestBoard: public CPPUNIT_NS::TestFixture
 {
@@ -13,17 +26,17 @@ class TestBoard: public CPPUNIT_NS::TestFixture
 	CPPUNIT_TEST (testSetCase);
 	CPPUNIT_TEST (testGetCase);
 	CPPUNIT_TEST_SUITE_END ();
-	
+
 	private:
 	Board* board;
-	Piece *a, *b, *c, *d;
-	
+	P *a, *b, *c, *d;
+
 	protected:
 	void testCopyState();
 	void testMovePiece();
 	void testSetCase();
 	void testGetCase();
-	
+
 	public:
 	void setUp();
 	void tearDown();

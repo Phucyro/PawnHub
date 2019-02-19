@@ -6,6 +6,7 @@
 class Socket {
 private:
   int file_descriptor;
+  char recv_buffer[MSG_LENGTH];
 
 public:
   Socket();
@@ -16,6 +17,7 @@ public:
   void connectToServer(std::string);
 
   void sendMessage(std::string);
+  bool parseBuffer(std::string&);
   std::string receiveMessage();
 };
 

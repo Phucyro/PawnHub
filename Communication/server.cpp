@@ -1,13 +1,26 @@
 #include "config.hpp"
 #include "BindSocket.hpp"
-#include <queue>
+#include "ServerMessageHandler.hpp"
+#include "MessageParser.hpp"
+#include <map>
 #include <thread>
-#include "LoginServer.hpp"
+#include "Data.hpp"
+#include "../Code/Player.hpp"
 
-// #include "startPartyServer.hpp"
+
+typedef std::map<std::string, Player*> PlayersMap;
+
 
 int main(){
-  // Initialisation socket serveur
+  Data data("database.txt"); // bug makefile
+  data.load();
+
+  char hostname[50];
+  gethostname(hostname, 50);
+  std::cout << "Hostname: " << hostname << std::endl;
+
+  PlayersMap players_map;
+
   BindSocket binding_socket;
 
   // Met le socket serveur en attente de connexions
@@ -17,9 +30,10 @@ int main(){
     // Accepte l'utilisateur dans le serveur et lui asssocie un socket
     Socket client_socket = binding_socket.createSocket();
 
-    // Demande a l'identifiant de se connecter ou de s'inscrire
-    treatConnection(&client_socket);
-    std::cout << "Un joueur s'est identifie" << std::endl;
+    // Traite la demande de connexion
+    std::thread thread(receiveMessageHandler, &client_socket, &data, &players_map);
+    thread.detach();
+    // sendBoard(client_socket, "hola");
 
   }
 

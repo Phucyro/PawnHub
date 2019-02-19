@@ -1,19 +1,21 @@
 
 #TODO:
 
-- definir les messages envoyes (board et move)
-- ecrire send et receive
-- caser le parser
+- mettre en commun les differentes methodes de message-handling (dans mon tout beau parser, idealement)
+- tester en reseau local (using hostname?)
 - gerer deux clients sur le meme jeu (_le plus gros qui reste_)
 
 ##Messages
 
+padding symbol defined: '|'
+- _cannot be used for anything else in messaging_
+- for example, cannot be allowed in chat (though use is limited really - but still possible)
+
 send board to clients
-- list of pieces, first white then black, separated by '!' symbol
+- list of pieces, first white then black, separated by '!' then '#'
 - each piece 3 characters:
-* name of piece (one letter/number, _undetermined as of yet_)
-* position (one letter one number OR two numbers, _either classic chess representation or matrix position_)
-- padding since message of defined length (_determine symbol_)
+* name of piece (one letter)
+* position (one letter one number _classic chess representation_)
 
 send move to server
 - 4 characters total, initial position and final position

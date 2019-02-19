@@ -100,7 +100,7 @@ Free the place taken by _state and change it to nullptr
 postcondition: _state == nullptr
 */
 {
-	for (int i; i < this->_column; i++)
+	for (unsigned i; i < this->_column; i++)
 	{
 		delete[] _state[i];
 	}
@@ -113,7 +113,12 @@ postcondition: _state == nullptr
 
 Piece* Board::getCase(Coordinate place) const
 {
-	return _state[place.getRealColumn()][place.getRealRow()];
+	try{
+		return _state[place.getRealColumn()][place.getRealRow()];
+	}
+	catch (int e){
+		return nullptr;
+	}
 }
 
 
@@ -132,58 +137,3 @@ void Board::setCase(Coordinate place, Piece* piece)
 }
 
 #endif
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
