@@ -3,9 +3,8 @@ FLAGS2= -std=c++17 -masm=intel -fconcepts -mlong-double-128 -ggdb3 -Wpedantic -W
 
 all: mainTest clean run
 
-mainTest: testRook.o testBishop.o testCoordinate.o testBoard.o Board.o Coordinate.o Game.o mainTest.cpp Piece.o Bishop.o testKnight.o Knight.o Classic.o Rook.o  Pawn.o Player.o testPawn.o King.o testKing.o
-	g++ $(FLAGS) testBoard.o Piece.o Coordinate.o Board.o Player.hpp testCoordinate.o testBishop.o Game.o Bishop.o testKnight.o Knight.o Classic.o testRook.o Rook.o  Pawn.o Player.o testPawn.o testKing.o King.o mainTest.cpp -o mainTest -lcppunit
-
+mainTest: testRook.o testBishop.o testCoordinate.o testBoard.o Board.o Coordinate.o Game.o mainTest.cpp Piece.o Bishop.o testKnight.o Knight.o Classic.o Rook.o  GhostPawn.o Pawn.o testPawn.o Player.o King.o testKing.o Queen.o
+	g++ $(FLAGS) testBoard.o Piece.o Coordinate.o Board.o Player.hpp testCoordinate.o testBishop.o Game.o Bishop.o testKnight.o Knight.o Classic.o testRook.o Rook.o  Pawn.o testPawn.o King.o testKing.o Queen.o GhostPawn.o Player.o mainTest.cpp -o mainTest -lcppunit
 
 
 testCoordinate.o: testCoordinate.cpp testCoordinate.hpp Coordinate.hpp
@@ -53,6 +52,12 @@ Pawn.o: Pawn.cpp Pawn.hpp Game.hpp Board.hpp Coordinate.hpp Piece.hpp GhostPawn.
 
 King.o: King.cpp King.hpp Pawn.hpp Rook.hpp Game.hpp Board.hpp Coordinate.hpp Piece.hpp GhostPawn.hpp
 	g++ -c $(FLAGS) King.cpp
+
+Queen.o: Queen.cpp Queen.hpp Game.hpp Board.hpp Coordinate.hpp Piece.hpp Piece.cpp Pawn.hpp GhostPawn.hpp
+	g++ -c $(FLAGS) Queen.cpp
+
+GhostPawn.o: GhostPawn.cpp Pawn.hpp Game.hpp Board.hpp Coordinate.hpp Piece.hpp GhostPawn.hpp
+	g++ -c $(FLAGS) GhostPawn.cpp
 
 Game.o: Board.hpp Coordinate.hpp Piece.hpp Player.hpp Game.hpp Game.cpp
 	g++ -c $(FLAGS) Game.cpp

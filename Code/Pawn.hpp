@@ -1,8 +1,8 @@
 #ifndef __PAWN__HPP__
 #define __PAWN__HPP__
 
-#include "Piece.hpp"
 #include "GhostPawn.hpp"
+#include "Piece.hpp"
 
 class Pawn : public Piece {
 
@@ -10,7 +10,7 @@ class Pawn : public Piece {
 		bool _moved;
 		GhostPawn *_ghost;
 
-		void _promote();
+		void _promote(Game&);
 
 	public :
 

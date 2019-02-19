@@ -33,6 +33,23 @@
 	\section{Introduction}
 		\subsection{Description du Projet}
 			\paragraph{}Ce projet aura pour but de recréer un grand classique des jeux de plateau: les échecs. Le jeu sera jouable via un mode multijoueurs. Le joueur pourra jouer au mode classique ou à une de ses variantes telles que  {\itshape AliceChess, DarkChess} et {\itshape HordeChess} que nous décrirons plus tard. De plus, il aura également la possibilité de créer un compte à partir duquel il pourra effectuer plusieurs actions qui seront détaillées ci-dessous. Néanmoins, le joueur pourra lancer une partie en tant que {\itshape visiteur} mais ne bénéficiera pas des avantages liés à la possession d'un compte.
+			\subsection{Fonctionnement du Jeu d'Échec}
+			\subsubsection{Règles du Jeu\footnote{Wikipedia}} Chaque joueur possède au départ un roi, une dame, deux tours, deux fous, deux cavaliers et huit pions. Le but du jeu est d'infliger à son adversaire un échec et mat, une situation dans laquelle le roi d'un joueur est en prise sans qu'il soit possible d'y remédier.
+			\subsubsection{Les Pièces}
+			\begin{description}
+		  \item[Le Pion :] Depuis sa position initiale, le pion peut avancer d'une ou 2 cases en avant, ensuite d'une case en avant uniquement. Néanmoins, le pion prend une autre pièce en diagonale. Également, lorsque le pion arrive à la dernière rangée, il effectue une promotion et est remplacé par n'importe quelle autre pièce, à part le roi, au choix du joueur. De plus, il peut également effectuer la prise en passant qui est expliquée dans le glossaire.
+			\item[La Tour :] La tour peut se déplacer d'un nombre quelconque de cases sur les rangées et les colonnes.
+			\item[Le Fou :] Le fou peut se déplacer uniquement en diagonale d'un nombre quelconque de cases.
+			\item[La Reine :] La reine peut se déplacer dans toutes les directions d'un nombre quelconque de cases.
+			\item[Le Roi :] Le roi peut se déplacer dans toutes les directions d'une case uniquement. Il peut également effectuer un roque qui est expliqué dans le glossaire.
+			\item[Le Cavalier :] Le cavalier se déplace en "L", voir image ci-dessous.
+			\begin{figure}[b]
+			\includegraphics[scale=0.50]{pieces_move.png}
+			\caption{Image provenant de Wikipedia}
+			\end{figure}
+			\end{description}
+			\clearpage
+			
 			\subsection{Les Modes de Jeu}
 				\subsubsection{Classique}
 					\paragraph{}Le jeu d'échecs classique, où le but est de mettre le roi adverse en échec sans qu'il ait la possibilité au tour suivant de ne plus l'être.
@@ -57,6 +74,14 @@
 		\item[AliceChess :] Variante du jeu d'échec jouée en utilisant 2 plateaux. Lorsqu'un coup est joué, la pièce est déplacée à la case correspondante mais dans l'autre plateau. À part cela, le jeu se déroule selon les règles habituelles du jeu d'échecs .
 		\item[DarkChess :] Variante du jeu d'échec où le joueur ne voit que ses propres pièces et les cases où il peut légalement les déplacer.
 		\item[HordeChess :] Variante du jeu d'échec où un joueur possède 32 pions et l'autre la collection standard du jeu d'échec traditionnel.
+		\item[Le Roque :] Le roque consiste à déplacer en un seul coup le roi et l'une des tours. On déplace d'abord le roi de deux cases vers la tour puis, avec la même main, on fait passer la tour de l'autre côté, juste à côté du roi (voir le diagramme ci-dessous). Les conditions suivantes sont nécessaires pour pouvoir roquer : aucune pièce ne se trouve entre le roi et la tour concernée, le roi et la tour concernée n'ont encore jamais joué et le roi n'est pas en échec ;
+la case traversée par le roi n'est contrôlée par aucune pièce adverse\footnote{source Wikipedia}.
+		\item[La Prise en Passant:] Au jeu d’échecs, la prise en passant est une possibilité particulière de capturer un pion. Lorsqu’un pion se trouve sur la cinquième rangée1 et que l’adversaire avance de deux cases un pion d’une colonne voisine (les deux pions se retrouvent alors côte-à-côte sur la même rangée), le premier pion peut prendre le second. Pour effectuer la prise en passant, le joueur avance son pion en diagonale sur la sixième rangée et la colonne du pion adverse, et ôte ce dernier de l’échiquier\footnote{source Wikipedia}
+		\begin{figure}[b]
+		\includegraphics[scale=1]{roque_prise_passant.png}
+		\caption{Image provenant de Wikipedia}
+		\end{figure}
+		
 		\end{description}
 		\clearpage
 
@@ -75,8 +100,11 @@
 				 1.3 & 11/12 & Huwart Maxence & Besoins systèmes\\ \hline
 				 1.4 & 12/12 & Mardulyn Romain & Explication des différent modes de jeu\\ \hline
 				 1.5 & 12/12 & Antunes André & Explication des options durant une partie\\ \hline
-                 1.6 & 12/12 & Nguyen Duc & Modification des diagrammes de séquence\\ \hline
-                 1.7 & 13/12 & Pham Hong Phuc & Correction et réajustement \\ \hline
+         1.6 & 12/12 & Nguyen Duc & Modification des diagrammes de séquence\\ \hline
+         1.7 & 13/12 & Pham Hong Phuc & Correction et réajustement \\ \hline
+				 1.8 & 12/02 & Boonen Jacques & Fonctionnement du jeu + ajout images \\ 
+				 1.9 & 13/02 & Boonen Jacques & Déroulement d'une partie \\ 
+				\hline
 \end{tabular}
 			\caption*{Historique des modifications}
 			\end{table}
@@ -313,6 +341,9 @@ Le programme doit être capable de tourner sous Unix. \\
 \subsection{Réseau}
 Le jeu se joue en réseau. Une connexion internet est donc requise. \\
 
+\subsection{Mise à Jour des Différentes Fonctionnalités}
+Le système se doit de mettre assez rapidement à jour les statistiques personnelles et le classement global après chaque partie.
+
 \section{Design du Système}
 
 \begin{figure}[ht]
@@ -337,7 +368,49 @@ Le jeu se joue en réseau. Une connexion internet est donc requise. \\
 \subsection{Les Actions du Joueur}
 
 \subsection{Client-Serveur}
+\paragraph{}Dans le cadre de ce projet, nous avons décidé que la partie serveur s'occupera de toute la logique du jeu tandis que la partie client s'assurera d'afficher correctement l'interface du jeu en temps réel et pour se faire, enverra des requêtes au serveur pour connaître les mouvements de pièces.
+\paragraph{}Il convient également de spécifier que l'échange d'information entre le serveur et le client se fera sous le format de chaînes de caractères. Par exemple, Le serveur enregistrera les noms de compte et mots de passe des joueurs dans un fichier texte et non une base de données. Et cela pour au moins 3 raisons décrites ci-dessous : 
+\begin{enumerate}
+\item Comme la plupart des tâches effectuées par nos programmes se font à l'aide de chaînes de caractères et par soucis d'homogénéité, il est préferable et plus simple que l'échange d'information entre le serveur et le client se fasse également sous cette forme.
+\item Une chaîne de caractère n'a pas besoin d'être traduite en binaire, ce qui diminue la complexité et le temps d'exécution de nos programmes.
+\item La taille du message envoyée n'est pas un probleme, car une taille de 100 octets suffit pour envoyer toutes les informations d'un message. Le plus grand message actuel est le plateau, qui ne consiste que de 98 octets lorsqu'il est complet (voir 6.5.2)
+\end{enumerate}
 \paragraph{}Le serveur aura une copie du board et tâchera de vérifier les différentes actions des joueurs. Il veillera également à mettre à jour les board des joueurs.
+
+\subsection{Déroulement d'une partie  } \\ \\
+
+\begin{enumerate}
+
+\item \textit{Assignation de la couleur des pièces aux joueurs} \\
+\textbf{Mise en pratique :} Le serveur envoie la couleur(noir ou blanc) au client. \\
+\textbf{Protocole :} Le serveur envoie '1' pour la couleur 'blanc' et '0' pour 'noir'. Pour l'instant, le premier connecté reçoit la couleur 'blanc'.  
+
+\item \textit{Affichage de l'échiquier} \\
+\textbf{Mise en pratique :} Le serveur envoie le plateau aux joueurs. \\
+\textbf{Protocole :} Le message est une suite de toutes les pièces présentes sur l'échiquier, chacune représentée par 3 caractères. Le premier caractère est une lettre désignant le type de la pièce considérée. Les 2 autres, sa position, en commençant par la colonne, selon la réprésentation classique d'un échiquier, c'est à dire, les rangées sont numérotées de 1 à 9 et les colonnes de "A" à "H". Les pions blancs sont séparés des noirs par '!' et à la fin des pions noirs, on ajoute un '#'. Exemple : pA2hA4rD5qC7kE1bF8!bA8qG4kD7#. L'envoi d'un plateau contenant toutes les pièces classiques est donc de 98 octets: 1 octet par caractère, 3 caractères par pièces, 32 pièces sur un plateau, soit 3*32=96, plus les 2 symboles de séparation.   
+
+\item \textit{Numéro du tour de jeu} \\
+\textbf{Mise en pratique :} Le serveur envoie le numéro du tour actuel de jeu aux joueurs.  \\
+\textbf{Protocole :} A partir d'un compteur dans la boucle de jeu, le serveur envoie le chiffre au client.  
+
+\item \textit{Tour du joueur} \\
+\textbf{Mise en pratique :} Chaque client vérifie si c'est bien au tour de son joueur de jouer, si oui, celui-ci envoie en message le mouvement de la pièce au serveur. \\
+\textbf{Protocole :} Le message est composé de 4 caractères, les 2 premiers sont l'emplacement du début de tour de la pièce et les 2 derniers sont la position future de la pièce demandée par le joueur.
+
+\item \textit{Mouvement de la pièce} \\
+\textbf{Mise en pratique :} Après avoir reçu la position future de la pièce indiquée par le joueur, le serveur vérifie sa validité et envoie son résultat au client. Tant que la position n'est pas validée par le serveur, le client doit renvoyer une position au serveur. Lorsque que celle-ci est validée, le serveur envoie aux 2 clients l'échiquier mis à jour.  \\
+\textbf{Protocole :} Le serveur renvoie un boolée True/False. 
+
+\item \textit{État de la partie} \\
+\textbf{Mise en pratique :} Le serveur envoie un message de statut : "<fin de jeu-match nul"> ou "<continue"> \\
+\textbf{Protocole :} Le serveur renvoie True pour terminer la partie ou False pour la continuer 
+
+\item Le joueur suivant commence son tour selon la procédure ci-dessus
+
+\item Si la partie est terminée, le joueur est déconnecté vu qu'il n'y a pas encore de menu.
+
+NB: Ce protocole n'est pas définitif
+\end{enumerate}
 
 \subsection{Menu}
 
@@ -352,3 +425,4 @@ Le jeu se joue en réseau. Une connexion internet est donc requise. \\
 \end{document}
 
 
+o

@@ -16,11 +16,13 @@ class SimpleGame: public Game
 		void _initBoard() override{}
 		void _nextTurn() override{}
 		bool _isFinish() override{return true;}
+		void _changePawn(Piece*, Piece*) override{}
 
 	public:
-	SimpleGame() : Game(nullptr, 0), _testCheck(false){}
+	SimpleGame() : Game(nullptr, 0, nullptr, nullptr, 0, 0), _testCheck(false){}
 	bool changeTestCheck(){_testCheck = !_testCheck;}
-	bool testCheck(const char& color, const unsigned& promote) override {return _testCheck;}
+	bool testCheck(const char color) override {return _testCheck;}
+	Player* _getCurrentPlayer() override{return nullptr;}
 
 };
 

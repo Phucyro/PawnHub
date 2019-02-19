@@ -2,7 +2,6 @@
 #define __ROOK__HPP__
 
 #include "Piece.hpp"
-#include "Pawn.hpp"
 
 class TestRook;
 
@@ -22,7 +21,7 @@ class Rook : public Piece {
 		}
 
 		Rook(const Rook& original) noexcept : Piece(original), _moved(original.hasMoved()) {}
-		explicit Rook(const Pawn& original) noexcept : Piece(original), _moved(original.hasMoved()){
+		explicit Rook(const Piece& original) noexcept : Piece(original), _moved(original.hasMoved()){
 			_str[TYP] = 'r';
 		}
 		virtual ~Rook() noexcept = default;

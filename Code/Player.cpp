@@ -11,16 +11,17 @@ Player& Player::operator= (Player&& original) {
 		_sock = original._sock;
 		_pipe = original._pipe;
 		original._pipe = nullptr;
+		_name = original._name;
 		return *this;
 	}
 
 
-char* Player::askMove(){
+std::string Player::askMove(){
 	askMoveToClient(_sock, _pipe[0]);
-	char *res = new char[5];
-	read(_pipe[1], res, sizeof(char)*4);
+	char res[5];
+	read(_pipe[1], &res, sizeof(char)*4);
 	res[4] = '\0';
-	return res;
+	return std::string(res);
 }
 
 void Player::showBoard(std::string board){
@@ -32,6 +33,22 @@ char Player::askPromotion(){
 	char res;
 	read(_pipe[1], &res, sizeof(char));
 	return res;
+}
+
+std::string Player::getName() const {
+	return _name;
+}
+
+Socket* Player::getSocket() const {
+	return _sock;
+}
+
+void Player::setName(std::string name){
+	_name = name;
+}
+
+void Player::setSocket(Socket* socket){
+	_sock = socket;
 }
 
 #endif

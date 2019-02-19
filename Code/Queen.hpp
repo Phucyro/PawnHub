@@ -2,7 +2,6 @@
 #define __QUEEN__HPP__
 
 #include "Piece.hpp"
-#include "Pawn.hpp"
 
 class Queen : public Piece {
 
@@ -24,7 +23,7 @@ class Queen : public Piece {
 		}
 
 		Queen(const Queen& original) noexcept : Piece(original){}
-		explicit Queen(const Pawn& original) noexcept : Piece(original){
+		explicit Queen(const Piece& original) noexcept : Piece(original){
 			_str[TYP] = 'q';
 		}
 		virtual ~Queen() noexcept = default;

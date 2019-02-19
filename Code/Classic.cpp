@@ -55,6 +55,30 @@ void Classic::_initBoard() {
 	Game::_board->setCase(Coordinate('H', '7'), Game::_pieces[31]);
 }
 
+void Classic::_changePawn(Piece *pawn, Piece* promotedPawn){
+	int start, i, end;
+	if (pawn->getColor() == 'w'){
+		int start = _lastStrongPiecesWhite;
+		int i = _lastStrongPiecesWhite;
+		_lastStrongPiecesWhite ++;
+		end = 16;
+	}else{
+		start = _lastStrongPieceBlack;
+		i = _lastStrongPieceBlack;
+		_lastStrongPieceBlack ++;
+		end = 32;
+	}
+
+	for (; i < end; i++) {
+		if (_pieces[i] == pawn){
+			delete pawn;
+			_pieces[i] = _pieces[start];
+			_pieces[start] = promotedPawn;
+			break; // <3
+		}
+	}
+}
+
 bool Classic::_executeMove(Coordinate start, Coordinate end, char playerColor){
 	Piece *movingPiece;
 	movingPiece = _board->getCase(start);
@@ -68,10 +92,10 @@ void Classic::_nextTurn() {
 	char playerColor = currentPlayer == _player1 ? 'w':'b';
 
 	bool isMoveValid = false;
-	char* playerMove;
+	std::string playerMove;
 	while(!isMoveValid){
 		playerMove = currentPlayer->askMove();
-		if (_fitInBoard(playerMove)){
+		if (this->_fitInBoard(playerMove)){
 			Coordinate start = Coordinate(playerMove[0], playerMove[1]), end = Coordinate(playerMove[2], playerMove[3]);
 			isMoveValid = this->_executeMove(start, end, playerColor);
 		}

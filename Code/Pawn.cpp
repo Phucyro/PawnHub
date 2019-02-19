@@ -60,7 +60,7 @@ bool Pawn::move(Coordinate end, Board* board, Game& game){
 	if (this->Piece::move(end, board, game)){
 		int rowMove = int(end.getRealRow()) - int(_coords.getRealRow());
 		if (rowMove == 2) _ghost = new GhostPawn(getColor(), Coordinate(_coords.getRealColumn(), _coords.getRealRow() - 1), game.getTurn(), this);
-		if (_coords.getRealRow() == 0 || _coords.getRealRow() == board->getRow() - 1) _promote();
+		if (_coords.getRealRow() == 0 || _coords.getRealRow() == board->getRow() - 1) _promote(game);
 		_moved = true;
 		return true;
 	}
@@ -74,9 +74,8 @@ bool Pawn::canMove(Board* board, Game& game){
 	return true;
 }
 
-void Pawn::_promote(){
-	//TODO
-
+void Pawn::_promote(Game& game){
+	game.promote(this);
 }
 
 #endif

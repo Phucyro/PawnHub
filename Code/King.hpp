@@ -2,7 +2,7 @@
 #define __KING__HPP__
 
 #include "Piece.hpp"
-#include "Pawn.hpp"
+//#include "Pawn.hpp"
 #include "Rook.hpp"
 
 class King : public Piece {
@@ -22,9 +22,6 @@ class King : public Piece {
 		}
 
 		King(const King& original) noexcept : Piece(original), _moved(original.hasMoved()) {}
-		explicit King(const Pawn& original) noexcept : Piece(original), _moved(original.hasMoved()){
-			_str[TYP] = 'k';
-		}
 		virtual ~King() noexcept = default;
 
 		King& operator= (const King&) = default;
@@ -34,5 +31,6 @@ class King : public Piece {
 		bool canMove(Board*, Game&) override;
 		bool _checkMove(Coordinate, Board*, Game&) override;
 };
+
 
 #endif

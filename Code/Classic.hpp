@@ -17,7 +17,7 @@ class Classic : public Game {
 		if(_turn%2) return _player1;
 		else return _player2;
 	}
-	bool _fitInBoard(char* playerMove){return playerMove[0] < 'A' && playerMove[0] > 'H' && playerMove[1] < '1' && playerMove[1] > '8' && playerMove[2] < 'A' && playerMove[2] > 'H' && playerMove[3] < '1' && playerMove[3] > '8';}
+	bool _fitInBoard(std::string playerMove){return playerMove[0] < 'A' && playerMove[0] > 'H' && playerMove[1] < '1' && playerMove[1] > '8' && playerMove[2] < 'A' && playerMove[2] > 'H' && playerMove[3] < '1' && playerMove[3] > '8';}
 
 	bool _executeMove(Coordinate, Coordinate, char);
 	bool _isCheckmate(char);
@@ -36,9 +36,11 @@ class Classic : public Game {
 	Classic(const Classic&) = delete;
 	using Game::_pieces;
 
+	void _changePawn(Piece*, Piece*) override;
+
 	public :
 
-	Classic() noexcept : Game(nullptr, 32) {_Pieces();}
+	Classic(Player* player1, Player* player2) noexcept : Game(nullptr, 32, player1, player2, 7, 22) {_Pieces();}
 	virtual ~Classic();
 	Classic& operator=(const Classic&) = delete;
 
