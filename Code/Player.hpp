@@ -18,10 +18,11 @@ class Player{
 	Socket *_sock;
 	int *_pipe;
 	std::string _name = "Guess";
+	int _queueNumber = -1; // Numero de file inexistante
 
 
 	public :
-	Player(): _pipe(nullptr){
+	Player(): _sock(nullptr), _pipe(nullptr) {
 		_pipe = new int[2];
 		if ((pipe(_pipe)) == -1) throw std::runtime_error("Fail while constructing a pipe for an object of type 'Player': ");
 	}
@@ -43,8 +44,11 @@ class Player{
 	char askPromotion();
 	std::string getName() const;
 	Socket* getSocket() const;
+	unsigned int getQueueNumber() const;
 	void setName(std::string);
 	void setSocket(Socket*);
+	void setQueueNumber(int);
+
 };
 
 #endif

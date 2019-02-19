@@ -43,12 +43,20 @@ Socket* Player::getSocket() const {
 	return _sock;
 }
 
+unsigned int Player::getQueueNumber() const {
+	return _queueNumber;
+}
+
 void Player::setName(std::string name){
 	_name = name;
 }
 
 void Player::setSocket(Socket* socket){
 	_sock = socket;
+}
+
+void Player::setQueueNumber(int queueNumber){
+	_queueNumber = queueNumber;
 }
 
 #endif
