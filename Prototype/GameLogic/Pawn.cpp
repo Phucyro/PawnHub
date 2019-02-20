@@ -28,7 +28,7 @@ bool Pawn::_checkMove(Coordinate end, Board* board, Game& game){
 	if (this->getColor() == 'w'){
 		if (std::abs(columnMove) == 1){
 			if (rowMove != 1) return false;
-			if (board->getCase(end) && board->getCase(end)->getColor() == 'w') return false;
+			if ((!_isPlaceFree(end, board)) && board->getCase(end)->getColor() == 'w') return false;
 		}
 		else{
 			if (rowMove > 2 || rowMove < 1) return false;
@@ -36,13 +36,13 @@ bool Pawn::_checkMove(Coordinate end, Board* board, Game& game){
 				if (this->hasMoved()) return false;
 				if (board->getCase(end)) return false;
 			}
-			if (board->getCase(Coordinate(_coords.getRealColumn(), _coords.getRealRow() + 1))) return false;
+			if (!_isPlaceFree(Coordinate(_coords.getRealColumn(), _coords.getRealRow() + 1), board)) return false;
 		}
 	}
 	else {
 		if (std::abs(columnMove) == 1){
 			if (rowMove != -1) return false;
-			if (board->getCase(end) && board->getCase(end)->getColor() == 'b') return false;
+			if ((!_isPlaceFree(end, board)) && board->getCase(end)->getColor() == 'b') return false;
 		}
 		else{
 			if (rowMove < -2 || rowMove > -1) return false;
@@ -50,7 +50,7 @@ bool Pawn::_checkMove(Coordinate end, Board* board, Game& game){
 				if (this->hasMoved()) return false;
 				if (board->getCase(end)) return false;
 			}
-			if (board->getCase(Coordinate(_coords.getRealColumn(), _coords.getRealRow() - 1))) return false;
+			if (!_isPlaceFree(Coordinate(_coords.getRealColumn(), _coords.getRealRow() - 1), board)) return false;
 		}
 	}
 	return true;

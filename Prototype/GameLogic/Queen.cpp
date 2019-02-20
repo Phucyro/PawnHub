@@ -20,17 +20,17 @@ bool Queen::_checkMoveRook(Coordinate end, Board* board, Game& game){
 
   		// check if there is no piece in the way
   		for (int i = int(_coords.getRealRow()) + rowDirection; i != end.getRealRow(); i += rowDirection){
-  			if (board->getCase(Coordinate(end.getRealColumn(), unsigned(i)))) return false;
+  			if (!_isPlaceFree(Coordinate(end.getRealColumn(), unsigned(i)), board)) return false;
   		}
   	}
   	else if(columnMove){
   		// check if there is no piece in the way
   		for (int i = int(_coords.getRealColumn()) + columnDirection; i != end.getRealColumn(); i += columnDirection){
-  			if (board->getCase(Coordinate(unsigned(i), end.getRealColumn()))) return false;
+  			if (!_isPlaceFree(Coordinate(unsigned(i), end.getRealColumn()), board)) return false;
   		}
   	}
   	else return false;
-  	if (board->getCase(end) && board->getCase(end)->getColor() == this->getColor()) return false;
+  	if ((!_isPlaceFree(end, board)) && board->getCase(end)->getColor() == this->getColor()) return false;
   	return true;
   }
 
@@ -49,12 +49,12 @@ bool Queen::_checkMoveBishop(Coordinate end, Board* board, Game& game){
 	row += rowDirection;
 	column += columnDirection;
 	while(row != end.getRealRow()){
-		if (board->getCase(Coordinate(column, row))) return false;
+		if (!_isPlaceFree(Coordinate(column, row), board)) return false;
 		row += rowDirection;
 		column += columnDirection;
 	}
 
-	if (board->getCase(end) && board->getCase(end)->getColor() == this->getColor()) return false;
+	if ((!_isPlaceFree(end, board)) && board->getCase(end)->getColor() == this->getColor()) return false;
 	return true;
 }
 
