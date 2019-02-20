@@ -4,29 +4,22 @@
 #include <iostream>
 #include"Player.hpp"
 
-void askMoveToClient(Socket*, Player* player){
-	std::cout<<"Player "<<player<<" enter move"<<std::endl;
-	std::string move;
-	std::cin>>move;
-	player->reciveMove(move);
-}
-void sendBoard(Socket*, std::string board){std::cout<<board<<std::endl;}
-void askPromotionToClient(Socket*, Player* player){
-	std::string message = std::string("q");
-	player->recivePromotion(message);
-}
+void sendAskMove(Socket);
+void sendAskPromotion(Socket);
+void sendBoard(Socket*, std::string);
+
 
 Player& Player::operator= (Player&& original) {
-		_sock = original._sock;
-		_pipe = original._pipe;
-		original._pipe = nullptr;
-		_name = original._name;
-		return *this;
-	}
+	_sock = original._sock;
+	_pipe = original._pipe;
+	original._pipe = nullptr;
+	_name = original._name;
+	return *this;
+}
 
 
 std::string Player::askMove(){
-	askMoveToClient(_sock, this);
+	sendAskMove(*sock);
 	char res[5];
 	read(_pipe[0], &res, sizeof(char)*4);
 	res[4] = '\0';
@@ -38,7 +31,7 @@ void Player::showBoard(std::string board){
 }
 
 char Player::askPromotion(){
-	askPromotionToClient(_sock, this);
+	sendAskPromotion(*_sock);
 	char res;
 	read(_pipe[0], &res, sizeof(char));
 	return res;
