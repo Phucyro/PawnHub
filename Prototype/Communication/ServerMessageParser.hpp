@@ -33,7 +33,9 @@ std::map<std::string, std::string> headerSendMap = {
  {"colour", "P"},
  {"turn", "T"},
  {"movecheck", "C"},
+ {"askmove", "a"},
  {"move", "M"},
+ {"askpromotion", "p"},
  {"quit", "0"},
  {"register", "1"},
  {"login", "2"},
@@ -68,9 +70,19 @@ void sendCheckResult(Socket socket, bool movecheck) {
   socket.sendMessage(header + std::to_string(movecheck));
 }
 
+void sendAskMove(Socket socket) {
+  std::string header = headerSendMap["askmove"];
+  socket.sendMessage(header);
+}
+
 void sendMove(Socket socket, std::string move) {
   std::string header = headerSendMap["move"];
   socket.sendMessage(header + move);
+}
+
+void sendAskPromotion(Socket socket) {
+  std::string header = headerSendMap["askpromotion"];
+  socket.sendMessage(header);
 }
 
 void sendQuit(Socket socket) {
