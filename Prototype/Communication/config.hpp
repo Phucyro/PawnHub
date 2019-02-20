@@ -9,7 +9,7 @@
 #include <netdb.h>
 
 
-#define MYPORT 5555
+#define PORT 5555
 #define BACKLOG 20
 #define MSG_LENGTH 50
 #define PADDING '|'

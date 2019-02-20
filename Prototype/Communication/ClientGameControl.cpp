@@ -1,5 +1,4 @@
 #include "ClientGameControl.hpp"
-#include "../GameDisplay/board.hpp"
 
 ClientGameControl::ClientGameControl(Socket _socket): board(), socket(_socket) {
   startParty();

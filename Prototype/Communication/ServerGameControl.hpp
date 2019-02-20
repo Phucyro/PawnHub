@@ -3,14 +3,16 @@
 #include <functional>
 
 #include "Socket.hpp"
-#include "../GameDisplay/board.hpp"
+#include "../GameLogic/Player.hpp"
+#include "../GameLogic/Classic.hpp"
 
-#ifndef _CCONTROL_H_
-#define _CCONTROL_H_
+#ifndef _SCONTROL_H_
+#define _SCONTROL_H_
 
-class ClientGameControl {
+class ServerGameControl {
 private:
-  Board board;
+  Player player;
+  Classic game;
   Socket socket;
 
   std::map<std::string, std::string> headerSendMap = {
@@ -31,29 +33,28 @@ private:
 
 
 public:
-  ClientGameControl(Socket);
+  ServerGameControl(Socket, Player);
 
 private:
-  void receiveBoard(std::string);
   void receiveUpdate(std::string);
   void receivePlayerColour(std::string);
   void receiveTurn(std::string);
   void receiveCheckResult(std::string);
   void receiveMove(std::string);
 
-  void sendMove(std::string);
+  void sendBoard(std::string);
+  void sendCheckControl(bool);
 
-  std::map<char, void(ClientGameControl::*)(std::string)> headerReceiveMap = {
-    {'B', &ClientGameControl::receiveBoard},
-    {'U', &ClientGameControl::receiveUpdate},
-    {'P', &ClientGameControl::receivePlayerColour},
-    {'T', &ClientGameControl::receiveTurn},
-    {'C', &ClientGameControl::receiveCheckResult},
-    {'M', &ClientGameControl::receiveMove},
+  std::map<char, void(ServerGameControl::*)(std::string)> headerReceiveMap = {
+    {'B', &ServerGameControl::receiveBoard},
+    {'U', &ServerGameControl::receiveUpdate},
+    {'P', &ServerGameControl::receivePlayerColour},
+    {'T', &ServerGameControl::receiveTurn},
+    {'C', &ServerGameControl::receiveCheckResult},
+    {'M', &ServerGameControl::receiveMove},
   };
 
   void handleMessage();
-  void startParty();
 };
 
 #endif

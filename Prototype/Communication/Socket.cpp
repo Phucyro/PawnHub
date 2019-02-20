@@ -3,7 +3,7 @@
 Socket::Socket() : file_descriptor(0) {
   file_descriptor = socket(AF_INET, SOCK_STREAM, 0);
   if (file_descriptor < 0) {
-    std::cout << "[Error] Socket" << std::endl;
+    throw std::string("[Error] Instantiation failed");
   }
 }
 
@@ -21,12 +21,12 @@ void Socket::connectToServer(std::string hostname) {
   hostent* host_addr = gethostbyname(hostname.c_str());
   sockaddr_in serv_addr;
   serv_addr.sin_family = AF_INET;
-  serv_addr.sin_port = htons(MYPORT);
+  serv_addr.sin_port = htons(PORT);
   serv_addr.sin_addr.s_addr = *((in_addr_t*) host_addr->h_addr); // Addresse IP a remplacer
   memset(&(serv_addr.sin_zero), '\0', 8);
 
   if (connect(getFileDescriptor(), (sockaddr*)&serv_addr, sizeof(serv_addr)) < 0) {
-    std::cout << "[Error] Connect" << std::endl;
+    throw std::string("[Error] Connect failed");
   }
   else std::cout << "Connected to server!" << std::endl;
 }
@@ -47,7 +47,7 @@ void Socket::sendMessage(std::string message) {
 
   if (message.length() == MSG_LENGTH) {
     if (send(getFileDescriptor(), str_ptr, MSG_LENGTH, 0) < 0) {
-      std::cout << "[Error] Send" << std::endl;
+      throw std::string("[Error] Send failed");
     }
   }
   else {
@@ -58,8 +58,7 @@ void Socket::sendMessage(std::string message) {
       str_ptr += total_sent;
       bytes_sent = send(getFileDescriptor(), str_ptr, (message_size - total_sent), 0);
       if (bytes_sent < 0) {
-        std::cout << "[Error] Send" << std::endl;
-        break;
+        throw std::string("[Error] Send failed");
       }
       total_sent += bytes_sent;
     }
@@ -83,12 +82,10 @@ std::string Socket::receiveMessage() {
   while (!message_done) {
     ssize_t bytes_received = recv(getFileDescriptor(), recv_buffer, MSG_LENGTH, 0);
     if (bytes_received < 0) {
-      std::cout << "[Error] Recv" << std::endl;
-      return "";  // crashes at message handler in MessageParser.hpp
+      throw std::string("[Error] Receive failed");
     }
     else if (bytes_received == 0) { // L'utilisateur s'est deconnecte
       throw std::string("[Error] Receive Socket shutdown");
-      return "";
     }
     else {
       message_done = parseBuffer(message);
