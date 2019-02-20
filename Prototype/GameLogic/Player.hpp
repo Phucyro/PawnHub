@@ -22,7 +22,7 @@ class Player{
 
 
 	public :
-	Player(): _sock(nullptr), _pipe(nullptr) {
+	Player(Socket* socket): _sock(socket), _pipe(nullptr) {
 		_pipe = new int[2];
 		if ((pipe(_pipe)) == -1) throw std::runtime_error("Fail while constructing a pipe for an object of type 'Player': ");
 	}

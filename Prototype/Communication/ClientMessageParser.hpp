@@ -3,8 +3,9 @@
 #include <functional>
 
 #include "Socket.hpp"
-#include "SplitString.hpp"
-#include "ClientHandler.hpp"
+// #include "SplitString.hpp"
+// #include "ClientHandler.hpp"
+#include "../GameDisplay/board.hpp"
 
 #ifndef _MSGPARSER_H_
 #define _MSGPARSER_H_
@@ -73,35 +74,35 @@ void sendMove(Socket socket, std::string move) {
   socket.sendMessage(header + move);
 }
 
-void sendQuit(Socket socket) {
-  std::string header = headerSendMap["quit"];
-  socket.sendMessage(header);
-}
-
-void sendRegister(Socket socket, std::string username, std::string password) {
-  std::string header = headerSendMap["register"];
-  socket.sendMessage(header + username + " " + password);
-}
-
-void sendLogin(Socket socket, std::string username, std::string password) {
-  std::string header = headerSendMap["login"];
-  socket.sendMessage(header + username + " " + password);
-}
-
-void sendPlayRequest(Socket socket, unsigned int game_type) {
-  std::string header = headerSendMap["play"];
-  socket.sendMessage(header + std::to_string(game_type));
-}
-
-void sendLeaveQueue(Socket socket) {
-  std::string header = headerSendMap["leave"];
-  socket.sendMessage(header);
-}
-
-void sendChat(Socket socket, std::string sender, std::string target, std::string text) {
-  std::string header = headerSendMap["chat"];
-  socket.sendMessage(header + " " + sender + " " + target + " " + text);
-}
+// void sendQuit(Socket socket) {
+//   std::string header = headerSendMap["quit"];
+//   socket.sendMessage(header);
+// }
+//
+// void sendRegister(Socket socket, std::string username, std::string password) {
+//   std::string header = headerSendMap["register"];
+//   socket.sendMessage(header + username + " " + password);
+// }
+//
+// void sendLogin(Socket socket, std::string username, std::string password) {
+//   std::string header = headerSendMap["login"];
+//   socket.sendMessage(header + username + " " + password);
+// }
+//
+// void sendPlayRequest(Socket socket, unsigned int game_type) {
+//   std::string header = headerSendMap["play"];
+//   socket.sendMessage(header + std::to_string(game_type));
+// }
+//
+// void sendLeaveQueue(Socket socket) {
+//   std::string header = headerSendMap["leave"];
+//   socket.sendMessage(header);
+// }
+//
+// void sendChat(Socket socket, std::string sender, std::string target, std::string text) {
+//   std::string header = headerSendMap["chat"];
+//   socket.sendMessage(header + " " + sender + " " + target + " " + text);
+// }
 
 // Receive Functions
 void receiveBoard(Socket socket, std::string message) {std::cout << message << std::endl;}
@@ -110,15 +111,15 @@ void receivePlayerColour(Socket socket, std::string message) {std::cout << messa
 void receiveTurn(Socket socket, std::string message) {std::cout << message << std::endl;}
 void receiveCheckResult(Socket socket, std::string message) {std::cout << message << std::endl;}
 void receiveMove(Socket socket, std::string message) {std::cout << message << std::endl;}
-void receiveQuit(Socket socket, std::string message) {}
-void receiveRegister(Socket socket, std::string message) {signUpHandler(message[1]);}
-void receiveLogin(Socket socket, std::string message) {signInHandler(message[1]);}
-void receivePlayRequest(Socket socket, std::string message) {
-  std::vector<std::string> split_msg = splitString(message, ' ');
-  chatHandler(split_msg[0], split_msg[1], split_msg[2]);
-}
-void receiveLeaveQueue(Socket socket, std::string message) {playGameHandler();}
-void receiveChat(Socket socket, std::string message) {leaveQueueHandler();}
+// void receiveQuit(Socket socket, std::string message) {}
+// void receiveRegister(Socket socket, std::string message) {signUpHandler(message[1]);}
+// void receiveLogin(Socket socket, std::string message) {signInHandler(message[1]);}
+// void receivePlayRequest(Socket socket, std::string message) {
+//   std::vector<std::string> split_msg = splitString(message, ' ');
+//   chatHandler(split_msg[0], split_msg[1], split_msg[2]);
+// }
+// void receiveLeaveQueue(Socket socket, std::string message) {playGameHandler();}
+// void receiveChat(Socket socket, std::string message) {leaveQueueHandler();}
 
 std::map<char, std::function<void(Socket, std::string)>> headerReceiveMap = {
   {'B', &receiveBoard},
@@ -127,13 +128,14 @@ std::map<char, std::function<void(Socket, std::string)>> headerReceiveMap = {
   {'T', &receiveTurn},
   {'C', &receiveCheckResult},
   {'M', &receiveMove},
-  {'0', &receiveQuit},
-  {'1', &receiveRegister},
-  {'2', &receiveLogin},
-  {'3', &receivePlayRequest},
-  {'4', &receiveLeaveQueue},
-  {'5', &receiveChat},
 };
+
+// {'0', &receiveQuit},
+// {'1', &receiveRegister},
+// {'2', &receiveLogin},
+// {'3', &receivePlayRequest},
+// {'4', &receiveLeaveQueue},
+// {'5', &receiveChat},
 
 // Receive Parser
 void handleMessage(Socket socket) {
