@@ -54,9 +54,8 @@ void Board::init_windows()
   draw_infos();
 
   refresh_board();
-  get_movement();
-  getch();
-  endwin();
+  // getch();
+  // endwin();
 
 }
 
@@ -96,6 +95,7 @@ void Board::draw_pieces(std::string board)
 /** Dessine les pions sur le board de depart **/
 {
   stringToBoard(board);
+  refresh_board();
 }
 
 void Board::draw_rectangle(int x1, int y1, int x2, int y2)
@@ -137,7 +137,7 @@ bool Board::isRunning()
   return running;
 }
 
-void Board::get_movement()
+std::string Board::get_movement()
 {
   int move[4];
 
@@ -153,9 +153,10 @@ void Board::get_movement()
   }
 
   std::string effective_move = moveToString(move);
-  const char* this_move = effective_move.c_str();
-  mvprintw(18, 30, "%s", this_move);
+  // const char* this_move = effective_move.c_str();
+  // mvprintw(18, 30, "%s", this_move);
   //switch des choix a faire?
+  return effective_move;
 }
 
 void Board::exit()

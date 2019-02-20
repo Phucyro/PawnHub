@@ -5,7 +5,7 @@
 #include "Socket.hpp"
 // #include "SplitString.hpp"
 // #include "ClientHandler.hpp"
-#include "../GameDisplay/board.hpp"
+#include "ClientControl.hpp"
 
 #ifndef _MSGPARSER_H_
 #define _MSGPARSER_H_
@@ -44,30 +44,30 @@ std::map<std::string, std::string> headerSendMap = {
 };
 
 // Send Functions
-void sendBoard(Socket socket, std::string board) {
-  std::string header = headerSendMap["board"];
-  socket.sendMessage(header + board);
-}
-
-void sendUpdate(Socket socket, std::string status) {
-  std::string header = headerSendMap["update"];
-  socket.sendMessage(header + status);
-}
-
-void sendPlayerColour(Socket socket, std::string colour) {
-  std::string header = headerSendMap["colour"];
-  socket.sendMessage(header + colour);
-}
-
-void sendTurn(Socket socket, int turn) {
-  std::string header = headerSendMap["turn"];
-  socket.sendMessage(header + std::to_string(turn));
-}
-
-void sendCheckResult(Socket socket, bool movecheck) {
-  std::string header = headerSendMap["movecheck"];
-  socket.sendMessage(header + std::to_string(movecheck));
-}
+// void sendBoard(Socket socket, std::string board) {
+//   std::string header = headerSendMap["board"];
+//   socket.sendMessage(header + board);
+// }
+//
+// void sendUpdate(Socket socket, std::string status) {
+//   std::string header = headerSendMap["update"];
+//   socket.sendMessage(header + status);
+// }
+//
+// void sendPlayerColour(Socket socket, std::string colour) {
+//   std::string header = headerSendMap["colour"];
+//   socket.sendMessage(header + colour);
+// }
+//
+// void sendTurn(Socket socket, int turn) {
+//   std::string header = headerSendMap["turn"];
+//   socket.sendMessage(header + std::to_string(turn));
+// }
+//
+// void sendCheckResult(Socket socket, bool movecheck) {
+//   std::string header = headerSendMap["movecheck"];
+//   socket.sendMessage(header + std::to_string(movecheck));
+// }
 
 void sendMove(Socket socket, std::string move) {
   std::string header = headerSendMap["move"];
@@ -105,12 +105,12 @@ void sendMove(Socket socket, std::string move) {
 // }
 
 // Receive Functions
-void receiveBoard(Socket socket, std::string message) {std::cout << message << std::endl;}
-void receiveUpdate(Socket socket, std::string message) {std::cout << message << std::endl;}
-void receivePlayerColour(Socket socket, std::string message) {std::cout << message << std::endl;}
-void receiveTurn(Socket socket, std::string message) {std::cout << message << std::endl;}
-void receiveCheckResult(Socket socket, std::string message) {std::cout << message << std::endl;}
-void receiveMove(Socket socket, std::string message) {std::cout << message << std::endl;}
+void receiveBoard(Socket socket, std::string message) {displayBoard(message);}
+// void receiveUpdate(Socket socket, std::string message) {std::cout << message << std::endl;}
+// void receivePlayerColour(Socket socket, std::string message) {std::cout << message << std::endl;}
+// void receiveTurn(Socket socket, std::string message) {std::cout << message << std::endl;}
+void receiveCheckResult(Socket socket, std::string message) {askMove();}
+void receiveMove(Socket socket, std::string message) {askMove();}
 // void receiveQuit(Socket socket, std::string message) {}
 // void receiveRegister(Socket socket, std::string message) {signUpHandler(message[1]);}
 // void receiveLogin(Socket socket, std::string message) {signInHandler(message[1]);}

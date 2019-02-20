@@ -6,15 +6,15 @@
 #include <thread>
 // #include "Data.hpp"
 // #include "Matchmaking.hpp"
-#include "../GameLogic/Classic.hpp"
-#include "../GameLogic/Player.hpp"
+// #include "../GameLogic/Classic.hpp"
+// #include "../GameLogic/Player.hpp"
 
 
 // typedef std::map<std::string, Player*> PlayersMap;
 
-void startParty(Classic* game) {
-  game->start();
-}
+// void startParty(Classic* game) {
+//   game->start();
+// }
 
 
 int main(){
@@ -33,13 +33,13 @@ int main(){
   while (true){
     // Accepte l'utilisateur dans le serveur et lui asssocie un socket
     Socket client_socket = binding_socket.createSocket();
-
-    Player new_player(&client_socket);
-    Classic new_game(&new_player, &new_player);
-    // Traite la demande de connexion
-    std::thread thread(startParty, &new_game);
-    thread.detach();
-    // sendBoard(client_socket, "hola");
+    //
+    // Player new_player(&client_socket);
+    // Classic new_game(&new_player, &new_player);
+    // // Traite la demande de connexion
+    // std::thread thread(startParty, &new_game);
+    // thread.detach();
+    sendBoard(client_socket, "pA5kB4!rE1#");
 
   }
 
