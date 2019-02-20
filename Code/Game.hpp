@@ -32,7 +32,7 @@ class Game
 	public:
 	virtual ~Game();
 
-	Game& operator= (const Game&) = delete;
+	Game& operator= (const Game&);
 	Game& operator= (Game&&);
 
 	void start();
