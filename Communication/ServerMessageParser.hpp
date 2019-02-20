@@ -106,19 +106,16 @@ void sendChat(Socket socket, std::string sender, std::string target, std::string
 // Receive Functions
 void receiveBoard(Socket socket, std::string message) {std::cout << message << std::endl;}
 void receiveUpdate(Socket socket, std::string message) {std::cout << message << std::endl;}
-void receivePlayerColour(Socket socket, Socket socket, std::string message) {std::cout << message << std::endl;}
+void receivePlayerColour(Socket socket, std::string message) {std::cout << message << std::endl;}
 void receiveTurn(Socket socket, std::string message) {std::cout << message << std::endl;}
 void receiveCheckResult(Socket socket, std::string message) {std::cout << message << std::endl;}
 void receiveMove(Socket socket, std::string message) {std::cout << message << std::endl;}
 void receiveQuit(Socket socket, std::string message) {}
 void receiveRegister(Socket socket, std::string message) {
   std::vector<std::string> user_info = splitString(message, ' ');
-  signUpHandler(&socket, data, user_info[0], user_info[1]);
+
 }
-void receiveLogin(Socket socket, std::string message) {
-  std::vector<std::string> user_info = splitString(message, ' ');
-  signInHandler(&socket, players_map, data, &player, user_info[0], user_info[1]);
-}
+void receiveLogin(Socket socket, std::string message) {}
 void receivePlayRequest(Socket socket, std::string message) {}
 void receiveLeaveQueue(Socket socket, std::string message) {}
 void receiveChat(Socket socket, std::string message) {}
@@ -130,12 +127,12 @@ std::map<char, std::function<void(Socket, std::string)>> headerReceiveMap = {
   {'T', &receiveTurn},
   {'C', &receiveCheckResult},
   {'M', &receiveMove},
-  {"0", &receiveQuit},
-  {"1", &receiveRegister},
-  {"2", &receiveLogin},
-  {"3", &receivePlayRequest},
-  {"4", &receiveLeaveQueue},
-  {"5", &receiveChat}
+  {'0', &receiveQuit},
+  {'1', &receiveRegister},
+  {'2', &receiveLogin},
+  {'3', &receivePlayRequest},
+  {'4', &receiveLeaveQueue},
+  {'5', &receiveChat},
 };
 
 // Receive Parser
