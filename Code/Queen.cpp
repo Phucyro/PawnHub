@@ -46,6 +46,8 @@ bool Queen::_checkMoveBishop(Coordinate end, Board* board, Game& game){
 
 	//test if there is no piece in the way
 	int row = _coords.getRealRow(), column = _coords.getRealColumn();
+	row += rowDirection;
+	column += columnDirection;
 	while(row != end.getRealRow()){
 		if (board->getCase(Coordinate(column, row))) return false;
 		row += rowDirection;

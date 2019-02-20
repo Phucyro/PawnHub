@@ -1,6 +1,7 @@
 #ifndef __GAME__CPP__
 #define __GAME__CPP__
 
+#include <iostream>
 #include"Game.hpp"
 #include "includesPieceHPP.hpp"
 
@@ -49,6 +50,22 @@ Game::~Game()
 }
 
 
+//=copy
+Game& Game::operator= (const Game& original)
+{
+	_player1 = original._player1;
+	_player2 = original._player2;
+	_winner = original._winner;
+	_turn = original._turn;
+	_board = original._board;
+	_pieces = original._pieces;
+	_piecesAmount = original._piecesAmount;
+	_lastStrongPiecesWhite = original._lastStrongPiecesWhite;
+	_lastStrongPieceBlack = original._lastStrongPieceBlack;
+	std::cout<<"end of game copy"<<std::endl;
+	return *this;
+}
+
 //=transfert
 Game& Game::operator= (Game&& original)
 {
@@ -62,6 +79,7 @@ Game& Game::operator= (Game&& original)
 	_piecesAmount = original._piecesAmount;
 	_lastStrongPiecesWhite = original._lastStrongPiecesWhite;
 	_lastStrongPieceBlack = original._lastStrongPieceBlack;
+	std::cout<<"end of game transfert"<<std::endl;
 	return *this;
 }
 

@@ -1,5 +1,5 @@
-#ifndef __TEST__KNIGHT__CPP__
-#define __TEST__KNIGHT__CPP__
+#ifndef __TEST__KING__CPP__
+#define __TEST__KING__CPP__
 
 #include <exception>
 #include <iostream>

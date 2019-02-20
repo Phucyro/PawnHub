@@ -2,6 +2,7 @@
 #define __KING__HPP__
 
 #include "Piece.hpp"
+//#include "Pawn.hpp"
 #include "Rook.hpp"
 
 class King : public Piece {
@@ -13,7 +14,7 @@ class King : public Piece {
 		void _reverseMove(Coordinate, Board*, Game&, Piece*)override;
 
 	public :
-		King(const char& color, Coordinate& coords) noexcept : Piece(color, coords), _moved(false) {
+		King(const char color, Coordinate coords) noexcept : Piece(color, coords), _moved(false) {
 			_str[TYP] = 'k';
 		}
 		King(const char color, const char column , const char row) : Piece(color,column,row), _moved(false){
@@ -23,7 +24,7 @@ class King : public Piece {
 		King(const King& original) noexcept : Piece(original), _moved(original.hasMoved()) {}
 		virtual ~King() noexcept = default;
 
-		King& operator= (const King&);
+		King& operator= (const King&) = default;
 
 		bool hasMoved() const override {return _moved;}
 		bool move(Coordinate, Board*, Game&) override;
