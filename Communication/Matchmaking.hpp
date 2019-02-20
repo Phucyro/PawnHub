@@ -6,6 +6,8 @@
 #include <string>
 #include <algorithm>
 #include "../Code/Player.hpp"
+#include <thread>
+#include "../Code/Classic.hpp"
 
 class Matchmaking {
 private:
@@ -18,7 +20,6 @@ public:
 
 protected:
   void check(unsigned int queue_number);
-  void createGame(Player* player1, Player* player2, unsigned int game_mode);
 };
 
 #endif

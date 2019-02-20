@@ -1,5 +1,14 @@
 #include "Matchmaking.hpp"
 
+void startGame(Game* game, Player* player1, Player* player2){
+  // Lance le jeu avec le bon mode de jeu
+  std::cout << "Une partie se lance : " << player1->getName() << " vs " <<
+  player2->getName() << std::endl;
+  game->start();
+  delete game; // ok ?
+}
+
+
 Matchmaking::Matchmaking(unsigned int number_of_queues) : _queues({}) {
   for (unsigned int a = 0; a < number_of_queues; ++a){
     _queues[a] = std::vector<Player*>();
@@ -21,6 +30,8 @@ void Matchmaking::removePlayer(Player* player){
 
 void Matchmaking::check(unsigned int queue_number){
   if (_queues[queue_number].size() >= 2){
+    Game* game;
+
     Player* player1 = _queues[queue_number][0];
     player1->setQueueNumber(-1);
     _queues[queue_number].erase(_queues[queue_number].begin());
@@ -29,12 +40,13 @@ void Matchmaking::check(unsigned int queue_number){
     player2->setQueueNumber(-1);
     _queues[queue_number].erase(_queues[queue_number].begin());
 
-    createGame(player1, player2, queue_number);
-  }
-}
+  // Cherche le mode de jeu
+    switch(queue_number){
+      case 0 :
+        game = new Classic(player1, player2);
+    }
 
-void Matchmaking::createGame(Player* player1, Player* player2, unsigned int game_mode){
-  // Lance le jeu avec le bon mode de jeu
-  std::cout << "Une partie se lance : " << player1->getName() << " vs " <<
-  player2->getName() << " dans le mode de jeu numero " << game_mode << std::endl;
+    std::thread game_thread(startGame, game, player1, player2);
+    game_thread.detach();
+  }
 }
