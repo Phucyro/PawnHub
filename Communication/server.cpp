@@ -1,7 +1,7 @@
 #include "config.hpp"
 #include "BindSocket.hpp"
 #include "ServerMessageHandler.hpp"
-#include "MessageParser.hpp"
+//#include "MessageParser.hpp"
 #include <map>
 #include <thread>
 #include "Data.hpp"
