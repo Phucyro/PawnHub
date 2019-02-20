@@ -104,23 +104,26 @@ void sendChat(Socket socket, std::string sender, std::string target, std::string
 }
 
 // Receive Functions
-void receiveBoard(std::string message) {std::cout << message << std::endl;}
-void receiveUpdate(std::string message) {std::cout << message << std::endl;}
-void receivePlayerColour(std::string message) {std::cout << message << std::endl;}
-void receiveTurn(std::string message) {std::cout << message << std::endl;}
-void receiveCheckResult(std::string message) {std::cout << message << std::endl;}
-void receiveMove(std::string message) {std::cout << message << std::endl;}
-void receiveQuit(std::string message) {}
-void receiveRegister(std::string message) {
+void receiveBoard(Socket socket, std::string message) {std::cout << message << std::endl;}
+void receiveUpdate(Socket socket, std::string message) {std::cout << message << std::endl;}
+void receivePlayerColour(Socket socket, Socket socket, std::string message) {std::cout << message << std::endl;}
+void receiveTurn(Socket socket, std::string message) {std::cout << message << std::endl;}
+void receiveCheckResult(Socket socket, std::string message) {std::cout << message << std::endl;}
+void receiveMove(Socket socket, std::string message) {std::cout << message << std::endl;}
+void receiveQuit(Socket socket, std::string message) {}
+void receiveRegister(Socket socket, std::string message) {
   std::vector<std::string> user_info = splitString(message, ' ');
-  signUpHandler(&client_socket);
+  signUpHandler(&socket, data, user_info[0], user_info[1]);
 }
-void receiveLogin(std::string message) {}
-void receivePlayRequest(std::string message) {}
-void receiveLeaveQueue(std::string message) {}
-void receiveChat(std::string message) {}
+void receiveLogin(Socket socket, std::string message) {
+  std::vector<std::string> user_info = splitString(message, ' ');
+  signInHandler(&socket, players_map, data, &player, user_info[0], user_info[1]);
+}
+void receivePlayRequest(Socket socket, std::string message) {}
+void receiveLeaveQueue(Socket socket, std::string message) {}
+void receiveChat(Socket socket, std::string message) {}
 
-std::map<char, std::function<void(std::string)>> headerReceiveMap = {
+std::map<char, std::function<void(Socket, std::string)>> headerReceiveMap = {
   {'B', &receiveBoard},
   {'U', &receiveUpdate},
   {'P', &receivePlayerColour},
@@ -132,14 +135,14 @@ std::map<char, std::function<void(std::string)>> headerReceiveMap = {
   {"2", &receiveLogin},
   {"3", &receivePlayRequest},
   {"4", &receiveLeaveQueue},
-  {"5", &receiveChat},
+  {"5", &receiveChat}
 };
 
 // Receive Parser
 void handleMessage(Socket socket) {
   std::string message = socket.receiveMessage();
   char header = message[0];
-  headerReceiveMap[header](message.erase(0,1));
+  headerReceiveMap[header](socket, message.erase(0,1));
 }
 
 #endif
