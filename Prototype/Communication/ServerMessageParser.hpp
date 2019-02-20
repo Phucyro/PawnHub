@@ -3,8 +3,8 @@
 #include <functional>
 
 #include "Socket.hpp"
-#include "SplitString.hpp"
-#include "ServerHandler.hpp"
+// #include "SplitString.hpp"
+// #include "ServerHandler.hpp"
 
 #ifndef _MSGPARSER_H_
 #define _MSGPARSER_H_
@@ -110,15 +110,15 @@ void receivePlayerColour(Socket socket, std::string message) {std::cout << messa
 void receiveTurn(Socket socket, std::string message) {std::cout << message << std::endl;}
 void receiveCheckResult(Socket socket, std::string message) {std::cout << message << std::endl;}
 void receiveMove(Socket socket, std::string message) {std::cout << message << std::endl;}
-void receiveQuit(Socket socket, std::string message) {}
-void receiveRegister(Socket socket, std::string message) {
-  std::vector<std::string> user_info = splitString(message, ' ');
-
-}
-void receiveLogin(Socket socket, std::string message) {}
-void receivePlayRequest(Socket socket, std::string message) {}
-void receiveLeaveQueue(Socket socket, std::string message) {}
-void receiveChat(Socket socket, std::string message) {}
+// void receiveQuit(Socket socket, std::string message) {}
+// void receiveRegister(Socket socket, std::string message) {
+//   std::vector<std::string> user_info = splitString(message, ' ');
+//
+// }
+// void receiveLogin(Socket socket, std::string message) {}
+// void receivePlayRequest(Socket socket, std::string message) {}
+// void receiveLeaveQueue(Socket socket, std::string message) {}
+// void receiveChat(Socket socket, std::string message) {}
 
 std::map<char, std::function<void(Socket, std::string)>> headerReceiveMap = {
   {'B', &receiveBoard},
@@ -127,13 +127,14 @@ std::map<char, std::function<void(Socket, std::string)>> headerReceiveMap = {
   {'T', &receiveTurn},
   {'C', &receiveCheckResult},
   {'M', &receiveMove},
-  {'0', &receiveQuit},
-  {'1', &receiveRegister},
-  {'2', &receiveLogin},
-  {'3', &receivePlayRequest},
-  {'4', &receiveLeaveQueue},
-  {'5', &receiveChat},
 };
+
+// {'0', &receiveQuit},
+// {'1', &receiveRegister},
+// {'2', &receiveLogin},
+// {'3', &receivePlayRequest},
+// {'4', &receiveLeaveQueue},
+// {'5', &receiveChat},
 
 // Receive Parser
 void handleMessage(Socket socket) {
