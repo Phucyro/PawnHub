@@ -2,18 +2,17 @@
 #define __PLAYER__CPP__
 
 #include <iostream>
-#include"Player.hpp"
+#include "Player.hpp"
 
-void askMoveToClient(Socket*, Player* player){
-	std::cout<<"Player "<<player<<" enter move"<<std::endl;
-	std::string move;
-	std::cin>>move;
-	player->reciveMove(move);
+void askMoveToClient(Socket* socket){
+	socket->sendMessage("A");
 }
-void sendBoard(Socket*, std::string board){std::cout<<board<<std::endl;}
-void askPromotionToClient(Socket*, Player* player){
-	std::string message = std::string("q");
-	player->recivePromotion(message);
+void sendBoard(Socket* socket, std::string board){
+	socket->sendMessage(std::string("C") + " " + board);
+}
+
+void askPromotionToClient(Socket* socket){
+	socket->sendMessage("B");
 }
 
 Player& Player::operator= (Player&& original) {
@@ -26,7 +25,7 @@ Player& Player::operator= (Player&& original) {
 
 
 std::string Player::askMove(){
-	askMoveToClient(_sock, this);
+	askMoveToClient(_sock);
 	char res[5];
 	read(_pipe[0], &res, sizeof(char)*4);
 	res[4] = '\0';
@@ -38,7 +37,7 @@ void Player::showBoard(std::string board){
 }
 
 char Player::askPromotion(){
-	askPromotionToClient(_sock, this);
+	askPromotionToClient(_sock);
 	char res;
 	read(_pipe[0], &res, sizeof(char));
 	return res;
@@ -66,14 +65,15 @@ void Player::setSocket(Socket* socket){
 
 void Player::setQueueNumber(int queueNumber){
 	_queueNumber = queueNumber;
+}
 
-void Player::reciveMove(std::string& message){
+void Player::receiveMove(std::string& message){
 	char str[message.length()+1];
 	std::strcpy(str, message.c_str());
 	write(_pipe[1], str, 4*sizeof(char));
 }
 
-void Player::recivePromotion(std::string& message){
+void Player::receivePromotion(std::string& message){
 	char str[message.length()+1];
 	std::strcpy(str, message.c_str());
 	write(_pipe[1], str, sizeof(char));

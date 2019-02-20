@@ -48,8 +48,8 @@ class Player{
 	void setName(std::string);
 	void setSocket(Socket*);
 	void setQueueNumber(int);
-	void reciveMove(std::string&);
-	void recivePromotion(std::string&);
+	void receiveMove(std::string&);
+	void receivePromotion(std::string&);
 };
 
 #endif
