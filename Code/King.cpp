@@ -66,21 +66,21 @@ bool King::_checkMove(Coordinate end, Board* board, Game& game){
 		//check if there is no piece in the way + if the king will not be checked in the way
 		bool res = true;
     Coordinate middleCoord = Coordinate(_coords.getRealColumn() + unsigned(1*columnDirection), _coords.getRealRow());
-    if (board->getCase(middleCoord)) return false;
+    if (!_isPlaceFree(middleCoord, board)) return false;
     board->movePiece(_coords, middleCoord);  //Ca me parait lourd comme démarche, a voir une fois testcheck ready
-    if (game.testCheck(this->getColor())) res = false;	//0 a changer
-    if (board->getCase(end)) return false;
+    if (game.testCheck(this->getOpenentColor())) res = false;	//0 a changer
+    if (!_isPlaceFree(end, board)) return false;
     board->movePiece(middleCoord, end);
-    if (game.testCheck(this->getColor()))res = false;	//0 a changer
+    if (game.testCheck(this->getOpenentColor()))res = false;	//0 a changer
     board->movePiece(end, _coords);
 		//columnMove == 2 ? rook->move(Coordinate(_coords.getRealColumn()+1, _coords.getRealRow()), board, game) : rook->move(Coordinate(_coords.getRealColumn()-1, _coords.getRealRow()), board, game);
-    if (board->getCase(Coordinate(tmpcoord.getRealColumn() - 1*columnDirection, tmpcoord.getRealRow()))) return false; //test if the case next to the rook is empty
+    if (!_isPlaceFree(Coordinate(tmpcoord.getRealColumn() - 1*columnDirection, tmpcoord.getRealRow()), board)) return false; //test if the case next to the rook is empty
     return res;
   }
 
 
   //test if there is a Piece of the same color to the destination
-  if (board->getCase(end) && board->getCase(end)->getColor() == this->getColor()) return false;
+  if ((!_isPlaceFree(end, board)) && board->getCase(end)->getColor() == this->getColor()) return false;
   return true;
 }
 
