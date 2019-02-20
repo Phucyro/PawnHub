@@ -64,4 +64,12 @@ void leaveQueueHandler(Matchmaking* matchmaking, Player* player){
   matchmaking->removePlayer(player);
   player->getSocket()->sendMessage("5");
 }
+
+void receiveMoveHandler(Player* player, std::string move){
+  player->receiveMove(move);
+}
+
+void receivePromotionHandler(Player* player, std::string piece){
+  player->receivePromotion(piece);
+}
 #endif

@@ -50,5 +50,17 @@ void leaveQueueHandler(){
   std::cout << "Vous avez quitte une file d'attente" << std::endl;
 }
 
+void askMoveHandler(){
+  std::cout << "A votre tour de jouer donnez votre move" << std::endl;
+}
+
+void askPromotionHandler(){
+  std::cout << "[Promotion] Choisissez un pion" << std::endl;
+}
+
+void boardHandler(std::string board){
+  std::cout << "Board : " << board << std::endl; 
+}
+
 
 #endif
