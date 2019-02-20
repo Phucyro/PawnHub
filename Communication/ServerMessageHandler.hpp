@@ -42,6 +42,12 @@ void receiveMessageHandler(Socket socket, Data* data, PlayersMap* players_map, M
         case '5' :
           leaveQueueHandler(matchmaking, &player);
           break;
+        case 'A' : // [A] [username] [move]
+          receiveMoveHandler(&player, msg[1]);
+          break;
+        case 'B' :
+          receivePromotionHandler(&player, msg[1]);
+          break;
       }
     }
   }
