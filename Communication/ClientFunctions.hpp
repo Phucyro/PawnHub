@@ -40,4 +40,14 @@ void leaveQueue(Socket* socket){
   socket->sendMessage("5");
 }
 
+void giveMove(Socket* socket, std::string move){
+  socket->sendMessage(std::string("A") + " " + move);
+}
+
+void givePromotion(Socket *socket, std::string piece){
+  socket->sendMessage(std::string("B") + " " + piece);
+}
+
+
+
 #endif
