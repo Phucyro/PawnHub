@@ -2,7 +2,7 @@
 #include <string>
 #include <map>
 #include <ncurses.h>
-#include "Coordinate.hpp"
+#include "../GameLogic/Coordinate.hpp"
 #include "board.hpp"
 
 
