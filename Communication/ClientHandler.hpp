@@ -29,7 +29,6 @@ void signInHandler(char msg){ // Fonction bool
   }
 }
 
-
 void chatHandler(std::string sender, std::string target, std::string text){
   if (target == "all"){
     std::cout << "[" << sender << "->all] " << text << std::endl;
@@ -59,7 +58,7 @@ void askPromotionHandler(){
 }
 
 void boardHandler(std::string board){
-  std::cout << "Board : " << board << std::endl; 
+  std::cout << "Board : " << board << std::endl;
 }
 
 
