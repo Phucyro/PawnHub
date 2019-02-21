@@ -6,10 +6,12 @@
 #include "../Communication/ServerMessageHandler.hpp"
 
 void askMoveToClient(Socket* socket){
+	std::cout<<"askMove"<<std::endl;
 	socket->sendMessage("Cnope");
 }
 void sendBoard(Socket* socket, std::string board){
-	std::cout << "sending board" << std::endl;
+	std::cout << "sending board:" << std::endl;
+	std::cout << std::string("B") + board<<std::endl;
 	socket->sendMessage(std::string("B") + board);
 }
 
@@ -28,10 +30,12 @@ Player& Player::operator= (Player&& original) {
 
 std::string Player::askMove(){
 	askMoveToClient(_sock);
-	receiveMessageHandler(*_sock, nullptr, nullptr, nullptr);
+	receiveMessageHandler(*_sock, *this, nullptr, nullptr, nullptr);
+	std::cout<<"end receiveMessageHandler"<<std::endl;
 	char res[5];
 	read(_pipe[0], &res, sizeof(char)*4);
 	res[4] = '\0';
+	std::cout<<"end askMove"<<std::endl;
 	return std::string(res);
 }
 
@@ -73,7 +77,9 @@ void Player::setQueueNumber(int queueNumber){
 void Player::receiveMove(std::string& message) {
 	char str[message.length()+1];
 	std::strcpy(str, message.c_str());
+	std::cout<<"reciveMove"<<std::endl;
 	write(_pipe[1], str, 4*sizeof(char));
+	std::cout<<"move written"<<std::endl;
 }
 
 void Player::receivePromotion(std::string& message) {

@@ -14,13 +14,10 @@
 typedef std::map<std::string, Player*> PlayersMap;
 
 
-void inline receiveMessageHandler(Socket socket, Data* data, PlayersMap* players_map, Matchmaking* matchmaking){
+void inline receiveMessageHandler(Socket socket, Player& player, Data* data, PlayersMap* players_map, Matchmaking* matchmaking){
   bool quit = false;
   std::vector<std::string> msg;
-  Player player(&socket);
-
   try {
-    while (!quit){
       msg = splitString(socket.receiveMessage(), ' ');
       std::cout << "Received Message " << msg[0] + " " + msg[1] << std::endl;
 
@@ -51,17 +48,17 @@ void inline receiveMessageHandler(Socket socket, Data* data, PlayersMap* players
           receivePromotionHandler(&player, msg[1]);
           break;
       }
-    }
   }
   catch (std::string const& error){
     std::cout << error << std::endl;
-  }
-
-  // Supprime l'entrée username : Player()
+    // Supprime l'entrée username : Player()
   std::cout << "Deconnexion de " << player.getName() << std::endl;
   if (player.getQueueNumber() != -1) matchmaking->removePlayer(&player);
   player.getSocket()->closeSocket();
   players_map->erase(player.getName());
+  }
+
+  
 }
 
 #endif

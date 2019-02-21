@@ -132,12 +132,14 @@ void Classic::_nextTurn() {
 	bool isMoveValid = false;
 	std::string playerMove;
 	while(!isMoveValid){
+		std::cout<<"askmove"<<std::endl;
 		playerMove = currentPlayer->askMove();
 		if (this->_fitInBoard(playerMove)){
 			Coordinate start = Coordinate(playerMove[0], playerMove[1]), end = Coordinate(playerMove[2], playerMove[3]);
 			isMoveValid = this->_executeMove(start, end, playerColor);
 		}
 	}
+	std::cout<<"sendBoard"<<std::endl;
 	_sendBoard();
 }
 
