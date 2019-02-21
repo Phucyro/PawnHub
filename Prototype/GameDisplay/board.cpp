@@ -94,6 +94,10 @@ void Board::draw_coordinates()
 void Board::draw_pieces(std::string board)
 /** Dessine les pions sur le board de depart **/
 {
+	clear();
+	refresh_board();
+	exit();
+	init_windows();
   stringToBoard(board);
   refresh_board();
 }
@@ -153,7 +157,7 @@ std::string Board::get_movement()
   }
 
   std::string effective_move = moveToString(move);
-  // const char* this_move = effective_move.c_str();
+   const char* this_move = effective_move.c_str();
   // mvprintw(18, 30, "%s", this_move);
   //switch des choix a faire?
   return effective_move;
