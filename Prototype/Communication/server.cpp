@@ -5,7 +5,7 @@
 #include <thread>
 #include "Data.hpp"
 #include "Matchmaking.hpp"
-#include "../GameLogic/Player.hpp"
+#include "ServerGameControl.hpp"
 
 
 typedef std::map<std::string, Player*> PlayersMap;
@@ -32,9 +32,7 @@ int main(){
     // std::thread thread(receiveMessageHandler, client_socket, &data, &players_map, &matchmaking);
     // thread.detach();
     // sendBoard(client_socket, "hola");
-    Player player(&client_socket);
-    Classic game(&player, &player);
-    game.start();
+    ServerGameControl control(client_socket);
 
   }
 

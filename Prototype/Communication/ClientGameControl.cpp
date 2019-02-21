@@ -21,7 +21,7 @@ void ClientGameControl::receiveTurn(std::string message) {
   std::cout << message << std::endl;
 }
 
-void ClientGameControl::receiveCheckResult(std::string message) {
+void ClientGameControl::receiveAskMove(std::string message) {
   sendMove(board.get_movement());
 }
 

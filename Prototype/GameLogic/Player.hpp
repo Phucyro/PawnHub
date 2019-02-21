@@ -11,23 +11,25 @@
 #include "Game.hpp"
 #include "Board.hpp"
 #include "../Communication/Socket.hpp"
+#include "../Communication/ServerGameControl.hpp"
 
 class Player{
 
 	private :
 	Socket *_sock;
+	ServerGameControl* _control;
 	int *_pipe;
 	std::string _name = "Guess";
 	int _queueNumber = -1; // Numero de file inexistante
 
 
 	public :
-	Player(Socket* socket): _sock(socket), _pipe(nullptr) {
+	Player(Socket* socket): _sock(socket), _control(nullptr), _pipe(nullptr) {
 		_pipe = new int[2];
 		if ((pipe(_pipe)) == -1) throw std::runtime_error("Fail while constructing a pipe for an object of type 'Player': ");
 	}
 	Player(const Player&) = delete;
-	Player(Player&& original): _sock(original._sock), _pipe(original._pipe), _name(original._name) {original._pipe = nullptr;}
+	Player(Player&& original): _sock(original._sock), _control(original._control), _pipe(original._pipe), _name(original._name) {original._pipe = nullptr;}
 
 	~Player(){
 		delete[] _pipe;
@@ -46,6 +48,7 @@ class Player{
 	Socket* getSocket() const;
 	unsigned int getQueueNumber() const;
 	void setName(std::string);
+	void setControl(ServerGameControl*);
 	void setSocket(Socket*);
 	void setQueueNumber(int);
 	void receiveMove(std::string&);
