@@ -8,7 +8,7 @@ void askMoveToClient(Socket* socket){
 	socket->sendMessage("A");
 }
 void sendBoard(Socket* socket, std::string board){
-	socket->sendMessage(std::string("C") + " " + board);
+	socket->sendMessage(std::string("C") + " " + "TEST");
 }
 
 void askPromotionToClient(Socket* socket){
