@@ -1,7 +1,6 @@
 #include "config.hpp"
 #include "BindSocket.hpp"
 #include "ServerMessageHandler.hpp"
-//#include "MessageParser.hpp"
 #include <map>
 #include <thread>
 #include "Data.hpp"
@@ -13,7 +12,7 @@ typedef std::map<std::string, Player*> PlayersMap;
 
 
 int main(){
-  Data data("database.txt"); // bug makefile
+  Data data("Communication/database.txt"); // bug makefile
   Matchmaking matchmaking(4);
   PlayersMap players_map;
   BindSocket binding_socket;

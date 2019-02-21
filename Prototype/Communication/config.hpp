@@ -11,5 +11,5 @@
 
 #define PORT 5555
 #define BACKLOG 20
-#define MSG_LENGTH 50
+#define MSG_LENGTH 120
 #define PADDING '|'

@@ -5,14 +5,14 @@
 #include"Player.hpp"
 
 void askMoveToClient(Socket* socket){
-	socket->sendMessage("A");
+	socket->sendMessage("C");
 }
 void sendBoard(Socket* socket, std::string board){
-	socket->sendMessage(std::string("C") + " " + "TEST");
+	socket->sendMessage(std::string("B") + board);
 }
 
 void askPromotionToClient(Socket* socket){
-	socket->sendMessage("B");
+	socket->sendMessage("P");
 }
 
 Player& Player::operator= (Player&& original) {
@@ -65,14 +65,15 @@ void Player::setSocket(Socket* socket){
 
 void Player::setQueueNumber(int queueNumber){
 	_queueNumber = queueNumber;
+}
 
-void Player::receiveMove(std::string& message){
+void Player::receiveMove(std::string& message) {
 	char str[message.length()+1];
 	std::strcpy(str, message.c_str());
 	write(_pipe[1], str, 4*sizeof(char));
 }
 
-void Player::receivePromotion(std::string& message){
+void Player::receivePromotion(std::string& message) {
 	char str[message.length()+1];
 	std::strcpy(str, message.c_str());
 	write(_pipe[1], str, sizeof(char));
