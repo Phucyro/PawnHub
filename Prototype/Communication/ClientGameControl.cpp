@@ -22,17 +22,19 @@ void ClientGameControl::receiveTurn(std::string message) {
 }
 
 void ClientGameControl::receiveCheckResult(std::string message) {
-  std::cout << "Getting player movement" << std::endl;
   sendMove(board.get_movement());
 }
 
 void ClientGameControl::receiveMove(std::string message) {
-  std::cout << "Weird: getting player movement" << std::endl;
-  sendMove(board.get_movement());
+  std::cout << "Getting move" << std::endl;
+  std::string move = board.get_movement();
+  std::cout << "Requesting send of " << move << std::endl;
+  sendMove(move);
 }
 
 void ClientGameControl::sendMove(std::string move) {
   std::string header = headerSendMap["move"];
+  std::cout << "Sending Move as " << header + " " + move << std::endl;
   socket.sendMessage(header + " " + move);
 }
 

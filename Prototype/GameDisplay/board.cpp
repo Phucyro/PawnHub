@@ -31,7 +31,6 @@ void Board::init_ncurses()
   curs_set(1);
 
   init_windows();
-
 }
 
 
@@ -54,9 +53,6 @@ void Board::init_windows()
   draw_infos();
 
   refresh_board();
-  // getch();
-  // endwin();
-
 }
 
 void Board::draw_infos()
@@ -152,14 +148,17 @@ std::string Board::get_movement()
     else if (i == 2) {
       mvprintw(16, 30, "%s", "State moved piece position: ");
     }
+    mvprintw(18, 30, "%d", i);
     move[i] = getch();
+    mvprintw(18, 32, "%d", i);
     mvprintw(15 + (i/2), 60 + (i%2), "%c", move[i]);
   }
 
   std::string effective_move = moveToString(move);
-   const char* this_move = effective_move.c_str();
-  // mvprintw(18, 30, "%s", this_move);
-  //switch des choix a faire?
+  const char* this_move = effective_move.c_str();
+  mvprintw(18, 30, "%s", this_move);
+  // switch des choix a faire?
+  std::cout << "Returning" << effective_move << std::endl;
   return effective_move;
 }
 

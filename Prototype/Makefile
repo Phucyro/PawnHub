@@ -6,7 +6,7 @@ LOGIC= $(wildcard GameLogic/*.cpp)
 CONFIG= Communication/config.hpp
 SOCKETS= Communication/Socket.o Communication/BindSocket.o
 LOGIN_CLIENT= Communication/ClientMessageHandler.hpp Communication/ClientFunctions.hpp Communication/SplitString.o
-LOGIN_SERVER= Communication/ServerMessageHandler.hpp Communication/Data.o Communication/SplitString.o Communication/Matchmaking.o
+LOGIN_SERVER= Communication/ServerMessageHandler.hpp Communication/ServerHandler.hpp Communication/Data.o Communication/SplitString.o Communication/Matchmaking.o
 GAME_CLIENT= Communication/ClientGameControl.o
 DISPLAY_CLIENT= GameDisplay/board.o
 GAME_SERVER= $(subst GameLogic/%.cpp, GameLogic/%.o, $(LOGIC))
@@ -14,7 +14,7 @@ GAME_SERVER= $(subst GameLogic/%.cpp, GameLogic/%.o, $(LOGIC))
 CLIENT_LFLAGS= -pthread -lncurses
 SERVER_LFLAGS= -pthread
 
-all: server client clean
+all: server client
 
 run: all
 	./server

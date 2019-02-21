@@ -3,11 +3,13 @@
 
 #include <iostream>
 #include"Player.hpp"
+#include "../Communication/ServerMessageHandler.hpp"
 
 void askMoveToClient(Socket* socket){
 	socket->sendMessage("Cnope");
 }
 void sendBoard(Socket* socket, std::string board){
+	std::cout << "sending board" << std::endl;
 	socket->sendMessage(std::string("B") + board);
 }
 
@@ -26,6 +28,7 @@ Player& Player::operator= (Player&& original) {
 
 std::string Player::askMove(){
 	askMoveToClient(_sock);
+	receiveMessageHandler(*_sock, nullptr, nullptr, nullptr);
 	char res[5];
 	read(_pipe[0], &res, sizeof(char)*4);
 	res[4] = '\0';

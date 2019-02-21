@@ -14,7 +14,7 @@
 typedef std::map<std::string, Player*> PlayersMap;
 
 
-void receiveMessageHandler(Socket socket, Data* data, PlayersMap* players_map, Matchmaking* matchmaking){
+void inline receiveMessageHandler(Socket socket, Data* data, PlayersMap* players_map, Matchmaking* matchmaking){
   bool quit = false;
   std::vector<std::string> msg;
   Player player(&socket);
@@ -22,6 +22,7 @@ void receiveMessageHandler(Socket socket, Data* data, PlayersMap* players_map, M
   try {
     while (!quit){
       msg = splitString(socket.receiveMessage(), ' ');
+      std::cout << "Received Message " << msg[0] + " " + msg[1] << std::endl;
 
       switch (msg[0][0]){
         case '0' : // [0]
@@ -43,6 +44,7 @@ void receiveMessageHandler(Socket socket, Data* data, PlayersMap* players_map, M
           leaveQueueHandler(matchmaking, &player);
           break;
         case 'A' : // [A] [username] [move]
+          std::cout << "Received move " << msg[1] << std::endl;
           receiveMoveHandler(&player, msg[1]);
           break;
         case 'B' :
