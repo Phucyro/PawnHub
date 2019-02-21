@@ -25,6 +25,7 @@ class Classic : public Game {
 	bool _isStalemate(char);
 	bool _notEnoughtPieces();
 	void _boardState(std::string&);
+	void _sendBoard();
 
 	int _calculOffset(char playerColor){return playerColor == 'w' ? 0 : 16;}
 
