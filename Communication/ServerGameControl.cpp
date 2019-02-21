@@ -1,7 +1,7 @@
 #include "ServerGameControl.hpp"
 
-ServerGameControl::ServerGameControl(Socket socket, Player _player): socket(_socket), player(_player) {
-  game = Classic(&player, &player, this);
+ServerGameControl::ServerGameControl(Socket _socket, Player _player): socket(_socket), player(_player) {
+  game = Classic(&player, &player);
   game.start();
 }
 
@@ -22,7 +22,7 @@ void ServerGameControl::receiveCheckResult(std::string message) {
 }
 
 void ServerGameControl::receiveMove(std::string message) {
-  player.receiveMove(move);
+  player.receiveMove(message);
 }
 
 void ServerGameControl::sendBoard(std::string move) {

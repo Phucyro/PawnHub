@@ -36,6 +36,7 @@ public:
   ServerGameControl(Socket, Player);
 
 private:
+  void receiveBoard(std::string);
   void receiveUpdate(std::string);
   void receivePlayerColour(std::string);
   void receiveTurn(std::string);
@@ -43,7 +44,7 @@ private:
   void receiveMove(std::string);
 
   void sendBoard(std::string);
-  void sendCheckControl(bool);
+  void sendCheckResult(bool);
 
   std::map<char, void(ServerGameControl::*)(std::string)> headerReceiveMap = {
     {'B', &ServerGameControl::receiveBoard},
