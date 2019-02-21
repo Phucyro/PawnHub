@@ -1,6 +1,6 @@
 #include "config.hpp"
 #include "Socket.hpp"
-// #include "ClientMessageHandler.hpp"
+#include "ClientMessageHandler.hpp"
 #include "ClientGameControl.hpp"
 #include <thread>
 
@@ -16,14 +16,12 @@ int main(){
   std::cout << std::endl;
   socket.connectToServer(hostname);
 
-  // Thread gere messages recus
-  // std::thread receive_thread(startParty, socket);
+  // // Thread gere messages recus
+  // std::thread receive_thread(receiveMessageHandler, &socket);
   // receive_thread.detach();
-
-  // Gere messages envoyes envoye par le client
+  //
+  // // Gere messages envoyes envoye par le client
   // sendMessageHandler(&socket, &client_username);
-
-  // handleMessage(socket);
 
   ClientGameControl control(socket);
 

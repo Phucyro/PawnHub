@@ -30,7 +30,7 @@ void ClientGameControl::receiveMove(std::string message) {
 
 void ClientGameControl::sendMove(std::string move) {
   std::string header = headerSendMap["move"];
-  socket.sendMessage(header + move);
+  socket.sendMessage(header + " " + move);
 }
 
 void ClientGameControl::handleMessage() {

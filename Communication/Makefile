@@ -9,7 +9,7 @@ LOGIN_SERVER= ServerMessageHandler.hpp Data.o SplitString.o Matchmaking.o
 GAME_CLIENT= StartPartyClient.hpp
 GAME_SERVER= ../Code/Piece.o ../Code/Coordinate.o ../Code/Board.o ../Code/Game.o ../Code/Bishop.o ../Code/Knight.o ../Code/Classic.o ../Code/Rook.o ../Code/Pawn.o ../Code/King.o ../Code/Queen.o ../Code/GhostPawn.o ../Code/Player.o
 
-all: clean server client
+all: server client clean
 
 run: all
 	./server

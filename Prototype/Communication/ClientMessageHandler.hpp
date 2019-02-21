@@ -14,10 +14,6 @@ void receiveMessageHandler(Socket* socket){
   while (true){
     msg = splitString(socket->receiveMessage(), ' ');
 
-    for(unsigned int a = 0; a < msg.size(); ++a){
-      std::cout << msg[a] << std::endl;
-    }
-
     switch(msg[0][0]){
       case '1' : // [1] [resultat]
         signUpHandler(msg[1][0]);

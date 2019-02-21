@@ -5,9 +5,9 @@
 #include <map>
 #include <string>
 #include <algorithm>
-#include "../Code/Player.hpp"
+#include "../GameLogic/Player.hpp"
 #include <thread>
-#include "../Code/Classic.hpp"
+#include "../GameLogic/Classic.hpp"
 
 class Matchmaking {
 private:

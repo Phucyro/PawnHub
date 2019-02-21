@@ -14,11 +14,11 @@ private:
   Socket socket;
 
   std::map<std::string, std::string> headerSendMap = {
-   {"board", "B"},
+   {"board", "C"},
    {"update", "U"},
-   {"colour", "P"},
+   {"colour", "X"},
    {"turn", "T"},
-   {"movecheck", "C"},
+   {"movecheck", "A"},
    {"move", "M"},
    {"quit", "0"},
    {"register", "1"},
@@ -46,7 +46,7 @@ private:
   std::map<char, void(ClientGameControl::*)(std::string)> headerReceiveMap = {
     {'B', &ClientGameControl::receiveBoard},
     {'U', &ClientGameControl::receiveUpdate},
-    {'P', &ClientGameControl::receivePlayerColour},
+    {'X', &ClientGameControl::receivePlayerColour},
     {'T', &ClientGameControl::receiveTurn},
     {'C', &ClientGameControl::receiveCheckResult},
     {'M', &ClientGameControl::receiveMove},
