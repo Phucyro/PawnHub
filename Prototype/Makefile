@@ -2,11 +2,14 @@ FLAGS= -std=c++17 -ggdb3 -Wpedantic -Wall -Wextra -Wconversion -Weffc++ -Wstrict
 
 CXX= g++
 
+LOGIC= $(wildcard GameLogic/*.cpp)
 CONFIG= Communication/config.hpp
 SOCKETS= Communication/Socket.o Communication/BindSocket.o
+LOGIN_CLIENT= Communication/ClientMessageHandler.hpp Communication/ClientFunctions.hpp Communication/SplitString.o
+LOGIN_SERVER= Communication/ServerMessageHandler.hpp Communication/Data.o Communication/SplitString.o Communication/Matchmaking.o
 GAME_CLIENT= Communication/ClientGameControl.o
 DISPLAY_CLIENT= GameDisplay/board.o
-GAME_SERVER= Communication/ServerMessageParser.hpp
+GAME_SERVER= $(substr GameLogic/%.cpp, GameLogic/%.o, $(LOGIC))
 
 CLIENT_LFLAGS= -pthread -lncurses
 SERVER_LFLAGS= -pthread

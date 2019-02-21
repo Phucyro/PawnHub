@@ -3,7 +3,7 @@
 
 #include "Data.hpp"
 #include "Socket.hpp"
-#include "../Code/Player.hpp"
+#include "../GameLogic/Player.hpp"
 #include "Matchmaking.hpp"
 
 typedef std::map<std::string, Player*> PlayersMap;

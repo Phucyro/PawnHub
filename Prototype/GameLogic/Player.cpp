@@ -60,13 +60,13 @@ void Player::setSocket(Socket* socket){
 void Player::setQueueNumber(int queueNumber){
 	_queueNumber = queueNumber;
 
-void Player::reciveMove(std::string& message){
+void Player::receiveMove(std::string& message){
 	char str[message.length()+1];
 	std::strcpy(str, message.c_str());
 	write(_pipe[1], str, 4*sizeof(char));
 }
 
-void Player::recivePromotion(std::string& message){
+void Player::receivePromotion(std::string& message){
 	char str[message.length()+1];
 	std::strcpy(str, message.c_str());
 	write(_pipe[1], str, sizeof(char));
