@@ -42,7 +42,7 @@ void stringToBoard(std::string message) {
     separatePieces(a, message, colour);
     a += CHAR_NUM;
   }
-  a += 1;
+  a += 3;
   colour = "black";
   while (message[a] != '#'){
     separatePieces(a, message, colour);

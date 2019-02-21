@@ -5,7 +5,7 @@
 #include"Player.hpp"
 
 void askMoveToClient(Socket* socket){
-	socket->sendMessage("C");
+	socket->sendMessage("Cnope");
 }
 void sendBoard(Socket* socket, std::string board){
 	socket->sendMessage(std::string("B") + board);

@@ -86,6 +86,7 @@ Game& Game::operator= (Game&& original)
 
 void Game::start()
 {
+	std::cout << "Starting Game" << std::endl;
 	this->_initBoard();
 	do
 	{
@@ -103,25 +104,25 @@ void Game::promote(Piece* piece)
 	if (!pawn) throw std::string("the piece to promote is not a pawn");
 	Piece* promotedPawn;
 	switch (type) {
-		case 'q': 
+		case 'q':
 			promotedPawn = new Queen(*pawn);
 			break;
-		
+
 
 		case 'b':
 			promotedPawn = new Bishop(*pawn);
 			break;
-		
+
 
 		case 'h':
 			promotedPawn = new Knight(*pawn);
 			break;
-		
+
 
 		case 'r':
 			promotedPawn = new Rook(*pawn);
 			break;
-		
+
 
 	}
 	this->_changePawn(pawn, promotedPawn);

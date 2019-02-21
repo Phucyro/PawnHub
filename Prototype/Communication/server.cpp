@@ -29,9 +29,12 @@ int main(){
     Socket client_socket = binding_socket.createSocket();
 
     // Traite la demande de connexion
-    std::thread thread(receiveMessageHandler, client_socket, &data, &players_map, &matchmaking);
-    thread.detach();
+    // std::thread thread(receiveMessageHandler, client_socket, &data, &players_map, &matchmaking);
+    // thread.detach();
     // sendBoard(client_socket, "hola");
+    Player player(&client_socket);
+    Classic game(&player, &player);
+    game.start();
 
   }
 

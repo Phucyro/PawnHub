@@ -90,6 +90,12 @@ void Classic::_initBoard() {
 	Game::_board->setCase(Coordinate('F', '7'), Game::_pieces[29]);
 	Game::_board->setCase(Coordinate('G', '7'), Game::_pieces[30]);
 	Game::_board->setCase(Coordinate('H', '7'), Game::_pieces[31]);
+
+	std::cout << "Sending Board" << std::endl;
+	std::string state;
+	this->_boardState(state);
+	_player1->showBoard(state);
+	_player2->showBoard(state);
 }
 
 void Classic::_changePawn(Piece *pawn, Piece* promotedPawn){

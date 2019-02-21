@@ -1,6 +1,7 @@
 #include "ClientGameControl.hpp"
 
 ClientGameControl::ClientGameControl(Socket _socket): board(), socket(_socket) {
+  std::cout << "Instantiating" << std::endl;
   startParty();
 }
 
@@ -21,10 +22,12 @@ void ClientGameControl::receiveTurn(std::string message) {
 }
 
 void ClientGameControl::receiveCheckResult(std::string message) {
+  std::cout << "Getting player movement" << std::endl;
   sendMove(board.get_movement());
 }
 
 void ClientGameControl::receiveMove(std::string message) {
+  std::cout << "Weird: getting player movement" << std::endl;
   sendMove(board.get_movement());
 }
 
@@ -40,6 +43,7 @@ void ClientGameControl::handleMessage() {
 }
 
 void ClientGameControl::startParty() {
+  std::cout << "Starting Party" << std::endl;
   board.init_ncurses();
   while(true) {handleMessage();}
 }
