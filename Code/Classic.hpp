@@ -24,7 +24,6 @@ class Classic : public Game {
 	bool _isCheckmate(char);
 	bool _isStalemate(char);
 	bool _notEnoughtPieces();
-	void _boardState(std::string&);
 
 	int _calculOffset(char playerColor){return playerColor == 'w' ? 0 : 16;}
 
@@ -34,6 +33,7 @@ class Classic : public Game {
 	void _initBoard() override;
 	void _nextTurn() override;
 	bool _isFinish() override;
+	void _boardState(std::string&) override;
 	Classic(const Classic&) = delete;
 	using Game::_pieces;
 
@@ -97,7 +97,5 @@ class Classic : public Game {
 		return false;
 	}
 };
-
-
 
 #endif

@@ -7,7 +7,7 @@
 #define KING_INDEX 4
 
 void Classic::_Pieces() {
-	_pieces = new Piece*[32];
+	_pieces = new Piece*[_piecesAmount];
 	_pieces[0] = new Rook('w', 'A', '1');		//0 -> 7 : pièces fortes blanches
 	_pieces[1] = new Knight('w', 'B', '1');
 	_pieces[2] = new Bishop('w', 'C', '1');
@@ -124,7 +124,6 @@ bool Classic::_executeMove(Coordinate start, Coordinate end, char playerColor){
 }
 
 void Classic::_nextTurn() {
-	++_turn;
 	Player *currentPlayer = _getCurrentPlayer();
 	char playerColor = currentPlayer == _player1 ? 'w':'b';
 
@@ -137,10 +136,6 @@ void Classic::_nextTurn() {
 			isMoveValid = this->_executeMove(start, end, playerColor);
 		}
 	}
-	std::string state;
-	this->_boardState(state);
-	_player1->showBoard(state);
-	_player2->showBoard(state);
 }
 
 bool Classic::_isCheckmate(char playerColor){
@@ -265,11 +260,11 @@ bool Classic::_isFinish() {
 void Classic::_boardState(std::string& state){
 	int i = 0;
 	for (; i < 16; i++){
-		state += _pieces[i]->toString();
+		if (!_pieces[i]->isTaken()) state += _pieces[i]->toString();
 	}
 	state += "!";
 	for (; i < 32; i++){
-		state += _pieces[i]->toString();
+		if (!_pieces[i]->isTaken()) state += _pieces[i]->toString();
 	}
 }
 #endif

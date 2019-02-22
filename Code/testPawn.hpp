@@ -5,26 +5,7 @@
 #include <cppunit/extensions/HelperMacros.h>
 #include "Pawn.hpp"
 #include "Coordinate.hpp"
-#include "Game.hpp"
-
-class SimpleGame: public Game
-{
-	private:
-	bool _testCheck;
-
-	protected:
-		void _initBoard() override{}
-		void _nextTurn() override{}
-		bool _isFinish() override{return true;}
-		void _changePawn(Piece*, Piece*) override{}
-		Player* _getCurrentPlayer() override{return nullptr;}
-
-	public:
-	SimpleGame() : Game(nullptr, 0, nullptr, nullptr, 0, 0), _testCheck(false){}
-	bool changeTestCheck(){_testCheck = !_testCheck;}
-	bool testCheck(const char) override {return _testCheck;}
-
-};
+#include "SimpleGame.hpp"
 
 class TestPawn: public CPPUNIT_NS::TestFixture
 {
