@@ -72,7 +72,7 @@ class Piece {
 		void changeIsTaken(){_isTaken = !_isTaken;}
 		virtual void changeIsTaken(unsigned turn, Piece*, Board*){_isTaken = !_isTaken;}
 		bool isTaken() const {return _isTaken;}
-		bool _isMovePossible(Coordinate, Board*, Game&);
+		virtual bool _isMovePossible(Coordinate, Board*, Game&);
 		bool _isMovePossible(int column, int row, Board* board, Game& game){return _isMovePossible(Coordinate(int (this->getColumn()) + column, int(this->getRow()) + row), board, game);}
 
 };

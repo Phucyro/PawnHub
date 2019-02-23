@@ -68,10 +68,17 @@ bool Pawn::move(Coordinate end, Board* board, Game& game){
 }
 
 bool Pawn::canMove(Board* board, Game& game){
-	if (this->_isMovePossible(1, 1, board, game)) return false;
-	if (this->_isMovePossible(0, 1, board, game)) return false;
-	if (this->_isMovePossible(-1, 1, board, game)) return false;
-	return true;
+	if (this->_isMovePossible(1, 1, board, game)) return true;
+	if (this->_isMovePossible(0, 1, board, game)) return true;
+	if (this->_isMovePossible(-1, 1, board, game)) return true;
+	return false;
+}
+
+bool Pawn::_isMovePossible(Coordinate dest, Board* board, Game& game){
+	bool moved = _moved;
+	bool res = this->Piece::_isMovePossible(dest, board, game);
+	_moved = moved;
+	return res;
 }
 
 void Pawn::_promote(Game& game){

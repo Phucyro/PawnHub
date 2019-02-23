@@ -8,6 +8,7 @@
 #include "includesPieceHPP.hpp"
 #include "Game.hpp"
 
+
 class Classic : public Game {
 
 	private :

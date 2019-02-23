@@ -149,19 +149,15 @@ bool Classic::_isCheckmate(char playerColor){
 		inTest = _pieces[i];
 		if (!inTest->isTaken()){
 			dPiecePlace = inTest->getCoord();
-			if (inTest->move(kingPlace, _board, *this)){
+			if (inTest->_checkMove(kingPlace, _board, *this)){
 				if (!dangerousPiece) dangerousPiece = inTest;
 				else moreThan2 = true;
-				_board->movePiece(kingPlace, dPiecePlace);
-				_board->setCase(kingPlace, king);
-				king->changeIsTaken(this->getTurn(), nullptr, _board);
 			}
 		}
 		i++;
 	}
 	if (!dangerousPiece) return false;
 	if (king->canMove(_board, *this)) return false;
-
 	if (!moreThan2){
 		int rowMove = int(dangerousPiece->getRow()) - int(king->getRow());
 		int rowDirection = rowMove/std::abs(rowMove);
