@@ -3,6 +3,7 @@
 
 #include "GhostPawn.hpp"
 #include "Piece.hpp"
+class GhostPawn;
 
 class Pawn : public Piece {
 
@@ -21,15 +22,13 @@ class Pawn : public Piece {
 			_str[TYP] = 'p';
 		}
 
-		Pawn(const Pawn& original) noexcept : Piece(original), _moved(original.hasMoved()), _ghost(nullptr) {
-			_ghost = new GhostPawn(*(original._ghost));
-		}
+		Pawn(const Pawn& original) noexcept;
 
 		Pawn(Pawn&& original) noexcept : Piece(original), _moved(original.hasMoved()), _ghost(original._ghost) {
 			original._ghost = nullptr;
 		}
 
-		virtual ~Pawn() noexcept {delete _ghost;}
+		virtual ~Pawn() noexcept;
 		Pawn& operator= (const Pawn&);
 		Pawn& operator= (Pawn&&);
 
