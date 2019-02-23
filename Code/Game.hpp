@@ -19,7 +19,7 @@ class Game
 	unsigned _lastStrongPiecesWhite;
 	unsigned _lastStrongPieceBlack;
 
-	void _sendBoard();
+	virtual void _sendBoard();
 	
 	virtual void _initBoard() = 0;
 	virtual void _nextTurn() = 0;
