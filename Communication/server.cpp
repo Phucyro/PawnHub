@@ -26,15 +26,15 @@ int main(){
 
   while (true){
     // Accepte l'utilisateur dans le serveur et lui asssocie un socket
-    Socket client_socket = binding_socket.createSocket();
+    Socket* client_socket = binding_socket.createSocket();
 
     // Traite la demande de connexion
     // std::thread thread(receiveMessageHandler, client_socket, &data, &players_map, &matchmaking);
     // thread.detach();
+    Player* player = new Player(client_socket);
+    matchmaking.addPlayer(player, 0);
 
-    // Boucle de jeu sans menu/login
-    ServerGameControl control(client_socket);
-
+    matchmaking.check(0);
   }
 
   return 0;

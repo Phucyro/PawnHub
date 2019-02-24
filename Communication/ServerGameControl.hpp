@@ -4,7 +4,7 @@
 
 #include "Socket.hpp"
 #include "../Code/Player.hpp"
-#include "../Code/Classic.hpp"
+#include "../Code/Game.hpp"
 
 #ifndef _SCONTROL_H_
 #define _SCONTROL_H_
@@ -13,9 +13,8 @@ class Classic;
 
 class ServerGameControl {
 private:
-  Socket socket;
   Player *player1, *player2;
-  Classic *game;
+  Game *game;
 
   std::map<std::string, std::string> headerSendMap = {
    {"board", "B"},
@@ -36,7 +35,7 @@ private:
 
 
 public:
-  ServerGameControl(Socket);
+  ServerGameControl(Player*, Player*, Game*);
   ~ServerGameControl();
 
 private:
@@ -44,19 +43,19 @@ private:
   void receivePromotion(std::string);
 
 public:
-  void sendBoard(std::string);
-  void sendUpdate(std::string);
-  void sendPlayerColour(std::string);
-  void sendTurn(int);
-  void sendAskMove();
-  void sendAskPromotion();
+  void sendBoard(Socket*, std::string);
+  void sendUpdate(Socket*, std::string);
+  void sendPlayerColour(Socket*, std::string);
+  void sendTurn(Socket*, int);
+  void sendAskMove(Socket*);
+  void sendAskPromotion(Socket*);
 
   std::map<char, void(ServerGameControl::*)(std::string)> headerReceiveMap = {
     {'M', &ServerGameControl::receiveMove},
     {'P', &ServerGameControl::receivePromotion},
   };
 
-  void handleMessage();
+  void handleMessage(Socket*);
   void startParty();
 };
 

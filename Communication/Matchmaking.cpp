@@ -1,11 +1,11 @@
 #include "Matchmaking.hpp"
+#include "ServerGameControl.hpp"
 
 void startGame(Game* game, Player* player1, Player* player2){
   // Lance le jeu avec le bon mode de jeu
   std::cout << "Une partie se lance : " << player1->getName() << " vs " <<
   player2->getName() << std::endl;
-  game->start();
-  delete game; // ok ?
+  ServerGameControl control(player1, player2, game);
 }
 
 

@@ -18,7 +18,6 @@ public:
   void addPlayer(Player* player, unsigned int queue_number);
   void removePlayer(Player* player);
 
-protected:
   void check(unsigned int queue_number);
 };
 

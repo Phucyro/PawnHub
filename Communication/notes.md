@@ -1,8 +1,11 @@
 
 #TODO:
 
-- mettre en commun les differentes methodes de message-handling (dans mon tout beau parser, idealement)
-- tester en reseau local (using hostname?)
+- envoyer les messages de la meme maniere pour chaque partie (jeu/admin)
+- idealement avoir une instance de controle admin qui gere les envois/receptions de messages
+  - et laisse la main au controle de jeu quand un jeu est en cours
+  - comment gerer le chat comme ca?
+- mieux gerer les exceptions/erreurs de client/serveur (ex: mauvais hostname, deconnection)
 - gerer deux clients sur le meme jeu (_le plus gros qui reste_)
 
 ##Messages
@@ -26,12 +29,4 @@ send move to server
 potentially threading rather than forking
 
 identify two connected clients
-launch game
-loop:
-- send board to both players
-- request move from first player
-- receive move from first player
-- send updated board to both players
-- request move from second player
-- receive move from second player
-end game
+pass control to game control instance
