@@ -5,22 +5,9 @@
 #include"Player.hpp"
 #include "../Communication/ServerMessageHandler.hpp"
 
-void askMoveToClient(Socket* socket){
-	std::cout<<"askMove"<<std::endl;
-	socket->sendMessage("Cnope");
-}
-void sendBoard(Socket* socket, std::string board){
-	std::cout << "sending board:" << std::endl;
-	std::cout << std::string("B") + board<<std::endl;
-	socket->sendMessage(std::string("B") + board);
-}
-
-void askPromotionToClient(Socket* socket){
-	socket->sendMessage("P");
-}
-
 Player& Player::operator= (Player&& original) {
 	_sock = original._sock;
+	_control = nullptr;
 	_pipe = original._pipe;
 	original._pipe = nullptr;
 	_name = original._name;
@@ -29,9 +16,8 @@ Player& Player::operator= (Player&& original) {
 
 
 std::string Player::askMove(){
-	askMoveToClient(_sock);
-	receiveMessageHandler(*_sock, *this, nullptr, nullptr, nullptr);
-	std::cout<<"end receiveMessageHandler"<<std::endl;
+	_control->sendAskMove();
+	_control->handleMessage();
 	char res[5];
 	read(_pipe[0], &res, sizeof(char)*4);
 	res[4] = '\0';
@@ -40,11 +26,13 @@ std::string Player::askMove(){
 }
 
 void Player::showBoard(std::string board){
-	sendBoard(_sock, board);
+	std::cout << "sending board" << std::endl;
+	_sock->sendMessage(std::string("B") + board);
 }
 
 char Player::askPromotion(){
-	askPromotionToClient(_sock);
+	_control->sendAskPromotion();
+	_control->handleMessage();
 	char res;
 	read(_pipe[0], &res, sizeof(char));
 	return res;
@@ -64,6 +52,10 @@ unsigned int Player::getQueueNumber() const {
 
 void Player::setName(std::string name){
 	_name = name;
+}
+
+void Player::setControl(ServerGameControl* control){
+	_control = control;
 }
 
 void Player::setSocket(Socket* socket){

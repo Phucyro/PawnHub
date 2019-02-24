@@ -21,21 +21,32 @@ void ClientGameControl::receiveTurn(std::string message) {
   std::cout << message << std::endl;
 }
 
-void ClientGameControl::receiveCheckResult(std::string message) {
-  sendMove(board.get_movement());
-}
-
-void ClientGameControl::receiveMove(std::string message) {
+void ClientGameControl::receiveAskMove(std::string message) {
   std::cout << "Getting move" << std::endl;
   std::string move = board.get_movement();
   std::cout << "Requesting send of " << move << std::endl;
   sendMove(move);
+  // sendMove(board.get_movement());
+}
+
+void ClientGameControl::receiveAskPromotion(std::string message) {
+  std::cout << "Getting promotion" << std::endl;
+  std::string promotion = board.get_promotion();
+  std::cout << "Requesting send of " << promotion << std::endl;
+  sendMove(promotion);
+  sendPromotion("Gotta fetch it first");
 }
 
 void ClientGameControl::sendMove(std::string move) {
   std::string header = headerSendMap["move"];
-  std::cout << "Sending Move as " << header + " " + move << std::endl;
-  socket.sendMessage(header + " " + move);
+  std::cout << "Sending Move as " << header + move << std::endl;
+  socket.sendMessage(header + move);
+}
+
+void ClientGameControl::sendPromotion(std::string promotion) {
+  std::string header = headerSendMap["promote"];
+  std::cout << "Sending Promotion as " << header + promotion << std::endl;
+  socket.sendMessage(header + promotion);
 }
 
 void ClientGameControl::handleMessage() {

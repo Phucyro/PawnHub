@@ -162,6 +162,11 @@ std::string Board::get_movement()
   return effective_move;
 }
 
+std::string Board::get_promotion() {
+  std::string promotion = "hello";
+  return promotion;
+}
+
 void Board::exit()
 {
   delwin(infos_win);

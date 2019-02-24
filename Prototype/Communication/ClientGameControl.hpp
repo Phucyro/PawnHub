@@ -14,12 +14,13 @@ private:
   Socket socket;
 
   std::map<std::string, std::string> headerSendMap = {
-   {"board", "C"},
+   {"board", "B"},
    {"update", "U"},
    {"colour", "X"},
    {"turn", "T"},
-   {"movecheck", "M"},
-   {"move", "A"},
+   {"askmove", "A"},
+   {"promote", "P"},
+   {"move", "M"},
    {"quit", "0"},
    {"register", "1"},
    {"login", "2"},
@@ -38,18 +39,19 @@ private:
   void receiveUpdate(std::string);
   void receivePlayerColour(std::string);
   void receiveTurn(std::string);
-  void receiveCheckResult(std::string);
-  void receiveMove(std::string);
+  void receiveAskMove(std::string);
+  void receiveAskPromotion(std::string);
 
   void sendMove(std::string);
+  void sendPromotion(std::string);
 
   std::map<char, void(ClientGameControl::*)(std::string)> headerReceiveMap = {
     {'B', &ClientGameControl::receiveBoard},
     {'U', &ClientGameControl::receiveUpdate},
     {'X', &ClientGameControl::receivePlayerColour},
     {'T', &ClientGameControl::receiveTurn},
-    {'C', &ClientGameControl::receiveCheckResult},
-    {'M', &ClientGameControl::receiveMove},
+    {'A', &ClientGameControl::receiveAskMove},
+    {'P', &ClientGameControl::receiveAskPromotion},
   };
 
   void handleMessage();

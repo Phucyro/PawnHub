@@ -9,12 +9,12 @@ LOGIN_CLIENT= Communication/ClientMessageHandler.hpp Communication/ClientFunctio
 LOGIN_SERVER= Communication/ServerMessageHandler.hpp Communication/ServerHandler.hpp Communication/Data.o Communication/SplitString.o Communication/Matchmaking.o
 GAME_CLIENT= Communication/ClientGameControl.o
 DISPLAY_CLIENT= GameDisplay/board.o
-GAME_SERVER= $(subst GameLogic/%.cpp, GameLogic/%.o, $(LOGIC))
+GAME_SERVER=  GameLogic/includesPieceHPP.hpp $(subst GameLogic/%.cpp, GameLogic/%.o, $(LOGIC)) Communication/ServerGameControl.o
 
 CLIENT_LFLAGS= -pthread -lncurses
 SERVER_LFLAGS= -pthread
 
-all: server client
+all: server client clean
 
 run: all
 	./server
