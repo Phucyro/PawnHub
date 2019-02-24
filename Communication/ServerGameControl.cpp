@@ -1,42 +1,67 @@
 #include "ServerGameControl.hpp"
 
-ServerGameControl::ServerGameControl(Socket _socket, Player _player): socket(_socket), player(_player) {
-  game = Classic(&player, &player);
-  game.start();
+ServerGameControl::ServerGameControl(Socket _socket): socket(_socket), player1(nullptr), player2(nullptr), game(nullptr) {
+  player1 = new Player(&socket);
+  player2 = new Player(&socket);
+  game = new Classic(player1, player2);
+  startParty();
 }
 
-void ServerGameControl::receiveUpdate(std::string message) {
-  std::cout << message << std::endl;
-}
-
-void ServerGameControl::receivePlayerColour(std::string message) {
-  std::cout << message << std::endl;
-}
-
-void ServerGameControl::receiveTurn(std::string message) {
-  std::cout << message << std::endl;
-}
-
-void ServerGameControl::receiveCheckResult(std::string message) {
-  std::cout << message << std::endl;
+ServerGameControl::~ServerGameControl() {
+  delete player1;
+  delete player2;
+  delete game;
 }
 
 void ServerGameControl::receiveMove(std::string message) {
-  player.receiveMove(message);
+  std::cout << "Received move" << message << std::endl;
+  player1->receiveMove(message);
+  player2->receiveMove(message);
 }
 
-void ServerGameControl::sendBoard(std::string move) {
-  std::string header = headerSendMap["board"];
-  socket.sendMessage(header + move);
+void ServerGameControl::receivePromotion(std::string message) {
+  player1->receivePromotion(message);
+  player2->receivePromotion(message);
 }
 
-void ServerGameControl::sendCheckResult(bool move_check) {
+void ServerGameControl::sendBoard(std::string board) {
   std::string header = headerSendMap["board"];
-  socket.sendMessage(header + std::to_string(move_check));
+  socket.sendMessage(header + board);
+}
+
+void ServerGameControl::sendUpdate(std::string update) {
+  std::string header = headerSendMap["update"];
+  socket.sendMessage(header + update);
+}
+
+void ServerGameControl::sendPlayerColour(std::string colour) {
+  std::string header = headerSendMap["colour"];
+  socket.sendMessage(header + colour);
+}
+
+void ServerGameControl::sendTurn(int turn) {
+  std::string header = headerSendMap["turn"];
+  socket.sendMessage(header + std::to_string(turn));
+}
+
+void ServerGameControl::sendAskMove() {
+  std::string header = headerSendMap["askmove"];
+  socket.sendMessage(header + "gimme");
+}
+
+void ServerGameControl::sendAskPromotion() {
+  std::string header = headerSendMap["promote"];
+  socket.sendMessage(header + "please");
 }
 
 void ServerGameControl::handleMessage() {
   std::string message = socket.receiveMessage();
   char header = message[0];
   (this->*(headerReceiveMap[header]))(message.erase(0,1));
+}
+
+void ServerGameControl::startParty() {
+  player1->setControl(this);
+  player2->setControl(this);
+  game->start();
 }

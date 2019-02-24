@@ -1,19 +1,18 @@
 #include "config.hpp"
 #include "BindSocket.hpp"
 #include "ServerMessageHandler.hpp"
-//#include "MessageParser.hpp"
 #include <map>
 #include <thread>
 #include "Data.hpp"
 #include "Matchmaking.hpp"
-#include "../Code/Player.hpp"
+#include "ServerGameControl.hpp"
 
 
 typedef std::map<std::string, Player*> PlayersMap;
 
 
 int main(){
-  Data data("database.txt"); // bug makefile
+  Data data("Communication/database.txt"); // bug makefile
   Matchmaking matchmaking(4);
   PlayersMap players_map;
   BindSocket binding_socket;
@@ -30,9 +29,11 @@ int main(){
     Socket client_socket = binding_socket.createSocket();
 
     // Traite la demande de connexion
-    std::thread thread(receiveMessageHandler, client_socket, &data, &players_map, &matchmaking);
-    thread.detach();
-    // sendBoard(client_socket, "hola");
+    // std::thread thread(receiveMessageHandler, client_socket, &data, &players_map, &matchmaking);
+    // thread.detach();
+
+    // Boucle de jeu sans menu/login
+    ServerGameControl control(client_socket);
 
   }
 

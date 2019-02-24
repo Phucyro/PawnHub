@@ -21,7 +21,7 @@ void Socket::connectToServer(std::string hostname) {
   hostent* host_addr = gethostbyname(hostname.c_str());
   sockaddr_in serv_addr;
   serv_addr.sin_family = AF_INET;
-  serv_addr.sin_port = htons(MYPORT);
+  serv_addr.sin_port = htons(PORT);
   serv_addr.sin_addr.s_addr = *((in_addr_t*) host_addr->h_addr); // Addresse IP a remplacer
   memset(&(serv_addr.sin_zero), '\0', 8);
 

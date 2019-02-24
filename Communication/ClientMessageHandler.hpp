@@ -30,14 +30,6 @@ void receiveMessageHandler(Socket* socket){
       case '5' :
         leaveQueueHandler();
         break;
-      case 'A' :
-        askMoveHandler();
-        break;
-      case 'B' :
-        askPromotionHandler();
-        break;
-      case 'C' :
-        boardHandler(msg[1]);
     }
   }
 }
@@ -71,11 +63,6 @@ void sendMessageHandler(Socket* socket, std::string* client_username){
       case '5' :
         leaveQueue(socket);
         break;
-      case 'A' :
-        giveMove(socket, msg[1]);
-        break;
-      case 'B' :
-        givePromotion(socket, msg[1]);
     }
   }
 }

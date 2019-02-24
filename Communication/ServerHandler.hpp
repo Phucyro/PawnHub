@@ -9,11 +9,11 @@
 typedef std::map<std::string, Player*> PlayersMap;
 
 
-void disconnect(bool* leave){
+void inline disconnect(bool* leave){
   *leave = true;
 }
 
-void signUpHandler(Socket* socket, Data* data, std::string username, std::string pswd){
+void inline signUpHandler(Socket* socket, Data* data, std::string username, std::string pswd){
   if (data->containsAccount(username)){
     socket->sendMessage("1 0");
   }
@@ -24,7 +24,7 @@ void signUpHandler(Socket* socket, Data* data, std::string username, std::string
   }
 }
 
-void signInHandler(Socket* socket, PlayersMap* players_map, Data* data, Player* player, std::string username, std::string pswd){
+void inline signInHandler(Socket* socket, PlayersMap* players_map, Data* data, Player* player, std::string username, std::string pswd){
   if (!(data->containsAccount(username))){
     socket->sendMessage("2 0"); // Compte inexistant
   }
@@ -33,13 +33,14 @@ void signInHandler(Socket* socket, PlayersMap* players_map, Data* data, Player* 
     player->setName(username);
     player->setSocket(socket);
     (*players_map)[username] = player;
+    std::cout << "Socket dans singin : " << socket << std::endl;
   }
   else {
     socket->sendMessage("2 2"); // Mauvais mot de passe
   }
 }
 
-void chatHandler(PlayersMap* players_map, std::string sender, std::string target, std::string text){
+void inline chatHandler(PlayersMap* players_map, std::string sender, std::string target, std::string text){
   if (target == "all"){ // Envoie le message a tous ceux connecte
     for (auto elem : *players_map){
       elem.second->getSocket()->sendMessage(std::string("3 ") + sender + " " + target + " " + text);
@@ -55,21 +56,15 @@ void chatHandler(PlayersMap* players_map, std::string sender, std::string target
   }
 }
 
-void playGameHandler(Matchmaking* matchmaking, Player* player, std::string game_mode){
+void inline playGameHandler(Matchmaking* matchmaking, Player* player, std::string game_mode){
   matchmaking->addPlayer(player, static_cast<unsigned int>(atoi(game_mode.c_str())));
   player->getSocket()->sendMessage("4");
 }
 
-void leaveQueueHandler(Matchmaking* matchmaking, Player* player){
+void inline leaveQueueHandler(Matchmaking* matchmaking, Player* player){
   matchmaking->removePlayer(player);
   player->getSocket()->sendMessage("5");
 }
 
-void receiveMoveHandler(Player* player, std::string move){
-  player->receiveMove(move);
-}
 
-void receivePromotionHandler(Player* player, std::string piece){
-  player->receivePromotion(piece);
-}
 #endif
