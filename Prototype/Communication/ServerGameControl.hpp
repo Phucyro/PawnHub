@@ -24,6 +24,7 @@ private:
    {"turn", "T"},
    {"askmove", "A"},
    {"move", "M"},
+   {"promote", "P"},
    {"quit", "0"},
    {"register", "1"},
    {"login", "2"},
@@ -39,24 +40,20 @@ public:
   ~ServerGameControl();
 
 private:
-  void receiveBoard(std::string);
-  void receiveUpdate(std::string);
-  void receivePlayerColour(std::string);
-  void receiveTurn(std::string);
-  void receiveAskMove(std::string);
   void receiveMove(std::string);
+  void receivePromotion(std::string);
 
 public:
   void sendBoard(std::string);
+  void sendUpdate(std::string);
+  void sendPlayerColour(std::string);
+  void sendTurn(int);
   void sendAskMove();
+  void sendAskPromotion();
 
   std::map<char, void(ServerGameControl::*)(std::string)> headerReceiveMap = {
-    {'B', &ServerGameControl::receiveBoard},
-    {'U', &ServerGameControl::receiveUpdate},
-    {'X', &ServerGameControl::receivePlayerColour},
-    {'T', &ServerGameControl::receiveTurn},
-    {'A', &ServerGameControl::receiveAskMove},
     {'M', &ServerGameControl::receiveMove},
+    {'P', &ServerGameControl::receivePromotion},
   };
 
   void handleMessage();

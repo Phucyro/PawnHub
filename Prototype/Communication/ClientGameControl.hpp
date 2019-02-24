@@ -19,6 +19,7 @@ private:
    {"colour", "X"},
    {"turn", "T"},
    {"askmove", "A"},
+   {"promote", "P"},
    {"move", "M"},
    {"quit", "0"},
    {"register", "1"},
@@ -39,9 +40,10 @@ private:
   void receivePlayerColour(std::string);
   void receiveTurn(std::string);
   void receiveAskMove(std::string);
-  void receiveMove(std::string);
+  void receiveAskPromotion(std::string);
 
   void sendMove(std::string);
+  void sendPromotion(std::string);
 
   std::map<char, void(ClientGameControl::*)(std::string)> headerReceiveMap = {
     {'B', &ClientGameControl::receiveBoard},
@@ -49,7 +51,7 @@ private:
     {'X', &ClientGameControl::receivePlayerColour},
     {'T', &ClientGameControl::receiveTurn},
     {'A', &ClientGameControl::receiveAskMove},
-    {'M', &ClientGameControl::receiveMove},
+    {'P', &ClientGameControl::receiveAskPromotion},
   };
 
   void handleMessage();

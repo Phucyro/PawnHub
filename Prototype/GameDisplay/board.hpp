@@ -45,6 +45,8 @@ public:
 
   std::string get_movement();
 
+  std::string get_promotion();
+
   bool isRunning();
 
 

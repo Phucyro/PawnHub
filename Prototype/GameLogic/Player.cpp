@@ -17,6 +17,7 @@ Player& Player::operator= (Player&& original) {
 
 std::string Player::askMove(){
 	_control->sendAskMove();
+	_control->handleMessage();
 	char res[5];
 	read(_pipe[0], &res, sizeof(char)*4);
 	res[4] = '\0';
@@ -29,7 +30,8 @@ void Player::showBoard(std::string board){
 }
 
 char Player::askPromotion(){
-	_sock->sendMessage("Pplease");
+	_control->sendAskPromotion();
+	_control->handleMessage();
 	char res;
 	read(_pipe[0], &res, sizeof(char));
 	return res;
