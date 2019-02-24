@@ -101,6 +101,7 @@ void Game::promote(Piece* piece)
 {
 	char type = this->_getCurrentPlayer()->askPromotion();
 	Pawn *pawn = dynamic_cast<Pawn*>(piece);
+	// might wanna call promote again until a pawn is given or a negation? can you refuse?
 	if (!pawn) throw std::string("the piece to promote is not a pawn");
 	Piece* promotedPawn;
 	switch (type) {
@@ -128,6 +129,7 @@ void Game::promote(Piece* piece)
 	this->_changePawn(pawn, promotedPawn);
 	delete pawn;
 
+	// need to send updated board to players here, btw
 }
 
 #endif

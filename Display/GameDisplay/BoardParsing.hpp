@@ -50,10 +50,4 @@ void stringToBoard(std::string message) {
   }
 }
 
-// purely for test here, not expected to stay
-std::string boardToString() {
-  std::string msg = "pA2hA4rD5qC7kE1bF8!bA8qG4kD7#";
-  return msg;
-}
-
 #endif

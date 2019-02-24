@@ -77,7 +77,7 @@ void Board::draw_coordinates()
 {
   for (int i=0; i<lines; i++)
   {
-    mvprintw(1+(OFFSET*i), 25 , "%d", lines-i);
+    mvprintw(1+(OFFSET*i), 25 , "%d", i+1);
   }
 
   for (int i=0; i<columns; i++)
@@ -141,16 +141,15 @@ std::string Board::get_movement()
 {
   int move[4];
 
-  for (int i = 0; i < 4; ++i) {
+  for (int i = 0; i < 5; ++i) {
     if (i == 0) {
       mvprintw(15, 30, "%s", "State initial piece position: ");
     }
     else if (i == 2) {
       mvprintw(16, 30, "%s", "State moved piece position: ");
     }
-    mvprintw(18, 30, "%d", i);
+    else if (i == 4) {break;}
     move[i] = getch();
-    mvprintw(18, 32, "%d", i);
     mvprintw(15 + (i/2), 60 + (i%2), "%c", move[i]);
   }
 
@@ -158,7 +157,6 @@ std::string Board::get_movement()
   const char* this_move = effective_move.c_str();
   mvprintw(18, 30, "%s", this_move);
   // switch des choix a faire?
-  std::cout << "Returning" << effective_move << std::endl;
   return effective_move;
 }
 
