@@ -14,7 +14,7 @@ GAME_SERVER=  GameLogic/includesPieceHPP.hpp $(subst GameLogic/%.cpp, GameLogic/
 CLIENT_LFLAGS= -pthread -lncurses
 SERVER_LFLAGS= -pthread
 
-all: server client
+all: server client clean
 
 run: all
 	./server

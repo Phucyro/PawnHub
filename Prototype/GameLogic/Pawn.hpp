@@ -4,6 +4,8 @@
 #include "GhostPawn.hpp"
 #include "Piece.hpp"
 
+// class GhostPawn;
+
 class Pawn : public Piece {
 
 	protected :
