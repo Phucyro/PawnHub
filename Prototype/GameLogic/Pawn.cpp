@@ -4,6 +4,14 @@
 #include <cmath>
 #include "Pawn.hpp"
 
+Pawn::~Pawn() noexcept {
+	delete _ghost;
+}
+
+Pawn::Pawn(const Pawn& original) noexcept : Piece(original), _moved(original.hasMoved()), _ghost(nullptr) {
+	_ghost = new GhostPawn(*(original._ghost));
+}
+
 Pawn& Pawn::operator= (const Pawn& original){
 	this->Piece::operator= (original);
 	_moved = original._moved;

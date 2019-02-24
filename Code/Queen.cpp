@@ -11,9 +11,9 @@ Queen& Queen::operator= (const Queen& original){
 
 bool Queen::_checkMoveRook(Coordinate end, Board* board, Game& game){
   	int rowMove = int(end.getRealRow()) - int(_coords.getRealRow());
-  	int rowDirection = rowMove/std::abs(rowMove);
+  	int rowDirection = rowMove == 0 ? 0 : rowMove/std::abs(rowMove);
   	int columnMove = int(end.getRealColumn()) - int(_coords.getRealColumn());
-  	int columnDirection = columnMove/std::abs(columnMove);
+  	int columnDirection = columnMove == 0 ? 0 : columnMove/std::abs(columnMove);
 
   	if (rowMove){
   		if (columnMove) return false;

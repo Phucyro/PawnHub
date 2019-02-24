@@ -13,6 +13,10 @@ ServerGameControl::~ServerGameControl() {
   delete game;
 }
 
+void ServerGameControl::receiveBoard(std::string message) {
+  std::cout << message << std::endl;
+}
+
 void ServerGameControl::receiveUpdate(std::string message) {
   std::cout << message << std::endl;
 }

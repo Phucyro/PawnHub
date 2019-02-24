@@ -9,7 +9,7 @@
 #ifndef _SCONTROL_H_
 #define _SCONTROL_H_
 
-// class Classic;
+class Classic;
 
 class ServerGameControl {
 private:
