@@ -3,11 +3,11 @@
 
 #include "Coordinate.hpp"
 #include "Board.hpp"
-#include "Game.hpp"
 
+class Game;
 #define TYP 0 // type
-#define ROW 1 // row
-#define COL 2 // column
+#define ROW 2 // row
+#define COL 1 // column
 
 
 class Piece {
@@ -17,11 +17,15 @@ class Piece {
 		char 				_color  ;		// 'w' ou 'b'
 	  Coordinate 	_coords ; 	// coords of Piece
     bool 				_isTaken; 	// tells if piece has been taken
-		char 				_str[3]	; 	// string containing info about piece
+		char 				_str[4]	; 	// string containing info about piece
+		bool				_2Dimension; // tells us if piece in 2nd dimension
 
-		constexpr Piece(const char color, const char column, const char row) : _color(color), _coords(column, row),_isTaken(false),_str(){
+		// TODO: addition of _2Dimension to str
+		 
+		Piece(const char color, const char column, const char row) : _color(color), _coords(column, row),_isTaken(false),_str(){
 			_str[ROW] = _coords.getAbstractRow();
 			_str[COL] = _coords.getAbstractColumn();
+			_str[3] = '\0';
 		}
 
 		Piece(const char color,Coordinate coords) : _color(color),_coords(coords),_isTaken(false),_str() {
@@ -35,7 +39,12 @@ class Piece {
 			}
 		}
 
-		virtual bool _checkMove(Coordinate, Board*, Game&) = 0;
+		Piece(const Piece* original) : _color(original->_color), _coords(original->_coords), _isTaken(original->_isTaken), _str() {
+			for (int i = 0; i < 4; i++){
+				_str[i] = original->_str[i];
+			}
+		}
+
 		virtual Piece* _doMove(Coordinate, Board*,Game&);
 		virtual void _reverseMove(Coordinate, Board*, Game&, Piece*);
 		inline bool _isPlaceFree(Coordinate place ,Board* board)
@@ -43,16 +52,35 @@ class Piece {
 			Piece* piece = board->getCase(place);
 			return (!piece) || piece->_str[TYP] == 'g';
 		}
+		void _setCoordinate(Coordinate newCoords){
+			_coords = newCoords;
+			_str[COL] = _coords.getAbstractColumn();
+			_str[ROW] = _coords.getAbstractRow();
+		}
 
 	public :
 		Piece& operator= (const Piece&);
+		virtual bool hasMoved() const = 0;
     virtual bool move(Coordinate, Board*, Game&);
-		virtual ~Piece() = default;
+    virtual bool _checkMove(Coordinate, Board*, Game&) = 0;
+    virtual bool canMove(Board*, Game&) = 0;
+		virtual ~Piece() noexcept {}
+		char getType() const {return _str[TYP];}
+		Coordinate getCoord() const {return _coords;}
 		char getColor() const {return _color;}
+		char getOpenentColor() const {return _color == 'w' ? 'b':'w';}
+		unsigned getRow() {return _coords.getRealRow();}
+		unsigned getColumn() {return _coords.getRealColumn();}
     virtual char* toString() {return _str;}
+		void changeIsTaken(){_isTaken = !_isTaken;}
 		virtual void changeIsTaken(unsigned turn, Piece*, Board*){_isTaken = !_isTaken;}
 		bool isTaken() const {return _isTaken;}
+		virtual bool _isMovePossible(Coordinate, Board*, Game&);
+		bool _isMovePossible(int column, int row, Board* board, Game& game){return _isMovePossible(Coordinate(int (this->getColumn()) + column, int(this->getRow()) + row), board, game);}
 
+		//Alice Chess addition
+		bool _getDimension(){return _2Dimension;}
+		void swapDimension(){_2Dimension = !_2Dimension;}
 };
-
+#include "Game.hpp"
 #endif

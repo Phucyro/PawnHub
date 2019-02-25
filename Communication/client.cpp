@@ -1,25 +1,30 @@
 #include "config.hpp"
 #include "Socket.hpp"
-#include "LoginClient.hpp"
-//#include "../Display/board.cpp"
+#include "ClientMessageHandler.hpp"
+#include "ClientGameControl.hpp"
+#include <thread>
 
 
 int main(){
-  // Initialisation socket
   Socket socket;
+  std::string client_username;
 
   // Demande de connexion au serveur
-  socket.connectToServer("127.0.0.1");
+  std::string hostname;
+  std::cout << "Please enter hostname: ";
+  std::cin >> hostname;
+  std::cout << std::endl;
+  socket.connectToServer(hostname);
 
-  // L'utilisateur doit s'identifier ou creer un compte
-  authentification(&socket);
 
-  /*
-  // Ouvre la fenetre (ne marche pas makefile doit changer)
-  Board board;
-  board.init_ncurses();
-  sleep(10);
-  */
+  socket.sendMessage("4 0");
+  // Thread gere messages recus
+  // std::thread receive_thread(receiveMessageHandler, &socket);
+  // receive_thread.detach();
+  receiveMessageHandler(&socket);
+
+  // Gere messages envoyes envoye par le client
+  // sendMessageHandler(&socket, &client_username);
 
   return 0;
 }
