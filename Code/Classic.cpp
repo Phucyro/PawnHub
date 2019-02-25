@@ -174,9 +174,9 @@ bool Classic::_isCheckmate(char playerColor){
 			while(std::abs(row) < std::abs(rowMove)){
 				for (int i = 16-offset; i < 32 - offset; i++){
 					if ((!_pieces[i]->isTaken()) && _pieces[i]->_isMovePossible(column, row, _board, *this)) return false;
-					row += rowDirection;
-					column += columnDirection;
 				}
+				row += rowDirection;
+				column += columnDirection;
 			}
 		}
 		//rook or queen case(row)
@@ -250,6 +250,9 @@ bool Classic::_isFinish() {
 	Player *currentPlayer = _getCurrentPlayer();
 	char opponentColor = currentPlayer == _player2 ? 'w':'b';
 	if (this->_isCheckmate(opponentColor)){
+		if (opponentColor == 'w')
+			std::cout << "Black Player win !" << std::endl;
+		else std::cout << "White Player win !" << std::endl;
 		_winner = currentPlayer;
 		return true;
 	}
