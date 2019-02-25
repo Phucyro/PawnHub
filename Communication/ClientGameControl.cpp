@@ -23,7 +23,6 @@ void ClientGameControl::receiveTurn(std::string message) {
 void ClientGameControl::receiveAskMove(std::string message) {
   std::string move = board.get_movement();
   sendMove(move);
-  // sendMove(board.get_movement());
 }
 
 void ClientGameControl::receiveAskPromotion(std::string message) {
@@ -48,8 +47,6 @@ void ClientGameControl::handleMessage() {
 }
 
 void ClientGameControl::startParty() {
-  socket.sendMessage("4 0");
-  if (socket.receiveMessage() == "4") {std::cout << "Placed in Queue" << std::endl;}
   board.init_ncurses();
   while(true) {handleMessage();}
 }
