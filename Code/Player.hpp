@@ -21,10 +21,11 @@ class Player{
 	int *_pipe;
 	std::string _name = "Guest";
 	int _queueNumber = -1; // Numero de file inexistante
+	bool _recvActive;
 
 
 	public :
-	Player(Socket* socket): _sock(socket), _control(nullptr), _pipe(nullptr) {
+	Player(Socket* socket): _sock(socket), _control(nullptr), _pipe(nullptr),_recvActive(false) {
 		_pipe = new int[2];
 		if ((pipe(_pipe)) == -1) throw std::runtime_error("Fail while constructing a pipe for an object of type 'Player': ");
 	}

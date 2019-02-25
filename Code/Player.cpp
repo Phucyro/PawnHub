@@ -18,6 +18,7 @@ Player& Player::operator= (Player&& original) {
 
 std::string Player::askMove(){
 	_control->sendAskMove(getSocket());
+	_recvActive = true;
 	_control->handleMessage(getSocket());
 	char res[5];
 	read(_pipe[0], &res, sizeof(char)*4);
@@ -31,6 +32,7 @@ void Player::showBoard(std::string board){
 
 char Player::askPromotion(){
 	_control->sendAskPromotion(getSocket());
+	_recvActive = true;
 	_control->handleMessage(getSocket());
 	char res;
 	read(_pipe[0], &res, sizeof(char));
@@ -66,15 +68,21 @@ void Player::setQueueNumber(int queueNumber){
 }
 
 void Player::receiveMove(std::string& message){
-	char str[message.length()+1];
-	std::strcpy(str, message.c_str());
-	write(_pipe[1], str, 4*sizeof(char));
+	if (_recvActive){
+		_recvActive = false;
+		char str[message.length()+1];
+		std::strcpy(str, message.c_str());
+		write(_pipe[1], str, 4*sizeof(char));
+	}
 }
 
 void Player::receivePromotion(std::string& message){
-	char str[message.length()+1];
-	std::strcpy(str, message.c_str());
-	write(_pipe[1], str, sizeof(char));
+	if (_recvActive){
+		_recvActive = false;
+		char str[message.length()+1];
+		std::strcpy(str, message.c_str());
+		write(_pipe[1], str, sizeof(char));
+	}
 }
 
 #endif

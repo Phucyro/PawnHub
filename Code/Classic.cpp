@@ -133,6 +133,7 @@ void Classic::_nextTurn() {
 	std::string playerMove;
 	while(!isMoveValid){
 		playerMove = currentPlayer->askMove();
+		std::cout<<"game recived: "<<playerMove<<std::endl;
 		if (this->_fitInBoard(playerMove)){
 			Coordinate start = Coordinate(playerMove[0], playerMove[1]), end = Coordinate(playerMove[2], playerMove[3]);
 			isMoveValid = this->_executeMove(start, end, playerColor);
