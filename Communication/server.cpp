@@ -29,12 +29,12 @@ int main(){
     Socket* client_socket = binding_socket.createSocket();
 
     // Traite la demande de connexion
-    // std::thread thread(receiveMessageHandler, client_socket, &data, &players_map, &matchmaking);
-    // thread.detach();
-    Player* player = new Player(client_socket);
-    matchmaking.addPlayer(player, 0);
-
-    matchmaking.check(0);
+    std::thread thread(receiveMessageHandler, client_socket, &data, &players_map, &matchmaking);
+    thread.detach();
+  //   Player* player = new Player(client_socket);
+  //   matchmaking.addPlayer(player, 0);
+  //
+  //   matchmaking.check(0);
   }
 
   return 0;

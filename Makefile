@@ -11,8 +11,8 @@ GAME_CLIENT= Communication/ClientGameControl.o
 DISPLAY_CLIENT= Display/GameDisplay/board.o
 GAME_SERVER=  Code/includesPieceHPP.hpp $(subst Code/%.cpp, Code/%.o, $(LOGIC)) Communication/ServerGameControl.o
 
-CLIENT_LFLAGS= -pthread -lncurses
-SERVER_LFLAGS= -pthread
+CLIENT_LFLAGS= -lpthread -lncurses
+SERVER_LFLAGS= -lpthread
 
 all: server client clean
 

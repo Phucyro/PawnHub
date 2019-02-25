@@ -48,6 +48,8 @@ void ClientGameControl::handleMessage() {
 }
 
 void ClientGameControl::startParty() {
+  socket.sendMessage("4 0");
+  if (socket.receiveMessage() == "4") {std::cout << "Placed in Queue" << std::endl;}
   board.init_ncurses();
   while(true) {handleMessage();}
 }
