@@ -1,13 +1,20 @@
 FLAGS= -std=c++17 -ggdb3 -Wpedantic -Wall -Wextra -Wconversion -Wstrict-null-sentinel -Wold-style-cast -Weffc++ -Wnoexcept -Wctor-dtor-privacy -Woverloaded-virtual -Wsign-promo -Wzero-as-null-pointer-constant -Wsuggest-final-types -Wsuggest-final-methods -Wsuggest-override -Woverloaded-virtual -Winline
 FLAGS2= -std=c++17 -masm=intel -fconcepts -mlong-double-128 -ggdb3 -Wpedantic -Wall -Wextra -Wconversion -Wsign-conversion -Weffc++ -Wstrict-null-sentinel -Wold-style-cast -Wnoexcept -Wctor-dtor-privacy -Woverloaded-virtual -Wsign-promo -Wzero-as-null-pointer-constant -Wsuggest-final-types -Wsuggest-final-methods -Wsuggest-override -lquadmath
 
-all: mainTest testClassic clean run
+all: mainTest testClassic testHorde testDark clean run
 
 mainTest: testRook.o testBishop.o testCoordinate.o testBoard.o Board.o Coordinate.o Game.o mainTest.cpp Piece.o Bishop.o testKnight.o Knight.o Classic.o Rook.o  GhostPawn.o Pawn.o testPawn.o Player.o King.o testKing.o Queen.o 
 	g++ $(FLAGS) testBoard.o Piece.o Coordinate.o Board.o testCoordinate.o Player.hpp testBishop.o Game.o Bishop.o testKnight.o Knight.o Classic.o testRook.o Rook.o  Pawn.o testPawn.o King.o testKing.o Queen.o GhostPawn.o Player.o mainTest.cpp -o mainTest -lcppunit
 
 testClassic: testClassic.cpp Board.o Coordinate.o Game.o Piece.o Bishop.o Knight.o Classic.o Rook.o  GhostPawn.o Pawn.o Player.o King.o Queen.o Socket.o
 	g++ $(FLAGS) Piece.o Coordinate.o Board.o Game.o Bishop.o Knight.o Classic.o Rook.o  Pawn.o King.o Queen.o GhostPawn.o Player.o Socket.o testClassic.cpp -o testClassic
+
+testHorde: testHorde.cpp Board.o Coordinate.o Game.o Piece.o Bishop.o Knight.o Horde.o Rook.o  GhostPawn.o Pawn.o Player.o King.o Queen.o Socket.o
+	g++ $(FLAGS) Piece.o Coordinate.o Board.o Game.o Bishop.o Knight.o Horde.o Rook.o  Pawn.o King.o Queen.o GhostPawn.o Player.o Socket.o testHorde.cpp -o testHorde
+
+testDark: testDark.cpp Board.o Coordinate.o Game.o Piece.o Bishop.o Knight.o Dark.o Rook.o  GhostPawn.o Pawn.o Player.o King.o Queen.o Socket.o
+	g++ $(FLAGS) Piece.o Coordinate.o Board.o Game.o Bishop.o Knight.o Dark.o Rook.o  Pawn.o King.o Queen.o GhostPawn.o Player.o Socket.o testDark.cpp -o testDark
+
 
 testCoordinate.o: testCoordinate.cpp testCoordinate.hpp Coordinate.hpp
 	g++ -c $(FLAGS) testCoordinate.cpp -lcppunit
@@ -66,6 +73,12 @@ Game.o: Board.hpp Coordinate.hpp Piece.hpp Player.hpp Game.hpp Game.cpp
 
 Classic.o: Board.hpp Coordinate.hpp Piece.hpp Player.hpp Game.hpp Classic.hpp Classic.cpp
 	g++ -c $(FLAGS) Classic.cpp
+	
+Horde.o: Board.hpp Coordinate.hpp Piece.hpp Player.hpp Game.hpp Horde.hpp Horde.cpp
+	g++ -c $(FLAGS) Horde.cpp
+
+Dark.o: Board.hpp Coordinate.hpp Piece.hpp Player.hpp Game.hpp Dark.hpp Dark.cpp
+	g++ -c $(FLAGS) Dark.cpp
 
 Player.o: Board.hpp Coordinate.hpp Piece.hpp Game.hpp Player.hpp Player.cpp
 	g++ -c $(FLAGS) Player.cpp

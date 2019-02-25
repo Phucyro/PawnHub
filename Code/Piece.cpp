@@ -28,14 +28,16 @@ void Piece::_reverseMove(Coordinate end, Board* board, Game& game, Piece* takenP
 
 bool Piece::move(Coordinate end, Board* board, Game& game){
 /*Move this piece to the correct location on the board and return true if the move is possible. Else return false and leave the board unchanged*/
+	Coordinate start = _coords;
 	if(!(this->_checkMove(end, board, game))) return false;
 	Piece* takenPiece = this->_doMove(end, board, game);
+	_setCoordinate(end);
 	
-	if(game.testCheck(this->getOpenentColor())){		//0 a changer
+	if(game.testCheck(this->getColor())){		//0 a changer
+		_setCoordinate(start);
 		this->_reverseMove(end, board, game, takenPiece);
 		return false;
 	}
-	_setCoordinate(end);
 	return true;
 }
 
@@ -46,6 +48,9 @@ bool Piece::_isMovePossible(Coordinate dest, Board* board, Game& game){
 	if (!this->move(dest, board, game))return false;
 	board->movePiece(dest, start);
 	board->setCase(dest, takenPiece);
+	if (takenPiece) takenPiece->changeIsTaken(game.getTurn(), this, board);
+	_setCoordinate(start);
+	
 	return true;
 }
 

@@ -19,7 +19,7 @@ class Player{
 	Socket *_sock;
 	ServerGameControl* _control;
 	int *_pipe;
-	std::string _name = "Guess";
+	std::string _name = "Guest";
 	int _queueNumber = -1; // Numero de file inexistante
 
 

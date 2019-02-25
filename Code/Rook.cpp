@@ -27,7 +27,7 @@ bool Rook::_checkMove(Coordinate end, Board* board, Game& game){
 	else if(columnMove){
 		// check if there is no piece in the way
 		for (int i = int(_coords.getRealColumn()) + columnDirection; i != end.getRealColumn(); i += columnDirection){
-			if (!_isPlaceFree(Coordinate(unsigned(i), end.getRealColumn()), board)) return false;
+			if (!_isPlaceFree(Coordinate(unsigned(i), end.getRealRow()), board)) return false;
 		}
 	}
 	else return false;
@@ -44,11 +44,18 @@ bool Rook::move(Coordinate end, Board* board, Game& game){
 }
 
 bool Rook::canMove(Board* board, Game& game){
-	if (this->_isMovePossible(0, 1, board, game)) return false;
-	if (this->_isMovePossible(1, 0, board, game)) return false;
-	if (this->_isMovePossible(-1, 0, board, game)) return false;
-	if (this->_isMovePossible(0, -1, board, game)) return false;
-	return true;
+	if (this->_isMovePossible(0, 1, board, game)) return true;
+	if (this->_isMovePossible(1, 0, board, game)) return true;
+	if (this->_isMovePossible(-1, 0, board, game)) return true;
+	if (this->_isMovePossible(0, -1, board, game)) return true;
+	return false;
+}
+
+bool Rook::_isMovePossible(Coordinate dest, Board* board, Game& game){
+	bool moved = _moved;
+	bool res = this->Piece::_isMovePossible(dest, board, game);
+	_moved = moved;
+	return res;
 }
 
 #endif
