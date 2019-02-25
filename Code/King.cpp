@@ -68,10 +68,10 @@ bool King::_checkMove(Coordinate end, Board* board, Game& game){
     Coordinate middleCoord = Coordinate(_coords.getRealColumn() + unsigned(1*columnDirection), _coords.getRealRow());
     if (!_isPlaceFree(middleCoord, board)) return false;
     board->movePiece(_coords, middleCoord);  //Ca me parait lourd comme démarche, a voir une fois testcheck ready
-    if (game.testCheck(this->getOpenentColor())) res = false;	//0 a changer
+    if (game.testCheck(this->getColor())) res = false;	//0 a changer
     if (!_isPlaceFree(end, board)) return false;
     board->movePiece(middleCoord, end);
-    if (game.testCheck(this->getOpenentColor()))res = false;	//0 a changer
+    if (game.testCheck(this->getColor()))res = false;	//0 a changer
     board->movePiece(end, _coords);
 		//columnMove == 2 ? rook->move(Coordinate(_coords.getRealColumn()+1, _coords.getRealRow()), board, game) : rook->move(Coordinate(_coords.getRealColumn()-1, _coords.getRealRow()), board, game);
     if (!_isPlaceFree(Coordinate(tmpcoord.getRealColumn() - 1*columnDirection, tmpcoord.getRealRow()), board)) return false; //test if the case next to the rook is empty
@@ -85,15 +85,22 @@ bool King::_checkMove(Coordinate end, Board* board, Game& game){
 }
 
 bool King::canMove(Board* board, Game& game){
-	if (this->_isMovePossible(1, 1, board, game)) return false;
-	if (this->_isMovePossible(0, 1, board, game)) return false;
-	if (this->_isMovePossible(-1, 1, board, game)) return false;
-	if (this->_isMovePossible(1, 0, board, game)) return false;
-	if (this->_isMovePossible(-1, 0, board, game)) return false;
-	if (this->_isMovePossible(1, -1, board, game)) return false;
-	if (this->_isMovePossible(0, -1, board, game)) return false;
-	if (this->_isMovePossible(-1, -1, board, game)) return false;
-	return true;
+	if (this->_isMovePossible(1, 1, board, game)) return true;
+	if (this->_isMovePossible(0, 1, board, game)) return true;
+	if (this->_isMovePossible(-1, 1, board, game)) return true;
+	if (this->_isMovePossible(1, 0, board, game)) return true;
+	if (this->_isMovePossible(-1, 0, board, game)) return true;
+	if (this->_isMovePossible(1, -1, board, game)) return true;
+	if (this->_isMovePossible(0, -1, board, game)) return true;
+	if (this->_isMovePossible(-1, -1, board, game)) return true;
+	return false;
+}
+
+bool King::_isMovePossible(Coordinate dest, Board* board, Game& game){
+	bool moved = _moved;
+	bool res = this->Piece::_isMovePossible(dest, board, game);
+	_moved = moved;
+	return res;
 }
 
 #endif

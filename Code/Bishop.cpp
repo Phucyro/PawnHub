@@ -32,10 +32,10 @@ bool Bishop::_checkMove(Coordinate end, Board* board, Game& game){
 }
 
 bool Bishop::canMove(Board* board, Game& game){
-	if (this->_isMovePossible(1, 1, board, game)) return false;
-	if (this->_isMovePossible(-1, 1, board, game)) return false;
-	if (this->_isMovePossible(1, -1, board, game)) return false;
-	if (this->_isMovePossible(-1, -1, board, game)) return false;
-	return true;
+	if (this->_isMovePossible(1, 1, board, game)) return true;
+	if (this->_isMovePossible(-1, 1, board, game)) return true;
+	if (this->_isMovePossible(1, -1, board, game)) return true;
+	if (this->_isMovePossible(-1, -1, board, game)) return true;
+	return false;
 }
 #endif

@@ -31,6 +31,8 @@ class Rook : public Piece {
 		bool hasMoved() const override {return _moved;}
 		bool move(Coordinate, Board*, Game&) override;
 		bool canMove(Board*, Game&) override;
+		using Piece::_isMovePossible;
+		bool _isMovePossible(Coordinate, Board*, Game&) override;
 
 		friend TestRook;
 

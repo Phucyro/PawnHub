@@ -19,11 +19,14 @@ class Game
 	unsigned _lastStrongPiecesWhite;
 	unsigned _lastStrongPieceBlack;
 
+	virtual void _sendBoard();
+	
 	virtual void _initBoard() = 0;
 	virtual void _nextTurn() = 0;
 	virtual bool _isFinish() = 0;
 	virtual Player* _getCurrentPlayer() = 0;
 	virtual void _changePawn(Piece*, Piece*) = 0;
+	virtual void _boardState(std::string&) = 0;
 
 	Game(Piece**, unsigned, Player*, Player*, unsigned lastStrongPiecesWhite, unsigned lastStrongPieceBlack);
 	Game(const Game&) = delete;
@@ -45,7 +48,7 @@ class Game
 	Player* getPlayer2(){return _player2;}
 
 };
+#include "Player.hpp"
 #include "Piece.hpp"
 #include"Board.hpp"
-#include "Player.hpp"
 #endif

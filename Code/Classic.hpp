@@ -8,6 +8,7 @@
 #include "includesPieceHPP.hpp"
 #include "Game.hpp"
 
+
 class Classic : public Game {
 
 	private :
@@ -35,6 +36,7 @@ class Classic : public Game {
 	void _initBoard() override;
 	void _nextTurn() override;
 	bool _isFinish() override;
+	void _boardState(std::string&) override;
 	Classic(const Classic&) = delete;
 	using Game::_pieces;
 
@@ -62,12 +64,12 @@ class Classic : public Game {
 		leftMaybePawn = Coordinate(_pieces[KING_INDEX]->getCoord().getRealColumn()+1, _pieces[KING_INDEX]->getCoord().getRealRow()+1);
 		Piece* MaybePawn = nullptr;
 		if (_board->isInBoard(leftMaybePawn)) MaybePawn = Game::_board->getCase(leftMaybePawn);
-		if (MaybePawn && MaybePawn->getColor() == 'b' && (MaybePawn->getType() == 'p' || MaybePawn->getType() == 'b' || MaybePawn->getType() == 'q' || MaybePawn->getType() == 'K')) return true;
+		if (MaybePawn && MaybePawn->getColor() == 'b' && (MaybePawn->getType() == 'p' || MaybePawn->getType() == 'b' || MaybePawn->getType() == 'q' || MaybePawn->getType() == 'k')) return true;
 
 		rightMaybePawn = Coordinate(_pieces[KING_INDEX]->getCoord().getRealColumn()-1, _pieces[KING_INDEX]->getCoord().getRealRow()+1);
 		MaybePawn = nullptr;
 		if (_board->isInBoard(rightMaybePawn)) MaybePawn = Game::_board->getCase(rightMaybePawn);
-		if (MaybePawn && MaybePawn->getColor() == 'b' && (MaybePawn->getType() == 'p' || MaybePawn->getType() == 'b' || MaybePawn->getType() == 'q' || MaybePawn->getType() == 'K')) return true;
+		if (MaybePawn && MaybePawn->getColor() == 'b' && (MaybePawn->getType() == 'p' || MaybePawn->getType() == 'b' || MaybePawn->getType() == 'q' || MaybePawn->getType() == 'k')) return true;
 
 		//strong pieces
 		for (unsigned i = 16; i <= _lastStrongPieceBlack; ++i){
@@ -82,12 +84,12 @@ class Classic : public Game {
 			leftMaybePawn = Coordinate(_pieces[16+KING_INDEX]->getCoord().getRealColumn()-1, _pieces[16+KING_INDEX]->getCoord().getRealRow()-1);
 			Piece* MaybePawn = nullptr;
 			if (_board->isInBoard(leftMaybePawn)) MaybePawn = Game::_board->getCase(leftMaybePawn);
-			if (MaybePawn && MaybePawn->getColor() == 'w' && (MaybePawn->getType() == 'p' || MaybePawn->getType() == 'b' || MaybePawn->getType() == 'q' || MaybePawn->getType() == 'K')) return true;
-
+			if (MaybePawn && MaybePawn->getColor() == 'w' && (MaybePawn->getType() == 'p' || MaybePawn->getType() == 'b' || MaybePawn->getType() == 'q' || MaybePawn->getType() == 'k')) return true;
+			
 			rightMaybePawn = Coordinate(_pieces[16+KING_INDEX]->getCoord().getRealColumn()+1, _pieces[16+KING_INDEX]->getCoord().getRealRow()-1);
 			MaybePawn = nullptr;
 			if (_board->isInBoard(rightMaybePawn)) MaybePawn = Game::_board->getCase(rightMaybePawn);
-			if (MaybePawn && MaybePawn->getColor() == 'w' && (MaybePawn->getType() == 'p' || MaybePawn->getType() == 'b' || MaybePawn->getType() == 'q' || MaybePawn->getType() == 'K')) return true;
+			if (MaybePawn && MaybePawn->getColor() == 'w' && (MaybePawn->getType() == 'p' || MaybePawn->getType() == 'b' || MaybePawn->getType() == 'q' || MaybePawn->getType() == 'k')) return true;
 
 			//strong pieces
 			for (unsigned i = 0; i <= _lastStrongPiecesWhite; ++i){
@@ -98,7 +100,5 @@ class Classic : public Game {
 		return false;
 	}
 };
-
-
 
 #endif

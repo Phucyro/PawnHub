@@ -88,13 +88,21 @@ void Game::start()
 {
 	std::cout << "Starting Game" << std::endl;
 	this->_initBoard();
+	this->_sendBoard();
 	do
 	{
+		++_turn;
 		this->_nextTurn();
+		this->_sendBoard();
 	}
 	while(! this->_isFinish());
+}
 
-
+void Game::_sendBoard(){
+	std::string state;
+	this->_boardState(state);
+	_player1->showBoard(state);
+	_player2->showBoard(state);
 }
 
 void Game::promote(Piece* piece)

@@ -17,10 +17,10 @@ class Pawn : public Piece {
 
 	public :
 
-		Pawn(const char color, Coordinate coords) noexcept : Piece(color, coords), _moved(false), _ghost(nullptr) {
+		Pawn(const char color, Coordinate coords, bool moved = false) noexcept : Piece(color, coords), _moved(moved), _ghost(nullptr) {
 			_str[TYP] = 'p';
 		}
-		Pawn(const char color, const char column , const char row) : Piece(color,column,row), _moved(false), _ghost(nullptr) {
+		Pawn(const char color, const char column , const char row, bool moved = false) : Piece(color,column,row), _moved(moved), _ghost(nullptr) {
 			_str[TYP] = 'p';
 		}
 
@@ -38,6 +38,8 @@ class Pawn : public Piece {
 		bool move(Coordinate, Board*, Game&) override;
 		bool canMove(Board*, Game&) override;
 		bool _checkMove(Coordinate, Board*, Game&) override;
+		using Piece::_isMovePossible;
+		bool _isMovePossible(Coordinate, Board*, Game&) override;
 };
 
 #endif
