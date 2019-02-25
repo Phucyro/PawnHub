@@ -2,6 +2,7 @@
 #define _CLIENTHANDLER_H_
 
 #include "Socket.hpp"
+#include "ClientGameControl.hpp"
 #include <string>
 
 
@@ -41,8 +42,9 @@ void chatHandler(std::string sender, std::string target, std::string text){
   }
 }
 
-void playGameHandler(){
-  std::cout << "Vous avez rejoins une file d'attente" << std::endl;
+void playGameHandler(Socket* socket){
+  std::cout << "Vous avez rejoint une file d'attente" << std::endl;
+  ClientGameControl control(*socket);
 }
 
 void leaveQueueHandler(){

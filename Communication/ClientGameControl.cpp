@@ -23,7 +23,6 @@ void ClientGameControl::receiveTurn(std::string message) {
 void ClientGameControl::receiveAskMove(std::string message) {
   std::string move = board.get_movement();
   sendMove(move);
-  // sendMove(board.get_movement());
 }
 
 void ClientGameControl::receiveAskPromotion(std::string message) {

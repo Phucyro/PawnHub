@@ -25,7 +25,7 @@ void receiveMessageHandler(Socket* socket){
         chatHandler(msg[1], msg[2], vectorToString(msg, 2));
         break;
       case '4' :
-        playGameHandler();
+        playGameHandler(socket);
         break;
       case '5' :
         leaveQueueHandler();

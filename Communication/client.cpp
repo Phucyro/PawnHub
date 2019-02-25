@@ -16,14 +16,15 @@ int main(){
   std::cout << std::endl;
   socket.connectToServer(hostname);
 
-  // // Thread gere messages recus
+
+  socket.sendMessage("4 0");
+  // Thread gere messages recus
   // std::thread receive_thread(receiveMessageHandler, &socket);
   // receive_thread.detach();
-  //
-  // // Gere messages envoyes envoye par le client
-  // sendMessageHandler(&socket, &client_username);
+  receiveMessageHandler(&socket);
 
-  ClientGameControl control(socket);
+  // Gere messages envoyes envoye par le client
+  // sendMessageHandler(&socket, &client_username);
 
   return 0;
 }
