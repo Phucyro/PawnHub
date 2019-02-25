@@ -133,7 +133,7 @@ void Classic::_nextTurn() {
 	std::string playerMove;
 	while(!isMoveValid){
 		playerMove = currentPlayer->askMove();
-		std::cout<<"game recived: "<<playerMove<<std::endl;
+		std::cout<<"game received: "<<playerMove<<std::endl;
 		if (this->_fitInBoard(playerMove)){
 			Coordinate start = Coordinate(playerMove[0], playerMove[1]), end = Coordinate(playerMove[2], playerMove[3]);
 			isMoveValid = this->_executeMove(start, end, playerColor);
@@ -164,9 +164,9 @@ bool Classic::_isCheckmate(char playerColor){
 	if (king->canMove(_board, *this)) return false;
 	if (!moreThan2){
 		int rowMove = int(dangerousPiece->getRow()) - int(king->getRow());
-		int rowDirection = rowMove/std::abs(rowMove);
+		int rowDirection = rowMove == 0 ? 0 : rowMove/std::abs(rowMove);
 		int columnMove = int(dangerousPiece->getColumn()) - int(king->getColumn());
-		int columnDirection = columnMove/std::abs(columnMove);
+		int columnDirection = columnMove == 0 ? 0 : columnMove/std::abs(columnMove);
 
 		//bishop or pawn or queen case
 		if (std::abs(rowMove) == std::abs(columnMove)){
