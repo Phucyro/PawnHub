@@ -25,10 +25,24 @@ void Board::init_ncurses()
 /**Initialise les parametres pour ncurses**/
 {
   initscr();
+  start_color();
   cbreak();
   noecho();
   keypad(stdscr, TRUE); //utilisation du keypad
   curs_set(1);
+
+  /**
+  init_pair(1,COLOR_WHITE, COLOR_BLUE);
+  init_pair(2,COLOR_WHITE, COLOR_RED);
+
+  attron(COLOR_PAIR(1));
+  mvprintw(1,1,"P");
+  attroff(COLOR_PAIR(1));
+
+  attron(COLOR_PAIR(2));
+  mvprintw(4,4,"T");
+  attroff(COLOR_PAIR(2));
+  **/
 
   init_windows();
 }
@@ -53,7 +67,12 @@ void Board::init_windows()
   draw_infos();
 
   refresh_board();
+  getch();
+  endwin();
+
 }
+
+
 
 void Board::draw_infos()
 /** Initialise la fenetre des infos **/
@@ -66,7 +85,7 @@ void Board::draw_infos()
 
   mvwprintw(infos_win , 4, 1, "LAST MOVE : ...");
 
-  mvwprintw(infos_win , 7, 1, "PLAYER'S TURN : ...");
+  mvwprintw(infos_win , 7, 1, "TURN : ...");
 
   mvwprintw(infos_win , 10, 1, "PRESS F4 TO QUIT");
 
@@ -170,4 +189,25 @@ void Board::exit()
   delwin(infos_win);
 
   endwin();
+}
+
+void Board::change_mode(std::string mode)
+{
+  mvwprintw(infos_win,1,13,mode.c_str());
+  refresh();
+  wrefresh(infos_win);
+}
+
+void Board::change_last_move(std::string move)
+{
+  mvwprintw(infos_win,4,13,move.c_str());
+  refresh();
+  wrefresh(infos_win);
+}
+
+void Board::change_turn(std::string turn)
+{
+  mvwprintw(infos_win,7,8,turn.c_str());
+  refresh();
+  wrefresh(infos_win);
 }

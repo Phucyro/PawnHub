@@ -30,7 +30,21 @@ void separatePieces(unsigned int a, std::string message, std::string colour) {
   Coordinate coor(message[a+1], message[a+2]);
   int column = coor.getRealColumn();
   int line = coor.getRealRow();
+
+  if (colour == "white")
+  {
+    init_pair(1, COLOR_WHITE, COLOR_RED);
+  }
+
+  else if (colour == "black")
+  {
+    init_pair(1, COLOR_WHITE, COLOR_BLUE);
+  }
+
+  attron(COLOR_PAIR(1));
   mvprintw(1+(line*OFFSET), 1+(column*OFFSET), "%c", piece);
+  attroff(COLOR_PAIR(1));
+
   // still need to set colour;
 }
 
