@@ -18,9 +18,6 @@ class Piece {
 	  Coordinate 	_coords ; 	// coords of Piece
     bool 				_isTaken; 	// tells if piece has been taken
 		char 				_str[4]	; 	// string containing info about piece
-		bool				_2Dimension; // tells us if piece in 2nd dimension
-
-		// TODO: addition of _2Dimension to str
 
 		Piece(const char color, const char column, const char row) : _color(color), _coords(column, row),_isTaken(false),_str(){
 			_str[ROW] = _coords.getAbstractRow();
@@ -47,7 +44,7 @@ class Piece {
 
 		virtual Piece* _doMove(Coordinate, Board*,Game&);
 		virtual void _reverseMove(Coordinate, Board*, Game&, Piece*);
-		inline bool _isPlaceFree(Coordinate place ,Board* board)
+		virtual bool _isPlaceFree(Coordinate place ,Board* board)
 		{
 			Piece* piece = board->getCase(place);
 			return (!piece) || piece->_str[TYP] == 'g';
@@ -77,10 +74,6 @@ class Piece {
 		bool isTaken() const {return _isTaken;}
 		virtual bool _isMovePossible(Coordinate, Board*, Game&);
 		bool _isMovePossible(int column, int row, Board* board, Game& game){return _isMovePossible(Coordinate(int (this->getColumn()) + column, int(this->getRow()) + row), board, game);}
-
-		//Alice Chess addition
-		bool _getDimension(){return _2Dimension;}
-		void _swapDimension(){_2Dimension = !_2Dimension;}
 };
 #include "Game.hpp"
 #endif
