@@ -23,7 +23,6 @@ std::string Player::askMove(){
 	char res[5];
 	read(_pipe[0], &res, sizeof(char)*4);
 	res[4] = '\0';
-	std::cout<<res<<std::endl;
 	return std::string(res);
 }
 
