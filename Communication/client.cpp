@@ -14,17 +14,22 @@ int main(){
   std::cout << "Please enter hostname: ";
   std::cin >> hostname;
   std::cout << std::endl;
-  socket.connectToServer(hostname);
 
 
-  socket.sendMessage("4 0");
-  // Thread gere messages recus
-  // std::thread receive_thread(receiveMessageHandler, &socket);
-  // receive_thread.detach();
-  receiveMessageHandler(&socket);
+  try {
+    socket.connectToServer(hostname);
+    socket.sendMessage("4 0");
+    // Thread gere messages recus
+    // std::thread receive_thread(receiveMessageHandler, &socket);
+    // receive_thread.detach();
+    receiveMessageHandler(&socket);
 
-  // Gere messages envoyes envoye par le client
-  // sendMessageHandler(&socket, &client_username);
+    // Gere messages envoyes envoye par le client
+    // sendMessageHandler(&socket, &client_username);
+  }catch(std::string error){
+    std::cout << error << std::endl;
+    return 1;
+  }
 
   return 0;
 }
