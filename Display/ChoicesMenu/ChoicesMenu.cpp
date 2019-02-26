@@ -1,13 +1,13 @@
-#include "Menu.hpp"
+#include "ChoicesMenu.hpp"
 
-Menu::Menu(const std::vector<std::string> param): main_win(nullptr), choices(param)
+ChoicesMenu::ChoicesMenu(const std::vector<std::string> param): main_win(nullptr), choices(param)
 {
   initscr(); // initialisation of ncurses
   noecho();
   cbreak();
   curs_set(0); // curseur invisible
 
-  // Initialisation of the window menu
+  // Initialisation of the window ChoicesMenu
   int y_max, x_max;
   getmaxyx(stdscr, y_max, x_max);
 
@@ -19,13 +19,13 @@ Menu::Menu(const std::vector<std::string> param): main_win(nullptr), choices(par
   init();
 }
 
-Menu::~Menu()
+ChoicesMenu::~ChoicesMenu()
 {
   delwin(main_win);
   endwin();
 }
 
-int Menu::init()
+int ChoicesMenu::init()
 {
 
   keypad(main_win, true); // allow use of arrow keys
@@ -68,6 +68,11 @@ int Menu::init()
       if (user_choice == 10) // ENTER
           break;
   }
+
+  mvprintw(1,1,"Your choice was %s", choices[highlight].c_str());
+
+  getch();
+  endwin();
 
   return highlight;
 

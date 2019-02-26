@@ -1,4 +1,4 @@
-#include "Menu.cpp"
+#include "ChoicesMenu.cpp"
 #include <string>
 #include <vector>
 
@@ -10,5 +10,5 @@ int main()
   test.push_back("Stats");
   test.push_back("Quitter");
 
-  Menu* menu = new Menu(test);
+  ChoicesMenu* menu = new ChoicesMenu(test);
 }

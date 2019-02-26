@@ -1,5 +1,5 @@
-#ifndef __MENU__HPP
-#define __MENU__HPP
+#ifndef __ChoicesMenu__HPP
+#define __ChoicesMenu__HPP
 
 //un bouton pour chaque mode
 //un pour quitter la file d'attente?
@@ -12,7 +12,7 @@
 #include <vector>
 #include <iostream>
 
-class Menu
+class ChoicesMenu
 {
 protected:
   const std::vector<std::string> choices;
@@ -20,9 +20,9 @@ protected:
   WINDOW* main_win;
 
 public:
-  Menu();
-  Menu(const std::vector<std::string> param);
-  ~Menu();
+  ChoicesMenu();
+  ChoicesMenu(const std::vector<std::string> param);
+  ~ChoicesMenu();
 
   int init();
 };
