@@ -142,8 +142,7 @@ bool Dark::_isFinish() {
 		_winner = currentPlayer;
 		return true;
 	}
-	if (this->_isStalemate(opponentColor)) return true;
-	return this->_notEnoughtPieces();
+	return this->_isStalemate(opponentColor);
 }
 
 bool Dark::_isCheckmate(char playerColor){
@@ -155,39 +154,6 @@ bool Dark::_isStalemate(char playerColor){
 	int offset = _calculOffset(playerColor);
 	for (int i = offset; i < offset+16; i++){
 		if ((!_pieces[i]->isTaken()) && _pieces[i]->canMove(_board, *this)) return false;
-	}
-	return true;
-}
-
-bool Dark::_notEnoughtPieces(){
-	char type;
-	Piece* lastPieceButKing = nullptr;
-	bool doubleBishop = false;
-	for (int i = 0; i < 32; i++){
-		type = _pieces[i]->isTaken() ? '!' : _pieces[i]->getType();
-		switch(type){
-			case '!': break;
-			case 'k': break;
-			case 'p': return false;
-			case 'q': return false;
-			case 'r': return false;
-			case 'h':{if (lastPieceButKing) return false;
-				  lastPieceButKing = _pieces[i];
-				  break;
-				 }
-			case 'b':{if (doubleBishop) return false;
-				  if (lastPieceButKing && _board->getCaseColor(_pieces[i]->getCoord()) == _board->getCaseColor(lastPieceButKing->getCoord())){
-				  	doubleBishop = true;
-				  	break;
-				  }
-				  if (!lastPieceButKing){
-				  	lastPieceButKing = _pieces[i];
-				  	break;
-				  }
-				  return false;
-				 }
-			default: break;
-		}
 	}
 	return true;
 }

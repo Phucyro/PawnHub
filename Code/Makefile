@@ -16,25 +16,25 @@ testDark: testDark.cpp Board.o Coordinate.o Game.o Piece.o Bishop.o Knight.o Dar
 	g++ $(FLAGS) Piece.o Coordinate.o Board.o Game.o Bishop.o Knight.o Dark.o Rook.o  Pawn.o King.o Queen.o GhostPawn.o Player.o Socket.o testDark.cpp -o testDark
 
 
-testCoordinate.o: testCoordinate.cpp testCoordinate.hpp Coordinate.hpp
+testCoordinate.o: testCoordinate.cpp testCoordinate.hpp Coordinate.hpp SimpleGame.hpp
 	g++ -c $(FLAGS) testCoordinate.cpp -lcppunit
 
-testBoard.o: testBoard.cpp testBoard.hpp Piece.hpp Board.hpp Coordinate.hpp
+testBoard.o: testBoard.cpp testBoard.hpp Piece.hpp Board.hpp Coordinate.hpp SimpleGame.hpp
 	g++ -c $(FLAGS) testBoard.cpp -lcppunit
 
-testBishop.o : testBishop.cpp testBishop.hpp Piece.hpp Board.hpp Game.hpp
+testBishop.o : testBishop.cpp testBishop.hpp Piece.hpp Board.hpp Game.hpp SimpleGame.hpp
 	g++ -c $(FLAGS) testBishop.cpp -lcppunit
 
-testKnight.o : testKnight.cpp testKnight.hpp Piece.hpp Board.hpp Game.hpp
+testKnight.o : testKnight.cpp testKnight.hpp Piece.hpp Board.hpp Game.hpp SimpleGame.hpp
 	g++ -c $(FLAGS) testKnight.cpp -lcppunit
 
-testRook.o : testRook.cpp testRook.hpp Piece.hpp Board.hpp Game.hpp
+testRook.o : testRook.cpp testRook.hpp Piece.hpp Board.hpp Game.hpp SimpleGame.hpp
 	g++ -c $(FLAGS) testRook.cpp -lcppunit
 
-testPawn.o : testPawn.cpp testPawn.hpp Piece.hpp Board.hpp Game.hpp
+testPawn.o : testPawn.cpp testPawn.hpp Piece.hpp Board.hpp Game.hpp SimpleGame.hpp
 	g++ -c $(FLAGS) testPawn.cpp -lcppunit
 
-testKing.o : testKing.cpp testKing.hpp Piece.hpp Board.hpp Game.hpp
+testKing.o : testKing.cpp testKing.hpp Piece.hpp Board.hpp Game.hpp SimpleGame.hpp
 	g++ -c $(FLAGS) testKing.cpp -lcppunit
 
 

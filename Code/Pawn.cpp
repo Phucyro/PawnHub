@@ -65,9 +65,13 @@ bool Pawn::_checkMove(Coordinate end, Board* board, Game& game){
 }
 
 bool Pawn::move(Coordinate end, Board* board, Game& game){
+	int rowMove = int(end.getRealRow()) - int(_coords.getRealRow());
+	int rowDirection = rowMove ? rowMove/std::abs(rowMove) : 0;
 	if (this->Piece::move(end, board, game)){
-		int rowMove = int(end.getRealRow()) - int(_coords.getRealRow());
-		if (rowMove == 2) _ghost = new GhostPawn(getColor(), Coordinate(_coords.getRealColumn(), _coords.getRealRow() - 1), game.getTurn(), this);
+		if (std::abs(rowMove) == 2) {
+			_ghost = new GhostPawn(getColor(), Coordinate(_coords.getRealColumn(), _coords.getRealRow() - 1*rowDirection), game.getTurn(), this);
+			board->setCase(Coordinate(_coords.getRealColumn(), _coords.getRealRow() - 1*rowDirection), _ghost);
+		}
 		if (_coords.getRealRow() == 0 || _coords.getRealRow() == board->getRow() - 1) _promote(game);
 		_moved = true;
 		return true;

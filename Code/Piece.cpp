@@ -16,7 +16,7 @@ Piece& Piece::operator= (const Piece& original){
 Piece* Piece::_doMove(Coordinate end, Board* board, Game& game){
 	Piece *takenPiece;
 	takenPiece = board->movePiece(_coords, end);
-	if (takenPiece) takenPiece->changeIsTaken(game.getTurn(),takenPiece,board);
+	if (takenPiece) takenPiece->changeIsTaken(game.getTurn(),this,board);
 	return takenPiece;
 }
 
