@@ -36,7 +36,13 @@ bool Pawn::_checkMove(Coordinate end, Board* board, Game& game){
 	if (this->getColor() == 'w'){
 		if (std::abs(columnMove) == 1){
 			if (rowMove != 1) return false;
-			if ((!_isPlaceFree(end, board)) && board->getCase(end)->getColor() == 'w') return false;
+			if (!_isPlaceFree(end, board)) {
+				if( board->getCase(end)->getColor() == 'w') return false;
+			}
+			else{
+				GhostPawn* ghost = dynamic_cast<GhostPawn*> (board->getCase(end));
+				if (!(ghost && ghost->getColor() == 'w' && ghost->isActive(game.getTurn()))) return false;
+			}
 		}
 		else{
 			if (rowMove > 2 || rowMove < 1) return false;
@@ -50,7 +56,13 @@ bool Pawn::_checkMove(Coordinate end, Board* board, Game& game){
 	else {
 		if (std::abs(columnMove) == 1){
 			if (rowMove != -1) return false;
-			if ((!_isPlaceFree(end, board)) && board->getCase(end)->getColor() == 'b') return false;
+			if (!_isPlaceFree(end, board)) {
+				if (board->getCase(end)->getColor() == 'b') return false;
+			}
+			else{
+				GhostPawn* ghost = dynamic_cast<GhostPawn*> (board->getCase(end));
+				if (!(ghost && ghost->getColor() == 'b' && ghost->isActive(game.getTurn()))) return false;
+			}
 		}
 		else{
 			if (rowMove < -2 || rowMove > -1) return false;

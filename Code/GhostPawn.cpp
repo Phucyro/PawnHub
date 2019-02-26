@@ -14,7 +14,7 @@ GhostPawn& GhostPawn::operator= (const GhostPawn& original){
 }
 
 void GhostPawn::changeIsTaken(unsigned turn, Piece* taker, Board* board){
-  if (_isActive(turn) && dynamic_cast<Pawn*>(taker)){
+  if (isActive(turn) && dynamic_cast<Pawn*>(taker)){
     int rowDirection = _color == 'w' ? 1 : -1;
     if(_isTaken) board->setCase(Coordinate(int(_coords.getRealColumn()), int(_coords.getRealRow()) + 1*rowDirection), _target);
     else board->setCase(Coordinate(int(_coords.getRealColumn()), int(_coords.getRealRow()) + 1*rowDirection), nullptr);
@@ -24,7 +24,7 @@ void GhostPawn::changeIsTaken(unsigned turn, Piece* taker, Board* board){
   this->Piece::changeIsTaken();
 }
 
-bool GhostPawn::_isActive(unsigned turn){
+bool GhostPawn::isActive(unsigned turn){
   return turn == _creationTurn + 1;
 }
 

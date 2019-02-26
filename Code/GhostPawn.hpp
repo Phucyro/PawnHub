@@ -6,9 +6,6 @@ class Pawn;
 
 class GhostPawn : public Piece{
 
-  private :
-      bool _isActive(unsigned);
-
   protected :
       unsigned _creationTurn;
       Pawn *_target ;
@@ -28,6 +25,7 @@ class GhostPawn : public Piece{
       void changeIsTaken(unsigned, Piece*, Board*) override;
       bool canMove(Board*, Game&) override{return false;}
       bool hasMoved() const override {return false;}
+      bool isActive(unsigned);
 };
 
 #include "Pawn.hpp"
