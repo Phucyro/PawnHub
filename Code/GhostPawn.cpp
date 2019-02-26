@@ -4,6 +4,8 @@
 #include <cmath>
 #include "GhostPawn.hpp"
 
+
+
 GhostPawn& GhostPawn::operator= (const GhostPawn& original){
   this->Piece::operator= (original);
   _creationTurn = original._creationTurn;
@@ -13,12 +15,13 @@ GhostPawn& GhostPawn::operator= (const GhostPawn& original){
 
 void GhostPawn::changeIsTaken(unsigned turn, Piece* taker, Board* board){
   if (_isActive(turn) && dynamic_cast<Pawn*>(taker)){
-    if(_isTaken) board->setCase(Coordinate(_coords.getRealColumn(), _coords.getRealRow() + 1u), _target);
-    else board->setCase(Coordinate(_coords.getRealColumn(), _coords.getRealRow() + 1u), nullptr);
+    int rowDirection = _color == 'w' ? 1 : -1;
+    if(_isTaken) board->setCase(Coordinate(int(_coords.getRealColumn()), int(_coords.getRealRow()) + 1*rowDirection), _target);
+    else board->setCase(Coordinate(int(_coords.getRealColumn()), int(_coords.getRealRow()) + 1*rowDirection), nullptr);
 
     _target->changeIsTaken();
-    this->Piece::changeIsTaken();
   }
+  this->Piece::changeIsTaken();
 }
 
 bool GhostPawn::_isActive(unsigned turn){
