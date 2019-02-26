@@ -126,16 +126,19 @@ bool Alice::_executeMove(Coordinate start, Coordinate end, char playerColor){
 void Alice::_nextTurn() {
 	Player *currentPlayer = _getCurrentPlayer();
 	char playerColor = currentPlayer == _player1 ? 'w':'b';
+	Coordinate start,end;
 
 	bool isMoveValid = false;
 	std::string playerMove;
 	while(!isMoveValid){
 		playerMove = currentPlayer->askMove();
 		if (this->_fitInBoard(playerMove)){
-			Coordinate start = Coordinate(playerMove[0], playerMove[1]), end = Coordinate(playerMove[2], playerMove[3]);
+			start = Coordinate(playerMove[0], playerMove[1]);
+			end = Coordinate(playerMove[2], playerMove[3]);
 			isMoveValid = this->_executeMove(start, end, playerColor);
 		}
 	}
+	this->_swapDimension(end); //TODO MAYBE
 }
 
 bool Alice::_isCheckmate(char playerColor){
