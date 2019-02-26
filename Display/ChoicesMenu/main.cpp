@@ -4,11 +4,16 @@
 
 int main()
 {
-  std::vector<std::string> test;
-  test.push_back("Jouer");
-  test.push_back("Chat");
-  test.push_back("Stats");
-  test.push_back("Quitter");
+  std::vector<std::string> mainMenu,playMenu,type;
+  mainMenu.push_back("Login");
+  mainMenu.push_back("Quitter");
+  mainMenu.push_back("Credits");
 
-  ChoicesMenu* menu = new ChoicesMenu(test);
+  playMenu.push_back("Jouer");
+  playMenu.push_back("Chat");
+  playMenu.push_back("Stats");
+  playMenu.push_back("Quitter");
+
+
+  ChoicesMenu* menu = new ChoicesMenu(mainMenu,playMenu);
 }

@@ -15,16 +15,16 @@
 class ChoicesMenu
 {
 protected:
-  const std::vector<std::string> choices;
+  const std::vector<std::string> mainMenu,playMenu;
 
   WINDOW* main_win;
 
 public:
   ChoicesMenu();
-  ChoicesMenu(const std::vector<std::string> param);
+  ChoicesMenu(const std::vector<std::string> mainMenu,const std::vector<std::string> playMenu);
   ~ChoicesMenu();
 
-  int init();
+  void init();
 };
 
 #endif
