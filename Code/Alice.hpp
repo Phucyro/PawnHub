@@ -97,6 +97,12 @@ class Alice : public Game {
 		}
 		return false;
 	}
+
+	void _swapDimension(Coordinate end){
+		Piece *movingPiece;
+		movingPiece = _board->getCase(end);
+		movingPiece->_swapDimension();
+	}
 };
 
 #endif

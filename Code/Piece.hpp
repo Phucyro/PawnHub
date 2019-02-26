@@ -21,7 +21,7 @@ class Piece {
 		bool				_2Dimension; // tells us if piece in 2nd dimension
 
 		// TODO: addition of _2Dimension to str
-		 
+
 		Piece(const char color, const char column, const char row) : _color(color), _coords(column, row),_isTaken(false),_str(){
 			_str[ROW] = _coords.getAbstractRow();
 			_str[COL] = _coords.getAbstractColumn();
@@ -80,7 +80,7 @@ class Piece {
 
 		//Alice Chess addition
 		bool _getDimension(){return _2Dimension;}
-		void swapDimension(){_2Dimension = !_2Dimension;}
+		void _swapDimension(){_2Dimension = !_2Dimension;}
 };
 #include "Game.hpp"
 #endif
