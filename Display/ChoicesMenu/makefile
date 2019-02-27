@@ -3,7 +3,7 @@ FLAGS= -std=c++17 -masm=intel -Wpedantic -Wall -Wextra -Wconversion -Weffc++ \
 		-Woverloaded-virtual -Wsign-promo -Wzero-as-null-pointer-constant \
 		-Wsuggest-final-types -Wsuggest-final-methods -Wsuggest-override
 
-LFLAGS= -pthread -lncurses
+LFLAGS= -pthread -lncurses -lform
 
 all: main clean
 
