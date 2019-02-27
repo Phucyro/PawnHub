@@ -52,6 +52,7 @@ void inline receiveMessageHandler(Socket* socket, Data* data, PlayersMap* player
   if (player->getQueueNumber() != -1) matchmaking->removePlayer(player);
   player->getSocket()->closeSocket();
   players_map->erase(player->getName());
+  data->saveUserData(player->getName());
   }
 
 
