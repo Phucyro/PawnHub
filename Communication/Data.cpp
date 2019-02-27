@@ -5,7 +5,7 @@ Data::Data(const std::string path) : _path(path), _dataMap({}), _ladders({}) {
   _ladders["Dark"] = {};
   _ladders["Horde"] = {};
   _ladders["Alice"] = {};
-  //initLadder();
+  initLadder();
 }
 
 
@@ -182,6 +182,7 @@ unsigned int Data::getUserAliceDraw(const std::string username){
 
 void Data::addUserClassicWin(const std::string username){
   ++(std::get<1>(_dataMap[username])[0]);
+  updateLadder("Classic", {username, std::get<1>(_dataMap[username])});
 }
 
 void Data::addUserClassicLose(const std::string username){
@@ -194,6 +195,7 @@ void Data::addUserClassicDraw(const std::string username){
 
 void Data::addUserDarkWin(const std::string username){
   ++(std::get<2>(_dataMap[username])[0]);
+  updateLadder("Dark", {username, std::get<2>(_dataMap[username])});
 }
 
 void Data::addUserDarkLose(const std::string username){
@@ -206,6 +208,7 @@ void Data::addUserDarkDraw(const std::string username){
 
 void Data::addUserHordeWin(const std::string username){
   ++(std::get<3>(_dataMap[username])[0]);
+  updateLadder("Horde", {username, std::get<3>(_dataMap[username])});
 }
 
 void Data::addUserHordeLose(const std::string username){
@@ -218,6 +221,7 @@ void Data::addUserHordeDraw(const std::string username){
 
 void Data::addUserAliceWin(const std::string username){
   ++(std::get<4>(_dataMap[username])[0]);
+  updateLadder("Alice", {username, std::get<4>(_dataMap[username])});
 }
 
 void Data::addUserAliceLose(const std::string username){
@@ -247,26 +251,25 @@ void Data::updateLadder(const std::string gamemode, UserLadderData data){
     while (pos != 0 && std::get<1>(data)[0] > std::get<1>(_ladders[gamemode][pos-1])[0]){
       // Si le joueur se trouvait dans le classement, le supprime et le replace
       if (std::get<0>(data) == std::get<0>(_ladders[gamemode][pos-1])){
-        _ladders[gamemode].erase(_ladders[gamemode].begin() + pos);
+        _ladders[gamemode].erase(_ladders[gamemode].begin() + pos-1);
         if (pos != 1) --pos;
       }
       --pos;
     }
 
     // Ajoute l'utilisateur au classement si joueur manquant dans top 10 ou si il a assez de points
-    if (pos != _ladders[gamemode].size() || (_ladders[gamemode].size() < 10 && !isInLadder(gamemode, std::get<0>(data)))){
+    if (pos != _ladders[gamemode].size() || (_ladders[gamemode].size() < 10 && !isInLadder(gamemode, std::get<0>(data))))
       _ladders[gamemode].insert(_ladders[gamemode].begin() + pos, data);
-    }
 
     // Supprime le joueur avec le moints de points si il y a plus de 10 joueurs
-    if (_ladders[gamemode].size() > 10){
+    if (_ladders[gamemode].size() > 10)
       _ladders[gamemode].pop_back();
-    }
   }
 }
 
 
 void Data::printLadder(const std::string gamemode){
+  std::cout << "Classement du mode : " << gamemode << std::endl;
   for (unsigned int a = 0; a < _ladders[gamemode].size(); ++a){
     std::cout << a << ") " << std::get<0>(_ladders[gamemode][a]) << " " <<
     std::get<1>(_ladders[gamemode][a])[0] << " points" << std::endl;
@@ -283,8 +286,11 @@ void Data::initLadder(){
       if (filename != "." && filename != ".."){
         const std::string username = filename.substr(0, filename.length()-4);
         loadUserData(username);
-        UserLadderData party_data = {username, std::get<1>(_dataMap[username])};
-        updateLadder("Classic", party_data);
+        updateLadder("Classic", {username, std::get<1>(_dataMap[username])});
+        updateLadder("Dark",    {username, std::get<2>(_dataMap[username])});
+        updateLadder("Horde",   {username, std::get<3>(_dataMap[username])});
+        updateLadder("Alice",   {username, std::get<4>(_dataMap[username])});
+        _dataMap.erase(username);
 
       }
     }
