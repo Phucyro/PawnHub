@@ -4,12 +4,13 @@
 #include "AliceBishop.hpp"
 
 Piece* AliceBishop::_doMove(Coordinate end, Board* board, Game& game){
-	this->Bishop::_doMove(end, board, game);
+	Piece* takenPiece = this->Bishop::_doMove(end, board, game);
 	_swapDimension();
+	return takenPiece;
 }
 
-Piece* AliceBishop::_reverseMove(Coordinate end, Board* board, Game& game){
-	this->Bishop::_reverseMove(end, board, game);
+void AliceBishop::_reverseMove(Coordinate end, Board* board, Game& game, Piece* takenPiece){
+	this->Bishop::_reverseMove(end, board, game, takenPiece);
 	_swapDimension();
 }
 

@@ -4,12 +4,13 @@
 #include "AliceKnight.hpp"
 
 Piece* AliceKnight::_doMove(Coordinate end, Board* board, Game& game){
-	this->Knight::_doMove(end, board, game);
+	Piece* takenPiece = this->Knight::_doMove(end, board, game);
 	_swapDimension();
+	return takenPiece;
 }
 
-Piece* AliceKnight::_reverseMove(Coordinate end, Board* board, Game& game){
-	this->Knight::_reverseMove(end, board, game);
+void AliceKnight::_reverseMove(Coordinate end, Board* board, Game& game, Piece* takenPiece){
+	this->Knight::_reverseMove(end, board, game, takenPiece);
 	_swapDimension();
 }
 

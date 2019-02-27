@@ -4,12 +4,13 @@
 #include "AliceQueen.hpp"
 
 Piece* AliceQueen::_doMove(Coordinate end, Board* board, Game& game){
-	this->Queen::_doMove(end, board, game);
+	Piece* takenPiece = this->Queen::_doMove(end, board, game);
 	_swapDimension();
+	return takenPiece;
 }
 
-Piece* AliceQueen::_reverseMove(Coordinate end, Board* board, Game& game){
-	this->Queen::_reverseMove(end, board, game);
+void AliceQueen::_reverseMove(Coordinate end, Board* board, Game& game, Piece* takenPiece){
+	this->Queen::_reverseMove(end, board, game, takenPiece);
 	_swapDimension();
 }
 

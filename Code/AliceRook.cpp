@@ -4,12 +4,13 @@
 #include "AliceRook.hpp"
 
 Piece* AliceRook::_doMove(Coordinate end, Board* board, Game& game){
-	this->Rook::_doMove(end, board, game);
+	Piece* takenPiece = this->Rook::_doMove(end, board, game);
 	_swapDimension();
+	return takenPiece;
 }
 
-Piece* AliceRook::_reverseMove(Coordinate end, Board* board, Game& game){
-	this->Rook::_reverseMove(end, board, game);
+void AliceRook::_reverseMove(Coordinate end, Board* board, Game& game, Piece* takenPiece){
+	this->Rook::_reverseMove(end, board, game, takenPiece);
 	_swapDimension();
 }
 

@@ -138,7 +138,6 @@ void Alice::_nextTurn() {
 			isMoveValid = this->_executeMove(start, end, playerColor);
 		}
 	}
-	this->_swapDimension(end); //TODO MAYBE
 }
 
 bool Alice::_isCheckmate(char playerColor){
