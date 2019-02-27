@@ -6,9 +6,7 @@
 #include <unistd.h>
 #include <sys/wait.h>
 #include "../Display/MenuHandler/MenuHandler.hpp"
-#include <fstream>
 
-std::ofstream file("debuggage.txt");
 
 void authentification(MenuHandler* menu, Socket* socket, int pipe_fd[]){
   char response[10] = "!";
@@ -43,9 +41,7 @@ void authentification(MenuHandler* menu, Socket* socket, int pipe_fd[]){
       username = menu->get_infos("Nom d'utilisateur :");
       menu->init_dataw();
       password = menu->get_infos("Mot de passe :");
-      file << "Avant sign" << std::endl;
       signIn(socket, username, password);
-      file << "Apres sign" << std::endl;
     }
     else {
       username = menu->get_infos("Nom d'utilisateur :");
@@ -76,9 +72,7 @@ int main(){
   receive_thread.detach();
 
   authentification(menuHandler, &socket, pipe_fd);
-
-  while (true){}
   std::cout << "Authentification enfin réussie" << std::endl;
-
+  
   return 0;
 }

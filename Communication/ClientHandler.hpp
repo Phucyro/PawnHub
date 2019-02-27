@@ -6,7 +6,7 @@
 #include <string>
 
 
-void signUpHandler(MenuHandler* menu, char msg, int pipe_fd[]){
+void signUpHandler(char msg, int pipe_fd[]){
   switch (msg){
     case '0' :
       std::cout << "Nom de compte indisponible" << std::endl;
@@ -19,7 +19,7 @@ void signUpHandler(MenuHandler* menu, char msg, int pipe_fd[]){
 }
 
 
-void signInHandler(MenuHandler* menu, char msg, int pipe_fd[]){ // Fonction bool
+void signInHandler(char msg, int pipe_fd[]){ // Fonction bool
   switch (msg){
     case '0' :
       write(pipe_fd[1], "2", 10); // Compte inexistant
