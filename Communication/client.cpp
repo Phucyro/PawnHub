@@ -6,6 +6,54 @@
 #include <unistd.h>
 #include <sys/wait.h>
 #include "../Display/MenuHandler/MenuHandler.hpp"
+#include "ClientFunctions.hpp"
+
+
+void chooseGamemode(MenuHandler* menu, Socket* socket){
+  menu->init_choicesw();
+  int choice = menu->get_choice({"Classic", "Dark", "Horde", "Alice", "Retourner au menu principal"});
+  switch (choice){
+    case 0 :
+      playGame(socket, 0);
+      break;
+    case 1 :
+      playGame(socket, 1);
+      break;
+    case 2 :
+      playGame(socket, 2);
+      break;
+    case 3 :
+      playGame(socket, 3);
+      break;
+    case 4 :
+      //retour
+  }
+}
+
+void waitingLine(MenuHandler* menu, Socket* socket){
+  menu->init_choicesw();
+  int choice = menu->get_choice({"Quitter"});
+}
+
+void gameMenu(MenuHandler* menu, Socket* socket){
+  bool end = false;
+  while (!end){
+    menu->init_choicesw();
+    int choice = menu->get_choice({"Jouer", "Ami", "Statistique", "Chat", "Quitter"});
+    switch (choice){
+      case 0 :
+        break;
+      case 1 :
+        break;
+      case 2 :
+        break;
+      case 3 :
+        break;
+      case 4 :
+        end = true;
+    }
+  }
+}
 
 
 void authentification(MenuHandler* menu, Socket* socket, int pipe_fd[]){
@@ -53,7 +101,7 @@ void authentification(MenuHandler* menu, Socket* socket, int pipe_fd[]){
     }
     read(pipe_fd[0], response, 10);
   }
-  menu->end_windows();
+  menu->clear_windows();
 }
 
 
@@ -72,7 +120,9 @@ int main(){
   receive_thread.detach();
 
   authentification(menuHandler, &socket, pipe_fd);
-  std::cout << "Authentification enfin réussie" << std::endl;
-  
+  gameMenu(menuHandler, &socket);
+
+  quit(menuHandler, &socket);
+  delete menuHandler;
   return 0;
 }

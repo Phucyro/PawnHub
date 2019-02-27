@@ -20,7 +20,8 @@ void inline receiveMessageHandler(Socket* socket, Data* data, PlayersMap* player
   Player* player = new Player(socket);
   try {
     while (!quit){
-      msg = splitString(socket->receiveMessage(), ' ');
+      msg = splitString(socket->receiveMessage(), '~');
+
       std::cout << "Received Message " << msg[0] + " " + msg[1] << std::endl;
 
       switch (msg[0][0]){
@@ -48,14 +49,13 @@ void inline receiveMessageHandler(Socket* socket, Data* data, PlayersMap* player
   catch (std::string const& error){
     std::cout << error << std::endl;
     // Supprime l'entrée username : Player()
+  }
+
   std::cout << "Deconnexion de " << player->getName() << std::endl;
   if (player->getQueueNumber() != -1) matchmaking->removePlayer(player);
   player->getSocket()->closeSocket();
   players_map->erase(player->getName());
   data->saveUserData(player->getName());
-  }
-
-
 }
 
 #endif

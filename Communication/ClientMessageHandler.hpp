@@ -13,7 +13,7 @@ void receiveMessageHandler(MenuHandler* menu, Socket* socket, int pipe_fd[]){
   std::vector<std::string> msg;
 
   while (true){
-    msg = splitString(socket->receiveMessage(), ' ');
+    msg = splitString(socket->receiveMessage(), '~');
 
     switch(msg[0][0]){
       case '1' : // [1] [resultat]
@@ -34,7 +34,7 @@ void receiveMessageHandler(MenuHandler* menu, Socket* socket, int pipe_fd[]){
     }
   }
 }
-
+/*
 void sendMessageHandler(Socket* socket){
   bool leave_game = false;
   std::string input;
@@ -67,6 +67,6 @@ void sendMessageHandler(Socket* socket){
     }
   }
 }
-
+*/
 
 #endif
