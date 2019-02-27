@@ -23,7 +23,7 @@ void receiveMessageHandler(MenuHandler* menu, Socket* socket, int pipe_fd[]){
         signInHandler(msg[1][0], pipe_fd);
         break;
       case '3' : // [3] [sender] [target] [text]
-        chatHandler(msg[1], msg[2], vectorToString(msg, 2));
+        //chatHandler(msg[1], msg[2], vectorToString(msg, 2));
         break;
       case '4' :
         playGameHandler(socket);

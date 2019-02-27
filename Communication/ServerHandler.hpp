@@ -18,8 +18,7 @@ void inline signUpHandler(Socket* socket, Data* data, std::string username, std:
     socket->sendMessage("1 0");
   }
   else {
-    data->addAccount(username, pswd);
-    data->write();
+    data->createUserAccount(username, pswd);
     socket->sendMessage("1 1");
   }
 }
@@ -28,12 +27,11 @@ void inline signInHandler(Socket* socket, PlayersMap* players_map, Data* data, P
   if (!(data->containsAccount(username))){
     socket->sendMessage("2 0"); // Compte inexistant
   }
-  else if (data->checkPassword(username, pswd)){
+  else if (data->checkUserPassword(username, pswd)){
     socket->sendMessage("2 1"); // Identification reussie
     player->setName(username);
     player->setSocket(socket);
     (*players_map)[username] = player;
-    std::cout << "Socket dans singin : " << socket << std::endl;
   }
   else {
     socket->sendMessage("2 2"); // Mauvais mot de passe

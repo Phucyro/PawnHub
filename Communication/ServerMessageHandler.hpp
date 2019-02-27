@@ -34,7 +34,7 @@ void inline receiveMessageHandler(Socket* socket, Data* data, PlayersMap* player
           signInHandler(socket, players_map, data, player, msg[1], msg[2]);
           break;
         case '3' : // [3] [sender] [target] [text]
-          chatHandler(players_map, msg[1], msg[2], vectorToString(msg, 3));
+          //chatHandler(players_map, msg[1], msg[2], vectorToString(msg, 3));
           break;
         case '4' :
           playGameHandler(matchmaking, player, msg[1]);
