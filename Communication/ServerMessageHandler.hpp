@@ -19,6 +19,7 @@ void inline receiveMessageHandler(Socket* socket, Data* data, PlayersMap* player
   std::vector<std::string> msg;
   Player* player = new Player(socket);
   try {
+    while (!quit){
       msg = splitString(socket->receiveMessage(), ' ');
       std::cout << "Received Message " << msg[0] + " " + msg[1] << std::endl;
 
@@ -42,6 +43,7 @@ void inline receiveMessageHandler(Socket* socket, Data* data, PlayersMap* player
           leaveQueueHandler(matchmaking, player);
           break;
       }
+    }
   }
   catch (std::string const& error){
     std::cout << error << std::endl;
