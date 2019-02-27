@@ -3,6 +3,7 @@
 
 #include <string>
 #include "Socket.hpp"
+#include "../Display/MenuHandler/MenuHandler.hpp"
 
 
 void quit(Socket* socket, bool* quit){
@@ -22,9 +23,8 @@ void signUp(Socket* socket, std::string username, std::string pswd1, std::string
 }
 
 
-void signIn(Socket* socket, std::string username, std::string pswd, std::string* client_username){
+void signIn(Socket* socket, std::string username, std::string pswd){
   socket->sendMessage(std::string("2") + " " + username + " " + pswd);
-  *client_username = username;
 }
 
 
