@@ -174,6 +174,7 @@ void Dark::_boardState(std::string& state){
 	for (int i = offset; i < 16+offset; i++) if (!_pieces[i]->isTaken()) state += _pieces[i]->toString();
 	state += "!";
 	for (int i = 16-offset; i < 32-offset; i++) if ((!_pieces[i]->isTaken()) && _isVisible(_pieces[i])) state += _pieces[i]->toString();
+	state += "#";
 }
 
 bool Dark::_isVisible(Piece* piece){
@@ -229,44 +230,5 @@ bool Dark::_isVisible(Piece* piece){
 	}
 	return false;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 #endif

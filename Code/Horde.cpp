@@ -207,36 +207,34 @@ bool Horde::_isCheckmate(char playerColor){
 
 			//bishop or pawn or queen case
 			if (std::abs(rowMove) == std::abs(columnMove)){
-				int row = 0, column = 0;
-				while(std::abs(row) < std::abs(rowMove)){
+				int row = int(king->getRow())+rowDirection, column = int(king->getColumn())+columnDirection;
+			while(row != dangerousPiece->getRow()){
 					for (int i = 16; i < 48; i++){
-						if ((!_pieces[i]->isTaken()) && _pieces[i]->_isMovePossible(column, row, _board, *this)) return false;
-						row += rowDirection;
-						column += columnDirection;
+						if ((!_pieces[i]->isTaken()) && _pieces[i]->_isMovePossible(Coordinate(column, row), _board, *this)) return false;
 					}
+					row += rowDirection;
+					column += columnDirection;
 				}
 			}
 			//rook or queen case(row)
 			else if (rowMove){
-				for (int j = 0; std::abs(j) < std::abs(rowMove); j += rowDirection){
+			for (int j = int(king->getRow())+rowDirection; j != dangerousPiece->getRow(); j += rowDirection){
 					for(int i = 16; i < 48; i++){
-						if ((!_pieces[i]->isTaken()) && _pieces[i]->_isMovePossible(0, j, _board, *this)) return false;
+						if ((!_pieces[i]->isTaken()) && _pieces[i]->_isMovePossible(Coordinate(int(king->getColumn()), j), _board, *this)) return false;
 					}
 				}
 			}
 			//rook or queen case(column)
 			else if (columnMove){
-				for (int j = 0; std::abs(j) < std::abs(columnMove); j += columnDirection){
+				for (int j = int(king->getColumn())+columnDirection; j != dangerousPiece->getColumn(); j += columnDirection){
 					for(int i = 16; i < 48; i++){
-						if ((!_pieces[i]->isTaken()) && _pieces[i]->_isMovePossible(0, j, _board, *this)) return false;
+						if ((!_pieces[i]->isTaken()) && _pieces[i]->_isMovePossible(Coordinate(j, int(king->getRow())), _board, *this)) return false;
 					}
 				}
 			}
-			//knight case
-			else{
-				for (int i = 16; i < 48; i++){
-					if ((!_pieces[i]->isTaken()) && _pieces[i]->_isMovePossible(0, 0, _board, *this)) return false;
-				}
+			//test if the dangerousPiece can be taken
+			for (int i = 16; i < 48; i++){
+				if ((!_pieces[i]->isTaken()) && _pieces[i]->_isMovePossible(dangerousPiece->getCoord(), _board, *this)) return false;
 			}
 		}
 	}
@@ -291,6 +289,7 @@ void Horde::_boardState(std::string& state){
 	for (; i < 32; i++){
 		if (!_pieces[i]->isTaken()) state += _pieces[i]->toString();
 	}
+	state += "#";
 }
 
 #endif

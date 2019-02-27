@@ -164,16 +164,16 @@ bool Classic::_isCheckmate(char playerColor){
 	if (king->canMove(_board, *this)) return false;
 	if (!moreThan2){
 		int rowMove = int(dangerousPiece->getRow()) - int(king->getRow());
-		int rowDirection = rowMove == 0 ? 0 : rowMove/std::abs(rowMove);
+		int rowDirection = rowMove ? rowMove/std::abs(rowMove) : 0;
 		int columnMove = int(dangerousPiece->getColumn()) - int(king->getColumn());
-		int columnDirection = columnMove == 0 ? 0 : columnMove/std::abs(columnMove);
+		int columnDirection = columnMove ? columnMove/std::abs(columnMove) : 0;
 
 		//bishop or pawn or queen case
 		if (std::abs(rowMove) == std::abs(columnMove)){
-			int row = 0, column = 0;
-			while(std::abs(row) < std::abs(rowMove)){
+			int row = int(king->getRow())+rowDirection, column = int(king->getColumn())+columnDirection;
+			while(row != dangerousPiece->getRow()){
 				for (int i = 16-offset; i < 32 - offset; i++){
-					if ((!_pieces[i]->isTaken()) && _pieces[i]->_isMovePossible(column, row, _board, *this)) return false;
+					if ((!_pieces[i]->isTaken()) && _pieces[i]->_isMovePossible(Coordinate(column, row), _board, *this)) return false;
 				}
 				row += rowDirection;
 				column += columnDirection;
@@ -181,25 +181,23 @@ bool Classic::_isCheckmate(char playerColor){
 		}
 		//rook or queen case(row)
 		else if (rowMove){
-			for (int j = 0; std::abs(j) < std::abs(rowMove); j += rowDirection){
+			for (int j = int(king->getRow())+rowDirection; j != dangerousPiece->getRow(); j += rowDirection){
 				for(int i = 16-offset; i < 32 - offset; i++){
-					if ((!_pieces[i]->isTaken()) && _pieces[i]->_isMovePossible(0, j, _board, *this)) return false;
+					if ((!_pieces[i]->isTaken()) && _pieces[i]->_isMovePossible(Coordinate(int(king->getColumn()), j), _board, *this)) return false;
 				}
 			}
 		}
 		//rook or queen case(column)
 		else if (columnMove){
-			for (int j = 0; std::abs(j) < std::abs(columnMove); j += columnDirection){
+			for (int j = int(king->getColumn())+columnDirection; j != dangerousPiece->getColumn(); j += columnDirection){
 				for(int i = 16-offset; i < 32 - offset; i++){
-					if ((!_pieces[i]->isTaken()) && _pieces[i]->_isMovePossible(0, j, _board, *this)) return false;
+					if ((!_pieces[i]->isTaken()) && _pieces[i]->_isMovePossible(Coordinate(j, int(king->getRow())), _board, *this)) return false;
 				}
 			}
 		}
-		//knight case
-		else{
-			for (int i = 16-offset; i < 32 - offset; i++){
-				if ((!_pieces[i]->isTaken()) && _pieces[i]->_isMovePossible(0, 0, _board, *this)) return false;
-			}
+		//test if the dangerousPiece can be taken
+		for (int i = 16-offset; i < 32 - offset; i++){
+			if ((!_pieces[i]->isTaken()) && _pieces[i]->_isMovePossible(dangerousPiece->getCoord(), _board, *this)) return false;
 		}
 	}
 	return true;
