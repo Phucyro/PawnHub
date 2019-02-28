@@ -8,6 +8,7 @@ class Coordinate
 	unsigned _row;
 
 	public:
+	constexpr Coordinate() noexcept : _column(), _row() {}   
 	constexpr Coordinate(unsigned column, unsigned row) noexcept : _column(column), _row(row) {}            //constructor with real coordinate
 	constexpr Coordinate(int column, int row) noexcept : Coordinate(unsigned(column), unsigned(row)) {}     //constructor with real coordinate
 	constexpr Coordinate(char column, char row) noexcept : _column(column - 'A'), _row(row - '1') {}        //constructor with abstract coordinate

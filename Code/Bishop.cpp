@@ -20,7 +20,7 @@ bool Bishop::_checkMove(Coordinate end, Board* board, Game& game){
 	if (std::abs(rowMove) != std::abs(columnMove)) return false; //test if the move normal for a bishop
 
 	//test if there is no piece in the way
-	int row = _coords.getRealRow()+rowDirection, column = _coords.getRealColumn()+columnDirection;
+	unsigned row = _coords.getRealRow()+rowDirection, column = _coords.getRealColumn()+columnDirection;
 	while(row != end.getRealRow()){
 		if (!_isPlaceFree(Coordinate(column, row), board)) return false;
 		row += rowDirection;
@@ -29,5 +29,13 @@ bool Bishop::_checkMove(Coordinate end, Board* board, Game& game){
 
 	if ((!_isPlaceFree(end, board)) && board->getCase(end)->getColor() == this->getColor()) return false;
 	return true;
+}
+
+bool Bishop::canMove(Board* board, Game& game){
+	if (this->_isMovePossible(1, 1, board, game)) return true;
+	if (this->_isMovePossible(-1, 1, board, game)) return true;
+	if (this->_isMovePossible(1, -1, board, game)) return true;
+	if (this->_isMovePossible(-1, -1, board, game)) return true;
+	return false;
 }
 #endif

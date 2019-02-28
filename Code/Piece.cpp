@@ -23,21 +23,35 @@ Piece* Piece::_doMove(Coordinate end, Board* board, Game& game){
 void Piece::_reverseMove(Coordinate end, Board* board, Game& game, Piece* takenPiece){
 	board->movePiece(end, _coords);
 	board->setCase(end, takenPiece);
-	takenPiece->changeIsTaken(game.getTurn(), this, board);
+	if (takenPiece) takenPiece->changeIsTaken(game.getTurn(), this, board);
 }
 
 bool Piece::move(Coordinate end, Board* board, Game& game){
 /*Move this piece to the correct location on the board and return true if the move is possible. Else return false and leave the board unchanged*/
+	Coordinate start = _coords;
 	if(!(this->_checkMove(end, board, game))) return false;
 	Piece* takenPiece = this->_doMove(end, board, game);
-
-	if(game.testCheck(this->getColor())){
+	_setCoordinate(end);
+	
+	if(game.testCheck(this->getColor())){		//0 a changer
+		_setCoordinate(start);
 		this->_reverseMove(end, board, game, takenPiece);
 		return false;
 	}
-	_coords = end;
 	return true;
 }
 
+bool Piece::_isMovePossible(Coordinate dest, Board* board, Game& game){
+	Coordinate start = this->getCoord();
+	if (!board->isInBoard(dest))return false;
+	Piece* takenPiece = board->getCase(dest);
+	if (!this->move(dest, board, game))return false;
+	board->movePiece(dest, start);
+	board->setCase(dest, takenPiece);
+	if (takenPiece) takenPiece->changeIsTaken(game.getTurn(), this, board);
+	_setCoordinate(start);
+	
+	return true;
+}
 
 #endif

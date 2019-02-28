@@ -4,7 +4,11 @@
 #include <ncurses.h>
 #include <string>
 
+<<<<<<< HEAD
 class LoginMenu
+=======
+class Menu
+>>>>>>> prototype
 {
 private:
   int y_max, x_max;
@@ -12,6 +16,7 @@ private:
   WINDOW* menu_win;
 
 public:
+<<<<<<< HEAD
 
   LoginMenu();
   ~LoginMenu();
@@ -20,6 +25,12 @@ public:
 
   std::string get_infos(std::string type);
 
+=======
+  Menu();
+  ~Menu();
+
+  std::string get_user_input();
+>>>>>>> prototype
 };
 
 #endif
