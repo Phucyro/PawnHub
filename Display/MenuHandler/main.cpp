@@ -18,13 +18,14 @@ int main()
 
   test->clear_windows();
 
+  test->init_statsw();
+  test->update_stats(0,"Julien",2, 3, 4);
   test->init_choicesw();
   std::vector<std::string> vecteur;
-  vecteur.push_back("Jouer");
-  vecteur.push_back("Stats");
   vecteur.push_back("Quitter");
 
   test->get_choice(vecteur);
+  test->refresh_board();
   test->end_windows();
 
 }
