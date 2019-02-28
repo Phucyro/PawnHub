@@ -26,13 +26,17 @@ public:
   void init_choicesw();
   int get_choice(const std::vector<std::string> param);
 
-  //stats menu
+  // init carre au dessus d'un menu choice
   void init_statsw();
 
-  void init_statst(std::string); //stats top 10
-  void init_statsp(std::string); //stats personelles
+  // stats menu
+  void init_statst(std::string mode); //stats top 10
+  void init_statsp(std::string name); //stats personelles
 
-  void update_stats(int, std::string, int, int, int);
+  void update_stats(int number, std::string first_column, int wins, int loses, int draws);
+
+  //friends list / invites menu
+  void init_friendsw(const std::vector<std::string> friends);
 
   //windows utilites
   void refresh_board();

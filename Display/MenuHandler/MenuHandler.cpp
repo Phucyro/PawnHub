@@ -216,7 +216,43 @@ void MenuHandler::update_stats(int number, std::string name, int wins, int loses
   refresh_board();
 }
 
+void MenuHandler::init_friendsw(const std::vector<std::string> friends)
+{
+  init_statsw();
 
+  int y_box, x_box;
+  getmaxyx(stats_w,y_box, x_box);
+
+  int x_split = (x_box/5);
+
+  /** for information about position
+  for (int i=0; i<y_box-2; i++)
+  {
+    mvwprintw(stats_w, 1+i, 5, "test");
+    mvwprintw(stats_w, 1+i, 5+x_split, "test");
+    mvwprintw(stats_w, 1+i, 5+2*x_split, "test");
+    mvwprintw(stats_w, 1+i, 5+3*x_split, "test");
+    mvwprintw(stats_w, 1+i, 5+4*x_split, "test");
+  }
+  **/
+
+  int count = 0;
+  int max_count = friends.size();
+
+  for (int j=0; j<y_box-2; j++)
+    for (int i=0; i<5; i++)
+    {
+      mvwprintw(stats_w, 1+j, 5+i*x_split, friends[count].c_str());
+      count += 1;
+
+      if (count > max_count - 1)
+      {
+        break;
+      }
+    }
+
+  refresh_board();
+}
 
 void MenuHandler::refresh_board()
 {
@@ -228,7 +264,7 @@ void MenuHandler::refresh_board()
 
 void MenuHandler::clear_windows()
 {
-  clear();
+  erase();
   refresh_board();
 }
 
