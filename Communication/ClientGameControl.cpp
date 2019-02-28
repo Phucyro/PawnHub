@@ -11,6 +11,7 @@ void ClientGameControl::receiveBoard(std::string message) {
 void ClientGameControl::receiveUpdate(std::string message) {
   if (message == "start") {
     board.init_ncurses();
+    // std::cout << "Game Started" << std::endl;
   }
   else if (message == "check") {
     board.declare_check();
@@ -68,6 +69,7 @@ void ClientGameControl::sendPromotion(std::string promotion) {
 void ClientGameControl::handleMessage() {
   std::string message = socket.receiveMessage();
   char header = message[0];
+  std::cout << "Received " << message << std::endl;
   (this->*(headerReceiveMap[header]))(message.erase(0,1));
 }
 

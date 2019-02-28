@@ -228,7 +228,7 @@ void MenuHandler::refresh_board()
 
 void MenuHandler::clear_windows()
 {
-  erase();
+  clear();
   refresh_board();
 }
 

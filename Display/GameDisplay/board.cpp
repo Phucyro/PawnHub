@@ -24,9 +24,7 @@ Board::~Board()
 void Board::init_ncurses()
 /**Initialise les parametres pour ncurses**/
 {
-  clear();
-  refresh();
-  start_color();
+  initscr();
   cbreak();
   noecho();
   keypad(stdscr, TRUE); //utilisation du keypad

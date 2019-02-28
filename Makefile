@@ -29,7 +29,7 @@ server: Communication/server.o $(SOCKETS) $(GAME_SERVER) $(LOGIN_SERVER) $(CONFI
 	$(CXX) $(FLAGS) -c -o $@ $<
 
 clean:
-	rm -f *.o Communication/*.o Display/GameDisplay/*.o Code/*.o
+	rm -f *.o Communication/*.o Display/GameDisplay/*.o Display/MenuHandler/*.o Code/*.o
 
 deepclean: clean
 	rm -f server client

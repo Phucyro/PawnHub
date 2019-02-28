@@ -26,6 +26,8 @@ void receiveMessageHandler(MenuHandler* menu, Socket* socket, int pipe_fd[]){
         //chatHandler(msg[1], msg[2], vectorToString(msg, 2));
         break;
       case '4' :
+        menu->clear_windows();
+        menu->end_windows();
         playGameHandler(socket);
         break;
       case '5' :

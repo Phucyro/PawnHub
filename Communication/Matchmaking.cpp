@@ -19,6 +19,7 @@ Matchmaking::Matchmaking(unsigned int number_of_queues) : _queues({}) {
 void Matchmaking::addPlayer(Player* player, unsigned int queue_number){
   _queues[queue_number].push_back(player); // 0 : Classic, 1 : Horde, 2 : Dark, 3 : Alice
   player->setQueueNumber(queue_number);
+  player->getSocket()->sendMessage("4");
   check(queue_number);
 }
 
