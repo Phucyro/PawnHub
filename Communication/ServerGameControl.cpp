@@ -32,6 +32,22 @@ void ServerGameControl::sendUpdate(Socket* socket, std::string update) {
   socket->sendMessage(header + update);
 }
 
+void ServerGameControl::sendStart(Socket* socket) {
+  sendUpdate(socket, "start");
+}
+
+void ServerGameControl::sendCheck(Socket* socket) {
+  sendUpdate(socket, "check");
+}
+
+void ServerGameControl::sendCheckmate(Socket* socket, std::string winner) {
+  sendUpdate(socket, winner);
+}
+
+void ServerGameControl::sendStalemate(Socket* socket) {
+  sendUpdate(socket, "stalemate");
+}
+
 void ServerGameControl::sendGameMode(Socket* socket, std::string mode) {
   std::string header = headerSendMap["gamemode"];
   socket->sendMessage(header + mode);

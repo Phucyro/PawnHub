@@ -68,8 +68,20 @@ void Player::setQueueNumber(int queueNumber){
 }
 
 
-void Player::transferUpdate(std::string& message) {
-	_control->sendUpdate(getSocket(), message);
+void Player::transferStart() {
+	_control->sendStart(getSocket());
+}
+
+void Player::transferCheck() {
+	_control->sendCheck(getSocket());
+}
+
+void Player::transferCheckmate(std::string& winner) {
+	_control->sendCheckmate(getSocket(), winner);
+}
+
+void Player::transferStalemate() {
+	_control->sendStalemate(getSocket());
 }
 
 void Player::transferGameMode(std::string& game) {

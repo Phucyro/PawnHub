@@ -12,6 +12,7 @@ class ClientGameControl {
 private:
   Board board;
   Socket socket;
+  bool game_ongoing;
 
   std::map<std::string, std::string> headerSendMap = {
    {"board", "B"},

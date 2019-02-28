@@ -96,6 +96,14 @@ void Board::update_turn(const char* turn) {
   refresh_board();
 }
 
+void Board::declare_check() {
+  mvprintw(15, 30, "%s", "CHECK");
+}
+
+void Board::endgame(const char* message) {
+  mvprintw(15, 30, "%s", message);
+}
+
 void Board::draw_coordinates()
 /** Initialise les coordonnees X et Y du board **/
 {

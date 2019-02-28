@@ -53,7 +53,10 @@ class Player{
 	void setSocket(Socket*);
 	void setQueueNumber(int);
 
-	void transferUpdate(std::string&);
+	void transferStart();
+	void transferCheck();
+	void transferCheckmate(std::string&);
+	void transferStalemate();
 	void transferGameMode(std::string&);
 	void transferColour(std::string&);
 	void transferTurn(unsigned);

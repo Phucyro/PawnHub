@@ -1,6 +1,6 @@
 #include "ClientGameControl.hpp"
 
-ClientGameControl::ClientGameControl(Socket _socket): board(), socket(_socket) {
+ClientGameControl::ClientGameControl(Socket _socket): board(), socket(_socket), game_ongoing(false) {
   startParty();
 }
 
@@ -13,10 +13,20 @@ void ClientGameControl::receiveUpdate(std::string message) {
     board.init_ncurses();
   }
   else if (message == "check") {
-    //board.declare_check();
+    board.declare_check();
   }
   else {
-    //board.endgame(message)      // either stalemate or checkmate
+    game_ongoing = false;
+    if (message == "stalemate") {
+      message = "Stalemate !";
+    }
+    else if (message == "white"){
+      message = "Checkmate: white player won !";
+    }
+    else {
+      message = "Checkmate: black player won !";
+    }
+    board.endgame(message.c_str());
   }
 }
 
@@ -62,5 +72,6 @@ void ClientGameControl::handleMessage() {
 }
 
 void ClientGameControl::startParty() {
-  while(true) {handleMessage();}
+  game_ongoing = true;
+  while(game_ongoing) {handleMessage();}
 }

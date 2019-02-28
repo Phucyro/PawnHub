@@ -48,6 +48,8 @@ public:
   void set_mode(const char*);
   void set_colour(const char*);
   void update_turn(const char*);
+  void declare_check();
+  void endgame(const char*);
 
   std::string get_movement();
   std::string get_promotion();

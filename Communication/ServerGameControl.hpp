@@ -40,6 +40,10 @@ private:
 public:
   void sendBoard(Socket*, std::string);
   void sendUpdate(Socket*, std::string);
+  void sendStart(Socket*);
+  void sendCheck(Socket*);
+  void sendCheckmate(Socket*, std::string);
+  void sendStalemate(Socket*);
   void sendGameMode(Socket*, std::string);
   void sendPlayerColour(Socket*, std::string);
   void sendTurn(Socket*, unsigned);

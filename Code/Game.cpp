@@ -105,9 +105,8 @@ void Game::start()
 }
 
 void Game::_sendStart(){
-	std::string update = "start";
-	_player1->transferUpdate(update);
-	_player2->transferUpdate(update);
+	_player1->transferStart();
+	_player2->transferStart();
 }
 
 void Game::_sendPlayerColour(){

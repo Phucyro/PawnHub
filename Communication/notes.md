@@ -6,7 +6,7 @@
   - faits: board, move, turn
   - en cours: game mode, player colour (biens recus mais probleme d'affichage)
   - a faire: promotion, check, endgame
-  --> prevenir des changements faits dans Code (update de \_start(); methodes pures de Game: \_sendGameMode; methodes virtuelles mais definies: \_sendStart, \_sendPlayerColour, \_sendTurn) (methodes de Player: transferUpdate, transferGameMode, transferColour, transferTurn)
+  --> prevenir des changements faits dans Code (update de \_start(); methodes pures de Game: \_sendGameMode; methodes virtuelles mais definies: \_sendStart, \_sendPlayerColour, \_sendTurn) (methodes de Player: transferStart, transferCheck, transferCheckmate, transferStalemate, transferGameMode, transferColour, transferTurn)
 
 ##Messages
 
