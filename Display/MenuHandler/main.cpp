@@ -28,9 +28,10 @@ int main()
   test->get_choice(vecteur);
   test->refresh_board();
   test->end_windows();
+  test->clear_windows();
 
   test->init_statsw();
-  test->init_statsp("Horde");
+  test->init_statst("Horde");
   test->update_stats(9,"Joe",4,6,8);
   test->init_choicesw();
   test->get_choice(vecteur);
