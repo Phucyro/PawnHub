@@ -18,7 +18,11 @@ int Socket::getFileDescriptor() {
 
 void Socket::connectToServer(std::string hostname) {
   // const char* converted_name = hostname.c_str();
-  hostent* host_addr = gethostbyname(hostname.c_str());
+  hostent* host_addr;
+  if((host_addr=gethostbyname(hostname.c_str()))==nullptr){
+    throw std::string("[Error] Hostname not found");
+  }
+
   sockaddr_in serv_addr;
   serv_addr.sin_family = AF_INET;
   serv_addr.sin_port = htons(PORT);
@@ -86,6 +90,7 @@ std::string Socket::receiveMessage() {
     }
     else if (bytes_received == 0) { // L'utilisateur s'est deconnecte
       throw std::string("[Error] Receive Socket shutdown");
+      closeSocket();
     }
     else {
       message_done = parseBuffer(message);

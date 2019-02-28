@@ -113,16 +113,28 @@ int main(){
   pipe(pipe_fd); // close ?
 
   // Demande de connexion au serveur
-  socket.connectToServer("ductrung-Lenovo-YOGA-510-14IKB");
+  std::string hostname;
+  std::cout << "Please enter hostname: ";
+  std::cin >> hostname;
+  std::cout << std::endl;
 
-  // Thread gere messages recus
-  std::thread receive_thread(receiveMessageHandler, menuHandler, &socket, pipe_fd);
-  receive_thread.detach();
 
-  authentification(menuHandler, &socket, pipe_fd);
-  gameMenu(menuHandler, &socket);
+  try {
+    socket.connectToServer(hostname);
 
-  quit(menuHandler, &socket);
-  delete menuHandler;
+    // Thread gere messages recus
+    std::thread receive_thread(receiveMessageHandler, menuHandler, &socket, pipe_fd);
+    receive_thread.detach();
+
+    authentification(menuHandler, &socket, pipe_fd);
+    gameMenu(menuHandler, &socket);
+
+    quit(menuHandler, &socket);
+    delete menuHandler;
+
+  } catch(std::string error) {
+    std::cout << error << std::endl;
+    return 1;
+  }
   return 0;
 }

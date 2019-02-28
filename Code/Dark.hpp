@@ -21,7 +21,6 @@ class Dark: public Game{
 	
 	bool _isCheckmate(char);
 	bool _isStalemate(char);
-	bool _notEnoughtPieces();
 	bool _executeMove(Coordinate, Coordinate, char);
 	
 	int _calculOffset(char playerColor){return playerColor == 'w' ? 0 : 16;}

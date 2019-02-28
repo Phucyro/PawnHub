@@ -5,7 +5,8 @@
 
 #include <iostream>
 #include <string>
-#include "includesPieceHPP.hpp"
+#include "includesAlicePieceHPP.hpp"
+#include "AlicePiece.hpp"
 #include "Game.hpp"
 
 
@@ -59,15 +60,23 @@ class Alice : public Game {
 		if (color == 'w' || color == 'a'){	//White		//a = all
 
 		//Pawn
+		AlicePiece* aliceKing = dynamic_cast<AlicePiece*>(_pieces[KING_INDEX]);
 		leftMaybePawn = Coordinate(_pieces[KING_INDEX]->getCoord().getRealColumn()+1, _pieces[KING_INDEX]->getCoord().getRealRow()+1);
 		Piece* MaybePawn = nullptr;
-		if (_board->isInBoard(leftMaybePawn)) MaybePawn = Game::_board->getCase(leftMaybePawn);
-		if (MaybePawn && MaybePawn->getColor() == 'b' && (MaybePawn->getType() == 'p' || MaybePawn->getType() == 'b' || MaybePawn->getType() == 'q' || MaybePawn->getType() == 'k')) return true;
+		AlicePiece* aliceMaybePawn;
+		if (_board->isInBoard(leftMaybePawn)){
+			MaybePawn = Game::_board->getCase(leftMaybePawn);
+			aliceMaybePawn = dynamic_cast<AlicePiece*>(MaybePawn);
+		}
+		if (MaybePawn && MaybePawn->getColor() == 'b' && (MaybePawn->getType() == 'p' || MaybePawn->getType() == 'b' || MaybePawn->getType() == 'q' || MaybePawn->getType() == 'k') && aliceMaybePawn->getDimension() == aliceKing->getDimension()) return true;
 
 		rightMaybePawn = Coordinate(_pieces[KING_INDEX]->getCoord().getRealColumn()-1, _pieces[KING_INDEX]->getCoord().getRealRow()+1);
 		MaybePawn = nullptr;
-		if (_board->isInBoard(rightMaybePawn)) MaybePawn = Game::_board->getCase(rightMaybePawn);
-		if (MaybePawn && MaybePawn->getColor() == 'b' && (MaybePawn->getType() == 'p' || MaybePawn->getType() == 'b' || MaybePawn->getType() == 'q' || MaybePawn->getType() == 'k')) return true;
+		if (_board->isInBoard(rightMaybePawn)){
+			MaybePawn = Game::_board->getCase(rightMaybePawn);
+			aliceMaybePawn = dynamic_cast<AlicePiece*>(MaybePawn);
+		}
+		if (MaybePawn && MaybePawn->getColor() == 'b' && (MaybePawn->getType() == 'p' || MaybePawn->getType() == 'b' || MaybePawn->getType() == 'q' || MaybePawn->getType() == 'k') && aliceMaybePawn->getDimension() == aliceKing->getDimension()) return true;
 
 		//strong pieces
 		for (unsigned i = 16; i <= _lastStrongPieceBlack; ++i){
@@ -79,15 +88,23 @@ class Alice : public Game {
 		if (color == 'b' || color == 'a'){	//Black		//a = all
 
 			//Pawn
+			AlicePiece* aliceKing = dynamic_cast<AlicePiece*>(_pieces[KING_INDEX+16]);
 			leftMaybePawn = Coordinate(_pieces[16+KING_INDEX]->getCoord().getRealColumn()-1, _pieces[16+KING_INDEX]->getCoord().getRealRow()-1);
 			Piece* MaybePawn = nullptr;
-			if (_board->isInBoard(leftMaybePawn)) MaybePawn = Game::_board->getCase(leftMaybePawn);
-			if (MaybePawn && MaybePawn->getColor() == 'w' && (MaybePawn->getType() == 'p' || MaybePawn->getType() == 'b' || MaybePawn->getType() == 'q' || MaybePawn->getType() == 'k')) return true;
+			AlicePiece* aliceMaybePawn;
+			if (_board->isInBoard(leftMaybePawn)){
+				MaybePawn = Game::_board->getCase(leftMaybePawn);
+				aliceMaybePawn = dynamic_cast<AlicePiece*>(MaybePawn);
+			}
+			if (MaybePawn && MaybePawn->getColor() == 'w' && (MaybePawn->getType() == 'p' || MaybePawn->getType() == 'b' || MaybePawn->getType() == 'q' || MaybePawn->getType() == 'k') && aliceMaybePawn->getDimension() == aliceKing->getDimension()) return true;
 
 			rightMaybePawn = Coordinate(_pieces[16+KING_INDEX]->getCoord().getRealColumn()+1, _pieces[16+KING_INDEX]->getCoord().getRealRow()-1);
 			MaybePawn = nullptr;
-			if (_board->isInBoard(rightMaybePawn)) MaybePawn = Game::_board->getCase(rightMaybePawn);
-			if (MaybePawn && MaybePawn->getColor() == 'w' && (MaybePawn->getType() == 'p' || MaybePawn->getType() == 'b' || MaybePawn->getType() == 'q' || MaybePawn->getType() == 'k')) return true;
+			if (_board->isInBoard(rightMaybePawn)){
+				MaybePawn = Game::_board->getCase(rightMaybePawn);
+				aliceMaybePawn = dynamic_cast<AlicePiece*>(MaybePawn);
+			}
+			if (MaybePawn && MaybePawn->getColor() == 'w' && (MaybePawn->getType() == 'p' || MaybePawn->getType() == 'b' || MaybePawn->getType() == 'q' || MaybePawn->getType() == 'k') && aliceMaybePawn->getDimension() == aliceKing->getDimension()) return true;
 
 			//strong pieces
 			for (unsigned i = 0; i <= _lastStrongPiecesWhite; ++i){

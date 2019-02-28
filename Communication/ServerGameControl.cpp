@@ -24,6 +24,7 @@ void ServerGameControl::receivePromotion(std::string message) {
 void ServerGameControl::sendBoard(Socket* socket, std::string board) {
   std::string header = headerSendMap["board"];
   socket->sendMessage(header + board);
+  sendTurn(socket, game->getTurn());
 }
 
 void ServerGameControl::sendUpdate(Socket* socket, std::string update) {
@@ -31,12 +32,33 @@ void ServerGameControl::sendUpdate(Socket* socket, std::string update) {
   socket->sendMessage(header + update);
 }
 
+void ServerGameControl::sendStart(Socket* socket) {
+  sendUpdate(socket, "start");
+}
+
+void ServerGameControl::sendCheck(Socket* socket) {
+  sendUpdate(socket, "check");
+}
+
+void ServerGameControl::sendCheckmate(Socket* socket, std::string winner) {
+  sendUpdate(socket, winner);
+}
+
+void ServerGameControl::sendStalemate(Socket* socket) {
+  sendUpdate(socket, "stalemate");
+}
+
+void ServerGameControl::sendGameMode(Socket* socket, std::string mode) {
+  std::string header = headerSendMap["gamemode"];
+  socket->sendMessage(header + mode);
+}
+
 void ServerGameControl::sendPlayerColour(Socket* socket, std::string colour) {
   std::string header = headerSendMap["colour"];
   socket->sendMessage(header + colour);
 }
 
-void ServerGameControl::sendTurn(Socket* socket, int turn) {
+void ServerGameControl::sendTurn(Socket* socket, unsigned turn) {
   std::string header = headerSendMap["turn"];
   socket->sendMessage(header + std::to_string(turn));
 }
