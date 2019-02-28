@@ -9,31 +9,30 @@
 #include "ClientHandler.hpp"
 #include "../Display/MenuHandler/MenuHandler.hpp"
 
-void receiveMessageHandler(MenuHandler* menu, Socket* socket, int pipe_fd[]){
+void receiveMessageHandler(MenuHandler* menu, Socket* socket, char* response){
   std::vector<std::string> msg;
 
-  while (true){
-    msg = splitString(socket->receiveMessage(), '~');
+  msg = splitString(socket->receiveMessage(), '~');
+  std::cout << "Received Message " << msg[0] + " " + msg[1] << std::endl;
 
-    switch(msg[0][0]){
-      case '1' : // [1] [resultat]
-        signUpHandler(msg[1][0], pipe_fd);
-        break;
-      case '2' : // [2] [resultat]
-        signInHandler(msg[1][0], pipe_fd);
-        break;
-      case '3' : // [3] [sender] [target] [text]
-        //chatHandler(msg[1], msg[2], vectorToString(msg, 2));
-        break;
-      case '4' :
-        menu->clear_windows();
-        menu->end_windows();
-        playGameHandler(socket);
-        break;
-      case '5' :
-        leaveQueueHandler();
-        break;
-    }
+  switch(msg[0][0]){
+    case '1' : // [1] [resultat]
+      signUpHandler(msg[1][0], response);
+      break;
+    case '2' : // [2] [resultat]
+      signInHandler(msg[1][0], response);
+      break;
+    case '3' : // [3] [sender] [target] [text]
+      //chatHandler(msg[1], msg[2], vectorToString(msg, 2));
+      break;
+    case '4' :
+      menu->clear_windows();
+      menu->end_windows();
+      playGameHandler(socket);
+      break;
+    case '5' :
+      leaveQueueHandler();
+      break;
   }
 }
 /*

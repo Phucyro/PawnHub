@@ -91,7 +91,7 @@ void Classic::_initBoard() {
 	Game::_board->setCase(Coordinate('G', '7'), Game::_pieces[30]);
 	Game::_board->setCase(Coordinate('H', '7'), Game::_pieces[31]);
 
-	_sendBoard();
+	// _sendBoard();
 }
 
 void Classic::_sendGameMode() {

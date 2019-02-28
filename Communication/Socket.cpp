@@ -1,4 +1,5 @@
 #include "Socket.hpp"
+#include <execinfo.h>
 
 Socket::Socket() : file_descriptor(0) {
   file_descriptor = socket(AF_INET, SOCK_STREAM, 0);
@@ -42,6 +43,9 @@ void Socket::closeSocket() {
 
 // Might break but my balmer peak state says it's perfect
 void Socket::sendMessage(std::string message) {
+  if (message[0] == 'B') throw std::string("Sent board too early");
+
+
   size_t message_size = message.length();
   if ((message_size % MSG_LENGTH) == 0) {
     message = message.append(std::string(MSG_LENGTH, PADDING));

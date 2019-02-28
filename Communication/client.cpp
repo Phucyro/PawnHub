@@ -15,6 +15,8 @@ void chooseGamemode(MenuHandler* menu, Socket* socket){
   switch (choice){
     case 0 :
       playGame(socket, "0");
+      char whatev[2] = "!";
+      receiveMessageHandler(menu, socket, whatev);
       break;
     // case 1 :
     //   playGame(socket, 1);
@@ -44,6 +46,7 @@ void gameMenu(MenuHandler* menu, Socket* socket){
     switch (choice){
       case 0 :
         chooseGamemode(menu, socket);
+        break;
       case 1 :
         break;
       case 2 :
@@ -100,7 +103,8 @@ void authentification(MenuHandler* menu, Socket* socket, int pipe_fd[]){
       confirmation = menu->get_infos("Confirmer mot de passe :");
       signUp(socket, username, password, confirmation);
     }
-    read(pipe_fd[0], response, 10);
+    // read(pipe_fd[0], response, 10);
+    receiveMessageHandler(menu, socket, response);
   }
   menu->clear_windows();
 }
@@ -124,8 +128,8 @@ int main(){
     socket.connectToServer(hostname);
 
     // Thread gere messages recus
-    std::thread receive_thread(receiveMessageHandler, menuHandler, &socket, pipe_fd);
-    receive_thread.detach();
+    // std::thread receive_thread(receiveMessageHandler, menuHandler, &socket, pipe_fd);
+    // receive_thread.detach();
 
     authentification(menuHandler, &socket, pipe_fd);
     gameMenu(menuHandler, &socket);
