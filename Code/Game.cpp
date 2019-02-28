@@ -158,9 +158,8 @@ void Game::promote(Piece* piece)
 
 	}
 	this->_changePawn(pawn, promotedPawn);
-	delete pawn;
 
-	// need to send updated board to players here, btw
+	this->_sendBoard();
 }
 
 #endif
