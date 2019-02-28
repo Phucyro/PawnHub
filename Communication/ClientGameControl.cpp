@@ -9,16 +9,30 @@ void ClientGameControl::receiveBoard(std::string message) {
 }
 
 void ClientGameControl::receiveUpdate(std::string message) {
-  std::cout << message << std::endl;
+  if (message == "start") {
+    board.init_ncurses();
+  }
+  else if (message == "check") {
+    //board.declare_check();
+  }
+  else {
+    //board.endgame(message)      // either stalemate or checkmate
+  }
+}
+
+void ClientGameControl::receiveGameMode(std::string message) {
+  const char* msg = message.c_str();
+  board.set_mode(msg);
 }
 
 void ClientGameControl::receivePlayerColour(std::string message) {
-  std::cout << message << std::endl;
+  const char* msg = message.c_str();
+  board.set_colour(msg);
 }
 
 void ClientGameControl::receiveTurn(std::string message) {
   const char* msg = message.c_str();
-  board.draw_infos(msg);
+  board.update_turn(msg);
 }
 
 void ClientGameControl::receiveAskMove(std::string message) {
@@ -48,6 +62,5 @@ void ClientGameControl::handleMessage() {
 }
 
 void ClientGameControl::startParty() {
-  board.init_ncurses();
   while(true) {handleMessage();}
 }

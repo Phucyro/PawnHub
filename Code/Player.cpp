@@ -67,6 +67,23 @@ void Player::setQueueNumber(int queueNumber){
 	_queueNumber = queueNumber;
 }
 
+
+void Player::transferUpdate(std::string& message) {
+	_control->sendUpdate(getSocket(), message);
+}
+
+void Player::transferGameMode(std::string& game) {
+	_control->sendGameMode(getSocket(), game);
+}
+
+void Player::transferColour(std::string& colour) {
+	_control->sendPlayerColour(getSocket(), colour);
+}
+
+void Player::transferTurn(unsigned turn) {
+	_control->sendTurn(getSocket(), turn);
+}
+
 void Player::receiveMove(std::string& message){
 	if (_recvActive){
 		_recvActive = false;

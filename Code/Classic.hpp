@@ -31,6 +31,7 @@ class Classic : public Game {
 	protected :
 
 	void _initBoard() override;
+	void _sendGameMode() override;
 	void _nextTurn() override;
 	bool _isFinish() override;
 	void _boardState(std::string&) override;

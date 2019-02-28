@@ -89,15 +89,37 @@ void Game::start()
 {
 	std::cout << "Starting Game" << std::endl;
 	this->_initBoard();
+	this->_sendGameMode();
+	this->_sendPlayerColour();
+	this->_sendStart();
 	this->_sendBoard();
 	do
 	{
 		++_turn;
+		this->_sendTurn();
 		this->_nextTurn();
 		this->_sendBoard();
 	}
 	while(! this->_isFinish());
 	std::cout << "Game finished" << std::endl;
+}
+
+void Game::_sendStart(){
+	std::string update = "start";
+	_player1->transferUpdate(update);
+	_player2->transferUpdate(update);
+}
+
+void Game::_sendPlayerColour(){
+	std::string colour = "White";
+	_player1->transferColour(colour);
+	colour = "Black";
+	_player2->transferColour(colour);
+}
+
+void Game::_sendTurn(){
+	_player1->transferTurn(getTurn());
+	_player2->transferTurn(getTurn());
 }
 
 void Game::_sendBoard(){

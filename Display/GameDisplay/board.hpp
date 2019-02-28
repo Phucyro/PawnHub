@@ -18,6 +18,8 @@ class Board
 
 protected:
   WINDOW* infos_win;
+  const char* mode;
+  const char* colour;
 
   void init_windows();
 
@@ -37,14 +39,17 @@ public:
 
   void draw_pieces(std::string);
 
-  void draw_infos(const char*);
+  void draw_infos();
 
-  void move_piece(int, int, int, int, std::string);
+  // void move_piece(int, int, int, int, std::string);
 
   void refresh_board();
 
-  std::string get_movement();
+  void set_mode(const char*);
+  void set_colour(const char*);
+  void update_turn(const char*);
 
+  std::string get_movement();
   std::string get_promotion();
 
   bool isRunning();

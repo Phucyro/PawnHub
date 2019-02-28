@@ -19,9 +19,13 @@ class Game
 	unsigned _lastStrongPiecesWhite;
 	unsigned _lastStrongPieceBlack;
 
+	virtual void _sendStart();
+	virtual void _sendPlayerColour();
+	virtual void _sendTurn();
 	virtual void _sendBoard();
 
 	virtual void _initBoard() = 0;
+	virtual void _sendGameMode() = 0;
 	virtual void _nextTurn() = 0;
 	virtual bool _isFinish() = 0;
 	virtual Player* _getCurrentPlayer() = 0;

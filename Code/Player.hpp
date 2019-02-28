@@ -52,6 +52,11 @@ class Player{
 	void setControl(ServerGameControl*);
 	void setSocket(Socket*);
 	void setQueueNumber(int);
+
+	void transferUpdate(std::string&);
+	void transferGameMode(std::string&);
+	void transferColour(std::string&);
+	void transferTurn(unsigned);
 	void receiveMove(std::string&);
 	void receivePromotion(std::string&);
 };

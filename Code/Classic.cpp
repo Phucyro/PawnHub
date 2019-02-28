@@ -94,6 +94,12 @@ void Classic::_initBoard() {
 	_sendBoard();
 }
 
+void Classic::_sendGameMode() {
+	std::string game = "Classic";
+	_player1->transferGameMode(game);
+	_player2->transferGameMode(game);
+}
+
 void Classic::_changePawn(Piece *pawn, Piece* promotedPawn){
 	int start, i, end;
 	if (pawn->getColor() == 'w'){

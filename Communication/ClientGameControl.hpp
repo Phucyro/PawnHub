@@ -16,17 +16,12 @@ private:
   std::map<std::string, std::string> headerSendMap = {
    {"board", "B"},
    {"update", "U"},
+   {"gamemode", "G"},
    {"colour", "X"},
    {"turn", "T"},
    {"askmove", "A"},
    {"promote", "P"},
    {"move", "M"},
-   {"quit", "0"},
-   {"register", "1"},
-   {"login", "2"},
-   {"chat", "3"},
-   {"play", "4"},
-   {"leave", "5"}
   };
 
 
@@ -37,6 +32,7 @@ public:
 private:
   void receiveBoard(std::string);
   void receiveUpdate(std::string);
+  void receiveGameMode(std::string);
   void receivePlayerColour(std::string);
   void receiveTurn(std::string);
   void receiveAskMove(std::string);
@@ -48,6 +44,7 @@ private:
   std::map<char, void(ClientGameControl::*)(std::string)> headerReceiveMap = {
     {'B', &ClientGameControl::receiveBoard},
     {'U', &ClientGameControl::receiveUpdate},
+    {'G', &ClientGameControl::receiveGameMode},
     {'X', &ClientGameControl::receivePlayerColour},
     {'T', &ClientGameControl::receiveTurn},
     {'A', &ClientGameControl::receiveAskMove},

@@ -8,4 +8,8 @@
 #define SIDE_LENGTH 2
 #define OFFSET (SIDE_LENGTH+1)
 
+// Colour effects
+#define WHITE_PLAYER 1
+#define BLACK_PLAYER 2
+
 #endif

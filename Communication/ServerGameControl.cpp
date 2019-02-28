@@ -32,6 +32,11 @@ void ServerGameControl::sendUpdate(Socket* socket, std::string update) {
   socket->sendMessage(header + update);
 }
 
+void ServerGameControl::sendGameMode(Socket* socket, std::string mode) {
+  std::string header = headerSendMap["gamemode"];
+  socket->sendMessage(header + mode);
+}
+
 void ServerGameControl::sendPlayerColour(Socket* socket, std::string colour) {
   std::string header = headerSendMap["colour"];
   socket->sendMessage(header + colour);
