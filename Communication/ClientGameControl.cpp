@@ -17,7 +17,8 @@ void ClientGameControl::receivePlayerColour(std::string message) {
 }
 
 void ClientGameControl::receiveTurn(std::string message) {
-  std::cout << message << std::endl;
+  const char* msg = message.c_str();
+  board.draw_infos(msg);
 }
 
 void ClientGameControl::receiveAskMove(std::string message) {

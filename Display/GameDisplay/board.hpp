@@ -23,8 +23,6 @@ protected:
 
   void draw_rectangle(int x1, int y1, int x2, int y2);
   void draw_coordinates();
-  void draw_infos();
-
 
   void test_game();
   void exit();
@@ -38,6 +36,8 @@ public:
   void init_ncurses();
 
   void draw_pieces(std::string);
+
+  void draw_infos(const char*);
 
   void move_piece(int, int, int, int, std::string);
 

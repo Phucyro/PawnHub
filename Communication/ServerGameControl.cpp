@@ -24,6 +24,7 @@ void ServerGameControl::receivePromotion(std::string message) {
 void ServerGameControl::sendBoard(Socket* socket, std::string board) {
   std::string header = headerSendMap["board"];
   socket->sendMessage(header + board);
+  sendTurn(socket, game->getTurn());
 }
 
 void ServerGameControl::sendUpdate(Socket* socket, std::string update) {
@@ -36,7 +37,7 @@ void ServerGameControl::sendPlayerColour(Socket* socket, std::string colour) {
   socket->sendMessage(header + colour);
 }
 
-void ServerGameControl::sendTurn(Socket* socket, int turn) {
+void ServerGameControl::sendTurn(Socket* socket, unsigned turn) {
   std::string header = headerSendMap["turn"];
   socket->sendMessage(header + std::to_string(turn));
 }

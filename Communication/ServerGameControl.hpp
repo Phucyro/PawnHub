@@ -46,7 +46,7 @@ public:
   void sendBoard(Socket*, std::string);
   void sendUpdate(Socket*, std::string);
   void sendPlayerColour(Socket*, std::string);
-  void sendTurn(Socket*, int);
+  void sendTurn(Socket*, unsigned);
   void sendAskMove(Socket*);
   void sendAskPromotion(Socket*);
 

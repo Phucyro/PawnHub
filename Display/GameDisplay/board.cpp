@@ -50,23 +50,23 @@ void Board::init_windows()
     }
 
   draw_coordinates();
-  draw_infos();
+  // draw_infos("0");
 
   refresh_board();
 }
 
-void Board::draw_infos()
+void Board::draw_infos(const char* infos)
 /** Initialise la fenetre des infos **/
 {
   int x_win, y_win;
   getmaxyx(infos_win, y_win, x_win);
 
-
   mvwprintw(infos_win, 1, 1, "GAME MODE : ...");
 
   mvwprintw(infos_win , 4, 1, "LAST MOVE : ...");
 
-  mvwprintw(infos_win , 7, 1, "PLAYER'S TURN : ...");
+  mvwprintw(infos_win , 7, 1, "%s", "PLAYER'S TURN : ");
+  mvwprintw(infos_win, 7, 17, "%c", infos);
 
   mvwprintw(infos_win , 10, 1, "PRESS F4 TO QUIT");
 
