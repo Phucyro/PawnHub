@@ -157,7 +157,7 @@ void Game::promote(Piece* piece)
 
 
 	}
-	this->_changePawn(pawn, promotedPawn);
+	this->_changePawn(pawn, promotedPawn, _board);
 
 	this->_sendBoard();
 }

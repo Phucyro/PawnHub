@@ -29,7 +29,7 @@ class Game
 	virtual void _nextTurn() = 0;
 	virtual bool _isFinish() = 0;
 	virtual Player* _getCurrentPlayer() = 0;
-	virtual void _changePawn(Piece*, Piece*) = 0;
+	virtual void _changePawn(Piece*, Piece*, Board*) = 0;
 	virtual void _boardState(std::string&) = 0;
 
 	Game(Piece**, unsigned, Player*, Player*, unsigned lastStrongPiecesWhite, unsigned lastStrongPieceBlack);

@@ -92,26 +92,35 @@ void Alice::_initBoard() {
 	Game::_board->setCase(Coordinate('H', '7'), Game::_pieces[31]);
 }
 
-void Alice::_changePawn(Piece *pawn, Piece* promotedPawn){
+void Alice::_changePawn(Piece *pawn, Piece* promotedPawn, Board* board){
 	int start, i, end;
 	if (pawn->getColor() == 'w'){
 		int start = _lastStrongPiecesWhite;
 		int i = _lastStrongPiecesWhite;
 		_lastStrongPiecesWhite ++;
 		end = 16;
+		for (; i < end; i++) {
+			if (_pieces[i] == pawn){
+				board->setCase(_pieces[i]->getCoord(), promotedPawn);
+				delete pawn;
+				_pieces[i] = _pieces[start];
+				_pieces[start] = promotedPawn;
+				break; // <3 <3 <3
+			}
+		}
 	}else{
 		start = _lastStrongPieceBlack;
 		i = _lastStrongPieceBlack;
 		_lastStrongPieceBlack ++;
 		end = 32;
-	}
-
-	for (; i < end; i++) {
-		if (_pieces[i] == pawn){
-			delete pawn;
-			_pieces[i] = _pieces[start];
-			_pieces[start] = promotedPawn;
-			break; // <3
+		for (; i < end; i++) {
+			if (_pieces[i] == pawn){
+				board->setCase(_pieces[i]->getCoord(), promotedPawn);
+				delete pawn;
+				_pieces[i] = _pieces[start];
+				_pieces[start] = promotedPawn;
+				break; // <3 <3 <3
+			}
 		}
 	}
 }

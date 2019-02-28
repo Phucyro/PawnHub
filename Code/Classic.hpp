@@ -38,7 +38,7 @@ class Classic : public Game {
 	Classic(const Classic&) = delete;
 	using Game::_pieces;
 
-	void _changePawn(Piece*, Piece*) override;
+	void _changePawn(Piece*, Piece*, Board*) override;
 
 	public :
 
