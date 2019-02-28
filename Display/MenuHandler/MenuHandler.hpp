@@ -28,6 +28,10 @@ public:
 
   //stats menu
   void init_statsw();
+
+  void init_statst(std::string); //stats top 10
+  void init_statsp(std::string); //stats personelles
+
   void update_stats(int, std::string, int, int, int);
 
   //windows utilites

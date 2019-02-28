@@ -132,6 +132,26 @@ void MenuHandler::init_statsw()
   stats_w = newwin(y_max-8, x_max-12, 0 , 5);
   box(stats_w, 0, 0);
 
+
+
+  /**   // A titre d'information pour les positions
+  for (int i=0; i<10 ; i++)
+  {
+    mvwprintw(stats_w, 5+i, 5, "1");
+    mvwprintw(stats_w, 5+i, 5+x_split, "1");
+    mvwprintw(stats_w, 5+i, 5+2*x_split, "1");
+    mvwprintw(stats_w, 5+i, 5+3*x_split, "1");
+  }
+  **/
+
+}
+
+void MenuHandler::init_statst(std::string mode)
+/** print la fenetre de top10 **/
+{
+  int y_max, x_max;
+  getmaxyx(stdscr, y_max, x_max);
+
   int x_title = x_max / 4;
 
   int y_box , x_box;
@@ -140,7 +160,7 @@ void MenuHandler::init_statsw()
   int x_split = (x_box/4) + 2;
   int y_split = (y_box/10);
 
-  mvwprintw(stats_w, 1, x_title + x_title/2, "TOP 10");
+  mvwprintw(stats_w, 1, x_title + x_title/2, "%s : Top 10 ", mode.c_str());
 
   mvwprintw(stats_w, 3, 5, "Username");
   mvwprintw(stats_w, 3, 5+1*x_split,"Wins");
@@ -153,16 +173,29 @@ void MenuHandler::init_statsw()
   }
 
   refresh_board();
+}
 
-  /**   // A titre d'information pour les positions
-  for (int i=0; i<10 ; i++)
-  {
-    mvwprintw(stats_w, 5+i, 5, "1");
-    mvwprintw(stats_w, 5+i, 5+x_split, "1");
-    mvwprintw(stats_w, 5+i, 5+2*x_split, "1");
-    mvwprintw(stats_w, 5+i, 5+3*x_split, "1");
-  }
-  **/
+void MenuHandler::init_statsp(std::string name)
+/** print la fenetre personnelle du joueur **/
+{
+  int y_max, x_max;
+  getmaxyx(stdscr, y_max, x_max);
+
+  int x_title = x_max / 4;
+
+  int y_box, x_box;
+  getmaxyx(stats_w, y_box, x_box);
+
+  int x_split = (x_box/4) + 2;
+  int y_split = (y_box/10);
+
+  mvwprintw(stats_w,1,x_title+x_title/2, "%s's stats", name.c_str());
+  mvwprintw(stats_w, 3, 5, "Mode");
+  mvwprintw(stats_w, 3, 5+1*x_split,"Wins");
+  mvwprintw(stats_w, 3, 5+2*x_split, "Loses");
+  mvwprintw(stats_w, 3, 5+3*x_split, "Draws");
+
+  refresh_board();
 
 }
 
@@ -182,6 +215,8 @@ void MenuHandler::update_stats(int number, std::string name, int wins, int loses
 
   refresh_board();
 }
+
+
 
 void MenuHandler::refresh_board()
 {
