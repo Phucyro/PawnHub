@@ -198,7 +198,12 @@ std::string Board::get_movement()
 }
 
 std::string Board::get_promotion() {
-  std::string promotion = "hello";
+  mvprintw(15, 30, "%s", "What do you wish to promote your pawn to?");
+  mvprintw(16, 30, "%s", "Queen: q   Bishop: b   Knight: h    Rook: r");
+
+  int answer = getch();
+  std::string promotion;
+  promotion.append(1, answer);
   return promotion;
 }
 
