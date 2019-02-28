@@ -14,19 +14,20 @@ void chooseGamemode(MenuHandler* menu, Socket* socket){
   int choice = menu->get_choice({"Classic", "Dark", "Horde", "Alice", "Retourner au menu principal"});
   switch (choice){
     case 0 :
-      playGame(socket, 0);
+      playGame(socket, "0");
       break;
-    case 1 :
-      playGame(socket, 1);
-      break;
-    case 2 :
-      playGame(socket, 2);
-      break;
-    case 3 :
-      playGame(socket, 3);
-      break;
-    case 4 :
-      //retour
+    // case 1 :
+    //   playGame(socket, 1);
+    //   break;
+    // case 2 :
+    //   playGame(socket, 2);
+    //   break;
+    // case 3 :
+    //   playGame(socket, 3);
+    //   break;
+    // case 4 :
+    //   //retour
+    //   break;
   }
 }
 
@@ -42,7 +43,7 @@ void gameMenu(MenuHandler* menu, Socket* socket){
     int choice = menu->get_choice({"Jouer", "Ami", "Statistique", "Chat", "Quitter"});
     switch (choice){
       case 0 :
-        break;
+        chooseGamemode(menu, socket);
       case 1 :
         break;
       case 2 :

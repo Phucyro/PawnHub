@@ -24,7 +24,8 @@ Board::~Board()
 void Board::init_ncurses()
 /**Initialise les parametres pour ncurses**/
 {
-  initscr();
+  clear();
+  refresh();
   start_color();
   cbreak();
   noecho();
