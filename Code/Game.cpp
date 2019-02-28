@@ -83,6 +83,7 @@ Game& Game::operator= (Game&& original)
 	return *this;
 }
 
+//TODO ---> return bool ? //maybe
 
 void Game::start()
 {
@@ -96,6 +97,7 @@ void Game::start()
 		this->_sendBoard();
 	}
 	while(! this->_isFinish());
+	std::cout << "Game finished" << std::endl;
 }
 
 void Game::_sendBoard(){

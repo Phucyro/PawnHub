@@ -46,10 +46,10 @@ void inline receiveMessageHandler(Socket* socket, Data* data, PlayersMap* player
   catch (std::string const& error){
     std::cout << error << std::endl;
     // Supprime l'entrée username : Player()
-  std::cout << "Deconnexion de " << player->getName() << std::endl;
-  if (player->getQueueNumber() != -1) matchmaking->removePlayer(player);
-  player->getSocket()->closeSocket();
-  players_map->erase(player->getName());
+    std::cout << "Deconnexion de " << player->getName() << std::endl;
+    if (player->getQueueNumber() != -1) matchmaking->removePlayer(player);
+      player->getSocket()->closeSocket();
+      players_map->erase(player->getName());
   }
 
 

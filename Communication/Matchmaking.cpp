@@ -44,6 +44,15 @@ void Matchmaking::check(unsigned int queue_number){
     switch(queue_number){
       case 0 :
         game = new Classic(player1, player2);
+      /*
+      case 1 :
+        game = new Alice(player1,player2);
+      case 2 :
+        game = new Horde(player1,player2);
+      case 3 :
+        game = new Dark(player1,player2);
+
+      */
     }
 
     std::thread game_thread(startGame, game, player1, player2);
