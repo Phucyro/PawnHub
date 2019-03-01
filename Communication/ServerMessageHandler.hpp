@@ -19,8 +19,11 @@ void inline receiveMessageHandler(Socket* socket, Data* data, PlayersMap* player
   std::vector<std::string> msg;
   Player* player = new Player(socket);
   try {
-      msg = splitString(socket->receiveMessage(), ' ');
-      std::cout << "Received Message " << msg[0] + " " + msg[1] << std::endl;
+    while (!quit){
+      player->getSocket()->lockMutex();
+      msg = splitString(socket->receiveMessage(), '~');
+
+      std::cout << "[ServerMessageHandler] Received Message " << msg[0] + " " + msg[1] << std::endl;
 
       switch (msg[0][0]){
         case '0' : // [0]
@@ -28,31 +31,36 @@ void inline receiveMessageHandler(Socket* socket, Data* data, PlayersMap* player
           break;
         case '1' : // [1] [username] [password]
           signUpHandler(socket, data, msg[1], msg[2]);
+          player->getSocket()->unlockMutex();
           break;
         case '2' : // [2] [username] [password]
           signInHandler(socket, players_map, data, player, msg[1], msg[2]);
+          player->getSocket()->unlockMutex();
           break;
         case '3' : // [3] [sender] [target] [text]
-          chatHandler(players_map, msg[1], msg[2], vectorToString(msg, 3));
+          //chatHandler(players_map, msg[1], msg[2], vectorToString(msg, 3));
+          player->getSocket()->unlockMutex();
           break;
         case '4' :
           playGameHandler(matchmaking, player, msg[1]);
           break;
         case '5' :
           leaveQueueHandler(matchmaking, player);
+          player->getSocket()->unlockMutex();
           break;
       }
+    }
   }
   catch (std::string const& error){
     std::cout << error << std::endl;
     // Supprime l'entrée username : Player()
-    std::cout << "Deconnexion de " << player->getName() << std::endl;
-    if (player->getQueueNumber() != -1) matchmaking->removePlayer(player);
-      player->getSocket()->closeSocket();
-      players_map->erase(player->getName());
   }
 
-
+  std::cout << "Deconnexion de " << player->getName() << std::endl;
+  if (player->getQueueNumber() != -1) matchmaking->removePlayer(player);
+  player->getSocket()->closeSocket();
+  players_map->erase(player->getName());
+  data->saveUserData(player->getName());
 }
 
 #endif

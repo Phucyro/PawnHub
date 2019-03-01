@@ -5,12 +5,12 @@ FLAGS= -std=c++17 -masm=intel -Wpedantic -Wall -Wextra -Wconversion -Weffc++ \
 
 LFLAGS= -pthread -lncurses
 
-all: menu.o main.out
+all: DataMenu.o main.out
 
-menu.o: menu.cpp menu.hpp
+DataMenu.o: DataMenu.cpp DataMenu.hpp
 	g++ $(FLAGS) $< -c -o $@ $(LFLAGS)
 
-main.out: main.cpp menu.o
+main.out: main.cpp DataMenu.o
 	g++ $(FLAGS) $< -o $@ $(LFLAGS)
 
 .PHONY: clean

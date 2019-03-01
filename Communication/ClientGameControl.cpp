@@ -1,6 +1,6 @@
 #include "ClientGameControl.hpp"
 
-ClientGameControl::ClientGameControl(Socket _socket): board(), socket(_socket), game_ongoing(false) {
+ClientGameControl::ClientGameControl(Socket& _socket): board(), socket(_socket), game_ongoing(false) {
   startParty();
 }
 
@@ -11,11 +11,13 @@ void ClientGameControl::receiveBoard(std::string message) {
 void ClientGameControl::receiveUpdate(std::string message) {
   if (message == "start") {
     board.init_ncurses();
+    // std::cout << "Game Started" << std::endl;
   }
   else if (message == "check") {
     board.declare_check();
   }
   else {
+    std::cout << "nique tam ere "<< std::endl;
     game_ongoing = false;
     if (message == "stalemate") {
       message = "Stalemate !";

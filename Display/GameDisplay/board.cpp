@@ -41,6 +41,19 @@ void Board::init_ncurses()
   init_pair(WHITE_PLAYER, COLOR_WHITE, COLOR_BLACK);
   init_pair(BLACK_PLAYER, COLOR_RED, COLOR_BLACK);
 
+  /**
+  init_pair(1,COLOR_WHITE, COLOR_BLUE);
+  init_pair(2,COLOR_WHITE, COLOR_RED);
+
+  attron(COLOR_PAIR(1));
+  mvprintw(1,1,"P");
+  attroff(COLOR_PAIR(1));
+
+  attron(COLOR_PAIR(2));
+  mvprintw(4,4,"T");
+  attroff(COLOR_PAIR(2));
+  **/
+
   init_windows();
 }
 
@@ -64,7 +77,11 @@ void Board::init_windows()
   draw_infos();
 
   refresh_board();
+  endwin();
+
 }
+
+
 
 void Board::draw_infos()
 /** Initialise la fenetre des infos **/
@@ -85,10 +102,12 @@ void Board::draw_infos()
 
 void Board::set_mode(const char* game) {
   mode = game;
+  refresh_board();
 }
 
 void Board::set_colour(const char* player_colour) {
   colour = player_colour;
+  refresh_board();
 }
 
 void Board::update_turn(const char* turn) {
@@ -98,10 +117,12 @@ void Board::update_turn(const char* turn) {
 
 void Board::declare_check() {
   mvprintw(15, 30, "%s", "CHECK");
+  refresh_board();
 }
 
 void Board::endgame(const char* message) {
   mvprintw(15, 30, "%s", message);
+  refresh_board();
 }
 
 void Board::draw_coordinates()
@@ -116,7 +137,7 @@ void Board::draw_coordinates()
   {
     mvprintw(24, 1+(OFFSET*i), "%c", 'A'+i);
   }
-
+  refresh_board();
 }
 
 void Board::draw_pieces(std::string board)
@@ -124,7 +145,7 @@ void Board::draw_pieces(std::string board)
 {
 	clear();
 	refresh_board();
-	// exit();
+	//exit();
 	init_windows();
   stringToBoard(board);
   refresh_board();
@@ -212,4 +233,25 @@ void Board::exit()
   delwin(infos_win);
 
   endwin();
+}
+
+void Board::change_mode(std::string mode)
+{
+  mvwprintw(infos_win,1,13,mode.c_str());
+  refresh();
+  wrefresh(infos_win);
+}
+
+void Board::change_last_move(std::string move)
+{
+  mvwprintw(infos_win,4,13,move.c_str());
+  refresh();
+  wrefresh(infos_win);
+}
+
+void Board::change_turn(std::string turn)
+{
+  mvwprintw(infos_win,7,8,turn.c_str());
+  refresh();
+  wrefresh(infos_win);
 }

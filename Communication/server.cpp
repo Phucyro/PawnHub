@@ -12,7 +12,7 @@ typedef std::map<std::string, Player*> PlayersMap;
 
 
 int main(){
-  Data data("Communication/database.txt"); // bug makefile
+  Data data("Database"); // bug makefile
   Matchmaking matchmaking(4);
   PlayersMap players_map;
   BindSocket binding_socket;

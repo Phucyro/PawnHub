@@ -76,11 +76,15 @@ void ServerGameControl::sendAskPromotion(Socket* socket) {
 void ServerGameControl::handleMessage(Socket* socket) {
   std::string message = socket->receiveMessage();
   char header = message[0];
-  (this->*(headerReceiveMap[header]))(message.erase(0,1));
+  std::cout << "HEADER : "<< header << " : " << message.substr(1) << '\n';
+  (this->*(headerReceiveMap[header]))(message.substr(1));
 }
 
 void ServerGameControl::startParty() {
   player1->setControl(this);
   player2->setControl(this);
   game->start();
+  player1->getSocket()->unlockMutex();
+  player2->getSocket()->unlockMutex();
+  std::cout << "SORTI DE LA GAME" << std::endl;
 }

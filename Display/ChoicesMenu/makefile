@@ -3,14 +3,14 @@ FLAGS= -std=c++17 -masm=intel -Wpedantic -Wall -Wextra -Wconversion -Weffc++ \
 		-Woverloaded-virtual -Wsign-promo -Wzero-as-null-pointer-constant \
 		-Wsuggest-final-types -Wsuggest-final-methods -Wsuggest-override
 
-LFLAGS= -pthread -lncurses
+LFLAGS= -pthread -lncurses -lform
 
-all: LoginMenu.o main.out
+all: main clean
 
-LoginMenu.o: LoginMenu.cpp LoginMenu.hpp
+ChoicesMenu.o: ChoicesMenu.cpp ChoicesMenu.hpp
 	g++ $(FLAGS) $< -c -o $@ $(LFLAGS)
 
-main.out: main.cpp LoginMenu.o
+main: main.cpp ChoicesMenu.o
 	g++ $(FLAGS) $< -o $@ $(LFLAGS)
 
 .PHONY: clean

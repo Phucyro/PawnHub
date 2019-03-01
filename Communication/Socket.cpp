@@ -1,6 +1,7 @@
 #include "Socket.hpp"
+#include <execinfo.h>
 
-Socket::Socket() : file_descriptor(0) {
+Socket::Socket() : file_descriptor(0), monMutex() {
   file_descriptor = socket(AF_INET, SOCK_STREAM, 0);
   if (file_descriptor < 0) {
     throw std::string("[Error] Instantiation failed");
@@ -42,6 +43,9 @@ void Socket::closeSocket() {
 
 // Might break but my balmer peak state says it's perfect
 void Socket::sendMessage(std::string message) {
+  //if (message[0] == 'B') throw std::string("Sent board too early");
+std::cout<<"message send: "<<message<<std::endl;
+
   size_t message_size = message.length();
   if ((message_size % MSG_LENGTH) == 0) {
     message = message.append(std::string(MSG_LENGTH, PADDING));
@@ -97,4 +101,12 @@ std::string Socket::receiveMessage() {
     }
   }
   return message;
+}
+
+void Socket::lockMutex(){
+  monMutex.lock();
+}
+
+void Socket::unlockMutex(){
+  monMutex.unlock();
 }

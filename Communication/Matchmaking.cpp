@@ -29,16 +29,20 @@ void Matchmaking::removePlayer(Player* player){
 }
 
 void Matchmaking::check(unsigned int queue_number){
+  std::cout << "Check de matchmaking" << std::endl;
   if (_queues[queue_number].size() >= 2){
     Game* game;
 
     Player* player1 = _queues[queue_number][0];
     player1->setQueueNumber(-1);
     _queues[queue_number].erase(_queues[queue_number].begin());
+    player1->getSocket()->sendMessage("4");
 
     Player* player2 = _queues[queue_number][0];
     player2->setQueueNumber(-1);
     _queues[queue_number].erase(_queues[queue_number].begin());
+    player2->getSocket()->sendMessage("4");
+
 
   // Cherche le mode de jeu
     switch(queue_number){

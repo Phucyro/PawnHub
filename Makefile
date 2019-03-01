@@ -8,7 +8,7 @@ SOCKETS= Communication/Socket.o Communication/BindSocket.o
 LOGIN_CLIENT= Communication/ClientMessageHandler.hpp Communication/ClientFunctions.hpp Communication/SplitString.o
 LOGIN_SERVER= Communication/ServerMessageHandler.hpp Communication/ServerHandler.hpp Communication/Data.o Communication/SplitString.o Communication/Matchmaking.o
 GAME_CLIENT= Communication/ClientGameControl.o
-DISPLAY_CLIENT= Display/GameDisplay/board.o
+DISPLAY_CLIENT= Display/GameDisplay/board.o Display/MenuHandler/MenuHandler.o
 GAME_SERVER=  Code/includesPieceHPP.hpp $(subst Code/%.cpp, Code/%.o, $(LOGIC)) Communication/ServerGameControl.o
 
 CLIENT_LFLAGS= -lpthread -lncurses
@@ -29,7 +29,7 @@ server: Communication/server.o $(SOCKETS) $(GAME_SERVER) $(LOGIN_SERVER) $(CONFI
 	$(CXX) $(FLAGS) -c -o $@ $<
 
 clean:
-	rm -f *.o Communication/*.o Display/GameDisplay/*.o Code/*.o
+	rm -f *.o Communication/*.o Display/GameDisplay/*.o Display/MenuHandler/*.o Code/*.o
 
 deepclean: clean
 	rm -f server client

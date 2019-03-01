@@ -7,34 +7,36 @@
 #include "SplitString.hpp"
 #include "ClientFunctions.hpp"
 #include "ClientHandler.hpp"
+#include "../Display/MenuHandler/MenuHandler.hpp"
 
-void receiveMessageHandler(Socket* socket){
+void receiveMessageHandler(MenuHandler* menu, Socket* socket, char* response){
   std::vector<std::string> msg;
 
-  while (true){
-    msg = splitString(socket->receiveMessage(), ' ');
+  msg = splitString(socket->receiveMessage(), '~');
+  std::cout << "Received Message " << msg[0] + " " + msg[1] << std::endl;
 
-    switch(msg[0][0]){
-      case '1' : // [1] [resultat]
-        signUpHandler(msg[1][0]);
-        break;
-      case '2' : // [2] [resultat]
-        signInHandler(msg[1][0]);
-        break;
-      case '3' : // [3] [sender] [target] [text]
-        chatHandler(msg[1], msg[2], vectorToString(msg, 2));
-        break;
-      case '4' :
-        playGameHandler(socket);
-        break;
-      case '5' :
-        leaveQueueHandler();
-        break;
-    }
+  switch(msg[0][0]){
+    case '1' : // [1] [resultat]
+      signUpHandler(msg[1][0], response);
+      break;
+    case '2' : // [2] [resultat]
+      signInHandler(msg[1][0], response);
+      break;
+    case '3' : // [3] [sender] [target] [text]
+      //chatHandler(msg[1], msg[2], vectorToString(msg, 2));
+      break;
+    case '4' :
+      menu->clear_windows();
+      menu->end_windows();
+      playGameHandler(socket);
+      break;
+    case '5' :
+      leaveQueueHandler();
+      break;
   }
 }
-
-void sendMessageHandler(Socket* socket, std::string* client_username){
+/*
+void sendMessageHandler(Socket* socket){
   bool leave_game = false;
   std::string input;
   std::vector<std::string> msg;
@@ -52,10 +54,10 @@ void sendMessageHandler(Socket* socket, std::string* client_username){
         signUp(socket, msg[1], msg[2], msg[3]);
         break;
       case '2' : // 2 [name] [mdp] : login
-        signIn(socket, msg[1], msg[2], client_username);
+        signIn(socket, msg[1], msg[2]);
         break;
       case '3' : // 3 [sender] [target] [msg]
-        chat(socket, *client_username, msg[1], vectorToString(msg, 2));
+        //chat(socket, *client_username, msg[1], vectorToString(msg, 2));
         break;
       case '4' : // 4 [gamemode]
         playGame(socket, msg[1]);
@@ -66,6 +68,6 @@ void sendMessageHandler(Socket* socket, std::string* client_username){
     }
   }
 }
-
+*/
 
 #endif

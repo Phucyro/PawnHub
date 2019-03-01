@@ -6,27 +6,35 @@
 #include <string>
 
 
-void signUpHandler(char msg){ // Fonction bool
+void signUpHandler(char msg, char* response){
   switch (msg){
     case '0' :
-      std::cout << "Compte existant" << std::endl;
+      std::cout << "Nom de compte indisponible" << std::endl;
+      // write(pipe_fd[1], "0", 10); // [0] Nom de compte indisponible
+      response[0] = '0';
       break;
     case '1' :
-      std::cout << "Compte cree avec succes" << std::endl;
+      // write(pipe_fd[1], "1", 10); // [1] Creation du compte succes
+      response[0] = '1';
+      std::cout << "Creation du compte succes" << std::endl;
   }
 }
 
 
-void signInHandler(char msg){ // Fonction bool
+void signInHandler(char msg, char* response){ // Fonction bool
   switch (msg){
     case '0' :
-      std::cout << "Compte inexistant" << std::endl;
+      // write(pipe_fd[1], "2", 10); // Compte inexistant
+      response[0] = '2';
       break;
     case '1' :
-      std::cout << "Identification reussie" << std::endl;
+      // write(pipe_fd[1], "3", 10); // Identification reussie
+      response[0] = '3';
       break;
     case '2' :
-      std::cout << "Mauvais mot de passe" << std::endl;
+      //write(pipe_fd[1], "4", 10); // Mauvais mot de passe
+      response[0] = '4';
+      break;
   }
 }
 

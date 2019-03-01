@@ -56,6 +56,11 @@ public:
 
   bool isRunning();
 
+  //change infos win
+  void change_mode(std::string);
+  void change_last_move(std::string);
+  void change_turn(std::string);
+
 
 private:
 

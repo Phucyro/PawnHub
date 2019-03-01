@@ -6,6 +6,10 @@
 
 std::vector<std::string> splitString(std::string, char);
 
-std::string vectorToString(std::vector<std::string> vect, unsigned int start);
+std::vector<unsigned int> toUIVector(std::vector<std::string>);
+
+std::string unsignedIntVectorToStr(std::vector<unsigned int>);
+
+std::string strVectorToStr(std::vector<std::string>);
 
 #endif

@@ -1,0 +1,50 @@
+#ifndef _MENU_HANDLER_HPP
+#define _MENU_HANDLER_HPP
+
+#include <string>
+#include "ncurses.h"
+#include <vector>
+#include <iostream>
+
+class MenuHandler
+{
+protected:
+  WINDOW* data_menu;
+  WINDOW* choices_menu;
+  WINDOW* stats_w;
+
+public:
+  MenuHandler();
+  ~MenuHandler();
+
+  //data menus
+  void init_dataw();
+  std::string get_infos(std::string);
+  void print_warning(std::string);
+
+  //choices menus
+  void init_choicesw();
+  int get_choice(const std::vector<std::string> param);
+
+  // init carre au dessus d'un menu choice
+  void init_statsw();
+
+  // stats menu
+  void init_statst(std::string mode); //stats top 10
+  void init_statsp(std::string name); //stats personelles
+
+  void update_stats(int number, std::string first_column, int wins, int loses, int draws);
+
+  //friends list / invites menu
+  void init_friendsw(const std::vector<std::string> friends);
+
+  //windows utilites
+  void refresh_board();
+  void clear_windows();
+  void end_windows();
+
+
+};
+
+
+#endif
