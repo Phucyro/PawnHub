@@ -44,7 +44,7 @@ void Alice::_Pieces() {
 }
 
 Alice::~Alice(){
-	for(int i = _piecesAmount - 1; i>=0; i--)
+	for(int i = int(_piecesAmount) - 1; i>=0; i--)
 	{
 		delete _pieces[i];
 	}
@@ -95,8 +95,8 @@ void Alice::_initBoard() {
 void Alice::_changePawn(Piece *pawn, Piece* promotedPawn, Board* board){
 	int start, i, end;
 	if (pawn->getColor() == 'w'){
-		int start = _lastStrongPiecesWhite;
-		int i = _lastStrongPiecesWhite;
+		int start = int(_lastStrongPiecesWhite);
+		int i = int(_lastStrongPiecesWhite);
 		_lastStrongPiecesWhite ++;
 		end = 16;
 		for (; i < end; i++) {
@@ -109,8 +109,8 @@ void Alice::_changePawn(Piece *pawn, Piece* promotedPawn, Board* board){
 			}
 		}
 	}else{
-		start = _lastStrongPieceBlack;
-		i = _lastStrongPieceBlack;
+		start = int(_lastStrongPieceBlack);
+		i = int(_lastStrongPieceBlack);
 		_lastStrongPieceBlack ++;
 		end = 32;
 		for (; i < end; i++) {
@@ -179,7 +179,7 @@ bool Alice::_isCheckmate(char playerColor){
 		//bishop or pawn or queen case
 		if (std::abs(rowMove) == std::abs(columnMove)){
 			int row = int(king->getRow())+rowDirection, column = int(king->getColumn())+columnDirection;
-			while(row != dangerousPiece->getRow()){
+			while(row != int(dangerousPiece->getRow())){
 				for (int i = 16-offset; i < 32 - offset; i++){
 					if ((!_pieces[i]->isTaken()) && _pieces[i]->_isMovePossible(Coordinate(column, row), _board, *this) && dynamic_cast<AlicePiece*>(_pieces[i])->getDimension() != dimension) return false;
 				}
@@ -189,7 +189,7 @@ bool Alice::_isCheckmate(char playerColor){
 		}
 		//rook or queen case(row)
 		else if (rowMove){
-			for (int j = int(king->getRow())+rowDirection; j != dangerousPiece->getRow(); j += rowDirection){
+			for (int j = int(king->getRow())+rowDirection; j != int(dangerousPiece->getRow()); j += rowDirection){
 				for(int i = 16-offset; i < 32 - offset; i++){
 					if ((!_pieces[i]->isTaken()) && _pieces[i]->_isMovePossible(Coordinate(int(king->getColumn()), j), _board, *this) && dynamic_cast<AlicePiece*>(_pieces[i])->getDimension() != dimension) return false;
 				}
@@ -197,7 +197,7 @@ bool Alice::_isCheckmate(char playerColor){
 		}
 		//rook or queen case(column)
 		else if (columnMove){
-			for (int j = int(king->getColumn())+columnDirection; j != king->getColumn(); j += columnDirection){
+			for (int j = int(king->getColumn())+columnDirection; j != int(king->getColumn()); j += columnDirection){
 				for(int i = 16-offset; i < 32 - offset; i++){
 					if ((!_pieces[i]->isTaken()) && _pieces[i]->_isMovePossible(Coordinate(j, int(king->getRow())), _board, *this) && dynamic_cast<AlicePiece*>(_pieces[i])->getDimension() != dimension) return false;
 				}

@@ -23,6 +23,9 @@ class Game
 	virtual void _sendPlayerColour();
 	virtual void _sendTurn();
 	virtual void _sendBoard();
+	virtual void _sendCheck();
+	virtual void _sendCheckmate();
+	virtual void _sendStalemate();
 
 	virtual void _initBoard() = 0;
 	virtual void _sendGameMode() = 0;
