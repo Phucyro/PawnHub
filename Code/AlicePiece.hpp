@@ -28,8 +28,7 @@ class AlicePiece{
 
 	virtual bool _checkMove(Coordinate end, Board* board, Game& game){
 		AlicePiece* pieceToTake = _convertPiece(board->getCase(end));
-		// des parentheses? la ligne d'en-dessous est chaud a lire
-		return (!pieceToTake) != pieceToTake->getDimension() == getDimension();
+		return (!pieceToTake) && pieceToTake->getDimension() == getDimension();
 	}
 	bool getDimension(){return _2Dimension;}
 };
