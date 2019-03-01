@@ -267,9 +267,13 @@ bool Classic::_isFinish() {
 			std::cout << "Black Player win !" << std::endl;
 		else std::cout << "White Player win !" << std::endl;
 		_winner = currentPlayer;
+		_sendCheckmate();
 		return true;
 	}
-	if (this->_isStalemate(opponentColor)) return true;
+	if (this->_isStalemate(opponentColor)) {
+		_sendStalemate();
+		return true;
+	}
 	return this->_notEnoughtPieces();
 }
 
