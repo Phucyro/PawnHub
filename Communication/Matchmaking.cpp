@@ -33,7 +33,6 @@ void Matchmaking::removePlayer(Player* player){
 }
 
 void Matchmaking::check(int queue_number){
-  std::cout << "Check de matchmaking" << std::endl;
   if (_queues[queue_number].size() >= 2){
     Game* game;
 
