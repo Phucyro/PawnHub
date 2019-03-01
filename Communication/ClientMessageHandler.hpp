@@ -9,18 +9,17 @@
 #include "ClientHandler.hpp"
 #include "../Display/MenuHandler/MenuHandler.hpp"
 
-void receiveMessageHandler(MenuHandler* menu, Socket* socket, char* response){
+void receiveMessageHandler(MenuHandler* menu, Socket* socket, bool* connected){
   std::vector<std::string> msg;
 
   msg = splitString(socket->receiveMessage(), '~');
-  std::cout << "Received Message " << msg[0] + " " + msg[1] << std::endl;
 
   switch(msg[0][0]){
     case '1' : // [1] [resultat]
-      signUpHandler(msg[1][0], response);
+      signUpHandler(menu, msg[1][0]);
       break;
     case '2' : // [2] [resultat]
-      signInHandler(msg[1][0], response);
+      signInHandler(menu, msg[1][0], connected);
       break;
     case '3' : // [3] [sender] [target] [text]
       //chatHandler(msg[1], msg[2], vectorToString(msg, 2));
