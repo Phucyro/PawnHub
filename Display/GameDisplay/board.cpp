@@ -77,7 +77,6 @@ void Board::init_windows()
   draw_infos();
 
   refresh_board();
-  getch();
   endwin();
 
 }
@@ -103,10 +102,12 @@ void Board::draw_infos()
 
 void Board::set_mode(const char* game) {
   mode = game;
+  refresh_board();
 }
 
 void Board::set_colour(const char* player_colour) {
   colour = player_colour;
+  refresh_board();
 }
 
 void Board::update_turn(const char* turn) {
@@ -116,10 +117,12 @@ void Board::update_turn(const char* turn) {
 
 void Board::declare_check() {
   mvprintw(15, 30, "%s", "CHECK");
+  refresh_board();
 }
 
 void Board::endgame(const char* message) {
   mvprintw(15, 30, "%s", message);
+  refresh_board();
 }
 
 void Board::draw_coordinates()
@@ -134,7 +137,7 @@ void Board::draw_coordinates()
   {
     mvprintw(24, 1+(OFFSET*i), "%c", 'A'+i);
   }
-
+  refresh_board();
 }
 
 void Board::draw_pieces(std::string board)
@@ -142,7 +145,7 @@ void Board::draw_pieces(std::string board)
 {
 	clear();
 	refresh_board();
-	// exit();
+	//exit();
 	init_windows();
   stringToBoard(board);
   refresh_board();

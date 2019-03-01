@@ -11,7 +11,7 @@
 class ClientGameControl {
 private:
   Board board;
-  Socket socket;
+  Socket& socket;
   bool game_ongoing;
 
   std::map<std::string, std::string> headerSendMap = {
@@ -28,7 +28,7 @@ private:
 
 
 public:
-  ClientGameControl(Socket);
+  ClientGameControl(Socket&);
 
 private:
   void receiveBoard(std::string);
