@@ -26,7 +26,7 @@ bool Queen::_checkMoveRook(Coordinate end, Board* board, Game& game){
   	else if(columnMove){
   		// check if there is no piece in the way
   		for (int i = int(_coords.getRealColumn()) + columnDirection; i != end.getRealColumn(); i += columnDirection){
-  			if (!_isPlaceFree(Coordinate(unsigned(i), end.getRealColumn()), board)) return false;
+  			if (!_isPlaceFree(Coordinate(unsigned(i), end.getRealRow()), board)) return false;
   		}
   	}
   	else return false;

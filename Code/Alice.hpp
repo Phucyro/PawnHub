@@ -39,7 +39,7 @@ class Alice : public Game {
 	Alice(const Alice&) = delete;
 	using Game::_pieces;
 
-	void _changePawn(Piece*, Piece*) override;
+	void _changePawn(Piece*, Piece*, Board*) override;
 
 	public :
 
