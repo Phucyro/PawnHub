@@ -8,10 +8,11 @@
 
 Player& Player::operator= (Player&& original) {
 		_sock = original._sock;
-		_control = nullptr;
+		_control = original._control;
 		_pipe = original._pipe;
 		original._pipe = nullptr;
 		_name = original._name;
+		_recvActive = original._recvActive;
 		return *this;
 	}
 

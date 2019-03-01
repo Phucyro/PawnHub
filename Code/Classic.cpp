@@ -157,6 +157,7 @@ void Classic::_nextTurn() {
 
 }
 
+// yall have some unsigned/signed int to deal with in here, it's stupid and a mess
 bool Classic::_isCheckmate(char playerColor){
 	Piece *dangerousPiece = nullptr, *inTest;
 	int offset = _calculOffset(playerColor);
@@ -186,7 +187,7 @@ bool Classic::_isCheckmate(char playerColor){
 		//bishop or pawn or queen case
 		if (std::abs(rowMove) == std::abs(columnMove)){
 			int row = int(king->getRow())+rowDirection, column = int(king->getColumn())+columnDirection;
-			while(row != dangerousPiece->getRow()){
+			while(row != int(dangerousPiece->getRow())){
 				for (int i = 16-offset; i < 32 - offset; i++){
 					if ((!_pieces[i]->isTaken()) && _pieces[i]->_isMovePossible(Coordinate(column, row), _board, *this)) return false;
 				}
@@ -196,7 +197,7 @@ bool Classic::_isCheckmate(char playerColor){
 		}
 		//rook or queen case(row)
 		else if (rowMove){
-			for (int j = int(king->getRow())+rowDirection; j != dangerousPiece->getRow(); j += rowDirection){
+			for (int j = int(king->getRow())+rowDirection; j != int(dangerousPiece->getRow()); j += rowDirection){
 				for(int i = 16-offset; i < 32 - offset; i++){
 					if ((!_pieces[i]->isTaken()) && _pieces[i]->_isMovePossible(Coordinate(int(king->getColumn()), j), _board, *this)) return false;
 				}
@@ -204,7 +205,7 @@ bool Classic::_isCheckmate(char playerColor){
 		}
 		//rook or queen case(column)
 		else if (columnMove){
-			for (int j = int(king->getColumn())+columnDirection; j != dangerousPiece->getColumn(); j += columnDirection){
+			for (int j = int(king->getColumn())+columnDirection; j != int(dangerousPiece->getColumn()); j += columnDirection){
 				for(int i = 16-offset; i < 32 - offset; i++){
 					if ((!_pieces[i]->isTaken()) && _pieces[i]->_isMovePossible(Coordinate(j, int(king->getRow())), _board, *this)) return false;
 				}

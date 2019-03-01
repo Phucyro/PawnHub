@@ -25,12 +25,12 @@ class Player{
 
 
 	public :
-	Player(Socket* socket): _sock(socket), _control(nullptr), _pipe(nullptr),_recvActive(false) {
+	Player(Socket* socket): _sock(socket), _control(nullptr), _pipe(nullptr), _recvActive(false) {
 		_pipe = new int[2];
 		if ((pipe(_pipe)) == -1) throw std::runtime_error("Fail while constructing a pipe for an object of type 'Player': ");
 	}
 	Player(const Player&) = delete;
-	Player(Player&& original): _sock(original._sock), _pipe(original._pipe), _name(original._name) {original._pipe = nullptr;}
+	Player(Player&& original): _sock(original._sock), _control(original._control), _pipe(original._pipe), _name(original._name), _recvActive(original._recvActive) {original._pipe = nullptr;}
 
 	~Player(){
 		delete[] _pipe;
