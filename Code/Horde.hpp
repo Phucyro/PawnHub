@@ -23,6 +23,7 @@ class Horde: public Game{
 
 	protected :
 	void _initBoard() override;
+	void _sendGameMode() override;
 	void _nextTurn() override;
 	bool _isFinish() override;
 	void _changePawn(Piece*, Piece*, Board*) override;

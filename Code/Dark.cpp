@@ -89,6 +89,12 @@ void Dark::_initBoard() {
 	Game::_board->setCase(Coordinate('H', '7'), Game::_pieces[31]);
 }
 
+void Dark::_sendGameMode() {
+	std::string game = "Dark";
+	_player1->transferGameMode(game);
+	_player2->transferGameMode(game);
+}
+
 void Dark::_changePawn(Piece *pawn, Piece* promotedPawn, Board* board){
 	int start, i, end;
 	if (pawn->getColor() == 'w'){

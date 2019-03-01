@@ -120,6 +120,12 @@ Horde::~Horde(){
 	delete[] _pieces;
 }
 
+void Horde::_sendGameMode() {
+	std::string game = "Horde";
+	_player1->transferGameMode(game);
+	_player2->transferGameMode(game);
+}
+
 void Horde::_changePawn(Piece *pawn, Piece* promotedPawn, Board* board){
 	int start, i, end;
 	if (pawn->getColor() == 'w'){
