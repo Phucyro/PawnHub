@@ -57,10 +57,12 @@ void inline receiveMessageHandler(Socket* socket, Data* data, PlayersMap* player
   }
 
   std::cout << "Deconnexion de " << player->getName() << std::endl;
-  if (player->getQueueNumber() != -1) matchmaking->removePlayer(player);
+  if (player->getQueueNumber() != -1)
+    matchmaking->removePlayer(player);
   player->getSocket()->closeSocket();
   players_map->erase(player->getName());
-  data->saveUserData(player->getName());
+  if (player->getName() != "Guest")
+    data->saveUserData(player->getName());
 }
 
 #endif
