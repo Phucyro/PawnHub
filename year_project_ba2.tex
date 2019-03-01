@@ -375,17 +375,21 @@ Le joueur se connecte à l'aide du \textit{hostname} du serveur, qui s'affiche �
 \subsection{Les Actions du Joueur}
 
 \subsection{Client-Serveur}
-\paragraph{}Dans le cadre de ce projet, nous avons décidé que la partie serveur s'occupera de toute la logique du jeu tandis que la partie client s'assurera d'afficher correctement l'interface du jeu en temps réel et pour se faire, enverra des requêtes au serveur pour connaître les mouvements de pièces.
+\paragraph{}Dans le cadre de ce projet, il a été décidé que la partie serveur s'occupera de toute la logique du jeu tandis que la partie client s'assurera d'afficher correctement l'interface du jeu en temps réel et pour ce faire, recevra des requêtes du serveur pour connaître les mouvements de pièces voulus par les joueurs.
 \paragraph{}Il convient également de spécifier que l'échange d'information entre le serveur et le client se fera sous le format de chaînes de caractères. Par exemple, Le serveur enregistrera les noms de compte et mots de passe des joueurs dans un fichier texte et non une base de données. Et cela pour au moins 3 raisons décrites ci-dessous : 
 \begin{enumerate}
 \item Comme la plupart des tâches effectuées par nos programmes se font à l'aide de chaînes de caractères et par soucis d'homogénéité, il est préferable et plus simple que l'échange d'information entre le serveur et le client se fasse également sous cette forme.
 \item Une chaîne de caractère n'a pas besoin d'être traduite en binaire, ce qui diminue la complexité et le temps d'exécution de nos programmes.
-\item La taille du message envoyée n'est pas un probleme, car une taille de 100 octets suffit pour envoyer toutes les informations d'un message. Le plus grand message actuel est le plateau, qui ne consiste que de 98 octets lorsqu'il est complet (voir 6.5.2)
+\item La taille du message envoyée n'est pas un probleme, car une taille de 150 octets suffit pour envoyer toutes les informations d'un message. Le plus grand message actuel est le plateau, qui ne consiste que de 147 octets lorsqu'il est complet dans un jeu de \textit{Horde Chess} (voir 6.5, point 2).
 \end{enumerate}
-\paragraph{}Le serveur aura une copie du board et tâchera de vérifier les différentes actions des joueurs. Il veillera également à mettre à jour les board des joueurs.
+\paragraph{}Le serveur tâchera de vérifier les différentes actions des joueurs et veillera également à envoyer régulièrement la disposition du plateau aux clients afin qu'il s'affiche correctement pour les joueurs.
 
 \subsection{Déroulement d'une partie}
 \begin{enumerate}
+
+\item \textit{Envoi de la confirmation de début de partie par le serveur}\\
+\textbf{Mise en pratique :} Le serveur envoie un message pré-défini aux clients.\\
+\textbf{Protocole :} Le serveur envoie 'start' aux clients, ce qui déclenche le passage d'un mode d'affichage
 
 \item \textit{Assignation de la couleur des pièces aux joueurs} \\
 \textbf{Mise en pratique :} Le serveur envoie la couleur(noir ou blanc) au client. \\
