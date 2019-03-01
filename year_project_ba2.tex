@@ -146,7 +146,7 @@ la case traversée par le roi n'est contrôlée par aucune pièce adverse\footno
 \textbf{Pré-conditions :} Le \textit{user} doit avoir sélectionné le sous-menu \textit{Connexion} puis l'option {\itshape Create} dans le menu principal du jeu.\\
 \textbf{Post-conditions :} Le \textit{user} doit encoder un nom d'utilisateur et un mot de passe afin de créer son compte.\\
 \textbf{Cas général :} Un nom d'utilisateur et un mot de passe correspondant sont encodés dans la base de données du système.\\
-\textbf{Cas exceptionnels :} Si le nom d'utilisateur encodé est déjà dans la base de données, l'utilisateur doit en ré-encoder un nouveau.
+\textbf{Cas exceptionnels :} Si le nom d'utilisateur encodé est déjà dans la base de données, l'utilisateur doit en réencoder un nouveau.
 
 
 
@@ -210,7 +210,7 @@ la case traversée par le roi n'est contrôlée par aucune pièce adverse\footno
 \textbf{Relations avec d'autres cas d'utilisation :} Néant \\
 \textbf{Pré-conditions :} C'est au tour du \textit{user} de jouer. Il doit préalablement choisir une pièce et indiquer un déplacement possible et valide. \\
 \textbf{Post-conditions :} La pièce se retrouve à la position désignée par le \textit{user} après déplacement. \\
-\textbf{Cas général :} Le \textit{user} doit déplacer un pion lorsque c'est à son tour de jouer. Il envoi ainsi une requête de déplacement au serveur qui vérifiera à son tour la validité ou non du coup. \\
+\textbf{Cas général :} Le \textit{user} doit déplacer un pion lorsque c'est à son tour de jouer. Il envoit ainsi une requête de déplacement au serveur qui vérifiera à son tour la validité ou non du coup. \\
 \textbf{Cas exceptionnels :} Le coup enregistré par le \textit{user} n'est pas valide. Il doit donc rejouer son tour. \\
 
 \subsubsection{Discuter dans le Chat}
@@ -308,7 +308,7 @@ Le joueur blanc commence. Celui-ci est le premier joueur connecté et qualifiabl
 \textbf{Acteur :} \textit{Server}. \\
 \textbf{Relations avec d'autres cas d'utilisation :} {\itshape Avancer un pion}. \\
 \textbf{Pré-conditions :} Un pion est arrivé à l'autre bout du plateau. \\
-\textbf{Post-conditions :} Pion promu en dame, fou, cavalier ou tour au choix du joueur qui possède le pion en question. Le jeu est ré-analysé pour identifier une potentielle mise en échec due au changement de statut du pion. \\
+\textbf{Post-conditions :} Pion promu en dame, fou, cavalier ou tour au choix du joueur qui possède le pion en question. Le jeu est réanalysé pour identifier une potentielle mise en échec dûe au changement de statut du pion. \\
 \textbf{Cas général :} Pion promu. \\
 \textbf{Cas exceptionnels :} Néant. \\
 
@@ -358,83 +358,19 @@ Le système se doit de mettre assez rapidement à jour les statistiques personne
 \caption{Diagramme de séquence pour le \textit{Matchmaking}}
 \label{SD_matchmaker} %SequenceDiagram_matchmaking
 \end{figure}
+\subsection{Logique du Jeu}
 
-\subsection{Diagrammes de Classes}
-\begin{figure}
+\begin{sidewaysfigure}[ph]
 %\centering
 \includegraphics[scale=0.5]{ClassDiagram.png}
 \caption{Diagramme de classes général}
 \label{CD} %ClassDiagram
-\end{figure}
-
-\subsubsection{Les Différentes Pièces}
-\begin{figure}
-\includegraphics[scale=0.5]{pieces_diagram.png}
-\caption{Diagramme des pièces et coordinate}
-\label{CD} %ClassDiagram
-\end{figure}
-
-\paragraph{Mode classique}Chaque type de pièces, c'est à dire, \textit{Queen,King,Bishop,Pawn,GhostPawn,Knight,Rook}, héritent de la classe mère \textit{Piece}.
-\textit{GhostPawn} est utilisé dans le cas où un pion peut effectuer une prise en passant.En effet, lorsque le pion est dans la possibilité d'en effectuer une, <<<  à complèter...................................... >>>.
-\begin{enumerate}
-\item
-\textbf{canMove :} permet de savoir si la pièce considérée peut se déplacer.Cette fonction est donc utile pour savoir si le roi est en échec par exemple. \\
-\textbf{checkMove :} vérifie si le mouvement demandé d'une pièce par le  joueur est valide.\\
-\textbf{hasMoved :}vérifie si la pièce a déjà été déplacée ou non.C'est une méthode nécessaire pour valider un roque ou une prise en passant.\\
-\textbf{isMovePossible :} :<<<.........>>>\\
-\textbf{Move :}est une méthode qui selon \textit{canMove,checkMove,hasMoved} effectue ou  non, le mouvement demandé par le joueur sur la pièce.\\
-\end{enumerate} 
-
-\paragraph{Mode Alice}
-
-
-
-\subsubsection{Coordinate}
-\paragraph{}Par soucis de facilité et d'homogénéité dans le code, chaque adresse réelle sur l'échiquier est retraduite en une adresse virtuelle compréhensible pour le board, et inversement . En effet, le board est !!à vérifier ce qui suit!!matrice composée de lignes et rangées numérotées de 0 à 7 alors que l'échiquier est numérotées de A à H et 1 à 8.
-%\begin{sidewaysfigure}[ph]
-
-\subsubsection{Les Différents Modes De Jeu}
-\begin{figure}
-\includegraphics[scale=0.5]{mode_chess.png}
-\caption{Diagramme des modes de jeu}
-\label{CD} %ClassDiagram
-\end{figure}
-\begin{enumerate}
-
-\item \textit{Méthodes Communes} \\
-\textbf{}  \\
-\textbf{}  \\
-\textbf{}  \\
-\textbf{}  \\
-
-\item \textit{Méthodes Classic } \\
-\textbf{}  \\
-\textbf{}  \\
-
-\item \textit{Méthodes Alice} \\
-\textbf{}  \\
-\textbf{}  \\
-
-\item \textit{Méthodes Dark} \\
-\textbf{}  \\
-\textbf{}  \\
-
-\item \textit{Méthodes Horde} \\
-\textbf{}  \\
-\textbf{}  \\
-\end{enumerate}
-\subsubsection{Player}
-
-\subsubsection{Board}
-\begin{figure}
-\centering			\includegraphics[scale=0.50]{board_player_diagram.png}
-\caption{Diagram de Board et Player}
-\end{figure}
+\end{sidewaysfigure}
 
 \newpage
 
 \subsection{Connexion du Joueur}
-Le joueur se connecte à l'aide du \textit{hostname} du serveur, qui s'affiche à l'exécution de celui-ci. Il accède ensuite à un menu lui permettant de se connecter à son compte ou d'en créer un nouveau.
+Le joueur se connecte à l'aide du \textit{hostname} du serveur, qui s'affiche à l'éxécution de celui-ci. Il accède ensuite à un menu lui permettant de se connecter à son compte ou d'en créer un nouveau.
 
 \subsection{Les Actions du Joueur}
 
@@ -442,13 +378,9 @@ Le joueur se connecte à l'aide du \textit{hostname} du serveur, qui s'affiche �
 \paragraph{}Dans le cadre de ce projet, il a été décidé que la partie serveur s'occupera de toute la logique du jeu tandis que la partie client s'assurera d'afficher correctement l'interface du jeu en temps réel et pour ce faire, recevra des requêtes du serveur pour connaître les mouvements de pièces voulus par les joueurs.
 \paragraph{}Il convient également de spécifier que l'échange d'information entre le serveur et le client se fera sous le format de chaînes de caractères. Par exemple, Le serveur enregistrera les noms de compte et mots de passe des joueurs dans un fichier texte et non une base de données. Et cela pour au moins 3 raisons décrites ci-dessous : 
 \begin{enumerate}
-\item Comme la plupart des tâches effectuées par nos programmes se font à l'aide de chaînes de caractères et par soucis d'homogénéité, il est préférable et plus simple que l'échange d'information entre le serveur et le client se fasse également sous cette forme.
+\item Comme la plupart des tâches effectuées par nos programmes se font à l'aide de chaînes de caractères et par soucis d'homogénéité, il est préferable et plus simple que l'échange d'information entre le serveur et le client se fasse également sous cette forme.
 \item Une chaîne de caractère n'a pas besoin d'être traduite en binaire, ce qui diminue la complexité et le temps d'exécution de nos programmes.
-<<<<<<< HEAD
 \item La taille du message envoyée n'est pas un probleme, car une taille de 150 octets suffit pour envoyer toutes les informations d'un message. Le plus grand message actuel est le plateau, qui ne consiste que de 147 octets lorsqu'il est complet dans un jeu de \textit{Horde Chess} (voir 6.5, point 2).
-=======
-\item La taille du message envoyée n'est pas un problème, car une taille de 100 octets suffit pour envoyer toutes les informations d'un message. Le plus grand message actuel est le plateau, qui ne consiste que de 98 octets lorsqu'il est complet (voir 6.5.2)
->>>>>>> dce50857856f767a2ae78fc85c8f9aec74aa07b6
 \end{enumerate}
 \paragraph{}Le serveur tâchera de vérifier les différentes actions des joueurs et veillera également à envoyer régulièrement la disposition du plateau aux clients afin qu'il s'affiche correctement pour les joueurs.
 
@@ -465,7 +397,7 @@ Le joueur se connecte à l'aide du \textit{hostname} du serveur, qui s'affiche �
 
 \item \textit{Affichage de l'échiquier} \\
 \textbf{Mise en pratique :} Le serveur envoie le plateau aux joueurs. \\
-\textbf{Protocole :} Le message est une suite de toutes les pièces présentes sur l'échiquier, chacune représentée par 3 caractères. Le premier caractère est une lettre désignant le type de la pièce considérée. Les 2 autres, sa position, en commençant par la colonne, selon la représentation classique d'un échiquier, c'est à dire, les rangées sont numérotées de 1 à 9 et les colonnes de "A" à "H". Les pions blancs sont séparés des noirs par '!' et à la fin des pions noirs, on ajoute un '\#'. Exemple : pA2hA4rD5qC7kE1bF8!bA8qG4kD7\#. L'envoi d'un plateau contenant toutes les pièces classiques est donc de 98 octets: 1 octet par caractère, 3 caractères par pièces, 32 pièces sur un plateau, soit 3*32=96, plus les 2 symboles de séparation.   
+\textbf{Protocole :} Le message est une suite de toutes les pièces présentes sur l'échiquier, chacune représentée par 3 caractères. Le premier caractère est une lettre désignant le type de la pièce considérée. Les 2 autres, sa position, en commençant par la colonne, selon la réprésentation classique d'un échiquier, c'est à dire, les rangées sont numérotées de 1 à 9 et les colonnes de "A" à "H". Les pions blancs sont séparés des noirs par '!' et à la fin des pions noirs, on ajoute un '\#'. Exemple : pA2hA4rD5qC7kE1bF8!bA8qG4kD7\#. L'envoi d'un plateau contenant toutes les pièces classiques est donc de 98 octets: 1 octet par caractère, 3 caractères par pièces, 32 pièces sur un plateau, soit 3*32=96, plus les 2 symboles de séparation.   
 
 \item \textit{Numéro du tour de jeu} \\
 \textbf{Mise en pratique :} Le serveur envoie le numéro du tour actuel de jeu aux joueurs.  \\
@@ -477,7 +409,7 @@ Le joueur se connecte à l'aide du \textit{hostname} du serveur, qui s'affiche �
 
 \item \textit{Mouvement de la pièce} \\
 \textbf{Mise en pratique :} Après avoir reçu la position future de la pièce indiquée par le joueur, le serveur vérifie sa validité et envoie son résultat au client. Tant que la position n'est pas validée par le serveur, le client doit renvoyer une position au serveur. Lorsque que celle-ci est validée, le serveur envoie aux 2 clients l'échiquier mis à jour.  \\
-\textbf{Protocole :} Le serveur renvoie un booléen True/False. 
+\textbf{Protocole :} Le serveur renvoie un boolée True/False. 
 
 \item \textit{État de la partie} \\
 \textbf{Mise en pratique :} Le serveur envoie un message de statut : "<fin de jeu-match nul"> ou "<continue"> \\
@@ -501,4 +433,6 @@ NB: Ce protocole n'est pas définitif
 
 
 \end{document}
+
+
 o
