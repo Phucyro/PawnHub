@@ -5,8 +5,8 @@
 
 void Horde::_Pieces(){
 	_pieces = new Piece*[_piecesAmount];
-	
-	
+
+
 	_pieces[0] = new Rook('w', 'A', '1');		//0 -> 7 : pièces fortes blanches
 	_pieces[1] = new Knight('w', 'B', '1');
 	_pieces[2] = new Bishop('w', 'C', '1');
@@ -23,8 +23,8 @@ void Horde::_Pieces(){
 	_pieces[13] = new Pawn('w', 'F', '2');
 	_pieces[14] = new Pawn('w', 'G', '2');
 	_pieces[15] = new Pawn('w', 'H', '2');
-	
-	
+
+
 	_pieces[16] = new Pawn('b','A','8',true);
 	_pieces[17] = new Pawn('b','A','7');
 	_pieces[18] = new Pawn('b','A','6',true);
@@ -76,8 +76,8 @@ void Horde::_initBoard(){
 	_board->setCase(Coordinate('F', '2'), _pieces[13]);
 	_board->setCase(Coordinate('G', '2'), _pieces[14]);
 	_board->setCase(Coordinate('H', '2'), _pieces[15]);
-	
-	
+
+
 	_board->setCase(Coordinate('A','8'), _pieces[16]);
 	_board->setCase(Coordinate('A','7'), _pieces[17]);
 	_board->setCase(Coordinate('A','6'), _pieces[18]);
@@ -113,33 +113,48 @@ void Horde::_initBoard(){
 }
 
 Horde::~Horde(){
-	for(int i = _piecesAmount - 1; i>=0; i--)
+	for(int i = int(_piecesAmount) - 1; i>=0; i--)
 	{
 		delete _pieces[i];
 	}
 	delete[] _pieces;
 }
 
-void Horde::_changePawn(Piece *pawn, Piece* promotedPawn){
+void Horde::_sendGameMode() {
+	std::string game = "Horde";
+	_player1->transferGameMode(game);
+	_player2->transferGameMode(game);
+}
+
+void Horde::_changePawn(Piece *pawn, Piece* promotedPawn, Board* board){
 	int start, i, end;
 	if (pawn->getColor() == 'w'){
-		int start = _lastStrongPiecesWhite;
-		int i = _lastStrongPiecesWhite;
+		int start = int(_lastStrongPiecesWhite);
+		int i = int(_lastStrongPiecesWhite);
 		_lastStrongPiecesWhite ++;
 		end = 16;
+		for (; i < end; i++) {
+			if (_pieces[i] == pawn){
+				board->setCase(_pieces[i]->getCoord(), promotedPawn);
+				delete pawn;
+				_pieces[i] = _pieces[start];
+				_pieces[start] = promotedPawn;
+				break; // <3 <3 <3
+			}
+		}
 	}else{
-		start = _lastStrongPieceBlack;
-		i = _lastStrongPieceBlack;
+		start = int(_lastStrongPieceBlack);
+		i = int(_lastStrongPieceBlack);
 		_lastStrongPieceBlack ++;
-		end = 48;
-	}
-
-	for (; i < end; i++) {
-		if (_pieces[i] == pawn){
-			delete pawn;
-			_pieces[i] = _pieces[start];
-			_pieces[start] = promotedPawn;
-			break; // <3
+		end = 32;
+		for (; i < end; i++) {
+			if (_pieces[i] == pawn){
+				board->setCase(_pieces[i]->getCoord(), promotedPawn);
+				delete pawn;
+				_pieces[i] = _pieces[start];
+				_pieces[start] = promotedPawn;
+				break; // <3 <3 <3
+			}
 		}
 	}
 }
@@ -175,11 +190,11 @@ bool Horde::_isFinish() {
 		return true;
 	}
 	return	this->_isStalemate(opponentColor);
-	
+
 }
 
 bool Horde::_isCheckmate(char playerColor){
-	if (playerColor = 'w'){
+	if (playerColor == 'w'){
 		Piece *dangerousPiece = nullptr, *inTest;
 		Piece *king = _pieces[KING_INDEX];
 		Coordinate kingPlace = king->getCoord(), dPiecePlace;
@@ -198,7 +213,7 @@ bool Horde::_isCheckmate(char playerColor){
 		}
 		if (!dangerousPiece) return false;
 		if (king->canMove(_board, *this)) return false;
-	
+
 		if (!moreThan2){
 			int rowMove = int(dangerousPiece->getRow()) - int(king->getRow());
 			int rowDirection = rowMove/std::abs(rowMove);
@@ -208,7 +223,7 @@ bool Horde::_isCheckmate(char playerColor){
 			//bishop or pawn or queen case
 			if (std::abs(rowMove) == std::abs(columnMove)){
 				int row = int(king->getRow())+rowDirection, column = int(king->getColumn())+columnDirection;
-			while(row != dangerousPiece->getRow()){
+			while(row != int(dangerousPiece->getRow())){
 					for (int i = 16; i < 48; i++){
 						if ((!_pieces[i]->isTaken()) && _pieces[i]->_isMovePossible(Coordinate(column, row), _board, *this)) return false;
 					}
@@ -218,7 +233,7 @@ bool Horde::_isCheckmate(char playerColor){
 			}
 			//rook or queen case(row)
 			else if (rowMove){
-			for (int j = int(king->getRow())+rowDirection; j != dangerousPiece->getRow(); j += rowDirection){
+			for (int j = int(king->getRow())+rowDirection; j != int(dangerousPiece->getRow()); j += rowDirection){
 					for(int i = 16; i < 48; i++){
 						if ((!_pieces[i]->isTaken()) && _pieces[i]->_isMovePossible(Coordinate(int(king->getColumn()), j), _board, *this)) return false;
 					}
@@ -226,7 +241,7 @@ bool Horde::_isCheckmate(char playerColor){
 			}
 			//rook or queen case(column)
 			else if (columnMove){
-				for (int j = int(king->getColumn())+columnDirection; j != dangerousPiece->getColumn(); j += columnDirection){
+				for (int j = int(king->getColumn())+columnDirection; j != int(dangerousPiece->getColumn()); j += columnDirection){
 					for(int i = 16; i < 48; i++){
 						if ((!_pieces[i]->isTaken()) && _pieces[i]->_isMovePossible(Coordinate(j, int(king->getRow())), _board, *this)) return false;
 					}
@@ -243,7 +258,7 @@ bool Horde::_isCheckmate(char playerColor){
 }
 
 bool Horde::_isStalemate(char playerColor){
-	if(playerColor = 'w'){
+	if(playerColor == 'w'){
 		for (int i = 0; i < 16; i++){
 			if ((!_pieces[i]->isTaken()) && _pieces[i]->canMove(_board, *this)) return false;
 		}
@@ -265,12 +280,12 @@ bool Horde::testCheck(const char color){
 		Piece* MaybePawn = nullptr;
 		if (_board->isInBoard(leftMaybePawn)) MaybePawn = Game::_board->getCase(leftMaybePawn);
 		if (MaybePawn && MaybePawn->getColor() == 'b' && (MaybePawn->getType() == 'p' || MaybePawn->getType() == 'b' || MaybePawn->getType() == 'q' || MaybePawn->getType() == 'k')) return true;
-	
+
 		rightMaybePawn = Coordinate(_pieces[KING_INDEX]->getCoord().getRealColumn()-1, _pieces[KING_INDEX]->getCoord().getRealRow()+1);
 		MaybePawn = nullptr;
 		if (_board->isInBoard(rightMaybePawn)) MaybePawn = Game::_board->getCase(rightMaybePawn);
 		if (MaybePawn && MaybePawn->getColor() == 'b' && (MaybePawn->getType() == 'p' || MaybePawn->getType() == 'b' || MaybePawn->getType() == 'q' || MaybePawn->getType() == 'k')) return true;
-	
+
 		//strong pieces
 		for (unsigned i = 16; i <= _lastStrongPieceBlack; ++i){
 			if (!_pieces[i]->isTaken())

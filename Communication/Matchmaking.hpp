@@ -7,18 +7,17 @@
 #include <algorithm>
 #include "../Code/Player.hpp"
 #include <thread>
-#include "../Code/Classic.hpp"
 
 class Matchmaking {
 private:
   std::map<int, std::vector<Player*>> _queues;
 
 public:
-  Matchmaking(unsigned int number_of_queues);
-  void addPlayer(Player* player, unsigned int queue_number);
+  Matchmaking(int number_of_queues);
+  void addPlayer(Player* player, int queue_number);
   void removePlayer(Player* player);
 
-  void check(unsigned int queue_number);
+  void check(int queue_number);
 };
 
 #endif

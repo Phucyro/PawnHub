@@ -15,7 +15,7 @@ class Classic : public Game {
 
 	void _Pieces();
 
-	Player* _getCurrentPlayer(){
+	Player* _getCurrentPlayer() override {
 		if(_turn%2) return _player1;
 		else return _player2;
 	}
@@ -38,7 +38,7 @@ class Classic : public Game {
 	Classic(const Classic&) = delete;
 	using Game::_pieces;
 
-	void _changePawn(Piece*, Piece*) override;
+	void _changePawn(Piece*, Piece*, Board*) override;
 
 	public :
 

@@ -128,6 +128,25 @@ void Game::_sendBoard(){
 	_player2->showBoard(state);
 }
 
+
+void Game::_sendCheck() {
+	_player1->transferCheck();
+	_player2->transferCheck();
+}
+
+void Game::_sendCheckmate() {
+	std::string winner;
+	if (_winner == _player1) winner = "white";
+	else winner = "black";
+	_player1->transferCheckmate(winner);
+	_player2->transferCheckmate(winner);
+}
+
+void Game::_sendStalemate() {
+	_player1->transferStalemate();
+	_player2->transferStalemate();
+}
+
 void Game::promote(Piece* piece)
 {
 	char type = this->_getCurrentPlayer()->askPromotion();
@@ -157,10 +176,9 @@ void Game::promote(Piece* piece)
 
 
 	}
-	this->_changePawn(pawn, promotedPawn);
-	delete pawn;
+	this->_changePawn(pawn, promotedPawn, _board);
 
-	// need to send updated board to players here, btw
+	this->_sendBoard();
 }
 
 #endif

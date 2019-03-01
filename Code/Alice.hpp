@@ -16,7 +16,7 @@ class Alice : public Game {
 
 	void _Pieces();
 
-	Player* _getCurrentPlayer(){
+	Player* _getCurrentPlayer() override {
 		if(_turn%2) return _player1;
 		else return _player2;
 	}
@@ -33,13 +33,14 @@ class Alice : public Game {
 	protected :
 
 	void _initBoard() override;
+	void _sendGameMode() override;
 	void _nextTurn() override;
 	bool _isFinish() override;
 	void _boardState(std::string&) override;
 	Alice(const Alice&) = delete;
 	using Game::_pieces;
 
-	void _changePawn(Piece*, Piece*) override;
+	void _changePawn(Piece*, Piece*, Board*) override;
 
 	public :
 

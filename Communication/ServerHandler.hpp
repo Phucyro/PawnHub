@@ -56,7 +56,7 @@ void inline chatHandler(PlayersMap* players_map, std::string sender, std::string
 }
 
 void inline playGameHandler(Matchmaking* matchmaking, Player* player, std::string game_mode){
-  matchmaking->addPlayer(player, static_cast<unsigned int>(atoi(game_mode.c_str())));
+  matchmaking->addPlayer(player, atoi(game_mode.c_str()));
 }
 
 void inline leaveQueueHandler(Matchmaking* matchmaking, Player* player){

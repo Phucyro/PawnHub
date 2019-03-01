@@ -20,13 +20,13 @@ bool Rook::_checkMove(Coordinate end, Board* board, Game& game){
 		if (columnMove) return false;
 
 		// check if there is no piece in the way
-		for (int i = int(_coords.getRealRow()) + rowDirection; i != end.getRealRow(); i += rowDirection){
+		for (int i = int(_coords.getRealRow()) + rowDirection; i != int(end.getRealRow()); i += rowDirection){
 			if (!_isPlaceFree(Coordinate(end.getRealColumn(), unsigned(i)), board)) return false;
 		}
 	}
 	else if(columnMove){
 		// check if there is no piece in the way
-		for (int i = int(_coords.getRealColumn()) + columnDirection; i != end.getRealColumn(); i += columnDirection){
+		for (int i = int(_coords.getRealColumn()) + columnDirection; i != int(end.getRealColumn()); i += columnDirection){
 			if (!_isPlaceFree(Coordinate(unsigned(i), end.getRealRow()), board)) return false;
 		}
 	}

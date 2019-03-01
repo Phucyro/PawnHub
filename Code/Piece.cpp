@@ -16,14 +16,20 @@ Piece& Piece::operator= (const Piece& original){
 Piece* Piece::_doMove(Coordinate end, Board* board, Game& game){
 	Piece *takenPiece;
 	takenPiece = board->movePiece(_coords, end);
-	if (takenPiece) takenPiece->changeIsTaken(game.getTurn(),this,board);
+	if (takenPiece && (takenPiece->getType() == 'p' || takenPiece->getType() == 'r' || takenPiece->getType() == 'h' || takenPiece->getType() == 'b'
+|| takenPiece->getType() == 'q' || takenPiece->getType() == 'k')) {
+		takenPiece->changeIsTaken(game.getTurn(),this,board);
+	}
 	return takenPiece;
 }
 
 void Piece::_reverseMove(Coordinate end, Board* board, Game& game, Piece* takenPiece){
 	board->movePiece(end, _coords);
 	board->setCase(end, takenPiece);
-	if (takenPiece) takenPiece->changeIsTaken(game.getTurn(), this, board);
+	if (takenPiece && (takenPiece->getType() == 'p' || takenPiece->getType() == 'r' || takenPiece->getType() == 'h' || takenPiece->getType() == 'b'
+|| takenPiece->getType() == 'q' || takenPiece->getType() == 'k')) {
+		takenPiece->changeIsTaken(game.getTurn(),this,board);
+	}
 }
 
 bool Piece::move(Coordinate end, Board* board, Game& game){
@@ -32,7 +38,7 @@ bool Piece::move(Coordinate end, Board* board, Game& game){
 	if(!(this->_checkMove(end, board, game))) return false;
 	Piece* takenPiece = this->_doMove(end, board, game);
 	_setCoordinate(end);
-	
+
 	if(game.testCheck(this->getColor())){		//0 a changer
 		_setCoordinate(start);
 		this->_reverseMove(end, board, game, takenPiece);
@@ -50,7 +56,7 @@ bool Piece::_isMovePossible(Coordinate dest, Board* board, Game& game){
 	board->setCase(dest, takenPiece);
 	if (takenPiece) takenPiece->changeIsTaken(game.getTurn(), this, board);
 	_setCoordinate(start);
-	
+
 	return true;
 }
 

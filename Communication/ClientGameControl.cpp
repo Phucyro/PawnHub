@@ -70,7 +70,6 @@ void ClientGameControl::sendPromotion(std::string promotion) {
 void ClientGameControl::handleMessage() {
   std::string message = socket.receiveMessage();
   char header = message[0];
-  std::cout << "Received " << message << std::endl;
   (this->*(headerReceiveMap[header]))(message.erase(0,1));
 }
 

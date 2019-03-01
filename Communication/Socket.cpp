@@ -8,7 +8,7 @@ Socket::Socket() : file_descriptor(0), monMutex() {
   }
 }
 
-Socket::Socket(int fd) : file_descriptor(fd) {}
+Socket::Socket(int fd) : file_descriptor(fd), monMutex() {}
 
 Socket::~Socket() {
 }
