@@ -9,18 +9,17 @@
 #include "ClientHandler.hpp"
 #include "../Display/MenuHandler/MenuHandler.hpp"
 
-void receiveMessageHandler(MenuHandler* menu, Socket* socket, char* response){
+void receiveMessageHandler(MenuHandler* menu, Socket* socket, bool* connected){
   std::vector<std::string> msg;
 
   msg = splitString(socket->receiveMessage(), '~');
-  std::cout << "Received Message " << msg[0] + " " + msg[1] << std::endl;
 
   switch(msg[0][0]){
     case '1' : // [1] [resultat]
-      signUpHandler(msg[1][0], response);
+      signUpHandler(menu, msg[1][0]);
       break;
     case '2' : // [2] [resultat]
-      signInHandler(msg[1][0], response);
+      signInHandler(menu, msg[1][0], connected);
       break;
     case '3' : // [3] [sender] [target] [text]
       //chatHandler(msg[1], msg[2], vectorToString(msg, 2));
@@ -35,39 +34,5 @@ void receiveMessageHandler(MenuHandler* menu, Socket* socket, char* response){
       break;
   }
 }
-/*
-void sendMessageHandler(Socket* socket){
-  bool leave_game = false;
-  std::string input;
-  std::vector<std::string> msg;
-
-  while (!leave_game){
-    std::cout << "Message : " << std::endl;
-    std::getline(std::cin, input);
-    msg = splitString(input, ' ');
-
-    switch (msg[0][0]){
-      case '0' : // 0 : quitter
-        quit(socket, &leave_game);
-        break;
-      case '1' : // 1 [name] [mdp1] [mdp2] : register
-        signUp(socket, msg[1], msg[2], msg[3]);
-        break;
-      case '2' : // 2 [name] [mdp] : login
-        signIn(socket, msg[1], msg[2]);
-        break;
-      case '3' : // 3 [sender] [target] [msg]
-        //chat(socket, *client_username, msg[1], vectorToString(msg, 2));
-        break;
-      case '4' : // 4 [gamemode]
-        playGame(socket, msg[1]);
-        break;
-      case '5' :
-        leaveQueue(socket);
-        break;
-    }
-  }
-}
-*/
 
 #endif
