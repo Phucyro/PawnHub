@@ -83,19 +83,42 @@ Game& Game::operator= (Game&& original)
 	return *this;
 }
 
+//TODO ---> return bool ? //maybe
 
 void Game::start()
 {
 	std::cout << "Starting Game" << std::endl;
 	this->_initBoard();
+	this->_sendGameMode();
+	this->_sendPlayerColour();
+	this->_sendStart();
 	this->_sendBoard();
 	do
 	{
 		++_turn;
+		this->_sendTurn();
 		this->_nextTurn();
 		this->_sendBoard();
 	}
 	while(! this->_isFinish());
+	std::cout << "Game finished" << std::endl;
+}
+
+void Game::_sendStart(){
+	_player1->transferStart();
+	_player2->transferStart();
+}
+
+void Game::_sendPlayerColour(){
+	std::string colour = "White";
+	_player1->transferColour(colour);
+	colour = "Black";
+	_player2->transferColour(colour);
+}
+
+void Game::_sendTurn(){
+	_player1->transferTurn(getTurn());
+	_player2->transferTurn(getTurn());
 }
 
 void Game::_sendBoard(){
@@ -134,10 +157,9 @@ void Game::promote(Piece* piece)
 
 
 	}
-	this->_changePawn(pawn, promotedPawn);
-	delete pawn;
+	this->_changePawn(pawn, promotedPawn, _board);
 
-	// need to send updated board to players here, btw
+	this->_sendBoard();
 }
 
 #endif

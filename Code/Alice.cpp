@@ -8,39 +8,39 @@
 
 void Alice::_Pieces() {
 	_pieces = new Piece*[_piecesAmount];
-	_pieces[0] = new Rook('w', 'A', '1');		//0 -> 7 : pièces fortes blanches
-	_pieces[1] = new Knight('w', 'B', '1');
-	_pieces[2] = new Bishop('w', 'C', '1');
-	_pieces[3] = new Queen('w', 'D', '1');
-	_pieces[4] = new King('w', 'E', '1');
-	_pieces[5] = new Bishop('w', 'F', '1');
-	_pieces[6] = new Knight('w', 'G', '1');
-	_pieces[7] = new Rook('w', 'H', '1');
-	_pieces[8] = new Pawn('w', 'A', '2');		//8 -> 15 : pions blancs
-	_pieces[9] = new Pawn('w', 'B', '2');
-	_pieces[10] = new Pawn('w', 'C', '2');
-	_pieces[11] = new Pawn('w', 'D', '2');
-	_pieces[12] = new Pawn('w', 'E', '2');
-	_pieces[13] = new Pawn('w', 'F', '2');
-	_pieces[14] = new Pawn('w', 'G', '2');
-	_pieces[15] = new Pawn('w', 'H', '2');
+	_pieces[0] = new AliceRook('w', 'A', '1');		//0 -> 7 : pièces fortes blanches
+	_pieces[1] = new AliceKnight('w', 'B', '1');
+	_pieces[2] = new AliceBishop('w', 'C', '1');
+	_pieces[3] = new AliceQueen('w', 'D', '1');
+	_pieces[4] = new AliceKing('w', 'E', '1');
+	_pieces[5] = new AliceBishop('w', 'F', '1');
+	_pieces[6] = new AliceKnight('w', 'G', '1');
+	_pieces[7] = new AliceRook('w', 'H', '1');
+	_pieces[8] = new AlicePawn('w', 'A', '2');		//8 -> 15 : pions blancs
+	_pieces[9] = new AlicePawn('w', 'B', '2');
+	_pieces[10] = new AlicePawn('w', 'C', '2');
+	_pieces[11] = new AlicePawn('w', 'D', '2');
+	_pieces[12] = new AlicePawn('w', 'E', '2');
+	_pieces[13] = new AlicePawn('w', 'F', '2');
+	_pieces[14] = new AlicePawn('w', 'G', '2');
+	_pieces[15] = new AlicePawn('w', 'H', '2');
 
-	_pieces[16] = new Rook('b', 'A', '8');		//16 -> 23 : pièces fortes noires
-	_pieces[17] = new Knight('b', 'B', '8');
-	_pieces[18] = new Bishop('b', 'C', '8');
-	_pieces[19] = new Queen('b', 'D', '8');
-	_pieces[20] = new King('b', 'E', '8');
-	_pieces[21] = new Bishop('b', 'F', '8');
-	_pieces[22] = new Knight('b', 'G', '8');
-	_pieces[23] = new Rook('b', 'H', '8');
-	_pieces[24] = new Pawn('b', 'A', '7');		//24 -> 31 : pions noirs
-	_pieces[25] = new Pawn('b', 'B', '7');
-	_pieces[26] = new Pawn('b', 'C', '7');
-	_pieces[27] = new Pawn('b', 'D', '7');
-	_pieces[28] = new Pawn('b', 'E', '7');
-	_pieces[29] = new Pawn('b', 'F', '7');
-	_pieces[30] = new Pawn('b', 'G', '7');
-	_pieces[31] = new Pawn('b', 'H', '7');
+	_pieces[16] = new AliceRook('b', 'A', '8');		//16 -> 23 : pièces fortes noires
+	_pieces[17] = new AliceKnight('b', 'B', '8');
+	_pieces[18] = new AliceBishop('b', 'C', '8');
+	_pieces[19] = new AliceQueen('b', 'D', '8');
+	_pieces[20] = new AliceKing('b', 'E', '8');
+	_pieces[21] = new AliceBishop('b', 'F', '8');
+	_pieces[22] = new AliceKnight('b', 'G', '8');
+	_pieces[23] = new AliceRook('b', 'H', '8');
+	_pieces[24] = new AlicePawn('b', 'A', '7');		//24 -> 31 : pions noirs
+	_pieces[25] = new AlicePawn('b', 'B', '7');
+	_pieces[26] = new AlicePawn('b', 'C', '7');
+	_pieces[27] = new AlicePawn('b', 'D', '7');
+	_pieces[28] = new AlicePawn('b', 'E', '7');
+	_pieces[29] = new AlicePawn('b', 'F', '7');
+	_pieces[30] = new AlicePawn('b', 'G', '7');
+	_pieces[31] = new AlicePawn('b', 'H', '7');
 }
 
 Alice::~Alice(){
@@ -92,26 +92,35 @@ void Alice::_initBoard() {
 	Game::_board->setCase(Coordinate('H', '7'), Game::_pieces[31]);
 }
 
-void Alice::_changePawn(Piece *pawn, Piece* promotedPawn){
+void Alice::_changePawn(Piece *pawn, Piece* promotedPawn, Board* board){
 	int start, i, end;
 	if (pawn->getColor() == 'w'){
 		int start = _lastStrongPiecesWhite;
 		int i = _lastStrongPiecesWhite;
 		_lastStrongPiecesWhite ++;
 		end = 16;
+		for (; i < end; i++) {
+			if (_pieces[i] == pawn){
+				board->setCase(_pieces[i]->getCoord(), promotedPawn);
+				delete pawn;
+				_pieces[i] = _pieces[start];
+				_pieces[start] = promotedPawn;
+				break; // <3 <3 <3
+			}
+		}
 	}else{
 		start = _lastStrongPieceBlack;
 		i = _lastStrongPieceBlack;
 		_lastStrongPieceBlack ++;
 		end = 32;
-	}
-
-	for (; i < end; i++) {
-		if (_pieces[i] == pawn){
-			delete pawn;
-			_pieces[i] = _pieces[start];
-			_pieces[start] = promotedPawn;
-			break; // <3
+		for (; i < end; i++) {
+			if (_pieces[i] == pawn){
+				board->setCase(_pieces[i]->getCoord(), promotedPawn);
+				delete pawn;
+				_pieces[i] = _pieces[start];
+				_pieces[start] = promotedPawn;
+				break; // <3 <3 <3
+			}
 		}
 	}
 }
@@ -126,13 +135,15 @@ bool Alice::_executeMove(Coordinate start, Coordinate end, char playerColor){
 void Alice::_nextTurn() {
 	Player *currentPlayer = _getCurrentPlayer();
 	char playerColor = currentPlayer == _player1 ? 'w':'b';
+	Coordinate start,end;
 
 	bool isMoveValid = false;
 	std::string playerMove;
 	while(!isMoveValid){
 		playerMove = currentPlayer->askMove();
 		if (this->_fitInBoard(playerMove)){
-			Coordinate start = Coordinate(playerMove[0], playerMove[1]), end = Coordinate(playerMove[2], playerMove[3]);
+			start = Coordinate(playerMove[0], playerMove[1]);
+			end = Coordinate(playerMove[2], playerMove[3]);
 			isMoveValid = this->_executeMove(start, end, playerColor);
 		}
 	}
@@ -142,6 +153,7 @@ bool Alice::_isCheckmate(char playerColor){
 	Piece *dangerousPiece = nullptr, *inTest;
 	int offset = _calculOffset(playerColor);
 	Piece *king = _pieces[offset+KING_INDEX];
+	bool dimension = dynamic_cast<AlicePiece*>(king)->getDimension();
 	Coordinate kingPlace = king->getCoord(), dPiecePlace;
 	int i = 16-offset;
 	bool moreThan2 = false;
@@ -160,42 +172,40 @@ bool Alice::_isCheckmate(char playerColor){
 	if (king->canMove(_board, *this)) return false;
 	if (!moreThan2){
 		int rowMove = int(dangerousPiece->getRow()) - int(king->getRow());
-		int rowDirection = rowMove/std::abs(rowMove);
+		int rowDirection = rowMove ? rowMove/std::abs(rowMove) : 0;
 		int columnMove = int(dangerousPiece->getColumn()) - int(king->getColumn());
-		int columnDirection = columnMove/std::abs(columnMove);
+		int columnDirection = columnMove ? columnMove/std::abs(columnMove) : 0;
 
 		//bishop or pawn or queen case
 		if (std::abs(rowMove) == std::abs(columnMove)){
-			int row = 0, column = 0;
-			while(std::abs(row) < std::abs(rowMove)){
+			int row = int(king->getRow())+rowDirection, column = int(king->getColumn())+columnDirection;
+			while(row != dangerousPiece->getRow()){
 				for (int i = 16-offset; i < 32 - offset; i++){
-					if ((!_pieces[i]->isTaken()) && _pieces[i]->_isMovePossible(column, row, _board, *this)) return false;
-					row += rowDirection;
-					column += columnDirection;
+					if ((!_pieces[i]->isTaken()) && _pieces[i]->_isMovePossible(Coordinate(column, row), _board, *this) && dynamic_cast<AlicePiece*>(_pieces[i])->getDimension() != dimension) return false;
 				}
+				row += rowDirection;
+				column += columnDirection;
 			}
 		}
 		//rook or queen case(row)
 		else if (rowMove){
-			for (int j = 0; std::abs(j) < std::abs(rowMove); j += rowDirection){
+			for (int j = int(king->getRow())+rowDirection; j != dangerousPiece->getRow(); j += rowDirection){
 				for(int i = 16-offset; i < 32 - offset; i++){
-					if ((!_pieces[i]->isTaken()) && _pieces[i]->_isMovePossible(0, j, _board, *this)) return false;
+					if ((!_pieces[i]->isTaken()) && _pieces[i]->_isMovePossible(Coordinate(int(king->getColumn()), j), _board, *this) && dynamic_cast<AlicePiece*>(_pieces[i])->getDimension() != dimension) return false;
 				}
 			}
 		}
 		//rook or queen case(column)
 		else if (columnMove){
-			for (int j = 0; std::abs(j) < std::abs(columnMove); j += columnDirection){
+			for (int j = int(king->getColumn())+columnDirection; j != king->getColumn(); j += columnDirection){
 				for(int i = 16-offset; i < 32 - offset; i++){
-					if ((!_pieces[i]->isTaken()) && _pieces[i]->_isMovePossible(0, j, _board, *this)) return false;
+					if ((!_pieces[i]->isTaken()) && _pieces[i]->_isMovePossible(Coordinate(j, int(king->getRow())), _board, *this) && dynamic_cast<AlicePiece*>(_pieces[i])->getDimension() != dimension) return false;
 				}
 			}
 		}
-		//knight case
-		else{
-			for (int i = 16-offset; i < 32 - offset; i++){
-				if ((!_pieces[i]->isTaken()) && _pieces[i]->_isMovePossible(0, 0, _board, *this)) return false;
-			}
+		//can the dangerousPiece be taken?
+		for (int i = 16-offset; i < 32 - offset; i++){
+			if ((!_pieces[i]->isTaken()) && _pieces[i]->_isMovePossible(dangerousPiece->getCoord(), _board, *this)) return false;
 		}
 	}
 	return true;
@@ -256,11 +266,18 @@ bool Alice::_isFinish() {
 void Alice::_boardState(std::string& state){
 	int i = 0;
 	for (; i < 16; i++){
-		if (!_pieces[i]->isTaken()) state += _pieces[i]->toString();
+		if (!_pieces[i]->isTaken()) {
+			state += _pieces[i]->toString();
+			state += dynamic_cast<AlicePiece*>(_pieces[i])->getDimension() ? '1':'2';
+		}
 	}
 	state += "!";
 	for (; i < 32; i++){
-		if (!_pieces[i]->isTaken()) state += _pieces[i]->toString();
+		if (!_pieces[i]->isTaken()) {
+			state += _pieces[i]->toString();
+			state += dynamic_cast<AlicePiece*>(_pieces[i])->getDimension() ? '1':'2';
+		}
 	}
+	state += "#";
 }
 #endif

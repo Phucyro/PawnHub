@@ -89,26 +89,35 @@ void Dark::_initBoard() {
 	Game::_board->setCase(Coordinate('H', '7'), Game::_pieces[31]);
 }
 
-void Dark::_changePawn(Piece *pawn, Piece* promotedPawn){
+void Dark::_changePawn(Piece *pawn, Piece* promotedPawn, Board* board){
 	int start, i, end;
 	if (pawn->getColor() == 'w'){
 		int start = _lastStrongPiecesWhite;
 		int i = _lastStrongPiecesWhite;
 		_lastStrongPiecesWhite ++;
 		end = 16;
+		for (; i < end; i++) {
+			if (_pieces[i] == pawn){
+				board->setCase(_pieces[i]->getCoord(), promotedPawn);
+				delete pawn;
+				_pieces[i] = _pieces[start];
+				_pieces[start] = promotedPawn;
+				break; // <3 <3 <3
+			}
+		}
 	}else{
 		start = _lastStrongPieceBlack;
 		i = _lastStrongPieceBlack;
 		_lastStrongPieceBlack ++;
 		end = 32;
-	}
-
-	for (; i < end; i++) {
-		if (_pieces[i] == pawn){
-			delete pawn;
-			_pieces[i] = _pieces[start];
-			_pieces[start] = promotedPawn;
-			break; // <3
+		for (; i < end; i++) {
+			if (_pieces[i] == pawn){
+				board->setCase(_pieces[i]->getCoord(), promotedPawn);
+				delete pawn;
+				_pieces[i] = _pieces[start];
+				_pieces[start] = promotedPawn;
+				break; // <3 <3 <3
+			}
 		}
 	}
 }
@@ -142,8 +151,7 @@ bool Dark::_isFinish() {
 		_winner = currentPlayer;
 		return true;
 	}
-	if (this->_isStalemate(opponentColor)) return true;
-	return this->_notEnoughtPieces();
+	return this->_isStalemate(opponentColor);
 }
 
 bool Dark::_isCheckmate(char playerColor){
@@ -155,39 +163,6 @@ bool Dark::_isStalemate(char playerColor){
 	int offset = _calculOffset(playerColor);
 	for (int i = offset; i < offset+16; i++){
 		if ((!_pieces[i]->isTaken()) && _pieces[i]->canMove(_board, *this)) return false;
-	}
-	return true;
-}
-
-bool Dark::_notEnoughtPieces(){
-	char type;
-	Piece* lastPieceButKing = nullptr;
-	bool doubleBishop = false;
-	for (int i = 0; i < 32; i++){
-		type = _pieces[i]->isTaken() ? '!' : _pieces[i]->getType();
-		switch(type){
-			case '!': break;
-			case 'k': break;
-			case 'p': return false;
-			case 'q': return false;
-			case 'r': return false;
-			case 'h':{if (lastPieceButKing) return false;
-				  lastPieceButKing = _pieces[i];
-				  break;
-				 }
-			case 'b':{if (doubleBishop) return false;
-				  if (lastPieceButKing && _board->getCaseColor(_pieces[i]->getCoord()) == _board->getCaseColor(lastPieceButKing->getCoord())){
-				  	doubleBishop = true;
-				  	break;
-				  }
-				  if (!lastPieceButKing){
-				  	lastPieceButKing = _pieces[i];
-				  	break;
-				  }
-				  return false;
-				 }
-			default: break;
-		}
 	}
 	return true;
 }
@@ -208,23 +183,24 @@ void Dark::_boardState(std::string& state){
 	for (int i = offset; i < 16+offset; i++) if (!_pieces[i]->isTaken()) state += _pieces[i]->toString();
 	state += "!";
 	for (int i = 16-offset; i < 32-offset; i++) if ((!_pieces[i]->isTaken()) && _isVisible(_pieces[i])) state += _pieces[i]->toString();
+	state += "#";
 }
 
 bool Dark::_isVisible(Piece* piece){
 	Coordinate leftMaybePawn, rightMaybePawn, frontMaybePawn;
-	if (piece->getColor() == 'w'){	//White	
+	if (piece->getColor() == 'w'){	//White
 
 		//Pawn
 		frontMaybePawn = Coordinate(piece->getCoord().getRealColumn(), piece->getCoord().getRealRow()+1);
 		Piece* MaybePawn = nullptr;
 		if (_board->isInBoard(frontMaybePawn)) MaybePawn = Game::_board->getCase(frontMaybePawn);
 		if (MaybePawn && MaybePawn->getColor() == 'b' && (MaybePawn->getType() == 'p' || MaybePawn->getType() == 'b' || MaybePawn->getType() == 'q' || MaybePawn->getType() == 'k')) return true;
-		
+
 		leftMaybePawn = Coordinate(piece->getCoord().getRealColumn()+1, piece->getCoord().getRealRow()+1);
 		MaybePawn = nullptr;
 		if (_board->isInBoard(leftMaybePawn)) MaybePawn = Game::_board->getCase(leftMaybePawn);
 		if (MaybePawn && MaybePawn->getColor() == 'b' && (MaybePawn->getType() == 'p' || MaybePawn->getType() == 'b' || MaybePawn->getType() == 'q' || MaybePawn->getType() == 'k')) return true;
-		
+
 		rightMaybePawn = Coordinate(piece->getCoord().getRealColumn()-1, piece->getCoord().getRealRow()+1);
 		MaybePawn = nullptr;
 		if (_board->isInBoard(rightMaybePawn)) MaybePawn = Game::_board->getCase(rightMaybePawn);
@@ -237,19 +213,19 @@ bool Dark::_isVisible(Piece* piece){
 		}
 	}
 
-	else{	//Black	
+	else{	//Black
 
 		//Pawn
 		frontMaybePawn = Coordinate(piece->getCoord().getRealColumn(), piece->getCoord().getRealRow()-1);
 		Piece* MaybePawn = nullptr;
 		if (_board->isInBoard(frontMaybePawn)) MaybePawn = Game::_board->getCase(frontMaybePawn);
 		if (MaybePawn && MaybePawn->getColor() == 'w' && (MaybePawn->getType() == 'p' || MaybePawn->getType() == 'b' || MaybePawn->getType() == 'q' || MaybePawn->getType() == 'k')) return true;
-		
+
 		leftMaybePawn = Coordinate(piece->getCoord().getRealColumn()-1, piece->getCoord().getRealRow()-1);
 		MaybePawn = nullptr;
 		if (_board->isInBoard(leftMaybePawn)) MaybePawn = Game::_board->getCase(leftMaybePawn);
 		if (MaybePawn && MaybePawn->getColor() == 'w' && (MaybePawn->getType() == 'p' || MaybePawn->getType() == 'b' || MaybePawn->getType() == 'q' || MaybePawn->getType() == 'k')) return true;
-			
+
 		rightMaybePawn = Coordinate(piece->getCoord().getRealColumn()+1, piece->getCoord().getRealRow()-1);
 		MaybePawn = nullptr;
 		if (_board->isInBoard(rightMaybePawn)) MaybePawn = Game::_board->getCase(rightMaybePawn);
@@ -263,44 +239,5 @@ bool Dark::_isVisible(Piece* piece){
 	}
 	return false;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 #endif

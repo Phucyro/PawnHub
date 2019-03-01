@@ -19,13 +19,17 @@ class Game
 	unsigned _lastStrongPiecesWhite;
 	unsigned _lastStrongPieceBlack;
 
+	virtual void _sendStart();
+	virtual void _sendPlayerColour();
+	virtual void _sendTurn();
 	virtual void _sendBoard();
-	
+
 	virtual void _initBoard() = 0;
+	virtual void _sendGameMode() = 0;
 	virtual void _nextTurn() = 0;
 	virtual bool _isFinish() = 0;
 	virtual Player* _getCurrentPlayer() = 0;
-	virtual void _changePawn(Piece*, Piece*) = 0;
+	virtual void _changePawn(Piece*, Piece*, Board*) = 0;
 	virtual void _boardState(std::string&) = 0;
 
 	Game(Piece**, unsigned, Player*, Player*, unsigned lastStrongPiecesWhite, unsigned lastStrongPieceBlack);
@@ -46,6 +50,7 @@ class Game
 	Player* getWinner(){return _winner;}
 	Player* getPlayer1(){return _player1;}
 	Player* getPlayer2(){return _player2;}
+	unsigned getTurn(){return _turn;}
 
 };
 #include "Player.hpp"

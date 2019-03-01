@@ -94,26 +94,41 @@ void Classic::_initBoard() {
 	_sendBoard();
 }
 
-void Classic::_changePawn(Piece *pawn, Piece* promotedPawn){
+void Classic::_sendGameMode() {
+	std::string game = "Classic";
+	_player1->transferGameMode(game);
+	_player2->transferGameMode(game);
+}
+
+void Classic::_changePawn(Piece *pawn, Piece* promotedPawn, Board* board){
 	int start, i, end;
 	if (pawn->getColor() == 'w'){
 		int start = _lastStrongPiecesWhite;
 		int i = _lastStrongPiecesWhite;
 		_lastStrongPiecesWhite ++;
 		end = 16;
+		for (; i < end; i++) {
+			if (_pieces[i] == pawn){
+				board->setCase(_pieces[i]->getCoord(), promotedPawn);
+				delete pawn;
+				_pieces[i] = _pieces[start];
+				_pieces[start] = promotedPawn;
+				break; // <3 <3 <3
+			}
+		}
 	}else{
 		start = _lastStrongPieceBlack;
 		i = _lastStrongPieceBlack;
 		_lastStrongPieceBlack ++;
 		end = 32;
-	}
-
-	for (; i < end; i++) {
-		if (_pieces[i] == pawn){
-			delete pawn;
-			_pieces[i] = _pieces[start];
-			_pieces[start] = promotedPawn;
-			break; // <3
+		for (; i < end; i++) {
+			if (_pieces[i] == pawn){
+				board->setCase(_pieces[i]->getCoord(), promotedPawn);
+				delete pawn;
+				_pieces[i] = _pieces[start];
+				_pieces[start] = promotedPawn;
+				break; // <3 <3 <3
+			}
 		}
 	}
 }
@@ -133,7 +148,7 @@ void Classic::_nextTurn() {
 	std::string playerMove;
 	while(!isMoveValid){
 		playerMove = currentPlayer->askMove();
-		std::cout<<"game recived: "<<playerMove<<std::endl;
+		std::cout<<"game received: "<<playerMove<<std::endl;
 		if (this->_fitInBoard(playerMove)){
 			Coordinate start = Coordinate(playerMove[0], playerMove[1]), end = Coordinate(playerMove[2], playerMove[3]);
 			isMoveValid = this->_executeMove(start, end, playerColor);
@@ -164,42 +179,40 @@ bool Classic::_isCheckmate(char playerColor){
 	if (king->canMove(_board, *this)) return false;
 	if (!moreThan2){
 		int rowMove = int(dangerousPiece->getRow()) - int(king->getRow());
-		int rowDirection = rowMove/std::abs(rowMove);
+		int rowDirection = rowMove ? rowMove/std::abs(rowMove) : 0;
 		int columnMove = int(dangerousPiece->getColumn()) - int(king->getColumn());
-		int columnDirection = columnMove/std::abs(columnMove);
+		int columnDirection = columnMove ? columnMove/std::abs(columnMove) : 0;
 
 		//bishop or pawn or queen case
 		if (std::abs(rowMove) == std::abs(columnMove)){
-			int row = 0, column = 0;
-			while(std::abs(row) < std::abs(rowMove)){
+			int row = int(king->getRow())+rowDirection, column = int(king->getColumn())+columnDirection;
+			while(row != dangerousPiece->getRow()){
 				for (int i = 16-offset; i < 32 - offset; i++){
-					if ((!_pieces[i]->isTaken()) && _pieces[i]->_isMovePossible(column, row, _board, *this)) return false;
-					row += rowDirection;
-					column += columnDirection;
+					if ((!_pieces[i]->isTaken()) && _pieces[i]->_isMovePossible(Coordinate(column, row), _board, *this)) return false;
 				}
+				row += rowDirection;
+				column += columnDirection;
 			}
 		}
 		//rook or queen case(row)
 		else if (rowMove){
-			for (int j = 0; std::abs(j) < std::abs(rowMove); j += rowDirection){
+			for (int j = int(king->getRow())+rowDirection; j != dangerousPiece->getRow(); j += rowDirection){
 				for(int i = 16-offset; i < 32 - offset; i++){
-					if ((!_pieces[i]->isTaken()) && _pieces[i]->_isMovePossible(0, j, _board, *this)) return false;
+					if ((!_pieces[i]->isTaken()) && _pieces[i]->_isMovePossible(Coordinate(int(king->getColumn()), j), _board, *this)) return false;
 				}
 			}
 		}
 		//rook or queen case(column)
 		else if (columnMove){
-			for (int j = 0; std::abs(j) < std::abs(columnMove); j += columnDirection){
+			for (int j = int(king->getColumn())+columnDirection; j != dangerousPiece->getColumn(); j += columnDirection){
 				for(int i = 16-offset; i < 32 - offset; i++){
-					if ((!_pieces[i]->isTaken()) && _pieces[i]->_isMovePossible(0, j, _board, *this)) return false;
+					if ((!_pieces[i]->isTaken()) && _pieces[i]->_isMovePossible(Coordinate(j, int(king->getRow())), _board, *this)) return false;
 				}
 			}
 		}
-		//knight case
-		else{
-			for (int i = 16-offset; i < 32 - offset; i++){
-				if ((!_pieces[i]->isTaken()) && _pieces[i]->_isMovePossible(0, 0, _board, *this)) return false;
-			}
+		//test if the dangerousPiece can be taken
+		for (int i = 16-offset; i < 32 - offset; i++){
+			if ((!_pieces[i]->isTaken()) && _pieces[i]->_isMovePossible(dangerousPiece->getCoord(), _board, *this)) return false;
 		}
 	}
 	return true;
@@ -250,6 +263,9 @@ bool Classic::_isFinish() {
 	Player *currentPlayer = _getCurrentPlayer();
 	char opponentColor = currentPlayer == _player2 ? 'w':'b';
 	if (this->_isCheckmate(opponentColor)){
+		if (opponentColor == 'w')
+			std::cout << "Black Player win !" << std::endl;
+		else std::cout << "White Player win !" << std::endl;
 		_winner = currentPlayer;
 		return true;
 	}

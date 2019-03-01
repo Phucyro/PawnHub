@@ -20,16 +20,11 @@ private:
    {"board", "B"},
    {"update", "U"},
    {"colour", "X"},
+   {"gamemode", "G"},
    {"turn", "T"},
    {"askmove", "A"},
    {"move", "M"},
    {"promote", "P"},
-   {"quit", "0"},
-   {"register", "1"},
-   {"login", "2"},
-   {"chat", "3"},
-   {"play", "4"},
-   {"leave", "5"}
   };
 
 
@@ -45,8 +40,13 @@ private:
 public:
   void sendBoard(Socket*, std::string);
   void sendUpdate(Socket*, std::string);
+  void sendStart(Socket*);
+  void sendCheck(Socket*);
+  void sendCheckmate(Socket*, std::string);
+  void sendStalemate(Socket*);
+  void sendGameMode(Socket*, std::string);
   void sendPlayerColour(Socket*, std::string);
-  void sendTurn(Socket*, int);
+  void sendTurn(Socket*, unsigned);
   void sendAskMove(Socket*);
   void sendAskPromotion(Socket*);
 

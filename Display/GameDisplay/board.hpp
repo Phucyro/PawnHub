@@ -18,13 +18,13 @@ class Board
 
 protected:
   WINDOW* infos_win;
+  const char* mode;
+  const char* colour;
 
   void init_windows();
 
   void draw_rectangle(int x1, int y1, int x2, int y2);
   void draw_coordinates();
-  void draw_infos();
-
 
   void test_game();
   void exit();
@@ -39,12 +39,19 @@ public:
 
   void draw_pieces(std::string);
 
-  void move_piece(int, int, int, int, std::string);
+  void draw_infos();
+
+  // void move_piece(int, int, int, int, std::string);
 
   void refresh_board();
 
-  std::string get_movement();
+  void set_mode(const char*);
+  void set_colour(const char*);
+  void update_turn(const char*);
+  void declare_check();
+  void endgame(const char*);
 
+  std::string get_movement();
   std::string get_promotion();
 
   bool isRunning();

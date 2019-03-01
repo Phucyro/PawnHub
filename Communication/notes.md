@@ -1,12 +1,14 @@
 
 #TODO:
 
-- envoyer les messages de la meme maniere pour chaque partie (jeu/admin)
-- idealement avoir une instance de controle admin qui gere les envois/receptions de messages
-  - et laisse la main au controle de jeu quand un jeu est en cours
-  - comment gerer le chat comme ca?
 - mieux gerer les exceptions/erreurs de client/serveur (ex: mauvais hostname, deconnection)
-- gerer deux clients sur le meme jeu (_le plus gros qui reste_)
+- gerer tous les autres messages de jeu
+  - faits: board, move, turn
+  - en cours: game mode, player colour (biens recus mais probleme d'affichage)
+  - a faire: promotion
+  --> prevenir des changements faits dans Code (update de \_start(); methodes pures de Game: \_sendGameMode; methodes virtuelles mais definies: \_sendStart, \_sendPlayerColour, \_sendTurn) (methodes de Player: transferStart, transferCheck, transferCheckmate, transferStalemate, transferGameMode, transferColour, transferTurn)
+
+- reine ne se deplace pas en horizontale de + d'une case
 
 ##Messages
 
@@ -23,10 +25,3 @@ send board to clients
 send move to server
 - 4 characters total, initial position and final position
 - position: letter-number combination, classic chess representation
-
-##Two Clients on the Same Game
-
-potentially threading rather than forking
-
-identify two connected clients
-pass control to game control instance
