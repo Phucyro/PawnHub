@@ -19,13 +19,13 @@ bool Queen::_checkMoveRook(Coordinate end, Board* board, Game& game){
   		if (columnMove) return false;
 
   		// check if there is no piece in the way
-  		for (int i = int(_coords.getRealRow()) + rowDirection; i != end.getRealRow(); i += rowDirection){
+  		for (int i = int(_coords.getRealRow()) + rowDirection; i != int(end.getRealRow()); i += rowDirection){
   			if (!_isPlaceFree(Coordinate(end.getRealColumn(), unsigned(i)), board)) return false;
   		}
   	}
   	else if(columnMove){
   		// check if there is no piece in the way
-  		for (int i = int(_coords.getRealColumn()) + columnDirection; i != end.getRealColumn(); i += columnDirection){
+  		for (int i = int(_coords.getRealColumn()) + columnDirection; i != int(end.getRealColumn()); i += columnDirection){
   			if (!_isPlaceFree(Coordinate(unsigned(i), end.getRealRow()), board)) return false;
   		}
   	}
@@ -45,10 +45,10 @@ bool Queen::_checkMoveBishop(Coordinate end, Board* board, Game& game){
 	if (std::abs(rowMove) != std::abs(columnMove)) return false; //test if the move normal for a Queen
 
 	//test if there is no piece in the way
-	int row = _coords.getRealRow(), column = _coords.getRealColumn();
+	int row = int(_coords.getRealRow()), column = int(_coords.getRealColumn());
 	row += rowDirection;
 	column += columnDirection;
-	while(row != end.getRealRow()){
+	while(row != int(end.getRealRow())){
 		if (!_isPlaceFree(Coordinate(column, row), board)) return false;
 		row += rowDirection;
 		column += columnDirection;

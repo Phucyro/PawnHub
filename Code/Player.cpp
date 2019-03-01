@@ -100,7 +100,7 @@ void Player::transferTurn(unsigned turn) {
 void Player::receiveMove(std::string& message){
 	if (_recvActive){
 		_recvActive = false;
-		char str[message.length()+1];
+		char str[4+1];				// 4 characters for a move, 1 for \0
 		std::strcpy(str, message.c_str());
 		write(_pipe[1], str, 4*sizeof(char));
 	}
@@ -109,7 +109,7 @@ void Player::receiveMove(std::string& message){
 void Player::receivePromotion(std::string& message){
 	if (_recvActive){
 		_recvActive = false;
-		char str[message.length()+1];
+		char str[1+1];				// 1 character for promotion request, 1 for \0
 		std::strcpy(str, message.c_str());
 		write(_pipe[1], str, sizeof(char));
 	}

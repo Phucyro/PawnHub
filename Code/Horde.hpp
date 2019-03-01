@@ -9,7 +9,7 @@
 class Horde: public Game{
 	private :
 	void _Pieces();
-	Player* _getCurrentPlayer(){
+	Player* _getCurrentPlayer() override {
 		if(_turn%2) return _player1;
 		else return _player2;
 	}

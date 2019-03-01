@@ -13,7 +13,7 @@ class Dark: public Game{
 
 	void _Pieces();
 
-	Player* _getCurrentPlayer() override{
+	Player* _getCurrentPlayer() override {
 		if(_turn%2) return _player1;
 		else return _player2;
 	}

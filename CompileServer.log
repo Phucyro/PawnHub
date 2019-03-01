@@ -1,0 +1,48 @@
+# GAME LOGIC PEEPS
+Code/Piece.hpp:73:39: warning: unused parameter ‘turn’ [-Wunused-parameter]
+   virtual void changeIsTaken(unsigned turn, Piece*, Board*){_isTaken = !_isTaken;}
+                                       ^~~~
+
+Code/AlicePiece.hpp:31:25: warning: suggest parentheses around comparison in operand of ‘==’ [-Wparentheses]
+   return (!pieceToTake) != pieceToTake->getDimension() == getDimension();
+          ~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Code/AlicePiece.hpp:29:62: warning: unused parameter ‘game’ [-Wunused-parameter]
+  virtual bool _checkMove(Coordinate end, Board* board, Game& game){
+                                                              ^~~~
+
+-> melange de unsigned/signed int dans les _isCheckmate et _isStalemate
+-> c'est degueu et assez facile a regler, faut juste vous mettre d'accord
+-> moins facile, c'est les changements de unsigned/signed int dans les _checkMove
+
+Code/Dark.hpp:53:28: warning: unused parameter ‘color’ [-Wunused-parameter]
+  bool testCheck(const char color) override {return false;}
+
+Code/Bishop.cpp:12:61: warning: unused parameter ‘game’ [-Wunused-parameter]
+ bool Bishop::_checkMove(Coordinate end, Board* board, Game& game){
+                                                             ^~~~
+
+Code/Knight.cpp:12:61: warning: unused parameter ‘game’ [-Wunused-parameter]
+ bool Knight::_checkMove(Coordinate end, Board* board, Game& game){
+                ion list [-Weffc++]
+
+Code/Rook.cpp:13:59: warning: unused parameter ‘game’ [-Wunused-parameter]
+ bool Rook::_checkMove(Coordinate end, Board* board, Game& game){
+                                                           ^~~~
+
+Code/Queen.cpp:12:64: warning: unused parameter ‘game’ [-Wunused-parameter]
+ bool Queen::_checkMoveRook(Coordinate end, Board* board, Game& game){
+                                                                ^~~~
+
+Code/Queen.cpp:38:66: warning: unused parameter ‘game’ [-Wunused-parameter]
+ bool Queen::_checkMoveBishop(Coordinate end, Board* board, Game& game){
+                                                                  ^~~~
+
+Code/BasicPawn.cpp:21:64: warning: unused parameter ‘game’ [-Wunused-parameter]
+ bool BasicPawn::_checkMove(Coordinate end, Board* board, Game& game){
+                                                                ^~~~
+
+Code/BasicPawn.cpp: In member function ‘virtual bool BasicPawn::move(Coordinate, Board*, Game&)’:
+Code/BasicPawn.cpp:61:6: warning: unused variable ‘rowDirection’ [-Wunused-variable]
+  int rowDirection = rowMove ? rowMove/std::abs(rowMove) : 0;
+      ^~~~~~~~~~~~
