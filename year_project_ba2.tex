@@ -80,7 +80,7 @@
 		\item[Pat :] Il y a pat lorsqu'aucun des joueurs n'est en mesure de placer l'autre en échec et mat.
 		\item[Le Roque :] Le roque consiste à déplacer en un seul coup le roi et l'une des tours. On déplace d'abord le roi de deux cases vers la tour puis, avec la même main, on fait passer la tour de l'autre côté, juste à côté du roi (voir le diagramme ci-dessous). Les conditions suivantes sont nécessaires pour pouvoir roquer : aucune pièce ne se trouve entre le roi et la tour concernée ; le roi et la tour concernée n'ont encore jamais joué et le roi n'est pas en échec ;
 la case traversée par le roi n'est contrôlée par aucune pièce adverse\footnote{source Wikipedia}.
-		\item[La Prise en Passant:] Au jeu d’échecs, la prise en passant est une possibilité particulière de capturer un pion. Lorsqu’un pion se trouve sur la cinquième rangée et que l’adversaire avance de deux cases un pion d’une colonne voisine (les deux pions se retrouvent alors côte-à-côte sur la même rangée), le premier pion peut prendre le second. Pour effectuer la prise en passant, le joueur avance son pion en diagonale sur la sixième rangée et la colonne du pion adverse, et ôte ce dernier de l’échiquier\footnote{source Wikipedia}
+		\item[La Prise en Passant:] Au jeu d’échecs, la prise en passant est une possibilité particulière de capturer un pion. Lorsqu’un pion se trouve sur la cinquième rangée et que l’adversaire avance de deux cases un pion d’une colonne voisine (les deux pions se retrouvent alors côte-à-côte sur la même rangée), le premier pion peut prendre le second. Pour effectuer la prise en passant, le joueur avance son pion en diagonale sur la sixième rangée et la colonne du pion adverse, et ôte ce dernier de l’échiquier\footnote{source Wikipedia}.
 		\begin{figure}[bh]
 		\centering
 		\includegraphics[scale=1]{roque_prise_passant.png}
@@ -447,7 +447,7 @@ Le joueur se connecte à l'aide du \textit{hostname} du serveur, qui s'affiche �
 \begin{enumerate}
 \item Comme la plupart des tâches effectuées par nos programmes se font à l'aide de chaînes de caractères et par soucis d'homogénéité, il est préférable et plus simple que l'échange d'information entre le serveur et le client se fasse également sous cette forme.
 \item Une chaîne de caractère n'a pas besoin d'être traduite en binaire, ce qui diminue la complexité et le temps d'exécution de nos programmes.
-\item La taille du message envoyée n'est pas un problème, car une taille de 150 octets suffit pour envoyer toutes les informations d'un message. Le plus grand message actuel est le plateau, qui ne consiste que de 147 octets lorsqu'il est complet dans un jeu de \textit{Horde Chess} (voir 6.5, point 2).
+\item La taille du message envoyée n'est pas un problème, car une taille de 150 octets suffit pour envoyer toutes les informations d'un message. Le plus grand message actuel est le plateau, qui ne consiste que de 147 octets lorsqu'il est complet dans un jeu de \textit{Horde Chess} (voir 6.5, point \ref{send_board}).
 \end{enumerate}
 \paragraph{}Si l'on souhaite tout de même envoyer des messages plus longs que la taille standard définie, le système de messagerie utilise du padding à l'aide du symbole '|'afin d'identifier la fin du message. La classe \textit{Socket} effectue ce padding ainsi que l'envoi et la réception de messages à l'aide des méthodes \textit{sendMessage} et \textit{receiveMessage}.
 \paragraph{}Le serveur tâchera de vérifier les différentes actions des joueurs et veillera également à envoyer régulièrement la disposition du plateau aux clients afin qu'il s'affiche correctement pour les joueurs.
@@ -467,6 +467,12 @@ Le joueur se connecte à l'aide du \textit{hostname} du serveur, qui s'affiche �
 \item \textit{Assignation de la couleur des pièces aux joueurs} \\
 \textbf{Mise en pratique :} Le serveur envoie la couleur du joueur (noir ou blanc) à son client. \\
 \textbf{Protocole :} Le serveur envoie 'white' au premier joueur, le joueur blanc, et 'black' pour le second joueur, précédé de l'en-tête 'X' (colour). Pour l'instant, le premier client connecté devient le premier joueur.  Comme pour le point précèdent, ce message est placé dans une variable de l'instance d'affichage du jeu.
+
+\begin{figure}
+\centering
+\includegraphics[scale=0.40]{Sequence_Server_GameStart.png}
+\caption{Diagramme de séquences d'initialisation du jeu côté serveur.}
+\end{figure}
 
 \item \textit{Envoi de la confirmation de début de partie par le serveur}\\
 \textbf{Mise en pratique :} Le serveur envoie un message pré-défini aux clients.\\
