@@ -17,7 +17,6 @@ void ClientGameControl::receiveUpdate(std::string message) {
     board.declare_check();
   }
   else {
-    std::cout << "nique tam ere "<< std::endl;
     game_ongoing = false;
     if (message == "stalemate") {
       message = "Stalemate !";
