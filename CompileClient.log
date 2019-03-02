@@ -1,0 +1,23 @@
+Display/GameDisplay/board.cpp: In member function ‘void Board::draw_infos()’:
+Display/GameDisplay/board.cpp:89:14: warning: variable ‘y_win’ set but not used [-Wunused-but-set-variable]
+   int x_win, y_win;
+              ^~~~~
+
+Display/MenuHandler/MenuHandler.cpp: In member function ‘void MenuHandler::init_statst(std::__cxx11::string)’:
+Display/MenuHandler/MenuHandler.cpp:152:7: warning: variable ‘y_max’ set but not used [-Wunused-but-set-variable]
+   int y_max, x_max;
+       ^~~~~
+Display/MenuHandler/MenuHandler.cpp:161:7: warning: unused variable ‘y_split’ [-Wunused-variable]
+   int y_split = (y_box/10);
+       ^~~~~~~
+Display/MenuHandler/MenuHandler.cpp: In member function ‘void MenuHandler::init_statsp(std::__cxx11::string)’:
+Display/MenuHandler/MenuHandler.cpp:181:7: warning: variable ‘y_max’ set but not used [-Wunused-but-set-variable]
+   int y_max, x_max;
+       ^~~~~
+Display/MenuHandler/MenuHandler.cpp:190:7: warning: unused variable ‘y_split’ [-Wunused-variable]
+   int y_split = (y_box/10);
+       ^~~~~~~
+Display/MenuHandler/MenuHandler.cpp: In member function ‘void MenuHandler::update_stats(int, std::__cxx11::string, int, int, int)’:
+Display/MenuHandler/MenuHandler.cpp:205:7: warning: variable ‘y_box’ set but not used [-Wunused-but-set-variable]
+   int y_box, x_box;
+       ^~~~~

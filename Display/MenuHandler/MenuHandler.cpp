@@ -6,6 +6,18 @@ MenuHandler::MenuHandler(): data_menu(nullptr), choices_menu(nullptr), stats_w(n
   start_color();
 }
 
+MenuHandler::MenuHandler(const MenuHandler& _other): data_menu(_other.data_menu), choices_menu(_other.choices_menu), stats_w(_other.stats_w) {
+  initscr();
+  start_color();
+}
+
+MenuHandler& MenuHandler::operator=(const MenuHandler& _other) {
+  data_menu = _other.data_menu;
+  choices_menu = _other.choices_menu;
+  stats_w = _other.stats_w;
+  return *this;
+}
+
 MenuHandler::~MenuHandler()
 {
   delwin(data_menu);
@@ -43,7 +55,7 @@ std::string MenuHandler::get_infos(std::string type)
 
   while ( ch != '\n' )
   {
-      input.push_back( ch );
+      input.push_back(char(ch));
       ch = mvwgetch(data_menu,2,1);
   }
 
@@ -86,13 +98,13 @@ int MenuHandler::get_choice(const std::vector<std::string> choices)
 
   while (1) // loop until user chose a mode
   {
-      for (int i = 0; i < choices.size(); i++)
+      for (int i = 0; i < int(choices.size()); i++)
       // displays list of choices
       {
 
         if (i == highlight) // current choice
             wattron(choices_menu, A_REVERSE);
-        mvwprintw(choices_menu, i+1, 1, choices[i].c_str() );
+        mvwprintw(choices_menu, i+1, 1, choices[unsigned(i)].c_str() );
         wattroff(choices_menu, A_REVERSE);
       }
 
@@ -106,11 +118,11 @@ int MenuHandler::get_choice(const std::vector<std::string> choices)
         case KEY_UP:
             highlight--;
             if (highlight == -1)
-                highlight = choices.size() - 1;
+                highlight = int(choices.size()) - 1;
             break;
         case KEY_DOWN:
             highlight++;
-            if (highlight == choices.size() )
+            if (highlight == int(choices.size()) )
                 highlight = 0;
             break;
         default:
@@ -236,8 +248,8 @@ void MenuHandler::init_friendsw(const std::vector<std::string> friends)
   }
   **/
 
-  int count = 0;
-  int max_count = friends.size();
+  unsigned count = 0;
+  unsigned long max_count = friends.size();
 
   for (int j=0; j<y_box-2; j++)
     for (int i=0; i<5; i++)

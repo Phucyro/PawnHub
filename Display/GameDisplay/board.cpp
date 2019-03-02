@@ -2,15 +2,20 @@
 #include "BoardParsing.hpp"
 #include "MoveParsing.hpp"
 
-Board::Board(): infos_win(nullptr), columns(BOARD_COLS), lines(BOARD_LINES), running(false)
-{
+Board::Board(): infos_win(nullptr), mode(nullptr), colour(nullptr), columns(BOARD_COLS), lines(BOARD_LINES), running(false) {}
 
-}
+Board::Board(int line_count, int col_count): infos_win(nullptr), mode(nullptr), colour(nullptr), columns(col_count), lines(line_count), running(false) {}
 
+Board::Board(const Board& _other): infos_win(_other.infos_win), mode(_other.mode), colour(_other.colour), columns(_other.columns), lines(_other.lines), running(_other.running) {}
 
-Board::Board(int line_count, int col_count): infos_win(nullptr), columns(col_count), lines(line_count), running(false)
-{
-
+Board& Board::operator=(const Board& _other) {
+  infos_win = _other.infos_win;
+  mode = _other.mode;
+  colour = _other.colour;
+  columns = _other.columns;
+  lines = _other.lines;
+  running = _other.running;
+  return *this;
 }
 
 Board::~Board()
@@ -224,7 +229,7 @@ std::string Board::get_promotion() {
 
   int answer = getch();
   std::string promotion;
-  promotion.append(1, answer);
+  promotion.append(1, char(answer));
   return promotion;
 }
 
