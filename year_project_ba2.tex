@@ -38,12 +38,12 @@
 			Chaque joueur commence le jeu avec 16 pions: un roi, une dame, deux tours, deux fous, deux cavaliers et huit pions. Le but du jeu est d'infliger à son adversaire un \textit{échec et mat}, une situation dans laquelle le roi d'un joueur est en prise sans qu'il soit possible d'y remédier\footnote{Wikipedia}.
 			\subsubsection{Les Pièces}
 			\begin{description}
-		  \item[Le Pion :] Depuis sa position initiale, le pion peut avancer d'une ou deux cases en avant, ensuite d'une case en avant uniquement. Cependant, le pion prend une autre pièce en diagonale. Également, lorsque le pion arrive à la dernière rangée, il effectue une promotion et est remplacé par n'importe quelle autre pièce, à part le roi, au choix du joueur \label{promote}. De plus, il peut également effectuer la prise en passant qui est expliquée dans le glossaire.
-			\item[La Tour :] La tour peut se déplacer d'un nombre quelconque de cases sur les rangées et les colonnes.
-			\item[Le Fou :] Le fou peut se déplacer uniquement en diagonale d'un nombre quelconque de cases.
-			\item[La Reine :] La reine peut se déplacer dans toutes les directions d'un nombre quelconque de cases.
-			\item[Le Roi :] Le roi peut se déplacer dans toutes les directions d'une case uniquement. Il peut également effectuer un roque qui est expliqué dans le glossaire.
-			\item[Le Cavalier :] Le cavalier se déplace en "L", voir image ci-dessous.
+		  \item[Le Pion (Pawn) :] Depuis sa position initiale, le pion peut avancer d'une ou deux cases en avant, ensuite d'une case en avant uniquement. Cependant, le pion prend une autre pièce en diagonale. Également, lorsque le pion arrive à la dernière rangée, il effectue une promotion et est remplacé par n'importe quelle autre pièce, à part le roi, au choix du joueur \label{promote}. De plus, il peut également effectuer la prise en passant qui est expliquée dans le glossaire.
+			\item[La Tour (Rook) :] La tour peut se déplacer d'un nombre quelconque de cases sur les rangées et les colonnes.
+			\item[Le Fou (Bishop) :] Le fou peut se déplacer uniquement en diagonale d'un nombre quelconque de cases.
+			\item[La Reine (Queen) :] La reine peut se déplacer dans toutes les directions d'un nombre quelconque de cases.
+			\item[Le Roi (King) :] Le roi peut se déplacer dans toutes les directions d'une case uniquement. Il peut également effectuer un roque qui est expliqué dans le glossaire.
+			\item[Le Cavalier (Knight) :] Le cavalier se déplace en "L", voir image ci-dessous.
 			\begin{figure}[bh]
 			\centering
 			\includegraphics[scale=0.50]{pieces_move.png}
@@ -76,11 +76,16 @@
 		%\item[AliceChess :] Variante du jeu d'échec jouée en utilisant 2 plateaux. Lorsqu'un coup est joué, la pièce est déplacée à la case correspondante mais dans l'autre plateau. À part cela, le jeu se déroule selon les règles habituelles du jeu d'échecs .
 		%\item[DarkChess :] Variante du jeu d'échec où le joueur ne voit que ses propres pièces et les cases où il peut légalement les déplacer.
 		%\item[HordeChess :] Variante du jeu d'échec où un joueur possède 32 pions et l'autre la collection standard du jeu d'échec traditionnel.
-		\item[Echec et mat :] Un joueur est en échec et mat lorsque son roi est en une position telle qu'il ne peut qu'être pris au prochain tour par son adversaire.
-		\item[Pat :] Il y a pat lorsqu'aucun des joueurs n'est en mesure de placer l'autre en échec et mat.
+		\item[Echiquier (Board) :] Plateau sur lequel se joue le jeu d'échec.
+		\item[Coup/Mouvement :] Déplacement d'une pièce d'une case à une autre de l'échiquier.
+		\item{Coup Légal :} est un coup qu'un joueur a le droit de jouer en vertu des règles du jeu (par opposition à un coup illégal\footnote{source Wikipedia})
+		\item[Prise :] Déplacement d'une pièce sur une case où se trouve une pièce adverse, ce qui implique un retrait du jeu de la pièce adverse.
+		\item[Echec :] Un joueur est en échec lorsque son roi est dans une position telle qu'il peut être pris par son adversaire.
+		\item[Echec et mate :] Un joueur est échec et mate il est en situation d'échec et qu'il n'a aucun coup légal lui permettant de se sortir de cette situation.
+		\item[Pat :] Il y a pat lorsque le joueur dont c'est le tour n'a pas de coup légal possible mais n'est pas en situation d'échec.
 		\item[Le Roque :] Le roque consiste à déplacer en un seul coup le roi et l'une des tours. On déplace d'abord le roi de deux cases vers la tour puis, avec la même main, on fait passer la tour de l'autre côté, juste à côté du roi (voir le diagramme ci-dessous). Les conditions suivantes sont nécessaires pour pouvoir roquer : aucune pièce ne se trouve entre le roi et la tour concernée ; le roi et la tour concernée n'ont encore jamais joué et le roi n'est pas en échec ;
 la case traversée par le roi n'est contrôlée par aucune pièce adverse\footnote{source Wikipedia}.
-		\item[La Prise en Passant:] Au jeu d’échecs, la prise en passant est une possibilité particulière de capturer un pion. Lorsqu’un pion se trouve sur la cinquième rangée et que l’adversaire avance de deux cases un pion d’une colonne voisine (les deux pions se retrouvent alors côte-à-côte sur la même rangée), le premier pion peut prendre le second. Pour effectuer la prise en passant, le joueur avance son pion en diagonale sur la sixième rangée et la colonne du pion adverse, et ôte ce dernier de l’échiquier\footnote{source Wikipedia}.
+		\item[La Prise en Passant:] Au jeu d’échecs, la prise en passant est une possibilité particulière de capturer un pion. Lorsqu’un pion avance de deux cases et que le joueur adverse possède un pion qui aurait pu prendre ce pion si ce dernier n'avait avancé que d'une case, alors l'adversaire peut, au tour suivant uniquement, prendre le pion venant d'avancer de 2 cases comme si ce dernier n'avait avancé que d'une seule case\footnote{source Wikipedia}.
 		\begin{figure}[bh]
 		\centering
 		\includegraphics[scale=1]{roque_prise_passant.png}
@@ -170,14 +175,6 @@ la case traversée par le roi n'est contrôlée par aucune pièce adverse\footno
 \textbf{Cas exceptionnels :} Néant.
 
 
-
-\subsubsection{Voir les Règles}
-\textbf{Acteur :} \textit{User}.\\
-\textbf{Relations avec d'autres cas d'utilisation :} Néant.\\
-\textbf{Pré-conditions :} Le \textit{user} doit avoir sélectionné l'option \textit{View Rules} dans le menu principal du jeu.\\
-\textbf{Post-conditions :} Le \textit{user} accède aux règles du jeu.\\
-\textbf{Cas général :} Le \textit{user} peut consulter les règles du jeu en envoyant une requête au serveur.\\
-\textbf{Cas exceptionnels :} Néant.
 
 \subsubsection{Voir les Statistiques Personnelles}
 \textbf{Acteur :} \textit{User}.\\
@@ -299,15 +296,15 @@ Le joueur blanc commence. Celui-ci est le premier joueur connecté et qualifiabl
 
 \subsubsection{Déplacer une Pièce}
 \textbf{Acteur :} \textit{Server}. \\
-\textbf{Relations avec d'autres cas d'utilisation :} {\itshape Avancer un pion}. \\
+\textbf{Relations avec d'autres cas d'utilisation :} {\itshape Avancer une pièce}. \\
 \textbf{Pré-conditions :} Réception du signal correspondant, coup valide (pas de pièces qui bloquent, etc). \\
 \textbf{Post-conditions :} Pièce déplacée. \\
 \textbf{Cas général :} Pièce déplacée. \\
-\textbf{Cas exceptionnels :} Pièces qui bloquent ou une pièce est déjà sur la case. Dans tous ces cas, on redemande au joueur de faire déplacer une de ses pièces. \\
+\textbf{Cas exceptionnels :} Si le coup n'est pas valide, on redemande au joueur de faire déplacer une de ses pièces. \\
 
 \subsubsection{Promotion}
 \textbf{Acteur :} \textit{Server}. \\
-\textbf{Relations avec d'autres cas d'utilisation :} {\itshape Avancer un pion}. \\
+\textbf{Relations avec d'autres cas d'utilisation :} {\itshape Avancer une pièce}. \\
 \textbf{Pré-conditions :} Un pion est arrivé à l'autre bout du plateau. \\
 \textbf{Post-conditions :} Pion promu en dame, fou, cavalier ou tour au choix du joueur qui possède le pion en question. Le jeu est ré-analysé pour identifier une potentielle mise en échec due au changement de statut du pion. \\
 \textbf{Cas général :} Pion promu. \\
@@ -315,7 +312,7 @@ Le joueur blanc commence. Celui-ci est le premier joueur connecté et qualifiabl
 
 \subsubsection{Roque}
 \textbf{Acteur :} \textit{Server}. \\
-\textbf{Relations avec d'autres cas d'utilisation :} {\itshape Avancer un pion}. \\
+\textbf{Relations avec d'autres cas d'utilisation :} {\itshape Avancer une pièce}. \\
 \textbf{Pré-conditions :} Un joueur déplace le roi sur une case provoquant le roque, le roi et la tour en question n'ont pas bougé depuis le début de la partie. Aucune pièce ne bloque. \\
 \textbf{Post-conditions :} Tour déplacée, position du roi mise à jour, le roi et la tour marqués comme "ayant déjà bougé". \\
 \textbf{Cas général :} Roque effectué. \\
@@ -377,14 +374,15 @@ Le système se doit de mettre assez rapidement à jour les statistiques personne
 \end{figure}
 
 \paragraph{Mode classique}Chaque type de pièces, c'est à dire, \textit{Queen,King,Bishop,Pawn,GhostPawn,Knight,Rook}, héritent de la classe mère \textit{Piece}.
-\textit{GhostPawn} est utilisé dans le cas où un pion peut effectuer une prise en passant.En effet, lorsqu'un pion avance de 2 cases, il laisse sur la case derrière lui, une pièce non visible pour le joueur.Si le pion adverse se trouve juste à coté de cette pièce,la prise en passant pourra être effectuer car le jeu considère que le \textit{move} du pion adverse est valide car il prend le \textit{GhostPawn}.
+\textit{GhostPawn} est utilisé pour la prise en passant. Lorsqu'un \textit{Pawn} avance de deux case, il laisse sur la case où il serait si il n'avait avancer que d'une case, un \textit{GhostPawn} qui est invisible pour le joueur. Un \textit{Pawn} considère un \textit{GhostPawn} comme une pièce prenable si ce dernier est actif (il est actif uniquement le tour juste après sa création). Lorsqu'un \textit{GhostPawn} est pris par un \textit{Pawn} et qu'il est actif, le \textit{GhostPawn} se charge de faire disparaitre le \textit{Pawn} qui l'a créer du plateau.
+\textit{BasicPawn} est un \textit{Pawn} qui ne peut effectuer de prise en passant. En effet, on voit qu'il ne possède pas d'attribut \textit{ghost}. Cette pièce est indispensable dans le mode \textit{Alice} car après chaque \textit{Move}, les pièces changent de \textit{Board} et ne peuvent donc pas effectuer de prise en passant.
 \begin{enumerate}
 \item
-\textbf{canMove :} permet de savoir si la pièce considérée peut se déplacer.Cette fonction est donc utile pour savoir si le roi est en échec par exemple. \\
-\textbf{checkMove :} vérifie si le mouvement demandé d'une pièce par le  joueur est valide.\\
-\textbf{hasMoved :}vérifie si la pièce a déjà été déplacée ou non.C'est une méthode nécessaire pour valider un roque ou une prise en passant.Également indispensable pour savoir si un pion peut avancer de 2 cases ou non.\\
-\textbf{isMovePossible :} prend en paramètre une coordonnée de l'échiquier et vérifie s'il existe une pièce qui peut se déplacer à l'endroit de la coordonnée. Cette fonction est utilisée pour savoir si le roi est en position d'échec et mat. La fonction qui s'occupe de savoir si le roi est en échec, se trouve dans la classe \textit{Classic} \\
-\textbf{Move :}est une méthode qui selon \textit{canMove,checkMove,hasMoved} effectue ou  non, le mouvement demandé par le joueur sur la pièce.\\
+\textbf{canMove :} Retourne true si la pièce peut se déplacer. \\
+\textbf{checkMove :} Retourne true si le mouvement demandé d'une pièce par le joueur est un déplacement normalement valide.\\
+\textbf{hasMoved :}Retourne true si la pièce a déjà été déplacée ou non.\\
+\textbf{isMovePossible :} vérifie si un movement est possible en prenant en compte le fait que le \textit{King} ne doit pas être en échec après ce mouvement.\\
+\textbf{Move :} est une méthode qui selon \textit{checkMove} effectue ou non, le mouvement demandé par le joueur sur la pièce. Cette méthode effectue d'abord un \textit{checkMove} à l'endroit du coup désiré par le joueur. Si, le coup est possible, elle effectue un \textit{doMove} ce qui permet d'avancer la pièce à l'endroit du coup. Dans le cas où le coup met le \textit{King} du joueur en échec, on effectue un \textit{ReverseMove} qui remet le \textit{Board} dans son état initial. Si le \textit{Board} à changé, la fonction retourne true.\\
 \end{enumerate}
 
 \paragraph{Mode Alice}
@@ -392,7 +390,7 @@ Le système se doit de mettre assez rapidement à jour les statistiques personne
 
 
 \subsubsection{Coordinate}
-\paragraph{}Par soucis de facilité et d'homogénéité dans le code, chaque adresse réelle sur l'échiquier est retraduite en une adresse virtuelle compréhensible pour les board, et inversement . En effet, le board coté Serveur est une matrice composée de lignes et rangées numérotées de 0 à 7 alors que l'échiquier coté Client est numérotées de A à H et 1 à 8.
+\paragraph{}Par soucis de facilité et d'homogénéité dans le code, \textit{Coordinate} est une classe qui retraduit chaque adresse réelle sur l'échiquier en une adresse virtuelle compréhensible pour les board, et inversement . En effet, le board coté Serveur est une matrice composée de lignes et rangées numérotées de 0 à 7 alors que l'échiquier coté Client est numérotées de A à H et 1 à 8.
 %\begin{sidewaysfigure}[ph]
 
 \subsubsection{Les Différents Modes De Jeu}
@@ -405,14 +403,22 @@ Le système se doit de mettre assez rapidement à jour les statistiques personne
 \begin{enumerate}
 
 \item \textit{Méthodes Communes} \\
-\textbf{}  \\
-\textbf{}  \\
-\textbf{}  \\
-\textbf{}  \\
+\textbf{start :} Lance la partie et se termine en cas de victoire d'un des 2 joueurs ou en cas d'égalité. \\
+\textbf{initBoard :} Place les pièces sur leur case de départ dans le \textit{Board}. \\
+\textbf{nextTurn :} Demande au joueur dont c'est le tour un mouvement. Ensuite teste si le mouvement est possible et l'exécute si c'est le cas, sinon redemande un mouvement au joueur. \\
+\textbf{isFinish :} Retourne true si un joueur le joueur qui vient de jouer à gagner (auquel cas le l'attribut \textit{winner} est mis à jour) ou si il y a égalité entre les 2 joueurs. \\
+\textbf{testCheck :} Retourne true si un \textit{King} est en échec. \\
+\textbf{promote :} Exécute la promotion d'un \textit{Pawn}.\\
+\textbf{send\textsl{Info} :} Envoie l'information \textsl{Info} au client.\\
 
 \item \textit{Méthodes Classic } \\
-\textbf{}  \\
-\textbf{}  \\
+\textbf{getCurrentPlayer :} Renvois le joueur courant.\\
+\textbf{executeMove :} Exécute le mouvement d'une pièce.\\
+\textbf{isCheckmate :} Retourne true si le joueur est en situation d'échec et mate.\\
+\textbf{isStalemate :} Retourne true si il y a un pat dans le \textit{Board} courant.\\
+\textbf{notEnoughtPieces :}Retourne true si il n'y a plus assez de pièces que pour qu'un des deux joueurs puisse faire un échec et mate.\\
+\textbf{sendGameMode :} Envoie aux deux joueurs le type de jeux.\\
+\textbf{boardState :} Retourne l'état du \textit{Board} sous forme d'un string et dont le format est celui qui est compréhensible par le client\footnote{Voir affichage de l'échiquier 6.5.6}.\\
 
 \item \textit{Méthodes Alice} \\
 \textbf{}  \\
@@ -466,7 +472,7 @@ Le joueur se connecte à l'aide du \textit{hostname} du serveur, qui s'affiche �
 \textbf{Protocole :} L'instance de jeu fait appel à une méthode \textit{\_sendGameMode}, qui déclenche l'envoi d'une chaine de caractères décrivant le mode de jeu, précédé de l'en-tête 'G' (gamemode). Une fois reçu, le message est identifié à l'aide de l'en-tête et placé dans une variable de l'instance d'affichage du jeu.
 
 \begin{figure} [ht]
-\centering 
+\centering
 \includegraphics[scale=0.40]{Sequence_Server_GameStart.png}
 \caption{Diagramme de séquences d'initialisation du jeu côté serveur.}
 \end{figure}
@@ -488,7 +494,7 @@ Le joueur se connecte à l'aide du \textit{hostname} du serveur, qui s'affiche �
 \label{send_board}
 
 \begin{figure} [H]
-\centering 
+\centering
 \includegraphics[scale=0.40]{Sequence_Server_GameLoop.png}
 \caption{Diagramme de séquences des étapes d'une boucle de jeu dans le cas où le premier joueur est le joueur courant, représenté du côté serveur.}
 \end{figure}
