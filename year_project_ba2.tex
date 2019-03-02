@@ -377,13 +377,13 @@ Le système se doit de mettre assez rapidement à jour les statistiques personne
 \end{figure}
 
 \paragraph{Mode classique}Chaque type de pièces, c'est à dire, \textit{Queen,King,Bishop,Pawn,GhostPawn,Knight,Rook}, héritent de la classe mère \textit{Piece}.
-\textit{GhostPawn} est utilisé dans le cas où un pion peut effectuer une prise en passant.En effet, lorsque le pion est dans la possibilité d'en effectuer une, <<<  à complèter...................................... >>>.
+\textit{GhostPawn} est utilisé dans le cas où un pion peut effectuer une prise en passant.En effet, lorsqu'un pion avance de 2 cases, il laisse sur la case derrière lui, une pièce non visible pour le joueur.Si le pion adverse se trouve juste à coté de cette pièce,la prise en passant pourra être effectuer car le jeu considère que le \textit{move} du pion adverse est valide car il prend le \textit{GhostPawn}.
 \begin{enumerate}
 \item
 \textbf{canMove :} permet de savoir si la pièce considérée peut se déplacer.Cette fonction est donc utile pour savoir si le roi est en échec par exemple. \\
 \textbf{checkMove :} vérifie si le mouvement demandé d'une pièce par le  joueur est valide.\\
-\textbf{hasMoved :}vérifie si la pièce a déjà été déplacée ou non.C'est une méthode nécessaire pour valider un roque ou une prise en passant.\\
-\textbf{isMovePossible :} :<<<.........>>>\\
+\textbf{hasMoved :}vérifie si la pièce a déjà été déplacée ou non.C'est une méthode nécessaire pour valider un roque ou une prise en passant.Également indispensable pour savoir si un pion peut avancer de 2 cases ou non.\\
+\textbf{isMovePossible :} prend en paramètre une coordonnée de l'échiquier et vérifie s'il existe une pièce qui peut se déplacer à l'endroit de la coordonnée. Cette fonction est utilisée pour savoir si le roi est en position d'échec et mat. La fonction qui s'occupe de savoir si le roi est en échec, se trouve dans la classe \textit{Classic} \\
 \textbf{Move :}est une méthode qui selon \textit{canMove,checkMove,hasMoved} effectue ou  non, le mouvement demandé par le joueur sur la pièce.\\
 \end{enumerate}
 
@@ -392,7 +392,7 @@ Le système se doit de mettre assez rapidement à jour les statistiques personne
 
 
 \subsubsection{Coordinate}
-\paragraph{}Par soucis de facilité et d'homogénéité dans le code, chaque adresse réelle sur l'échiquier est retraduite en une adresse virtuelle compréhensible pour le board, et inversement . En effet, le board est !!à vérifier ce qui suit!!matrice composée de lignes et rangées numérotées de 0 à 7 alors que l'échiquier est numérotées de A à H et 1 à 8.
+\paragraph{}Par soucis de facilité et d'homogénéité dans le code, chaque adresse réelle sur l'échiquier est retraduite en une adresse virtuelle compréhensible pour les board, et inversement . En effet, le board coté Serveur est une matrice composée de lignes et rangées numérotées de 0 à 7 alors que l'échiquier coté Client est numérotées de A à H et 1 à 8.
 %\begin{sidewaysfigure}[ph]
 
 \subsubsection{Les Différents Modes De Jeu}
@@ -447,7 +447,7 @@ Le joueur se connecte à l'aide du \textit{hostname} du serveur, qui s'affiche �
 \begin{enumerate}
 \item Comme la plupart des tâches effectuées par nos programmes se font à l'aide de chaînes de caractères et par soucis d'homogénéité, il est préférable et plus simple que l'échange d'information entre le serveur et le client se fasse également sous cette forme.
 \item Une chaîne de caractère n'a pas besoin d'être traduite en binaire, ce qui diminue la complexité et le temps d'exécution de nos programmes.
-\item La taille du message envoyée n'est pas un probleme, car une taille de 150 octets suffit pour envoyer toutes les informations d'un message. Le plus grand message actuel est le plateau, qui ne consiste que de 147 octets lorsqu'il est complet dans un jeu de \textit{Horde Chess} (voir 6.5, point 2).
+\item La taille du message envoyée n'est pas un problème, car une taille de 150 octets suffit pour envoyer toutes les informations d'un message. Le plus grand message actuel est le plateau, qui ne consiste que de 147 octets lorsqu'il est complet dans un jeu de \textit{Horde Chess} (voir 6.5, point 2).
 \end{enumerate}
 \paragraph{}Si l'on souhaite tout de même envoyer des messages plus longs que la taille standard définie, le système de messagerie utilise du padding à l'aide du symbole '|'afin d'identifier la fin du message. La classe \textit{Socket} effectue ce padding ainsi que l'envoi et la réception de messages à l'aide des méthodes \textit{sendMessage} et \textit{receiveMessage}.
 \paragraph{}Le serveur tâchera de vérifier les différentes actions des joueurs et veillera également à envoyer régulièrement la disposition du plateau aux clients afin qu'il s'affiche correctement pour les joueurs.
@@ -484,7 +484,7 @@ Le joueur se connecte à l'aide du \textit{hostname} du serveur, qui s'affiche �
 
 \item \textit{Requête de mouvement du joueur} \\
 \textbf{Mise en pratique :} Le serveur identifie le joueur qui doit effectuer un mouvement et envoie une requête au client approprié. Celui-ci affiche la requête au joueur, qui entre le mouvement de pièce voulu. Le mouvement est renvoyé au serveur, qui vérifie la légalité de la demande - tant que le mouvement demandé par le joueur n'est pas autorisé par les règles du jeu, celui-ci doit rentrer une nouvelle demande de mouvement.\\
-\textbf{Protocole :} La boucle de jeu présente dans la logique du serveur identifie l'instance de joueur concernée par la demande de mouvement et déclenche un envoi de message à son client ayant comme en-tête 'A' (askmove). Ce message est interprété par le client, qui demande au joueur de proposer un mouvement pour une de ses pièces. Le mouvement est alors renvoyé au serveur pour être vérifié. Ce message est composé de 4 caractères, les 2 premiers rerprésentant l'emplacement du début de tour de la pièce et les 2 derniers la position future de la pièce, précédé de l'en-tête 'M' (move). Le serveur vérifie si le mouvement demandé est possible, et renvoie une demande de mouvement tant qu'il ne l'est pas.
+\textbf{Protocole :} La boucle de jeu présente dans la logique du serveur identifie l'instance de joueur concernée par la demande de mouvement et déclenche un envoi de message à son client ayant comme en-tête 'A' (askmove). Ce message est interprété par le client, qui demande au joueur de proposer un mouvement pour une de ses pièces. Le mouvement est alors renvoyé au serveur pour être vérifié. Ce message est composé de 4 caractères, les 2 premiers représentant l'emplacement du début de tour de la pièce et les 2 derniers la position future de la pièce, précédé de l'en-tête 'M' (move). Le serveur vérifie si le mouvement demandé est possible, et renvoie une demande de mouvement tant qu'il ne l'est pas.
 
 \item \textit{Mouvement de pièce} \\
 \textbf{Mise en pratique :} Une fois que le mouvement demandé par le joueur est identifié comme possible, le serveur met à jour son instance de plateau et renvoie le plateau aux deux clients afin qu'ils l'affichent.  \\
