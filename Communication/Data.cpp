@@ -12,7 +12,9 @@ Data::Data(const std::string path) : _path(path), _dataMap({}), _ladders({}) {
 bool Data::containsAccount(const std::string username){
   const std::string full_path = _path + "/" + username + ".txt";
   std::ifstream file(full_path.c_str());
-  return file.good();
+  bool exist = file.good();
+  file.close();
+  return exist;
 }
 
 
@@ -40,7 +42,7 @@ bool Data::createUserAccount(const std::string username, const std::string passw
   if (containsAccount(username))
     return false;
   // Si peut ajouter ami deco il faut creer le fichier dès la création
-  _dataMap[username] = UserData(password, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, std::vector<std::string>());
+  _dataMap[username] = UserData(password, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {}, {});
   saveUserData(username);
   return true;
 }
@@ -58,7 +60,7 @@ void Data::loadUserData(const std::string username){
     std::string data_line;
     std::string password;
     Stat classic, dark, horde, alice;
-    std::vector<std::string> friends;
+    std::vector<std::string> friends, friend_request;
 
     std::getline(file, data_line);
     password = data_line;
@@ -78,11 +80,16 @@ void Data::loadUserData(const std::string username){
     std::getline(file, data_line);
     friends = splitString(data_line, ' ');
 
-    _dataMap[username] = UserData(password, classic, dark, horde, alice, friends);
+    std::getline(file, data_line);
+    friend_request = splitString(data_line, ' ');
+
+    _dataMap[username] = UserData(password, classic, dark, horde, alice, friends, friend_request);
   }
   else {
     std::cerr << "[Error] Data open file read" << std::endl;
   }
+
+  file.close();
 }
 
 
@@ -100,83 +107,181 @@ void Data::saveUserData(const std::string username){
     file << unsignedIntVectorToStr(std::get<3>(_dataMap[username])) << std::endl; // Horde
     file << unsignedIntVectorToStr(std::get<4>(_dataMap[username])) << std::endl; // Alice
     file << strVectorToStr(std::get<5>(_dataMap[username])) << std::endl; // Liste amis
+    file << strVectorToStr(std::get<6>(_dataMap[username])) << std::endl; // Demande ami
     _dataMap.erase(username);
   }
   else {
     std::cerr << "[Error] Data open file write" << std::endl;
   }
+
+  file.close();
 }
 
+Stat Data::getUserStat(const std::string username, const std::string gamemode){
+  Stat user_stat;
 
-bool Data::addUserFriend(const std::string username, const std::string friend_name){
-  /*
-  Ajoute un ami à la liste d'amis de l'utilisateur si cet ami ne se trouve pas encore
-  dans la liste.
-  */
-  std::vector<std::string> friends = std::get<5>(_dataMap[username]);
+  if (!containsAccount(username)) return Stat(); // Joueur inexistant
 
-  if (std::find(friends.begin(), friends.end(), friend_name) == friends.end()){
-    std::get<5>(_dataMap[username]).push_back(friend_name);
-    return true;
+  if (_dataMap.find(username) != _dataMap.end()){
+    if (gamemode == "Classic")
+      user_stat = std::get<1>(_dataMap[username]);
+    else if (gamemode == "Dark")
+      user_stat = std::get<2>(_dataMap[username]);
+    else if (gamemode == "Horde")
+      user_stat = std::get<3>(_dataMap[username]);
+    else
+      user_stat = std::get<4>(_dataMap[username]);
   }
-  return false; //Deja dans la liste d'amis
+  else {
+    loadUserData(username);
+    if (gamemode == "Classic")
+      user_stat = std::get<1>(_dataMap[username]);
+    else if (gamemode == "Dark")
+      user_stat = std::get<2>(_dataMap[username]);
+    else if (gamemode == "Horde")
+      user_stat = std::get<3>(_dataMap[username]);
+    else
+      user_stat = std::get<4>(_dataMap[username]);
+    saveUserData(username);
+  }
+
+  return user_stat;
 }
 
 
-std::vector<std::string> Data::getUserFriendsList(const std::string username){
-  /*
-  Renvoie la liste d'amis de l'utilisateur
-  */
+bool Data::accceptFriendRequest(const std::string username, const std::string friend_name){
+  //friend_name = celui qui a demande pour etre ami
+  std::vector<std::string> request = getUserFriendRequest(username);
+
+  if (std::find(request.begin(), request.end(), friend_name) == request.end()){
+    return 0; // friend ne se trouve pas dans la liste de requete
+  }
+
+  std::vector<std::string> friends1 = getUserFriends(username);
+  std::vector<std::string> friends2 = getUserFriends(friend_name);
+  request.erase(std::remove(request.begin(), request.end(), friend_name), request.end());
+  friends1.push_back(friend_name);
+  friends2.push_back(username);
+
+  if (_dataMap.find(username) != _dataMap.end()){ // Si connecte
+    std::get<5>(_dataMap[username]) = friends1;
+    std::get<6>(_dataMap[username]) = friends2;
+  }
+  else {
+    loadUserData(username);
+    std::get<5>(_dataMap[username]) = friends1;
+    std::get<6>(_dataMap[username]) = request;
+    saveUserData(username);
+  }
+
+  if (_dataMap.find(friend_name) != _dataMap.end()){ // Si connecte
+    std::get<5>(_dataMap[friend_name]) = friends2;
+  }
+  else {
+    loadUserData(friend_name);
+    std::get<5>(_dataMap[friend_name]) = friends2;
+    saveUserData(friend_name);
+  }
+
+  return 1; // Demande d'ami acceptee
+}
+
+
+int Data::sendFriendRequest(const std::string username, const std::string friend_name){
+  if (friend_name == username){
+    return -3; // Peut pas etre ami avec soi meme
+  }
+  if (!containsAccount(friend_name)){
+    return -2; // Utilisateur inexistant
+  }
+
+  std::vector<std::string> friends = getUserFriends(username);
+  std::vector<std::string> request = getUserFriendRequest(friend_name);
+
+  if (std::find(friends.begin(), friends.end(), friend_name) != friends.end()){
+    return -1; // Deja dans liste amis
+  }
+  if (std::find(request.begin(), request.end(), username) != request.end()){
+    return 0; // Demande deja envoyee
+  }
+
+  std::vector<std::string> user_request = getUserFriendRequest(username);
+  if (std::find(user_request.begin(), user_request.end(), friend_name) != user_request.end()){
+    accceptFriendRequest(username, friend_name);
+    return 1;
+  }
+
+
+  if (_dataMap.find(friend_name) != _dataMap.end()){ // Si ami connecte
+    std::get<6>(_dataMap[friend_name]).push_back(username);
+  }
+  else {
+    loadUserData(friend_name);
+    std::get<6>(_dataMap[friend_name]).push_back(username);
+    saveUserData(friend_name);
+  }
+  return 2; // Demande envoyee
+}
+
+
+bool Data::removeFriend(const std::string username, const std::string friend_name){
+  std::vector<std::string> friends1 = getUserFriends(username);
+
+  if (std::find(friends1.begin(), friends1.end(), friend_name) == friends1.end()){
+    return 0; // Ami inexistant
+  }
+
+  std::vector<std::string> friends2 = getUserFriends(friend_name);
+
+  // Supprime ami
+  friends1.erase(std::remove(friends1.begin(), friends1.end(), friend_name), friends1.end());
+  friends2.erase(std::remove(friends2.begin(), friends2.end(), username), friends2.end());
+
+  if (_dataMap.find(username) != _dataMap.end()){ // Connecte
+    std::get<5>(_dataMap[username]) = friends1;
+  }
+  else {
+    loadUserData(username);
+    std::get<5>(_dataMap[username]) = friends1;
+    saveUserData(username);
+  }
+
+  if (_dataMap.find(friend_name) != _dataMap.end()){ // Connecte
+    std::get<5>(_dataMap[friend_name]) = friends2;
+  }
+  else {
+    loadUserData(friend_name);
+    std::get<5>(_dataMap[friend_name]) = friends2;
+    saveUserData(friend_name);
+  }
+
+  return 1;
+}
+
+
+std::vector<std::string> Data::getUserFriends(const std::string username){
+  std::vector<std::string> friends;
+
+  if (_dataMap.find(username) == _dataMap.end()){
+    loadUserData(username);
+    friends = std::get<5>(_dataMap[username]);
+    saveUserData(username);
+    return friends;
+  }
   return std::get<5>(_dataMap[username]);
 }
 
 
-unsigned int Data::getUserClassicWin(const std::string username){
-  return std::get<1>(_dataMap[username])[0];
-}
+std::vector<std::string> Data::getUserFriendRequest(const std::string username){
+  std::vector<std::string> request;
 
-unsigned int Data::getUserClassicLose(const std::string username){
-  return std::get<1>(_dataMap[username])[1];
-}
-
-unsigned int Data::getUserClassicDraw(const std::string username){
-  return std::get<1>(_dataMap[username])[2];
-}
-
-unsigned int Data::getUserDarkWin(const std::string username){
-  return std::get<2>(_dataMap[username])[0];
-}
-
-unsigned int Data::getUserDarkLose(const std::string username){
-  return std::get<2>(_dataMap[username])[1];
-}
-
-unsigned int Data::getUserDarkDraw(const std::string username){
-  return std::get<2>(_dataMap[username])[3];
-}
-
-unsigned int Data::getUserHordeWin(const std::string username){
-  return std::get<3>(_dataMap[username])[0];
-}
-
-unsigned int Data::getUserHordeLose(const std::string username){
-  return std::get<3>(_dataMap[username])[1];
-}
-
-unsigned int Data::getUserHordeDraw(const std::string username){
-  return std::get<3>(_dataMap[username])[2];
-}
-
-unsigned int Data::getUserAliceWin(const std::string username){
-  return std::get<4>(_dataMap[username])[0];
-}
-
-unsigned int Data::getUserAliceLose(const std::string username){
-  return std::get<4>(_dataMap[username])[1];
-}
-
-unsigned int Data::getUserAliceDraw(const std::string username){
-  return std::get<4>(_dataMap[username])[2];
+  if (_dataMap.find(username) == _dataMap.end()){
+    loadUserData(username);
+    request = std::get<6>(_dataMap[username]);
+    saveUserData(username);
+    return request;
+  }
+  return std::get<6>(_dataMap[username]);
 }
 
 
@@ -291,7 +396,6 @@ void Data::initLadder(){
         updateLadder("Horde",   {username, std::get<3>(_dataMap[username])});
         updateLadder("Alice",   {username, std::get<4>(_dataMap[username])});
         _dataMap.erase(username);
-
       }
     }
     closedir(directory);
@@ -299,4 +403,8 @@ void Data::initLadder(){
   else {
     std::cerr << "[Error] Open directory" << std::endl;
   }
+}
+
+std::vector<UserLadderData> Data::getLadder(const std::string gamemode){
+  return _ladders[gamemode];
 }

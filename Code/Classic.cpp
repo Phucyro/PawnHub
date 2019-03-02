@@ -5,6 +5,7 @@
 #include "Classic.hpp"
 
 #define KING_INDEX 4
+void stopGdb(){}
 
 void Classic::_Pieces() {
 	_pieces = new Piece*[_piecesAmount];
@@ -189,7 +190,7 @@ bool Classic::_isCheckmate(char playerColor){
 			int row = int(king->getRow())+rowDirection, column = int(king->getColumn())+columnDirection;
 			while(row != int(dangerousPiece->getRow())){
 				for (int i = 16-offset; i < 32 - offset; i++){
-					if ((!_pieces[i]->isTaken()) && _pieces[i]->_isMovePossible(Coordinate(column, row), _board, *this)) return false;
+					if ((!_pieces[i]->isTaken()) && _pieces[i] != dangerousPiece && _pieces[i]->_isMovePossible(Coordinate(column, row), _board, *this))return false;
 				}
 				row += rowDirection;
 				column += columnDirection;
@@ -199,7 +200,7 @@ bool Classic::_isCheckmate(char playerColor){
 		else if (rowMove){
 			for (int j = int(king->getRow())+rowDirection; j != int(dangerousPiece->getRow()); j += rowDirection){
 				for(int i = 16-offset; i < 32 - offset; i++){
-					if ((!_pieces[i]->isTaken()) && _pieces[i]->_isMovePossible(Coordinate(int(king->getColumn()), j), _board, *this)) return false;
+					if ((!_pieces[i]->isTaken()) && _pieces[i] != dangerousPiece && _pieces[i]->_isMovePossible(Coordinate(int(king->getColumn()), j), _board, *this)) return false;
 				}
 			}
 		}
@@ -207,7 +208,7 @@ bool Classic::_isCheckmate(char playerColor){
 		else if (columnMove){
 			for (int j = int(king->getColumn())+columnDirection; j != int(dangerousPiece->getColumn()); j += columnDirection){
 				for(int i = 16-offset; i < 32 - offset; i++){
-					if ((!_pieces[i]->isTaken()) && _pieces[i]->_isMovePossible(Coordinate(j, int(king->getRow())), _board, *this)) return false;
+					if ((!_pieces[i]->isTaken()) && _pieces[i] != dangerousPiece && _pieces[i]->_isMovePossible(Coordinate(j, int(king->getRow())), _board, *this)) return false;
 				}
 			}
 		}
