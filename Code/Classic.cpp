@@ -188,7 +188,7 @@ bool Classic::_isCheckmate(char playerColor){
 		if (std::abs(rowMove) == std::abs(columnMove)){
 			int row = int(king->getRow())+rowDirection, column = int(king->getColumn())+columnDirection;
 			while(row != int(dangerousPiece->getRow())){
-				for (int i = 16-offset; i < 32 - offset; i++){
+				for (int i = offset; i < 16 + offset; i++){
 					if ((!_pieces[i]->isTaken()) && _pieces[i]->_isMovePossible(Coordinate(column, row), _board, *this)) return false;
 				}
 				row += rowDirection;
@@ -198,7 +198,7 @@ bool Classic::_isCheckmate(char playerColor){
 		//rook or queen case(row)
 		else if (rowMove){
 			for (int j = int(king->getRow())+rowDirection; j != int(dangerousPiece->getRow()); j += rowDirection){
-				for(int i = 16-offset; i < 32 - offset; i++){
+				for(int i = offset; i < 16 + offset; i++){
 					if ((!_pieces[i]->isTaken()) && _pieces[i]->_isMovePossible(Coordinate(int(king->getColumn()), j), _board, *this)) return false;
 				}
 			}
@@ -206,13 +206,13 @@ bool Classic::_isCheckmate(char playerColor){
 		//rook or queen case(column)
 		else if (columnMove){
 			for (int j = int(king->getColumn())+columnDirection; j != int(dangerousPiece->getColumn()); j += columnDirection){
-				for(int i = 16-offset; i < 32 - offset; i++){
+				for(int i = offset; i < 16 + offset; i++){
 					if ((!_pieces[i]->isTaken()) && _pieces[i]->_isMovePossible(Coordinate(j, int(king->getRow())), _board, *this)) return false;
 				}
 			}
 		}
 		//test if the dangerousPiece can be taken
-		for (int i = 16-offset; i < 32 - offset; i++){
+		for (int i = offset; i < 16 + offset; i++){
 			if ((!_pieces[i]->isTaken()) && _pieces[i]->_isMovePossible(dangerousPiece->getCoord(), _board, *this)) return false;
 		}
 	}
@@ -221,7 +221,7 @@ bool Classic::_isCheckmate(char playerColor){
 
 bool Classic::_isStalemate(char playerColor){
 	int offset = _calculOffset(playerColor);
-	for (int i = offset; i < offset+16; i++){
+	for (int i = 16 - offset; i < 32 - offset; i++){
 		if ((!_pieces[i]->isTaken()) && _pieces[i]->canMove(_board, *this)) return false;
 	}
 	return true;
