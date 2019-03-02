@@ -383,8 +383,8 @@ Le système se doit de mettre assez rapidement à jour les statistiques personne
 \textbf{canMove :} permet de savoir si la pièce considérée peut se déplacer.Cette fonction est donc utile pour savoir si le roi est en échec par exemple. \\
 \textbf{checkMove :} vérifie si le mouvement demandé d'une pièce par le  joueur est valide.\\
 \textbf{hasMoved :}vérifie si la pièce a déjà été déplacée ou non.C'est une méthode nécessaire pour valider un roque ou une prise en passant.Également indispensable pour savoir si un pion peut avancer de 2 cases ou non.\\
-\textbf{isMovePossible :} prend en paramètre une coordonnée de l'échiquier et vérifie s'il existe une pièce qui peut se déplacer à l'endroit de la coordonnée. Cette fonction est utilisée pour savoir si le roi est en position d'échec et mat. La fonction qui s'occupe de savoir si le roi est en échec, se trouve dans la classe \textit{Classic} \\
-\textbf{Move :}est une méthode qui selon \textit{canMove,checkMove,hasMoved} effectue ou  non, le mouvement demandé par le joueur sur la pièce.\\
+\textbf{isMovePossible :} prend en paramètre une coordonnée de l'échiquier et vérifie si la pièce peut se déplacer à l'endroit de la coordonnée. Cette fonction est utilisée pour savoir si le roi est en position d'échec et mat. La fonction qui s'occupe de savoir si le roi est en échec, se trouve dans la classe \textit{Classic} \\
+\textbf{Move :}est une méthode qui selon \textit{checkMove} effectue ou  non, le mouvement demandé par le joueur sur la pièce.\\
 \end{enumerate}
 
 \paragraph{Mode Alice}
@@ -433,7 +433,10 @@ Le système se doit de mettre assez rapidement à jour les statistiques personne
 \centering			\includegraphics[scale=0.50]{board_player_diagram.png}
 \caption{Diagram de Board et Player}
 \end{figure}
-
+\begin{enumerate}
+\item
+\textbf{movePiece :} Prend 2 coordonnées, une de départ et une d'arrivée. Déplace la pièce se trouvant sur la case de départ vers la case d'arrivée et renvois la pièce qui fut prise, sinon nullptr.
+\end{enumerate}
 \newpage
 
 \subsection{Connexion du Joueur}
