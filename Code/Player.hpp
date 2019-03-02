@@ -33,10 +33,10 @@ class Player{
 	Player(Player&& original): _sock(original._sock), _control(original._control), _pipe(original._pipe), _name(original._name), _recvActive(original._recvActive) {original._pipe = nullptr;}
 
 	~Player(){
-		delete[] _pipe;
 		delete _sock;
 		close(_pipe[0]);
 		close(_pipe[1]);
+		delete[] _pipe;
 	}
 
 	Player& operator= (const Player&) = delete;
