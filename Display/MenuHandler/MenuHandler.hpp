@@ -15,6 +15,8 @@ protected:
 
 public:
   MenuHandler();
+  MenuHandler(const MenuHandler&);
+  MenuHandler& operator=(const MenuHandler&);
   ~MenuHandler();
 
   //data menus

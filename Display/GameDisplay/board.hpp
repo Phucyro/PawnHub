@@ -33,6 +33,8 @@ protected:
 public:
   Board();
   Board(int lines, int cols);
+  Board(const Board&);
+  Board& operator=(const Board&);
   ~Board();
 
   void init_ncurses();
