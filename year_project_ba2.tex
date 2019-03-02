@@ -76,6 +76,7 @@
 		%\item[AliceChess :] Variante du jeu d'échec jouée en utilisant 2 plateaux. Lorsqu'un coup est joué, la pièce est déplacée à la case correspondante mais dans l'autre plateau. À part cela, le jeu se déroule selon les règles habituelles du jeu d'échecs .
 		%\item[DarkChess :] Variante du jeu d'échec où le joueur ne voit que ses propres pièces et les cases où il peut légalement les déplacer.
 		%\item[HordeChess :] Variante du jeu d'échec où un joueur possède 32 pions et l'autre la collection standard du jeu d'échec traditionnel.
+		\item{Coup Légal :} est un coup qu'un joueur a le droit de jouer en vertu des règles du jeu (par opposition à un coup illégal\footnote{source Wikipedia})
 		\item[Echec et mat :] Un joueur est en échec et mat lorsque son roi est en une position telle qu'il ne peut qu'être pris au prochain tour par son adversaire.
 		\item[Pat :] Il y a pat lorsqu'aucun des joueurs n'est en mesure de placer l'autre en échec et mat.
 		\item[Le Roque :] Le roque consiste à déplacer en un seul coup le roi et l'une des tours. On déplace d'abord le roi de deux cases vers la tour puis, avec la même main, on fait passer la tour de l'autre côté, juste à côté du roi (voir le diagramme ci-dessous). Les conditions suivantes sont nécessaires pour pouvoir roquer : aucune pièce ne se trouve entre le roi et la tour concernée ; le roi et la tour concernée n'ont encore jamais joué et le roi n'est pas en échec ;
@@ -384,7 +385,7 @@ Le système se doit de mettre assez rapidement à jour les statistiques personne
 \textbf{checkMove :} vérifie si le mouvement demandé d'une pièce par le  joueur est valide.\\
 \textbf{hasMoved :}vérifie si la pièce a déjà été déplacée ou non.C'est une méthode nécessaire pour valider un roque ou une prise en passant.Également indispensable pour savoir si un pion peut avancer de 2 cases ou non.\\
 \textbf{isMovePossible :} prend en paramètre une coordonnée de l'échiquier et vérifie si la pièce peut se déplacer à l'endroit de la coordonnée. Cette fonction est utilisée pour savoir si le roi est en position d'échec et mat. La fonction qui s'occupe de savoir si le roi est en échec, se trouve dans la classe \textit{Classic} \\
-\textbf{Move :}est une méthode qui selon \textit{checkMove} effectue ou  non, le mouvement demandé par le joueur sur la pièce.\\
+\textbf{Move :}est une méthode qui selon \textit{checkMove} effectue ou  non, le mouvement demandé par le joueur sur la pièce.Cette méthode effectue d'abord un \texit{CheckMove} à l'endroit du coup désiré par le joueur. Si, le coup est légal, elle effectue un \textit{doMove} ce qui permet d'avancer la pièce à l'endroit du coup.Dans le cas où le coup du \textit{King} le rend en échec, on effectue un \textit{ReverseMove}. \\
 \end{enumerate}
 
 \paragraph{Mode Alice} Les méthodes et attributs des pièces sont les mêmes à l'exception d'un attribut \textit{2Dimension} pour savoir dans quelle dimension se trouve la pièce (et donc une méthode \textit{swapDimension}). A noter que \textit{AlicePawn} hérite de \textit{BasicPawn} et non de \textit{Pawn} puisqu'il n'y a pas de prises en passant dans le mode \textit{Alice}.
@@ -392,7 +393,7 @@ Le système se doit de mettre assez rapidement à jour les statistiques personne
 
 
 \subsubsection{Coordinate}
-\paragraph{}Par soucis de facilité et d'homogénéité dans le code, chaque adresse réelle sur l'échiquier est retraduite en une adresse virtuelle compréhensible pour les board, et inversement . En effet, le board coté Serveur est une matrice composée de lignes et rangées numérotées de 0 à 7 alors que l'échiquier coté Client est numérotées de A à H et 1 à 8.
+\paragraph{}Par soucis de facilité et d'homogénéité dans le code, \textit{Coordinate} est une classe qui retraduit chaque adresse réelle sur l'échiquier en une adresse virtuelle compréhensible pour les board, et inversement . En effet, le board coté Serveur est une matrice composée de lignes et rangées numérotées de 0 à 7 alors que l'échiquier coté Client est numérotées de A à H et 1 à 8.
 %\begin{sidewaysfigure}[ph]
 
 \subsubsection{Les Différents Modes De Jeu}
