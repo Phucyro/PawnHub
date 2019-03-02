@@ -34,7 +34,7 @@ class Player{
 
 	~Player(){
 		delete[] _pipe;
-		_sock = nullptr;
+		delete _sock;
 		close(_pipe[0]);
 		close(_pipe[1]);
 	}

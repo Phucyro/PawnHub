@@ -9,27 +9,28 @@
 
 
 int main(){
-  Socket socket;
-  MenuHandler* menu = new MenuHandler();
+try {
+    // Connexion au serveur
+    Socket* socket = new Socket;
+    std::string hostname;
+    bool good_hostname = false;
+    while (!good_hostname) {
+      std::cout << "Please enter hostname: ";
+      std::cin >> hostname;
+      std::cout << std::endl;
+      good_hostname = socket->connectToServer(hostname);
+    }
 
-  // Demande de connexion au serveur
-  std::string hostname;
-  std::cout << "Please enter hostname: ";
-  std::cin >> hostname;
-  std::cout << std::endl;
+    MenuHandler* menu = new MenuHandler();
+    authentificationMenu(menu, socket);
+    mainMenu(menu, socket);
 
-
-  try {
-    socket.connectToServer(hostname);
-
-    authentificationMenu(menu, &socket);
-    mainMenu(menu, &socket);
-
-    quit(menu, &socket);
+    quit(menu, socket);
     delete menu;
+    delete socket;
 
-  } catch(std::string error) {
-    std::cout << error << std::endl;
+  } catch(std::runtime_error& error) {
+    std::cout << error.what() << std::endl;
     return 1;
   }
   return 0;

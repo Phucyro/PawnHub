@@ -3,6 +3,7 @@
 
 #include "Socket.hpp"
 #include "ClientGameControl.hpp"
+#include "../Display/MenuHandler/MenuHandler.hpp"
 #include <string>
 
 

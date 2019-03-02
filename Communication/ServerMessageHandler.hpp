@@ -51,21 +51,22 @@ void inline receiveMessageHandler(Socket* socket, Data* data, PlayersMap* player
       }
     }
   }
-  catch (std::string const& error){
-    std::cout << error << std::endl;
+  catch (std::runtime_error& error){
+    std::cout << error.what() << std::endl;
     // Supprime l'entrée username : Player()
   }
 
   std::cout << "Deconnexion de " << player->getName() << std::endl;
 
-  if (player->getQueueNumber() != -1)
+  if (int(player->getQueueNumber()) != -1)
     matchmaking->removePlayer(player);
 
-  player->getSocket()->closeSocket();
   players_map->erase(player->getName());
 
   if (player->getName() != "Guest")
     data->saveUserData(player->getName());
+
+  delete player;
 }
 
 #endif

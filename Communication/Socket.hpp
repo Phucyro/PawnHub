@@ -16,7 +16,7 @@ public:
   ~Socket();
 
   int getFileDescriptor();
-  void connectToServer(std::string);
+  bool connectToServer(std::string);
   void closeSocket();
 
   void sendMessage(std::string);

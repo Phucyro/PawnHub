@@ -33,7 +33,7 @@ std::vector<unsigned int> toUIVector(std::vector<std::string> vector){
   std::vector<unsigned int> res;
 
   for (unsigned int a = 0; a < vector.size(); ++a){
-    res.push_back(std::stoi(vector[a]));
+    res.push_back(unsigned(std::stoi(vector[a])));
   }
   return res;
 }
