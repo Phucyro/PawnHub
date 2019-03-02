@@ -374,7 +374,6 @@ Le système se doit de mettre assez rapidement à jour les statistiques personne
 \end{figure}
 
 \paragraph{Mode classique}Chaque type de pièces, c'est à dire, \textit{Queen,King,Bishop,Pawn,GhostPawn,Knight,Rook}, héritent de la classe mère \textit{Piece}.
-<<<<<<< HEAD
 \textit{GhostPawn} est utilisé pour la prise en passant. Lorsqu'un \textit{Pawn} avance de deux case, il laisse sur la case où il serait si il n'avait avancer que d'une case, un \textit{GhostPawn} qui est invisible pour le joueur. Un \textit{Pawn} considère un \textit{GhostPawn} comme une pièce prenable si ce dernier est actif (il est actif uniquement le tour juste après sa création). Lorsqu'un \textit{GhostPawn} est pris par un \textit{Pawn} et qu'il est actif, le \textit{GhostPawn} se charge de faire disparaitre le \textit{Pawn} qui l'a créer du plateau.
 \textit{BasicPawn} est un \textit{Pawn} qui ne peut effectuer de prise en passant. En effet, on voit qu'il ne possède pas d'attribut \textit{ghost}. Cette pièce est indispensable dans le mode \textit{Alice} car après chaque \textit{Move}, les pièces changent de \textit{Board} et ne peuvent donc pas effectuer de prise en passant.
 \begin{enumerate}
@@ -383,7 +382,7 @@ Le système se doit de mettre assez rapidement à jour les statistiques personne
 \textbf{checkMove :} Retourne true si le mouvement demandé d'une pièce par le joueur est un déplacement normalement valide.\\
 \textbf{hasMoved :}Retourne true si la pièce a déjà été déplacée ou non.\\
 \textbf{isMovePossible :} vérifie si un movement est possible en prenant en compte le fait que le \textit{King} ne doit pas être en échec après ce mouvement.\\
-\textbf{Move :}est une méthode qui selon \textit{checkMove} effectue ou  non, le mouvement demandé par le joueur sur la pièce.Cette méthode effectue d'abord un \texit{CheckMove} à l'endroit du coup désiré par le joueur. Si, le coup est possible, elle effectue un \textit{doMove} ce qui permet d'avancer la pièce à l'endroit du coup. Dans le cas où le coup met le \textit{King} du joueur en échec, on effectue un \textit{ReverseMove} qui remet le \textit{Board} dans son état initial. Si le \textit{Board} à changé, la fontion retourne true.\\
+\textbf{Move :} est une méthode qui selon \textit{checkMove} effectue ou non, le mouvement demandé par le joueur sur la pièce. Cette méthode effectue d'abord un \textit{checkMove} à l'endroit du coup désiré par le joueur. Si, le coup est possible, elle effectue un \textit{doMove} ce qui permet d'avancer la pièce à l'endroit du coup. Dans le cas où le coup met le \textit{King} du joueur en échec, on effectue un \textit{ReverseMove} qui remet le \textit{Board} dans son état initial. Si le \textit{Board} à changé, la fonction retourne true.\\
 \end{enumerate}
 
 \paragraph{Mode Alice} Les méthodes et attributs des pièces sont les mêmes à l'exception d'un attribut \textit{2Dimension} pour savoir dans quelle dimension se trouve la pièce (et donc une méthode \textit{swapDimension}). A noter que \textit{AlicePawn} hérite de \textit{BasicPawn} et non de \textit{Pawn} puisqu'il n'y a pas de prises en passant dans le mode \textit{Alice}.
