@@ -4,6 +4,15 @@ ServerGameControl::ServerGameControl(Player* _player1, Player* _player2, Game* _
   startParty();
 }
 
+ServerGameControl::ServerGameControl(const ServerGameControl& _other): player1(_other.player1), player2(_other.player2), game(_other.game) {
+}
+ServerGameControl& ServerGameControl::operator=(const ServerGameControl& _other) {
+  player1 = _other.player1;
+  player2 = _other.player2;
+  game = _other.game;
+  return *this;
+}
+
 ServerGameControl::~ServerGameControl() {
   delete player1;
   delete player2;

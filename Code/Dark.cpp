@@ -41,7 +41,7 @@ void Dark::_Pieces() {
 }
 
 Dark::~Dark(){
-	for(int i = _piecesAmount - 1; i>=0; i--)
+	for(int i = int(_piecesAmount) - 1; i>=0; i--)
 	{
 		delete _pieces[i];
 	}
@@ -92,8 +92,8 @@ void Dark::_initBoard() {
 void Dark::_changePawn(Piece *pawn, Piece* promotedPawn, Board* board){
 	int start, i, end;
 	if (pawn->getColor() == 'w'){
-		int start = _lastStrongPiecesWhite;
-		int i = _lastStrongPiecesWhite;
+		int start = int(_lastStrongPiecesWhite);
+		int i = int(_lastStrongPiecesWhite);
 		_lastStrongPiecesWhite ++;
 		end = 16;
 		for (; i < end; i++) {
@@ -106,8 +106,8 @@ void Dark::_changePawn(Piece *pawn, Piece* promotedPawn, Board* board){
 			}
 		}
 	}else{
-		start = _lastStrongPieceBlack;
-		i = _lastStrongPieceBlack;
+		start = int(_lastStrongPieceBlack);
+		i = int(_lastStrongPieceBlack);
 		_lastStrongPieceBlack ++;
 		end = 32;
 		for (; i < end; i++) {

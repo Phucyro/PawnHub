@@ -58,7 +58,7 @@
 				\subsubsection{Alice Chess}
 					\paragraph{}Le jeu d'échecs d'Alice est une variante du jeu d'échecs jouée en utilisant 2 plateaux. Après chaque coup, la pièce déplacée est téléportée sur la case où elle a été placée mais de l'autre plateau. Un coup n'est valide que si la case où doit se téléporter la pièce ne comporte aucune pièce de sa faction. Mis à part ce changement d'affichage, le jeu se déroule selon les règles habituelles du jeu d'échecs.
 				\subsubsection{Dark Chess}
-					\paragraph{} Le jeu d'échecs sombre est une variante du jeu d'échecs où le joueur ne voit que ses propres pièces et les cases où il peut légalement les déplacer. Le but des joueurs est de prendre le roi adverse. Contrairement aux règles classiques, le roi d'un joueur peut être en échec à la fin de son tour. De plus, il n'y a pas de prises en passant possibles. À part cela, le jeu se déroule selon les règles habituelles du jeu d'échecs.
+					\paragraph{} Le jeu d'échecs sombre est une variante du jeu d'échecs où le joueur ne voit que ses propres pièces et les cases où il peut légalement les déplacer, ainsi que les pièces de l'adversaire qui peuvent être prises. Le but des joueurs est de prendre le roi adverse. Contrairement aux règles classiques, le roi d'un joueur peut être en échec à la fin de son tour. À part cela, le jeu se déroule selon les règles habituelles du jeu d'échecs.
 				\subsubsection{Horde Chess}
 					\paragraph{} Le jeu d'échecs de horde est une variante du jeu d'échecs où le joueur noir possède 32 pions et le joueur blanc la collection standard du jeu d'échecs classique. Le but du joueur noir est le but du jeu classique mais le but du joueur blanc est de prendre tous les pions du joueur noir. À part cela, le jeu se déroule selon les règles habituelles du jeu d'échecs.
 
@@ -78,6 +78,7 @@
 		%\item[HordeChess :] Variante du jeu d'échec où un joueur possède 32 pions et l'autre la collection standard du jeu d'échec traditionnel.
 		\item[Echiquier (Board) :] Plateau sur lequel se joue le jeu d'échec.
 		\item[Coup/Mouvement :] Déplacement d'une pièce d'une case à une autre de l'échiquier.
+		\item{Coup Légal :} est un coup qu'un joueur a le droit de jouer en vertu des règles du jeu (par opposition à un coup illégal\footnote{source Wikipedia})
 		\item[Prise :] Déplacement d'une pièce sur une case où se trouve une pièce adverse, ce qui implique un retrait du jeu de la pièce adverse.
 		\item[Echec :] Un joueur est en échec lorsque son roi est dans une position telle qu'il peut être pris par son adversaire.
 		\item[Echec et mate :] Un joueur est échec et mate il est en situation d'échec et qu'il n'a aucun coup légal lui permettant de se sortir de cette situation.
@@ -373,22 +374,24 @@ Le système se doit de mettre assez rapidement à jour les statistiques personne
 \end{figure}
 
 \paragraph{Mode classique}Chaque type de pièces, c'est à dire, \textit{Queen,King,Bishop,Pawn,GhostPawn,Knight,Rook}, héritent de la classe mère \textit{Piece}.
-\textit{GhostPawn} est utilisé pour la prise en passant. Lorsqu'un \textit{Pawn} avance de deux case, il laisse sur la case où il serait si il n'avait avancer que d'une case, un \textit{GhostPawn}. Un \textit{Pawn} considère un \textit{GhostPawn} comme une pièce prenable si ce dernier est actif (il est actif uniquement le tour juste après sa création). Lorsqu'un \textit{GhostPawn} est pris par un \textit{Pawn} et qu'il est actif, le \textit{GhostPawn} se charge de faire disparaitre le \textit{Pawn} qui l'a créer du plateau.
+<<<<<<< HEAD
+\textit{GhostPawn} est utilisé pour la prise en passant. Lorsqu'un \textit{Pawn} avance de deux case, il laisse sur la case où il serait si il n'avait avancer que d'une case, un \textit{GhostPawn} qui est invisible pour le joueur. Un \textit{Pawn} considère un \textit{GhostPawn} comme une pièce prenable si ce dernier est actif (il est actif uniquement le tour juste après sa création). Lorsqu'un \textit{GhostPawn} est pris par un \textit{Pawn} et qu'il est actif, le \textit{GhostPawn} se charge de faire disparaitre le \textit{Pawn} qui l'a créer du plateau.
+\textit{BasicPawn} est un \textit{Pawn} qui ne peut effectuer de prise en passant. En effet, on voit qu'il ne possède pas d'attribut \textit{ghost}. Cette pièce est indispensable dans le mode \textit{Alice} car après chaque \textit{Move}, les pièces changent de \textit{Board} et ne peuvent donc pas effectuer de prise en passant.
 \begin{enumerate}
 \item
 \textbf{canMove :} Retourne true si la pièce peut se déplacer. \\
 \textbf{checkMove :} Retourne true si le mouvement demandé d'une pièce par le joueur est un déplacement normalement valide.\\
 \textbf{hasMoved :}Retourne true si la pièce a déjà été déplacée ou non.\\
 \textbf{isMovePossible :} vérifie si un movement est possible en prenant en compte le fait que le \textit{King} ne doit pas être en échec après ce mouvement.\\
-\textbf{Move :}est une méthode qui selon \textit{checkMove, hasMoved et testCheck(de Game)} effectue ou  non, le mouvement demandé par le joueur sur la pièce.\\
+\textbf{Move :}est une méthode qui selon \textit{checkMove} effectue ou  non, le mouvement demandé par le joueur sur la pièce.Cette méthode effectue d'abord un \texit{CheckMove} à l'endroit du coup désiré par le joueur. Si, le coup est possible, elle effectue un \textit{doMove} ce qui permet d'avancer la pièce à l'endroit du coup. Dans le cas où le coup met le \textit{King} du joueur en échec, on effectue un \textit{ReverseMove} qui remet le \textit{Board} dans son état initial. Si le \textit{Board} à changé, la fontion retourne true.\\
 \end{enumerate}
 
-\paragraph{Mode Alice}
+\paragraph{Mode Alice} Les méthodes et attributs des pièces sont les mêmes à l'exception d'un attribut \textit{2Dimension} pour savoir dans quelle dimension se trouve la pièce (et donc une méthode \textit{swapDimension}). A noter que \textit{AlicePawn} hérite de \textit{BasicPawn} et non de \textit{Pawn} puisqu'il n'y a pas de prises en passant dans le mode \textit{Alice}.
 
 
 
 \subsubsection{Coordinate}
-\paragraph{}Par soucis de facilité et d'homogénéité dans le code, chaque adresse réelle sur l'échiquier est retraduite en une adresse virtuelle compréhensible pour le board, et inversement . En effet, le board est une matrice composée de lignes et rangées numérotées de 0 à 7 alors que l'échiquier est numérotées de A à H et 1 à 8.
+\paragraph{}Par soucis de facilité et d'homogénéité dans le code, \textit{Coordinate} est une classe qui retraduit chaque adresse réelle sur l'échiquier en une adresse virtuelle compréhensible pour les board, et inversement . En effet, le board coté Serveur est une matrice composée de lignes et rangées numérotées de 0 à 7 alors que l'échiquier coté Client est numérotées de A à H et 1 à 8.
 %\begin{sidewaysfigure}[ph]
 
 \subsubsection{Les Différents Modes De Jeu}
@@ -422,9 +425,8 @@ Le système se doit de mettre assez rapidement à jour les statistiques personne
 \textbf{}  \\
 \textbf{}  \\
 
-\item \textit{Méthodes Dark} \\
-\textbf{}  \\
-\textbf{}  \\
+\item \textit{Méthodes Dark} \\ \\
+\textbf{isVisible :} Permet de savoir si une pièce est visible ou non pour l'adversaire. \\
 
 \item \textit{Méthodes Horde} \\
 \textbf{}  \\
@@ -437,7 +439,10 @@ Le système se doit de mettre assez rapidement à jour les statistiques personne
 \centering			\includegraphics[scale=0.50]{board_player_diagram.png}
 \caption{Diagram de Board et Player}
 \end{figure}
-
+\begin{enumerate}
+\item
+\textbf{movePiece :} Prend 2 coordonnées, une de départ et une d'arrivée. Déplace la pièce se trouvant sur la case de départ vers la case d'arrivée et renvois la pièce qui fut prise, sinon nullptr.
+\end{enumerate}
 \newpage
 
 \subsection{Connexion du Joueur}
@@ -451,7 +456,7 @@ Le joueur se connecte à l'aide du \textit{hostname} du serveur, qui s'affiche �
 \begin{enumerate}
 \item Comme la plupart des tâches effectuées par nos programmes se font à l'aide de chaînes de caractères et par soucis d'homogénéité, il est préférable et plus simple que l'échange d'information entre le serveur et le client se fasse également sous cette forme.
 \item Une chaîne de caractère n'a pas besoin d'être traduite en binaire, ce qui diminue la complexité et le temps d'exécution de nos programmes.
-\item La taille du message envoyée n'est pas un probleme, car une taille de 150 octets suffit pour envoyer toutes les informations d'un message. Le plus grand message actuel est le plateau, qui ne consiste que de 147 octets lorsqu'il est complet dans un jeu de \textit{Horde Chess} (voir 6.5, point 2).
+\item La taille du message envoyée n'est pas un problème, car une taille de 150 octets suffit pour envoyer toutes les informations d'un message. Le plus grand message actuel est le plateau, qui ne consiste que de 147 octets lorsqu'il est complet dans un jeu de \textit{Horde Chess} (voir 6.5, point \ref{send_board}).
 \end{enumerate}
 \paragraph{}Si l'on souhaite tout de même envoyer des messages plus longs que la taille standard définie, le système de messagerie utilise du padding à l'aide du symbole '|'afin d'identifier la fin du message. La classe \textit{Socket} effectue ce padding ainsi que l'envoi et la réception de messages à l'aide des méthodes \textit{sendMessage} et \textit{receiveMessage}.
 \paragraph{}Le serveur tâchera de vérifier les différentes actions des joueurs et veillera également à envoyer régulièrement la disposition du plateau aux clients afin qu'il s'affiche correctement pour les joueurs.
@@ -472,6 +477,12 @@ Le joueur se connecte à l'aide du \textit{hostname} du serveur, qui s'affiche �
 \textbf{Mise en pratique :} Le serveur envoie la couleur du joueur (noir ou blanc) à son client. \\
 \textbf{Protocole :} Le serveur envoie 'white' au premier joueur, le joueur blanc, et 'black' pour le second joueur, précédé de l'en-tête 'X' (colour). Pour l'instant, le premier client connecté devient le premier joueur.  Comme pour le point précèdent, ce message est placé dans une variable de l'instance d'affichage du jeu.
 
+\begin{figure}
+\centering
+\includegraphics[scale=0.40]{Sequence_Server_GameStart.png}
+\caption{Diagramme de séquences d'initialisation du jeu côté serveur.}
+\end{figure}
+
 \item \textit{Envoi de la confirmation de début de partie par le serveur}\\
 \textbf{Mise en pratique :} Le serveur envoie un message pré-défini aux clients.\\
 \textbf{Protocole :} Le serveur envoie 'start' aux clients, précédé de l'en-tête 'U' (update), ce qui déclenche le passage du mode d'affichage du menu au mode d'affichage du jeu.
@@ -488,7 +499,7 @@ Le joueur se connecte à l'aide du \textit{hostname} du serveur, qui s'affiche �
 
 \item \textit{Requête de mouvement du joueur} \\
 \textbf{Mise en pratique :} Le serveur identifie le joueur qui doit effectuer un mouvement et envoie une requête au client approprié. Celui-ci affiche la requête au joueur, qui entre le mouvement de pièce voulu. Le mouvement est renvoyé au serveur, qui vérifie la légalité de la demande - tant que le mouvement demandé par le joueur n'est pas autorisé par les règles du jeu, celui-ci doit rentrer une nouvelle demande de mouvement.\\
-\textbf{Protocole :} La boucle de jeu présente dans la logique du serveur identifie l'instance de joueur concernée par la demande de mouvement et déclenche un envoi de message à son client ayant comme en-tête 'A' (askmove). Ce message est interprété par le client, qui demande au joueur de proposer un mouvement pour une de ses pièces. Le mouvement est alors renvoyé au serveur pour être vérifié. Ce message est composé de 4 caractères, les 2 premiers rerprésentant l'emplacement du début de tour de la pièce et les 2 derniers la position future de la pièce, précédé de l'en-tête 'M' (move). Le serveur vérifie si le mouvement demandé est possible, et renvoie une demande de mouvement tant qu'il ne l'est pas.
+\textbf{Protocole :} La boucle de jeu présente dans la logique du serveur identifie l'instance de joueur concernée par la demande de mouvement et déclenche un envoi de message à son client ayant comme en-tête 'A' (askmove). Ce message est interprété par le client, qui demande au joueur de proposer un mouvement pour une de ses pièces. Le mouvement est alors renvoyé au serveur pour être vérifié. Ce message est composé de 4 caractères, les 2 premiers représentant l'emplacement du début de tour de la pièce et les 2 derniers la position future de la pièce, précédé de l'en-tête 'M' (move). Le serveur vérifie si le mouvement demandé est possible, et renvoie une demande de mouvement tant qu'il ne l'est pas.
 
 \item \textit{Mouvement de pièce} \\
 \textbf{Mise en pratique :} Une fois que le mouvement demandé par le joueur est identifié comme possible, le serveur met à jour son instance de plateau et renvoie le plateau aux deux clients afin qu'ils l'affichent.  \\

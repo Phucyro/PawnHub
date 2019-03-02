@@ -31,6 +31,8 @@ private:
 
 public:
   ServerGameControl(Player*, Player*, Game*);
+  ServerGameControl(const ServerGameControl&);
+  ServerGameControl& operator=(const ServerGameControl&);
   ~ServerGameControl();
 
 private:
