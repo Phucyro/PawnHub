@@ -5,7 +5,7 @@
 #include <unistd.h>
 #include <sys/wait.h>
 #include "Menu.hpp"
-
+#include "../Display/MenuHandler/MenuHandler.hpp"
 
 
 int main(){

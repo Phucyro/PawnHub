@@ -32,6 +32,8 @@ void receiveMessageHandler(MenuHandler* menu, Socket* socket, bool* connected){
     case '5' :
       leaveQueueHandler();
       break;
+    case '7' :
+      myStatHandler(menu, msg[1], msg[2], msg[3]);
   }
 }
 

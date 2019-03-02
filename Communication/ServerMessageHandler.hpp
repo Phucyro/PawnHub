@@ -48,6 +48,10 @@ void inline receiveMessageHandler(Socket* socket, Data* data, PlayersMap* player
           leaveQueueHandler(matchmaking, player);
           player->getSocket()->unlockMutex();
           break;
+        case '7' :
+          myStatHandler(player, data);
+          player->getSocket()->unlockMutex();
+          break;
       }
     }
   }
