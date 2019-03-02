@@ -6,6 +6,7 @@ ServerGameControl::ServerGameControl(Player* _player1, Player* _player2, Game* _
 
 ServerGameControl::ServerGameControl(const ServerGameControl& _other): player1(_other.player1), player2(_other.player2), game(_other.game) {
 }
+
 ServerGameControl& ServerGameControl::operator=(const ServerGameControl& _other) {
   player1 = _other.player1;
   player2 = _other.player2;
@@ -14,8 +15,8 @@ ServerGameControl& ServerGameControl::operator=(const ServerGameControl& _other)
 }
 
 ServerGameControl::~ServerGameControl() {
-  delete player1;
-  delete player2;
+  player1 = nullptr;
+  player2 = nullptr;
   delete game;
 }
 
