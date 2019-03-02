@@ -116,6 +116,7 @@ la case traversée par le roi n'est contrôlée par aucune pièce adverse\footno
 				 2.1 & 13/02 & Boonen Jacques & Déroulement d'une partie \\
 				 2.2 & 28/02 & Forest Caroline & Mise à jour du déroulement d'une partie \\
 				 2.2.1 & 02/03 & Forest Caroline & Diagrammes de séquences pour le déroulement d'une partie \\
+				 2.3 & 3/03 & Nguyen Duc & Protocole de communication du menu \\
 				\hline
 \end{tabular}
 			\caption*{Historique des modifications}
@@ -530,6 +531,58 @@ Le joueur se connecte à l'aide du \textit{hostname} du serveur, qui s'affiche �
 \end{enumerate}
 
 \subsection{Menu}
+\begin{enumerate}
+
+\item \textit{Affichage du menu}\\
+\textbf{Mise en pratique :} Les méthodes de l'objet permettant l'affichage du menu sont utilisées et les options suivantes sont proposées à l'utilisateur : \textit{Jouer}, \textit{Amis}, \textit{Statistique} et \textit{Quitter}.\\
+\textbf{Protocole :} La méthode \textit{\_get\_choice}, toujours précédée par la méthode \textit{\_init\_choicew}, est utilisée afin de pouvoir afficher les différentes options.
+
+\item \textit{Choix d'une option}\\
+\textbf{Mise en pratique :} L'utilisateur peut parcourir les différentes options en utilisant les touches directionnelle \textit{Haut} et \textit{Bas} et valider son choix en appuyant sur la touche \textit{Entrée} \\
+\textbf{Protocole :} Après que la méthode \textit{\_get\_choice} est appelée, le programme attend que l'utilisateur choisisse une option. Après que le choix a été fait, une fonction est appelée pour diriger l'utilisateur vers un autre menu.
+
+\item \textit{Choix d'option du menu Jouer}\\
+\textbf{Mise en pratique :} Les 4 modes de jeu sont affichés et l'utilisateur peut rejoindre une file d'attente vers le mode de jeu approprié en sélectionnant une de ces 4 options ou revenir au menu principal en choisissant l'option \textit{Retour}.\\
+\textbf{Protocole :} Si l'utilisateur choisit un mode de jeu, la fonction \textit{playGame} est appelée et elle envoie un message au serveur qui placera le joueur dans une file d'attente et l'utilisateur sera bloqué jusqu'à ce qu'un autre joueur rejoigne la même file d'attente. Sinon l'utilisateur sera dirigé vers le menu principal.
+
+\item \textit{Choix d'option du menu Ami}\\
+\textbf{Mise en pratique :} L'utilisateur a le choix entre 6 options : \textit{Voir sa liste d'amis}, \textit{Envoyer une demande d'ami}, \textit{Retirer un ami}, \textit{Accepter ou refuser une demande d'ami}, \textit{Annuler sa demande d'ami} et \textit{Retour}.\\
+\textbf{Protocole :} Après que la méthode \textit{\_get\_choice} est appelée, le programme attend que l'utilisateur choisisse une option et après que le choix a été fait une fonction est appelée pour diriger l'utilisateur vers un autre menu. 
+
+\item \textit{Voir sa liste d'amis}\\
+\textbf{Mise en pratique :} Après avoir choisi l'option, le nom de tout les amis de l'utilisateur sont affichés dans un rectangle.\\
+\textbf{Protocole :} Un message est envoyé au serveur qui traitera la demande et qui renverra le nom de tout ses amis. Une fois que le nom des amis sont reçus du coté client, la méthode \textit{init\_friendsw} est utilisée pour afficher le nom de tout ses amis sur l'écran.
+
+\item \textit{Envoyer une demande d'ami}\\
+\textbf{Mise en pratique :} Après avoir choisi l'option, l'utilisateur est invité à rentrer un nom ou à rentrer une commande pour retourner au menu des amis.\\
+\textbf{Protocole :} Si l'utilisateur ne rentre pas la commande pour quitter alors un message est envoyé au serveur qui le traitera et renverra le résultat de l'opération. Plusieurs résultat sont possibles, soit la demande a été envoyée soit une de ces erreurs s'est produite : l'utilisateur s'est envoyé une demande d'ami à lui même, la personne se trouve déjà dans sa liste d'amis, le nom n'est lié à aucun compte ou alors une demande a déjà été envoyée. 
+
+\item \textit{Retirer un ami}\\
+\textbf{Mise en pratique :} Après avoir choisi l'option, l'utilisateur est invité à rentrer un nom ou à rentrer une commande pour retourner au menu des amis.\\
+\textbf{Protocole :} Si l'utilisateur ne rentre pas la commande pour quitter alors un message est envoyé au serveur qui le traitera et renverra le résultat de l'opération. Plusieurs résultats sont possibles, soit la personne a été retirée de la liste d'amis soit l'utilisateur a entré le nom d'une personne qui ne fait pas partie de ses amis.
+
+\item \textit{Accepter ou refuser une demande d'ami}\\
+\textbf{Mise en pratique :} Après avoir choisi l'option, l'utilisateur est invité à rentrer une commande suivi d'un nom ou à rentrer une commande pour retourner au menu des amis.\\
+\textbf{Protocole :} Si l'utilisateur ne rentre pas la commande pour quitter alors un message est envoyé au serveur qui le traitera et renverra le résultat de l'opération. Plusieurs résultats sont possibles, soit la demande a été acceptée ou refusée soit le nom de la personne entrée n'a envoyé aucune demande d'ami.
+
+\item \textit{Annuler sa demande d'ami}\\
+\textbf{Mise en pratique :} Après avoir choisi l'option, l'utilisateur est invité à rentrer un nom ou à rentrer une commande pour retourner au menu des amis.\\
+\textbf{Protocole :} Si l'utilisateur ne rentre pas la commande pour quitter alors un message est envoyé au serveur qui le traitera et renverra le résultat de l'opération. Plusieurs résultats sont possibles, soit la demande a été annulée soit le nom de la personne entré est incorrect.
+
+\item \textit{Choix d'option du menu Statistique}\\
+\textbf{Mise en pratique :} L'utilisateur a le choix entre 3 options : \textit{Voir ses statistiques}, \textit{Voir le classement général} et \textit{Quitter}.\\
+\textbf{Protocole :} Si l'utilisateur décide de voir ses statistiques, la fonction \textit{checkMyStat} est appelée et enverra un message au serveur qui retournera les statistiques de l'utilisateur qui seront affichées dans un rectangle. Si l'utilisateur veut voir le classement général, il sera redirigé vers un autre menu. Sinon, l'utilisateur retourne au menu principal.
+
+\item \textit{Choix d'option du menu Classement général}\\
+\textbf{Mise en pratique :} L'utilisateur a le choix entre 5 options : \textit{Classic}, \textit{Dark}, \textit{Horde}, \textit{Alice} et \textit{Retour}. \\
+\textbf{Protocole :} Si l'utilisateur choisit une des 4 premières options alors un messages est envoyé au serveur qui renverra le nom et statistiques des 10 premiers joueurs du mode sélectionné. Ces informations seront ensuite affichées dans un rectangle. Sinon l'utilisateur revient au menu principal.
+
+
+\item \textit{Utilisation du chat}\\
+\textbf{Mise en pratique :} Une fois que l'utilisateur a sélectionné cette option, il peut discuter soit avec ses amis soit discuter avec n'importe quelle autre personne dans le canal global.\\
+\textbf{Protocole :} Une fois que l'utilisateur rentre la commande pour discuter, un message sera envoyé au serveur qui le traitera et renverra le résultat de l'opération. Plusieurs résultats sont possibles, soit le message de l'utilisateur s'est envoyé correctement, soit la commande a été mal entrée et dans ce cas aucun message n'est envoyé.
+
+\end{enumerate}
 
 \section{Annexe}
 
