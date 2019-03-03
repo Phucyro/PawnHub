@@ -337,10 +337,12 @@ void Data::addUserClassicWin(const std::string username){
 
 void Data::addUserClassicLose(const std::string username){
   ++(std::get<1>(_dataMap[username])[1]);
+  updateLadder("Classic", {username, std::get<1>(_dataMap[username])});
 }
 
 void Data::addUserClassicDraw(const std::string username){
   ++(std::get<1>(_dataMap[username])[2]);
+  updateLadder("Classic", {username, std::get<1>(_dataMap[username])});
 }
 
 void Data::addUserDarkWin(const std::string username){
@@ -350,10 +352,12 @@ void Data::addUserDarkWin(const std::string username){
 
 void Data::addUserDarkLose(const std::string username){
   ++(std::get<2>(_dataMap[username])[1]);
+  updateLadder("Dark", {username, std::get<2>(_dataMap[username])});
 }
 
 void Data::addUserDarkDraw(const std::string username){
   ++(std::get<2>(_dataMap[username])[2]);
+  updateLadder("Dark", {username, std::get<2>(_dataMap[username])});
 }
 
 void Data::addUserHordeWin(const std::string username){
@@ -363,10 +367,12 @@ void Data::addUserHordeWin(const std::string username){
 
 void Data::addUserHordeLose(const std::string username){
   ++(std::get<3>(_dataMap[username])[1]);
+  updateLadder("Horde", {username, std::get<3>(_dataMap[username])});
 }
 
 void Data::addUserHordeDraw(const std::string username){
   ++(std::get<3>(_dataMap[username])[2]);
+  updateLadder("Horde", {username, std::get<3>(_dataMap[username])});
 }
 
 void Data::addUserAliceWin(const std::string username){
@@ -376,10 +382,12 @@ void Data::addUserAliceWin(const std::string username){
 
 void Data::addUserAliceLose(const std::string username){
   ++(std::get<4>(_dataMap[username])[1]);
+  updateLadder("Alice", {username, std::get<4>(_dataMap[username])});
 }
 
 void Data::addUserAliceDraw(const std::string username){
   ++(std::get<4>(_dataMap[username])[2]);
+  updateLadder("Alice", {username, std::get<4>(_dataMap[username])});
 }
 
 
