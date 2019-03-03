@@ -69,7 +69,20 @@ std::string MenuHandler::get_infos(std::string type)
 void MenuHandler::print_warning(std::string warning)
 /** print le message d'erreur **/
 {
-  mvprintw(1,1,warning.c_str());
+  int y_max, x_max;
+  getmaxyx(stdscr, y_max, x_max);
+
+  mvprintw(y_max-2,1,warning.c_str());
+  refresh();
+}
+
+void MenuHandler::print_warning2(std::string warning)
+/** print le message d'erreur **/
+{
+  int y_max, x_max;
+  getmaxyx(stdscr, y_max, x_max);
+
+  mvprintw(y_max-1,1,warning.c_str());
   refresh();
 }
 
@@ -228,6 +241,7 @@ void MenuHandler::update_stats(int number, std::string name, int wins, int loses
 }
 
 void MenuHandler::init_friendsw(const std::vector<std::string> friends)
+/**affiche les amis sur le top window**/
 {
   init_statsw();
 
@@ -250,29 +264,19 @@ void MenuHandler::init_friendsw(const std::vector<std::string> friends)
   unsigned count = 0;
   unsigned long max_count = friends.size();
 
-  /**
-  for (int j=0; j<y_box-2; j++)
-    for (int i=0; i<5; i++)
-    {
-      mvwprintw(stats_w, 1+j, 5+i*x_split, friends[count].c_str());
-      count += 1;
-
-
-
-      if (count > max_count - 1)
-      {
-        break;
-      }
-    }
-
-  **/
-
   int i = 0;
   int j = 0;
 
+  bool empty = false;
+
+  if (max_count == 0)
+  {
+    empty = true;
+  }
+
   bool end = false;
 
-  while (!end)
+  while (!end && !empty)
   {
     mvwprintw(stats_w, 1+j, 5+i*x_split, friends[count].c_str());
     i += 1;
@@ -291,6 +295,27 @@ void MenuHandler::init_friendsw(const std::vector<std::string> friends)
   }
 
   refresh_board();
+
+}
+
+void MenuHandler::init_chatw()
+{
+  init_statsw();
+  int y_max, x_max;
+  getmaxyx(stats_w, y_max, x_max);
+  mvwprintw(stats_w, 1, 1,"Messages recus");
+  refresh_board();
+}
+
+void MenuHandler::update_chatw(int number, std::string sender, std::string message)
+{
+  int y_max, x_max;
+  getmaxyx(stats_w, y_max, x_max);
+
+  if (number < y_max-4)
+  {
+    mvwprintw(stats_w, 3+number, 1, "%s : %s", sender.c_str(), message.c_str());
+  }
 
 }
 

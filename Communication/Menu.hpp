@@ -218,11 +218,16 @@ void theirFriendRequestMenu(MenuHandler* menu, Socket* socket){
   }
 
   std::string command = "";
+  menu->print_warning2("Quiter : /quit   Accepter : /accept [name]   Refuser : /refuse [name]");
+  menu->refresh_board();
+
 
   while (command != "/quit"){
     menu->init_dataw();
     command = menu->get_infos("commande");
     menu->refresh_board();
+
+    if (!checkInputFormat(command)) continue;
 
     std::vector<std::string> split = splitString(command, ' ');
 
@@ -244,12 +249,17 @@ void sendFriendRequestMenu(MenuHandler* menu, Socket* socket){
   std::vector<std::string> temp_v = {};
   menu->clear_windows();
 
+  menu->print_warning2("Quitter : /quit   Envoyer : /send [name]");
+  menu->refresh_board();
+
   std::string command = "";
 
   while (command != "/quit"){
     menu->init_dataw();
     command = menu->get_infos("commande");
     menu->refresh_board();
+
+    if (!checkInputFormat(command)) continue;
 
     std::vector<std::string> split = splitString(command, ' ');
 
@@ -265,6 +275,8 @@ void removeFriendMenu(MenuHandler* menu, Socket* socket){
   bool temp_b = false;
   std::vector<std::string> temp_v = {};
   menu->clear_windows();
+  menu->print_warning2("Quitter : /quit   Supprimer : /remove [name]");
+  menu->refresh_board();
 
   std::string command = "";
 
@@ -272,6 +284,8 @@ void removeFriendMenu(MenuHandler* menu, Socket* socket){
     menu->init_dataw();
     command = menu->get_infos("commande");
     menu->refresh_board();
+
+    if (!checkInputFormat(command)) continue;
 
     std::vector<std::string> split = splitString(command, ' ');
 
