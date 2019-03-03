@@ -83,7 +83,6 @@ Game& Game::operator= (Game&& original)
 	return *this;
 }
 
-//TODO ---> return bool ? //maybe
 
 void Game::start()
 {

@@ -130,7 +130,7 @@ void Board::draw_infos()
 
   mvwprintw(infos_win , 7, 1, "%s", "TURN COUNT : ");
 
-  mvwprintw(infos_win , 10, 1, "PRESS F4 TO QUIT");
+  mvwprintw(infos_win , 10, 1, "PRESS Ctrl+C TO QUIT");
 
   refresh_board();
 }
