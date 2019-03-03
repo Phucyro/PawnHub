@@ -6,10 +6,13 @@
 #include "Socket.hpp"
 #include "ClientFunctions.hpp"
 #include "ClientMessageHandler.hpp"
+#include <string>
+#include <vector>
 
 void authentificationMenu(MenuHandler* menu, Socket* socket){
   std::string username, password, confirmation;
   bool connected = false;
+  std::vector<std::string> temp_v;
   int format;
 
   while (!connected || format != 5){
@@ -56,7 +59,7 @@ void authentificationMenu(MenuHandler* menu, Socket* socket){
       signUp(socket, username, password, confirmation);
 
     if (format == 5)
-      receiveMessageHandler(menu, socket, &connected);
+      receiveMessageHandler(menu, socket, &connected, &temp_v);
   }
 }
 
@@ -66,21 +69,23 @@ void gamemodeMenu(MenuHandler* menu, Socket* socket){
   menu->clear_windows();
   menu->init_choicesw();
   int choice = menu->get_choice({"Classic", "Dark", "Horde", "Alice", "Retour"});
-  bool temp = true;
+  bool temp_b = true;
+  std::vector<std::string> temp_v;
 
   switch (choice){
     case 0 :
       playGame(socket, "0");
-      receiveMessageHandler(menu, socket, &temp);
+      receiveMessageHandler(menu, socket, &temp_b, &temp_v);
       break;
      case 1 :
        playGame(socket, "1");
        receiveMessageHandler(menu, socket, &temp);
        break;
      case 2 :
-       playGame(socket, "2");
-       receiveMessageHandler(menu, socket, &temp);
-       break;
+      playGame(socket, "2");
+      receiveMessageHandler(menu, socket, &temp_b, &temp_v);
+      break;
+
     // case 3 :
     //   playGame(socket, 3);
     //   receiveMessageHandler(menu, socket, &temp);
@@ -93,13 +98,14 @@ void gamemodeMenu(MenuHandler* menu, Socket* socket){
 ////////////////////////////////////////////////////////////////////////////////
 
 void leaveLadderMenu(MenuHandler* menu, Socket* socket, std::string mode){
-  bool temp = true;
+  bool temp_b = true;
+  std::vector<std::string> temp_v;
   menu->clear_windows();
   menu->init_statsw();
   menu->init_statst(mode);
 
   for (unsigned int a = 0; a < 10; ++a){
-    receiveMessageHandler(menu, socket, &temp);
+    receiveMessageHandler(menu, socket, &temp_b, &temp_v);
   }
 
   menu->refresh_board();
@@ -140,21 +146,23 @@ void ladderMenu(MenuHandler* menu, Socket* socket){
 
 
 void myStatMenu(MenuHandler* menu, Socket* socket){
-  bool temp = true;
+  bool temp_b = true;
+  std::vector<std::string> temp_v;
   menu->clear_windows();
-
+  /*
   menu->init_statsw();
   menu->init_statsp("User");
 
   checkMyStat(socket);
 
   for (unsigned int a = 0; a < 4; ++a){
-    receiveMessageHandler(menu, socket, &temp);
+    receiveMessageHandler(menu, socket, &temp_b, &temp_v);
   }
-
+  */
   menu->refresh_board();
   menu->init_choicesw();
   menu->get_choice({"Retour"});
+  menu->refresh_board();
 }
 
 
@@ -181,6 +189,58 @@ void statMenu(MenuHandler* menu, Socket* socket){
 
 ////////////////////////////////////////////////////////////////////////////////
 
+void viewFriendsMenu(MenuHandler* menu, Socket* socket){
+  bool stop_receive = false;
+  std::vector<std::string> friends_list = {};
+  menu->clear_windows();
+  viewFriendsList(socket);
+
+  while (!stop_receive){
+    receiveMessageHandler(menu, socket, &stop_receive, &friends_list);
+  }
+
+  menu->refresh_board();
+  menu->init_choicesw();
+  menu->get_choice({"Retour"});
+  menu->refresh_board();
+}
+
+void theirFriendRequestMenu(MenuHandler* menu, Socket* socket){}
+
+void myFriendRequestMenu(MenuHandler* menu, Socket* socket){}
+
+
+void friendMenu(MenuHandler* menu, Socket* socket){
+  bool leave = false;
+
+  while (!leave){
+    menu->clear_windows();
+    menu->init_choicesw();
+    int choice = menu->get_choice({
+      "Consulter sa liste d'amis",
+      "Accepter ou refuser une demande d'amis",
+      "Envoyer ou annuler une demande d'amis",
+      "Retour"
+    });
+
+    switch (choice){
+      case 0 :
+        viewFriendsMenu(menu, socket);
+        break;
+      case 1 :
+        theirFriendRequestMenu(menu, socket);
+        break;
+      case 2 :
+        myFriendRequestMenu(menu, socket);
+        break;
+      case 3 :
+        leave = true;
+    }
+  }
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
 void mainMenu(MenuHandler* menu, Socket* socket){
   bool leave = false;
 
@@ -194,6 +254,7 @@ void mainMenu(MenuHandler* menu, Socket* socket){
         gamemodeMenu(menu, socket);
         break;
       case 1 :
+        friendMenu(menu, socket);
         break;
       case 2 :
         break;

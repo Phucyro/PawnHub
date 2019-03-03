@@ -118,4 +118,16 @@ void inline ladderHandler(Socket* socket, Data* data, std::string mode){
 }
 
 
+void inline viewFriendsHandler(Player* player, Data* data){
+  std::vector<std::string> friends = data->getUserFriends(player->getName());
+
+  for (unsigned int a = 0; a < friends.size(); ++a){
+    player->getSocket()->sendMessage(std::string("9~") + friends[a]);
+  }
+
+  player->getSocket()->sendMessage("9~Guest");
+}
+
+
+
 #endif

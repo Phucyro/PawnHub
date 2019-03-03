@@ -56,6 +56,10 @@ void inline receiveMessageHandler(Socket* socket, Data* data, PlayersMap* player
           ladderHandler(socket, data, msg[1]);
           player->getSocket()->unlockMutex();
           break;
+        case '9' :
+          viewFriendsHandler(player, data);
+          player->getSocket()->unlockMutex();
+          break;
       }
     }
   }

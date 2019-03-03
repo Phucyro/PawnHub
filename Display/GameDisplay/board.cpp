@@ -77,6 +77,8 @@ void Board::init_windows()
   draw_coordinates();
   draw_infos();
 
+  refresh_board();
+
 }
 
 void Board::draw_alice_coordinates()
@@ -97,6 +99,7 @@ void Board::draw_alice_coordinates()
 }
 
 void Board::draw_alice_board()
+/**initialise le deuxieme board **/
 {
   int board_height = lines*OFFSET;
   int board_width = columns*OFFSET;
@@ -108,6 +111,9 @@ void Board::draw_alice_board()
     }
 
   draw_alice_coordinates();
+
+  refresh_board();
+
 
 }
 
@@ -178,6 +184,13 @@ void Board::draw_pieces(std::string board)
 	//exit();
 	init_windows();
   stringToBoard(board);
+  refresh_board();
+}
+
+void Board::draw_alice_pieces(std::string board)
+{
+  refresh_board();
+  aliceToBoard(board);
   refresh_board();
 }
 

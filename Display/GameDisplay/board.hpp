@@ -42,6 +42,7 @@ public:
   void draw_pieces(std::string);
 
   void draw_alice_board();
+  void draw_alice_pieces(std::string);
 
   void draw_infos();
 
