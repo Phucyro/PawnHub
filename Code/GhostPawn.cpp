@@ -2,6 +2,7 @@
 #define __GHOSTPAWN__CPP__
 
 #include <cmath>
+#include <iostream>
 #include "GhostPawn.hpp"
 
 
@@ -15,9 +16,8 @@ GhostPawn& GhostPawn::operator= (const GhostPawn& original){
 
 void GhostPawn::changeIsTaken(unsigned turn, Piece* taker, Board* board){
   if (isActive(turn) && dynamic_cast<Pawn*>(taker)){
-    int rowDirection = _color == 'w' ? 1 : -1;
-    if(_isTaken) board->setCase(Coordinate(int(_coords.getRealColumn()), int(_coords.getRealRow()) + 1*rowDirection), _target);
-    else board->setCase(Coordinate(int(_coords.getRealColumn()), int(_coords.getRealRow()) + 1*rowDirection), nullptr);
+    if(_isTaken) board->setCase(_target->getCoord(), _target);
+    else board->setCase(_target->getCoord(), nullptr);
 
     _target->changeIsTaken();
   }

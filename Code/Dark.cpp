@@ -98,9 +98,9 @@ void Dark::_sendGameMode() {
 void Dark::_changePawn(Piece *pawn, Piece* promotedPawn, Board* board){
 	int start, i, end;
 	if (pawn->getColor() == 'w'){
+		_lastStrongPiecesWhite ++;
 		int start = int(_lastStrongPiecesWhite);
 		int i = int(_lastStrongPiecesWhite);
-		_lastStrongPiecesWhite ++;
 		end = 16;
 		for (; i < end; i++) {
 			if (_pieces[i] == pawn){
@@ -112,9 +112,9 @@ void Dark::_changePawn(Piece *pawn, Piece* promotedPawn, Board* board){
 			}
 		}
 	}else{
+		_lastStrongPieceBlack ++;
 		start = int(_lastStrongPieceBlack);
 		i = int(_lastStrongPieceBlack);
-		_lastStrongPieceBlack ++;
 		end = 32;
 		for (; i < end; i++) {
 			if (_pieces[i] == pawn){

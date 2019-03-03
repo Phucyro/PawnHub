@@ -5,7 +5,6 @@
 #include "Classic.hpp"
 
 #define KING_INDEX 4
-void stopGdb(){}
 
 void Classic::_Pieces() {
 	_pieces = new Piece*[_piecesAmount];
@@ -104,9 +103,9 @@ void Classic::_sendGameMode() {
 void Classic::_changePawn(Piece *pawn, Piece* promotedPawn, Board* board){
 	int start, i, end;
 	if (pawn->getColor() == 'w'){
+		_lastStrongPiecesWhite ++;
 		int start = int(_lastStrongPiecesWhite);
 		int i = int(_lastStrongPiecesWhite);
-		_lastStrongPiecesWhite ++;
 		end = 16;
 		for (; i < end; i++) {
 			if (_pieces[i] == pawn){
@@ -118,9 +117,9 @@ void Classic::_changePawn(Piece *pawn, Piece* promotedPawn, Board* board){
 			}
 		}
 	}else{
+		_lastStrongPieceBlack ++;
 		start = int(_lastStrongPieceBlack);
 		i = int(_lastStrongPieceBlack);
-		_lastStrongPieceBlack ++;
 		end = 32;
 		for (; i < end; i++) {
 			if (_pieces[i] == pawn){
@@ -276,7 +275,11 @@ bool Classic::_isFinish() {
 		_sendStalemate();
 		return true;
 	}
-	return this->_notEnoughtPieces();
+	if (this->_notEnoughtPieces()){
+		_sendStalemate();
+		return true;
+	}
+	return false;
 }
 
 void Classic::_boardState(std::string& state){
