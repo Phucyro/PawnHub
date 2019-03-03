@@ -4,4 +4,5 @@ int main()
 {
   Board* test = new Board();
   test->init_ncurses();
+  
 }
