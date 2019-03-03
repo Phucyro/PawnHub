@@ -154,10 +154,14 @@ bool Dark::_isFinish() {
 	Player *currentPlayer = _getCurrentPlayer();
 	char opponentColor = currentPlayer == _player2 ? 'w':'b';
 	if (this->_isCheckmate(opponentColor)){
+		if (opponentColor == 'w')
+			std::cout << "Black Player win !" << std::endl;
+		else std::cout << "White Player win !" << std::endl;
 		_winner = currentPlayer;
+		_sendCheckmate();
 		return true;
 	}
-	return this->_isStalemate(opponentColor);
+	return false;
 }
 
 bool Dark::_isCheckmate(char playerColor){
@@ -184,15 +188,16 @@ void Dark::_sendBoard(){
 }
 
 void Dark::_boardState(std::string& state){
-	int offset = _calculOffset(state[0]);
+	char color = state[0];
 	state.clear();
-	for (int i = offset; i < 16+offset; i++) if (!_pieces[i]->isTaken()) state += _pieces[i]->toString();
+	for (int i = 0; i < 16; i++) if ((!_pieces[i]->isTaken()) && _isVisible(_pieces[i], color)) state += _pieces[i]->toString();
 	state += "!";
-	for (int i = 16-offset; i < 32-offset; i++) if ((!_pieces[i]->isTaken()) && _isVisible(_pieces[i])) state += _pieces[i]->toString();
+	for (int i = 16; i < 32; i++) if ((!_pieces[i]->isTaken()) && _isVisible(_pieces[i], color)) state += _pieces[i]->toString();
 	state += "#";
 }
 
-bool Dark::_isVisible(Piece* piece){
+bool Dark::_isVisible(Piece* piece, char color){
+	if (piece->getColor() == color) return true;
 	Coordinate leftMaybePawn, rightMaybePawn, frontMaybePawn;
 	if (piece->getColor() == 'w'){	//White
 
