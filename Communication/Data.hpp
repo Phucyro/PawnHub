@@ -10,6 +10,7 @@
 #include "SplitString.hpp"
 #include <algorithm>
 #include "dirent.h"
+#include <mutex>
 
 typedef std::vector<unsigned int> Stat;
 typedef std::tuple<std::string, Stat, Stat, Stat, Stat, std::vector<std::string>, std::vector<std::string>, std::vector<std::string>> UserData;

@@ -3,6 +3,8 @@
 
 #include <cmath>
 #include "Classic.hpp"
+#include "../Communication/Data.hpp"
+extern Data data;
 
 #define KING_INDEX 4
 
@@ -264,18 +266,29 @@ bool Classic::_isFinish() {
 	Player *currentPlayer = _getCurrentPlayer();
 	char opponentColor = currentPlayer == _player2 ? 'w':'b';
 	if (this->_isCheckmate(opponentColor)){
-		if (opponentColor == 'w')
+		if (opponentColor == 'w'){
 			std::cout << "Black Player win !" << std::endl;
-		else std::cout << "White Player win !" << std::endl;
+			data.addUserClassicWin(_player2->getName());
+			data.addUserClassicLose(_player1->getName());
+		}
+		else {
+			std::cout << "White Player win !" << std::endl;
+			data.addUserClassicLose(_player2->getName());
+			data.addUserClassicWin(_player1->getName());
+		}
 		_winner = currentPlayer;
 		_sendCheckmate();
 		return true;
 	}
 	if (this->_isStalemate(opponentColor)) {
+		data.addUserClassicDraw(_player2->getName());
+		data.addUserClassicDraw(_player1->getName());
 		_sendStalemate();
 		return true;
 	}
 	if (this->_notEnoughtPieces()){
+		data.addUserClassicDraw(_player2->getName());
+		data.addUserClassicDraw(_player1->getName());
 		_sendStalemate();
 		return true;
 	}

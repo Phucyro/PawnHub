@@ -2,6 +2,8 @@
 #define _HORDE_CPP_
 
 #include "Horde.hpp"
+#include "../Communication/Data.hpp"
+extern Data data;
 
 void Horde::_Pieces(){
 	_pieces = new Piece*[_piecesAmount];
@@ -186,14 +188,23 @@ bool Horde::_isFinish() {
 	Player *currentPlayer = _getCurrentPlayer();
 	char opponentColor = currentPlayer == _player2 ? 'w':'b';
 	if (this->_isCheckmate(opponentColor)){
-		if (opponentColor == 'w')
+		if (opponentColor == 'w'){
 			std::cout << "Black Player win !" << std::endl;
-		else std::cout << "White Player win !" << std::endl;
+			data.addUserHordeWin(_player2->getName());
+			data.addUserHordeLose(_player1->getName());
+		}
+		else {
+			std::cout << "White Player win !" << std::endl;
+			data.addUserHordeLose(_player2->getName());
+			data.addUserHordeWin(_player1->getName());
+		}
 		_winner = currentPlayer;
 		_sendCheckmate();
 		return true;
 	}
 	if (this->_isStalemate(opponentColor)) {
+		data.addUserHordeDraw(_player2->getName());
+		data.addUserHordeDraw(_player1->getName());
 		_sendStalemate();
 		return true;
 	}

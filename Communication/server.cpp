@@ -9,6 +9,7 @@
 
 
 typedef std::map<std::string, Player*> PlayersMap;
+extern Data data("Database"); // bug makefile
 
 
 int main(){
@@ -17,7 +18,6 @@ int main(){
   std::cout << "Hostname: " << hostname << std::endl;
 
   try {
-    Data data("Database"); // bug makefile
     Matchmaking matchmaking(4);
     PlayersMap players_map;
     BindSocket binding_socket;
