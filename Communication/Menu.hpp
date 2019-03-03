@@ -86,10 +86,10 @@ void gamemodeMenu(MenuHandler* menu, Socket* socket){
       receiveMessageHandler(menu, socket, &temp_b, &temp_v);
       break;
 
-    // case 3 :
-    //   playGame(socket, 3);
-    //   receiveMessageHandler(menu, socket, &temp);
-    //   break;
+    case 3 :
+      playGame(socket, "3");
+      receiveMessageHandler(menu, socket, &temp_b, &temp_v);
+      break;
     case 4 :
       break;
   }
@@ -136,7 +136,7 @@ void ladderMenu(MenuHandler* menu, Socket* socket){
         break;
       case 3 :
         viewLadder(socket, "3");
-        leaveLadderMenu(menu, socket, "Alide");
+        leaveLadderMenu(menu, socket, "Alice");
         break;
       case 4 :
         leave = true;
