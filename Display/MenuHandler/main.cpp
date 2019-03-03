@@ -49,10 +49,12 @@ int main()
   choices.push_back("Ajouter ami");
   choices.push_back("Supprimer ami");
 
+
   for (int i=0; i<80; i++)
   {
     friends.push_back("Allan");
   }
+
 
   test->clear_windows();
   test->end_windows();

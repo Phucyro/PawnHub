@@ -251,29 +251,19 @@ void MenuHandler::init_friendsw(const std::vector<std::string> friends)
   unsigned count = 0;
   unsigned long max_count = friends.size();
 
-  /**
-  for (int j=0; j<y_box-2; j++)
-    for (int i=0; i<5; i++)
-    {
-      mvwprintw(stats_w, 1+j, 5+i*x_split, friends[count].c_str());
-      count += 1;
-
-
-
-      if (count > max_count - 1)
-      {
-        break;
-      }
-    }
-
-  **/
-
   int i = 0;
   int j = 0;
 
+  bool empty = false;
+
+  if (max_count == 0)
+  {
+    empty = true;
+  }
+
   bool end = false;
 
-  while (!end)
+  while (!end && !empty)
   {
     mvwprintw(stats_w, 1+j, 5+i*x_split, friends[count].c_str());
     i += 1;
