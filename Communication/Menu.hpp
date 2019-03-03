@@ -60,11 +60,12 @@ void authentificationMenu(MenuHandler* menu, Socket* socket){
   }
 }
 
+////////////////////////////////////////////////////////////////////////////////
 
 void gamemodeMenu(MenuHandler* menu, Socket* socket){
   menu->clear_windows();
   menu->init_choicesw();
-  int choice = menu->get_choice({"Classic", "Dark", "Horde", "Alice", "Retourner au menu principal"});
+  int choice = menu->get_choice({"Classic", "Dark", "Horde", "Alice", "Retour"});
   bool temp = true;
 
   switch (choice){
@@ -74,6 +75,7 @@ void gamemodeMenu(MenuHandler* menu, Socket* socket){
       break;
     // case 1 :
     //   playGame(socket, 1);
+    //   receiveMessageHandler(menu, socket, &temp);
     //   break;
      case 2 :
       playGame(socket, "2");
@@ -81,20 +83,63 @@ void gamemodeMenu(MenuHandler* menu, Socket* socket){
       break;
     // case 3 :
     //   playGame(socket, 3);
+    //   receiveMessageHandler(menu, socket, &temp);
     //   break;
     case 4 :
       break;
   }
 }
 
+////////////////////////////////////////////////////////////////////////////////
 
+void myStatMenu(MenuHandler* menu, Socket* socket){
+  bool temp = true;
+  menu->clear_windows();
+
+  menu->init_statsw();
+  menu->init_statsp("User");
+
+  checkMyStat(menu, socket);
+
+  for (unsigned int a = 0; a < 4; ++a){
+    receiveMessageHandler(menu, socket, &temp);
+    menu->refresh_board();
+  }
+
+  menu->init_choicesw();
+  menu->get_choice({"Retour"});
+}
+
+
+void statMenu(MenuHandler* menu, Socket* socket){
+  bool leave = false;
+
+  while (!leave){
+    menu->clear_windows();
+    menu->init_choicesw();
+    int choice = menu->get_choice({"Mes statistiques", "Classement général", "Retour"});
+
+    switch (choice){
+      case 0 :
+        myStatMenu(menu, socket);
+        break;
+      case 1 :
+        break;
+      case 2 :
+        leave = true;
+    }
+  }
+}
+
+////////////////////////////////////////////////////////////////////////////////
 
 void mainMenu(MenuHandler* menu, Socket* socket){
   bool leave = false;
 
   while (!leave){
+    menu->clear_windows();
     menu->init_choicesw();
-    int choice = menu->get_choice({"Jouer", "Ami", "Statistique", "Chat", "Quitter"});
+    int choice = menu->get_choice({"Jouer", "Ami", "Chat", "Statistique", "Quitter"});
 
     switch (choice){
       case 0 :
@@ -105,6 +150,7 @@ void mainMenu(MenuHandler* menu, Socket* socket){
       case 2 :
         break;
       case 3 :
+        statMenu(menu, socket);
         break;
       case 4 :
         leave = true;

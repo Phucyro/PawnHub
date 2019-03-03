@@ -5,6 +5,7 @@
 #include "ClientGameControl.hpp"
 #include "../Display/MenuHandler/MenuHandler.hpp"
 #include <string>
+#include <stdlib.h>
 
 
 void signUpHandler(MenuHandler* menu, char msg){
@@ -25,8 +26,7 @@ void signInHandler(MenuHandler* menu, char msg, bool* connected){ // Fonction bo
       menu->print_warning("Nom de compte inexistant");
       break;
     case '1' :
-      menu->print_warning("Connexion réussie");
-      *connected = true;
+      *connected = true; // Connexion réussie
       break;
     case '2' :
       menu->print_warning("Mauvais mot de passe");
@@ -53,6 +53,11 @@ void playGameHandler(Socket* socket){
 
 void leaveQueueHandler(){
   std::cout << "Vous avez quitte une file d'attente" << std::endl;
+}
+
+void myStatHandler(MenuHandler* menu, std::string pos, std::string mode, std::string data){
+  std::vector<std::string> data_v = splitString(data, ' ');
+  menu->update_stats(atoi(pos.c_str()), mode, atoi(data_v[0].c_str()), atoi(data_v[1].c_str()), atoi(data_v[2].c_str()));
 }
 
 

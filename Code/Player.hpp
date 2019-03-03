@@ -47,13 +47,14 @@ class Player{
 	char askPromotion();
 	std::string getName() const;
 	Socket* getSocket() const;
-	unsigned int getQueueNumber() const;
+	int getQueueNumber() const;
 	void setName(std::string);
 	void setControl(ServerGameControl*);
 	void setSocket(Socket*);
 	void setQueueNumber(int);
 
 	void transferStart();
+	void transferUpdate(std::string&);
 	void transferCheck();
 	void transferCheckmate(std::string&);
 	void transferStalemate();

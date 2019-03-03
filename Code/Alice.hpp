@@ -34,6 +34,7 @@ class Alice : public Game {
 
 	void _initBoard() override;
 	void _sendGameMode() override;
+	void _sendStart() override;
 	void _nextTurn() override;
 	bool _isFinish() override;
 	void _boardState(std::string&) override;

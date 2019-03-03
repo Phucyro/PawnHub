@@ -21,7 +21,7 @@ ServerGameControl::~ServerGameControl() {
 }
 
 void ServerGameControl::receiveMove(std::string message) {
-  std::cout << "Received move" << message << std::endl;
+  std::cout << "Received move " << message << std::endl;
   player1->receiveMove(message);
   player2->receiveMove(message);
 }
@@ -35,6 +35,14 @@ void ServerGameControl::sendBoard(Socket* socket, std::string board) {
   std::string header = headerSendMap["board"];
   socket->sendMessage(header + board);
   sendTurn(socket, game->getTurn());
+}
+
+void ServerGameControl::sendFirstBoard(Socket* socket, std::string board) {
+  sendBoard(socket, "1" + board);
+}
+
+void ServerGameControl::sendSecondBoard(Socket* socket, std::string board) {
+  sendBoard(socket, "2" + board);
 }
 
 void ServerGameControl::sendUpdate(Socket* socket, std::string update) {

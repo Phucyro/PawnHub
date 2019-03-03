@@ -41,6 +41,8 @@ private:
 
 public:
   void sendBoard(Socket*, std::string);
+  void sendFirstBoard(Socket*, std::string);
+  void sendSecondBoard(Socket*, std::string);
   void sendUpdate(Socket*, std::string);
   void sendStart(Socket*);
   void sendCheck(Socket*);
