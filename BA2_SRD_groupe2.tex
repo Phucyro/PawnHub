@@ -380,7 +380,14 @@ Le système se doit de mettre assez rapidement à jour les statistiques personne
 \textbf{Move :} est une méthode qui selon \textit{checkMove} effectue ou non, le mouvement demandé par le joueur sur la pièce. Cette méthode effectue d'abord un \textit{checkMove} à l'endroit du coup désiré par le joueur. Si, le coup est possible, elle effectue un \textit{doMove} ce qui permet d'avancer la pièce à l'endroit du coup. Dans le cas où le coup met le \textit{King} du joueur en échec, on effectue un \textit{ReverseMove} qui remet le \textit{Board} dans son état initial. Si le \textit{Board} à changé, la fonction retourne true.\\
 \end{enumerate}
 
-\paragraph{Mode Alice}
+%\paragraph{Mode Alice}
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.5]{alice_pieces.png}
+\caption{Diagramme des pièces du mode de jeu Alice}
+\label{CD} %ClassDiagram
+\end{figure}
 
 
 
@@ -431,9 +438,9 @@ Dark possède en plus:\\
 
 
 \end{enumerate}
-\subsubsection{Player}
+%\subsubsection{Player}
 
-\subsubsection{Board}
+\subsubsection{Board et Player}
 \begin{figure} [H]
 \centering
 \includegraphics[scale=0.50]{board_player_diagram.png}
