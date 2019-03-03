@@ -3,6 +3,8 @@
 
 #include <cmath>
 #include "Alice.hpp"
+#include "../Communication/Data.hpp"
+extern Data data;
 
 #define KING_INDEX 4
 
@@ -268,11 +270,33 @@ bool Alice::_isFinish() {
 	Player *currentPlayer = _getCurrentPlayer();
 	char opponentColor = currentPlayer == _player2 ? 'w':'b';
 	if (this->_isCheckmate(opponentColor)){
+		if (opponentColor == 'w'){
+			std::cout << "Black Player win !" << std::endl;
+			data.addUserAliceWin(_player2->getName());
+			data.addUserAliceLose(_player1->getName());
+		}
+		else {
+			std::cout << "White Player win !" << std::endl;
+			data.addUserAliceLose(_player2->getName());
+			data.addUserAliceWin(_player1->getName());
+		}
 		_winner = currentPlayer;
+		_sendCheckmate();
 		return true;
 	}
-	if (this->_isStalemate(opponentColor)) return true;
-	return this->_notEnoughtPieces();
+	if (this->_isStalemate(opponentColor)) {
+		data.addUserAliceDraw(_player2->getName());
+		data.addUserAliceDraw(_player1->getName());
+		_sendStalemate();
+		return true;
+	}
+	if (this->_notEnoughtPieces()){
+		data.addUserAliceDraw(_player2->getName());
+		data.addUserAliceDraw(_player1->getName());
+		_sendStalemate();
+		return true;
+	}
+	return false;
 }
 
 void Alice::_boardState(std::string& state){

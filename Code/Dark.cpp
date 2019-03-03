@@ -2,6 +2,8 @@
 #define _DARK_CPP_
 
 #include "Dark.hpp"
+#include "../Communication/Data.hpp"
+extern Data data;
 
 void Dark::_Pieces() {
 	_pieces = new Piece*[_piecesAmount];
@@ -154,9 +156,16 @@ bool Dark::_isFinish() {
 	Player *currentPlayer = _getCurrentPlayer();
 	char opponentColor = currentPlayer == _player2 ? 'w':'b';
 	if (this->_isCheckmate(opponentColor)){
-		if (opponentColor == 'w')
+		if (opponentColor == 'w'){
 			std::cout << "Black Player win !" << std::endl;
-		else std::cout << "White Player win !" << std::endl;
+			data.addUserDarkWin(_player2->getName());
+			data.addUserDarkLose(_player1->getName());
+		}
+		else {
+			std::cout << "White Player win !" << std::endl;
+			data.addUserDarkLose(_player2->getName());
+			data.addUserDarkWin(_player1->getName());
+		}
 		_winner = currentPlayer;
 		_sendCheckmate();
 		return true;
