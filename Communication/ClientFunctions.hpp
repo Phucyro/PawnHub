@@ -48,4 +48,8 @@ void viewLadder(Socket* socket, std::string mode){
   socket->sendMessage(std::string("8~") + mode);
 }
 
+void viewFriendsList(Socket* socket){
+  socket->sendMessage("9~viewFriends");
+}
+
 #endif

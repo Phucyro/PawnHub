@@ -65,4 +65,14 @@ void ladderHandler(MenuHandler* menu, std::string pos, std::string username, std
   menu->update_stats(atoi(pos.c_str()), username, atoi(stat_v[0].c_str()), atoi(stat_v[1].c_str()), atoi(stat_v[2].c_str()));
 }
 
+void viewFriendsHandler(MenuHandler* menu, std::string friend_name, bool* stop, std::vector<std::string>* friends_list){
+  if (friend_name != "Guest"){
+    friends_list->push_back(friend_name);
+  }
+  else {
+    menu->init_friendsw(*friends_list);
+    *stop = true;
+  }
+}
+
 #endif

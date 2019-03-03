@@ -9,7 +9,7 @@
 #include "ClientHandler.hpp"
 #include "../Display/MenuHandler/MenuHandler.hpp"
 
-void receiveMessageHandler(MenuHandler* menu, Socket* socket, bool* connected){
+void receiveMessageHandler(MenuHandler* menu, Socket* socket, bool* b_option, std::vector<std::string>* v_option){
   std::vector<std::string> msg;
 
   msg = splitString(socket->receiveMessage(), '~');
@@ -19,7 +19,7 @@ void receiveMessageHandler(MenuHandler* menu, Socket* socket, bool* connected){
       signUpHandler(menu, msg[1][0]);
       break;
     case '2' : // [2] [resultat]
-      signInHandler(menu, msg[1][0], connected);
+      signInHandler(menu, msg[1][0], b_option);
       break;
     case '3' : // [3] [sender] [target] [text]
       //chatHandler(msg[1], msg[2], vectorToString(msg, 2));
@@ -38,6 +38,10 @@ void receiveMessageHandler(MenuHandler* menu, Socket* socket, bool* connected){
     case '8' :
       ladderHandler(menu, msg[1], msg[2], msg[3]);
       break;
+    case '9' :
+      viewFriendsHandler(menu, msg[1], b_option, v_option);
+      break;
+
   }
 }
 
