@@ -12,7 +12,7 @@
 #include "dirent.h"
 
 typedef std::vector<unsigned int> Stat;
-typedef std::tuple<std::string, Stat, Stat, Stat, Stat, std::vector<std::string>, std::vector<std::string>> UserData;
+typedef std::tuple<std::string, Stat, Stat, Stat, Stat, std::vector<std::string>, std::vector<std::string>, std::vector<std::string>> UserData;
 typedef std::tuple<std::string, Stat> UserLadderData;
 
 class Data {
@@ -31,8 +31,10 @@ public:
   Stat getUserStat(const std::string username, const std::string gamemode);
 
   std::vector<std::string> getUserFriends(const std::string username);
-  std::vector<std::string> getUserFriendRequest(const std::string username);
+  std::vector<std::string> getUserFriendRequests(const std::string username);
+  std::vector<std::string> getUserSentRequests(const std::string username);
   bool accceptFriendRequest(const std::string username, const std::string friend_name);
+  bool refuseFriendRequest(const std::string username, const std::string friend_name);
   int sendFriendRequest(const std::string username, const std::string friend_name);
   bool removeFriend(const std::string username, const std::string friend_name);
 
