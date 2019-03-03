@@ -205,19 +205,21 @@ std::string Board::get_movement()
 {
   int move[4];
 
-  // echo();    // would have been cool but can't clear it without brute force
+  // echo();    // would have been cool but can't quite get it to work properly
+  // nocbreak();
   for (int i = 0; i < 5; ++i) {
     if (i == 0) {
-      mvprintw(15, 30, "%s", "State initial piece position: ");
+      mvprintw(15, 32, "%s", "State initial piece position: ");
     }
     else if (i == 2) {
-      mvprintw(16, 30, "%s", "State moved piece position: ");
+      mvprintw(16, 32, "%s", "State moved piece position:  ");
     }
     else if (i == 4) {break;}
     move[i] = getch();
     mvprintw(15 + (i/2), 60 + (i%2), "%c", move[i]);
   }
   // noecho();
+  // cbreak();
   refresh_board();
 
   std::string effective_move = moveToString(move);

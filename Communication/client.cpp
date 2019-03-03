@@ -27,8 +27,8 @@ try {
     quit(menu, socket);
     delete menu;
     delete socket;
-
-  } catch(std::runtime_error& error) {
+  }
+  catch(std::runtime_error& error) {
     std::cout << error.what() << std::endl;
     return 1;
   }
