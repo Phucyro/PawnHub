@@ -104,6 +104,32 @@ void Board::draw_alice_board()
   int board_height = lines*OFFSET;
   int board_width = columns*OFFSET;
 
+<<<<<<< HEAD
+=======
+void Board::draw_alice_coordinates()
+{
+
+  for (int i=0; i<lines; i++)
+  {
+    mvprintw(1+(OFFSET*i), 54, "%d", i+1);
+  }
+
+  for (int i=0; i<columns; i++)
+  {
+    mvprintw(24, 57+(OFFSET*i), "%c", 'A'+i);
+  }
+
+
+  refresh_board();
+}
+
+void Board::draw_alice_board()
+/**initialise le deuxieme board **/
+{
+  int board_height = lines*OFFSET;
+  int board_width = columns*OFFSET;
+
+>>>>>>> cb69e40ee25560cf5a14eb1b5342b317f30f384c
   for (int i=56; i<80; i+=OFFSET)
     for (int j=0; j<24; j+=OFFSET)
     {
@@ -116,6 +142,10 @@ void Board::draw_alice_board()
 
 
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> cb69e40ee25560cf5a14eb1b5342b317f30f384c
 
 void Board::draw_infos()
 /** Initialise la fenetre des infos **/
@@ -164,14 +194,22 @@ void Board::draw_coordinates()
 {
   for (int i=0; i<lines; i++)
   {
+<<<<<<< HEAD
     mvprintw(OFFSET*(i+1), 1 , "%d", i+1);
     mvprintw(OFFSET*(i+1), 25+OFFSET , "%d", i+1);
+=======
+    mvprintw(1+(OFFSET*i), 25 , "%d", i+1);
+>>>>>>> cb69e40ee25560cf5a14eb1b5342b317f30f384c
   }
 
   for (int i=0; i<columns; i++)
   {
+<<<<<<< HEAD
     mvprintw(1, 1+OFFSET*(i+1), "%c", 'A'+i);
     mvprintw(26, 1+OFFSET*(i+1), "%c", 'A'+i);
+=======
+    mvprintw(24, 1+(OFFSET*i), "%c", 'A'+i);
+>>>>>>> cb69e40ee25560cf5a14eb1b5342b317f30f384c
   }
   refresh_board();
 }
@@ -194,6 +232,10 @@ void Board::draw_alice_pieces(std::string board)
   refresh_board();
 }
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> cb69e40ee25560cf5a14eb1b5342b317f30f384c
 void Board::draw_rectangle(int x1, int y1, int x2, int y2)
 /** permet de dessiner des rectangles de (x1,y1) vers (x2, y2) **/
 {
