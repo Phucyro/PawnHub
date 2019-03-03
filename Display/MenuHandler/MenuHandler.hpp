@@ -23,6 +23,8 @@ public:
   void init_dataw();
   std::string get_infos(std::string);
   void print_warning(std::string);
+  void print_warning2(std::string);
+
 
   //choices menus
   void init_choicesw();

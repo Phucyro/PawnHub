@@ -69,7 +69,20 @@ std::string MenuHandler::get_infos(std::string type)
 void MenuHandler::print_warning(std::string warning)
 /** print le message d'erreur **/
 {
-  mvprintw(1,1,warning.c_str());
+  int y_max, x_max;
+  getmaxyx(stdscr, y_max, x_max);
+
+  mvprintw(y_max-2,1,warning.c_str());
+  refresh();
+}
+
+void MenuHandler::print_warning2(std::string warning)
+/** print le message d'erreur **/
+{
+  int y_max, x_max;
+  getmaxyx(stdscr, y_max, x_max);
+
+  mvprintw(y_max-1,1,warning.c_str());
   refresh();
 }
 

@@ -22,3 +22,10 @@ int checkFormat(std::string username, std::string password, std::string confirma
 
   return 5;
 }
+
+bool checkInputFormat(std::string message){
+  for (unsigned int a = 0; a < message.length(); ++a){
+    if (message[a] == '|' || message[a] == '~') return false;
+  }
+  return true;
+}
