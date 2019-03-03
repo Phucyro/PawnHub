@@ -29,13 +29,13 @@ protected:
   void draw_alice_coordinates();
 
   void test_game();
-  void exit();
 
 
 public:
   Board();
   Board(int lines, int cols);
   ~Board();
+  void exit();
 
   void init_ncurses();
 
