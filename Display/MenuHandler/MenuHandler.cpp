@@ -108,8 +108,7 @@ int MenuHandler::get_choice(const std::vector<std::string> choices)
         wattroff(choices_menu, A_REVERSE);
       }
 
-      refresh();
-      wrefresh(choices_menu);
+      refresh_board();
 
       int user_choice = wgetch(choices_menu); // get user input
 
@@ -251,11 +250,14 @@ void MenuHandler::init_friendsw(const std::vector<std::string> friends)
   unsigned count = 0;
   unsigned long max_count = friends.size();
 
+  /**
   for (int j=0; j<y_box-2; j++)
     for (int i=0; i<5; i++)
     {
       mvwprintw(stats_w, 1+j, 5+i*x_split, friends[count].c_str());
       count += 1;
+
+
 
       if (count > max_count - 1)
       {
@@ -263,7 +265,33 @@ void MenuHandler::init_friendsw(const std::vector<std::string> friends)
       }
     }
 
+  **/
+
+  int i = 0;
+  int j = 0;
+
+  bool end = false;
+
+  while (!end)
+  {
+    mvwprintw(stats_w, 1+j, 5+i*x_split, friends[count].c_str());
+    i += 1;
+    count += 1;
+
+    if (i>4)
+    {
+      j += 1;
+      i = 0;
+    }
+
+    if (j>=y_box-2 || count>max_count-1)
+    {
+      end = true;
+    }
+  }
+
   refresh_board();
+
 }
 
 void MenuHandler::refresh_board()

@@ -16,16 +16,19 @@ Piece& Piece::operator= (const Piece& original){
 Piece* Piece::_doMove(Coordinate end, Board* board, Game& game){
 	Piece *takenPiece;
 	takenPiece = board->movePiece(_coords, end);
-	if (takenPiece) {
+	if (takenPiece && (takenPiece->getType() == 'p' || takenPiece->getType() == 'r' || takenPiece->getType() == 'b' ||
+takenPiece->getType() == 'h' || takenPiece->getType() == 'q' || takenPiece->getType() == 'k' || takenPiece->getType() == 'g')) {
 		takenPiece->changeIsTaken(game.getTurn(),this,board);
+		return takenPiece;
 	}
-	return takenPiece;
+	return nullptr;
 }
 
 void Piece::_reverseMove(Coordinate end, Board* board, Game& game, Piece* takenPiece){
 	board->movePiece(end, _coords);
 	board->setCase(end, takenPiece);
-	if (takenPiece) {
+	if (takenPiece && (takenPiece->getType() == 'p' || takenPiece->getType() == 'r' || takenPiece->getType() == 'b' ||
+takenPiece->getType() == 'h' || takenPiece->getType() == 'q' || takenPiece->getType() == 'k' || takenPiece->getType() == 'g')) {
 		takenPiece->changeIsTaken(game.getTurn(),this,board);
 	}
 }
