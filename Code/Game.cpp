@@ -83,7 +83,6 @@ Game& Game::operator= (Game&& original)
 	return *this;
 }
 
-//TODO ---> return bool ? //maybe
 
 void Game::start()
 {
@@ -151,7 +150,6 @@ void Game::promote(Piece* piece)
 {
 	char type = this->_getCurrentPlayer()->askPromotion();
 	Pawn *pawn = dynamic_cast<Pawn*>(piece);
-	// might wanna call promote again until a pawn is given or a negation? can you refuse?
 	if (!pawn) throw std::string("the piece to promote is not a pawn");
 	Piece* promotedPawn;
 	switch (type) {

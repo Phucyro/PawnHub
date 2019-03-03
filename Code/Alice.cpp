@@ -3,6 +3,8 @@
 
 #include <cmath>
 #include "Alice.hpp"
+#include "../Communication/Data.hpp"
+extern Data data;
 
 #define KING_INDEX 4
 
@@ -92,12 +94,24 @@ void Alice::_initBoard() {
 	Game::_board->setCase(Coordinate('H', '7'), Game::_pieces[31]);
 }
 
+void Alice::_sendGameMode() {
+	std::string game = "Alice";
+	_player1->transferGameMode(game);
+	_player2->transferGameMode(game);
+}
+
+void Alice::_sendStart() {
+	std::string update = "alice";
+	_player1->transferUpdate(update);
+	_player2->transferUpdate(update);
+}
+
 void Alice::_changePawn(Piece *pawn, Piece* promotedPawn, Board* board){
 	int start, i, end;
 	if (pawn->getColor() == 'w'){
+		_lastStrongPiecesWhite ++;
 		int start = int(_lastStrongPiecesWhite);
 		int i = int(_lastStrongPiecesWhite);
-		_lastStrongPiecesWhite ++;
 		end = 16;
 		for (; i < end; i++) {
 			if (_pieces[i] == pawn){
@@ -109,9 +123,9 @@ void Alice::_changePawn(Piece *pawn, Piece* promotedPawn, Board* board){
 			}
 		}
 	}else{
+		_lastStrongPieceBlack ++;
 		start = int(_lastStrongPieceBlack);
 		i = int(_lastStrongPieceBlack);
-		_lastStrongPieceBlack ++;
 		end = 32;
 		for (; i < end; i++) {
 			if (_pieces[i] == pawn){
@@ -180,7 +194,7 @@ bool Alice::_isCheckmate(char playerColor){
 		if (std::abs(rowMove) == std::abs(columnMove)){
 			int row = int(king->getRow())+rowDirection, column = int(king->getColumn())+columnDirection;
 			while(row != int(dangerousPiece->getRow())){
-				for (int i = 16-offset; i < 32 - offset; i++){
+				for (int i = offset; i < 16 + offset; i++){
 					if ((!_pieces[i]->isTaken()) && _pieces[i]->_isMovePossible(Coordinate(column, row), _board, *this) && dynamic_cast<AlicePiece*>(_pieces[i])->getDimension() != dimension) return false;
 				}
 				row += rowDirection;
@@ -190,7 +204,7 @@ bool Alice::_isCheckmate(char playerColor){
 		//rook or queen case(row)
 		else if (rowMove){
 			for (int j = int(king->getRow())+rowDirection; j != int(dangerousPiece->getRow()); j += rowDirection){
-				for(int i = 16-offset; i < 32 - offset; i++){
+				for(int i = offset; i < 16 + offset; i++){
 					if ((!_pieces[i]->isTaken()) && _pieces[i]->_isMovePossible(Coordinate(int(king->getColumn()), j), _board, *this) && dynamic_cast<AlicePiece*>(_pieces[i])->getDimension() != dimension) return false;
 				}
 			}
@@ -198,13 +212,13 @@ bool Alice::_isCheckmate(char playerColor){
 		//rook or queen case(column)
 		else if (columnMove){
 			for (int j = int(king->getColumn())+columnDirection; j != int(king->getColumn()); j += columnDirection){
-				for(int i = 16-offset; i < 32 - offset; i++){
+				for(int i = offset; i < 16 + offset; i++){
 					if ((!_pieces[i]->isTaken()) && _pieces[i]->_isMovePossible(Coordinate(j, int(king->getRow())), _board, *this) && dynamic_cast<AlicePiece*>(_pieces[i])->getDimension() != dimension) return false;
 				}
 			}
 		}
 		//can the dangerousPiece be taken?
-		for (int i = 16-offset; i < 32 - offset; i++){
+		for (int i = offset; i < 16 + offset; i++){
 			if ((!_pieces[i]->isTaken()) && _pieces[i]->_isMovePossible(dangerousPiece->getCoord(), _board, *this)) return false;
 		}
 	}
@@ -256,11 +270,33 @@ bool Alice::_isFinish() {
 	Player *currentPlayer = _getCurrentPlayer();
 	char opponentColor = currentPlayer == _player2 ? 'w':'b';
 	if (this->_isCheckmate(opponentColor)){
+		if (opponentColor == 'w'){
+			std::cout << "Black Player win !" << std::endl;
+			data.addUserAliceWin(_player2->getName());
+			data.addUserAliceLose(_player1->getName());
+		}
+		else {
+			std::cout << "White Player win !" << std::endl;
+			data.addUserAliceLose(_player2->getName());
+			data.addUserAliceWin(_player1->getName());
+		}
 		_winner = currentPlayer;
+		_sendCheckmate();
 		return true;
 	}
-	if (this->_isStalemate(opponentColor)) return true;
-	return this->_notEnoughtPieces();
+	if (this->_isStalemate(opponentColor)) {
+		data.addUserAliceDraw(_player2->getName());
+		data.addUserAliceDraw(_player1->getName());
+		_sendStalemate();
+		return true;
+	}
+	if (this->_notEnoughtPieces()){
+		data.addUserAliceDraw(_player2->getName());
+		data.addUserAliceDraw(_player1->getName());
+		_sendStalemate();
+		return true;
+	}
+	return false;
 }
 
 void Alice::_boardState(std::string& state){

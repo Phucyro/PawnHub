@@ -15,12 +15,16 @@ protected:
 
 public:
   MenuHandler();
+  MenuHandler(const MenuHandler&);
+  MenuHandler& operator=(const MenuHandler&);
   ~MenuHandler();
 
   //data menus
   void init_dataw();
   std::string get_infos(std::string);
   void print_warning(std::string);
+  void print_warning2(std::string);
+
 
   //choices menus
   void init_choicesw();
@@ -37,6 +41,10 @@ public:
 
   //friends list / invites menu
   void init_friendsw(const std::vector<std::string> friends);
+
+  //chat
+  void init_chatw();
+  void update_chatw(int, std::string, std::string);
 
   //windows utilites
   void refresh_board();

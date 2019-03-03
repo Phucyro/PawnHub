@@ -12,6 +12,7 @@
 #include "Board.hpp"
 #include "../Communication/Socket.hpp"
 #include "../Communication/ServerGameControl.hpp"
+#include "../Communication/Data.hpp"
 
 class Player{
 
@@ -33,10 +34,10 @@ class Player{
 	Player(Player&& original): _sock(original._sock), _control(original._control), _pipe(original._pipe), _name(original._name), _recvActive(original._recvActive) {original._pipe = nullptr;}
 
 	~Player(){
-		delete[] _pipe;
-		_sock = nullptr;
+		delete _sock;
 		close(_pipe[0]);
 		close(_pipe[1]);
+		delete[] _pipe;
 	}
 
 	Player& operator= (const Player&) = delete;
@@ -47,13 +48,14 @@ class Player{
 	char askPromotion();
 	std::string getName() const;
 	Socket* getSocket() const;
-	unsigned int getQueueNumber() const;
+	int getQueueNumber() const;
 	void setName(std::string);
 	void setControl(ServerGameControl*);
 	void setSocket(Socket*);
 	void setQueueNumber(int);
 
 	void transferStart();
+	void transferUpdate(std::string&);
 	void transferCheck();
 	void transferCheckmate(std::string&);
 	void transferStalemate();

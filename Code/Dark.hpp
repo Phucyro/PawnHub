@@ -24,11 +24,12 @@ class Dark: public Game{
 	bool _executeMove(Coordinate, Coordinate, char);
 
 	int _calculOffset(char playerColor){return playerColor == 'w' ? 0 : 16;}
-	bool _isVisible(Piece*);
+	bool _isVisible(Piece*, char);
 
 	protected :
 
 	void _initBoard() override;
+	void _sendGameMode() override;
 	void _nextTurn() override;
 	bool _isFinish() override;
 	void _boardState(std::string&) override;

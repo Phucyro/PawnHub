@@ -48,7 +48,7 @@ Socket* Player::getSocket() const {
 	return _sock;
 }
 
-unsigned int Player::getQueueNumber() const {
+int Player::getQueueNumber() const {
 	return _queueNumber;
 }
 
@@ -71,6 +71,10 @@ void Player::setQueueNumber(int queueNumber){
 
 void Player::transferStart() {
 	_control->sendStart(getSocket());
+}
+
+void Player::transferUpdate(std::string& update) {
+	_control->sendUpdate(getSocket(), update);
 }
 
 void Player::transferCheck() {

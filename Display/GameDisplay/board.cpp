@@ -61,26 +61,61 @@ void Board::init_ncurses()
 void Board::init_windows()
 /**Initialise le board**/
 {
-  int board_height = lines*OFFSET;
-  int board_width = columns*OFFSET;
+  int board_height = (lines+1)*OFFSET;
+  int board_width = (columns+1)*OFFSET;
 
   infos_win = newwin(board_height/2, board_width, 0, board_width+4);
   box(infos_win,0,0);
 
-  for (int i=0; i<24; i+=OFFSET)
-    for (int j=0; j<24; j+=OFFSET)
+  for (int i=0; i<(lines*OFFSET); i+=OFFSET)
+    for (int j=0; j<(columns*OFFSET); j+=OFFSET)
     {
-      draw_rectangle(i,j,i+SIDE_LENGTH,j+SIDE_LENGTH);
+      draw_rectangle(i+OFFSET,j+2,i+OFFSET+SIDE_LENGTH,j+2+SIDE_LENGTH);
     }
+
 
   draw_coordinates();
   draw_infos();
 
   refresh_board();
-  endwin();
 
 }
 
+void Board::draw_alice_coordinates()
+{
+
+  for (int i=0; i<lines; i++)
+  {
+    mvprintw(1+(OFFSET*i), 54, "%d", i+1);
+  }
+
+  for (int i=0; i<columns; i++)
+  {
+    mvprintw(24, 57+(OFFSET*i), "%c", 'A'+i);
+  }
+
+
+  refresh_board();
+}
+
+void Board::draw_alice_board()
+/**initialise le deuxieme board **/
+{
+  int board_height = lines*OFFSET;
+  int board_width = columns*OFFSET;
+
+  for (int i=56; i<80; i+=OFFSET)
+    for (int j=0; j<24; j+=OFFSET)
+    {
+      draw_rectangle(i, j, i+SIDE_LENGTH, j+SIDE_LENGTH);
+    }
+
+  draw_alice_coordinates();
+
+  refresh_board();
+
+
+}
 
 
 void Board::draw_infos()
@@ -95,7 +130,7 @@ void Board::draw_infos()
 
   mvwprintw(infos_win , 7, 1, "%s", "TURN COUNT : ");
 
-  mvwprintw(infos_win , 10, 1, "PRESS F4 TO QUIT");
+  mvwprintw(infos_win , 10, 1, "PRESS Ctrl+C TO QUIT");
 
   refresh_board();
 }
@@ -123,6 +158,7 @@ void Board::declare_check() {
 void Board::endgame(const char* message) {
   mvprintw(15, 30, "%s", message);
   refresh_board();
+  getch();
 }
 
 void Board::draw_coordinates()
@@ -130,12 +166,14 @@ void Board::draw_coordinates()
 {
   for (int i=0; i<lines; i++)
   {
-    mvprintw(1+(OFFSET*i), 25 , "%d", i+1);
+    mvprintw(OFFSET*(i+1), 1 , "%d", i+1);
+    mvprintw(OFFSET*(i+1), 25+OFFSET , "%d", i+1);
   }
 
   for (int i=0; i<columns; i++)
   {
-    mvprintw(24, 1+(OFFSET*i), "%c", 'A'+i);
+    mvprintw(1, 1+OFFSET*(i+1), "%c", 'A'+i);
+    mvprintw(26, 1+OFFSET*(i+1), "%c", 'A'+i);
   }
   refresh_board();
 }
@@ -150,6 +188,14 @@ void Board::draw_pieces(std::string board)
   stringToBoard(board);
   refresh_board();
 }
+
+void Board::draw_alice_pieces(std::string board)
+{
+  refresh_board();
+  aliceToBoard(board);
+  refresh_board();
+}
+
 
 void Board::draw_rectangle(int x1, int y1, int x2, int y2)
 /** permet de dessiner des rectangles de (x1,y1) vers (x2, y2) **/

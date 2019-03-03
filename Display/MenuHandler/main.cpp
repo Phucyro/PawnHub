@@ -45,19 +45,43 @@ int main()
 
   //TEST 5
   std::vector<std::string> friends;
+  std::vector<std::string> choices;
+  choices.push_back("Ajouter ami");
+  choices.push_back("Supprimer ami");
 
-  for (int i=0; i<20; i++)
+
+  for (int i=0; i<80; i++)
   {
     friends.push_back("Allan");
   }
 
+
+  test->clear_windows();
+  test->end_windows();
+
   test->init_friendsw(friends);
-  test->refresh_board();
   test->init_choicesw();
-  test->get_choice(vecteur);
+  test->get_choice(choices);
+
   test->refresh_board();
   test->end_windows();
 
+  //TEST 6
+  test->clear_windows();
+  test->init_chatw();
+
+  for (int i=0; i<30; i++)
+  {
+    test->update_chatw(i,"Julien", "Bien le bonsoir");
+  }
+  test->refresh_board();
+
+  test->init_dataw();
+  test->get_infos("votre message (/w destinataire message)");
+
+  test->refresh_board();
+
+  test->end_windows();
 
 
 

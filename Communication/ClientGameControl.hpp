@@ -13,6 +13,7 @@ private:
   Board board;
   Socket& socket;
   bool game_ongoing;
+  bool is_alice;
 
   std::map<std::string, std::string> headerSendMap = {
    {"board", "B"},

@@ -6,6 +6,7 @@ ServerGameControl::ServerGameControl(Player* _player1, Player* _player2, Game* _
 
 ServerGameControl::ServerGameControl(const ServerGameControl& _other): player1(_other.player1), player2(_other.player2), game(_other.game) {
 }
+
 ServerGameControl& ServerGameControl::operator=(const ServerGameControl& _other) {
   player1 = _other.player1;
   player2 = _other.player2;
@@ -14,13 +15,13 @@ ServerGameControl& ServerGameControl::operator=(const ServerGameControl& _other)
 }
 
 ServerGameControl::~ServerGameControl() {
-  delete player1;
-  delete player2;
+  player1 = nullptr;
+  player2 = nullptr;
   delete game;
 }
 
 void ServerGameControl::receiveMove(std::string message) {
-  std::cout << "Received move" << message << std::endl;
+  std::cout << "Received move " << message << std::endl;
   player1->receiveMove(message);
   player2->receiveMove(message);
 }
@@ -34,6 +35,14 @@ void ServerGameControl::sendBoard(Socket* socket, std::string board) {
   std::string header = headerSendMap["board"];
   socket->sendMessage(header + board);
   sendTurn(socket, game->getTurn());
+}
+
+void ServerGameControl::sendFirstBoard(Socket* socket, std::string board) {
+  sendBoard(socket, "1" + board);
+}
+
+void ServerGameControl::sendSecondBoard(Socket* socket, std::string board) {
+  sendBoard(socket, "2" + board);
 }
 
 void ServerGameControl::sendUpdate(Socket* socket, std::string update) {

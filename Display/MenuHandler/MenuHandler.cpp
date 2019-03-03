@@ -6,6 +6,18 @@ MenuHandler::MenuHandler(): data_menu(nullptr), choices_menu(nullptr), stats_w(n
   start_color();
 }
 
+MenuHandler::MenuHandler(const MenuHandler& _other): data_menu(_other.data_menu), choices_menu(_other.choices_menu), stats_w(_other.stats_w) {
+  initscr();
+  start_color();
+}
+
+MenuHandler& MenuHandler::operator=(const MenuHandler& _other) {
+  data_menu = _other.data_menu;
+  choices_menu = _other.choices_menu;
+  stats_w = _other.stats_w;
+  return *this;
+}
+
 MenuHandler::~MenuHandler()
 {
   delwin(data_menu);
@@ -43,7 +55,7 @@ std::string MenuHandler::get_infos(std::string type)
 
   while ( ch != '\n' )
   {
-      input.push_back( ch );
+      input.push_back(char(ch));
       ch = mvwgetch(data_menu,2,1);
   }
 
@@ -57,7 +69,20 @@ std::string MenuHandler::get_infos(std::string type)
 void MenuHandler::print_warning(std::string warning)
 /** print le message d'erreur **/
 {
-  mvprintw(1,1,warning.c_str());
+  int y_max, x_max;
+  getmaxyx(stdscr, y_max, x_max);
+
+  mvprintw(y_max-2,1,warning.c_str());
+  refresh();
+}
+
+void MenuHandler::print_warning2(std::string warning)
+/** print le message d'erreur **/
+{
+  int y_max, x_max;
+  getmaxyx(stdscr, y_max, x_max);
+
+  mvprintw(y_max-1,1,warning.c_str());
   refresh();
 }
 
@@ -86,18 +111,17 @@ int MenuHandler::get_choice(const std::vector<std::string> choices)
 
   while (1) // loop until user chose a mode
   {
-      for (int i = 0; i < choices.size(); i++)
+      for (int i = 0; i < int(choices.size()); i++)
       // displays list of choices
       {
 
         if (i == highlight) // current choice
             wattron(choices_menu, A_REVERSE);
-        mvwprintw(choices_menu, i+1, 1, choices[i].c_str() );
+        mvwprintw(choices_menu, i+1, 1, choices[unsigned(i)].c_str() );
         wattroff(choices_menu, A_REVERSE);
       }
 
-      refresh();
-      wrefresh(choices_menu);
+      refresh_board();
 
       int user_choice = wgetch(choices_menu); // get user input
 
@@ -106,11 +130,11 @@ int MenuHandler::get_choice(const std::vector<std::string> choices)
         case KEY_UP:
             highlight--;
             if (highlight == -1)
-                highlight = choices.size() - 1;
+                highlight = int(choices.size()) - 1;
             break;
         case KEY_DOWN:
             highlight++;
-            if (highlight == choices.size() )
+            if (highlight == int(choices.size()) )
                 highlight = 0;
             break;
         default:
@@ -217,6 +241,7 @@ void MenuHandler::update_stats(int number, std::string name, int wins, int loses
 }
 
 void MenuHandler::init_friendsw(const std::vector<std::string> friends)
+/**affiche les amis sur le top window**/
 {
   init_statsw();
 
@@ -236,22 +261,62 @@ void MenuHandler::init_friendsw(const std::vector<std::string> friends)
   }
   **/
 
-  int count = 0;
-  int max_count = friends.size();
+  unsigned count = 0;
+  unsigned long max_count = friends.size();
 
-  for (int j=0; j<y_box-2; j++)
-    for (int i=0; i<5; i++)
+  int i = 0;
+  int j = 0;
+
+  bool empty = false;
+
+  if (max_count == 0)
+  {
+    empty = true;
+  }
+
+  bool end = false;
+
+  while (!end && !empty)
+  {
+    mvwprintw(stats_w, 1+j, 5+i*x_split, friends[count].c_str());
+    i += 1;
+    count += 1;
+
+    if (i>4)
     {
-      mvwprintw(stats_w, 1+j, 5+i*x_split, friends[count].c_str());
-      count += 1;
-
-      if (count > max_count - 1)
-      {
-        break;
-      }
+      j += 1;
+      i = 0;
     }
 
+    if (j>=y_box-2 || count>max_count-1)
+    {
+      end = true;
+    }
+  }
+
   refresh_board();
+
+}
+
+void MenuHandler::init_chatw()
+{
+  init_statsw();
+  int y_max, x_max;
+  getmaxyx(stats_w, y_max, x_max);
+  mvwprintw(stats_w, 1, 1,"Messages recus");
+  refresh_board();
+}
+
+void MenuHandler::update_chatw(int number, std::string sender, std::string message)
+{
+  int y_max, x_max;
+  getmaxyx(stats_w, y_max, x_max);
+
+  if (number < y_max-4)
+  {
+    mvwprintw(stats_w, 3+number, 1, "%s : %s", sender.c_str(), message.c_str());
+  }
+
 }
 
 void MenuHandler::refresh_board()

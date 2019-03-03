@@ -2,6 +2,8 @@
 #define _HORDE_CPP_
 
 #include "Horde.hpp"
+#include "../Communication/Data.hpp"
+extern Data data;
 
 void Horde::_Pieces(){
 	_pieces = new Piece*[_piecesAmount];
@@ -120,12 +122,18 @@ Horde::~Horde(){
 	delete[] _pieces;
 }
 
+void Horde::_sendGameMode() {
+	std::string game = "Horde";
+	_player1->transferGameMode(game);
+	_player2->transferGameMode(game);
+}
+
 void Horde::_changePawn(Piece *pawn, Piece* promotedPawn, Board* board){
 	int start, i, end;
 	if (pawn->getColor() == 'w'){
+		_lastStrongPiecesWhite ++;
 		int start = int(_lastStrongPiecesWhite);
 		int i = int(_lastStrongPiecesWhite);
-		_lastStrongPiecesWhite ++;
 		end = 16;
 		for (; i < end; i++) {
 			if (_pieces[i] == pawn){
@@ -137,10 +145,10 @@ void Horde::_changePawn(Piece *pawn, Piece* promotedPawn, Board* board){
 			}
 		}
 	}else{
+		_lastStrongPieceBlack ++;
 		start = int(_lastStrongPieceBlack);
 		i = int(_lastStrongPieceBlack);
-		_lastStrongPieceBlack ++;
-		end = 32;
+		end = 48;
 		for (; i < end; i++) {
 			if (_pieces[i] == pawn){
 				board->setCase(_pieces[i]->getCoord(), promotedPawn);
@@ -180,10 +188,27 @@ bool Horde::_isFinish() {
 	Player *currentPlayer = _getCurrentPlayer();
 	char opponentColor = currentPlayer == _player2 ? 'w':'b';
 	if (this->_isCheckmate(opponentColor)){
+		if (opponentColor == 'w'){
+			std::cout << "Black Player win !" << std::endl;
+			data.addUserHordeWin(_player2->getName());
+			data.addUserHordeLose(_player1->getName());
+		}
+		else {
+			std::cout << "White Player win !" << std::endl;
+			data.addUserHordeLose(_player2->getName());
+			data.addUserHordeWin(_player1->getName());
+		}
 		_winner = currentPlayer;
+		_sendCheckmate();
 		return true;
 	}
-	return	this->_isStalemate(opponentColor);
+	if (this->_isStalemate(opponentColor)) {
+		data.addUserHordeDraw(_player2->getName());
+		data.addUserHordeDraw(_player1->getName());
+		_sendStalemate();
+		return true;
+	}
+	return false;
 
 }
 
@@ -207,7 +232,6 @@ bool Horde::_isCheckmate(char playerColor){
 		}
 		if (!dangerousPiece) return false;
 		if (king->canMove(_board, *this)) return false;
-
 		if (!moreThan2){
 			int rowMove = int(dangerousPiece->getRow()) - int(king->getRow());
 			int rowDirection = rowMove/std::abs(rowMove);
@@ -217,8 +241,8 @@ bool Horde::_isCheckmate(char playerColor){
 			//bishop or pawn or queen case
 			if (std::abs(rowMove) == std::abs(columnMove)){
 				int row = int(king->getRow())+rowDirection, column = int(king->getColumn())+columnDirection;
-			while(row != int(dangerousPiece->getRow())){
-					for (int i = 16; i < 48; i++){
+				while(row != int(dangerousPiece->getRow())){
+					for (int i = 0; i < 16; i++){
 						if ((!_pieces[i]->isTaken()) && _pieces[i]->_isMovePossible(Coordinate(column, row), _board, *this)) return false;
 					}
 					row += rowDirection;
@@ -228,7 +252,7 @@ bool Horde::_isCheckmate(char playerColor){
 			//rook or queen case(row)
 			else if (rowMove){
 			for (int j = int(king->getRow())+rowDirection; j != int(dangerousPiece->getRow()); j += rowDirection){
-					for(int i = 16; i < 48; i++){
+					for(int i = 0; i < 16; i++){
 						if ((!_pieces[i]->isTaken()) && _pieces[i]->_isMovePossible(Coordinate(int(king->getColumn()), j), _board, *this)) return false;
 					}
 				}
@@ -236,13 +260,13 @@ bool Horde::_isCheckmate(char playerColor){
 			//rook or queen case(column)
 			else if (columnMove){
 				for (int j = int(king->getColumn())+columnDirection; j != int(dangerousPiece->getColumn()); j += columnDirection){
-					for(int i = 16; i < 48; i++){
+					for(int i = 0; i < 16; i++){
 						if ((!_pieces[i]->isTaken()) && _pieces[i]->_isMovePossible(Coordinate(j, int(king->getRow())), _board, *this)) return false;
 					}
 				}
 			}
 			//test if the dangerousPiece can be taken
-			for (int i = 16; i < 48; i++){
+			for (int i = 0; i < 16; i++){
 				if ((!_pieces[i]->isTaken()) && _pieces[i]->_isMovePossible(dangerousPiece->getCoord(), _board, *this)) return false;
 			}
 		}
@@ -295,10 +319,11 @@ void Horde::_boardState(std::string& state){
 		if (!_pieces[i]->isTaken()) state += _pieces[i]->toString();
 	}
 	state += "!";
-	for (; i < 32; i++){
+	for (; i < 48; i++){
 		if (!_pieces[i]->isTaken()) state += _pieces[i]->toString();
 	}
 	state += "#";
+	std::cout<<"Board state: "<<state<<std::endl;
 }
 
 #endif

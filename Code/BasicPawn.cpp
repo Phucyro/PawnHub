@@ -68,9 +68,10 @@ bool BasicPawn::move(Coordinate end, Board* board, Game& game){
 }
 
 bool BasicPawn::canMove(Board* board, Game& game){
-	if (this->_isMovePossible(1, 1, board, game)) return true;
-	if (this->_isMovePossible(0, 1, board, game)) return true;
-	if (this->_isMovePossible(-1, 1, board, game)) return true;
+	int direction = this->getColor() == 'w' ? 1:-1;
+	if (this->_isMovePossible(1, 1*direction, board, game)) return true;
+	if (this->_isMovePossible(0, 1*direction, board, game)) return true;
+	if (this->_isMovePossible(-1, 1*direction, board, game)) return true;
 	return false;
 }
 

@@ -1,0 +1,1121 @@
+g++    -c -o Communication/server.o Communication/server.cpp
+g++ -std=c++17 -ggdb3 -Wpedantic -Wall -Wextra -Wconversion -Weffc++ -Wstrict-null-sentinel -Wnoexcept -Wctor-dtor-privacy -Woverloaded-virtual -Wsign-promo -Wzero-as-null-pointer-constant -Wsuggest-final-types -Wsuggest-final-methods -Wsuggest-override -c -o Communication/Socket.o Communication/Socket.cpp
+Communication/Socket.cpp: In constructor ‘Socket::Socket(int)’:
+Communication/Socket.cpp:11:1: warning: ‘Socket::monMutex’ should be initialized in the member initialization list [-Weffc++]
+ Socket::Socket(int fd) : file_descriptor(fd) {}
+ ^~~~~~
+g++ -std=c++17 -ggdb3 -Wpedantic -Wall -Wextra -Wconversion -Weffc++ -Wstrict-null-sentinel -Wnoexcept -Wctor-dtor-privacy -Woverloaded-virtual -Wsign-promo -Wzero-as-null-pointer-constant -Wsuggest-final-types -Wsuggest-final-methods -Wsuggest-override -c -o Communication/BindSocket.o Communication/BindSocket.cpp
+g++ -std=c++17 -ggdb3 -Wpedantic -Wall -Wextra -Wconversion -Weffc++ -Wstrict-null-sentinel -Wnoexcept -Wctor-dtor-privacy -Woverloaded-virtual -Wsign-promo -Wzero-as-null-pointer-constant -Wsuggest-final-types -Wsuggest-final-methods -Wsuggest-override -c -o Communication/ServerGameControl.o Communication/ServerGameControl.cpp
+In file included from Communication/../Code/Game.hpp:57,
+                 from Communication/../Code/Player.hpp:11,
+                 from Communication/ServerGameControl.hpp:6,
+                 from Communication/ServerGameControl.cpp:1:
+Communication/../Code/Piece.hpp: In member function ‘virtual void Piece::changeIsTaken(unsigned int, Piece*, Board*)’:
+Communication/../Code/Piece.hpp:73:39: warning: unused parameter ‘turn’ [-Wunused-parameter]
+   virtual void changeIsTaken(unsigned turn, Piece*, Board*){_isTaken = !_isTaken;}
+                              ~~~~~~~~~^~~~
+In file included from Communication/../Code/Player.hpp:14,
+                 from Communication/ServerGameControl.hpp:6,
+                 from Communication/ServerGameControl.cpp:1:
+Communication/../Code/../Communication/ServerGameControl.hpp: At global scope:
+Communication/../Code/../Communication/ServerGameControl.hpp:14:7: warning: ‘class ServerGameControl’ has pointer data members [-Weffc++]
+ class ServerGameControl {
+       ^~~~~~~~~~~~~~~~~
+Communication/../Code/../Communication/ServerGameControl.hpp:14:7: warning:   but does not override ‘ServerGameControl(const ServerGameControl&)’ [-Weffc++]
+Communication/../Code/../Communication/ServerGameControl.hpp:14:7: warning:   or ‘operator=(const ServerGameControl&)’ [-Weffc++]
+In file included from Communication/ServerGameControl.hpp:6,
+                 from Communication/ServerGameControl.cpp:1:
+Communication/../Code/Player.hpp: In constructor ‘Player::Player(Player&&)’:
+Communication/../Code/Player.hpp:33:2: warning: ‘Player::_control’ should be initialized in the member initialization list [-Weffc++]
+  Player(Player&& original): _sock(original._sock), _pipe(original._pipe), _name(original._name) {original._pipe = nullptr;}
+  ^~~~~~
+Communication/../Code/Player.hpp:33:2: warning: ‘Player::_recvActive’ should be initialized in the member initialization list [-Weffc++]
+g++ -std=c++17 -ggdb3 -Wpedantic -Wall -Wextra -Wconversion -Weffc++ -Wstrict-null-sentinel -Wnoexcept -Wctor-dtor-privacy -Woverloaded-virtual -Wsign-promo -Wzero-as-null-pointer-constant -Wsuggest-final-types -Wsuggest-final-methods -Wsuggest-override -c -o Communication/Data.o Communication/Data.cpp
+g++ -std=c++17 -ggdb3 -Wpedantic -Wall -Wextra -Wconversion -Weffc++ -Wstrict-null-sentinel -Wnoexcept -Wctor-dtor-privacy -Woverloaded-virtual -Wsign-promo -Wzero-as-null-pointer-constant -Wsuggest-final-types -Wsuggest-final-methods -Wsuggest-override -c -o Communication/SplitString.o Communication/SplitString.cpp
+g++ -std=c++17 -ggdb3 -Wpedantic -Wall -Wextra -Wconversion -Weffc++ -Wstrict-null-sentinel -Wnoexcept -Wctor-dtor-privacy -Woverloaded-virtual -Wsign-promo -Wzero-as-null-pointer-constant -Wsuggest-final-types -Wsuggest-final-methods -Wsuggest-override -c -o Communication/Matchmaking.o Communication/Matchmaking.cpp
+In file included from Communication/../Code/Game.hpp:57,
+                 from Communication/../Code/Player.hpp:11,
+                 from Communication/Matchmaking.hpp:8,
+                 from Communication/Matchmaking.cpp:1:
+Communication/../Code/Piece.hpp: In member function ‘virtual void Piece::changeIsTaken(unsigned int, Piece*, Board*)’:
+Communication/../Code/Piece.hpp:73:39: warning: unused parameter ‘turn’ [-Wunused-parameter]
+   virtual void changeIsTaken(unsigned turn, Piece*, Board*){_isTaken = !_isTaken;}
+                              ~~~~~~~~~^~~~
+In file included from Communication/../Code/Player.hpp:14,
+                 from Communication/Matchmaking.hpp:8,
+                 from Communication/Matchmaking.cpp:1:
+Communication/../Code/../Communication/ServerGameControl.hpp: At global scope:
+Communication/../Code/../Communication/ServerGameControl.hpp:14:7: warning: ‘class ServerGameControl’ has pointer data members [-Weffc++]
+ class ServerGameControl {
+       ^~~~~~~~~~~~~~~~~
+Communication/../Code/../Communication/ServerGameControl.hpp:14:7: warning:   but does not override ‘ServerGameControl(const ServerGameControl&)’ [-Weffc++]
+Communication/../Code/../Communication/ServerGameControl.hpp:14:7: warning:   or ‘operator=(const ServerGameControl&)’ [-Weffc++]
+In file included from Communication/Matchmaking.hpp:8,
+                 from Communication/Matchmaking.cpp:1:
+Communication/../Code/Player.hpp: In constructor ‘Player::Player(Player&&)’:
+Communication/../Code/Player.hpp:33:2: warning: ‘Player::_control’ should be initialized in the member initialization list [-Weffc++]
+  Player(Player&& original): _sock(original._sock), _pipe(original._pipe), _name(original._name) {original._pipe = nullptr;}
+  ^~~~~~
+Communication/../Code/Player.hpp:33:2: warning: ‘Player::_recvActive’ should be initialized in the member initialization list [-Weffc++]
+In file included from Communication/Matchmaking.hpp:10,
+                 from Communication/Matchmaking.cpp:1:
+Communication/../Code/Classic.hpp: At global scope:
+Communication/../Code/Classic.hpp:18:10: warning: ‘virtual Player* Classic::_getCurrentPlayer()’ can be marked override [-Wsuggest-override]
+  Player* _getCurrentPlayer(){
+          ^~~~~~~~~~~~~~~~~
+g++ -std=c++17 -ggdb3 -Wpedantic -Wall -Wextra -Wconversion -Weffc++ -Wstrict-null-sentinel -Wnoexcept -Wctor-dtor-privacy -Woverloaded-virtual -Wsign-promo -Wzero-as-null-pointer-constant -Wsuggest-final-types -Wsuggest-final-methods -Wsuggest-override -o server Communication/server.o Communication/Socket.o Communication/BindSocket.o Code/includesPieceHPP.hpp Code/AliceRook.cpp Code/King.cpp Code/Coordinate.cpp Code/Classic.cpp Code/Bishop.cpp Code/AlicePiece.cpp Code/GhostPawn.cpp Code/Game.cpp Code/AlicePawn.cpp Code/Alice.cpp Code/AliceKing.cpp Code/Pawn.cpp Code/Player.cpp Code/Dark.cpp Code/AliceKnight.cpp Code/Board.cpp Code/Knight.cpp Code/AliceBishop.cpp Code/Rook.cpp Code/Piece.cpp Code/Queen.cpp Code/Horde.cpp Code/BasicPawn.cpp Code/AliceQueen.cpp Communication/ServerGameControl.o Communication/ServerMessageHandler.hpp Communication/ServerHandler.hpp Communication/Data.o Communication/SplitString.o Communication/Matchmaking.o Communication/config.hpp -lpthread
+In file included from Code/Bishop.hpp:4,
+                 from Code/includesPieceHPP.hpp:4:
+Code/Piece.hpp: In member function ‘virtual void Piece::changeIsTaken(unsigned int, Piece*, Board*)’:
+Code/Piece.hpp:73:39: warning: unused parameter ‘turn’ [-Wunused-parameter]
+   virtual void changeIsTaken(unsigned turn, Piece*, Board*){_isTaken = !_isTaken;}
+                              ~~~~~~~~~^~~~
+In file included from Code/Player.hpp:14,
+                 from Code/Game.hpp:56,
+                 from Code/Piece.hpp:78,
+                 from Code/Bishop.hpp:4,
+                 from Code/includesPieceHPP.hpp:4:
+Code/../Communication/ServerGameControl.hpp: At global scope:
+Code/../Communication/ServerGameControl.hpp:14:7: warning: ‘class ServerGameControl’ has pointer data members [-Weffc++]
+ class ServerGameControl {
+       ^~~~~~~~~~~~~~~~~
+Code/../Communication/ServerGameControl.hpp:14:7: warning:   but does not override ‘ServerGameControl(const ServerGameControl&)’ [-Weffc++]
+Code/../Communication/ServerGameControl.hpp:14:7: warning:   or ‘operator=(const ServerGameControl&)’ [-Weffc++]
+In file included from Code/Game.hpp:56,
+                 from Code/Piece.hpp:78,
+                 from Code/Bishop.hpp:4,
+                 from Code/includesPieceHPP.hpp:4:
+Code/Player.hpp: In constructor ‘Player::Player(Player&&)’:
+Code/Player.hpp:33:2: warning: ‘Player::_control’ should be initialized in the member initialization list [-Weffc++]
+  Player(Player&& original): _sock(original._sock), _pipe(original._pipe), _name(original._name) {original._pipe = nullptr;}
+  ^~~~~~
+Code/Player.hpp:33:2: warning: ‘Player::_recvActive’ should be initialized in the member initialization list [-Weffc++]
+In file included from Code/Board.hpp:42,
+                 from Code/AlicePiece.hpp:5,
+                 from Code/AliceRook.hpp:4,
+                 from Code/AliceRook.cpp:4:
+Code/Piece.hpp: In member function ‘virtual void Piece::changeIsTaken(unsigned int, Piece*, Board*)’:
+Code/Piece.hpp:73:39: warning: unused parameter ‘turn’ [-Wunused-parameter]
+   virtual void changeIsTaken(unsigned turn, Piece*, Board*){_isTaken = !_isTaken;}
+                              ~~~~~~~~~^~~~
+In file included from Code/Player.hpp:14,
+                 from Code/Game.hpp:56,
+                 from Code/Piece.hpp:78,
+                 from Code/Board.hpp:42,
+                 from Code/AlicePiece.hpp:5,
+                 from Code/AliceRook.hpp:4,
+                 from Code/AliceRook.cpp:4:
+Code/../Communication/ServerGameControl.hpp: At global scope:
+Code/../Communication/ServerGameControl.hpp:14:7: warning: ‘class ServerGameControl’ has pointer data members [-Weffc++]
+ class ServerGameControl {
+       ^~~~~~~~~~~~~~~~~
+Code/../Communication/ServerGameControl.hpp:14:7: warning:   but does not override ‘ServerGameControl(const ServerGameControl&)’ [-Weffc++]
+Code/../Communication/ServerGameControl.hpp:14:7: warning:   or ‘operator=(const ServerGameControl&)’ [-Weffc++]
+In file included from Code/Game.hpp:56,
+                 from Code/Piece.hpp:78,
+                 from Code/Board.hpp:42,
+                 from Code/AlicePiece.hpp:5,
+                 from Code/AliceRook.hpp:4,
+                 from Code/AliceRook.cpp:4:
+Code/Player.hpp: In constructor ‘Player::Player(Player&&)’:
+Code/Player.hpp:33:2: warning: ‘Player::_control’ should be initialized in the member initialization list [-Weffc++]
+  Player(Player&& original): _sock(original._sock), _pipe(original._pipe), _name(original._name) {original._pipe = nullptr;}
+  ^~~~~~
+Code/Player.hpp:33:2: warning: ‘Player::_recvActive’ should be initialized in the member initialization list [-Weffc++]
+In file included from Code/AliceRook.hpp:4,
+                 from Code/AliceRook.cpp:4:
+Code/AlicePiece.hpp: In member function ‘virtual bool AlicePiece::_checkMove(Coordinate, Board*, Game&)’:
+Code/AlicePiece.hpp:31:25: warning: suggest parentheses around comparison in operand of ‘==’ [-Wparentheses]
+   return (!pieceToTake) != pieceToTake->getDimension() == getDimension();
+          ~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Code/AlicePiece.hpp:29:62: warning: unused parameter ‘game’ [-Wunused-parameter]
+  virtual bool _checkMove(Coordinate end, Board* board, Game& game){
+                                                        ~~~~~~^~~~
+In file included from Code/King.hpp:4,
+                 from Code/King.cpp:5:
+Code/Piece.hpp: In member function ‘virtual void Piece::changeIsTaken(unsigned int, Piece*, Board*)’:
+Code/Piece.hpp:73:39: warning: unused parameter ‘turn’ [-Wunused-parameter]
+   virtual void changeIsTaken(unsigned turn, Piece*, Board*){_isTaken = !_isTaken;}
+                              ~~~~~~~~~^~~~
+In file included from Code/Player.hpp:14,
+                 from Code/Game.hpp:56,
+                 from Code/Piece.hpp:78,
+                 from Code/King.hpp:4,
+                 from Code/King.cpp:5:
+Code/../Communication/ServerGameControl.hpp: At global scope:
+Code/../Communication/ServerGameControl.hpp:14:7: warning: ‘class ServerGameControl’ has pointer data members [-Weffc++]
+ class ServerGameControl {
+       ^~~~~~~~~~~~~~~~~
+Code/../Communication/ServerGameControl.hpp:14:7: warning:   but does not override ‘ServerGameControl(const ServerGameControl&)’ [-Weffc++]
+Code/../Communication/ServerGameControl.hpp:14:7: warning:   or ‘operator=(const ServerGameControl&)’ [-Weffc++]
+In file included from Code/Game.hpp:56,
+                 from Code/Piece.hpp:78,
+                 from Code/King.hpp:4,
+                 from Code/King.cpp:5:
+Code/Player.hpp: In constructor ‘Player::Player(Player&&)’:
+Code/Player.hpp:33:2: warning: ‘Player::_control’ should be initialized in the member initialization list [-Weffc++]
+  Player(Player&& original): _sock(original._sock), _pipe(original._pipe), _name(original._name) {original._pipe = nullptr;}
+  ^~~~~~
+Code/Player.hpp:33:2: warning: ‘Player::_recvActive’ should be initialized in the member initialization list [-Weffc++]
+In file included from Code/Bishop.hpp:4,
+                 from Code/includesPieceHPP.hpp:4,
+                 from Code/Classic.hpp:8,
+                 from Code/Classic.cpp:5:
+Code/Piece.hpp: In member function ‘virtual void Piece::changeIsTaken(unsigned int, Piece*, Board*)’:
+Code/Piece.hpp:73:39: warning: unused parameter ‘turn’ [-Wunused-parameter]
+   virtual void changeIsTaken(unsigned turn, Piece*, Board*){_isTaken = !_isTaken;}
+                              ~~~~~~~~~^~~~
+In file included from Code/Player.hpp:14,
+                 from Code/Game.hpp:56,
+                 from Code/Piece.hpp:78,
+                 from Code/Bishop.hpp:4,
+                 from Code/includesPieceHPP.hpp:4,
+                 from Code/Classic.hpp:8,
+                 from Code/Classic.cpp:5:
+Code/../Communication/ServerGameControl.hpp: At global scope:
+Code/../Communication/ServerGameControl.hpp:14:7: warning: ‘class ServerGameControl’ has pointer data members [-Weffc++]
+ class ServerGameControl {
+       ^~~~~~~~~~~~~~~~~
+Code/../Communication/ServerGameControl.hpp:14:7: warning:   but does not override ‘ServerGameControl(const ServerGameControl&)’ [-Weffc++]
+Code/../Communication/ServerGameControl.hpp:14:7: warning:   or ‘operator=(const ServerGameControl&)’ [-Weffc++]
+In file included from Code/Game.hpp:56,
+                 from Code/Piece.hpp:78,
+                 from Code/Bishop.hpp:4,
+                 from Code/includesPieceHPP.hpp:4,
+                 from Code/Classic.hpp:8,
+                 from Code/Classic.cpp:5:
+Code/Player.hpp: In constructor ‘Player::Player(Player&&)’:
+Code/Player.hpp:33:2: warning: ‘Player::_control’ should be initialized in the member initialization list [-Weffc++]
+  Player(Player&& original): _sock(original._sock), _pipe(original._pipe), _name(original._name) {original._pipe = nullptr;}
+  ^~~~~~
+Code/Player.hpp:33:2: warning: ‘Player::_recvActive’ should be initialized in the member initialization list [-Weffc++]
+In file included from Code/Classic.cpp:5:
+Code/Classic.hpp: At global scope:
+Code/Classic.hpp:18:10: warning: ‘virtual Player* Classic::_getCurrentPlayer()’ can be marked override [-Wsuggest-override]
+  Player* _getCurrentPlayer(){
+          ^~~~~~~~~~~~~~~~~
+Code/Classic.cpp: In member function ‘bool Classic::_isCheckmate(char)’:
+Code/Classic.cpp:189:14: warning: comparison of integer expressions of different signedness: ‘int’ and ‘unsigned int’ [-Wsign-compare]
+    while(row != dangerousPiece->getRow()){
+          ~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~
+Code/Classic.cpp:199:53: warning: comparison of integer expressions of different signedness: ‘int’ and ‘unsigned int’ [-Wsign-compare]
+    for (int j = int(king->getRow())+rowDirection; j != dangerousPiece->getRow(); j += rowDirection){
+                                                   ~~^~~~~~~~~~~~~~~~~~~~~~~~~~~
+Code/Classic.cpp:207:59: warning: comparison of integer expressions of different signedness: ‘int’ and ‘unsigned int’ [-Wsign-compare]
+    for (int j = int(king->getColumn())+columnDirection; j != dangerousPiece->getColumn(); j += columnDirection){
+                                                         ~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In file included from Code/Bishop.hpp:4,
+                 from Code/Bishop.cpp:5:
+Code/Piece.hpp: In member function ‘virtual void Piece::changeIsTaken(unsigned int, Piece*, Board*)’:
+Code/Piece.hpp:73:39: warning: unused parameter ‘turn’ [-Wunused-parameter]
+   virtual void changeIsTaken(unsigned turn, Piece*, Board*){_isTaken = !_isTaken;}
+                              ~~~~~~~~~^~~~
+In file included from Code/Player.hpp:14,
+                 from Code/Game.hpp:56,
+                 from Code/Piece.hpp:78,
+                 from Code/Bishop.hpp:4,
+                 from Code/Bishop.cpp:5:
+Code/../Communication/ServerGameControl.hpp: At global scope:
+Code/../Communication/ServerGameControl.hpp:14:7: warning: ‘class ServerGameControl’ has pointer data members [-Weffc++]
+ class ServerGameControl {
+       ^~~~~~~~~~~~~~~~~
+Code/../Communication/ServerGameControl.hpp:14:7: warning:   but does not override ‘ServerGameControl(const ServerGameControl&)’ [-Weffc++]
+Code/../Communication/ServerGameControl.hpp:14:7: warning:   or ‘operator=(const ServerGameControl&)’ [-Weffc++]
+In file included from Code/Game.hpp:56,
+                 from Code/Piece.hpp:78,
+                 from Code/Bishop.hpp:4,
+                 from Code/Bishop.cpp:5:
+Code/Player.hpp: In constructor ‘Player::Player(Player&&)’:
+Code/Player.hpp:33:2: warning: ‘Player::_control’ should be initialized in the member initialization list [-Weffc++]
+  Player(Player&& original): _sock(original._sock), _pipe(original._pipe), _name(original._name) {original._pipe = nullptr;}
+  ^~~~~~
+Code/Player.hpp:33:2: warning: ‘Player::_recvActive’ should be initialized in the member initialization list [-Weffc++]
+Code/Bishop.cpp: In member function ‘virtual bool Bishop::_checkMove(Coordinate, Board*, Game&)’:
+Code/Bishop.cpp:12:61: warning: unused parameter ‘game’ [-Wunused-parameter]
+ bool Bishop::_checkMove(Coordinate end, Board* board, Game& game){
+                                                       ~~~~~~^~~~
+In file included from Code/Board.hpp:42,
+                 from Code/AlicePiece.hpp:5,
+                 from Code/AlicePiece.cpp:4:
+Code/Piece.hpp: In member function ‘virtual void Piece::changeIsTaken(unsigned int, Piece*, Board*)’:
+Code/Piece.hpp:73:39: warning: unused parameter ‘turn’ [-Wunused-parameter]
+   virtual void changeIsTaken(unsigned turn, Piece*, Board*){_isTaken = !_isTaken;}
+                              ~~~~~~~~~^~~~
+In file included from Code/Player.hpp:14,
+                 from Code/Game.hpp:56,
+                 from Code/Piece.hpp:78,
+                 from Code/Board.hpp:42,
+                 from Code/AlicePiece.hpp:5,
+                 from Code/AlicePiece.cpp:4:
+Code/../Communication/ServerGameControl.hpp: At global scope:
+Code/../Communication/ServerGameControl.hpp:14:7: warning: ‘class ServerGameControl’ has pointer data members [-Weffc++]
+ class ServerGameControl {
+       ^~~~~~~~~~~~~~~~~
+Code/../Communication/ServerGameControl.hpp:14:7: warning:   but does not override ‘ServerGameControl(const ServerGameControl&)’ [-Weffc++]
+Code/../Communication/ServerGameControl.hpp:14:7: warning:   or ‘operator=(const ServerGameControl&)’ [-Weffc++]
+In file included from Code/Game.hpp:56,
+                 from Code/Piece.hpp:78,
+                 from Code/Board.hpp:42,
+                 from Code/AlicePiece.hpp:5,
+                 from Code/AlicePiece.cpp:4:
+Code/Player.hpp: In constructor ‘Player::Player(Player&&)’:
+Code/Player.hpp:33:2: warning: ‘Player::_control’ should be initialized in the member initialization list [-Weffc++]
+  Player(Player&& original): _sock(original._sock), _pipe(original._pipe), _name(original._name) {original._pipe = nullptr;}
+  ^~~~~~
+Code/Player.hpp:33:2: warning: ‘Player::_recvActive’ should be initialized in the member initialization list [-Weffc++]
+In file included from Code/AlicePiece.cpp:4:
+Code/AlicePiece.hpp: In member function ‘virtual bool AlicePiece::_checkMove(Coordinate, Board*, Game&)’:
+Code/AlicePiece.hpp:31:25: warning: suggest parentheses around comparison in operand of ‘==’ [-Wparentheses]
+   return (!pieceToTake) != pieceToTake->getDimension() == getDimension();
+          ~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Code/AlicePiece.hpp:29:62: warning: unused parameter ‘game’ [-Wunused-parameter]
+  virtual bool _checkMove(Coordinate end, Board* board, Game& game){
+                                                        ~~~~~~^~~~
+In file included from Code/GhostPawn.hpp:4,
+                 from Code/GhostPawn.cpp:5:
+Code/Piece.hpp: In member function ‘virtual void Piece::changeIsTaken(unsigned int, Piece*, Board*)’:
+Code/Piece.hpp:73:39: warning: unused parameter ‘turn’ [-Wunused-parameter]
+   virtual void changeIsTaken(unsigned turn, Piece*, Board*){_isTaken = !_isTaken;}
+                              ~~~~~~~~~^~~~
+In file included from Code/Player.hpp:14,
+                 from Code/Game.hpp:56,
+                 from Code/Piece.hpp:78,
+                 from Code/GhostPawn.hpp:4,
+                 from Code/GhostPawn.cpp:5:
+Code/../Communication/ServerGameControl.hpp: At global scope:
+Code/../Communication/ServerGameControl.hpp:14:7: warning: ‘class ServerGameControl’ has pointer data members [-Weffc++]
+ class ServerGameControl {
+       ^~~~~~~~~~~~~~~~~
+Code/../Communication/ServerGameControl.hpp:14:7: warning:   but does not override ‘ServerGameControl(const ServerGameControl&)’ [-Weffc++]
+Code/../Communication/ServerGameControl.hpp:14:7: warning:   or ‘operator=(const ServerGameControl&)’ [-Weffc++]
+In file included from Code/Game.hpp:56,
+                 from Code/Piece.hpp:78,
+                 from Code/GhostPawn.hpp:4,
+                 from Code/GhostPawn.cpp:5:
+Code/Player.hpp: In constructor ‘Player::Player(Player&&)’:
+Code/Player.hpp:33:2: warning: ‘Player::_control’ should be initialized in the member initialization list [-Weffc++]
+  Player(Player&& original): _sock(original._sock), _pipe(original._pipe), _name(original._name) {original._pipe = nullptr;}
+  ^~~~~~
+Code/Player.hpp:33:2: warning: ‘Player::_recvActive’ should be initialized in the member initialization list [-Weffc++]
+In file included from Code/Board.hpp:42,
+                 from Code/Player.hpp:12,
+                 from Code/Game.hpp:56,
+                 from Code/Game.cpp:5:
+Code/Piece.hpp: In member function ‘virtual void Piece::changeIsTaken(unsigned int, Piece*, Board*)’:
+Code/Piece.hpp:73:39: warning: unused parameter ‘turn’ [-Wunused-parameter]
+   virtual void changeIsTaken(unsigned turn, Piece*, Board*){_isTaken = !_isTaken;}
+                              ~~~~~~~~~^~~~
+In file included from Code/Player.hpp:14,
+                 from Code/Game.hpp:56,
+                 from Code/Game.cpp:5:
+Code/../Communication/ServerGameControl.hpp: At global scope:
+Code/../Communication/ServerGameControl.hpp:14:7: warning: ‘class ServerGameControl’ has pointer data members [-Weffc++]
+ class ServerGameControl {
+       ^~~~~~~~~~~~~~~~~
+Code/../Communication/ServerGameControl.hpp:14:7: warning:   but does not override ‘ServerGameControl(const ServerGameControl&)’ [-Weffc++]
+Code/../Communication/ServerGameControl.hpp:14:7: warning:   or ‘operator=(const ServerGameControl&)’ [-Weffc++]
+In file included from Code/Game.hpp:56,
+                 from Code/Game.cpp:5:
+Code/Player.hpp: In constructor ‘Player::Player(Player&&)’:
+Code/Player.hpp:33:2: warning: ‘Player::_control’ should be initialized in the member initialization list [-Weffc++]
+  Player(Player&& original): _sock(original._sock), _pipe(original._pipe), _name(original._name) {original._pipe = nullptr;}
+  ^~~~~~
+Code/Player.hpp:33:2: warning: ‘Player::_recvActive’ should be initialized in the member initialization list [-Weffc++]
+In file included from Code/Board.hpp:42,
+                 from Code/AlicePiece.hpp:5,
+                 from Code/AlicePawn.hpp:4,
+                 from Code/AlicePawn.cpp:4:
+Code/Piece.hpp: In member function ‘virtual void Piece::changeIsTaken(unsigned int, Piece*, Board*)’:
+Code/Piece.hpp:73:39: warning: unused parameter ‘turn’ [-Wunused-parameter]
+   virtual void changeIsTaken(unsigned turn, Piece*, Board*){_isTaken = !_isTaken;}
+                              ~~~~~~~~~^~~~
+In file included from Code/Player.hpp:14,
+                 from Code/Game.hpp:56,
+                 from Code/Piece.hpp:78,
+                 from Code/Board.hpp:42,
+                 from Code/AlicePiece.hpp:5,
+                 from Code/AlicePawn.hpp:4,
+                 from Code/AlicePawn.cpp:4:
+Code/../Communication/ServerGameControl.hpp: At global scope:
+Code/../Communication/ServerGameControl.hpp:14:7: warning: ‘class ServerGameControl’ has pointer data members [-Weffc++]
+ class ServerGameControl {
+       ^~~~~~~~~~~~~~~~~
+Code/../Communication/ServerGameControl.hpp:14:7: warning:   but does not override ‘ServerGameControl(const ServerGameControl&)’ [-Weffc++]
+Code/../Communication/ServerGameControl.hpp:14:7: warning:   or ‘operator=(const ServerGameControl&)’ [-Weffc++]
+In file included from Code/Game.hpp:56,
+                 from Code/Piece.hpp:78,
+                 from Code/Board.hpp:42,
+                 from Code/AlicePiece.hpp:5,
+                 from Code/AlicePawn.hpp:4,
+                 from Code/AlicePawn.cpp:4:
+Code/Player.hpp: In constructor ‘Player::Player(Player&&)’:
+Code/Player.hpp:33:2: warning: ‘Player::_control’ should be initialized in the member initialization list [-Weffc++]
+  Player(Player&& original): _sock(original._sock), _pipe(original._pipe), _name(original._name) {original._pipe = nullptr;}
+  ^~~~~~
+Code/Player.hpp:33:2: warning: ‘Player::_recvActive’ should be initialized in the member initialization list [-Weffc++]
+In file included from Code/AlicePawn.hpp:4,
+                 from Code/AlicePawn.cpp:4:
+Code/AlicePiece.hpp: In member function ‘virtual bool AlicePiece::_checkMove(Coordinate, Board*, Game&)’:
+Code/AlicePiece.hpp:31:25: warning: suggest parentheses around comparison in operand of ‘==’ [-Wparentheses]
+   return (!pieceToTake) != pieceToTake->getDimension() == getDimension();
+          ~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Code/AlicePiece.hpp:29:62: warning: unused parameter ‘game’ [-Wunused-parameter]
+  virtual bool _checkMove(Coordinate end, Board* board, Game& game){
+                                                        ~~~~~~^~~~
+In file included from Code/Board.hpp:42,
+                 from Code/AlicePiece.hpp:5,
+                 from Code/AliceBishop.hpp:4,
+                 from Code/includesAlicePieceHPP.hpp:4,
+                 from Code/Alice.hpp:8,
+                 from Code/Alice.cpp:5:
+Code/Piece.hpp: In member function ‘virtual void Piece::changeIsTaken(unsigned int, Piece*, Board*)’:
+Code/Piece.hpp:73:39: warning: unused parameter ‘turn’ [-Wunused-parameter]
+   virtual void changeIsTaken(unsigned turn, Piece*, Board*){_isTaken = !_isTaken;}
+                              ~~~~~~~~~^~~~
+In file included from Code/Player.hpp:14,
+                 from Code/Game.hpp:56,
+                 from Code/Piece.hpp:78,
+                 from Code/Board.hpp:42,
+                 from Code/AlicePiece.hpp:5,
+                 from Code/AliceBishop.hpp:4,
+                 from Code/includesAlicePieceHPP.hpp:4,
+                 from Code/Alice.hpp:8,
+                 from Code/Alice.cpp:5:
+Code/../Communication/ServerGameControl.hpp: At global scope:
+Code/../Communication/ServerGameControl.hpp:14:7: warning: ‘class ServerGameControl’ has pointer data members [-Weffc++]
+ class ServerGameControl {
+       ^~~~~~~~~~~~~~~~~
+Code/../Communication/ServerGameControl.hpp:14:7: warning:   but does not override ‘ServerGameControl(const ServerGameControl&)’ [-Weffc++]
+Code/../Communication/ServerGameControl.hpp:14:7: warning:   or ‘operator=(const ServerGameControl&)’ [-Weffc++]
+In file included from Code/Game.hpp:56,
+                 from Code/Piece.hpp:78,
+                 from Code/Board.hpp:42,
+                 from Code/AlicePiece.hpp:5,
+                 from Code/AliceBishop.hpp:4,
+                 from Code/includesAlicePieceHPP.hpp:4,
+                 from Code/Alice.hpp:8,
+                 from Code/Alice.cpp:5:
+Code/Player.hpp: In constructor ‘Player::Player(Player&&)’:
+Code/Player.hpp:33:2: warning: ‘Player::_control’ should be initialized in the member initialization list [-Weffc++]
+  Player(Player&& original): _sock(original._sock), _pipe(original._pipe), _name(original._name) {original._pipe = nullptr;}
+  ^~~~~~
+Code/Player.hpp:33:2: warning: ‘Player::_recvActive’ should be initialized in the member initialization list [-Weffc++]
+In file included from Code/AliceBishop.hpp:4,
+                 from Code/includesAlicePieceHPP.hpp:4,
+                 from Code/Alice.hpp:8,
+                 from Code/Alice.cpp:5:
+Code/AlicePiece.hpp: In member function ‘virtual bool AlicePiece::_checkMove(Coordinate, Board*, Game&)’:
+Code/AlicePiece.hpp:31:25: warning: suggest parentheses around comparison in operand of ‘==’ [-Wparentheses]
+   return (!pieceToTake) != pieceToTake->getDimension() == getDimension();
+          ~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Code/AlicePiece.hpp:29:62: warning: unused parameter ‘game’ [-Wunused-parameter]
+  virtual bool _checkMove(Coordinate end, Board* board, Game& game){
+                                                        ~~~~~~^~~~
+In file included from Code/Alice.cpp:5:
+Code/Alice.hpp: At global scope:
+Code/Alice.hpp:19:10: warning: ‘virtual Player* Alice::_getCurrentPlayer()’ can be marked override [-Wsuggest-override]
+  Player* _getCurrentPlayer(){
+          ^~~~~~~~~~~~~~~~~
+Code/Alice.cpp: In member function ‘bool Alice::_isCheckmate(char)’:
+Code/Alice.cpp:182:14: warning: comparison of integer expressions of different signedness: ‘int’ and ‘unsigned int’ [-Wsign-compare]
+    while(row != dangerousPiece->getRow()){
+          ~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~
+Code/Alice.cpp:192:53: warning: comparison of integer expressions of different signedness: ‘int’ and ‘unsigned int’ [-Wsign-compare]
+    for (int j = int(king->getRow())+rowDirection; j != dangerousPiece->getRow(); j += rowDirection){
+                                                   ~~^~~~~~~~~~~~~~~~~~~~~~~~~~~
+Code/Alice.cpp:200:59: warning: comparison of integer expressions of different signedness: ‘int’ and ‘unsigned int’ [-Wsign-compare]
+    for (int j = int(king->getColumn())+columnDirection; j != king->getColumn(); j += columnDirection){
+                                                         ~~^~~~~~~~~~~~~~~~~~~~
+In file included from Code/Board.hpp:42,
+                 from Code/AlicePiece.hpp:5,
+                 from Code/AliceKing.hpp:4,
+                 from Code/AliceKing.cpp:4:
+Code/Piece.hpp: In member function ‘virtual void Piece::changeIsTaken(unsigned int, Piece*, Board*)’:
+Code/Piece.hpp:73:39: warning: unused parameter ‘turn’ [-Wunused-parameter]
+   virtual void changeIsTaken(unsigned turn, Piece*, Board*){_isTaken = !_isTaken;}
+                              ~~~~~~~~~^~~~
+In file included from Code/Player.hpp:14,
+                 from Code/Game.hpp:56,
+                 from Code/Piece.hpp:78,
+                 from Code/Board.hpp:42,
+                 from Code/AlicePiece.hpp:5,
+                 from Code/AliceKing.hpp:4,
+                 from Code/AliceKing.cpp:4:
+Code/../Communication/ServerGameControl.hpp: At global scope:
+Code/../Communication/ServerGameControl.hpp:14:7: warning: ‘class ServerGameControl’ has pointer data members [-Weffc++]
+ class ServerGameControl {
+       ^~~~~~~~~~~~~~~~~
+Code/../Communication/ServerGameControl.hpp:14:7: warning:   but does not override ‘ServerGameControl(const ServerGameControl&)’ [-Weffc++]
+Code/../Communication/ServerGameControl.hpp:14:7: warning:   or ‘operator=(const ServerGameControl&)’ [-Weffc++]
+In file included from Code/Game.hpp:56,
+                 from Code/Piece.hpp:78,
+                 from Code/Board.hpp:42,
+                 from Code/AlicePiece.hpp:5,
+                 from Code/AliceKing.hpp:4,
+                 from Code/AliceKing.cpp:4:
+Code/Player.hpp: In constructor ‘Player::Player(Player&&)’:
+Code/Player.hpp:33:2: warning: ‘Player::_control’ should be initialized in the member initialization list [-Weffc++]
+  Player(Player&& original): _sock(original._sock), _pipe(original._pipe), _name(original._name) {original._pipe = nullptr;}
+  ^~~~~~
+Code/Player.hpp:33:2: warning: ‘Player::_recvActive’ should be initialized in the member initialization list [-Weffc++]
+In file included from Code/AliceKing.hpp:4,
+                 from Code/AliceKing.cpp:4:
+Code/AlicePiece.hpp: In member function ‘virtual bool AlicePiece::_checkMove(Coordinate, Board*, Game&)’:
+Code/AlicePiece.hpp:31:25: warning: suggest parentheses around comparison in operand of ‘==’ [-Wparentheses]
+   return (!pieceToTake) != pieceToTake->getDimension() == getDimension();
+          ~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Code/AlicePiece.hpp:29:62: warning: unused parameter ‘game’ [-Wunused-parameter]
+  virtual bool _checkMove(Coordinate end, Board* board, Game& game){
+                                                        ~~~~~~^~~~
+In file included from Code/GhostPawn.hpp:4,
+                 from Code/Pawn.hpp:4,
+                 from Code/Pawn.cpp:5:
+Code/Piece.hpp: In member function ‘virtual void Piece::changeIsTaken(unsigned int, Piece*, Board*)’:
+Code/Piece.hpp:73:39: warning: unused parameter ‘turn’ [-Wunused-parameter]
+   virtual void changeIsTaken(unsigned turn, Piece*, Board*){_isTaken = !_isTaken;}
+                              ~~~~~~~~~^~~~
+In file included from Code/Player.hpp:14,
+                 from Code/Game.hpp:56,
+                 from Code/Piece.hpp:78,
+                 from Code/GhostPawn.hpp:4,
+                 from Code/Pawn.hpp:4,
+                 from Code/Pawn.cpp:5:
+Code/../Communication/ServerGameControl.hpp: At global scope:
+Code/../Communication/ServerGameControl.hpp:14:7: warning: ‘class ServerGameControl’ has pointer data members [-Weffc++]
+ class ServerGameControl {
+       ^~~~~~~~~~~~~~~~~
+Code/../Communication/ServerGameControl.hpp:14:7: warning:   but does not override ‘ServerGameControl(const ServerGameControl&)’ [-Weffc++]
+Code/../Communication/ServerGameControl.hpp:14:7: warning:   or ‘operator=(const ServerGameControl&)’ [-Weffc++]
+In file included from Code/Game.hpp:56,
+                 from Code/Piece.hpp:78,
+                 from Code/GhostPawn.hpp:4,
+                 from Code/Pawn.hpp:4,
+                 from Code/Pawn.cpp:5:
+Code/Player.hpp: In constructor ‘Player::Player(Player&&)’:
+Code/Player.hpp:33:2: warning: ‘Player::_control’ should be initialized in the member initialization list [-Weffc++]
+  Player(Player&& original): _sock(original._sock), _pipe(original._pipe), _name(original._name) {original._pipe = nullptr;}
+  ^~~~~~
+Code/Player.hpp:33:2: warning: ‘Player::_recvActive’ should be initialized in the member initialization list [-Weffc++]
+In file included from Code/Game.hpp:57,
+                 from Code/Player.hpp:11,
+                 from Code/Player.cpp:5:
+Code/Piece.hpp: In member function ‘virtual void Piece::changeIsTaken(unsigned int, Piece*, Board*)’:
+Code/Piece.hpp:73:39: warning: unused parameter ‘turn’ [-Wunused-parameter]
+   virtual void changeIsTaken(unsigned turn, Piece*, Board*){_isTaken = !_isTaken;}
+                              ~~~~~~~~~^~~~
+In file included from Code/Player.hpp:14,
+                 from Code/Player.cpp:5:
+Code/../Communication/ServerGameControl.hpp: At global scope:
+Code/../Communication/ServerGameControl.hpp:14:7: warning: ‘class ServerGameControl’ has pointer data members [-Weffc++]
+ class ServerGameControl {
+       ^~~~~~~~~~~~~~~~~
+Code/../Communication/ServerGameControl.hpp:14:7: warning:   but does not override ‘ServerGameControl(const ServerGameControl&)’ [-Weffc++]
+Code/../Communication/ServerGameControl.hpp:14:7: warning:   or ‘operator=(const ServerGameControl&)’ [-Weffc++]
+In file included from Code/Player.cpp:5:
+Code/Player.hpp: In constructor ‘Player::Player(Player&&)’:
+Code/Player.hpp:33:2: warning: ‘Player::_control’ should be initialized in the member initialization list [-Weffc++]
+  Player(Player&& original): _sock(original._sock), _pipe(original._pipe), _name(original._name) {original._pipe = nullptr;}
+  ^~~~~~
+Code/Player.hpp:33:2: warning: ‘Player::_recvActive’ should be initialized in the member initialization list [-Weffc++]
+In file included from Code/../Communication/Matchmaking.hpp:10,
+                 from Code/../Communication/ServerHandler.hpp:7,
+                 from Code/../Communication/ServerMessageHandler.hpp:5,
+                 from Code/Player.cpp:6:
+Code/../Communication/../Code/Classic.hpp: At global scope:
+Code/../Communication/../Code/Classic.hpp:18:10: warning: ‘virtual Player* Classic::_getCurrentPlayer()’ can be marked override [-Wsuggest-override]
+  Player* _getCurrentPlayer(){
+          ^~~~~~~~~~~~~~~~~
+In file included from Code/Player.cpp:6:
+Code/../Communication/ServerMessageHandler.hpp: In function ‘void receiveMessageHandler(Socket*, Data*, PlayersMap*, Matchmaking*)’:
+Code/../Communication/ServerMessageHandler.hpp:60:32: warning: comparison of integer expressions of different signedness: ‘unsigned int’ and ‘int’ [-Wsign-compare]
+   if (player->getQueueNumber() != -1) matchmaking->removePlayer(player);
+       ~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~
+Code/Player.cpp: In member function ‘void Player::receiveMove(std::__cxx11::string&)’:
+Code/Player.cpp:102:30: warning: ISO C++ forbids variable length array ‘str’ [-Wvla]
+   char str[message.length()+1];
+                              ^
+Code/Player.cpp: In member function ‘void Player::receivePromotion(std::__cxx11::string&)’:
+Code/Player.cpp:111:30: warning: ISO C++ forbids variable length array ‘str’ [-Wvla]
+   char str[message.length()+1];
+                              ^
+In file included from Code/Bishop.hpp:4,
+                 from Code/includesPieceHPP.hpp:4,
+                 from Code/Dark.hpp:8,
+                 from Code/Dark.cpp:4:
+Code/Piece.hpp: In member function ‘virtual void Piece::changeIsTaken(unsigned int, Piece*, Board*)’:
+Code/Piece.hpp:73:39: warning: unused parameter ‘turn’ [-Wunused-parameter]
+   virtual void changeIsTaken(unsigned turn, Piece*, Board*){_isTaken = !_isTaken;}
+                              ~~~~~~~~~^~~~
+In file included from Code/Player.hpp:14,
+                 from Code/Game.hpp:56,
+                 from Code/Piece.hpp:78,
+                 from Code/Bishop.hpp:4,
+                 from Code/includesPieceHPP.hpp:4,
+                 from Code/Dark.hpp:8,
+                 from Code/Dark.cpp:4:
+Code/../Communication/ServerGameControl.hpp: At global scope:
+Code/../Communication/ServerGameControl.hpp:14:7: warning: ‘class ServerGameControl’ has pointer data members [-Weffc++]
+ class ServerGameControl {
+       ^~~~~~~~~~~~~~~~~
+Code/../Communication/ServerGameControl.hpp:14:7: warning:   but does not override ‘ServerGameControl(const ServerGameControl&)’ [-Weffc++]
+Code/../Communication/ServerGameControl.hpp:14:7: warning:   or ‘operator=(const ServerGameControl&)’ [-Weffc++]
+In file included from Code/Game.hpp:56,
+                 from Code/Piece.hpp:78,
+                 from Code/Bishop.hpp:4,
+                 from Code/includesPieceHPP.hpp:4,
+                 from Code/Dark.hpp:8,
+                 from Code/Dark.cpp:4:
+Code/Player.hpp: In constructor ‘Player::Player(Player&&)’:
+Code/Player.hpp:33:2: warning: ‘Player::_control’ should be initialized in the member initialization list [-Weffc++]
+  Player(Player&& original): _sock(original._sock), _pipe(original._pipe), _name(original._name) {original._pipe = nullptr;}
+  ^~~~~~
+Code/Player.hpp:33:2: warning: ‘Player::_recvActive’ should be initialized in the member initialization list [-Weffc++]
+In file included from Code/Dark.cpp:4:
+Code/Dark.hpp: At global scope:
+Code/Dark.hpp:16:10: warning: ‘virtual Player* Dark::_getCurrentPlayer()’ can be marked override [-Wsuggest-override]
+  Player* _getCurrentPlayer(){
+          ^~~~~~~~~~~~~~~~~
+In file included from Code/Dark.cpp:4:
+Code/Dark.hpp: In member function ‘virtual bool Dark::testCheck(char)’:
+Code/Dark.hpp:53:28: warning: unused parameter ‘color’ [-Wunused-parameter]
+  bool testCheck(const char color) override {return false;}
+                 ~~~~~~~~~~~^~~~~
+In file included from Code/Board.hpp:42,
+                 from Code/AlicePiece.hpp:5,
+                 from Code/AliceKnight.hpp:4,
+                 from Code/AliceKnight.cpp:4:
+Code/Piece.hpp: In member function ‘virtual void Piece::changeIsTaken(unsigned int, Piece*, Board*)’:
+Code/Piece.hpp:73:39: warning: unused parameter ‘turn’ [-Wunused-parameter]
+   virtual void changeIsTaken(unsigned turn, Piece*, Board*){_isTaken = !_isTaken;}
+                              ~~~~~~~~~^~~~
+In file included from Code/Player.hpp:14,
+                 from Code/Game.hpp:56,
+                 from Code/Piece.hpp:78,
+                 from Code/Board.hpp:42,
+                 from Code/AlicePiece.hpp:5,
+                 from Code/AliceKnight.hpp:4,
+                 from Code/AliceKnight.cpp:4:
+Code/../Communication/ServerGameControl.hpp: At global scope:
+Code/../Communication/ServerGameControl.hpp:14:7: warning: ‘class ServerGameControl’ has pointer data members [-Weffc++]
+ class ServerGameControl {
+       ^~~~~~~~~~~~~~~~~
+Code/../Communication/ServerGameControl.hpp:14:7: warning:   but does not override ‘ServerGameControl(const ServerGameControl&)’ [-Weffc++]
+Code/../Communication/ServerGameControl.hpp:14:7: warning:   or ‘operator=(const ServerGameControl&)’ [-Weffc++]
+In file included from Code/Game.hpp:56,
+                 from Code/Piece.hpp:78,
+                 from Code/Board.hpp:42,
+                 from Code/AlicePiece.hpp:5,
+                 from Code/AliceKnight.hpp:4,
+                 from Code/AliceKnight.cpp:4:
+Code/Player.hpp: In constructor ‘Player::Player(Player&&)’:
+Code/Player.hpp:33:2: warning: ‘Player::_control’ should be initialized in the member initialization list [-Weffc++]
+  Player(Player&& original): _sock(original._sock), _pipe(original._pipe), _name(original._name) {original._pipe = nullptr;}
+  ^~~~~~
+Code/Player.hpp:33:2: warning: ‘Player::_recvActive’ should be initialized in the member initialization list [-Weffc++]
+In file included from Code/AliceKnight.hpp:4,
+                 from Code/AliceKnight.cpp:4:
+Code/AlicePiece.hpp: In member function ‘virtual bool AlicePiece::_checkMove(Coordinate, Board*, Game&)’:
+Code/AlicePiece.hpp:31:25: warning: suggest parentheses around comparison in operand of ‘==’ [-Wparentheses]
+   return (!pieceToTake) != pieceToTake->getDimension() == getDimension();
+          ~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Code/AlicePiece.hpp:29:62: warning: unused parameter ‘game’ [-Wunused-parameter]
+  virtual bool _checkMove(Coordinate end, Board* board, Game& game){
+                                                        ~~~~~~^~~~
+In file included from Code/Board.hpp:42,
+                 from Code/Board.cpp:4:
+Code/Piece.hpp: In member function ‘virtual void Piece::changeIsTaken(unsigned int, Piece*, Board*)’:
+Code/Piece.hpp:73:39: warning: unused parameter ‘turn’ [-Wunused-parameter]
+   virtual void changeIsTaken(unsigned turn, Piece*, Board*){_isTaken = !_isTaken;}
+                              ~~~~~~~~~^~~~
+In file included from Code/Player.hpp:14,
+                 from Code/Game.hpp:56,
+                 from Code/Piece.hpp:78,
+                 from Code/Board.hpp:42,
+                 from Code/Board.cpp:4:
+Code/../Communication/ServerGameControl.hpp: At global scope:
+Code/../Communication/ServerGameControl.hpp:14:7: warning: ‘class ServerGameControl’ has pointer data members [-Weffc++]
+ class ServerGameControl {
+       ^~~~~~~~~~~~~~~~~
+Code/../Communication/ServerGameControl.hpp:14:7: warning:   but does not override ‘ServerGameControl(const ServerGameControl&)’ [-Weffc++]
+Code/../Communication/ServerGameControl.hpp:14:7: warning:   or ‘operator=(const ServerGameControl&)’ [-Weffc++]
+In file included from Code/Game.hpp:56,
+                 from Code/Piece.hpp:78,
+                 from Code/Board.hpp:42,
+                 from Code/Board.cpp:4:
+Code/Player.hpp: In constructor ‘Player::Player(Player&&)’:
+Code/Player.hpp:33:2: warning: ‘Player::_control’ should be initialized in the member initialization list [-Weffc++]
+  Player(Player&& original): _sock(original._sock), _pipe(original._pipe), _name(original._name) {original._pipe = nullptr;}
+  ^~~~~~
+Code/Player.hpp:33:2: warning: ‘Player::_recvActive’ should be initialized in the member initialization list [-Weffc++]
+In file included from Code/Knight.hpp:4,
+                 from Code/Knight.cpp:5:
+Code/Piece.hpp: In member function ‘virtual void Piece::changeIsTaken(unsigned int, Piece*, Board*)’:
+Code/Piece.hpp:73:39: warning: unused parameter ‘turn’ [-Wunused-parameter]
+   virtual void changeIsTaken(unsigned turn, Piece*, Board*){_isTaken = !_isTaken;}
+                              ~~~~~~~~~^~~~
+In file included from Code/Player.hpp:14,
+                 from Code/Game.hpp:56,
+                 from Code/Piece.hpp:78,
+                 from Code/Knight.hpp:4,
+                 from Code/Knight.cpp:5:
+Code/../Communication/ServerGameControl.hpp: At global scope:
+Code/../Communication/ServerGameControl.hpp:14:7: warning: ‘class ServerGameControl’ has pointer data members [-Weffc++]
+ class ServerGameControl {
+       ^~~~~~~~~~~~~~~~~
+Code/../Communication/ServerGameControl.hpp:14:7: warning:   but does not override ‘ServerGameControl(const ServerGameControl&)’ [-Weffc++]
+Code/../Communication/ServerGameControl.hpp:14:7: warning:   or ‘operator=(const ServerGameControl&)’ [-Weffc++]
+In file included from Code/Game.hpp:56,
+                 from Code/Piece.hpp:78,
+                 from Code/Knight.hpp:4,
+                 from Code/Knight.cpp:5:
+Code/Player.hpp: In constructor ‘Player::Player(Player&&)’:
+Code/Player.hpp:33:2: warning: ‘Player::_control’ should be initialized in the member initialization list [-Weffc++]
+  Player(Player&& original): _sock(original._sock), _pipe(original._pipe), _name(original._name) {original._pipe = nullptr;}
+  ^~~~~~
+Code/Player.hpp:33:2: warning: ‘Player::_recvActive’ should be initialized in the member initialization list [-Weffc++]
+Code/Knight.cpp: In member function ‘virtual bool Knight::_checkMove(Coordinate, Board*, Game&)’:
+Code/Knight.cpp:12:61: warning: unused parameter ‘game’ [-Wunused-parameter]
+ bool Knight::_checkMove(Coordinate end, Board* board, Game& game){
+                                                       ~~~~~~^~~~
+In file included from Code/Board.hpp:42,
+                 from Code/AlicePiece.hpp:5,
+                 from Code/AliceBishop.hpp:4,
+                 from Code/AliceBishop.cpp:4:
+Code/Piece.hpp: In member function ‘virtual void Piece::changeIsTaken(unsigned int, Piece*, Board*)’:
+Code/Piece.hpp:73:39: warning: unused parameter ‘turn’ [-Wunused-parameter]
+   virtual void changeIsTaken(unsigned turn, Piece*, Board*){_isTaken = !_isTaken;}
+                              ~~~~~~~~~^~~~
+In file included from Code/Player.hpp:14,
+                 from Code/Game.hpp:56,
+                 from Code/Piece.hpp:78,
+                 from Code/Board.hpp:42,
+                 from Code/AlicePiece.hpp:5,
+                 from Code/AliceBishop.hpp:4,
+                 from Code/AliceBishop.cpp:4:
+Code/../Communication/ServerGameControl.hpp: At global scope:
+Code/../Communication/ServerGameControl.hpp:14:7: warning: ‘class ServerGameControl’ has pointer data members [-Weffc++]
+ class ServerGameControl {
+       ^~~~~~~~~~~~~~~~~
+Code/../Communication/ServerGameControl.hpp:14:7: warning:   but does not override ‘ServerGameControl(const ServerGameControl&)’ [-Weffc++]
+Code/../Communication/ServerGameControl.hpp:14:7: warning:   or ‘operator=(const ServerGameControl&)’ [-Weffc++]
+In file included from Code/Game.hpp:56,
+                 from Code/Piece.hpp:78,
+                 from Code/Board.hpp:42,
+                 from Code/AlicePiece.hpp:5,
+                 from Code/AliceBishop.hpp:4,
+                 from Code/AliceBishop.cpp:4:
+Code/Player.hpp: In constructor ‘Player::Player(Player&&)’:
+Code/Player.hpp:33:2: warning: ‘Player::_control’ should be initialized in the member initialization list [-Weffc++]
+  Player(Player&& original): _sock(original._sock), _pipe(original._pipe), _name(original._name) {original._pipe = nullptr;}
+  ^~~~~~
+Code/Player.hpp:33:2: warning: ‘Player::_recvActive’ should be initialized in the member initialization list [-Weffc++]
+In file included from Code/AliceBishop.hpp:4,
+                 from Code/AliceBishop.cpp:4:
+Code/AlicePiece.hpp: In member function ‘virtual bool AlicePiece::_checkMove(Coordinate, Board*, Game&)’:
+Code/AlicePiece.hpp:31:25: warning: suggest parentheses around comparison in operand of ‘==’ [-Wparentheses]
+   return (!pieceToTake) != pieceToTake->getDimension() == getDimension();
+          ~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Code/AlicePiece.hpp:29:62: warning: unused parameter ‘game’ [-Wunused-parameter]
+  virtual bool _checkMove(Coordinate end, Board* board, Game& game){
+                                                        ~~~~~~^~~~
+In file included from Code/Rook.hpp:4,
+                 from Code/Rook.cpp:5:
+Code/Piece.hpp: In member function ‘virtual void Piece::changeIsTaken(unsigned int, Piece*, Board*)’:
+Code/Piece.hpp:73:39: warning: unused parameter ‘turn’ [-Wunused-parameter]
+   virtual void changeIsTaken(unsigned turn, Piece*, Board*){_isTaken = !_isTaken;}
+                              ~~~~~~~~~^~~~
+In file included from Code/Player.hpp:14,
+                 from Code/Game.hpp:56,
+                 from Code/Piece.hpp:78,
+                 from Code/Rook.hpp:4,
+                 from Code/Rook.cpp:5:
+Code/../Communication/ServerGameControl.hpp: At global scope:
+Code/../Communication/ServerGameControl.hpp:14:7: warning: ‘class ServerGameControl’ has pointer data members [-Weffc++]
+ class ServerGameControl {
+       ^~~~~~~~~~~~~~~~~
+Code/../Communication/ServerGameControl.hpp:14:7: warning:   but does not override ‘ServerGameControl(const ServerGameControl&)’ [-Weffc++]
+Code/../Communication/ServerGameControl.hpp:14:7: warning:   or ‘operator=(const ServerGameControl&)’ [-Weffc++]
+In file included from Code/Game.hpp:56,
+                 from Code/Piece.hpp:78,
+                 from Code/Rook.hpp:4,
+                 from Code/Rook.cpp:5:
+Code/Player.hpp: In constructor ‘Player::Player(Player&&)’:
+Code/Player.hpp:33:2: warning: ‘Player::_control’ should be initialized in the member initialization list [-Weffc++]
+  Player(Player&& original): _sock(original._sock), _pipe(original._pipe), _name(original._name) {original._pipe = nullptr;}
+  ^~~~~~
+Code/Player.hpp:33:2: warning: ‘Player::_recvActive’ should be initialized in the member initialization list [-Weffc++]
+Code/Rook.cpp: In member function ‘virtual bool Rook::_checkMove(Coordinate, Board*, Game&)’:
+Code/Rook.cpp:23:60: warning: comparison of integer expressions of different signedness: ‘int’ and ‘unsigned int’ [-Wsign-compare]
+   for (int i = int(_coords.getRealRow()) + rowDirection; i != end.getRealRow(); i += rowDirection){
+                                                          ~~^~~~~~~~~~~~~~~~~~~
+Code/Rook.cpp:29:66: warning: comparison of integer expressions of different signedness: ‘int’ and ‘unsigned int’ [-Wsign-compare]
+   for (int i = int(_coords.getRealColumn()) + columnDirection; i != end.getRealColumn(); i += columnDirection){
+                                                                ~~^~~~~~~~~~~~~~~~~~~~~~
+Code/Rook.cpp:13:59: warning: unused parameter ‘game’ [-Wunused-parameter]
+ bool Rook::_checkMove(Coordinate end, Board* board, Game& game){
+                                                     ~~~~~~^~~~
+In file included from Code/Piece.cpp:4:
+Code/Piece.hpp: In member function ‘virtual void Piece::changeIsTaken(unsigned int, Piece*, Board*)’:
+Code/Piece.hpp:73:39: warning: unused parameter ‘turn’ [-Wunused-parameter]
+   virtual void changeIsTaken(unsigned turn, Piece*, Board*){_isTaken = !_isTaken;}
+                              ~~~~~~~~~^~~~
+In file included from Code/Player.hpp:14,
+                 from Code/Game.hpp:56,
+                 from Code/Piece.hpp:78,
+                 from Code/Piece.cpp:4:
+Code/../Communication/ServerGameControl.hpp: At global scope:
+Code/../Communication/ServerGameControl.hpp:14:7: warning: ‘class ServerGameControl’ has pointer data members [-Weffc++]
+ class ServerGameControl {
+       ^~~~~~~~~~~~~~~~~
+Code/../Communication/ServerGameControl.hpp:14:7: warning:   but does not override ‘ServerGameControl(const ServerGameControl&)’ [-Weffc++]
+Code/../Communication/ServerGameControl.hpp:14:7: warning:   or ‘operator=(const ServerGameControl&)’ [-Weffc++]
+In file included from Code/Game.hpp:56,
+                 from Code/Piece.hpp:78,
+                 from Code/Piece.cpp:4:
+Code/Player.hpp: In constructor ‘Player::Player(Player&&)’:
+Code/Player.hpp:33:2: warning: ‘Player::_control’ should be initialized in the member initialization list [-Weffc++]
+  Player(Player&& original): _sock(original._sock), _pipe(original._pipe), _name(original._name) {original._pipe = nullptr;}
+  ^~~~~~
+Code/Player.hpp:33:2: warning: ‘Player::_recvActive’ should be initialized in the member initialization list [-Weffc++]
+In file included from Code/Queen.hpp:4,
+                 from Code/Queen.cpp:5:
+Code/Piece.hpp: In member function ‘virtual void Piece::changeIsTaken(unsigned int, Piece*, Board*)’:
+Code/Piece.hpp:73:39: warning: unused parameter ‘turn’ [-Wunused-parameter]
+   virtual void changeIsTaken(unsigned turn, Piece*, Board*){_isTaken = !_isTaken;}
+                              ~~~~~~~~~^~~~
+In file included from Code/Player.hpp:14,
+                 from Code/Game.hpp:56,
+                 from Code/Piece.hpp:78,
+                 from Code/Queen.hpp:4,
+                 from Code/Queen.cpp:5:
+Code/../Communication/ServerGameControl.hpp: At global scope:
+Code/../Communication/ServerGameControl.hpp:14:7: warning: ‘class ServerGameControl’ has pointer data members [-Weffc++]
+ class ServerGameControl {
+       ^~~~~~~~~~~~~~~~~
+Code/../Communication/ServerGameControl.hpp:14:7: warning:   but does not override ‘ServerGameControl(const ServerGameControl&)’ [-Weffc++]
+Code/../Communication/ServerGameControl.hpp:14:7: warning:   or ‘operator=(const ServerGameControl&)’ [-Weffc++]
+In file included from Code/Game.hpp:56,
+                 from Code/Piece.hpp:78,
+                 from Code/Queen.hpp:4,
+                 from Code/Queen.cpp:5:
+Code/Player.hpp: In constructor ‘Player::Player(Player&&)’:
+Code/Player.hpp:33:2: warning: ‘Player::_control’ should be initialized in the member initialization list [-Weffc++]
+  Player(Player&& original): _sock(original._sock), _pipe(original._pipe), _name(original._name) {original._pipe = nullptr;}
+  ^~~~~~
+Code/Player.hpp:33:2: warning: ‘Player::_recvActive’ should be initialized in the member initialization list [-Weffc++]
+Code/Queen.cpp: In member function ‘bool Queen::_checkMoveRook(Coordinate, Board*, Game&)’:
+Code/Queen.cpp:22:62: warning: comparison of integer expressions of different signedness: ‘int’ and ‘unsigned int’ [-Wsign-compare]
+     for (int i = int(_coords.getRealRow()) + rowDirection; i != end.getRealRow(); i += rowDirection){
+                                                            ~~^~~~~~~~~~~~~~~~~~~
+Code/Queen.cpp:28:68: warning: comparison of integer expressions of different signedness: ‘int’ and ‘unsigned int’ [-Wsign-compare]
+     for (int i = int(_coords.getRealColumn()) + columnDirection; i != end.getRealColumn(); i += columnDirection){
+                                                                  ~~^~~~~~~~~~~~~~~~~~~~~~
+Code/Queen.cpp:12:64: warning: unused parameter ‘game’ [-Wunused-parameter]
+ bool Queen::_checkMoveRook(Coordinate end, Board* board, Game& game){
+                                                          ~~~~~~^~~~
+Code/Queen.cpp: In member function ‘bool Queen::_checkMoveBishop(Coordinate, Board*, Game&)’:
+Code/Queen.cpp:51:12: warning: comparison of integer expressions of different signedness: ‘int’ and ‘unsigned int’ [-Wsign-compare]
+  while(row != end.getRealRow()){
+        ~~~~^~~~~~~~~~~~~~~~~~~
+Code/Queen.cpp:38:66: warning: unused parameter ‘game’ [-Wunused-parameter]
+ bool Queen::_checkMoveBishop(Coordinate end, Board* board, Game& game){
+                                                            ~~~~~~^~~~
+In file included from Code/Bishop.hpp:4,
+                 from Code/includesPieceHPP.hpp:4,
+                 from Code/Horde.hpp:6,
+                 from Code/Horde.cpp:4:
+Code/Piece.hpp: In member function ‘virtual void Piece::changeIsTaken(unsigned int, Piece*, Board*)’:
+Code/Piece.hpp:73:39: warning: unused parameter ‘turn’ [-Wunused-parameter]
+   virtual void changeIsTaken(unsigned turn, Piece*, Board*){_isTaken = !_isTaken;}
+                              ~~~~~~~~~^~~~
+In file included from Code/Player.hpp:14,
+                 from Code/Game.hpp:56,
+                 from Code/Piece.hpp:78,
+                 from Code/Bishop.hpp:4,
+                 from Code/includesPieceHPP.hpp:4,
+                 from Code/Horde.hpp:6,
+                 from Code/Horde.cpp:4:
+Code/../Communication/ServerGameControl.hpp: At global scope:
+Code/../Communication/ServerGameControl.hpp:14:7: warning: ‘class ServerGameControl’ has pointer data members [-Weffc++]
+ class ServerGameControl {
+       ^~~~~~~~~~~~~~~~~
+Code/../Communication/ServerGameControl.hpp:14:7: warning:   but does not override ‘ServerGameControl(const ServerGameControl&)’ [-Weffc++]
+Code/../Communication/ServerGameControl.hpp:14:7: warning:   or ‘operator=(const ServerGameControl&)’ [-Weffc++]
+In file included from Code/Game.hpp:56,
+                 from Code/Piece.hpp:78,
+                 from Code/Bishop.hpp:4,
+                 from Code/includesPieceHPP.hpp:4,
+                 from Code/Horde.hpp:6,
+                 from Code/Horde.cpp:4:
+Code/Player.hpp: In constructor ‘Player::Player(Player&&)’:
+Code/Player.hpp:33:2: warning: ‘Player::_control’ should be initialized in the member initialization list [-Weffc++]
+  Player(Player&& original): _sock(original._sock), _pipe(original._pipe), _name(original._name) {original._pipe = nullptr;}
+  ^~~~~~
+Code/Player.hpp:33:2: warning: ‘Player::_recvActive’ should be initialized in the member initialization list [-Weffc++]
+In file included from Code/Horde.cpp:4:
+Code/Horde.hpp: At global scope:
+Code/Horde.hpp:12:10: warning: ‘virtual Player* Horde::_getCurrentPlayer()’ can be marked override [-Wsuggest-override]
+  Player* _getCurrentPlayer(){
+          ^~~~~~~~~~~~~~~~~
+Code/Horde.cpp: In member function ‘bool Horde::_isCheckmate(char)’:
+Code/Horde.cpp:191:18: warning: suggest parentheses around assignment used as truth value [-Wparentheses]
+  if (playerColor = 'w'){
+      ~~~~~~~~~~~~^~~~~
+Code/Horde.cpp:220:14: warning: comparison of integer expressions of different signedness: ‘int’ and ‘unsigned int’ [-Wsign-compare]
+    while(row != dangerousPiece->getRow()){
+          ~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~
+Code/Horde.cpp:230:53: warning: comparison of integer expressions of different signedness: ‘int’ and ‘unsigned int’ [-Wsign-compare]
+    for (int j = int(king->getRow())+rowDirection; j != dangerousPiece->getRow(); j += rowDirection){
+                                                   ~~^~~~~~~~~~~~~~~~~~~~~~~~~~~
+Code/Horde.cpp:238:60: warning: comparison of integer expressions of different signedness: ‘int’ and ‘unsigned int’ [-Wsign-compare]
+     for (int j = int(king->getColumn())+columnDirection; j != dangerousPiece->getColumn(); j += columnDirection){
+                                                          ~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Code/Horde.cpp: In member function ‘bool Horde::_isStalemate(char)’:
+Code/Horde.cpp:255:17: warning: suggest parentheses around assignment used as truth value [-Wparentheses]
+  if(playerColor = 'w'){
+     ~~~~~~~~~~~~^~~~~
+In file included from Code/BasicPawn.hpp:4,
+                 from Code/BasicPawn.cpp:5:
+Code/Piece.hpp: In member function ‘virtual void Piece::changeIsTaken(unsigned int, Piece*, Board*)’:
+Code/Piece.hpp:73:39: warning: unused parameter ‘turn’ [-Wunused-parameter]
+   virtual void changeIsTaken(unsigned turn, Piece*, Board*){_isTaken = !_isTaken;}
+                              ~~~~~~~~~^~~~
+In file included from Code/Player.hpp:14,
+                 from Code/Game.hpp:56,
+                 from Code/Piece.hpp:78,
+                 from Code/BasicPawn.hpp:4,
+                 from Code/BasicPawn.cpp:5:
+Code/../Communication/ServerGameControl.hpp: At global scope:
+Code/../Communication/ServerGameControl.hpp:14:7: warning: ‘class ServerGameControl’ has pointer data members [-Weffc++]
+ class ServerGameControl {
+       ^~~~~~~~~~~~~~~~~
+Code/../Communication/ServerGameControl.hpp:14:7: warning:   but does not override ‘ServerGameControl(const ServerGameControl&)’ [-Weffc++]
+Code/../Communication/ServerGameControl.hpp:14:7: warning:   or ‘operator=(const ServerGameControl&)’ [-Weffc++]
+In file included from Code/Game.hpp:56,
+                 from Code/Piece.hpp:78,
+                 from Code/BasicPawn.hpp:4,
+                 from Code/BasicPawn.cpp:5:
+Code/Player.hpp: In constructor ‘Player::Player(Player&&)’:
+Code/Player.hpp:33:2: warning: ‘Player::_control’ should be initialized in the member initialization list [-Weffc++]
+  Player(Player&& original): _sock(original._sock), _pipe(original._pipe), _name(original._name) {original._pipe = nullptr;}
+  ^~~~~~
+Code/Player.hpp:33:2: warning: ‘Player::_recvActive’ should be initialized in the member initialization list [-Weffc++]
+Code/BasicPawn.cpp: In member function ‘virtual bool BasicPawn::_checkMove(Coordinate, Board*, Game&)’:
+Code/BasicPawn.cpp:21:64: warning: unused parameter ‘game’ [-Wunused-parameter]
+ bool BasicPawn::_checkMove(Coordinate end, Board* board, Game& game){
+                                                          ~~~~~~^~~~
+Code/BasicPawn.cpp: In member function ‘virtual bool BasicPawn::move(Coordinate, Board*, Game&)’:
+Code/BasicPawn.cpp:61:6: warning: unused variable ‘rowDirection’ [-Wunused-variable]
+  int rowDirection = rowMove ? rowMove/std::abs(rowMove) : 0;
+      ^~~~~~~~~~~~
+In file included from Code/Board.hpp:42,
+                 from Code/AlicePiece.hpp:5,
+                 from Code/AliceQueen.hpp:4,
+                 from Code/AliceQueen.cpp:4:
+Code/Piece.hpp: In member function ‘virtual void Piece::changeIsTaken(unsigned int, Piece*, Board*)’:
+Code/Piece.hpp:73:39: warning: unused parameter ‘turn’ [-Wunused-parameter]
+   virtual void changeIsTaken(unsigned turn, Piece*, Board*){_isTaken = !_isTaken;}
+                              ~~~~~~~~~^~~~
+In file included from Code/Player.hpp:14,
+                 from Code/Game.hpp:56,
+                 from Code/Piece.hpp:78,
+                 from Code/Board.hpp:42,
+                 from Code/AlicePiece.hpp:5,
+                 from Code/AliceQueen.hpp:4,
+                 from Code/AliceQueen.cpp:4:
+Code/../Communication/ServerGameControl.hpp: At global scope:
+Code/../Communication/ServerGameControl.hpp:14:7: warning: ‘class ServerGameControl’ has pointer data members [-Weffc++]
+ class ServerGameControl {
+       ^~~~~~~~~~~~~~~~~
+Code/../Communication/ServerGameControl.hpp:14:7: warning:   but does not override ‘ServerGameControl(const ServerGameControl&)’ [-Weffc++]
+Code/../Communication/ServerGameControl.hpp:14:7: warning:   or ‘operator=(const ServerGameControl&)’ [-Weffc++]
+In file included from Code/Game.hpp:56,
+                 from Code/Piece.hpp:78,
+                 from Code/Board.hpp:42,
+                 from Code/AlicePiece.hpp:5,
+                 from Code/AliceQueen.hpp:4,
+                 from Code/AliceQueen.cpp:4:
+Code/Player.hpp: In constructor ‘Player::Player(Player&&)’:
+Code/Player.hpp:33:2: warning: ‘Player::_control’ should be initialized in the member initialization list [-Weffc++]
+  Player(Player&& original): _sock(original._sock), _pipe(original._pipe), _name(original._name) {original._pipe = nullptr;}
+  ^~~~~~
+Code/Player.hpp:33:2: warning: ‘Player::_recvActive’ should be initialized in the member initialization list [-Weffc++]
+In file included from Code/AliceQueen.hpp:4,
+                 from Code/AliceQueen.cpp:4:
+Code/AlicePiece.hpp: In member function ‘virtual bool AlicePiece::_checkMove(Coordinate, Board*, Game&)’:
+Code/AlicePiece.hpp:31:25: warning: suggest parentheses around comparison in operand of ‘==’ [-Wparentheses]
+   return (!pieceToTake) != pieceToTake->getDimension() == getDimension();
+          ~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Code/AlicePiece.hpp:29:62: warning: unused parameter ‘game’ [-Wunused-parameter]
+  virtual bool _checkMove(Coordinate end, Board* board, Game& game){
+                                                        ~~~~~~^~~~
+In file included from Communication/../Code/Game.hpp:57,
+                 from Communication/../Code/Player.hpp:11,
+                 from Communication/ServerHandler.hpp:6,
+                 from Communication/ServerMessageHandler.hpp:5:
+Communication/../Code/Piece.hpp: In member function ‘virtual void Piece::changeIsTaken(unsigned int, Piece*, Board*)’:
+Communication/../Code/Piece.hpp:73:39: warning: unused parameter ‘turn’ [-Wunused-parameter]
+   virtual void changeIsTaken(unsigned turn, Piece*, Board*){_isTaken = !_isTaken;}
+                              ~~~~~~~~~^~~~
+In file included from Communication/../Code/Player.hpp:14,
+                 from Communication/ServerHandler.hpp:6,
+                 from Communication/ServerMessageHandler.hpp:5:
+Communication/../Code/../Communication/ServerGameControl.hpp: At global scope:
+Communication/../Code/../Communication/ServerGameControl.hpp:14:7: warning: ‘class ServerGameControl’ has pointer data members [-Weffc++]
+ class ServerGameControl {
+       ^~~~~~~~~~~~~~~~~
+Communication/../Code/../Communication/ServerGameControl.hpp:14:7: warning:   but does not override ‘ServerGameControl(const ServerGameControl&)’ [-Weffc++]
+Communication/../Code/../Communication/ServerGameControl.hpp:14:7: warning:   or ‘operator=(const ServerGameControl&)’ [-Weffc++]
+In file included from Communication/ServerHandler.hpp:6,
+                 from Communication/ServerMessageHandler.hpp:5:
+Communication/../Code/Player.hpp: In constructor ‘Player::Player(Player&&)’:
+Communication/../Code/Player.hpp:33:2: warning: ‘Player::_control’ should be initialized in the member initialization list [-Weffc++]
+  Player(Player&& original): _sock(original._sock), _pipe(original._pipe), _name(original._name) {original._pipe = nullptr;}
+  ^~~~~~
+Communication/../Code/Player.hpp:33:2: warning: ‘Player::_recvActive’ should be initialized in the member initialization list [-Weffc++]
+In file included from Communication/Matchmaking.hpp:10,
+                 from Communication/ServerHandler.hpp:7,
+                 from Communication/ServerMessageHandler.hpp:5:
+Communication/../Code/Classic.hpp: At global scope:
+Communication/../Code/Classic.hpp:18:10: warning: ‘virtual Player* Classic::_getCurrentPlayer()’ can be marked override [-Wsuggest-override]
+  Player* _getCurrentPlayer(){
+          ^~~~~~~~~~~~~~~~~
+Communication/ServerMessageHandler.hpp: In function ‘void receiveMessageHandler(Socket*, Data*, PlayersMap*, Matchmaking*)’:
+Communication/ServerMessageHandler.hpp:60:32: warning: comparison of integer expressions of different signedness: ‘unsigned int’ and ‘int’ [-Wsign-compare]
+   if (player->getQueueNumber() != -1) matchmaking->removePlayer(player);
+       ~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~
+In file included from Communication/../Code/Game.hpp:57,
+                 from Communication/../Code/Player.hpp:11,
+                 from Communication/ServerHandler.hpp:6:
+Communication/../Code/Piece.hpp: In member function ‘virtual void Piece::changeIsTaken(unsigned int, Piece*, Board*)’:
+Communication/../Code/Piece.hpp:73:39: warning: unused parameter ‘turn’ [-Wunused-parameter]
+   virtual void changeIsTaken(unsigned turn, Piece*, Board*){_isTaken = !_isTaken;}
+                              ~~~~~~~~~^~~~
+In file included from Communication/../Code/Player.hpp:14,
+                 from Communication/ServerHandler.hpp:6:
+Communication/../Code/../Communication/ServerGameControl.hpp: At global scope:
+Communication/../Code/../Communication/ServerGameControl.hpp:14:7: warning: ‘class ServerGameControl’ has pointer data members [-Weffc++]
+ class ServerGameControl {
+       ^~~~~~~~~~~~~~~~~
+Communication/../Code/../Communication/ServerGameControl.hpp:14:7: warning:   but does not override ‘ServerGameControl(const ServerGameControl&)’ [-Weffc++]
+Communication/../Code/../Communication/ServerGameControl.hpp:14:7: warning:   or ‘operator=(const ServerGameControl&)’ [-Weffc++]
+In file included from Communication/ServerHandler.hpp:6:
+Communication/../Code/Player.hpp: In constructor ‘Player::Player(Player&&)’:
+Communication/../Code/Player.hpp:33:2: warning: ‘Player::_control’ should be initialized in the member initialization list [-Weffc++]
+  Player(Player&& original): _sock(original._sock), _pipe(original._pipe), _name(original._name) {original._pipe = nullptr;}
+  ^~~~~~
+Communication/../Code/Player.hpp:33:2: warning: ‘Player::_recvActive’ should be initialized in the member initialization list [-Weffc++]
+In file included from Communication/Matchmaking.hpp:10,
+                 from Communication/ServerHandler.hpp:7:
+Communication/../Code/Classic.hpp: At global scope:
+Communication/../Code/Classic.hpp:18:10: warning: ‘virtual Player* Classic::_getCurrentPlayer()’ can be marked override [-Wsuggest-override]
+  Player* _getCurrentPlayer(){
+          ^~~~~~~~~~~~~~~~~
+g++    -c -o Communication/client.o Communication/client.cpp
+g++ -std=c++17 -ggdb3 -Wpedantic -Wall -Wextra -Wconversion -Weffc++ -Wstrict-null-sentinel -Wnoexcept -Wctor-dtor-privacy -Woverloaded-virtual -Wsign-promo -Wzero-as-null-pointer-constant -Wsuggest-final-types -Wsuggest-final-methods -Wsuggest-override -c -o Communication/ClientGameControl.o Communication/ClientGameControl.cpp
+In file included from Communication/ClientGameControl.hpp:6,
+                 from Communication/ClientGameControl.cpp:1:
+Communication/../Display/GameDisplay/board.hpp:16:7: warning: ‘class Board’ has pointer data members [-Weffc++]
+ class Board
+       ^~~~~
+Communication/../Display/GameDisplay/board.hpp:16:7: warning:   but does not override ‘Board(const Board&)’ [-Weffc++]
+Communication/../Display/GameDisplay/board.hpp:16:7: warning:   or ‘operator=(const Board&)’ [-Weffc++]
+Communication/ClientGameControl.cpp: In member function ‘void ClientGameControl::receiveAskMove(std::__cxx11::string)’:
+Communication/ClientGameControl.cpp:50:52: warning: unused parameter ‘message’ [-Wunused-parameter]
+ void ClientGameControl::receiveAskMove(std::string message) {
+                                        ~~~~~~~~~~~~^~~~~~~
+Communication/ClientGameControl.cpp: In member function ‘void ClientGameControl::receiveAskPromotion(std::__cxx11::string)’:
+Communication/ClientGameControl.cpp:55:57: warning: unused parameter ‘message’ [-Wunused-parameter]
+ void ClientGameControl::receiveAskPromotion(std::string message) {
+                                             ~~~~~~~~~~~~^~~~~~~
+g++ -std=c++17 -ggdb3 -Wpedantic -Wall -Wextra -Wconversion -Weffc++ -Wstrict-null-sentinel -Wnoexcept -Wctor-dtor-privacy -Woverloaded-virtual -Wsign-promo -Wzero-as-null-pointer-constant -Wsuggest-final-types -Wsuggest-final-methods -Wsuggest-override -c -o Display/GameDisplay/board.o Display/GameDisplay/board.cpp
+In file included from Display/GameDisplay/board.cpp:1:
+Display/GameDisplay/board.hpp:16:7: warning: ‘class Board’ has pointer data members [-Weffc++]
+ class Board
+       ^~~~~
+Display/GameDisplay/board.hpp:16:7: warning:   but does not override ‘Board(const Board&)’ [-Weffc++]
+Display/GameDisplay/board.hpp:16:7: warning:   or ‘operator=(const Board&)’ [-Weffc++]
+Display/GameDisplay/board.cpp: In constructor ‘Board::Board()’:
+Display/GameDisplay/board.cpp:5:1: warning: ‘Board::mode’ should be initialized in the member initialization list [-Weffc++]
+ Board::Board(): infos_win(nullptr), columns(BOARD_COLS), lines(BOARD_LINES), running(false)
+ ^~~~~
+Display/GameDisplay/board.cpp:5:1: warning: ‘Board::colour’ should be initialized in the member initialization list [-Weffc++]
+Display/GameDisplay/board.cpp: In constructor ‘Board::Board(int, int)’:
+Display/GameDisplay/board.cpp:11:1: warning: ‘Board::mode’ should be initialized in the member initialization list [-Weffc++]
+ Board::Board(int line_count, int col_count): infos_win(nullptr), columns(col_count), lines(line_count), running(false)
+ ^~~~~
+Display/GameDisplay/board.cpp:11:1: warning: ‘Board::colour’ should be initialized in the member initialization list [-Weffc++]
+Display/GameDisplay/board.cpp: In member function ‘void Board::draw_infos()’:
+Display/GameDisplay/board.cpp:89:14: warning: variable ‘y_win’ set but not used [-Wunused-but-set-variable]
+   int x_win, y_win;
+              ^~~~~
+Display/GameDisplay/board.cpp: In member function ‘std::__cxx11::string Board::get_promotion()’:
+Display/GameDisplay/board.cpp:227:23: warning: conversion from ‘int’ to ‘char’ may change value [-Wconversion]
+   promotion.append(1, answer);
+                       ^~~~~~
+g++ -std=c++17 -ggdb3 -Wpedantic -Wall -Wextra -Wconversion -Weffc++ -Wstrict-null-sentinel -Wnoexcept -Wctor-dtor-privacy -Woverloaded-virtual -Wsign-promo -Wzero-as-null-pointer-constant -Wsuggest-final-types -Wsuggest-final-methods -Wsuggest-override -c -o Display/MenuHandler/MenuHandler.o Display/MenuHandler/MenuHandler.cpp
+In file included from Display/MenuHandler/MenuHandler.cpp:1:
+Display/MenuHandler/MenuHandler.hpp:9:7: warning: ‘class MenuHandler’ has pointer data members [-Weffc++]
+ class MenuHandler
+       ^~~~~~~~~~~
+Display/MenuHandler/MenuHandler.hpp:9:7: warning:   but does not override ‘MenuHandler(const MenuHandler&)’ [-Weffc++]
+Display/MenuHandler/MenuHandler.hpp:9:7: warning:   or ‘operator=(const MenuHandler&)’ [-Weffc++]
+Display/MenuHandler/MenuHandler.cpp: In member function ‘std::__cxx11::string MenuHandler::get_infos(std::__cxx11::string)’:
+Display/MenuHandler/MenuHandler.cpp:46:24: warning: conversion from ‘int’ to ‘char’ may change value [-Wconversion]
+       input.push_back( ch );
+                        ^~
+Display/MenuHandler/MenuHandler.cpp: In member function ‘int MenuHandler::get_choice(std::vector<std::__cxx11::basic_string<char> >)’:
+Display/MenuHandler/MenuHandler.cpp:89:25: warning: comparison of integer expressions of different signedness: ‘int’ and ‘std::vector<std::__cxx11::basic_string<char> >::size_type’ {aka ‘long unsigned int’} [-Wsign-compare]
+       for (int i = 0; i < choices.size(); i++)
+                       ~~^~~~~~~~~~~~~~~~
+Display/MenuHandler/MenuHandler.cpp:109:44: warning: conversion from ‘std::vector<std::__cxx11::basic_string<char> >::size_type’ {aka ‘long unsigned int’} to ‘int’ may change value [-Wconversion]
+                 highlight = choices.size() - 1;
+                             ~~~~~~~~~~~~~~~^~~
+Display/MenuHandler/MenuHandler.cpp:113:27: warning: comparison of integer expressions of different signedness: ‘int’ and ‘std::vector<std::__cxx11::basic_string<char> >::size_type’ {aka ‘long unsigned int’} [-Wsign-compare]
+             if (highlight == choices.size() )
+                 ~~~~~~~~~~^~~~~~~~~~~~~~~~~
+Display/MenuHandler/MenuHandler.cpp: In member function ‘void MenuHandler::init_statst(std::__cxx11::string)’:
+Display/MenuHandler/MenuHandler.cpp:152:7: warning: variable ‘y_max’ set but not used [-Wunused-but-set-variable]
+   int y_max, x_max;
+       ^~~~~
+Display/MenuHandler/MenuHandler.cpp:161:7: warning: unused variable ‘y_split’ [-Wunused-variable]
+   int y_split = (y_box/10);
+       ^~~~~~~
+Display/MenuHandler/MenuHandler.cpp: In member function ‘void MenuHandler::init_statsp(std::__cxx11::string)’:
+Display/MenuHandler/MenuHandler.cpp:181:7: warning: variable ‘y_max’ set but not used [-Wunused-but-set-variable]
+   int y_max, x_max;
+       ^~~~~
+Display/MenuHandler/MenuHandler.cpp:190:7: warning: unused variable ‘y_split’ [-Wunused-variable]
+   int y_split = (y_box/10);
+       ^~~~~~~
+Display/MenuHandler/MenuHandler.cpp: In member function ‘void MenuHandler::update_stats(int, std::__cxx11::string, int, int, int)’:
+Display/MenuHandler/MenuHandler.cpp:205:7: warning: variable ‘y_box’ set but not used [-Wunused-but-set-variable]
+   int y_box, x_box;
+       ^~~~~
+Display/MenuHandler/MenuHandler.cpp: In member function ‘void MenuHandler::init_friendsw(std::vector<std::__cxx11::basic_string<char> >)’:
+Display/MenuHandler/MenuHandler.cpp:240:31: warning: conversion from ‘std::vector<std::__cxx11::basic_string<char> >::size_type’ {aka ‘long unsigned int’} to ‘int’ may change value [-Wconversion]
+   int max_count = friends.size();
+                   ~~~~~~~~~~~~^~
+g++ -std=c++17 -ggdb3 -Wpedantic -Wall -Wextra -Wconversion -Weffc++ -Wstrict-null-sentinel -Wnoexcept -Wctor-dtor-privacy -Woverloaded-virtual -Wsign-promo -Wzero-as-null-pointer-constant -Wsuggest-final-types -Wsuggest-final-methods -Wsuggest-override -o client Communication/client.o Communication/Socket.o Communication/BindSocket.o Communication/ClientGameControl.o Communication/ClientMessageHandler.hpp Communication/ClientFunctions.hpp Communication/SplitString.o Display/GameDisplay/board.o Display/MenuHandler/MenuHandler.o Communication/config.hpp -lpthread -lncurses
+In file included from Communication/ClientFunctions.hpp:6,
+                 from Communication/ClientMessageHandler.hpp:8:
+Communication/../Display/MenuHandler/MenuHandler.hpp:9:7: warning: ‘class MenuHandler’ has pointer data members [-Weffc++]
+ class MenuHandler
+       ^~~~~~~~~~~
+Communication/../Display/MenuHandler/MenuHandler.hpp:9:7: warning:   but does not override ‘MenuHandler(const MenuHandler&)’ [-Weffc++]
+Communication/../Display/MenuHandler/MenuHandler.hpp:9:7: warning:   or ‘operator=(const MenuHandler&)’ [-Weffc++]
+In file included from Communication/ClientGameControl.hpp:6,
+                 from Communication/ClientHandler.hpp:5,
+                 from Communication/ClientMessageHandler.hpp:9:
+Communication/../Display/GameDisplay/board.hpp:16:7: warning: ‘class Board’ has pointer data members [-Weffc++]
+ class Board
+       ^~~~~
+Communication/../Display/GameDisplay/board.hpp:16:7: warning:   but does not override ‘Board(const Board&)’ [-Weffc++]
+Communication/../Display/GameDisplay/board.hpp:16:7: warning:   or ‘operator=(const Board&)’ [-Weffc++]
+In file included from Communication/ClientFunctions.hpp:6:
+Communication/../Display/MenuHandler/MenuHandler.hpp:9:7: warning: ‘class MenuHandler’ has pointer data members [-Weffc++]
+ class MenuHandler
+       ^~~~~~~~~~~
+Communication/../Display/MenuHandler/MenuHandler.hpp:9:7: warning:   but does not override ‘MenuHandler(const MenuHandler&)’ [-Weffc++]
+Communication/../Display/MenuHandler/MenuHandler.hpp:9:7: warning:   or ‘operator=(const MenuHandler&)’ [-Weffc++]
+rm -f *.o Communication/*.o Display/GameDisplay/*.o Display/MenuHandler/*.o Code/*.o
