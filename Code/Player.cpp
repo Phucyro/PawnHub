@@ -48,7 +48,7 @@ Socket* Player::getSocket() const {
 	return _sock;
 }
 
-unsigned int Player::getQueueNumber() const {
+int Player::getQueueNumber() const {
 	return _queueNumber;
 }
 
