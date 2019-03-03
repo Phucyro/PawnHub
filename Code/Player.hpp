@@ -54,6 +54,7 @@ class Player{
 	void setQueueNumber(int);
 
 	void transferStart();
+	void transferUpdate(std::string&);
 	void transferCheck();
 	void transferCheckmate(std::string&);
 	void transferStalemate();

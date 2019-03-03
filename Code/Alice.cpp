@@ -98,6 +98,11 @@ void Alice::_sendGameMode() {
 	_player2->transferGameMode(game);
 }
 
+void Alice::_sendStart() {
+	_player1->transferUpdate("alice");
+	_player2->transferUpdate("alice");
+}
+
 void Alice::_changePawn(Piece *pawn, Piece* promotedPawn, Board* board){
 	int start, i, end;
 	if (pawn->getColor() == 'w'){

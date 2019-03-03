@@ -73,6 +73,10 @@ void Player::transferStart() {
 	_control->sendStart(getSocket());
 }
 
+void Player::transferUpdate(std::string& update) {
+	_control->sendUpdate(getSocket(), update);
+}
+
 void Player::transferCheck() {
 	_control->sendCheck(getSocket());
 }

@@ -1,17 +1,28 @@
 #include "ClientGameControl.hpp"
 
-ClientGameControl::ClientGameControl(Socket& _socket): board(), socket(_socket), game_ongoing(false) {
+ClientGameControl::ClientGameControl(Socket& _socket): board(), socket(_socket), game_ongoing(false), is_alice(false) {
   startParty();
 }
 
 void ClientGameControl::receiveBoard(std::string message) {
-  board.draw_pieces(message);
+  if (!is_alice) {
+    board.draw_pieces(message);
+  }
+  else if (message[0] == '1') {
+    // board.draw_pieces_1(message.erase(0,1));
+  }
+  else {
+    // board.draw_pieces_2(message.erase(0,1));
+  }
 }
 
 void ClientGameControl::receiveUpdate(std::string message) {
   if (message == "start") {
     board.init_ncurses();
-    // std::cout << "Game Started" << std::endl;
+  }
+  else if (message == "alice") {
+    is_alice = true;
+    // board.init_alice();
   }
   else if (message == "check") {
     board.declare_check();
