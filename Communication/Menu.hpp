@@ -8,6 +8,7 @@
 #include "ClientMessageHandler.hpp"
 #include <string>
 #include <vector>
+#include "SplitString.hpp"
 
 void authentificationMenu(MenuHandler* menu, Socket* socket){
   std::string username, password, confirmation;
@@ -149,7 +150,7 @@ void myStatMenu(MenuHandler* menu, Socket* socket){
   bool temp_b = true;
   std::vector<std::string> temp_v;
   menu->clear_windows();
-  /*
+
   menu->init_statsw();
   menu->init_statsp("User");
 
@@ -158,7 +159,7 @@ void myStatMenu(MenuHandler* menu, Socket* socket){
   for (unsigned int a = 0; a < 4; ++a){
     receiveMessageHandler(menu, socket, &temp_b, &temp_v);
   }
-  */
+
   menu->refresh_board();
   menu->init_choicesw();
   menu->get_choice({"Retour"});
@@ -205,9 +206,81 @@ void viewFriendsMenu(MenuHandler* menu, Socket* socket){
   menu->refresh_board();
 }
 
-void theirFriendRequestMenu(MenuHandler* menu, Socket* socket){}
 
-void myFriendRequestMenu(MenuHandler* menu, Socket* socket){}
+void theirFriendRequestMenu(MenuHandler* menu, Socket* socket){
+  bool stop_receive = false;
+  std::vector<std::string> friends_request = {};
+  menu->clear_windows();
+  viewTheirfriendRequest(socket);
+
+  while (!stop_receive){
+    receiveMessageHandler(menu, socket, &stop_receive, &friends_request);
+  }
+
+  std::string command = "";
+
+  while (command != "/quit"){
+    menu->init_dataw();
+    command = menu->get_infos("commande");
+    menu->refresh_board();
+
+    std::vector<std::string> split = splitString(command, ' ');
+
+    if (split.size() == 2){
+      if (split[0] == "/accept"){
+        acceptRefuseRequest(socket, split[1], "1");
+      }
+      else if (split[0] == "/refuse"){
+        acceptRefuseRequest(socket, split[1], "2");
+      }
+      receiveMessageHandler(menu, socket, &stop_receive, &friends_request);
+    }
+  }
+}
+
+
+void sendFriendRequestMenu(MenuHandler* menu, Socket* socket){
+  bool temp_b = false;
+  std::vector<std::string> temp_v = {};
+  menu->clear_windows();
+
+  std::string command = "";
+
+  while (command != "/quit"){
+    menu->init_dataw();
+    command = menu->get_infos("commande");
+    menu->refresh_board();
+
+    std::vector<std::string> split = splitString(command, ' ');
+
+    if (split[0] == "/send" && split.size() == 2){
+      sendFriendRequest(socket, split[1]);
+      receiveMessageHandler(menu, socket, &temp_b, &temp_v);
+    }
+  }
+}
+
+
+void removeFriendMenu(MenuHandler* menu, Socket* socket){
+  bool temp_b = false;
+  std::vector<std::string> temp_v = {};
+  menu->clear_windows();
+
+  std::string command = "";
+
+  while (command != "/quit"){
+    menu->init_dataw();
+    command = menu->get_infos("commande");
+    menu->refresh_board();
+
+    std::vector<std::string> split = splitString(command, ' ');
+
+    if (split[0] == "/remove" && split.size() == 2){
+      removeFriend(socket, split[1]);
+      receiveMessageHandler(menu, socket, &temp_b, &temp_v);
+    }
+  }
+}
 
 
 void friendMenu(MenuHandler* menu, Socket* socket){
@@ -218,8 +291,9 @@ void friendMenu(MenuHandler* menu, Socket* socket){
     menu->init_choicesw();
     int choice = menu->get_choice({
       "Consulter sa liste d'amis",
-      "Accepter ou refuser une demande d'amis",
-      "Envoyer ou annuler une demande d'amis",
+      "Accepter ou refuser une demande d'ami",
+      "Envoyer une demande d'ami",
+      "Retirer un ami de sa liste d'amis",
       "Retour"
     });
 
@@ -231,9 +305,12 @@ void friendMenu(MenuHandler* menu, Socket* socket){
         theirFriendRequestMenu(menu, socket);
         break;
       case 2 :
-        myFriendRequestMenu(menu, socket);
+        sendFriendRequestMenu(menu, socket);
         break;
       case 3 :
+        removeFriendMenu(menu, socket);
+        break;
+      case 4 :
         leave = true;
     }
   }

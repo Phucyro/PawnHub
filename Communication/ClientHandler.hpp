@@ -75,4 +75,64 @@ void viewFriendsHandler(MenuHandler* menu, std::string friend_name, bool* stop, 
   }
 }
 
+void viewFriendRequestHandler(MenuHandler* menu, std::string request, bool* stop, std::vector<std::string>* request_list){
+  if (request != "Guest"){
+    request_list->push_back(request);
+  }
+  else {
+    menu->init_friendsw(*request_list);
+    *stop = true;
+  }
+}
+
+void acceptRefuseRequestHandler(MenuHandler* menu, std::string option, std::string res){
+  if (option == "0")
+    menu->print_warning("Vous ne pouvez pas être amis avec vous même");
+  else if (option == "1"){
+    if (res == "0")
+      menu->print_warning("Vous n'avez pas recu de demande de cet utilisateur");
+    else
+      menu->print_warning("Cet utilisateur a été ajouté à vos amis");
+  }
+  else {
+    if (res == "0")
+      menu->print_warning("Vous n'avez pas recu de demande cet utilisateur");
+    else
+      menu->print_warning("Cet utilisateur a été retiré de vos amis");
+  }
+  menu->refresh_board();
+}
+
+void sendFriendRequestHandler(MenuHandler* menu, std::string res){
+  switch (res[0]){
+    case '0' :
+      menu->print_warning("Utilisateur inexistant");
+      break;
+    case '1' :
+      menu->print_warning("Utilisateur déjà dans la liste d'amis");
+      break;
+    case '2' :
+      menu->print_warning("Demande d'ami déjà envoyé");
+      break;
+    case '3' :
+      menu->print_warning("Vous êtes tout les deux devenus amis");
+      break;
+    case '4' :
+      menu->print_warning("Demande d'ami envoyé");
+  }
+  menu->refresh_board();
+}
+
+void removeFriendHandler(MenuHandler* menu, std::string res){
+  switch (res[0]){
+    case '0' :
+      menu->print_warning("Cet utilisateur ne fait pas partie de vos amis");
+      break;
+    case '1' :
+      menu->print_warning("Utilisateur retiré de votre liste d'amis");
+  }
+  menu->refresh_board();
+}
+
+
 #endif

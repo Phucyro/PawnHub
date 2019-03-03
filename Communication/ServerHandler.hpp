@@ -129,5 +129,44 @@ void inline viewFriendsHandler(Player* player, Data* data){
 }
 
 
+void inline viewFriendRequestHandler(Player* player, Data* data){
+  std::vector<std::string> requests = data->getUserFriendRequests(player->getName());
+
+  for (unsigned int a = 0; a < requests.size(); ++a){
+    player->getSocket()->sendMessage(std::string("10~") + requests[a]);
+  }
+
+  player->getSocket()->sendMessage("10~Guest");
+}
+
+void inline acceptRefuseRequestHandler(Player* player, Data* data, std::string name, std::string option){
+  if (player->getName() == name){
+    player->getSocket()->sendMessage("11~0~0");
+  }
+
+  if (option == "1"){
+    int res = data->accceptFriendRequest(player->getName(), name);
+    player->getSocket()->sendMessage(std::string("11~1~") + std::to_string(res));
+  }
+  else {
+    int res = data->refuseFriendRequest(player->getName(), name);
+    player->getSocket()->sendMessage(std::string("11~2~") + std::to_string(res));
+  }
+}
+
+void inline sendFriendRequestHandler(Player* player, Data* data, std::string name){
+  if (player->getName() == name){
+    player->getSocket()->sendMessage("12~0");
+  }
+  else {
+    int res = data->sendFriendRequest(player->getName(), name);
+    player->getSocket()->sendMessage(std::string("12~") + std::to_string(res));
+  }
+}
+
+void inline removeFriendHandler(Player* player, Data* data, std::string name){
+  int res = data->removeFriend(player->getName(), name);
+  player->getSocket()->sendMessage(std::string("13~") + std::to_string(res));
+}
 
 #endif
