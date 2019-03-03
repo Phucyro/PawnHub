@@ -99,8 +99,9 @@ void Alice::_sendGameMode() {
 }
 
 void Alice::_sendStart() {
-	_player1->transferUpdate("alice");
-	_player2->transferUpdate("alice");
+	std::string string = "alice";
+	_player1->transferUpdate(string);
+	_player2->transferUpdate(string);
 }
 
 void Alice::_changePawn(Piece *pawn, Piece* promotedPawn, Board* board){
