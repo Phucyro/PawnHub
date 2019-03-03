@@ -62,10 +62,24 @@ int main()
   test->get_choice(choices);
 
   test->refresh_board();
-
-
   test->end_windows();
 
+  //TEST 6
+  test->clear_windows();
+  test->init_chatw();
+
+  for (int i=0; i<30; i++)
+  {
+    test->update_chatw(i,"Julien", "Bien le bonsoir");
+  }
+  test->refresh_board();
+
+  test->init_dataw();
+  test->get_infos("votre message (/w destinataire message)");
+
+  test->refresh_board();
+
+  test->end_windows();
 
 
 

@@ -228,6 +228,7 @@ void MenuHandler::update_stats(int number, std::string name, int wins, int loses
 }
 
 void MenuHandler::init_friendsw(const std::vector<std::string> friends)
+/**affiche les amis sur le top window**/
 {
   init_statsw();
 
@@ -291,6 +292,27 @@ void MenuHandler::init_friendsw(const std::vector<std::string> friends)
   }
 
   refresh_board();
+
+}
+
+void MenuHandler::init_chatw()
+{
+  init_statsw();
+  int y_max, x_max;
+  getmaxyx(stats_w, y_max, x_max);
+  mvwprintw(stats_w, 1, 1,"Messages recus");
+  refresh_board();
+}
+
+void MenuHandler::update_chatw(int number, std::string sender, std::string message)
+{
+  int y_max, x_max;
+  getmaxyx(stats_w, y_max, x_max);
+
+  if (number < y_max-4)
+  {
+    mvwprintw(stats_w, 3+number, 1, "%s : %s", sender.c_str(), message.c_str());
+  }
 
 }
 
