@@ -2,20 +2,15 @@
 #include "BoardParsing.hpp"
 #include "MoveParsing.hpp"
 
-Board::Board(): infos_win(nullptr), mode(nullptr), colour(nullptr), columns(BOARD_COLS), lines(BOARD_LINES), running(false) {}
+Board::Board(): infos_win(nullptr), columns(BOARD_COLS), lines(BOARD_LINES), running(false)
+{
 
-Board::Board(int line_count, int col_count): infos_win(nullptr), mode(nullptr), colour(nullptr), columns(col_count), lines(line_count), running(false) {}
+}
 
-Board::Board(const Board& _other): infos_win(_other.infos_win), mode(_other.mode), colour(_other.colour), columns(_other.columns), lines(_other.lines), running(_other.running) {}
 
-Board& Board::operator=(const Board& _other) {
-  infos_win = _other.infos_win;
-  mode = _other.mode;
-  colour = _other.colour;
-  columns = _other.columns;
-  lines = _other.lines;
-  running = _other.running;
-  return *this;
+Board::Board(int line_count, int col_count): infos_win(nullptr), columns(col_count), lines(line_count), running(false)
+{
+
 }
 
 Board::~Board()
@@ -66,27 +61,55 @@ void Board::init_ncurses()
 void Board::init_windows()
 /**Initialise le board**/
 {
-  int board_height = (lines+1)*OFFSET;
-  int board_width = (columns+1)*OFFSET;
+  int board_height = lines*OFFSET;
+  int board_width = columns*OFFSET;
 
   infos_win = newwin(board_height/2, board_width, 0, board_width+4);
   box(infos_win,0,0);
 
-  for (int i=0; i<(lines*OFFSET); i+=OFFSET)
-    for (int j=0; j<(columns*OFFSET); j+=OFFSET)
+  for (int i=0; i<24; i+=OFFSET)
+    for (int j=0; j<24; j+=OFFSET)
     {
-      draw_rectangle(i+OFFSET,j+2,i+OFFSET+SIDE_LENGTH,j+2+SIDE_LENGTH);
+      draw_rectangle(i,j,i+SIDE_LENGTH,j+SIDE_LENGTH);
     }
+
 
   draw_coordinates();
   draw_infos();
 
-  refresh_board();
-  endwin();
-
 }
 
+void Board::draw_alice_coordinates()
+{
 
+  for (int i=0; i<lines; i++)
+  {
+    mvprintw(1+(OFFSET*i), 54, "%d", i+1);
+  }
+
+  for (int i=0; i<columns; i++)
+  {
+    mvprintw(24, 57+(OFFSET*i), "%c", 'A'+i);
+  }
+
+
+  refresh_board();
+}
+
+void Board::draw_alice_board()
+{
+  int board_height = lines*OFFSET;
+  int board_width = columns*OFFSET;
+
+  for (int i=56; i<80; i+=OFFSET)
+    for (int j=0; j<24; j+=OFFSET)
+    {
+      draw_rectangle(i, j, i+SIDE_LENGTH, j+SIDE_LENGTH);
+    }
+
+  draw_alice_coordinates();
+
+}
 
 void Board::draw_infos()
 /** Initialise la fenetre des infos **/
@@ -123,13 +146,11 @@ void Board::update_turn(const char* turn) {
 void Board::declare_check() {
   mvprintw(15, 30, "%s", "CHECK");
   refresh_board();
-  getch();
 }
 
 void Board::endgame(const char* message) {
   mvprintw(15, 30, "%s", message);
   refresh_board();
-  getch();
 }
 
 void Board::draw_coordinates()
@@ -137,14 +158,12 @@ void Board::draw_coordinates()
 {
   for (int i=0; i<lines; i++)
   {
-    mvprintw(OFFSET*(i+1), 1, "%d", i+1);
-    mvprintw(OFFSET*(i+1), 25+OFFSET , "%d", i+1);
+    mvprintw(1+(OFFSET*i), 25 , "%d", i+1);
   }
 
   for (int i=0; i<columns; i++)
   {
-    mvprintw(1, 1+OFFSET*(i+1), "%c", 'A'+i);
-    mvprintw(25+1, 1+OFFSET*(i+1), "%c", 'A'+i);
+    mvprintw(24, 1+(OFFSET*i), "%c", 'A'+i);
   }
   refresh_board();
 }
@@ -205,21 +224,19 @@ std::string Board::get_movement()
 {
   int move[4];
 
-  // echo();    // would have been cool but can't quite get it to work properly
-  // nocbreak();
+  // echo();    // would have been cool but can't clear it without brute force
   for (int i = 0; i < 5; ++i) {
     if (i == 0) {
-      mvprintw(15, 32, "%s", "State initial piece position: ");
+      mvprintw(15, 30, "%s", "State initial piece position: ");
     }
     else if (i == 2) {
-      mvprintw(16, 32, "%s", "State moved piece position:  ");
+      mvprintw(16, 30, "%s", "State moved piece position: ");
     }
     else if (i == 4) {break;}
     move[i] = getch();
     mvprintw(15 + (i/2), 60 + (i%2), "%c", move[i]);
   }
   // noecho();
-  // cbreak();
   refresh_board();
 
   std::string effective_move = moveToString(move);
@@ -235,7 +252,7 @@ std::string Board::get_promotion() {
 
   int answer = getch();
   std::string promotion;
-  promotion.append(1, char(answer));
+  promotion.append(1, answer);
   return promotion;
 }
 
