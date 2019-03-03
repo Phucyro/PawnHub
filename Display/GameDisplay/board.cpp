@@ -87,6 +87,42 @@ void Board::init_windows()
 }
 
 
+void Board::draw_alice_coordinates()
+{
+
+  for (int i=0; i<lines; i++)
+  {
+    mvprintw(1+(OFFSET*i), 54, "%d", i+1);
+  }
+
+  for (int i=0; i<columns; i++)
+  {
+    mvprintw(24, 57+(OFFSET*i), "%c", 'A'+i);
+  }
+
+
+  refresh_board();
+}
+
+void Board::draw_alice_board()
+/**initialise le deuxieme board **/
+{
+  int board_height = lines*OFFSET;
+  int board_width = columns*OFFSET;
+
+  for (int i=56; i<80; i+=OFFSET)
+    for (int j=0; j<24; j+=OFFSET)
+    {
+      draw_rectangle(i, j, i+SIDE_LENGTH, j+SIDE_LENGTH);
+    }
+
+  draw_alice_coordinates();
+
+  refresh_board();
+
+
+}
+
 
 void Board::draw_infos()
 /** Initialise la fenetre des infos **/
@@ -137,14 +173,12 @@ void Board::draw_coordinates()
 {
   for (int i=0; i<lines; i++)
   {
-    mvprintw(OFFSET*(i+1), 1, "%d", i+1);
-    mvprintw(OFFSET*(i+1), 25+OFFSET , "%d", i+1);
+    mvprintw(1+(OFFSET*i), 25 , "%d", i+1);
   }
 
   for (int i=0; i<columns; i++)
   {
-    mvprintw(1, 1+OFFSET*(i+1), "%c", 'A'+i);
-    mvprintw(25+1, 1+OFFSET*(i+1), "%c", 'A'+i);
+    mvprintw(24, 1+(OFFSET*i), "%c", 'A'+i);
   }
   refresh_board();
 }
@@ -159,6 +193,14 @@ void Board::draw_pieces(std::string board)
   stringToBoard(board);
   refresh_board();
 }
+
+void Board::draw_alice_pieces(std::string board)
+{
+  refresh_board();
+  aliceToBoard(board);
+  refresh_board();
+}
+
 
 void Board::draw_rectangle(int x1, int y1, int x2, int y2)
 /** permet de dessiner des rectangles de (x1,y1) vers (x2, y2) **/
@@ -205,21 +247,19 @@ std::string Board::get_movement()
 {
   int move[4];
 
-  // echo();    // would have been cool but can't quite get it to work properly
-  // nocbreak();
+  // echo();    // would have been cool but can't clear it without brute force
   for (int i = 0; i < 5; ++i) {
     if (i == 0) {
-      mvprintw(15, 32, "%s", "State initial piece position: ");
+      mvprintw(15, 30, "%s", "State initial piece position: ");
     }
     else if (i == 2) {
-      mvprintw(16, 32, "%s", "State moved piece position:  ");
+      mvprintw(16, 30, "%s", "State moved piece position: ");
     }
     else if (i == 4) {break;}
     move[i] = getch();
     mvprintw(15 + (i/2), 60 + (i%2), "%c", move[i]);
   }
   // noecho();
-  // cbreak();
   refresh_board();
 
   std::string effective_move = moveToString(move);
