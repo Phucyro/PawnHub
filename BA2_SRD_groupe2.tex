@@ -21,9 +21,9 @@
        \textbf{Software Requirement Document\\
 	   Pawn Hub}}
 \author{Huwart Maxence, Boonen Jacques\\
-		Pham Hong Phuc, Duc Nguyen, Caroline Forest\\
-		Antunes Andre, Romain Mardulyn}
-\date{2 Mars 2019}
+		Pham Hong Phuc, Nguyen Duc, Forest Caroline\\
+		Antunes Andre, Mardulyn Romain}
+\date{3 Mars 2019}
 \begin{document}
 	\maketitle
 	\newpage
@@ -62,7 +62,7 @@
 				\subsubsection{Horde Chess}
 					\paragraph{} Le jeu d'échecs de horde est une variante du jeu d'échecs où le joueur noir possède 32 pions et le joueur blanc la collection standard du jeu d'échecs classique. Le but du joueur noir est le but du jeu classique mais le but du joueur blanc est de prendre tous les pions du joueur noir. À part cela, le jeu se déroule selon les règles habituelles du jeu d'échecs.
 
-			\subsection{Fonctionnalités pour Utilisateur Enregistré et Utilisateur Non-Enregistré}Depuis le menu principal, les joueurs pourront accéder à l'option {\itshape View Rules} à travers lequel ils pourront lire en détail les règles du jeu d'échecs et de ses variantes. Les joueurs lanceront une partie via l'option {\itshape Game}. Lors d'une partie, ils pourront s'envoyer des messages via un chat dédié.
+			\subsection{Fonctionnalités pour Utilisateur Enregistré et Utilisateur Non-Enregistré}Depuis le menu principal, les joueurs pourront accéder à l'option {\itshape View Rules} à travers lequel ils pourront lire en détail les règles du jeu d'échecs et de ses variantes. Les joueurs lanceront une partie via l'option {\itshape Game}. %Lors d'une partie, ils pourront s'envoyer des messages via un chat dédié. %TODO ne nous avancons pas, je dirais
 
 			\subsection{Fonctionnalités pour Utilisateur Enregistré}Les joueurs pourront communiquer via un chat global. Dans le système de matchmaking, ils auront le choix entre affronter un ami ou un joueur aléatoire parmi ceux qui sont connectés et libres\footnote{ne se trouvant pas en partie.}. À travers le menu principal, les utilisateurs accéderont à plusieurs sous-menus tels que {\itshape View Ranking, View Rules, View Statistics, Friends List}.%rajouter d'autres fonctionnalités au besoin.
 
@@ -81,7 +81,7 @@
 		\item{Coup Légal :} est un coup qu'un joueur a le droit de jouer en vertu des règles du jeu (par opposition à un coup illégal\footnote{source Wikipedia})
 		\item[Prise :] Déplacement d'une pièce sur une case où se trouve une pièce adverse, ce qui implique un retrait du jeu de la pièce adverse.
 		\item[Echec :] Un joueur est en échec lorsque son roi est dans une position telle qu'il peut être pris par son adversaire.
-		\item[Echec et mate :] Un joueur est échec et mate il est en situation d'échec et qu'il n'a aucun coup légal lui permettant de se sortir de cette situation.
+		\item[Echec et mat :] Un joueur est échec et mate il est en situation d'échec et qu'il n'a aucun coup légal lui permettant de se sortir de cette situation.
 		\item[Pat :] Il y a pat lorsque le joueur dont c'est le tour n'a pas de coup légal possible mais n'est pas en situation d'échec.
 		\item[Le Roque :] Le roque consiste à déplacer en un seul coup le roi et l'une des tours. On déplace d'abord le roi de deux cases vers la tour puis, avec la même main, on fait passer la tour de l'autre côté, juste à côté du roi (voir le diagramme ci-dessous). Les conditions suivantes sont nécessaires pour pouvoir roquer : aucune pièce ne se trouve entre le roi et la tour concernée ; le roi et la tour concernée n'ont encore jamais joué et le roi n'est pas en échec ;
 la case traversée par le roi n'est contrôlée par aucune pièce adverse\footnote{source Wikipedia}.
@@ -324,15 +324,6 @@ Le joueur blanc commence. Celui-ci est le premier joueur connecté et qualifiabl
 \subsubsection{Déroulement de la Partie}
 Voici le déroulement de la partie représentée à l'aide d'un diagramme de séquence : \\
 
-\begin{figure}[H]
-\centering
-\includegraphics[scale=0.8]{SequenceDiagramClassicChessTurn.png}
-\caption{Diagramme de séquence d'une partie}
-\label{SD_classicgame}
-\end{figure}
-\clearpage
-
-
 
 \subsubsection{Fin de la Partie}
 À la fin de chaque tour de jeu, la logique du jeu se trouvant côté serveur vérifie s'il y a un gagnant ou si l'on a affaire à un Pat. Si oui, le résultat est envoyé à chacun des joueurs et la partie se termine.
@@ -345,7 +336,7 @@ Voici le déroulement de la partie représentée à l'aide d'un diagramme de sé
 Le programme doit être capable de tourner sous Unix. \\
 
 \subsection{Réseau}
-Le jeu se joue en réseau local. Une connexion internet est donc requise. \\
+Le jeu se joue en réseau local, une connexion internet est donc requise. Le serveur affiche son nom d'hôte afin que les clients puissent savoir où se connecter. \\
 
 \subsection{Mise à Jour des Différentes Fonctionnalités}
 Le système se doit de mettre assez rapidement à jour les statistiques personnelles et le classement global après chaque partie.
@@ -452,13 +443,13 @@ Le joueur se connecte à l'aide du \textit{hostname} du serveur, qui s'affiche �
 
 \subsection{Client-Serveur}
 \paragraph{}Dans le cadre de ce projet, il a été décidé que la partie serveur s'occupera de toute la logique du jeu tandis que la partie client s'assurera d'afficher correctement l'interface du jeu en temps réel et pour ce faire, recevra des requêtes du serveur pour connaître les mouvements de pièces voulus par les joueurs.
-\paragraph{}Il convient également de spécifier que l'échange d'information entre le serveur et le client se fera sous le format de chaînes de caractères. Par exemple, Le serveur enregistrera les noms de compte et mots de passe des joueurs dans un fichier texte et non une base de données. Et cela pour au moins 3 raisons décrites ci-dessous :
+\paragraph{}Il convient également de spécifier que l'échange d'information entre le serveur et le client se fera sous le format de chaînes de caractères. Par exemple,lLe serveur enregistrera les noms de compte et mots de passe des joueurs dans un fichier texte et non une base de données. Et cela pour au moins 3 raisons décrites ci-dessous :
 \begin{enumerate}
-\item Comme la plupart des tâches effectuées par nos programmes se font à l'aide de chaînes de caractères et par soucis d'homogénéité, il est préférable et plus simple que l'échange d'information entre le serveur et le client se fasse également sous cette forme.
+\item Comme la plupart des tâches effectuées par nos programmes se font à l'aide de chaînes de caractères et par souci d'homogénéité, il est préférable et plus simple que l'échange d'information entre le serveur et le client se fasse également sous cette forme.
 \item Une chaîne de caractère n'a pas besoin d'être traduite en binaire, ce qui diminue la complexité et le temps d'exécution de nos programmes.
 \item La taille du message envoyée n'est pas un problème, car une taille de 150 octets suffit pour envoyer toutes les informations d'un message. Le plus grand message actuel est le plateau, qui ne consiste que de 147 octets lorsqu'il est complet dans un jeu de \textit{Horde Chess} (voir 6.5, point \ref{send_board}).
 \end{enumerate}
-\paragraph{}Si l'on souhaite tout de même envoyer des messages plus longs que la taille standard définie, le système de messagerie utilise du padding à l'aide du symbole '|'afin d'identifier la fin du message. La classe \textit{Socket} effectue ce padding ainsi que l'envoi et la réception de messages à l'aide des méthodes \textit{sendMessage} et \textit{receiveMessage}.
+\paragraph{}Si l'on souhaite tout de même envoyer des messages plus longs que la taille standard définie, le système de messagerie utilise du padding à l'aide du symbole '|' afin d'identifier la fin du message. La classe \textit{Socket} effectue ce padding ainsi que l'envoi et la réception de messages à l'aide des méthodes \textit{sendMessage} et \textit{receiveMessage}.
 \paragraph{}Le serveur tâchera de vérifier les différentes actions des joueurs et veillera également à envoyer régulièrement la disposition du plateau aux clients afin qu'il s'affiche correctement pour les joueurs.
 \paragraph{}Afin d'identifier les messages échangés et le protocole à suivre suite à la réception d'un message, ceux-ci sont précédés d'un en-tête.
 
@@ -476,7 +467,7 @@ Le joueur se connecte à l'aide du \textit{hostname} du serveur, qui s'affiche �
 \begin{figure} [ht]
 \centering
 \includegraphics[scale=0.40]{Sequence_Server_GameStart.png}
-\caption{Diagramme de séquences d'initialisation du jeu côté serveur.}
+\caption{Diagramme de séquences d'initialisation du jeu côté serveur, dans le cas d'un jeu d'échecs classique.}
 \end{figure}
 
 \item \textit{Assignation de la couleur des pièces aux joueurs} \\
@@ -498,13 +489,13 @@ Le joueur se connecte à l'aide du \textit{hostname} du serveur, qui s'affiche �
 \begin{figure} [H]
 \centering
 \includegraphics[scale=0.40]{Sequence_Server_GameLoop.png}
-\caption{Diagramme de séquences des étapes à l'intérieur d'une boucle de jeu dans le cas où le premier joueur est le joueur courant, représenté du côté serveur.}
+\caption{Diagramme de séquences des étapes à l'intérieur d'une boucle de jeu dans le cas d'un jeu d'échecs classique où le premier joueur est le joueur courant, représenté du côté serveur.}
 \end{figure}
 
 \begin{figure} [H]
 \centering
 \includegraphics[scale=0.40]{Sequence_Client_GameLoop.png}
-\caption{Diagramme de séquences de réception de messages durant une partie, représenté du côté client.}
+\caption{Diagramme de séquences de réception de messages durant une partie de jeu d'échecs classique, représenté du côté client.}
 \end{figure}
 
 \item \textit{Envoi du nombre de tours de jeu} \\
