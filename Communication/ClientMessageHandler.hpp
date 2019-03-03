@@ -8,55 +8,66 @@
 #include "ClientFunctions.hpp"
 #include "ClientHandler.hpp"
 #include "../Display/MenuHandler/MenuHandler.hpp"
-#include <stdlib.h>
 
-void receiveMessageHandler(MenuHandler* menu, Socket* socket, bool* b_option, std::vector<std::string>* v_option){
+void receiveMessageHandler(MenuHandler* menu, Socket* socket, char* response){
   std::vector<std::string> msg;
 
   msg = splitString(socket->receiveMessage(), '~');
+  std::cout << "Received Message " << msg[0] + " " + msg[1] << std::endl;
 
-  int choice = atoi(msg[0].c_str());
-
-  switch(choice){
-    case 1 : // [1] [resultat]
-      signUpHandler(menu, msg[1][0]);
+  switch(msg[0][0]){
+    case '1' : // [1] [resultat]
+      signUpHandler(msg[1][0], response);
       break;
-    case 2 : // [2] [resultat]
-      signInHandler(menu, msg[1][0], b_option);
+    case '2' : // [2] [resultat]
+      signInHandler(msg[1][0], response);
       break;
-    case 3 : // [3] [sender] [target] [text]
+    case '3' : // [3] [sender] [target] [text]
       //chatHandler(msg[1], msg[2], vectorToString(msg, 2));
       break;
-    case 4 :
+    case '4' :
       menu->clear_windows();
       menu->end_windows();
       playGameHandler(socket);
       break;
-    case 5 :
+    case '5' :
       leaveQueueHandler();
-      break;
-    case 7 :
-      myStatHandler(menu, msg[1], msg[2], msg[3]);
-      break;
-    case 8 :
-      ladderHandler(menu, msg[1], msg[2], msg[3]);
-      break;
-    case 9 :
-      viewFriendsHandler(menu, msg[1], b_option, v_option);
-      break;
-    case 10 :
-      viewFriendRequestHandler(menu, msg[1], b_option, v_option);
-      break;
-    case 11 :
-      acceptRefuseRequestHandler(menu, msg[1], msg[2]);
-      break;
-    case 12 :
-      sendFriendRequestHandler(menu, msg[1]);
-      break;
-    case 13 :
-      removeFriendHandler(menu, msg[1]);
       break;
   }
 }
+/*
+void sendMessageHandler(Socket* socket){
+  bool leave_game = false;
+  std::string input;
+  std::vector<std::string> msg;
+
+  while (!leave_game){
+    std::cout << "Message : " << std::endl;
+    std::getline(std::cin, input);
+    msg = splitString(input, ' ');
+
+    switch (msg[0][0]){
+      case '0' : // 0 : quitter
+        quit(socket, &leave_game);
+        break;
+      case '1' : // 1 [name] [mdp1] [mdp2] : register
+        signUp(socket, msg[1], msg[2], msg[3]);
+        break;
+      case '2' : // 2 [name] [mdp] : login
+        signIn(socket, msg[1], msg[2]);
+        break;
+      case '3' : // 3 [sender] [target] [msg]
+        //chat(socket, *client_username, msg[1], vectorToString(msg, 2));
+        break;
+      case '4' : // 4 [gamemode]
+        playGame(socket, msg[1]);
+        break;
+      case '5' :
+        leaveQueue(socket);
+        break;
+    }
+  }
+}
+*/
 
 #endif

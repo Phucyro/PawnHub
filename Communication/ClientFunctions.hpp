@@ -37,35 +37,8 @@ void playGame(Socket* socket, std::string game_mode){
 }
 
 void leaveQueue(Socket* socket){
-  socket->sendMessage("5~leaveQueue");
+  socket->sendMessage("5");
 }
 
-void checkMyStat(Socket* socket){
-  socket->sendMessage("7~myStat");
-}
-
-void viewLadder(Socket* socket, std::string mode){
-  socket->sendMessage(std::string("8~") + mode);
-}
-
-void viewFriendsList(Socket* socket){
-  socket->sendMessage("9~viewFriends");
-}
-
-void viewTheirfriendRequest(Socket* socket){
-  socket->sendMessage("10~viewRequest");
-}
-
-void acceptRefuseRequest(Socket* socket, std::string name, std::string option){
-  socket->sendMessage(std::string("11~") + name + "~" + option);
-}
-
-void sendFriendRequest(Socket* socket, std::string name){
-  socket->sendMessage(std::string("12~") + name);
-}
-
-void removeFriend(Socket* socket, std::string name){
-  socket->sendMessage(std::string("13~") + name);
-}
 
 #endif

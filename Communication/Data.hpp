@@ -12,7 +12,7 @@
 #include "dirent.h"
 
 typedef std::vector<unsigned int> Stat;
-typedef std::tuple<std::string, Stat, Stat, Stat, Stat, std::vector<std::string>, std::vector<std::string>, std::vector<std::string>> UserData;
+typedef std::tuple<std::string, Stat, Stat, Stat, Stat, std::vector<std::string>> UserData;
 typedef std::tuple<std::string, Stat> UserLadderData;
 
 class Data {
@@ -28,15 +28,21 @@ public:
   bool createUserAccount(const std::string username, const std::string password);
   void loadUserData(const std::string username);
   void saveUserData(const std::string username);
-  Stat getUserStat(const std::string username, const std::string gamemode);
+  bool addUserFriend(const std::string username, const std::string friend_name);
+  std::vector<std::string> getUserFriendsList(const std::string username);
 
-  std::vector<std::string> getUserFriends(const std::string username);
-  std::vector<std::string> getUserFriendRequests(const std::string username);
-  std::vector<std::string> getUserSentRequests(const std::string username);
-  bool accceptFriendRequest(const std::string username, const std::string friend_name);
-  bool refuseFriendRequest(const std::string username, const std::string friend_name);
-  int sendFriendRequest(const std::string username, const std::string friend_name);
-  bool removeFriend(const std::string username, const std::string friend_name);
+  unsigned int getUserClassicWin(const std::string username);
+  unsigned int getUserClassicLose(const std::string username);
+  unsigned int getUserClassicDraw(const std::string username);
+  unsigned int getUserDarkWin(const std::string username);
+  unsigned int getUserDarkLose(const std::string username);
+  unsigned int getUserDarkDraw(const std::string username);
+  unsigned int getUserHordeWin(const std::string username);
+  unsigned int getUserHordeLose(const std::string username);
+  unsigned int getUserHordeDraw(const std::string username);
+  unsigned int getUserAliceWin(const std::string username);
+  unsigned int getUserAliceLose(const std::string username);
+  unsigned int getUserAliceDraw(const std::string username);
 
   void addUserClassicWin(const std::string username);
   void addUserClassicLose(const std::string username);
@@ -55,6 +61,5 @@ public:
   void updateLadder(const std::string gamemode, UserLadderData data);
   void printLadder(const std::string gamemode);
   void initLadder();
-  std::vector<UserLadderData> getLadder(const std::string gamemode);
 };
 #endif

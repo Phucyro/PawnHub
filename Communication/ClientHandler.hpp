@@ -3,35 +3,39 @@
 
 #include "Socket.hpp"
 #include "ClientGameControl.hpp"
-#include "../Display/MenuHandler/MenuHandler.hpp"
 #include <string>
-#include <stdlib.h>
 
 
-void signUpHandler(MenuHandler* menu, char msg){
+void signUpHandler(char msg, char* response){
   switch (msg){
     case '0' :
-      menu->print_warning("Le nom de compte a deja été pris");
+      std::cout << "Nom de compte indisponible" << std::endl;
+      // write(pipe_fd[1], "0", 10); // [0] Nom de compte indisponible
+      response[0] = '0';
       break;
     case '1' :
-      menu->print_warning("Compte créé avec succes");
+      // write(pipe_fd[1], "1", 10); // [1] Creation du compte succes
+      response[0] = '1';
+      std::cout << "Creation du compte succes" << std::endl;
   }
-  menu->refresh_board();
 }
 
 
-void signInHandler(MenuHandler* menu, char msg, bool* connected){ // Fonction bool
+void signInHandler(char msg, char* response){ // Fonction bool
   switch (msg){
     case '0' :
-      menu->print_warning("Nom de compte inexistant");
+      // write(pipe_fd[1], "2", 10); // Compte inexistant
+      response[0] = '2';
       break;
     case '1' :
-      *connected = true; // Connexion réussie
+      // write(pipe_fd[1], "3", 10); // Identification reussie
+      response[0] = '3';
       break;
     case '2' :
-      menu->print_warning("Mauvais mot de passe");
+      //write(pipe_fd[1], "4", 10); // Mauvais mot de passe
+      response[0] = '4';
+      break;
   }
-  menu->refresh_board();
 }
 
 void chatHandler(std::string sender, std::string target, std::string text){
@@ -53,85 +57,6 @@ void playGameHandler(Socket* socket){
 
 void leaveQueueHandler(){
   std::cout << "Vous avez quitte une file d'attente" << std::endl;
-}
-
-void myStatHandler(MenuHandler* menu, std::string pos, std::string mode, std::string stat){
-  std::vector<std::string> stat_v = splitString(stat, ' ');
-  menu->update_stats(atoi(pos.c_str()), mode, atoi(stat_v[0].c_str()), atoi(stat_v[1].c_str()), atoi(stat_v[2].c_str()));
-}
-
-void ladderHandler(MenuHandler* menu, std::string pos, std::string username, std::string stat){
-  std::vector<std::string> stat_v = splitString(stat, ' ');
-  menu->update_stats(atoi(pos.c_str()), username, atoi(stat_v[0].c_str()), atoi(stat_v[1].c_str()), atoi(stat_v[2].c_str()));
-}
-
-void viewFriendsHandler(MenuHandler* menu, std::string friend_name, bool* stop, std::vector<std::string>* friends_list){
-  if (friend_name != "Guest"){
-    friends_list->push_back(friend_name);
-  }
-  else {
-    menu->init_friendsw(*friends_list);
-    *stop = true;
-  }
-}
-
-void viewFriendRequestHandler(MenuHandler* menu, std::string request, bool* stop, std::vector<std::string>* request_list){
-  if (request != "Guest"){
-    request_list->push_back(request);
-  }
-  else {
-    menu->init_friendsw(*request_list);
-    *stop = true;
-  }
-}
-
-void acceptRefuseRequestHandler(MenuHandler* menu, std::string option, std::string res){
-  if (option == "0")
-    menu->print_warning("Vous ne pouvez pas être amis avec vous même");
-  else if (option == "1"){
-    if (res == "0")
-      menu->print_warning("Vous n'avez pas recu de demande de cet utilisateur");
-    else
-      menu->print_warning("Cet utilisateur a été ajouté à vos amis");
-  }
-  else {
-    if (res == "0")
-      menu->print_warning("Vous n'avez pas recu de demande cet utilisateur");
-    else
-      menu->print_warning("Cet utilisateur a été retiré de vos amis");
-  }
-  menu->refresh_board();
-}
-
-void sendFriendRequestHandler(MenuHandler* menu, std::string res){
-  switch (res[0]){
-    case '0' :
-      menu->print_warning("Utilisateur inexistant");
-      break;
-    case '1' :
-      menu->print_warning("Utilisateur déjà dans la liste d'amis");
-      break;
-    case '2' :
-      menu->print_warning("Demande d'ami déjà envoyé");
-      break;
-    case '3' :
-      menu->print_warning("Vous êtes tout les deux devenus amis");
-      break;
-    case '4' :
-      menu->print_warning("Demande d'ami envoyé");
-  }
-  menu->refresh_board();
-}
-
-void removeFriendHandler(MenuHandler* menu, std::string res){
-  switch (res[0]){
-    case '0' :
-      menu->print_warning("Cet utilisateur ne fait pas partie de vos amis");
-      break;
-    case '1' :
-      menu->print_warning("Utilisateur retiré de votre liste d'amis");
-  }
-  menu->refresh_board();
 }
 
 
