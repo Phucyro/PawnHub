@@ -56,11 +56,11 @@
 				\subsubsection{Classique}
 					\paragraph{}Dans une partie de jeu d'échecs classique, le but est de mettre le roi adverse en échec sans qu'il ait la possibilité au tour suivant de ne plus l'être.
 				\subsubsection{Alice Chess}
-					\paragraph{}Le jeu d'échecs d'Alice est une variante du jeu d'échecs jouée en utilisant 2 plateaux. Après chaque coup, la pièce déplacée est téléportée sur la case où elle a été placée mais de l'autre plateau. Un coup n'est valide que si la case où doit se téléporter la pièce ne comporte aucune pièce de sa faction. Mis à part ce changement d'affichage, le jeu se déroule selon les règles habituelles du jeu d'échecs.
+					\paragraph{}Le jeu d'échecs d'Alice est une variante du jeu d'échecs jouée en utilisant 2 plateaux. Après chaque coup joué, la pièce déplacée est téléportée vers l'autre plateau. Un coup n'est valide que si la case où doit se téléporter la pièce ne comporte aucune pièce de sa couleur. Mis à part ce changement d'affichage, le jeu se déroule selon les règles habituelles du jeu d'échecs.
 				\subsubsection{Dark Chess}
-					\paragraph{} Le jeu d'échecs sombre est une variante du jeu d'échecs où le joueur ne voit que ses propres pièces et les cases où il peut légalement les déplacer. Le but des joueurs est de prendre le roi adverse. Contrairement aux règles classiques, le roi d'un joueur peut être en échec à la fin de son tour. De plus, il n'y a pas de prises en passant possibles. À part cela, le jeu se déroule selon les règles habituelles du jeu d'échecs.
+					\paragraph{} Le jeu d'échecs Dark est une variante du jeu d'échecs où le joueur ne voit que ses propres pièces et les cases où il peut légalement les déplacer. Le but des joueurs est de prendre le roi adverse. Contrairement aux règles classiques, le roi d'un joueur peut être en échec à la fin de son tour. De plus, il n'y a pas de prises en passant possibles. À part cela, le jeu se déroule selon les règles habituelles du jeu d'échecs.
 				\subsubsection{Horde Chess}
-					\paragraph{} Le jeu d'échecs de horde est une variante du jeu d'échecs où le joueur noir possède 32 pions et le joueur blanc la collection standard du jeu d'échecs classique. Le but du joueur noir est le but du jeu classique mais le but du joueur blanc est de prendre tous les pions du joueur noir. À part cela, le jeu se déroule selon les règles habituelles du jeu d'échecs.
+					\paragraph{} Le jeu d'échecs de horde est une variante du jeu d'échecs où le joueur noir possède 32 pions et le joueur blanc la collection standard du jeu d'échecs classique. Pour gagner la partie, le joueur blanc doit prendre tous les pions du joueur noir tandis que celui-ci doit mettre le roi blanc en échec et mat. À part cela, le jeu se déroule selon les règles habituelles du jeu d'échecs.
 
 			\subsection{Fonctionnalités pour Utilisateur Enregistré et Utilisateur Non-Enregistré}Depuis le menu principal, les joueurs pourront accéder à l'option {\itshape View Rules} à travers lequel ils pourront lire en détail les règles du jeu d'échecs et de ses variantes. Les joueurs lanceront une partie via l'option {\itshape Game}. %Lors d'une partie, ils pourront s'envoyer des messages via un chat dédié. %TODO ne nous avancons pas, je dirais
 
@@ -81,9 +81,9 @@
 		\item{Coup Légal :} est un coup qu'un joueur a le droit de jouer en vertu des règles du jeu (par opposition à un coup illégal\footnote{source Wikipedia})
 		\item[Prise :] Déplacement d'une pièce sur une case où se trouve une pièce adverse, ce qui implique un retrait du jeu de la pièce adverse.
 		\item[Echec :] Un joueur est en échec lorsque son roi est dans une position telle qu'il peut être pris par son adversaire.
-		\item[Echec et mat :] Un joueur est échec et mate il est en situation d'échec et qu'il n'a aucun coup légal lui permettant de se sortir de cette situation.
-		\item[Pat :] Il y a pat lorsque le joueur dont c'est le tour n'a pas de coup légal possible mais n'est pas en situation d'échec.
-		\item[Le Roque :] Le roque consiste à déplacer en un seul coup le roi et l'une des tours. On déplace d'abord le roi de deux cases vers la tour puis, avec la même main, on fait passer la tour de l'autre côté, juste à côté du roi (voir le diagramme ci-dessous). Les conditions suivantes sont nécessaires pour pouvoir roquer : aucune pièce ne se trouve entre le roi et la tour concernée ; le roi et la tour concernée n'ont encore jamais joué et le roi n'est pas en échec ;
+		\item[Echec et mat :] Un joueur est échec et mat il est en situation d'échec et qu'il n'a aucun coup légal lui permettant de se sortir de cette situation.
+		\item[Pat :] Il y a pat lorsque au tour du joueur, son roi n'est pas en échec mais ne peut effectuer de coups légaux sans se mettre en échec. Le pat met immédiatement fin à la partie et la partie est considérée comme une égalité.
+		\item[Le Roque :] Le roque consiste à déplacer en un seul coup le roi et l'une des tours. On déplace d'abord le roi de deux cases vers la tour puis, on fait passer la tour de l'autre côté, juste à côté du roi (voir le diagramme ci-dessous). Les conditions suivantes sont nécessaires pour pouvoir roquer : aucune pièce ne se trouve entre le roi et la tour concernée ; le roi et la tour concernée n'ont encore jamais joué et le roi n'est pas en échec ;
 la case traversée par le roi n'est contrôlée par aucune pièce adverse\footnote{source Wikipedia}.
 		\item[La Prise en Passant:] Au jeu d’échecs, la prise en passant est une possibilité particulière de capturer un pion. Lorsqu’un pion avance de deux cases et que le joueur adverse possède un pion qui aurait pu prendre ce pion si ce dernier n'avait avancé que d'une case, alors l'adversaire peut, au tour suivant uniquement, prendre le pion venant d'avancer de 2 cases comme si ce dernier n'avait avancé que d'une seule case\footnote{source Wikipedia}.
 		\begin{figure}[bh]
@@ -118,6 +118,7 @@ la case traversée par le roi n'est contrôlée par aucune pièce adverse\footno
 				 2.2.1 & 02/03 & Forest Caroline & Diagrammes de séquences pour le déroulement d'une partie \\
 				 2.3 & 3/03 & Nguyen Duc & Protocole de communication du menu \\
 				 2.4 & 3/03 & Antunes André & Rajout des méthodes pour Alice, Dark, Horde, Classique \\
+				 2.5 & 3/03 & Boonen Jacques & Nouveaux Diagrammes de classes \\
 				\hline
 \end{tabular}
 			\caption*{Historique des modifications}
@@ -211,7 +212,7 @@ la case traversée par le roi n'est contrôlée par aucune pièce adverse\footno
 \textbf{Relations avec d'autres cas d'utilisation :} Néant \\
 \textbf{Pré-conditions :} C'est au tour du \textit{user} de jouer. Il doit préalablement choisir une pièce et indiquer un déplacement possible et valide. \\
 \textbf{Post-conditions :} La pièce se retrouve à la position désignée par le \textit{user} après déplacement. \\
-\textbf{Cas général :} Le \textit{user} doit déplacer un pion lorsque c'est à son tour de jouer. Il envoi ainsi une requête de déplacement au serveur qui vérifiera à son tour la validité ou non du coup. \\
+\textbf{Cas général :} Le \textit{user} doit déplacer un pion lors de son tour de jeu. Il envoie ainsi une requête de déplacement au serveur qui vérifiera à son tour la validité ou non du coup. \\
 \textbf{Cas exceptionnels :} Le coup enregistré par le \textit{user} n'est pas valide. Il doit donc rejouer son tour. \\
 
 \subsubsection{Discuter dans le Chat}
@@ -242,7 +243,7 @@ Afin d'avoir des parties de jeux dynamiques, les joueurs se verront imposer une 
 \textbf{Pré-conditions :} \textit{Server} en ligne et réception du signal correspondant. \\
 \textbf{Post-conditions :} Utilisateur connecté, redirection vers le menu principal, sous-menus réservés aux utilisateurs débloqués, remplacement du sous-menu \textit{Log In/Create an account} par \textit{Log Out}. \\
 \textbf{Cas général :} Utilisateur connecté. \\
-\textbf{Cas exceptionnels :} Si un utilisateur est déjà connecté sur un compte, un autre joueur ne peut se connecter sur ce compte. De même, si l’utilisateur encode mal ses identifiants, le système lui renvoie un message d’erreur afin qu’il les réécrive correctement. \\
+\textbf{Cas exceptionnels :} Si un utilisateur est déjà connecté sur un compte, un autre joueur ne peut se connecter sur ce compte. De même, si l'utilisateur encode mal ses identifiants, le système lui renvoie un message d’erreur afin qu’il les réécrive correctement. \\
 
 \subsection{Enregistrement d'un Nouveau Compte}
 \textbf{Acteur :} \textit{Server}. \\
@@ -295,7 +296,7 @@ Afin d'avoir des parties de jeux dynamiques, les joueurs se verront imposer une 
 \subsection{Gestion d'une Partie}
 
 \subsubsection{Premier à Jouer}
-Le joueur blanc commence. Celui-ci est le premier joueur connecté et qualifiable de la file d'attente pour ce jeu. \\
+Le premier joueur connecté à la partie se voit attribuer la couleur blanche et commence par conséquent en premier. \\
 
 \subsubsection{Déplacer une Pièce}
 \textbf{Acteur :} \textit{Server}. \\
@@ -327,7 +328,7 @@ Voici le déroulement de la partie représentée à l'aide d'un diagramme de sé
 
 
 \subsubsection{Fin de la Partie}
-À la fin de chaque tour de jeu, la logique du jeu se trouvant côté serveur vérifie s'il y a un gagnant ou si l'on a affaire à un Pat. Si oui, le résultat est envoyé à chacun des joueurs et la partie se termine.
+À la fin de chaque tour de jeu, la logique du jeu se trouvant côté serveur vérifie s'il y a un gagnant ou si un Pat s'est produit. Si oui, le résultat est envoyé à chacun des joueurs et la partie se termine.
 
 
 \section{Besoins Systèmes : Non-Fonctionnels}
@@ -368,14 +369,14 @@ Le système se doit de mettre assez rapidement à jour les statistiques personne
 \end{figure}
 
 \paragraph{Mode classique}Chaque type de pièces, c'est à dire, \textit{Queen,King,Bishop,Pawn,GhostPawn,Knight,Rook}, héritent de la classe mère \textit{Piece}.
-\textit{GhostPawn} est utilisé pour la prise en passant. Lorsqu'un \textit{Pawn} avance de deux case, il laisse sur la case où il serait si il n'avait avancer que d'une case, un \textit{GhostPawn} qui est invisible pour le joueur. Un \textit{Pawn} considère un \textit{GhostPawn} comme une pièce prenable si ce dernier est actif (il est actif uniquement le tour juste après sa création). Lorsqu'un \textit{GhostPawn} est pris par un \textit{Pawn} et qu'il est actif, le \textit{GhostPawn} se charge de faire disparaitre le \textit{Pawn} qui l'a créer du plateau.
-\textit{BasicPawn} est un \textit{Pawn} qui ne peut effectuer de prise en passant. En effet, on voit qu'il ne possède pas d'attribut \textit{ghost}. Cette pièce est indispensable dans le mode \textit{Alice} car après chaque \textit{Move}, les pièces changent de \textit{Board} et ne peuvent donc pas effectuer de prise en passant.
+\textit{GhostPawn} est utilisé pour la prise en passant. Lorsqu'un \textit{Pawn} avance de deux case, il laisse sur la case où il serait s'il n'avait avancer que d'une case, un \textit{GhostPawn} qui est invisible pour le joueur. Un \textit{Pawn} considère un \textit{GhostPawn} comme une pièce prenable si cette dernière est active(elle est active uniquement le tour juste après sa création). Lorsqu'un \textit{GhostPawn} est pris par un \textit{Pawn} et qu'il est actif.Ensuite, le \textit{GhostPawn} se charge de faire disparaitre le \textit{Pawn} qui l'a créé du plateau.
+\textit{BasicPawn} est un \textit{Pawn} qui ne peut effectuer de prise en passant. En effet, il ne possède pas d'attribut \textit{ghost}. Cette pièce est indispensable dans le mode \textit{Alice} car après chaque \textit{Move}, les pièces changent de \textit{Board} et ne peuvent donc pas effectuer de prise en passant.
 \begin{enumerate}
 \item
 \textbf{canMove :} Retourne true si la pièce peut se déplacer. \\
-\textbf{checkMove :} Retourne true si le mouvement demandé d'une pièce par le joueur est un déplacement normalement valide.\\
+\textbf{checkMove :} Retourne true si le mouvement demandé d'une pièce par le joueur est un coup légal.\\
 \textbf{hasMoved :}Retourne true si la pièce a déjà été déplacée ou non.\\
-\textbf{isMovePossible :} vérifie si un movement est possible en prenant en compte le fait que le \textit{King} ne doit pas être en échec après ce mouvement.\\
+\textbf{isMovePossible :} vérifie si le coup d'un joueur ne met pas son propre \textit{King} en échec. Si non, le coup n'est pas légal.\\
 \textbf{Move :} est une méthode qui selon \textit{checkMove} effectue ou non, le mouvement demandé par le joueur sur la pièce. Cette méthode effectue d'abord un \textit{checkMove} à l'endroit du coup désiré par le joueur. Si, le coup est possible, elle effectue un \textit{doMove} ce qui permet d'avancer la pièce à l'endroit du coup. Dans le cas où le coup met le \textit{King} du joueur en échec, on effectue un \textit{ReverseMove} qui remet le \textit{Board} dans son état initial. Si le \textit{Board} à changé, la fonction retourne true.\\
 \end{enumerate}
 
@@ -399,31 +400,31 @@ Le système se doit de mettre assez rapidement à jour les statistiques personne
 \item \textit{Méthodes Communes} \\
 \textbf{start :} Lance la partie et se termine en cas de victoire d'un des 2 joueurs ou en cas d'égalité. \\
 \textbf{initBoard :} Place les pièces sur leur case de départ dans le \textit{Board}. \\
-\textbf{nextTurn :} Demande au joueur dont c'est le tour un mouvement. Ensuite teste si le mouvement est possible et l'exécute si c'est le cas, sinon redemande un mouvement au joueur. \\
-\textbf{isFinish} Retourne true si un joueur est en échecs et mate ou si il y a égalité entre les 2 joueurs. Le joueur qui vient de jouer a gagné  (auquel cas le l'attribut \textit{winner} est mis à jour). \\
+\textbf{nextTurn :} Demande au joueur dont c'est le tour un mouvement. Ensuite, teste si le mouvement est légal et l'exécute si c'est le cas, sinon redemande un mouvement au joueur. \\
+\textbf{isFinish} Retourne true si un joueur est en échec et mat ou s'il y a égalité entre les 2 joueurs. Le joueur qui vient de jouer a gagné(auquel cas, l'attribut \textit{winner} est mis à jour). \\
 \textbf{testCheck :} Retourne true si un \textit{King} est en échec. \\
 \textbf{promote :} Exécute la promotion d'un \textit{Pawn}.\\
-\textbf{send\textsl{Info} :} Envoie l'information \textsl{Info} au client.\\
+\textbf{send\textsl{Info} :} Envoi de l'information \textsl{Info} au client.\\
 
 \item \textit{Méthodes Classic } \\
-\textbf{getCurrentPlayer :} Renvois le joueur courant.\\
+\textbf{getCurrentPlayer :} Renvoie le joueur courant.\\
 \textbf{executeMove :} Exécute le mouvement d'une pièce.\\
-\textbf{isCheckmate :} Retourne true si le joueur est en situation d'échec et mate.\\
+\textbf{isCheckmate :} Retourne true si le joueur est en échec et mat.\\
 \textbf{isStalemate :} Retourne true si il y a un pat dans le \textit{Board} courant.\\
-\textbf{notEnoughtPieces :}Retourne true si il n'y a plus assez de pièces que pour qu'un des deux joueurs puisse faire un échec et mate.\\
-\textbf{sendGameMode :} Envoie aux deux joueurs le type de jeux.\\
+\textbf{notEnoughtPieces :}Retourne true si il n'y a plus assez de pièces que pour qu'un des deux joueurs puisse faire un échec et mat.\\
+\textbf{sendGameMode :} Envoie aux deux joueurs le mode de jeu.\\
 \textbf{boardState :} Retourne l'état du \textit{Board} sous forme d'un string et dont le format est celui qui est compréhensible par le client\footnote{Voir affichage de l'échiquier 6.5.6}.
 
-Les méthodes de Horde,Alice et Dark ne changent pas en leur methodes comparé au classique.Il y que l'intérieur de la fonction change un peu, pour s'adapter au différents jeux.
+Le rôle des méthodes de \textit{Horde,Alice et Dark} sont les mêmes que pour le mode \textit{Classic}.Néanmoins, le code de ces méthodes divergent selon le mode afin de s'adapter à la spécificité de chacun.
 
 \item \textit{Méthodes Alice} \\
-Alice possède en plus,\\
-\textbf{boardState :} Ici on a rajouté l'option de la dimension mais sinon le contexte reste le même que pour la méthode classique. \footnote{Voir méthodes Classique de l'échiquier 6.1.3}. 
+Alice possède en plus:\\
+\textbf{boardState :} Le \textit{boardState} prend en considération la dimension du plateau, paramètre propre à ce mode de jeu. Le reste du code se comporte selon la méthode classique. \footnote{Voir méthodes Classique de l'échiquier 6.1.3}. 
 
 \item \textit{Méthodes Dark} \\
-Dark possède en plus,\\
-\textbf{boardState :} Ici on a rajouté l'option de la visibilité mais sinon le contexte reste le même que pour la méthode classique. \footnote{Voir méthodes Classique de l'échiquier 6.1.3}. \\
-\textbf{isVisible :}  Retourne true si, la pièce est visible par l'advairsaire, c'est à dire si la pièce est ce trouve sur une case où une pièce adverse peut se déplacer.
+Dark possède en plus:\\
+\textbf{boardState :}  Le \textit{boardState} prend en considération la visibilité des différentes pièce, paramètre propre à ce mode de jeu. Le reste du code se comporte selon la méthode classique. \footnote{Voir méthodes Classique de l'échiquier 6.1.3}. \\
+\textbf{isVisible :} Cette méthode indique si la pièce est visible par l'adversaire, c'est à dire si celui-ci est dans la possibilité de prendre la pièce. Si tel est le cas, renvoi d'un true.
 
 
 
@@ -448,7 +449,7 @@ Le joueur se connecte à l'aide du \textit{hostname} du serveur, qui s'affiche �
 
 \subsection{Client-Serveur}
 \paragraph{}Dans le cadre de ce projet, il a été décidé que la partie serveur s'occupera de toute la logique du jeu tandis que la partie client s'assurera d'afficher correctement l'interface du jeu en temps réel et pour ce faire, recevra des requêtes du serveur pour connaître les mouvements de pièces voulus par les joueurs.
-\paragraph{}Il convient également de spécifier que l'échange d'information entre le serveur et le client se fera sous le format de chaînes de caractères. Par exemple,lLe serveur enregistrera les noms de compte et mots de passe des joueurs dans un fichier texte et non une base de données. Et cela pour au moins 3 raisons décrites ci-dessous :
+\paragraph{}Il convient également de spécifier que l'échange d'information entre le serveur et le client se fera sous le format de chaînes de caractères. Par exemple,le serveur enregistrera les noms de compte et mots de passe des joueurs dans un fichier texte et non une base de données. Et cela pour au moins 3 raisons décrites ci-dessous :
 \begin{enumerate}
 \item Comme la plupart des tâches effectuées par nos programmes se font à l'aide de chaînes de caractères et par souci d'homogénéité, il est préférable et plus simple que l'échange d'information entre le serveur et le client se fasse également sous cette forme.
 \item Une chaîne de caractère n'a pas besoin d'être traduite en binaire, ce qui diminue la complexité et le temps d'exécution de nos programmes.
@@ -462,7 +463,7 @@ Le joueur se connecte à l'aide du \textit{hostname} du serveur, qui s'affiche �
 \begin{enumerate}
 
 \item \textit{Initialisation du plateau côté serveur}\\
-\textbf{Mise en pratique :} Le serveur initialise son objet de plateau en entrant toutes les pièces adaptées au jeu demandé à leurs coordonnées respectives.\\
+\textbf{Mise en pratique :} Le serveur initialise son objet de plateau en entrant toutes les pièces adaptées au jeu demandé, à leurs coordonnées respectives.\\
 \textbf{Protocole :} L'instance de jeu fait appel à une méthode \textit{\_initBoard}, définie selon le mode de jeu.
 
 \item \textit{Envoi du mode de jeu aux clients}\\
@@ -505,23 +506,23 @@ Le joueur se connecte à l'aide du \textit{hostname} du serveur, qui s'affiche �
 
 \item \textit{Envoi du nombre de tours de jeu} \\
 \textbf{Mise en pratique :} Le serveur envoie le numéro du tour actuel de jeu aux joueurs.  \\
-\textbf{Protocole :} A partir d'un compteur dans la boucle de jeu, le serveur envoie le chiffre au client précédé de l'en-tête 'T' (turn), qui apparait dans la fenêtre d'information de l'affichage du jeu.
+\textbf{Protocole :} À partir d'un compteur dans la boucle de jeu, le serveur envoie le chiffre au client précédé de l'en-tête 'T' (turn), qui apparait dans la fenêtre d'information de l'affichage du jeu.
 \label{send_turn}
 
 \item \textit{Requête de mouvement du joueur} \\
 \textbf{Mise en pratique :} Le serveur identifie le joueur qui doit effectuer un mouvement et envoie une requête au client approprié. Celui-ci affiche la requête au joueur, qui entre le mouvement de pièce voulu. Le mouvement est renvoyé au serveur, qui vérifie la légalité de la demande - tant que le mouvement demandé par le joueur n'est pas autorisé par les règles du jeu, celui-ci doit rentrer une nouvelle demande de mouvement.\\
-\textbf{Protocole :} La boucle de jeu présente dans la logique du serveur identifie l'instance de joueur concernée par la demande de mouvement et déclenche un envoi de message à son client ayant comme en-tête 'A' (askmove). Ce message est interprété par le client, qui demande au joueur de proposer un mouvement pour une de ses pièces. Le mouvement est alors renvoyé au serveur pour être vérifié. Ce message est composé de 4 caractères, les 2 premiers représentant l'emplacement du début de tour de la pièce et les 2 derniers la position future de la pièce, précédé de l'en-tête 'M' (move). Le serveur vérifie si le mouvement demandé est possible, et renvoie une demande de mouvement tant qu'il ne l'est pas.
+\textbf{Protocole :} La boucle de jeu présente dans la logique du serveur identifie l'instance de joueur concernée par la demande de mouvement et déclenche un envoi de message à son client ayant comme en-tête 'A' (askmove). Ce message est interprété par le client, qui demande au joueur de proposer un mouvement pour une de ses pièces. Le mouvement est alors renvoyé au serveur pour être vérifié. Ce message est composé de 4 caractères, les 2 premiers représentant l'emplacement du début de tour de la pièce et les 2 derniers, la position future de la pièce, précédée de l'en-tête 'M' (move). Le serveur vérifie si le mouvement demandé est possible, et renvoie une demande de mouvement tant qu'il ne l'est pas.
 
 \item \textit{Mouvement de pièce} \\
 \textbf{Mise en pratique :} Une fois que le mouvement demandé par le joueur est identifié comme possible, le serveur met à jour son instance de plateau et renvoie le plateau aux deux clients afin qu'ils l'affichent.  \\
 \textbf{Protocole :} voir \ref{send_board}.
 
 \item \textit{Promotion de pièce}\\
-\textbf{Mise en pratique :} Si le mouvement du joueur qui vient d'être effectué permet une promotion de pion (voir \ref{promote}), le serveur envoie une requête au client pour connaitre la promotion voulue. Une fois la demande recue, le serveur met à jour le plateau et le renvoie.\\
+\textbf{Mise en pratique :} Si le mouvement du joueur qui vient d'être effectué permet une promotion de pion (voir \ref{promote}), le serveur envoie une requête au client pour connaitre la promotion voulue. Une fois la demande reçue, le serveur met à jour le plateau et le renvoie.\\
 \textbf{Protocole :} Le serveur envoie un message ayant pour en-tête 'P' (promote) au client concerné. Celui-ci affiche la demande au joueur, qui choisit la pièce qu'il souhaite obtenir. Le client envoie la demande au serveur, qui consiste en un message de un caractère, représentant la pièce choisie ('q':  reine/queen, 'b': fou/bishop, 'h': cavalier/horse/knight, 'r': tour/rook), précédé de l'en-tête 'P' (promote).
 
 \item \textit{Fin du tour de jeu} \\
-\textbf{Mise en pratique :} Le serveur vérifie si le jeu est terminé, ce qui consiste deux cas (un des joueurs à placé l'autre en échec et mat, il a gagné; aucun des joueurs n'est en mesure de placer l'autre en échec et mat, il y a pat). Si le jeu n'est pas fini, le serveur passe au tour suivant.\\
+\textbf{Mise en pratique :} Le serveur vérifie si le jeu est terminé, ce qui consiste en deux cas (un des joueurs a placé l'autre en échec et mat, il a gagné; aucun des joueurs n'est en mesure de placer l'autre en échec et mat, il y a pat). Si le jeu n'est pas fini, le serveur passe au tour suivant.\\
 \textbf{Protocole :} L'instance de jeu du serveur fait un appel régulier a une méthode \textit{\_isFinish} pour identifier une fin de partie. Si c'est le cas, un message est envoyé au client, précédé de l'en-tête 'U' (update). Dans le cas d'un échec et mat, la couleur du gagnant est envoyée; dans le cas d'un pat, le message 'stalemate' est envoyé. Si le jeu n'est pas fini, le compteur de tours est incrémenté et la boucle de jeu reprend du début (\ref{send_turn}).
 
 \end{enumerate}
@@ -534,49 +535,46 @@ Le joueur se connecte à l'aide du \textit{hostname} du serveur, qui s'affiche �
 \textbf{Protocole :} La méthode \textit{\_get\_choice}, toujours précédée par la méthode \textit{\_init\_choicew}, est utilisée afin de pouvoir afficher les différentes options.
 
 \item \textit{Choix d'une option}\\
-\textbf{Mise en pratique :} L'utilisateur peut parcourir les différentes options en utilisant les touches directionnelle \textit{Haut} et \textit{Bas} et valider son choix en appuyant sur la touche \textit{Entrée} \\
-\textbf{Protocole :} Après que la méthode \textit{\_get\_choice} est appelée, le programme attend que l'utilisateur choisisse une option. Après que le choix a été fait, une fonction est appelée pour diriger l'utilisateur vers un autre menu.
+\textbf{Mise en pratique :} L'utilisateur peut parcourir les différentes options en utilisant les touches directionnelles \textit{Haut} et \textit{Bas} et valider son choix en appuyant sur la touche \textit{Entrée} \\
+\textbf{Protocole :} Après avoir appelé la méthode \textit{\_get\_choice}, le programme attend que l'utilisateur choisisse une option. Si le choix a été fait, une fonction est appelée pour diriger l'utilisateur vers un autre menu.
 
 \item \textit{Choix d'option du menu Jouer}\\
 \textbf{Mise en pratique :} Les 4 modes de jeu sont affichés et l'utilisateur peut rejoindre une file d'attente vers le mode de jeu approprié en sélectionnant une de ces 4 options ou revenir au menu principal en choisissant l'option \textit{Retour}.\\
-\textbf{Protocole :} Si l'utilisateur choisit un mode de jeu, la fonction \textit{playGame} est appelée et elle envoie un message au serveur qui placera le joueur dans une file d'attente et l'utilisateur sera bloqué jusqu'à ce qu'un autre joueur rejoigne la même file d'attente. Sinon l'utilisateur sera dirigé vers le menu principal.
+\textbf{Protocole :} Si l'utilisateur choisit un mode de jeu, la fonction \textit{playGame} est appelée et elle envoie un message au serveur qui placera le joueur dans une file d'attente. Ensuite l'utilisateur sera bloqué jusqu'à ce qu'un autre joueur rejoigne la même file d'attente. Sinon l'utilisateur sera dirigé vers le menu principal.
 
 \item \textit{Choix d'option du menu Ami}\\
-\textbf{Mise en pratique :} L'utilisateur a le choix entre 6 options : \textit{Voir sa liste d'amis}, \textit{Envoyer une demande d'ami}, \textit{Retirer un ami}, \textit{Accepter ou refuser une demande d'ami}, \textit{Annuler sa demande d'ami} et \textit{Retour}.\\
-\textbf{Protocole :} Après que la méthode \textit{\_get\_choice} est appelée, le programme attend que l'utilisateur choisisse une option et après que le choix a été fait une fonction est appelée pour diriger l'utilisateur vers un autre menu. 
+\textbf{Mise en pratique :} L'utilisateur a le choix entre 5 options : \textit{Voir sa liste d'amis}, \textit{Envoyer une demande d'ami}, \textit{Retirer un ami}, \textit{Accepter ou refuser une demande d'ami} et \textit{Retour}.\\
+\textbf{Protocole :} Après avoir appelé la méthode \textit{\_get\_choice}, le programme attend que l'utilisateur choisisse une option.Si un choix a été fait, une fonction est appelée pour diriger l'utilisateur vers un autre menu. 
 
 \item \textit{Voir sa liste d'amis}\\
-\textbf{Mise en pratique :} Après avoir choisi l'option, le nom de tout les amis de l'utilisateur sont affichés dans un rectangle.\\
-\textbf{Protocole :} Un message est envoyé au serveur qui traitera la demande et qui renverra le nom de tout ses amis. Une fois que le nom des amis sont reçus du coté client, la méthode \textit{init\_friendsw} est utilisée pour afficher le nom de tout ses amis sur l'écran.
+\textbf{Mise en pratique :} Après avoir choisi cette option, les noms des amis de l'utilisateur sont affichés dans un rectangle.\\
+\textbf{Protocole :} Un message est envoyé au serveur qui traitera la demande et qui renverra le nom de tous ses amis. Lorsque l'entièreté des noms des amis sont reçus du coté client, la méthode \textit{init\_friendsw} affiche le nom de tous ses amis sur l'écran.
 
 \item \textit{Envoyer une demande d'ami}\\
-\textbf{Mise en pratique :} Après avoir choisi l'option, l'utilisateur est invité à rentrer un nom ou à rentrer une commande pour retourner au menu des amis.\\
-\textbf{Protocole :} Si l'utilisateur ne rentre pas la commande pour quitter alors un message est envoyé au serveur qui le traitera et renverra le résultat de l'opération. Plusieurs résultat sont possibles, soit la demande a été envoyée soit une de ces erreurs s'est produite : l'utilisateur s'est envoyé une demande d'ami à lui même, la personne se trouve déjà dans sa liste d'amis, le nom n'est lié à aucun compte ou alors une demande a déjà été envoyée. 
+\textbf{Mise en pratique :} Après avoir choisi cette option, l'utilisateur est invité à rentrer un nom ou une autre commande pour retourner au menu des amis.\\
+\textbf{Protocole :} Si l'utilisateur ne rentre pas la commande pour quitter ce menu, alors un message est envoyé au serveur qui le traitera et renverra le résultat de l'opération. Plusieurs résultat sont possibles, soit la demande a été envoyée soit l'une de ces erreurs s'est produite : l'utilisateur s'est envoyé une demande d'ami à lui même, la personne se trouve déjà dans sa liste d'amis, le nom n'est lié à aucun compte ou alors une demande a déjà été envoyée. 
 
 \item \textit{Retirer un ami}\\
-\textbf{Mise en pratique :} Après avoir choisi l'option, l'utilisateur est invité à rentrer un nom ou à rentrer une commande pour retourner au menu des amis.\\
-\textbf{Protocole :} Si l'utilisateur ne rentre pas la commande pour quitter alors un message est envoyé au serveur qui le traitera et renverra le résultat de l'opération. Plusieurs résultats sont possibles, soit la personne a été retirée de la liste d'amis soit l'utilisateur a entré le nom d'une personne qui ne fait pas partie de ses amis.
+\textbf{Mise en pratique :} Après avoir choisi cette option, l'utilisateur est invité à rentrer un nom ou une autre commande pour retourner au menu des amis.\\
+\textbf{Protocole :} Si l'utilisateur ne rentre pas la commande pour quitter ce menu, alors un message est envoyé au serveur qui le traitera et renverra le résultat de l'opération. Plusieurs résultats sont possibles, soit la personne a été retirée de la liste d'amis soit l'utilisateur a entré le nom d'une personne qui ne fait pas partie de ses amis.
 
 \item \textit{Accepter ou refuser une demande d'ami}\\
-\textbf{Mise en pratique :} Après avoir choisi l'option, l'utilisateur est invité à rentrer une commande suivi d'un nom ou à rentrer une commande pour retourner au menu des amis.\\
-\textbf{Protocole :} Si l'utilisateur ne rentre pas la commande pour quitter alors un message est envoyé au serveur qui le traitera et renverra le résultat de l'opération. Plusieurs résultats sont possibles, soit la demande a été acceptée ou refusée soit le nom de la personne entrée n'a envoyé aucune demande d'ami.
+\textbf{Mise en pratique :} Après avoir choisi cette option, l'utilisateur est invité à rentrer une commande suivi d'un nom ou autre une commande pour retourner au menu des amis.\\
+\textbf{Protocole :} Si l'utilisateur ne rentre pas la commande pour quitter ce menu, alors un message est envoyé au serveur qui le traitera et renverra le résultat de l'opération. Plusieurs résultats sont possibles, soit la demande a été acceptée ou refusée, soit aucune demande d'ami n'a été envoyée par le nom de la personne encodé.
 
-\item \textit{Annuler sa demande d'ami}\\
-\textbf{Mise en pratique :} Après avoir choisi l'option, l'utilisateur est invité à rentrer un nom ou à rentrer une commande pour retourner au menu des amis.\\
-\textbf{Protocole :} Si l'utilisateur ne rentre pas la commande pour quitter alors un message est envoyé au serveur qui le traitera et renverra le résultat de l'opération. Plusieurs résultats sont possibles, soit la demande a été annulée soit le nom de la personne entré est incorrect.
 
-\item \textit{Choix d'option du menu Statistique}\\
+\item \textit{Choix d'option du menu Statistiques}\\
 \textbf{Mise en pratique :} L'utilisateur a le choix entre 3 options : \textit{Voir ses statistiques}, \textit{Voir le classement général} et \textit{Quitter}.\\
 \textbf{Protocole :} Si l'utilisateur décide de voir ses statistiques, la fonction \textit{checkMyStat} est appelée et enverra un message au serveur qui retournera les statistiques de l'utilisateur qui seront affichées dans un rectangle. Si l'utilisateur veut voir le classement général, il sera redirigé vers un autre menu. Sinon, l'utilisateur retourne au menu principal.
 
 \item \textit{Choix d'option du menu Classement général}\\
 \textbf{Mise en pratique :} L'utilisateur a le choix entre 5 options : \textit{Classic}, \textit{Dark}, \textit{Horde}, \textit{Alice} et \textit{Retour}. \\
-\textbf{Protocole :} Si l'utilisateur choisit une des 4 premières options alors un messages est envoyé au serveur qui renverra le nom et statistiques des 10 premiers joueurs du mode sélectionné. Ces informations seront ensuite affichées dans un rectangle. Sinon l'utilisateur revient au menu principal.
+\textbf{Protocole :} Si l'utilisateur choisit une des 4 premières options, alors un messages est envoyé au serveur qui renverra le nom et les statistiques des 10 premiers joueurs du mode sélectionné. Ces informations seront ensuite affichées dans un rectangle. Sinon l'utilisateur revient au menu principal.
 
 
 \item \textit{Utilisation du chat}\\
 \textbf{Mise en pratique :} Une fois que l'utilisateur a sélectionné cette option, il peut discuter soit avec ses amis soit discuter avec n'importe quelle autre personne dans le canal global.\\
-\textbf{Protocole :} Une fois que l'utilisateur rentre la commande pour discuter, un message sera envoyé au serveur qui le traitera et renverra le résultat de l'opération. Plusieurs résultats sont possibles, soit le message de l'utilisateur s'est envoyé correctement, soit la commande a été mal entrée et dans ce cas aucun message n'est envoyé.
+\textbf{Protocole :} Une fois que l'utilisateur rentre la commande pour discuter, un message sera envoyé au serveur qui le traitera et renverra le résultat de l'opération. Plusieurs résultats sont possibles, soit le message de l'utilisateur s'est correctement envoyé, soit la commande a été mal entrée et dans ce cas, aucun message n'est envoyé.
 
 \end{enumerate}
 
