@@ -117,6 +117,7 @@ la case traversée par le roi n'est contrôlée par aucune pièce adverse\footno
 				 2.2 & 28/02 & Forest Caroline & Mise à jour du déroulement d'une partie \\
 				 2.2.1 & 02/03 & Forest Caroline & Diagrammes de séquences pour le déroulement d'une partie \\
 				 2.3 & 3/03 & Nguyen Duc & Protocole de communication du menu \\
+				 2.4 & 3/03 & Antunes André & Rajout des méthodes pour Alice, Dark, Horde, Classique \\
 				\hline
 \end{tabular}
 			\caption*{Historique des modifications}
@@ -399,7 +400,7 @@ Le système se doit de mettre assez rapidement à jour les statistiques personne
 \textbf{start :} Lance la partie et se termine en cas de victoire d'un des 2 joueurs ou en cas d'égalité. \\
 \textbf{initBoard :} Place les pièces sur leur case de départ dans le \textit{Board}. \\
 \textbf{nextTurn :} Demande au joueur dont c'est le tour un mouvement. Ensuite teste si le mouvement est possible et l'exécute si c'est le cas, sinon redemande un mouvement au joueur. \\
-\textbf{isFinish :} Retourne true si un joueur le joueur qui vient de jouer à gagner (auquel cas le l'attribut \textit{winner} est mis à jour) ou si il y a égalité entre les 2 joueurs. \\
+\textbf{isFinish} Retourne true si un joueur est en échecs et mate ou si il y a égalité entre les 2 joueurs. Le joueur qui vient de jouer a gagné  (auquel cas le l'attribut \textit{winner} est mis à jour). \\
 \textbf{testCheck :} Retourne true si un \textit{King} est en échec. \\
 \textbf{promote :} Exécute la promotion d'un \textit{Pawn}.\\
 \textbf{send\textsl{Info} :} Envoie l'information \textsl{Info} au client.\\
@@ -411,19 +412,23 @@ Le système se doit de mettre assez rapidement à jour les statistiques personne
 \textbf{isStalemate :} Retourne true si il y a un pat dans le \textit{Board} courant.\\
 \textbf{notEnoughtPieces :}Retourne true si il n'y a plus assez de pièces que pour qu'un des deux joueurs puisse faire un échec et mate.\\
 \textbf{sendGameMode :} Envoie aux deux joueurs le type de jeux.\\
-\textbf{boardState :} Retourne l'état du \textit{Board} sous forme d'un string et dont le format est celui qui est compréhensible par le client\footnote{Voir affichage de l'échiquier 6.5.6}.\\
+\textbf{boardState :} Retourne l'état du \textit{Board} sous forme d'un string et dont le format est celui qui est compréhensible par le client\footnote{Voir affichage de l'échiquier 6.5.6}.
+
+Les méthodes de Horde,Alice et Dark ne changent pas en leur methodes comparé au classique.Il y que l'intérieur de la fonction change un peu, pour s'adapter au différents jeux.
 
 \item \textit{Méthodes Alice} \\
-\textbf{}  \\
-\textbf{}  \\
+Alice possède en plus,\\
+\textbf{boardState :} Ici on a rajouté l'option de la dimension mais sinon le contexte reste le même que pour la méthode classique. \footnote{Voir méthodes Classique de l'échiquier 6.1.3}. 
 
 \item \textit{Méthodes Dark} \\
-\textbf{}  \\
-\textbf{}  \\
+Dark possède en plus,\\
+\textbf{boardState :} Ici on a rajouté l'option de la visibilité mais sinon le contexte reste le même que pour la méthode classique. \footnote{Voir méthodes Classique de l'échiquier 6.1.3}. \\
+\textbf{isVisible :}  Retourne true si, la pièce est visible par l'advairsaire, c'est à dire si la pièce est ce trouve sur une case où une pièce adverse peut se déplacer.
 
-\item \textit{Méthodes Horde} \\
-\textbf{}  \\
-\textbf{}  \\
+
+
+
+
 \end{enumerate}
 \subsubsection{Player}
 
