@@ -77,6 +77,7 @@ void gamemodeMenu(MenuHandler* menu, Socket* socket){
     //   break;
      case 2 :
       playGame(socket, "2");
+      receiveMessageHandler(menu, socket, &temp);
       break;
     // case 3 :
     //   playGame(socket, 3);
