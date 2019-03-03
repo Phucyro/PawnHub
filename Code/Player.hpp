@@ -12,6 +12,7 @@
 #include "Board.hpp"
 #include "../Communication/Socket.hpp"
 #include "../Communication/ServerGameControl.hpp"
+#include "../Communication/Data.hpp"
 
 class Player{
 

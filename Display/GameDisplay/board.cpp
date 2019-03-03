@@ -158,6 +158,7 @@ void Board::declare_check() {
 void Board::endgame(const char* message) {
   mvprintw(15, 30, "%s", message);
   refresh_board();
+  getch();
 }
 
 void Board::draw_coordinates()
