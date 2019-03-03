@@ -4,7 +4,7 @@
 #include <string>
 #include "Socket.hpp"
 #include "../Display/MenuHandler/MenuHandler.hpp"
-#include "ClientMessageHandler.hpp"
+
 
 void quit(MenuHandler* menu, Socket* socket){
   socket->sendMessage("0~oirf");
@@ -40,7 +40,12 @@ void leaveQueue(Socket* socket){
   socket->sendMessage("5~leaveQueue");
 }
 
-void checkMyStat(MenuHandler* menu, Socket* socket){
+void checkMyStat(Socket* socket){
   socket->sendMessage("7~myStat");
 }
+
+void viewLadder(Socket* socket, std::string mode){
+  socket->sendMessage(std::string("8~") + mode);
+}
+
 #endif

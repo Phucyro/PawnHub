@@ -52,6 +52,10 @@ void inline receiveMessageHandler(Socket* socket, Data* data, PlayersMap* player
           myStatHandler(player, data);
           player->getSocket()->unlockMutex();
           break;
+        case '8' :
+          ladderHandler(socket, data, msg[1]);
+          player->getSocket()->unlockMutex();
+          break;
       }
     }
   }

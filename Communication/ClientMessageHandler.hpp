@@ -34,6 +34,10 @@ void receiveMessageHandler(MenuHandler* menu, Socket* socket, bool* connected){
       break;
     case '7' :
       myStatHandler(menu, msg[1], msg[2], msg[3]);
+      break;
+    case '8' :
+      ladderHandler(menu, msg[1], msg[2], msg[3]);
+      break;
   }
 }
 
