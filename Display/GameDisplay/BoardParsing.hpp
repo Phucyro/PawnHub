@@ -32,12 +32,12 @@ void separatePieces(unsigned int a, std::string message, std::string colour) {
   int line = coor.getRealRow();
   if (colour == "white") {
     attron(COLOR_PAIR(WHITE_PLAYER));
-    mvprintw(1+(line*OFFSET), 1+(column*OFFSET), "%c", piece);
+    mvprintw((line+1)*OFFSET, 1+((column+1)*OFFSET), "%c", piece);
     attroff(COLOR_PAIR(WHITE_PLAYER));
   }
   else {
     attron(COLOR_PAIR(BLACK_PLAYER));
-    mvprintw(1+(line*OFFSET), 1+(column*OFFSET), "%c", piece);
+    mvprintw((line+1)*OFFSET, 1+((column+1)*OFFSET), "%c", piece);
     attroff(COLOR_PAIR(BLACK_PLAYER));
   }
 }

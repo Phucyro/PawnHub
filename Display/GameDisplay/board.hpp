@@ -27,7 +27,6 @@ protected:
   void draw_coordinates();
 
   void test_game();
-  void exit();
 
 
 public:
@@ -38,6 +37,7 @@ public:
   ~Board();
 
   void init_ncurses();
+  void exit();
 
   void draw_pieces(std::string);
 

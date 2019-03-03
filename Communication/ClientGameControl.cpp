@@ -75,4 +75,5 @@ void ClientGameControl::handleMessage() {
 void ClientGameControl::startParty() {
   game_ongoing = true;
   while(game_ongoing) {handleMessage();}
+  board.exit();
 }

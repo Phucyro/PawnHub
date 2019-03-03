@@ -66,16 +66,16 @@ void Board::init_ncurses()
 void Board::init_windows()
 /**Initialise le board**/
 {
-  int board_height = lines*OFFSET;
-  int board_width = columns*OFFSET;
+  int board_height = (lines+1)*OFFSET;
+  int board_width = (columns+1)*OFFSET;
 
   infos_win = newwin(board_height/2, board_width, 0, board_width+4);
   box(infos_win,0,0);
 
-  for (int i=0; i<24; i+=OFFSET)
-    for (int j=0; j<24; j+=OFFSET)
+  for (int i=0; i<(lines*OFFSET); i+=OFFSET)
+    for (int j=0; j<(columns*OFFSET); j+=OFFSET)
     {
-      draw_rectangle(i,j,i+SIDE_LENGTH,j+SIDE_LENGTH);
+      draw_rectangle(i+OFFSET,j+2,i+OFFSET+SIDE_LENGTH,j+2+SIDE_LENGTH);
     }
 
   draw_coordinates();
@@ -123,11 +123,13 @@ void Board::update_turn(const char* turn) {
 void Board::declare_check() {
   mvprintw(15, 30, "%s", "CHECK");
   refresh_board();
+  getch();
 }
 
 void Board::endgame(const char* message) {
   mvprintw(15, 30, "%s", message);
   refresh_board();
+  getch();
 }
 
 void Board::draw_coordinates()
@@ -135,12 +137,14 @@ void Board::draw_coordinates()
 {
   for (int i=0; i<lines; i++)
   {
-    mvprintw(1+(OFFSET*i), 25 , "%d", i+1);
+    mvprintw(OFFSET*(i+1), 1, "%d", i+1);
+    mvprintw(OFFSET*(i+1), 25+OFFSET , "%d", i+1);
   }
 
   for (int i=0; i<columns; i++)
   {
-    mvprintw(24, 1+(OFFSET*i), "%c", 'A'+i);
+    mvprintw(1, 1+OFFSET*(i+1), "%c", 'A'+i);
+    mvprintw(25+1, 1+OFFSET*(i+1), "%c", 'A'+i);
   }
   refresh_board();
 }

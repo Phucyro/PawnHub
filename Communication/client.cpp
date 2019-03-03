@@ -1,9 +1,8 @@
-#include "config.hpp"
-#include "Socket.hpp"
-#include "ClientGameControl.hpp"
 #include <thread>
 #include <unistd.h>
 #include <sys/wait.h>
+#include "config.hpp"
+#include "Socket.hpp"
 #include "Menu.hpp"
 #include "../Display/MenuHandler/MenuHandler.hpp"
 

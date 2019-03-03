@@ -15,42 +15,42 @@ void inline disconnect(bool* leave){
 
 void inline signUpHandler(Socket* socket, Data* data, std::string username, std::string pswd){
   if (data->containsAccount(username)){
-    socket->sendMessage("1~0");
+    socket->printSend("1~0");
   }
   else {
     data->createUserAccount(username, pswd);
-    socket->sendMessage("1~1");
+    socket->printSend("1~1");
   }
 }
 
 void inline signInHandler(Socket* socket, PlayersMap* players_map, Data* data, Player* player, std::string username, std::string pswd){
   if (!(data->containsAccount(username))){
-    socket->sendMessage("2~0"); // Compte inexistant
+    socket->printSend("2~0"); // Compte inexistant
   }
   else if (data->checkUserPassword(username, pswd)){
-    socket->sendMessage("2~1"); // Identification reussie
+    socket->printSend("2~1"); // Identification reussie
     data->loadUserData(username);
     player->setName(username);
     player->setSocket(socket);
     (*players_map)[username] = player;
   }
   else {
-    socket->sendMessage("2~2"); // Mauvais mot de passe
+    socket->printSend("2~2"); // Mauvais mot de passe
   }
 }
 
 void inline chatHandler(PlayersMap* players_map, std::string sender, std::string target, std::string text){
   if (target == "all"){ // Envoie le message a tous ceux connecte
     for (auto elem : *players_map){
-      elem.second->getSocket()->sendMessage(std::string("3~") + sender + "~" + target + "~" + text);
+      elem.second->getSocket()->printSend(std::string("3~") + sender + "~" + target + "~" + text);
     }
   }
   else {
     if (players_map->find(target) != players_map->end()){ // Utilisateur connecte
-      (*players_map)[target]->getSocket()->sendMessage(std::string("3~") + sender + "~" + text);
+      (*players_map)[target]->getSocket()->printSend(std::string("3~") + sender + "~" + text);
     }
     else { // Envoie msg pour dire que la cible est deconnecte
-      (*players_map)[sender]->getSocket()->sendMessage(std::string("3~server~") + target);
+      (*players_map)[sender]->getSocket()->printSend(std::string("3~server~") + target);
     }
   }
 }
@@ -61,7 +61,7 @@ void inline playGameHandler(Matchmaking* matchmaking, Player* player, std::strin
 
 void inline leaveQueueHandler(Matchmaking* matchmaking, Player* player){
   matchmaking->removePlayer(player);
-  player->getSocket()->sendMessage("5");
+  player->getSocket()->printSend("5");
 }
 
 void inline myStatHandler(Player* player, Data* data){
@@ -69,7 +69,7 @@ void inline myStatHandler(Player* player, Data* data){
 
   for (unsigned int a = 0; a < 4; ++a){
     std::string stat = unsignedIntVectorToStr(data->getUserStat(player->getName(), mode[a]));
-    player->getSocket()->sendMessage(std::string("7~") + std::to_string(a) + "~" + mode[a] + "~" + stat);
+    player->getSocket()->printSend(std::string("7~") + std::to_string(a) + "~" + mode[a] + "~" + stat);
   }
 }
 
