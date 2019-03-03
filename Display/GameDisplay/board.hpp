@@ -26,20 +26,22 @@ protected:
   void draw_rectangle(int x1, int y1, int x2, int y2);
   void draw_coordinates();
 
+  void draw_alice_coordinates();
+
   void test_game();
+  void exit();
 
 
 public:
   Board();
   Board(int lines, int cols);
-  Board(const Board&);
-  Board& operator=(const Board&);
   ~Board();
 
   void init_ncurses();
-  void exit();
 
   void draw_pieces(std::string);
+
+  void draw_alice_board();
 
   void draw_infos();
 

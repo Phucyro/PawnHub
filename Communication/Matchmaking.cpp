@@ -53,13 +53,13 @@ void Matchmaking::check(int queue_number){
         game = new Classic(player1, player2);
         break;
       case 1 :
-        game = new Alice(player1,player2);
+        game = new Dark(player1,player2);
         break;
       case 2 :
         game = new Horde(player1,player2);
         break;
       case 3 :
-        game = new Dark(player1,player2);
+        game = new Alice(player1,player2);
         break;
 
     }
