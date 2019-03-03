@@ -55,10 +55,14 @@ void leaveQueueHandler(){
   std::cout << "Vous avez quitte une file d'attente" << std::endl;
 }
 
-void myStatHandler(MenuHandler* menu, std::string pos, std::string mode, std::string data){
-  std::vector<std::string> data_v = splitString(data, ' ');
-  menu->update_stats(atoi(pos.c_str()), mode, atoi(data_v[0].c_str()), atoi(data_v[1].c_str()), atoi(data_v[2].c_str()));
+void myStatHandler(MenuHandler* menu, std::string pos, std::string mode, std::string stat){
+  std::vector<std::string> stat_v = splitString(stat, ' ');
+  menu->update_stats(atoi(pos.c_str()), mode, atoi(stat_v[0].c_str()), atoi(stat_v[1].c_str()), atoi(stat_v[2].c_str()));
 }
 
+void ladderHandler(MenuHandler* menu, std::string pos, std::string username, std::string stat){
+  std::vector<std::string> stat_v = splitString(stat, ' ');
+  menu->update_stats(atoi(pos.c_str()), username, atoi(stat_v[0].c_str()), atoi(stat_v[1].c_str()), atoi(stat_v[2].c_str()));
+}
 
 #endif

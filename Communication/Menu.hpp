@@ -92,6 +92,53 @@ void gamemodeMenu(MenuHandler* menu, Socket* socket){
 
 ////////////////////////////////////////////////////////////////////////////////
 
+void leaveLadderMenu(MenuHandler* menu, Socket* socket, std::string mode){
+  bool temp = true;
+  menu->clear_windows();
+  menu->init_statsw();
+  menu->init_statst(mode);
+
+  for (unsigned int a = 0; a < 10; ++a){
+    receiveMessageHandler(menu, socket, &temp);
+  }
+
+  menu->refresh_board();
+  menu->init_choicesw();
+  menu->get_choice({"Retour"});
+}
+
+void ladderMenu(MenuHandler* menu, Socket* socket){
+  bool leave = false;
+
+  while (!leave){
+    menu->clear_windows();
+    menu->init_choicesw();
+    int choice = menu->get_choice({"Classic", "Dark", "Horde", "Alice", "Retour"});
+
+    switch (choice){
+      case 0 :
+        viewLadder(socket, "0");
+        leaveLadderMenu(menu, socket, "Classic");
+        break;
+      case 1 :
+        viewLadder(socket, "1");
+        leaveLadderMenu(menu, socket, "Dark");
+        break;
+      case 2 :
+        viewLadder(socket, "2");
+        leaveLadderMenu(menu, socket, "Horde");
+        break;
+      case 3 :
+        viewLadder(socket, "3");
+        leaveLadderMenu(menu, socket, "Alide");
+        break;
+      case 4 :
+        leave = true;
+    }
+  }
+}
+
+
 void myStatMenu(MenuHandler* menu, Socket* socket){
   bool temp = true;
   menu->clear_windows();
@@ -99,13 +146,13 @@ void myStatMenu(MenuHandler* menu, Socket* socket){
   menu->init_statsw();
   menu->init_statsp("User");
 
-  checkMyStat(menu, socket);
+  checkMyStat(socket);
 
   for (unsigned int a = 0; a < 4; ++a){
     receiveMessageHandler(menu, socket, &temp);
-    menu->refresh_board();
   }
 
+  menu->refresh_board();
   menu->init_choicesw();
   menu->get_choice({"Retour"});
 }
@@ -124,6 +171,7 @@ void statMenu(MenuHandler* menu, Socket* socket){
         myStatMenu(menu, socket);
         break;
       case 1 :
+        ladderMenu(menu, socket);
         break;
       case 2 :
         leave = true;
