@@ -176,7 +176,13 @@ void Horde::_nextTurn() {
 	std::string playerMove;
 	while(!isMoveValid){
 		playerMove = currentPlayer->askMove();
-		if (this->_fitInBoard(playerMove)){
+		std::cout<<"game received: "<<playerMove<<std::endl;
+		if (playerMove[0] == 's' && playerMove[1] == 's'){
+			if(currentPlayer == _player1) _winner = _player2;
+			else _winner = _player1;
+			isMoveValid = true;
+		}
+		else if (this->_fitInBoard(playerMove)){
 			Coordinate start = Coordinate(playerMove[0], playerMove[1]), end = Coordinate(playerMove[2], playerMove[3]);
 			isMoveValid = this->_executeMove(start, end, playerColor);
 		}
@@ -185,6 +191,10 @@ void Horde::_nextTurn() {
 
 
 bool Horde::_isFinish() {
+	if (_winner){
+		_sendCheckmate();
+		return true;
+	}
 	Player *currentPlayer = _getCurrentPlayer();
 	char opponentColor = currentPlayer == _player2 ? 'w':'b';
 	if (this->_isCheckmate(opponentColor)){

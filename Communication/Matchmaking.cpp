@@ -4,21 +4,32 @@
 #include "../Code/Alice.hpp"
 #include "../Code/Horde.hpp"
 #include "../Code/Dark.hpp"
+#include "cleanThread.hpp"
 
-void startGame(Game* game, Player* player1, Player* player2){
+void delFinishedThread(std::list<ExecInfoThread*>&);
+
+void startGame(Game* game, Player* player1, Player* player2, ExecInfoThread* infoThread){
   // Lance le jeu avec le bon mode de jeu
   std::cout << "Une partie se lance : " << player1->getName() << " vs " <<
   player2->getName() << std::endl;
-  ServerGameControl control(player1, player2, game);
+  ServerGameControl control(player1, player2, game, infoThread);
 }
 
 
-Matchmaking::Matchmaking(int number_of_queues) : _queues({}) {
+Matchmaking::Matchmaking(int number_of_queues) : _queues({}), _games() {
   for (int a = 0; a < number_of_queues; ++a){
     _queues[a] = std::vector<Player*>();
   }
 }
 
+Matchmaking::~Matchmaking(){
+  std::list<ExecInfoThread*>::iterator it;
+  for (it = _games.begin(); it != _games.end(); ++it){
+    (*it)->getThread()->join();
+    delete (*it)->getThread();
+    delete *it;
+  }
+}
 
 void Matchmaking::addPlayer(Player* player, int queue_number){
   _queues[queue_number].push_back(player); // 0 : Classic, 1 : Horde, 2 : Dark, 3 : Alice
@@ -63,8 +74,10 @@ void Matchmaking::check(int queue_number){
         break;
 
     }
-
-    std::thread game_thread(startGame, game, player1, player2);
-    game_thread.detach();
+    ExecInfoThread *infoThread = new ExecInfoThread();
+    std::thread *game_thread = new std::thread(startGame, game, player1, player2, infoThread);
+    infoThread->setThread(game_thread);
+    _games.push_back(infoThread);
   }
+  delFinishedThread(_games);
 }

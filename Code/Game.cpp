@@ -149,6 +149,10 @@ void Game::_sendStalemate() {
 void Game::promote(Piece* piece)
 {
 	char type = this->_getCurrentPlayer()->askPromotion();
+	if (type == 's'){
+		if (_getCurrentPlayer() == _player1) _winner = _player2;
+		else _winner = _player1;
+	}
 	Pawn *pawn = dynamic_cast<Pawn*>(piece);
 	if (!pawn) throw std::string("the piece to promote is not a pawn");
 	Piece* promotedPawn;

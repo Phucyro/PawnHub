@@ -5,6 +5,7 @@
 #include "Socket.hpp"
 #include "../Code/Player.hpp"
 #include "../Code/Game.hpp"
+#include "ExecInfoThread.hpp"
 
 #ifndef _SCONTROL_H_
 #define _SCONTROL_H_
@@ -15,6 +16,7 @@ class ServerGameControl {
 private:
   Player *player1, *player2;
   Game *game;
+  ExecInfoThread* info;
 
   std::map<std::string, std::string> headerSendMap = {
    {"board", "B"},
@@ -27,10 +29,10 @@ private:
    {"promote", "P"},
   };
 
-
+	void _playerDisconected(Socket*);
 
 public:
-  ServerGameControl(Player*, Player*, Game*);
+  ServerGameControl(Player*, Player*, Game*, ExecInfoThread*);
   ServerGameControl(const ServerGameControl&);
   ServerGameControl& operator=(const ServerGameControl&);
   ~ServerGameControl();

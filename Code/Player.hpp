@@ -64,6 +64,7 @@ class Player{
 	void transferTurn(unsigned);
 	void receiveMove(std::string&);
 	void receivePromotion(std::string&);
+	void surrend();
 };
 
 #endif

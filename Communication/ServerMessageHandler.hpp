@@ -6,6 +6,7 @@
 #include "Matchmaking.hpp"
 #include "Data.hpp"
 #include "../Code/Player.hpp"
+#include "ExecInfoThread.hpp"
 #include <vector>
 #include <string>
 #include <iostream>
@@ -15,7 +16,7 @@
 typedef std::map<std::string, Player*> PlayersMap;
 
 
-void inline receiveMessageHandler(Socket* socket, Data* data, PlayersMap* players_map, Matchmaking* matchmaking){
+void inline receiveMessageHandler(Socket* socket, Data* data, PlayersMap* players_map, Matchmaking* matchmaking, ExecInfoThread* info){
   bool quit = false;
   std::vector<std::string> msg;
   Player* player = new Player(socket);
@@ -98,6 +99,7 @@ void inline receiveMessageHandler(Socket* socket, Data* data, PlayersMap* player
     data->saveUserData(player->getName());
 
   delete player;
+  info->setFinished(true);
 }
 
 #endif

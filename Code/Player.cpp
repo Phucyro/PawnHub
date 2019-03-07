@@ -119,4 +119,9 @@ void Player::receivePromotion(std::string& message){
 	}
 }
 
+void Player::surrend(){
+	char message[5]="ssss";
+	write(_pipe[1], message, 4*sizeof(char));
+}
+
 #endif
