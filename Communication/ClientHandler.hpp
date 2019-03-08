@@ -30,6 +30,10 @@ void signInHandler(MenuHandler* menu, char msg, bool* connected){ // Fonction bo
       break;
     case '2' :
       menu->print_warning("Mauvais mot de passe");
+      break;
+    case '3' :
+      menu->print_warning("Compte en cour d'utilisation");
+      break;
   }
   menu->refresh_board();
 }

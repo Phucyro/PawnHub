@@ -11,7 +11,6 @@ void delFinishedThread(std::list<ExecInfoThread*>& threadList){
 		ExecInfoThread* thread;
 		std::list<ExecInfoThread*>::iterator it;
 		for (it = threadList.begin(); it != threadList.end() && !threadList.empty(); ++it){
-			std::cout<<(*it)<<std::endl;
 			if (*it && (*it)->isFinished()){
 				thread = *it;
 				--it;

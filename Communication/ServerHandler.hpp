@@ -7,6 +7,7 @@
 #include "Matchmaking.hpp"
 #include <string>
 #include <tuple>
+#include <iostream>
 
 typedef std::map<std::string, Player*> PlayersMap;
 typedef std::vector<unsigned int> Stat;
@@ -33,15 +34,23 @@ void inline signInHandler(Socket* socket, PlayersMap* players_map, Data* data, P
   if (!(data->containsAccount(username))){
     socket->printSend("2~0"); // Compte inexistant
   }
-  else if (data->checkUserPassword(username, pswd)){
-    socket->printSend("2~1"); // Identification reussie
-    data->loadUserData(username);
-    player->setName(username);
-    player->setSocket(socket);
-    (*players_map)[username] = player;
-  }
   else {
-    socket->printSend("2~2"); // Mauvais mot de passe
+    try{
+        players_map->at(username);
+        socket->printSend("2~3"); // Compte déjà connecté
+    }
+    catch(std::out_of_range e){
+      if (data->checkUserPassword(username, pswd)){
+        socket->printSend("2~1"); // Identification reussie
+        data->loadUserData(username);
+        player->setName(username);
+        player->setSocket(socket);
+        (*players_map)[username] = player;
+      }
+      else {
+        socket->printSend("2~2"); // Mauvais mot de passe
+      }
+    }
   }
 }
 
