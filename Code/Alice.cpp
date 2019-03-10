@@ -192,9 +192,7 @@ bool Alice::_isCheckmate(char playerColor){
 		i++;
 	}
 	if (!dangerousPiece) return false;
-	std::cout<<"dangerous piece exist"<<std::endl;
 	if (king->canMove(_board, *this)) return false;
-	std::cout<<"king can't move"<<std::endl;
 	if (!moreThan2){
 		int rowMove = int(dangerousPiece->getRow()) - int(king->getRow());
 		int rowDirection = rowMove ? rowMove/std::abs(rowMove) : 0;

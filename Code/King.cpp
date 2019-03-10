@@ -90,21 +90,13 @@ bool King::_checkMove(Coordinate end, Board* board, Game& game){
 
 bool King::canMove(Board* board, Game& game){
 	if (this->_isMovePossible(1, 1, board, game)) return true;
-	std::cout<<"move 1 1 impossible"<<std::endl;
 	if (this->_isMovePossible(0, 1, board, game)) return true;
-	std::cout<<"move 0 1 impossible"<<std::endl;
 	if (this->_isMovePossible(-1, 1, board, game)) return true;
-	std::cout<<"move -1 1 impossible"<<std::endl;
 	if (this->_isMovePossible(1, 0, board, game)) return true;
-	std::cout<<"move 1 0 impossible"<<std::endl;
 	if (this->_isMovePossible(-1, 0, board, game)) return true;
-	std::cout<<"move -1 0 impossible"<<std::endl;
 	if (this->_isMovePossible(1, -1, board, game)) return true;
-	std::cout<<"move 1 -1 impossible"<<std::endl;
 	if (this->_isMovePossible(0, -1, board, game)) return true;
-	std::cout<<"move 0 -1 impossible"<<std::endl;
 	if (this->_isMovePossible(-1, -1, board, game)) return true;
-	std::cout<<"move -1 -1 impossible"<<std::endl;
 	return false;
 }
 
