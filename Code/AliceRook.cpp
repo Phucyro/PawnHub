@@ -30,4 +30,12 @@ bool AliceRook::_isMovePossible(Coordinate end, Board* board, Game& game){
 	return false;
 }
 
+bool AliceRook::canMove(Board* board, Game& game){
+	if (this->_canMoveInLine(0, 1, board, game)) return true;
+	if (this->_canMoveInLine(1, 0, board, game)) return true;
+	if (this->_canMoveInLine(-1, 0, board, game)) return true;
+	if (this->_canMoveInLine(0, -1, board, game)) return true;
+	return false;
+}
+
 #endif

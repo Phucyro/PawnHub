@@ -9,10 +9,10 @@ void ClientGameControl::receiveBoard(std::string message) {
     board.draw_pieces(message);
   }
   else if (message[0] == '1') {
-    // board.draw_pieces_1(message.erase(0,1));
+    board.draw_pieces(message.erase(0,1));
   }
   else {
-    // board.draw_pieces_2(message.erase(0,1));
+    board.draw_alice_pieces(message.erase(0,1));
   }
 }
 
@@ -22,7 +22,7 @@ void ClientGameControl::receiveUpdate(std::string message) {
   }
   else if (message == "alice") {
     is_alice = true;
-    // board.init_alice();
+    board.draw_alice_board();
   }
   else if (message == "check") {
     board.declare_check();

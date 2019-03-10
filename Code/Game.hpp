@@ -48,7 +48,7 @@ class Game
 	void start();
 	virtual bool testCheck(const char color) = 0;
 	unsigned getTurn() const {return _turn;}
-	void promote(Piece* pawn);
+	virtual void promote(Piece*);
 
 	Player* getWinner(){return _winner;}
 	Player* getPlayer1(){return _player1;}

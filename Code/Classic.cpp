@@ -227,6 +227,7 @@ bool Classic::_isCheckmate(char playerColor){
 }
 
 bool Classic::_isStalemate(char playerColor){
+	if (this->testCheck(playerColor)) return false;
 	int offset = _calculOffset(playerColor);
 	for (int i = offset; i < 16+offset; i++){
 		if ((!_pieces[i]->isTaken()) && _pieces[i]->canMove(_board, *this)) return false;

@@ -9,4 +9,14 @@ bool AlicePiece::_isPlaceFree(Coordinate place ,Board* board){
 }
 AlicePiece::~AlicePiece(){}
 
+bool AlicePiece::_canMoveInLine(int columnDirection, int rowDirection, Board* board, Game& game){
+	int column = columnDirection, row = rowDirection;
+	while (board->isInBoard(Coordinate(column, row))){
+		if (this->_isMovePossible(column, row, board, game)) return true;
+		column += columnDirection;
+		row += rowDirection;
+	}
+	return false;
+}
+
 #endif

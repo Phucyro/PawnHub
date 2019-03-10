@@ -147,7 +147,8 @@ void Game::_sendStalemate() {
 }
 
 void Game::promote(Piece* piece)
-{
+{	
+	this->_sendBoard();
 	char type = this->_getCurrentPlayer()->askPromotion();
 	if (type == 's'){
 		if (_getCurrentPlayer() == _player1) _winner = _player2;
@@ -179,8 +180,6 @@ void Game::promote(Piece* piece)
 
 	}
 	this->_changePawn(pawn, promotedPawn, _board);
-
-	this->_sendBoard();
 }
 
 #endif

@@ -286,6 +286,7 @@ bool Horde::_isCheckmate(char playerColor){
 }
 
 bool Horde::_isStalemate(char playerColor){
+	if (this->testCheck(playerColor)) return false;
 	if(playerColor == 'w'){
 		for (int i = 0; i < 16; i++){
 			if ((!_pieces[i]->isTaken()) && _pieces[i]->canMove(_board, *this)) return false;

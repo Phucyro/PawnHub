@@ -17,6 +17,8 @@ class AlicePiece{
 	virtual bool _isPlaceFree(Coordinate place ,Board* board);
 	AlicePiece(bool dimension): _2Dimension(dimension){}
 	AlicePiece(const AlicePiece& original): _2Dimension(original._2Dimension){}
+	
+	bool _canMoveInLine(int, int, Board*, Game&);
 
 	public :
 	virtual ~AlicePiece() = 0;
@@ -28,9 +30,10 @@ class AlicePiece{
 
 	virtual bool _checkMove(Coordinate end, Board* board, Game& game){
 		AlicePiece* pieceToTake = _convertPiece(board->getCase(end));
-		return (!pieceToTake) && pieceToTake->getDimension() == getDimension();
+		return (!pieceToTake) || pieceToTake->getDimension() == getDimension();
 	}
 	bool getDimension(){return _2Dimension;}
+	virtual bool _isMovePossible(int, int, Board*, Game&) = 0;
 };
 
 #include "Game.hpp"

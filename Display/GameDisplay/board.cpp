@@ -86,12 +86,14 @@ void Board::draw_alice_coordinates()
 
   for (int i=0; i<lines; i++)
   {
-    mvprintw(1+(OFFSET*i), 54, "%d", i+1);
+    mvprintw(OFFSET*(i+1), 63, "%d", i+1);
+    mvprintw(OFFSET*(i+1), 63+25+OFFSET , "%d", i+1);//54
   }
 
   for (int i=0; i<columns; i++)
   {
-    mvprintw(24, 57+(OFFSET*i), "%c", 'A'+i);
+    mvprintw(26, 66+(OFFSET*i), "%c", 'A'+i);//57
+    mvprintw(1, 66+(OFFSET*i), "%c", 'A'+i);
   }
 
 
@@ -104,8 +106,8 @@ void Board::draw_alice_board()
   int board_height = lines*OFFSET;
   int board_width = columns*OFFSET;
 
-  for (int i=56; i<80; i+=OFFSET)
-    for (int j=0; j<24; j+=OFFSET)
+  for (int i=65; i<89; i+=OFFSET)//56->80
+    for (int j=2; j<25; j+=OFFSET)
     {
       draw_rectangle(i, j, i+SIDE_LENGTH, j+SIDE_LENGTH);
     }
@@ -192,6 +194,7 @@ void Board::draw_pieces(std::string board)
 void Board::draw_alice_pieces(std::string board)
 {
   refresh_board();
+  draw_alice_board();
   aliceToBoard(board);
   refresh_board();
 }

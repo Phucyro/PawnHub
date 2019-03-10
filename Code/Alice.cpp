@@ -101,12 +101,15 @@ void Alice::_sendGameMode() {
 }
 
 void Alice::_sendStart() {
-	std::string update = "alice";
+	std::string update = "start";
+	_player1->transferUpdate(update);
+	_player2->transferUpdate(update);
+	update = "alice";
 	_player1->transferUpdate(update);
 	_player2->transferUpdate(update);
 }
 
-void Alice::_changePawn(Piece *pawn, Piece* promotedPawn, Board* board){
+void Alice::_changePawn(Piece* pawn, Piece* promotedPawn, Board* board){
 	int start, i, end;
 	if (pawn->getColor() == 'w'){
 		_lastStrongPiecesWhite ++;
@@ -189,7 +192,9 @@ bool Alice::_isCheckmate(char playerColor){
 		i++;
 	}
 	if (!dangerousPiece) return false;
+	std::cout<<"dangerous piece exist"<<std::endl;
 	if (king->canMove(_board, *this)) return false;
+	std::cout<<"king can't move"<<std::endl;
 	if (!moreThan2){
 		int rowMove = int(dangerousPiece->getRow()) - int(king->getRow());
 		int rowDirection = rowMove ? rowMove/std::abs(rowMove) : 0;
@@ -232,6 +237,7 @@ bool Alice::_isCheckmate(char playerColor){
 }
 
 bool Alice::_isStalemate(char playerColor){
+	if (this->testCheck(playerColor)) return false;
 	int offset = _calculOffset(playerColor);
 	for (int i = offset; i < offset+16; i++){
 		if ((!_pieces[i]->isTaken()) && _pieces[i]->canMove(_board, *this)) return false;
@@ -309,21 +315,66 @@ bool Alice::_isFinish() {
 	return false;
 }
 
+void Alice::_sendBoard(){
+	std::string state;
+	state += '1';
+	this->_boardState(state);
+	_player1->showBoard(state);
+	_player2->showBoard(state);
+	state.clear();
+	state += '2';
+	this->_boardState(state);
+	_player1->showBoard(state);
+	_player2->showBoard(state);
+}
+
 void Alice::_boardState(std::string& state){
+	bool rightDimension = state[0] == '2';
 	int i = 0;
 	for (; i < 16; i++){
-		if (!_pieces[i]->isTaken()) {
-			state += _pieces[i]->toString();
-			state += dynamic_cast<AlicePiece*>(_pieces[i])->getDimension() ? '1':'2';
-		}
+		if (!_pieces[i]->isTaken() && dynamic_cast<AlicePiece*>(_pieces[i])->getDimension() == rightDimension) state += _pieces[i]->toString();
 	}
 	state += "!";
 	for (; i < 32; i++){
-		if (!_pieces[i]->isTaken()) {
-			state += _pieces[i]->toString();
-			state += dynamic_cast<AlicePiece*>(_pieces[i])->getDimension() ? '1':'2';
-		}
+		if (!_pieces[i]->isTaken() && dynamic_cast<AlicePiece*>(_pieces[i])->getDimension() == rightDimension) state += _pieces[i]->toString();
 	}
 	state += "#";
 }
+
+void Alice::promote(Piece* piece)
+{	
+	this->_sendBoard();
+	char type = this->_getCurrentPlayer()->askPromotion();
+	if (type == 's'){
+		if (_getCurrentPlayer() == _player1) _winner = _player2;
+		else _winner = _player1;
+	}
+	AlicePawn *pawn = dynamic_cast<AlicePawn*>(piece);
+	if (!pawn) throw std::string("the piece to promote is not a pawn");
+	Piece* promotedPawn;
+	switch (type) {
+		case 'q':
+			promotedPawn = new AliceQueen(*pawn);
+			break;
+
+
+		case 'b':
+			promotedPawn = new AliceBishop(*pawn);
+			break;
+
+
+		case 'h':
+			promotedPawn = new AliceKnight(*pawn);
+			break;
+
+
+		case 'r':
+			promotedPawn = new AliceRook(*pawn);
+			break;
+
+
+	}
+	this->_changePawn(pawn, promotedPawn, _board);
+}
+
 #endif

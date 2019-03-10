@@ -37,6 +37,7 @@ class Alice : public Game {
 	void _sendStart() override;
 	void _nextTurn() override;
 	bool _isFinish() override;
+	void _sendBoard() override;
 	void _boardState(std::string&) override;
 	Alice(const Alice&) = delete;
 	using Game::_pieces;
@@ -56,7 +57,7 @@ class Alice : public Game {
 		return *this;
 	}
 
-
+	void promote(Piece*) override;
 	bool testCheck(const char color) override {
 		Coordinate leftMaybePawn, rightMaybePawn;
 		if (color == 'w' || color == 'a'){	//White		//a = all

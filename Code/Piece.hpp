@@ -73,7 +73,7 @@ class Piece {
 		virtual void changeIsTaken(unsigned turn, Piece*, Board*){_isTaken = !_isTaken;}
 		bool isTaken() const {return _isTaken;}
 		virtual bool _isMovePossible(Coordinate, Board*, Game&);
-		bool _isMovePossible(int column, int row, Board* board, Game& game){return _isMovePossible(Coordinate(int (this->getColumn()) + column, int(this->getRow()) + row), board, game);}
+		bool _isMovePossible(int column, int row, Board* board, Game& game){return this->_isMovePossible(Coordinate(int (this->getColumn()) + column, int(this->getRow()) + row), board, game);}
 };
 #include "Game.hpp"
 #endif
