@@ -89,6 +89,10 @@ void Player::transferStalemate() {
 	_control->sendStalemate(getSocket());
 }
 
+void Player::transferSurrend(){
+	_control->sendSurrend(getSocket());
+}
+
 void Player::transferGameMode(std::string& game) {
 	_control->sendGameMode(getSocket(), game);
 }
@@ -120,7 +124,7 @@ void Player::receivePromotion(std::string& message){
 }
 
 void Player::surrend(){
-	char message[5]="ssss";
+	char message[5]="/end";
 	write(_pipe[1], message, 4*sizeof(char));
 }
 

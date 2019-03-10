@@ -79,6 +79,10 @@ void ServerGameControl::sendStalemate(Socket* socket) {
   sendUpdate(socket, "stalemate");
 }
 
+void ServerGameControl::sendSurrend(Socket* socket) {
+  sendUpdate(socket, "surrend");
+}
+
 void ServerGameControl::sendGameMode(Socket* socket, std::string mode) {
   std::string header = headerSendMap["gamemode"];
   try{socket->sendMessage(header + mode);}

@@ -227,6 +227,10 @@ void Board::draw_rectangle(int x1, int y1, int x2, int y2)
 //   refresh_board();
 // }
 
+void Board::clear_board(){
+	clear();
+	refresh_board();
+}
 
 void Board::refresh_board()
 /** refresh le board (a faire apres chaque modification) **/
@@ -253,7 +257,7 @@ std::string Board::get_movement()
     else if (i == 2) {
       mvprintw(16, 30, "%s", "State moved piece position: ");
     }
-    else if (i == 4) {break;}
+    else if (i == 4) break;
     move[i] = getch();
     mvprintw(15 + (i/2), 60 + (i%2), "%c", move[i]);
   }

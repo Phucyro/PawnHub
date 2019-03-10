@@ -146,11 +146,15 @@ void Game::_sendStalemate() {
 	_player2->transferStalemate();
 }
 
+void Game::_sendSurrend(){
+	_winner->transferSurrend();
+}
+
 void Game::promote(Piece* piece)
 {	
 	this->_sendBoard();
 	char type = this->_getCurrentPlayer()->askPromotion();
-	if (type == 's'){
+	if (type == '/'){
 		if (_getCurrentPlayer() == _player1) _winner = _player2;
 		else _winner = _player1;
 	}

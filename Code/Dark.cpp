@@ -145,7 +145,7 @@ void Dark::_nextTurn() {
 	std::string playerMove;
 	while(!isMoveValid){
 		playerMove = currentPlayer->askMove();
-		if (playerMove[0] == 's' && playerMove[1] == 's'){
+		if (playerMove[0] == '/' && playerMove[1] == 'e' && playerMove[2] == 'n' && playerMove[3] == 'd'){
 			if(currentPlayer == _player1) _winner = _player2;
 			else _winner = _player1;
 			isMoveValid = true;
@@ -159,7 +159,7 @@ void Dark::_nextTurn() {
 
 bool Dark::_isFinish() {
 	if (_winner){
-		_sendCheckmate();
+		_sendSurrend();
 		return true;
 	}
 	Player *currentPlayer = _getCurrentPlayer();

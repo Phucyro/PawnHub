@@ -59,6 +59,7 @@ class Player{
 	void transferCheck();
 	void transferCheckmate(std::string&);
 	void transferStalemate();
+	void transferSurrend();
 	void transferGameMode(std::string&);
 	void transferColour(std::string&);
 	void transferTurn(unsigned);

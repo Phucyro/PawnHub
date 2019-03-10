@@ -159,7 +159,7 @@ void Alice::_nextTurn() {
 	while(!isMoveValid){
 		playerMove = currentPlayer->askMove();
 		std::cout<<"game received: "<<playerMove<<std::endl;
-		if (playerMove[0] == 's' && playerMove[1] == 's'){
+		if (playerMove[0] == '/' && playerMove[1] == 'e' && playerMove[2] == 'n' && playerMove[3] == 'd'){
 			if(currentPlayer == _player1) _winner = _player2;
 			else _winner = _player1;
 			isMoveValid = true;
@@ -278,7 +278,7 @@ bool Alice::_notEnoughtPieces(){
 
 bool Alice::_isFinish() {
 	if (_winner){
-		_sendCheckmate();
+		_sendSurrend();
 		return true;
 	}
 	Player *currentPlayer = _getCurrentPlayer();

@@ -45,6 +45,7 @@ public:
   void draw_alice_pieces(std::string);
 
   void draw_infos();
+  void clear_board();
 
   // void move_piece(int, int, int, int, std::string);
 

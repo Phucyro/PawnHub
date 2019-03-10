@@ -50,6 +50,7 @@ public:
   void sendCheck(Socket*);
   void sendCheckmate(Socket*, std::string);
   void sendStalemate(Socket*);
+  void sendSurrend(Socket*);
   void sendGameMode(Socket*, std::string);
   void sendPlayerColour(Socket*, std::string);
   void sendTurn(Socket*, unsigned);

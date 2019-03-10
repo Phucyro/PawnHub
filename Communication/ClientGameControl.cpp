@@ -32,6 +32,9 @@ void ClientGameControl::receiveUpdate(std::string message) {
     if (message == "stalemate") {
       message = "Stalemate !";
     }
+    else if (message == "surrend") {
+      message = "You win: your oppenent gave up !";
+    }
     else if (message == "white"){
       message = "Checkmate: white player won !";
     }
@@ -60,6 +63,11 @@ void ClientGameControl::receiveTurn(std::string message) {
 void ClientGameControl::receiveAskMove(std::string message) {
   std::string move = board.get_movement();
   sendMove(move);
+  if (move == "/end"){
+  	game_ongoing = false;
+  	board.clear_board();
+  	board.endgame("You gave up.");
+  }
 }
 
 void ClientGameControl::receiveAskPromotion(std::string message) {

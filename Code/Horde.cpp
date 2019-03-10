@@ -192,7 +192,7 @@ void Horde::_nextTurn() {
 
 bool Horde::_isFinish() {
 	if (_winner){
-		_sendCheckmate();
+		_sendSurrend();
 		return true;
 	}
 	Player *currentPlayer = _getCurrentPlayer();

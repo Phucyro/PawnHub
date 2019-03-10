@@ -26,6 +26,7 @@ class Game
 	virtual void _sendCheck();
 	virtual void _sendCheckmate();
 	virtual void _sendStalemate();
+	virtual void _sendSurrend();
 
 	virtual void _initBoard() = 0;
 	virtual void _sendGameMode() = 0;
