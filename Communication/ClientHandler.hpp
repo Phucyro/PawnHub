@@ -32,25 +32,47 @@ void signInHandler(MenuHandler* menu, char msg, bool* connected){ // Fonction bo
       menu->print_warning("Mauvais mot de passe");
       break;
     case '3' :
-      menu->print_warning("Compte en cour d'utilisation");
+      menu->print_warning("Ce compte est déjà utilisé par quelqu'un");
       break;
   }
   menu->refresh_board();
 }
 
-void chatHandler(std::string sender, std::string target, std::string text){
+
+void chatHandler(MenuHandler* menu, std::string sender, std::string target, std::string text, std::vector<std::string>* messages){
+  std::string msg_to_print;
+
   if (target == "all"){
-    std::cout << "[" << sender << "->all] " << text << std::endl;
+    msg_to_print = std::string("[") + sender + "->" + target + "] " + text;
   }
-  else if (sender == "server"){
-    std::cout << target << " est deconnecte" << std::endl;
+  else if (sender == "Guest"){
+    msg_to_print =  target + " est deconnecté ou n'existe pas";
   }
   else {
-    std::cout << "[" << sender << "->me] " << text << std::endl;
+    msg_to_print =  std::string("[") + sender + "->me] " + text;
   }
+
+  if (messages->size() == 30){
+    messages->erase(messages->begin());
+    messages->push_back(msg_to_print);
+  }
+  else {
+    messages->push_back(msg_to_print);
+  }
+
+  menu->init_chatw();
+
+  for (unsigned int a = 0; a < messages->size(); ++a){
+    menu->update_chatw(a, "", (*messages)[a]);
+  }
+  menu->refresh_board();
+
 }
 
-void playGameHandler(Socket* socket){
+
+void playGameHandler(MenuHandler* menu, Socket* socket){
+  menu->clear_windows();
+  menu->end_windows();
   std::cout << "Vous avez rejoint une file d'attente" << std::endl;
   ClientGameControl control(*socket);
 }
@@ -136,6 +158,23 @@ void removeFriendHandler(MenuHandler* menu, std::string res){
       menu->print_warning("Utilisateur retiré de votre liste d'amis");
   }
   menu->refresh_board();
+}
+
+void viewSentRequestHandler(MenuHandler* menu, std::string request, bool* stop, std::vector<std::string>* request_list){
+  if (request != "Guest"){
+    request_list->push_back(request);
+  }
+  else {
+    menu->init_friendsw(*request_list);
+    *stop = true;
+  }
+}
+
+void cancelRequestHandler(MenuHandler* menu, std::string res){
+  if (res == "0")
+    menu->print_warning("Aucune requete n'a été envoyé à ce joueur");
+  else
+    menu->print_warning("La demande d'ami a été annulée");
 }
 
 

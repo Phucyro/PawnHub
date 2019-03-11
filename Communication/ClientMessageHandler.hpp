@@ -25,12 +25,10 @@ void receiveMessageHandler(MenuHandler* menu, Socket* socket, bool* b_option, st
       signInHandler(menu, msg[1][0], b_option);
       break;
     case 3 : // [3] [sender] [target] [text]
-      //chatHandler(msg[1], msg[2], vectorToString(msg, 2));
+      chatHandler(menu, msg[1], msg[2], msg[3], v_option);
       break;
     case 4 :
-      menu->clear_windows();
-      menu->end_windows();
-      playGameHandler(socket);
+      playGameHandler(menu, socket);
       break;
     case 5 :
       leaveQueueHandler();
@@ -55,6 +53,12 @@ void receiveMessageHandler(MenuHandler* menu, Socket* socket, bool* b_option, st
       break;
     case 13 :
       removeFriendHandler(menu, msg[1]);
+      break;
+    case 14 :
+      viewSentRequestHandler(menu, msg[1], b_option, v_option);
+      break;
+    case 15 :
+      cancelRequestHandler(menu, msg[1]);
       break;
   }
 }

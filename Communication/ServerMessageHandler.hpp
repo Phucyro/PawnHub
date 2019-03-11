@@ -6,7 +6,6 @@
 #include "Matchmaking.hpp"
 #include "Data.hpp"
 #include "../Code/Player.hpp"
-#include "ExecInfoThread.hpp"
 #include <vector>
 #include <string>
 #include <iostream>
@@ -16,7 +15,7 @@
 typedef std::map<std::string, Player*> PlayersMap;
 
 
-void inline receiveMessageHandler(Socket* socket, Data* data, PlayersMap* players_map, Matchmaking* matchmaking, ExecInfoThread* info){
+void inline receiveMessageHandler(Socket* socket, Data* data, PlayersMap* players_map, Matchmaking* matchmaking){
   bool quit = false;
   std::vector<std::string> msg;
   Player* player = new Player(socket);
@@ -42,7 +41,7 @@ void inline receiveMessageHandler(Socket* socket, Data* data, PlayersMap* player
           player->getSocket()->unlockMutex();
           break;
         case 3 : // [3] [sender] [target] [text]
-          //chatHandler(players_map, msg[1], msg[2], vectorToString(msg, 3));
+          chatHandler(players_map, player, msg[1], msg[2]);
           player->getSocket()->unlockMutex();
           break;
         case 4 :
@@ -80,6 +79,18 @@ void inline receiveMessageHandler(Socket* socket, Data* data, PlayersMap* player
           removeFriendHandler(player, data, msg[1]);
           player->getSocket()->unlockMutex();
           break;
+        case 14 :
+          viewSentRequestHandler(player, data);
+          player->getSocket()->unlockMutex();
+          break;
+        case 15 :
+          cancelRequestHandler(player, data, msg[1]);
+          player->getSocket()->unlockMutex();
+          break;
+        case 20 :
+          socket->sendMessage("20~stopChat");
+          player->getSocket()->unlockMutex();
+          break;
       }
     }
   }
@@ -99,7 +110,6 @@ void inline receiveMessageHandler(Socket* socket, Data* data, PlayersMap* player
     data->saveUserData(player->getName());
 
   delete player;
-  info->setFinished(true);
 }
 
 #endif

@@ -7,7 +7,6 @@
 #include "Matchmaking.hpp"
 #include <string>
 #include <tuple>
-#include <iostream>
 
 typedef std::map<std::string, Player*> PlayersMap;
 typedef std::vector<unsigned int> Stat;
@@ -34,39 +33,34 @@ void inline signInHandler(Socket* socket, PlayersMap* players_map, Data* data, P
   if (!(data->containsAccount(username))){
     socket->printSend("2~0"); // Compte inexistant
   }
+  else if (data->isConnected(username)){
+    socket->printSend("2~3"); // Joueur deja connecte
+  }
+  else if (data->checkUserPassword(username, pswd)){
+    socket->printSend("2~1"); // Identification reussie
+    data->loadUserData(username);
+    player->setName(username);
+    player->setSocket(socket);
+    (*players_map)[username] = player;
+  }
   else {
-    try{
-        players_map->at(username);
-        socket->printSend("2~3"); // Compte déjà connecté
-    }
-    catch(std::out_of_range e){
-      if (data->checkUserPassword(username, pswd)){
-        socket->printSend("2~1"); // Identification reussie
-        data->loadUserData(username);
-        player->setName(username);
-        player->setSocket(socket);
-        (*players_map)[username] = player;
-      }
-      else {
-        socket->printSend("2~2"); // Mauvais mot de passe
-      }
-    }
+    socket->printSend("2~2"); // Mauvais mot de passe
   }
 }
 
 
-void inline chatHandler(PlayersMap* players_map, std::string sender, std::string target, std::string text){
+void inline chatHandler(PlayersMap* players_map, Player* player, std::string target, std::string text){
   if (target == "all"){ // Envoie le message a tous ceux connecte
     for (auto elem : *players_map){
-      elem.second->getSocket()->printSend(std::string("3~") + sender + "~" + target + "~" + text);
+      elem.second->getSocket()->sendMessage(std::string("3~") + player->getName() + "~" + target + "~" + text);
     }
   }
   else {
     if (players_map->find(target) != players_map->end()){ // Utilisateur connecte
-      (*players_map)[target]->getSocket()->printSend(std::string("3~") + sender + "~" + text);
+      (*players_map)[target]->getSocket()->sendMessage(std::string("3~") + player->getName() + "~" + target + "~" + text);
     }
     else { // Envoie msg pour dire que la cible est deconnecte
-      (*players_map)[sender]->getSocket()->printSend(std::string("3~server~") + target);
+      player->getSocket()->sendMessage(std::string("3~Guest~") + target + "None");
     }
   }
 }
@@ -176,6 +170,21 @@ void inline sendFriendRequestHandler(Player* player, Data* data, std::string nam
 void inline removeFriendHandler(Player* player, Data* data, std::string name){
   int res = data->removeFriend(player->getName(), name);
   player->getSocket()->sendMessage(std::string("13~") + std::to_string(res));
+}
+
+void inline viewSentRequestHandler(Player* player, Data* data){
+  std::vector<std::string> sent_request = data->getUserSentRequests(player->getName());
+
+  for (unsigned int a = 0; a < sent_request.size(); ++a){
+    player->getSocket()->sendMessage(std::string("14~") + sent_request[a]);
+  }
+
+  player->getSocket()->sendMessage("14~Guest");
+}
+
+void inline cancelRequestHandler(Player* player, Data* data, std::string name){
+  int res = data->cancelSentRequest(player->getName(), name);
+  player->getSocket()->sendMessage(std::string("15~" + std::to_string(res)));
 }
 
 #endif
