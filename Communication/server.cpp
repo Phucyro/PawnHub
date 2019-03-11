@@ -3,8 +3,8 @@
 #include "ServerMessageHandler.hpp"
 #include <map>
 #include <thread>
-#include <list> 
-#include <iterator> 
+#include <list>
+#include <iterator>
 #include "Data.hpp"
 #include "Matchmaking.hpp"
 #include "ServerGameControl.hpp"
@@ -21,8 +21,8 @@ int main(){
   char hostname[50];
   gethostname(hostname, 50);
   std::cout << "Hostname: " << hostname << std::endl;
-  
-  
+
+
     Matchmaking matchmaking(4);
     PlayersMap players_map;
     BindSocket binding_socket;
@@ -37,10 +37,11 @@ int main(){
 
       // Traite la demande de connexion
       infoThread = new ExecInfoThread();
-      std::thread *thread = new std::thread(receiveMessageHandler, client_socket, &data, &players_map, &matchmaking, infoThread);
+      std::thread *thread = new std::thread(receiveMessageHandler, client_socket, &data, &players_map, &matchmaking);
+      //std::thread *thread = new std::thread(receiveMessageHandler, client_socket, &data, &players_map, &matchmaking, infoThread);
       infoThread->setThread(thread);
       connectedPlayer.push_back(infoThread);
-      
+
     //   Player* player = new Player(client_socket);
     //   matchmaking.addPlayer(player, 0);
     //
