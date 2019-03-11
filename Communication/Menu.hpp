@@ -9,6 +9,7 @@
 #include <string>
 #include <vector>
 #include "SplitString.hpp"
+#include <thread>
 
 void authentificationMenu(MenuHandler* menu, Socket* socket){
   std::string username, password, confirmation;
@@ -25,7 +26,7 @@ void authentificationMenu(MenuHandler* menu, Socket* socket){
         menu->print_warning("Les mots de passe ne correspondent pas");
         break;
       case 2 :
-        menu->print_warning("La longueur du nom et mot de passe doivent être compris entre 1 et 10");
+        menu->print_warning("La longueur du nom et mot de passe doivent être comprise entre 1 et 10");
         break;
       case 3 :
         menu->print_warning("Votre nom ne peut être composé que de chiffres et lettres");
@@ -296,6 +297,37 @@ void removeFriendMenu(MenuHandler* menu, Socket* socket){
   }
 }
 
+void cancelRequestMenu(MenuHandler* menu, Socket* socket){
+  bool stop_receive = false;
+  std::vector<std::string> sent_request = {};
+  menu->clear_windows();
+  viewSentRequest(socket);
+
+  while (!stop_receive){
+    receiveMessageHandler(menu, socket, &stop_receive, &sent_request);
+  }
+
+  std::string command = "";
+  menu->print_warning2("Quiter : /quit   Annuler : /cancel [name]");
+  menu->refresh_board();
+
+
+  while (command != "/quit"){
+    menu->init_dataw();
+    command = menu->get_infos("commande");
+    menu->refresh_board();
+
+    if (!checkInputFormat(command)) continue;
+
+    std::vector<std::string> split = splitString(command, ' ');
+
+    if (split.size() == 2 && split[0] == "/cancel"){
+      cancelRequest(socket, split[1]);
+      receiveMessageHandler(menu, socket, &stop_receive, &sent_request);
+    }
+  }
+}
+
 
 void friendMenu(MenuHandler* menu, Socket* socket){
   bool leave = false;
@@ -308,6 +340,7 @@ void friendMenu(MenuHandler* menu, Socket* socket){
       "Accepter ou refuser une demande d'ami",
       "Envoyer une demande d'ami",
       "Retirer un ami de sa liste d'amis",
+      "Annuler une demande d'ami",
       "Retour"
     });
 
@@ -325,10 +358,53 @@ void friendMenu(MenuHandler* menu, Socket* socket){
         removeFriendMenu(menu, socket);
         break;
       case 4 :
+        cancelRequestMenu(menu, socket);
+        break;
+      case 5 :
         leave = true;
     }
   }
 }
+
+////////////////////////////////////////////////////////////////////////////////
+
+void chatThread(MenuHandler* menu,Socket* socket, bool* stop, std::vector<std::string>* messages){
+  while (!(*stop)){
+    receiveMessageHandler(menu, socket, stop, messages);
+  }
+}
+
+
+void chatMenu(MenuHandler* menu, Socket* socket){
+  bool stop = false;
+  std::vector<std::string> messages = {};
+  menu->clear_windows();
+  menu->print_warning2("Quitter : /quit   Chat : /msg [destinaire] [message]");
+  menu->refresh_board();
+
+  std::thread thread(chatThread, menu, socket, &stop, &messages);
+  thread.detach();
+
+  std::string command = "";
+
+  while (command != "/quit"){
+    menu->init_dataw();
+    command = menu->get_infos("commande");
+    menu->refresh_board();
+
+    if (!checkInputFormat(command)) continue;
+
+    std::vector<std::string> split = splitString(command, ' ');
+
+    if (split[0] == "/msg" && split.size() >= 3){
+      chat(socket, split[1], command.substr(4+split[2].length()));
+    }
+  }
+
+  stop = true;
+  socket->sendMessage("20~StopChat");
+}
+
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -348,6 +424,7 @@ void mainMenu(MenuHandler* menu, Socket* socket){
         friendMenu(menu, socket);
         break;
       case 2 :
+        chatMenu(menu, socket);
         break;
       case 3 :
         statMenu(menu, socket);
