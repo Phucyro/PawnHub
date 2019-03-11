@@ -25,6 +25,7 @@ private:
 public:
   Data(const std::string path);
   bool containsAccount(const std::string username);
+  bool isConnected(const std::string username);
   bool checkUserPassword(const std::string username, const std::string password);
   bool createUserAccount(const std::string username, const std::string password);
   void loadUserData(const std::string username);
@@ -38,6 +39,7 @@ public:
   bool refuseFriendRequest(const std::string username, const std::string friend_name);
   int sendFriendRequest(const std::string username, const std::string friend_name);
   bool removeFriend(const std::string username, const std::string friend_name);
+  bool cancelSentRequest(const std::string username, const std::string friend_name);
 
   void addUserClassicWin(const std::string username);
   void addUserClassicLose(const std::string username);

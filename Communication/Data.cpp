@@ -21,12 +21,20 @@ bool Data::containsAccount(const std::string username){
   return exist;
 }
 
+bool Data::isConnected(const std::string username){
+  if (_dataMap.find(username) != _dataMap.end())
+    return true;
+  else
+    return false;
+}
+
 
 bool Data::checkUserPassword(const std::string username, const std::string password){
   /*
   Renvoie true si les mots de passe correspondent sinon false
   Attention, il faut vérifier si un compte avec ce nom existe deja
   */
+
   loadUserData(username);
   std::string file_password = std::get<0>(_dataMap[username]);
   _dataMap.erase(username);
@@ -287,6 +295,33 @@ bool Data::removeFriend(const std::string username, const std::string friend_nam
   }
 
   std::get<5>(_dataMap[username]) = my_friends;
+
+  return 1;
+}
+
+bool Data::cancelSentRequest(const std::string username, const std::string friend_name){
+  std::vector<std::string> sent = getUserSentRequests(username);
+
+  if (std::find(sent.begin(), sent.end(), friend_name) == sent.end()){
+    return 0; // Aucune requete n'a ete envoye a friend_name
+  }
+
+  // Sinon annule la Requete
+  std::vector<std::string> friend_request = getUserFriendRequests(friend_name);
+
+  sent.erase(std::remove(sent.begin(), sent.end(), friend_name), sent.end());
+  friend_request.erase(std::remove(friend_request.begin(), friend_request.end(), username), friend_request.end());
+
+  if (_dataMap.find(friend_name) != _dataMap.end()){
+    std::get<6>(_dataMap[friend_name]) = friend_request;
+  }
+  else {
+    loadUserData(friend_name);
+    std::get<6>(_dataMap[friend_name]) = friend_request;
+    saveUserData(friend_name);
+  }
+
+  std::get<7>(_dataMap[username]) = sent;
 
   return 1;
 }
