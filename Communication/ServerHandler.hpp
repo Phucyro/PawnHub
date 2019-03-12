@@ -7,6 +7,7 @@
 #include "Matchmaking.hpp"
 #include <string>
 #include <tuple>
+#include <algorithm>
 
 typedef std::map<std::string, Player*> PlayersMap;
 typedef std::vector<unsigned int> Stat;
@@ -105,6 +106,7 @@ void inline ladderHandler(Socket* socket, Data* data, std::string mode){
   }
 
   std::vector<UserLadderData> ladder = data->getLadder(gamemode);
+  std::reverse(ladder.begin(), ladder.end());
 
   unsigned int a = 0;
 
