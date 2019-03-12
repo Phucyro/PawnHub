@@ -60,7 +60,7 @@ void inline chatHandler(PlayersMap* players_map, Player* player, std::string tar
       (*players_map)[target]->getSocket()->sendMessage(std::string("3~") + player->getName() + "~" + target + "~" + text);
     }
     else { // Envoie msg pour dire que la cible est deconnecte
-      player->getSocket()->sendMessage(std::string("3~Guest~") + target + "None");
+      player->getSocket()->sendMessage(std::string("3~Guest~") + target + "~None");
     }
   }
 }
