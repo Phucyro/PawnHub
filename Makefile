@@ -12,7 +12,9 @@ GAME_CLIENT= Communication/ClientGameControl.o
 DISPLAY_CLIENT= Qt_UI/Connection/connectiondialog.o
 GAME_SERVER=  Code/includesPieceHPP.hpp $(subst Code/%.cpp, Code/%.o, $(LOGIC)) Communication/ServerGameControl.o
 
-CLIENT_LFLAGS= -lpthread -lncurses
+INCLUDE= -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets
+
+CLIENT_LFLAGS= -lpthread -lncurses -L/usr/lib/x86_64-linux-gnu -lQt5Gui -lQt5Core -lQt5Widgets
 SERVER_LFLAGS= -lpthread
 
 all: server client clean
@@ -21,7 +23,7 @@ run: all
 	./server
 
 client: Communication/client.o $(SOCKETS) $(GAME_CLIENT) $(LOGIN_CLIENT) $(DISPLAY_CLIENT) $(CONFIG)
-	$(CXX) $(FLAGS) -o $@ $^ $(CLIENT_LFLAGS)
+	$(CXX) $(FLAGS) -o $@ $^ $(CLIENT_LFLAGS) $(INCLUDE)
 
 server: Communication/server.o $(SOCKETS) $(GAME_SERVER) $(LOGIN_SERVER) $(CONFIG)
 	$(CXX) $(FLAGS) -o $@ $^ $(SERVER_LFLAGS)
@@ -35,9 +37,6 @@ Code/%.o: %.cpp %.hpp
 Qt_UI/Connection/%.o:
 	Qt_UI/Connection/make $@
 
-
-QT += core gui
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 
 
