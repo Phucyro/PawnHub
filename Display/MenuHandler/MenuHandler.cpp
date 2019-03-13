@@ -37,7 +37,7 @@ void MenuHandler::init_dataw()
   int y_max, x_max;
 
   getmaxyx(stdscr, y_max, x_max);
-  data_menu = newwin(5, x_max - 12, y_max - y_max/3+2 , 5);
+  data_menu = newwin(5, x_max - 12, y_max - y_max/3+3 , 5);
   box(data_menu,0,0);
 
   refresh();
