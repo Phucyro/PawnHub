@@ -124,7 +124,7 @@ void acceptRefuseRequestHandler(MenuHandler* menu, std::string option, std::stri
     if (res == "0")
       menu->print_warning("Vous n'avez pas recu de demande cet utilisateur");
     else
-      menu->print_warning("Cet utilisateur a été retiré de vos amis");
+      menu->print_warning("Cet utilisateur a été retiré de la liste");
   }
   menu->refresh_board();
 }
