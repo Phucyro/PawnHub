@@ -21,6 +21,7 @@ private:
   const std::string _path;
   std::map<std::string, UserData> _dataMap;
   std::map<std::string, std::vector<UserLadderData>> _ladders;
+  std::mutex _mutex;
 
 public:
   Data(const std::string path);
@@ -60,5 +61,9 @@ public:
   std::vector<UserLadderData> getLadder(const std::string gamemode);
   void printLadder(const std::string gamemode);
   Stat getUserStat(const std::string username, const std::string gamemode);
+
+  void lockMutex();
+  void unlockMutex();
+
 };
 #endif
