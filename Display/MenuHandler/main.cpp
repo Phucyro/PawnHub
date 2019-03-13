@@ -48,9 +48,13 @@ int main()
   std::vector<std::string> choices;
   choices.push_back("Ajouter ami");
   choices.push_back("Supprimer ami");
+  choices.push_back("Supprimer ami");
+  choices.push_back("Supprimer ami");
+  choices.push_back("Supprimer ami");
+  choices.push_back("Supprimer ami");
 
 
-  for (int i=0; i<80; i++)
+  for (int i=0; i<200; i++)
   {
     friends.push_back("Allan");
   }
@@ -70,9 +74,11 @@ int main()
   test->clear_windows();
   test->init_chatw();
 
-  for (int i=0; i<30; i++)
+
+
+  for (int i=0; i<120; i++)
   {
-    test->update_chatw(i,"Julien", "Bien le bonsoir");
+    test->update_chatw(i,"Julien", "Bien le bonsoirrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
   }
   test->refresh_board();
 

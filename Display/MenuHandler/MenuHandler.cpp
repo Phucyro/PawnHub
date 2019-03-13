@@ -37,12 +37,13 @@ void MenuHandler::init_dataw()
   int y_max, x_max;
 
   getmaxyx(stdscr, y_max, x_max);
-  data_menu = newwin(5, x_max-12, y_max - y_max/3, 5);
+  data_menu = newwin(5, x_max - 12, y_max - y_max/3+2 , 5);
   box(data_menu,0,0);
 
   refresh();
   wrefresh(data_menu);
 }
+
 
 std::string MenuHandler::get_infos(std::string type)
 /** permet d'obtenir l'input du joueur **/
@@ -72,7 +73,7 @@ void MenuHandler::print_warning(std::string warning)
   int y_max, x_max;
   getmaxyx(stdscr, y_max, x_max);
 
-  mvprintw(y_max-2,1,warning.c_str());
+  mvprintw(y_max-1,1,warning.c_str());
   refresh();
 }
 
@@ -96,7 +97,7 @@ void MenuHandler::init_choicesw()
   int y_max, x_max;
   getmaxyx(stdscr,y_max,x_max);
 
-  choices_menu = newwin(7, x_max - 12, y_max - y_max/3 , 5);
+  choices_menu = newwin(8, x_max - 12, y_max - y_max/3  , 5);
   box(choices_menu, 0, 0);
   refresh();
   wrefresh(choices_menu);
@@ -312,9 +313,12 @@ void MenuHandler::update_chatw(int number, std::string sender, std::string messa
   int y_max, x_max;
   getmaxyx(stats_w, y_max, x_max);
 
-  if (number < y_max-4)
+  int length_max = x_max - sender.size() - 5;
+
+
+  if (number < y_max-7)
   {
-    mvwprintw(stats_w, 3+number, 1, "%s : %s", sender.c_str(), message.c_str());
+    mvwprintw(stats_w, 3+number, 1, "%s : %s", sender.c_str(), message.substr(0,length_max).c_str());
   }
 
 }
