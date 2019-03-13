@@ -5,6 +5,7 @@
 #include "Socket.hpp"
 #include "Menu.hpp"
 #include "../Display/MenuHandler/MenuHandler.hpp"
+#include "../Qt_UI/Connection/connectiondialog.h"
 
 
 int main(){
@@ -14,9 +15,11 @@ try {
     std::string hostname;
     bool good_hostname = false;
     while (!good_hostname) {
-      std::cout << "Please enter hostname: ";
-      std::cin >> hostname;
-      std::cout << std::endl;
+      // std::cout << "Please enter hostname: ";
+      // std::cin >> hostname;
+      // std::cout << std::endl;
+      ConnectionDialog connection_w;
+      hostname = connection_w.askHostname();
       good_hostname = socket->connectToServer(hostname);
     }
 

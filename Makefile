@@ -8,7 +8,8 @@ SOCKETS= Communication/Socket.o Communication/BindSocket.o
 LOGIN_CLIENT= Communication/ClientMessageHandler.hpp Communication/ClientFunctions.hpp Communication/SplitString.o Communication/CheckFormat.o Communication/Menu.hpp
 LOGIN_SERVER= Communication/ServerMessageHandler.hpp Communication/ServerHandler.hpp Communication/Data.o Communication/SplitString.o Communication/Matchmaking.o
 GAME_CLIENT= Communication/ClientGameControl.o
-DISPLAY_CLIENT= Display/GameDisplay/board.o Display/MenuHandler/MenuHandler.o
+# DISPLAY_CLIENT= Display/GameDisplay/board.o Display/MenuHandler/MenuHandler.o
+DISPLAY_CLIENT= Qt_UI/Connection/connectiondialog.o
 GAME_SERVER=  Code/includesPieceHPP.hpp $(subst Code/%.cpp, Code/%.o, $(LOGIC)) Communication/ServerGameControl.o
 
 CLIENT_LFLAGS= -lpthread -lncurses
@@ -25,8 +26,22 @@ client: Communication/client.o $(SOCKETS) $(GAME_CLIENT) $(LOGIN_CLIENT) $(DISPL
 server: Communication/server.o $(SOCKETS) $(GAME_SERVER) $(LOGIN_SERVER) $(CONFIG)
 	$(CXX) $(FLAGS) -o $@ $^ $(SERVER_LFLAGS)
 
-%.o: %.cpp %.hpp
+Communication/%.o: %.cpp %.hpp
 	$(CXX) $(FLAGS) -c -o $@ $<
+
+Code/%.o: %.cpp %.hpp
+	$(CXX) $(FLAGS) -c -o $@ $<
+
+Qt_UI/Connection/%.o:
+	Qt_UI/Connection/make $@
+
+
+QT += core gui
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+
+
+
+# -------------------------------------
 
 clean:
 	rm -f *.o Communication/*.o Display/GameDisplay/*.o Display/MenuHandler/*.o Code/*.o
