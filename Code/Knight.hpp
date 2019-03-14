@@ -30,6 +30,8 @@ class Knight : public Piece {
 
 		Knight& operator= (const Knight&);
 
+		Coordinate* PossibleMoves(Board*, Game&) override;
+
 		friend TestKnight;
 };
 

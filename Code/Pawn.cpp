@@ -34,10 +34,10 @@ bool Pawn::_checkMove(Coordinate end, Board* board, Game& game){
 	return (ghost && ghost->getColor() != this->getColor() && ghost->isActive(game.getTurn()) && std::abs(rowMove) == 1 && rowDirection == colorDirection && std::abs(columnMove) == 1) || this->BasicPawn::_checkMove(end, board, game);
 }
 
-bool Pawn::move(Coordinate end, Board* board, Game& game){
+bool Pawn::move(Coordinate end, Board* board, Game& game, const bool& ForPossibleMoves){
 	int rowMove = int(end.getRealRow()) - int(_coords.getRealRow());
 	int rowDirection = rowMove ? rowMove/std::abs(rowMove) : 0;
-	if (this->BasicPawn::move(end, board, game)){
+	if (this->BasicPawn::move(end, board, game, ForPossibleMoves)){
 		if (std::abs(rowMove) == 2) {
 			_ghost = new GhostPawn(getColor(), Coordinate(_coords.getRealColumn(), _coords.getRealRow() - 1*rowDirection), game.getTurn(), this);
 			board->setCase(Coordinate(_coords.getRealColumn(), _coords.getRealRow() - 1*rowDirection), _ghost);

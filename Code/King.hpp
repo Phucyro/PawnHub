@@ -27,11 +27,12 @@ class King : public Piece {
 		King& operator= (const King&) = default;
 
 		bool hasMoved() const override {return _moved;}
-		bool move(Coordinate, Board*, Game&) override;
+		bool move(Coordinate, Board*, Game&, const bool&) override;
 		bool canMove(Board*, Game&) override;
 		bool _checkMove(Coordinate, Board*, Game&) override;
 		using Piece::_isMovePossible;
 		bool _isMovePossible(Coordinate, Board*, Game&) override;
+		Coordinate* PossibleMoves(Board*, Game&) override;
 };
 
 

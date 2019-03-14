@@ -31,4 +31,41 @@ bool Knight::canMove(Board* board, Game& game){
 	return false;
 }
 
+Coordinate* Knight::PossibleMoves(Board* board, Game& game){
+	Coordinate res[8];
+	int index = 0;
+	if (this->_isMovePossible(1, 2, board, game)){
+		res[index] = Coordinate(_coords.getRealColumn()+1, _coords.getRealRow()+2);
+		++index;
+	}
+	if (this->_isMovePossible(1, -2, board, game)){
+		res[index] = Coordinate(_coords.getRealColumn()+1, _coords.getRealRow()-2);
+		++index;
+	} 
+	if (this->_isMovePossible(-1, 2, board, game)){
+		res[index] = Coordinate(_coords.getRealColumn()-1, _coords.getRealRow()+2);
+		++index;
+	}
+	if (this->_isMovePossible(-1, -2, board, game)){
+		res[index] = Coordinate(_coords.getRealColumn()-1, _coords.getRealRow()-2);
+		++index;
+	} 
+	if (this->_isMovePossible(2, 1, board, game)){
+		res[index] = Coordinate(_coords.getRealColumn()+2, _coords.getRealRow()+1);
+		++index;
+	} 
+	if (this->_isMovePossible(2, -1, board, game)){
+		res[index] = Coordinate(_coords.getRealColumn()+2, _coords.getRealRow()-1);
+		++index;
+	} 
+	if (this->_isMovePossible(-2, 1, board, game)){
+		res[index] = Coordinate(_coords.getRealColumn()-2, _coords.getRealRow()+1);
+		++index;
+	} 
+	if (this->_isMovePossible(-2, -1, board, game)){
+		res[index] = Coordinate(_coords.getRealColumn()-2, _coords.getRealRow()-1);
+	}
+	return res; 
+}
+
 #endif

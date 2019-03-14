@@ -56,10 +56,10 @@ bool BasicPawn::_checkMove(Coordinate end, Board* board, Game& game){
 	return true;
 }
 
-bool BasicPawn::move(Coordinate end, Board* board, Game& game){
+bool BasicPawn::move(Coordinate end, Board* board, Game& game, const bool& ForPossibleMoves){
 	int rowMove = int(end.getRealRow()) - int(_coords.getRealRow());
 	int rowDirection = rowMove ? rowMove/std::abs(rowMove) : 0;
-	if (this->Piece::move(end, board, game)){
+	if (this->Piece::move(end, board, game, ForPossibleMoves)){
 		if (_coords.getRealRow() == 0 || _coords.getRealRow() == board->getRow() - 1) _promote(game);
 		_moved = true;
 		return true;
@@ -84,6 +84,33 @@ bool BasicPawn::_isMovePossible(Coordinate dest, Board* board, Game& game){
 
 void BasicPawn::_promote(Game& game){
 	game.promote(this);
+}
+
+Coordinate* BasicPawn::PossibleMoves(Board* board, Game& game){
+	Coordinate res[4];
+	int index = 0;
+	int i = _color == 'w' ? 1 : -1;
+	Coordinate start = _coords;
+	if (!board->getCase(Coordinate(_coords.getRealColumn(), _coords.getRealRow()+i)) &&
+	this->_isMovePossible(0, i, board, game)){
+		res[index] = Coordinate(_coords.getRealColumn(), _coords.getRealRow()+i);
+		++index;
+		if (!_moved && !board->getCase(Coordinate(_coords.getRealColumn(), _coords.getRealRow()+2*i)) && 
+		this->_isMovePossible(0, 2*i, board, game)){
+			res[index] = Coordinate(_coords.getRealColumn(), _coords.getRealRow()+2*i);
+			++index;
+		}
+	}
+	if (board->getCase(Coordinate(_coords.getRealColumn()+1, _coords.getRealRow()+i)) &&
+	this->_isMovePossible(1, i, board, game)){
+		res[index] = Coordinate(_coords.getRealColumn()+1, _coords.getRealRow()+i);
+		++index;
+	}
+	if (board->getCase(Coordinate(_coords.getRealColumn()-1, _coords.getRealRow()+i)) &&
+	this->_isMovePossible(-1, i, board, game)){
+		res[index] = Coordinate(_coords.getRealColumn()-1, _coords.getRealRow()+i);
+	}
+	return res;
 }
 
 #endif

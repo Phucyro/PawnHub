@@ -35,8 +35,8 @@ bool Rook::_checkMove(Coordinate end, Board* board, Game& game){
 	return true;
 }
 
-bool Rook::move(Coordinate end, Board* board, Game& game){
-	if(this->Piece::move(end, board, game)){
+bool Rook::move(Coordinate end, Board* board, Game& game, const bool& ForPossibleMoves){
+	if(this->Piece::move(end, board, game, ForPossibleMoves)){
 		_moved = true;
 		return true;
 	}
@@ -55,6 +55,48 @@ bool Rook::_isMovePossible(Coordinate dest, Board* board, Game& game){
 	bool moved = _moved;
 	bool res = this->Piece::_isMovePossible(dest, board, game);
 	_moved = moved;
+	return res;
+}
+
+Coordinate* Rook::PossibleMoves(Board* board, Game& game){
+	Coordinate res[14];
+	int index = 0;
+	int i = 1;
+	while (this->_isMovePossible(0, i, board, game)){
+		res[index] = Coordinate(_coords.getRealColumn(), _coords.getRealRow()+i);
+		++index;
+		if (board->getCase(Coordinate(_coords.getRealColumn(), _coords.getRealRow()+i)) && 
+		board->getCase(Coordinate(_coords.getRealColumn(), _coords.getRealRow()+i))->getColor() != this->getColor()) 
+			break;
+		++i;
+	}
+	i = 1;
+	while (this->_isMovePossible(i, 0, board, game)){
+		res[index] = Coordinate(_coords.getRealColumn()+i, _coords.getRealRow());
+		++index;
+		if (board->getCase(Coordinate(_coords.getRealColumn()+i, _coords.getRealRow())) && 
+		board->getCase(Coordinate(_coords.getRealColumn()+i, _coords.getRealRow()))->getColor() != this->getColor()) 
+			break;
+		++i;
+	}
+	i = -1;
+	while (this->_isMovePossible(0, i, board, game)){
+		res[index] = Coordinate(_coords.getRealColumn(), _coords.getRealRow()+i);
+		++index;
+		if (board->getCase(Coordinate(_coords.getRealColumn(), _coords.getRealRow()+i)) && 
+		board->getCase(Coordinate(_coords.getRealColumn(), _coords.getRealRow()+i))->getColor() != this->getColor()) 
+			break;
+		--i;
+	}
+	i = -1;
+	while (this->_isMovePossible(i, 0, board, game)){
+		res[index] = Coordinate(_coords.getRealColumn()+i, _coords.getRealRow());
+		if (board->getCase(Coordinate(_coords.getRealColumn()+i, _coords.getRealRow())) && 
+		board->getCase(Coordinate(_coords.getRealColumn()+i, _coords.getRealRow()))->getColor() != this->getColor()) 
+			break;
+		++index;
+		--i;
+	}
 	return res;
 }
 

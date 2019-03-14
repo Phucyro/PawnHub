@@ -28,6 +28,7 @@ class Bishop : public Piece {
 		Bishop& operator= (const Bishop&);
 
 		bool canMove(Board*, Game&) override;
+		Coordinate* PossibleMoves(Board*, Game&) override;
 
 		friend TestBishop;
 };

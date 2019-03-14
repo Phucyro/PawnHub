@@ -38,4 +38,51 @@ bool Bishop::canMove(Board* board, Game& game){
 	if (this->_isMovePossible(-1, -1, board, game)) return true;
 	return false;
 }
+
+Coordinate* Bishop::PossibleMoves(Board* board, Game& game){
+	Coordinate res[13];
+	int index = 0;
+	int rowMove, columnMove = 1;
+	while (this->_isMovePossible(columnMove, rowMove, board, game)){
+		res[index] = Coordinate(_coords.getRealColumn()+columnMove, _coords.getRealRow()+rowMove);
+		++index;
+		if (board->getCase(Coordinate(_coords.getRealColumn()+columnMove, _coords.getRealRow()+rowMove)) && 
+		board->getCase(Coordinate(_coords.getRealColumn()+columnMove, _coords.getRealRow()+rowMove))->getColor() != this->getColor()) 
+			break;
+		++rowMove;
+		++columnMove;
+	}
+	rowMove, columnMove = 1, -1;
+	while (this->_isMovePossible(columnMove, rowMove, board, game)){
+		res[index] = Coordinate(_coords.getRealColumn()+columnMove, _coords.getRealRow()+rowMove);
+		++index;
+		if (board->getCase(Coordinate(_coords.getRealColumn()+columnMove, _coords.getRealRow()+rowMove)) && 
+		board->getCase(Coordinate(_coords.getRealColumn()+columnMove, _coords.getRealRow()+rowMove))->getColor() != this->getColor()) 
+			break;
+		++rowMove;
+		--columnMove;
+	}
+	rowMove, columnMove = -1, 1;
+	while (this->_isMovePossible(columnMove, rowMove, board, game)){
+		res[index] = Coordinate(_coords.getRealColumn()+columnMove, _coords.getRealRow()+rowMove);
+		++index;
+		if (board->getCase(Coordinate(_coords.getRealColumn()+columnMove, _coords.getRealRow()+rowMove)) && 
+		board->getCase(Coordinate(_coords.getRealColumn()+columnMove, _coords.getRealRow()+rowMove))->getColor() != this->getColor()) 
+			break;
+		--rowMove;
+		++columnMove;
+	}
+	rowMove, columnMove = -1;
+	while (this->_isMovePossible(columnMove, rowMove, board, game)){
+		res[index] = Coordinate(_coords.getRealColumn()+columnMove, _coords.getRealRow()+rowMove);
+		if (board->getCase(Coordinate(_coords.getRealColumn()+columnMove, _coords.getRealRow()+rowMove)) && 
+		board->getCase(Coordinate(_coords.getRealColumn()+columnMove, _coords.getRealRow()+rowMove))->getColor() != this->getColor()) 
+			break;
+		++index;
+		--rowMove;
+		--columnMove;
+	}
+	return res;
+}
+
 #endif

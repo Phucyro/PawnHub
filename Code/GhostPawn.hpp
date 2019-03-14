@@ -26,6 +26,7 @@ class GhostPawn : public Piece{
       bool canMove(Board*, Game&) override{return false;}
       bool hasMoved() const override {return false;}
       bool isActive(unsigned);
+      Coordinate* PossibleMoves(Board* board, Game& game) override {}
 };
 
 #include "Pawn.hpp"

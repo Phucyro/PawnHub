@@ -27,7 +27,7 @@ class Pawn : public BasicPawn {
 		Pawn& operator= (const Pawn&);
 		Pawn& operator= (Pawn&&);
 
-		bool move(Coordinate, Board*, Game&) override;
+		bool move(Coordinate, Board*, Game&, const bool&) override;
 		bool _checkMove(Coordinate, Board*, Game&) override;
 };
 

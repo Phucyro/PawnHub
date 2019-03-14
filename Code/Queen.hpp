@@ -31,6 +31,8 @@ class Queen : public Piece {
 		Queen& operator= (const Queen&);
 
 		bool canMove(Board*, Game&) override;
+
+		Coordinate* PossibleMoves(Board*, Game&) override;
 };
 
 #endif

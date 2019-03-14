@@ -165,7 +165,7 @@ bool Horde::_executeMove(Coordinate start, Coordinate end, char playerColor){
 	Piece *movingPiece;
 	movingPiece = _board->getCase(start);
 	if (!movingPiece || movingPiece->getColor() != playerColor) return false;
-	return movingPiece->move(end, _board, *this);
+	return movingPiece->move(end, _board, *this, false);
 }
 
 void Horde::_nextTurn() {

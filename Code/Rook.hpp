@@ -29,10 +29,11 @@ class Rook : public Piece {
 		Rook& operator= (const Rook&);
 
 		bool hasMoved() const override {return _moved;}
-		bool move(Coordinate, Board*, Game&) override;
+		bool move(Coordinate, Board*, Game&, const bool&) override;
 		bool canMove(Board*, Game&) override;
 		using Piece::_isMovePossible;
 		bool _isMovePossible(Coordinate, Board*, Game&) override;
+		Coordinate* PossibleMoves(Board*, Game&) override;
 
 		friend TestRook;
 

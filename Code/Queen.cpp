@@ -78,4 +78,92 @@ bool Queen::canMove(Board* board, Game& game){
 	return false;
 }
 
+Coordinate* Queen::PossibleMoves(Board* board, Game& game){
+	Coordinate res[27];
+	int index = 0;
+
+	//Rook Part
+
+	int i = 1;
+	while (this->_isMovePossible(0, i, board, game)){
+		res[index] = Coordinate(_coords.getRealColumn(), _coords.getRealRow()+i);
+		++index;
+		if (board->getCase(Coordinate(_coords.getRealColumn(), _coords.getRealRow()+i)) && 
+		board->getCase(Coordinate(_coords.getRealColumn(), _coords.getRealRow()+i))->getColor() != this->getColor()) 
+			break;
+		++i;
+	}
+	i = 1;
+	while (this->_isMovePossible(i, 0, board, game)){
+		res[index] = Coordinate(_coords.getRealColumn()+i, _coords.getRealRow());
+		++index;
+		if (board->getCase(Coordinate(_coords.getRealColumn()+i, _coords.getRealRow())) && 
+		board->getCase(Coordinate(_coords.getRealColumn()+i, _coords.getRealRow()))->getColor() != this->getColor()) 
+			break;
+		++i;
+	}
+	i = -1;
+	while (this->_isMovePossible(0, i, board, game)){
+		res[index] = Coordinate(_coords.getRealColumn(), _coords.getRealRow()+i);
+		++index;
+		if (board->getCase(Coordinate(_coords.getRealColumn(), _coords.getRealRow()+i)) && 
+		board->getCase(Coordinate(_coords.getRealColumn(), _coords.getRealRow()+i))->getColor() != this->getColor()) 
+			break;
+		--i;
+	}
+	i = -1;
+	while (this->_isMovePossible(i, 0, board, game)){
+		res[index] = Coordinate(_coords.getRealColumn()+i, _coords.getRealRow());
+		++index;
+		if (board->getCase(Coordinate(_coords.getRealColumn()+i, _coords.getRealRow())) && 
+		board->getCase(Coordinate(_coords.getRealColumn()+i, _coords.getRealRow()))->getColor() != this->getColor()) 
+			break;
+		--i;
+	}
+
+	//Bishop Part
+
+	int rowMove, columnMove = 1;
+	while (this->_isMovePossible(columnMove, rowMove, board, game)){
+		res[index] = Coordinate(_coords.getRealColumn()+columnMove, _coords.getRealRow()+rowMove);
+		++index;
+		if (board->getCase(Coordinate(_coords.getRealColumn()+columnMove, _coords.getRealRow()+rowMove)) && 
+		board->getCase(Coordinate(_coords.getRealColumn()+columnMove, _coords.getRealRow()+rowMove))->getColor() != this->getColor()) 
+			break;
+		++rowMove;
+		++columnMove;
+	}
+	rowMove, columnMove = 1, -1;
+	while (this->_isMovePossible(columnMove, rowMove, board, game)){
+		res[index] = Coordinate(_coords.getRealColumn()+columnMove, _coords.getRealRow()+rowMove);
+		++index;
+		if (board->getCase(Coordinate(_coords.getRealColumn()+columnMove, _coords.getRealRow()+rowMove)) && 
+		board->getCase(Coordinate(_coords.getRealColumn()+columnMove, _coords.getRealRow()+rowMove))->getColor() != this->getColor()) 
+			break;
+		++rowMove;
+		--columnMove;
+	}
+	rowMove, columnMove = -1, 1;
+	while (this->_isMovePossible(columnMove, rowMove, board, game)){
+		res[index] = Coordinate(_coords.getRealColumn()+columnMove, _coords.getRealRow()+rowMove);
+		++index;
+		if (board->getCase(Coordinate(_coords.getRealColumn()+columnMove, _coords.getRealRow()+rowMove)) && 
+		board->getCase(Coordinate(_coords.getRealColumn()+columnMove, _coords.getRealRow()+rowMove))->getColor() != this->getColor()) 
+			break;
+		--rowMove;
+		++columnMove;
+	}
+	rowMove, columnMove = -1;
+	while (this->_isMovePossible(columnMove, rowMove, board, game)){
+		res[index] = Coordinate(_coords.getRealColumn()+columnMove, _coords.getRealRow()+rowMove);
+		if (board->getCase(Coordinate(_coords.getRealColumn()+columnMove, _coords.getRealRow()+rowMove)) && 
+		board->getCase(Coordinate(_coords.getRealColumn()+columnMove, _coords.getRealRow()+rowMove))->getColor() != this->getColor()) 
+			break;
+		++index;
+		--rowMove;
+		--columnMove;
+	}
+	return res;
+}
+
 #endif

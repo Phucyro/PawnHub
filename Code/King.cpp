@@ -12,12 +12,12 @@ Piece* King::_doMove(Coordinate end, Board* board, Game& game){
 	if (columnMove == 2){
 		Coordinate startRook = Coordinate(end.getRealColumn()+1u, end.getRealRow());
 		Coordinate endRook = Coordinate(end.getRealColumn()-1, end.getRealRow());
-		board->getCase(startRook)->move(endRook, board, game);
+		board->getCase(startRook)->move(endRook, board, game, false);
 	}
 	else if (columnMove == -2) {
 		Coordinate startRook = Coordinate(end.getRealColumn()-2, end.getRealRow());
 		Coordinate endRook = Coordinate(end.getRealColumn()+1u, end.getRealRow());
-		board->getCase(startRook)->move(endRook, board, game);
+		board->getCase(startRook)->move(endRook, board, game, false);
 	}
 	return this->Piece::_doMove(end, board, game);
 }
@@ -38,8 +38,8 @@ void King::_reverseMove(Coordinate end, Board* board, Game& game, Piece* takenPi
 	this->Piece::_reverseMove(end, board, game, takenPiece);
 }
 
-bool King::move(Coordinate end, Board* board, Game& game) {
-  if (this->Piece::move(end, board, game)){
+bool King::move(Coordinate end, Board* board, Game& game, const bool& ForPossibleMoves) {
+  if (this->Piece::move(end, board, game, ForPossibleMoves)){
 		_moved = true;
 		return true;
 	}
@@ -100,6 +100,43 @@ bool King::_isMovePossible(Coordinate dest, Board* board, Game& game){
 	bool moved = _moved;
 	bool res = this->Piece::_isMovePossible(dest, board, game);
 	_moved = moved;
+	return res;
+}
+
+Coordinate* King::PossibleMoves(Board* board, Game& game){
+	Coordinate res[8];
+	int index = 0;
+	if (this->_isMovePossible(1, 1, board, game)){
+		res[index] = Coordinate(_coords.getRealColumn()+1, _coords.getRealRow()+1);
+		++index;
+	}
+	if (this->_isMovePossible(0, 1, board, game)){
+		res[index] = Coordinate(_coords.getRealColumn(), _coords.getRealRow()+1);
+		++index;
+	}
+	if (this->_isMovePossible(-1, 1, board, game)){
+		res[index] = Coordinate(_coords.getRealColumn()-1, _coords.getRealRow()+1);
+		++index;
+	}
+	if (this->_isMovePossible(1, 0, board, game)){
+		res[index] = Coordinate(_coords.getRealColumn()+1, _coords.getRealRow());
+		++index;
+	}
+	if (this->_isMovePossible(-1, 0, board, game)){
+		res[index] = Coordinate(_coords.getRealColumn()-1, _coords.getRealRow());
+		++index;
+	}
+	if (this->_isMovePossible(1, -1, board, game)){
+		res[index] = Coordinate(_coords.getRealColumn()+1, _coords.getRealRow()-1);
+		++index;
+	}
+	if (this->_isMovePossible(0, -1, board, game)){
+		res[index] = Coordinate(_coords.getRealColumn(), _coords.getRealRow()-1);
+		++index;
+	}
+	if (this->_isMovePossible(-1, -1, board, game)){
+		res[index] = Coordinate(_coords.getRealColumn()-1, _coords.getRealRow()-1);
+	}
 	return res;
 }
 

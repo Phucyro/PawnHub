@@ -33,30 +33,27 @@ takenPiece->getType() == 'h' || takenPiece->getType() == 'q' || takenPiece->getT
 	}
 }
 
-bool Piece::move(Coordinate end, Board* board, Game& game){
+bool Piece::move(Coordinate end, Board* board, Game& game, const bool& ForPossibleMoves){
 /*Move this piece to the correct location on the board and return true if the move is possible. Else return false and leave the board unchanged*/
 	Coordinate start = _coords;
-	if(!(this->_checkMove(end, board, game))) return false;
+	if (ForPossibleMoves) {if(!(this->_checkMove(end, board, game))) return false;}
 	Piece* takenPiece = this->_doMove(end, board, game);
 	_setCoordinate(end);
 
-	if(game.testCheck(this->getColor())){		//0 a changer
+	if(game.testCheck(this->getColor())){		
 		_setCoordinate(start);
 		this->_reverseMove(end, board, game, takenPiece);
 		return false;
 	}
+
+	if (ForPossibleMoves) {_setCoordinate(start); this->_reverseMove(end, board, game, takenPiece);}
 	return true;
 }
 
 bool Piece::_isMovePossible(Coordinate dest, Board* board, Game& game){
-	Coordinate start = this->getCoord();
-	if (!board->isInBoard(dest))return false;
-	Piece* takenPiece = board->getCase(dest);
-	if (!this->move(dest, board, game))return false;
-	board->movePiece(dest, start);
-	board->setCase(dest, takenPiece);
-	if (takenPiece) takenPiece->changeIsTaken(game.getTurn(), this, board);
-	_setCoordinate(start);
+	if (!board->isInBoard(dest)) return false;
+	if (board->getCase(dest) && board->getCase(dest)->getColor() == this->getColor()) return false;
+	if (!this->Piece::move(dest, board, game, true)) return false;
 
 	return true;
 }
