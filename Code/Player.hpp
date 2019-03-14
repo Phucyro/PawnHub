@@ -53,6 +53,7 @@ class Player{
 	void setControl(ServerGameControl*);
 	void setSocket(Socket*);
 	void setQueueNumber(int);
+	int getReadPipe() const {return _pipe[1];}
 
 	void transferStart();
 	void transferUpdate(std::string&);

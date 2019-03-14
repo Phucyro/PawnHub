@@ -6,9 +6,9 @@
 #include <iostream>
 #include <string>
 #include "includesPieceHPP.hpp"
-#include "Game.hpp"
+#include "TurnBasedGame.hpp"
 
-class Dark: public Game{
+class Dark: public TurnBasedGame{
 	private :
 
 	void _Pieces();
@@ -38,16 +38,16 @@ class Dark: public Game{
 	void _changePawn(Piece*, Piece*, Board*) override;
 
 	public :
-	Dark(Player* player1, Player* player2) noexcept : Game(nullptr, 32, player1, player2, 7, 22) {_Pieces();}
+	Dark(Player* player1, Player* player2) noexcept : TurnBasedGame(nullptr, 32, player1, player2, 7, 22) {_Pieces();}
 	Dark(const Dark&) = delete;
 	virtual ~Dark();
 
 	Dark& operator=(const Dark& original){
-		this->Game::operator=(original);
+		this->TurnBasedGame::operator=(original);
 		return *this;
 	}
 	Dark& operator=(Dark&& original){
-		this->Game::operator=(original);
+		this->TurnBasedGame::operator=(original);
 		return *this;
 	}
 

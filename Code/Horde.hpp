@@ -4,9 +4,9 @@
 #define KING_INDEX 4
 
 #include "includesPieceHPP.hpp"
-#include "Game.hpp"
+#include "TurnBasedGame.hpp"
 
-class Horde: public Game{
+class Horde: public TurnBasedGame{
 	private :
 	void _Pieces();
 	Player* _getCurrentPlayer() override {
@@ -30,15 +30,15 @@ class Horde: public Game{
 	void _boardState(std::string&) override;
 
 	public :
-	Horde(Player* player1, Player* player2) noexcept : Game(nullptr, 48, player1, player2, 7, 15) {_Pieces();}
+	Horde(Player* player1, Player* player2) noexcept : TurnBasedGame(nullptr, 48, player1, player2, 7, 15) {_Pieces();}
 	Horde(const Horde&) = delete;
 	virtual ~Horde();
 	Horde& operator=(const Horde& original){
-		this->Game::operator=(original);
+		this->TurnBasedGame::operator=(original);
 		return *this;
 	}
 	Horde& operator=(Horde&& original){
-		this->Game::operator=(original);
+		this->TurnBasedGame::operator=(original);
 		return *this;
 	}
 	bool testCheck(const char color) override;

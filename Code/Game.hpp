@@ -30,13 +30,11 @@ class Game
 
 	virtual void _initBoard() = 0;
 	virtual void _sendGameMode() = 0;
-	virtual void _nextTurn() = 0;
 	virtual bool _isFinish() = 0;
-	virtual Player* _getCurrentPlayer() = 0;
 	virtual void _changePawn(Piece*, Piece*, Board*) = 0;
 	virtual void _boardState(std::string&) = 0;
 
-	Game(Piece**, unsigned, Player*, Player*, unsigned lastStrongPiecesWhite, unsigned lastStrongPieceBlack);
+	Game(Piece**, unsigned, Player*, Player*, unsigned lastStrongPiecesWhite, unsigned lastStrongPieceBlack, Board*);
 	Game(const Game&) = delete;
 	Game(Game&&);
 
@@ -46,7 +44,7 @@ class Game
 	Game& operator= (const Game&);
 	Game& operator= (Game&&);
 
-	void start();
+	virtual void start() = 0;
 	virtual bool testCheck(const char color) = 0;
 	unsigned getTurn() const {return _turn;}
 	virtual void promote(Piece*);

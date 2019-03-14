@@ -6,10 +6,10 @@
 #include <iostream>
 #include <string>
 #include "includesPieceHPP.hpp"
-#include "Game.hpp"
+#include "TurnBasedGame.hpp"
 
 
-class Classic : public Game {
+class Classic : public TurnBasedGame {
 
 	private :
 
@@ -36,20 +36,20 @@ class Classic : public Game {
 	bool _isFinish() override;
 	void _boardState(std::string&) override;
 	Classic(const Classic&) = delete;
-	using Game::_pieces;
+	using TurnBasedGame::_pieces;
 
 	void _changePawn(Piece*, Piece*, Board*) override;
 
 	public :
 
-	Classic(Player* player1, Player* player2) noexcept : Game(nullptr, 32, player1, player2, 7, 22) {_Pieces();}
+	Classic(Player* player1, Player* player2) noexcept : TurnBasedGame(nullptr, 32, player1, player2, 7, 22) {_Pieces();}
 	~Classic();
 	Classic& operator=(const Classic& original){
-		this->Game::operator=(original);
+		this->TurnBasedGame::operator=(original);
 		return *this;
 	}
 	Classic& operator=(Classic&& original){
-		this->Game::operator=(original);
+		this->TurnBasedGame::operator=(original);
 		return *this;
 	}
 
@@ -61,18 +61,18 @@ class Classic : public Game {
 		//Pawn
 		leftMaybePawn = Coordinate(_pieces[KING_INDEX]->getCoord().getRealColumn()+1, _pieces[KING_INDEX]->getCoord().getRealRow()+1);
 		Piece* MaybePawn = nullptr;
-		if (_board->isInBoard(leftMaybePawn)) MaybePawn = Game::_board->getCase(leftMaybePawn);
+		if (_board->isInBoard(leftMaybePawn)) MaybePawn = TurnBasedGame::_board->getCase(leftMaybePawn);
 		if (MaybePawn && MaybePawn->getColor() == 'b' && (MaybePawn->getType() == 'p' || MaybePawn->getType() == 'b' || MaybePawn->getType() == 'q' || MaybePawn->getType() == 'k')) return true;
 
 		rightMaybePawn = Coordinate(_pieces[KING_INDEX]->getCoord().getRealColumn()-1, _pieces[KING_INDEX]->getCoord().getRealRow()+1);
 		MaybePawn = nullptr;
-		if (_board->isInBoard(rightMaybePawn)) MaybePawn = Game::_board->getCase(rightMaybePawn);
+		if (_board->isInBoard(rightMaybePawn)) MaybePawn = TurnBasedGame::_board->getCase(rightMaybePawn);
 		if (MaybePawn && MaybePawn->getColor() == 'b' && (MaybePawn->getType() == 'p' || MaybePawn->getType() == 'b' || MaybePawn->getType() == 'q' || MaybePawn->getType() == 'k')) return true;
 
 		//strong pieces
 		for (unsigned i = 16; i <= _lastStrongPieceBlack; ++i){
 			if (!_pieces[i]->isTaken())
-				if (_pieces[i]->_checkMove(_pieces[KING_INDEX]->getCoord(), Game::_board, *this)) return true;
+				if (_pieces[i]->_checkMove(_pieces[KING_INDEX]->getCoord(), TurnBasedGame::_board, *this)) return true;
 		}
 	}
 
@@ -81,18 +81,18 @@ class Classic : public Game {
 			//Pawn
 			leftMaybePawn = Coordinate(_pieces[16+KING_INDEX]->getCoord().getRealColumn()-1, _pieces[16+KING_INDEX]->getCoord().getRealRow()-1);
 			Piece* MaybePawn = nullptr;
-			if (_board->isInBoard(leftMaybePawn)) MaybePawn = Game::_board->getCase(leftMaybePawn);
+			if (_board->isInBoard(leftMaybePawn)) MaybePawn = TurnBasedGame::_board->getCase(leftMaybePawn);
 			if (MaybePawn && MaybePawn->getColor() == 'w' && (MaybePawn->getType() == 'p' || MaybePawn->getType() == 'b' || MaybePawn->getType() == 'q' || MaybePawn->getType() == 'k')) return true;
 
 			rightMaybePawn = Coordinate(_pieces[16+KING_INDEX]->getCoord().getRealColumn()+1, _pieces[16+KING_INDEX]->getCoord().getRealRow()-1);
 			MaybePawn = nullptr;
-			if (_board->isInBoard(rightMaybePawn)) MaybePawn = Game::_board->getCase(rightMaybePawn);
+			if (_board->isInBoard(rightMaybePawn)) MaybePawn = TurnBasedGame::_board->getCase(rightMaybePawn);
 			if (MaybePawn && MaybePawn->getColor() == 'w' && (MaybePawn->getType() == 'p' || MaybePawn->getType() == 'b' || MaybePawn->getType() == 'q' || MaybePawn->getType() == 'k')) return true;
 
 			//strong pieces
 			for (unsigned i = 0; i <= _lastStrongPiecesWhite; ++i){
 				if (!_pieces[i]->isTaken())
-					if (_pieces[i]->_checkMove(_pieces[KING_INDEX+16]->getCoord(), Game::_board, *this)) return true;
+					if (_pieces[i]->_checkMove(_pieces[KING_INDEX+16]->getCoord(), TurnBasedGame::_board, *this)) return true;
 			}
 		}
 		return false;

@@ -7,10 +7,10 @@
 #include <string>
 #include "includesAlicePieceHPP.hpp"
 #include "AlicePiece.hpp"
-#include "Game.hpp"
+#include "TurnBasedGame.hpp"
 
 
-class Alice : public Game {
+class Alice : public TurnBasedGame {
 
 	private :
 
@@ -40,20 +40,20 @@ class Alice : public Game {
 	void _sendBoard() override;
 	void _boardState(std::string&) override;
 	Alice(const Alice&) = delete;
-	using Game::_pieces;
+	using TurnBasedGame::_pieces;
 
 	void _changePawn(Piece*, Piece*, Board*) override;
 
 	public :
 
-	Alice(Player* player1, Player* player2) noexcept : Game(nullptr, 32, player1, player2, 7, 22) {_Pieces();}
+	Alice(Player* player1, Player* player2) noexcept : TurnBasedGame(nullptr, 32, player1, player2, 7, 22) {_Pieces();}
 	virtual ~Alice();
 	Alice& operator=(const Alice& original){
-		this->Game::operator=(original);
+		this->TurnBasedGame::operator=(original);
 		return *this;
 	}
 	Alice& operator=(Alice&& original){
-		this->Game::operator=(original);
+		this->TurnBasedGame::operator=(original);
 		return *this;
 	}
 
@@ -68,7 +68,7 @@ class Alice : public Game {
 		Piece* MaybePawn = nullptr;
 		AlicePiece* aliceMaybePawn;
 		if (_board->isInBoard(leftMaybePawn)){
-			MaybePawn = Game::_board->getCase(leftMaybePawn);
+			MaybePawn = TurnBasedGame::_board->getCase(leftMaybePawn);
 			aliceMaybePawn = dynamic_cast<AlicePiece*>(MaybePawn);
 		}
 		if (MaybePawn && MaybePawn->getColor() == 'b' && (MaybePawn->getType() == 'p' || MaybePawn->getType() == 'b' || MaybePawn->getType() == 'q' || MaybePawn->getType() == 'k') && aliceMaybePawn->getDimension() == aliceKing->getDimension()) return true;
@@ -76,7 +76,7 @@ class Alice : public Game {
 		rightMaybePawn = Coordinate(_pieces[KING_INDEX]->getCoord().getRealColumn()-1, _pieces[KING_INDEX]->getCoord().getRealRow()+1);
 		MaybePawn = nullptr;
 		if (_board->isInBoard(rightMaybePawn)){
-			MaybePawn = Game::_board->getCase(rightMaybePawn);
+			MaybePawn = TurnBasedGame::_board->getCase(rightMaybePawn);
 			aliceMaybePawn = dynamic_cast<AlicePiece*>(MaybePawn);
 		}
 		if (MaybePawn && MaybePawn->getColor() == 'b' && (MaybePawn->getType() == 'p' || MaybePawn->getType() == 'b' || MaybePawn->getType() == 'q' || MaybePawn->getType() == 'k') && aliceMaybePawn->getDimension() == aliceKing->getDimension()) return true;
@@ -84,7 +84,7 @@ class Alice : public Game {
 		//strong pieces
 		for (unsigned i = 16; i <= _lastStrongPieceBlack; ++i){
 			if (!_pieces[i]->isTaken())
-				if (_pieces[i]->_checkMove(_pieces[KING_INDEX]->getCoord(), Game::_board, *this)) return true;
+				if (_pieces[i]->_checkMove(_pieces[KING_INDEX]->getCoord(), TurnBasedGame::_board, *this)) return true;
 		}
 	}
 
@@ -96,7 +96,7 @@ class Alice : public Game {
 			Piece* MaybePawn = nullptr;
 			AlicePiece* aliceMaybePawn;
 			if (_board->isInBoard(leftMaybePawn)){
-				MaybePawn = Game::_board->getCase(leftMaybePawn);
+				MaybePawn = TurnBasedGame::_board->getCase(leftMaybePawn);
 				aliceMaybePawn = dynamic_cast<AlicePiece*>(MaybePawn);
 			}
 			if (MaybePawn && MaybePawn->getColor() == 'w' && (MaybePawn->getType() == 'p' || MaybePawn->getType() == 'b' || MaybePawn->getType() == 'q' || MaybePawn->getType() == 'k') && aliceMaybePawn->getDimension() == aliceKing->getDimension()) return true;
@@ -104,7 +104,7 @@ class Alice : public Game {
 			rightMaybePawn = Coordinate(_pieces[16+KING_INDEX]->getCoord().getRealColumn()+1, _pieces[16+KING_INDEX]->getCoord().getRealRow()-1);
 			MaybePawn = nullptr;
 			if (_board->isInBoard(rightMaybePawn)){
-				MaybePawn = Game::_board->getCase(rightMaybePawn);
+				MaybePawn = TurnBasedGame::_board->getCase(rightMaybePawn);
 				aliceMaybePawn = dynamic_cast<AlicePiece*>(MaybePawn);
 			}
 			if (MaybePawn && MaybePawn->getColor() == 'w' && (MaybePawn->getType() == 'p' || MaybePawn->getType() == 'b' || MaybePawn->getType() == 'q' || MaybePawn->getType() == 'k') && aliceMaybePawn->getDimension() == aliceKing->getDimension()) return true;
@@ -112,7 +112,7 @@ class Alice : public Game {
 			//strong pieces
 			for (unsigned i = 0; i <= _lastStrongPiecesWhite; ++i){
 				if (!_pieces[i]->isTaken())
-					if (_pieces[i]->_checkMove(_pieces[KING_INDEX+16]->getCoord(), Game::_board, *this)) return true;
+					if (_pieces[i]->_checkMove(_pieces[KING_INDEX+16]->getCoord(), TurnBasedGame::_board, *this)) return true;
 			}
 		}
 		return false;

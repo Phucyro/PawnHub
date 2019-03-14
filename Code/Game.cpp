@@ -6,19 +6,17 @@
 #include "includesPieceHPP.hpp"
 
 //constructor
-Game::Game(Piece** pieces, unsigned piecesAmount, Player* player1, Player* player2, unsigned lastStrongPiecesWhite, unsigned lastStrongPieceBlack):
+Game::Game(Piece** pieces, unsigned piecesAmount, Player* player1, Player* player2, unsigned lastStrongPiecesWhite, unsigned lastStrongPieceBlack, Board* board):
 	_player1(player1),
 	_player2(player2),
 	_winner(nullptr),
 	_turn(0),
-	_board(nullptr),
+	_board(board),
 	_pieces(pieces),
 	_piecesAmount(piecesAmount),
 	_lastStrongPiecesWhite(lastStrongPiecesWhite),
 	_lastStrongPieceBlack(lastStrongPieceBlack)
-{
-	_board = new Board();
-}
+{}
 
 
 
@@ -83,26 +81,6 @@ Game& Game::operator= (Game&& original)
 	return *this;
 }
 
-
-void Game::start()
-{
-	std::cout << "Starting Game" << std::endl;
-	this->_initBoard();
-	this->_sendGameMode();
-	this->_sendPlayerColour();
-	this->_sendStart();
-	this->_sendBoard();
-	do
-	{
-		++_turn;
-		this->_sendTurn();
-		this->_nextTurn();
-		this->_sendBoard();
-	}
-	while(! this->_isFinish());
-	std::cout << "Game finished" << std::endl;
-}
-
 void Game::_sendStart(){
 	_player1->transferStart();
 	_player2->transferStart();
@@ -153,9 +131,10 @@ void Game::_sendSurrend(){
 void Game::promote(Piece* piece)
 {	
 	this->_sendBoard();
-	char type = this->_getCurrentPlayer()->askPromotion();
+	Player *currentPlayer = piece->getColor() == 'w' ? _player1 : _player2;
+	char type = currentPlayer->askPromotion();
 	if (type == '/'){
-		if (_getCurrentPlayer() == _player1) _winner = _player2;
+		if (currentPlayer == _player1) _winner = _player2;
 		else _winner = _player1;
 	}
 	Pawn *pawn = dynamic_cast<Pawn*>(piece);
