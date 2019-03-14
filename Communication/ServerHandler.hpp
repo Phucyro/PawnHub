@@ -7,6 +7,7 @@
 #include "Matchmaking.hpp"
 #include <string>
 #include <tuple>
+#include <algorithm>
 
 typedef std::map<std::string, Player*> PlayersMap;
 typedef std::vector<unsigned int> Stat;
@@ -60,7 +61,7 @@ void inline chatHandler(PlayersMap* players_map, Player* player, std::string tar
       (*players_map)[target]->getSocket()->sendMessage(std::string("3~") + player->getName() + "~" + target + "~" + text);
     }
     else { // Envoie msg pour dire que la cible est deconnecte
-      player->getSocket()->sendMessage(std::string("3~Guest~") + target + "None");
+      player->getSocket()->sendMessage(std::string("3~Guest~") + target + "~None");
     }
   }
 }
@@ -105,6 +106,7 @@ void inline ladderHandler(Socket* socket, Data* data, std::string mode){
   }
 
   std::vector<UserLadderData> ladder = data->getLadder(gamemode);
+  std::reverse(ladder.begin(), ladder.end());
 
   unsigned int a = 0;
 

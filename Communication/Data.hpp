@@ -21,6 +21,7 @@ private:
   const std::string _path;
   std::map<std::string, UserData> _dataMap;
   std::map<std::string, std::vector<UserLadderData>> _ladders;
+  std::mutex _mutex;
 
 public:
   Data(const std::string path);
@@ -30,14 +31,13 @@ public:
   bool createUserAccount(const std::string username, const std::string password);
   void loadUserData(const std::string username);
   void saveUserData(const std::string username);
-  Stat getUserStat(const std::string username, const std::string gamemode);
 
   std::vector<std::string> getUserFriends(const std::string username);
   std::vector<std::string> getUserFriendRequests(const std::string username);
   std::vector<std::string> getUserSentRequests(const std::string username);
   bool accceptFriendRequest(const std::string username, const std::string friend_name);
   bool refuseFriendRequest(const std::string username, const std::string friend_name);
-  int sendFriendRequest(const std::string username, const std::string friend_name);
+  int sendFriendRequest(const std::string username, const std::string friend_name); // A change si deco
   bool removeFriend(const std::string username, const std::string friend_name);
   bool cancelSentRequest(const std::string username, const std::string friend_name);
 
@@ -55,9 +55,15 @@ public:
   void addUserAliceDraw(const std::string username);
 
   bool isInLadder(const std::string gamemode, const std::string username);
-  void updateLadder(const std::string gamemode, UserLadderData data);
-  void printLadder(const std::string gamemode);
+  void updateLadderOnLoseDraw(const std::string gamemode, UserLadderData data);
+  void updateLadderOnWin(const std::string gamemode, UserLadderData data);
   void initLadder();
   std::vector<UserLadderData> getLadder(const std::string gamemode);
+  void printLadder(const std::string gamemode);
+  Stat getUserStat(const std::string username, const std::string gamemode);
+
+  void lockMutex();
+  void unlockMutex();
+
 };
 #endif

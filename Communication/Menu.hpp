@@ -397,7 +397,7 @@ void chatMenu(MenuHandler* menu, Socket* socket){
     std::vector<std::string> split = splitString(command, ' ');
 
     if (split[0] == "/msg" && split.size() >= 3){
-      chat(socket, split[1], command.substr(4+split[2].length()));
+      chat(socket, split[1], command.substr(6+split[1].size()));
     }
   }
 

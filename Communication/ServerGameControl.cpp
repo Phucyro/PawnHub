@@ -148,7 +148,6 @@ void ServerGameControl::startParty() {
   game->start();
   player1->getSocket()->unlockMutex();
   player2->getSocket()->unlockMutex();
-  std::cout << "SORTI DE LA GAME" << std::endl;
 }
 void ServerGameControl::_playerDisconected(Socket* socket){
 	if(player1->getSocket() == socket) player1->surrend();

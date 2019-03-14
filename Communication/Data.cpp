@@ -1,6 +1,6 @@
 #include "Data.hpp"
 
-Data::Data(const std::string path) : _path(path), _dataMap({}), _ladders({}) {
+Data::Data(const std::string path) : _path(path), _dataMap({}), _ladders({}), _mutex() {
   _ladders["Classic"] = {};
   _ladders["Dark"] = {};
   _ladders["Horde"] = {};
@@ -37,7 +37,7 @@ bool Data::checkUserPassword(const std::string username, const std::string passw
 
   loadUserData(username);
   std::string file_password = std::get<0>(_dataMap[username]);
-  _dataMap.erase(username);
+  saveUserData(username);
 
   if (file_password == password)
     return true;
@@ -55,6 +55,10 @@ bool Data::createUserAccount(const std::string username, const std::string passw
     return false;
   // Si peut ajouter ami deco il faut creer le fichier dès la création
   _dataMap[username] = UserData(password, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {}, {}, {});
+  updateLadderOnWin("Classic", {username, {0,0,0}});
+  updateLadderOnWin("Dark", {username, {0,0,0}});
+  updateLadderOnWin("Horde", {username, {0,0,0}});
+  updateLadderOnWin("Alice", {username, {0,0,0}});
   saveUserData(username);
   return true;
 }
@@ -133,37 +137,6 @@ void Data::saveUserData(const std::string username){
   file.close();
 }
 
-Stat Data::getUserStat(const std::string username, const std::string gamemode){
-  Stat user_stat;
-
-  if (!containsAccount(username)) return Stat(); // Joueur inexistant
-
-  if (_dataMap.find(username) != _dataMap.end()){
-    if (gamemode == "Classic")
-      user_stat = std::get<1>(_dataMap[username]);
-    else if (gamemode == "Dark")
-      user_stat = std::get<2>(_dataMap[username]);
-    else if (gamemode == "Horde")
-      user_stat = std::get<3>(_dataMap[username]);
-    else
-      user_stat = std::get<4>(_dataMap[username]);
-  }
-  else {
-    loadUserData(username);
-    if (gamemode == "Classic")
-      user_stat = std::get<1>(_dataMap[username]);
-    else if (gamemode == "Dark")
-      user_stat = std::get<2>(_dataMap[username]);
-    else if (gamemode == "Horde")
-      user_stat = std::get<3>(_dataMap[username]);
-    else
-      user_stat = std::get<4>(_dataMap[username]);
-    saveUserData(username);
-  }
-
-  return user_stat;
-}
-
 
 bool Data::accceptFriendRequest(const std::string username, const std::string friend_name){
   std::vector<std::string> my_requests = getUserFriendRequests(username); // recue
@@ -182,6 +155,7 @@ bool Data::accceptFriendRequest(const std::string username, const std::string fr
   my_friends.push_back(friend_name);
   his_friends.push_back(username);
 
+  _mutex.lock();
   if (_dataMap.find(friend_name) != _dataMap.end()){ // Si friend_name est connecte
     std::get<5>(_dataMap[friend_name]) = his_friends;
     std::get<7>(_dataMap[friend_name]) = his_sent_requests;
@@ -192,9 +166,20 @@ bool Data::accceptFriendRequest(const std::string username, const std::string fr
     std::get<7>(_dataMap[friend_name]) = his_sent_requests;
     saveUserData(friend_name);
   }
+  _mutex.unlock();
 
-  std::get<5>(_dataMap[username]) = my_friends;
-  std::get<6>(_dataMap[username]) = my_requests; // Requete recue
+  _mutex.lock();
+  if (_dataMap.find(username) != _dataMap.end()){
+    std::get<5>(_dataMap[username]) = my_friends;
+    std::get<6>(_dataMap[username]) = my_requests; // Requete recue
+  }
+  else {
+    loadUserData(username);
+    std::get<5>(_dataMap[username]) = my_friends;
+    std::get<6>(_dataMap[username]) = my_requests; // Requete recue
+    saveUserData(username);
+  }
+  _mutex.unlock();
 
   return 1;
 }
@@ -213,6 +198,7 @@ bool Data::refuseFriendRequest(const std::string username, const std::string fri
   his_sent_requests.erase(std::remove(his_sent_requests.begin(), his_sent_requests.end(), username), his_sent_requests.end());
   my_requests.erase(std::remove(my_requests.begin(), my_requests.end(), friend_name), my_requests.end());
 
+  _mutex.lock();
   if (_dataMap.find(friend_name) != _dataMap.end()){ // Si friend_name est connecte
     std::get<7>(_dataMap[friend_name]) = his_sent_requests;
   }
@@ -221,8 +207,18 @@ bool Data::refuseFriendRequest(const std::string username, const std::string fri
     std::get<7>(_dataMap[friend_name]) = his_sent_requests;
     saveUserData(friend_name);
   }
+  _mutex.unlock();
 
-  std::get<6>(_dataMap[username]) = my_requests; // Requete recue
+  _mutex.lock();
+  if (_dataMap.find(username) != _dataMap.end()){
+    std::get<6>(_dataMap[username]) = my_requests; // Requete recue
+  }
+  else {
+    loadUserData(username);
+    std::get<6>(_dataMap[username]) = my_requests; // Requete recue
+    saveUserData(username);
+  }
+  _mutex.unlock();
 
   return 1;
 }
@@ -256,6 +252,7 @@ int Data::sendFriendRequest(const std::string username, const std::string friend
   }
 
   // Sinon envoie la demande
+  _mutex.lock();
   if (_dataMap.find(friend_name) != _dataMap.end()){ // Si ami connecte
     std::get<6>(_dataMap[friend_name]).push_back(username);
   }
@@ -264,9 +261,19 @@ int Data::sendFriendRequest(const std::string username, const std::string friend
     std::get<6>(_dataMap[friend_name]).push_back(username);
     saveUserData(friend_name);
   }
+  _mutex.unlock();
 
   // Ajoute friend_name au demandes envoyees de username
-  std::get<7>(_dataMap[username]).push_back(friend_name);
+  _mutex.lock();
+  if (_dataMap.find(username) != _dataMap.end()){
+    std::get<7>(_dataMap[username]).push_back(friend_name);
+  }
+  else {
+    loadUserData(username);
+    std::get<7>(_dataMap[username]).push_back(friend_name);
+    saveUserData(username);
+  }
+  _mutex.unlock();
 
   return 4; // Demande envoyee
 }
@@ -285,6 +292,7 @@ bool Data::removeFriend(const std::string username, const std::string friend_nam
   my_friends.erase(std::remove(my_friends.begin(), my_friends.end(), friend_name), my_friends.end());
   his_friends.erase(std::remove(his_friends.begin(), his_friends.end(), username), his_friends.end());
 
+  _mutex.lock();
   if (_dataMap.find(friend_name) != _dataMap.end()){ // Si friend_name est connecte
     std::get<5>(_dataMap[friend_name]) = his_friends;
   }
@@ -293,8 +301,18 @@ bool Data::removeFriend(const std::string username, const std::string friend_nam
     std::get<5>(_dataMap[friend_name]) = his_friends;
     saveUserData(friend_name);
   }
+  _mutex.unlock();
 
-  std::get<5>(_dataMap[username]) = my_friends;
+  _mutex.lock();
+  if (_dataMap.find(username) != _dataMap.end()){
+    std::get<5>(_dataMap[username]) = my_friends;
+  }
+  else {
+    loadUserData(username);
+    std::get<5>(_dataMap[username]) = my_friends;
+    saveUserData(username);
+  }
+  _mutex.unlock();
 
   return 1;
 }
@@ -312,6 +330,7 @@ bool Data::cancelSentRequest(const std::string username, const std::string frien
   sent.erase(std::remove(sent.begin(), sent.end(), friend_name), sent.end());
   friend_request.erase(std::remove(friend_request.begin(), friend_request.end(), username), friend_request.end());
 
+  _mutex.lock();
   if (_dataMap.find(friend_name) != _dataMap.end()){
     std::get<6>(_dataMap[friend_name]) = friend_request;
   }
@@ -320,8 +339,18 @@ bool Data::cancelSentRequest(const std::string username, const std::string frien
     std::get<6>(_dataMap[friend_name]) = friend_request;
     saveUserData(friend_name);
   }
+  _mutex.unlock();
 
-  std::get<7>(_dataMap[username]) = sent;
+  _mutex.lock();
+  if (_dataMap.find(username) != _dataMap.end()){
+    std::get<7>(_dataMap[username]) = sent;
+  }
+  else {
+    loadUserData(username);
+    std::get<7>(_dataMap[username]) = sent;
+    saveUserData(username);
+  }
+  _mutex.unlock();
 
   return 1;
 }
@@ -330,99 +359,282 @@ bool Data::cancelSentRequest(const std::string username, const std::string frien
 std::vector<std::string> Data::getUserFriends(const std::string username){
   std::vector<std::string> friends;
 
-  if (_dataMap.find(username) == _dataMap.end()){
+  _mutex.lock();
+  if (_dataMap.find(username) != _dataMap.end()){
+    friends = std::get<5>(_dataMap[username]);
+  }
+  else {
     loadUserData(username);
     friends = std::get<5>(_dataMap[username]);
     saveUserData(username);
-    return friends;
   }
-  return std::get<5>(_dataMap[username]);
+  _mutex.unlock();
+
+  return friends;
 }
 
 
 std::vector<std::string> Data::getUserFriendRequests(const std::string username){
   std::vector<std::string> requests;
 
-  if (_dataMap.find(username) == _dataMap.end()){
+  _mutex.lock();
+  if (_dataMap.find(username) != _dataMap.end()){
+    requests = std::get<6>(_dataMap[username]);
+  }
+  else {
     loadUserData(username);
     requests = std::get<6>(_dataMap[username]);
     saveUserData(username);
-    return requests;
   }
-  return std::get<6>(_dataMap[username]);
+  _mutex.unlock();
+
+  return requests;
 }
 
 std::vector<std::string> Data::getUserSentRequests(const std::string username){
   std::vector<std::string> requests_sent;
 
-  if (_dataMap.find(username) == _dataMap.end()){
+  _mutex.lock();
+  if (_dataMap.find(username) != _dataMap.end()){
+    requests_sent = std::get<7>(_dataMap[username]);
+  }
+  else {
     loadUserData(username);
     requests_sent = std::get<7>(_dataMap[username]);
     saveUserData(username);
-    return requests_sent;
   }
-  return std::get<7>(_dataMap[username]);
+  _mutex.unlock();
+
+  return requests_sent;
 }
 
 
 void Data::addUserClassicWin(const std::string username){
-  ++(std::get<1>(_dataMap[username])[0]);
-  updateLadder("Classic", {username, std::get<1>(_dataMap[username])});
+  Stat stat;
+
+  _mutex.lock();
+  if (_dataMap.find(username) != _dataMap.end()){
+    ++(std::get<1>(_dataMap[username])[0]);
+    stat = std::get<1>(_dataMap[username]);
+  }
+  else {
+    loadUserData(username);
+    ++(std::get<1>(_dataMap[username])[0]);
+    stat = std::get<1>(_dataMap[username]);
+    saveUserData(username);
+  }
+  _mutex.unlock();
+
+  updateLadderOnWin("Classic", {username, stat});
 }
 
 void Data::addUserClassicLose(const std::string username){
-  ++(std::get<1>(_dataMap[username])[1]);
-  updateLadder("Classic", {username, std::get<1>(_dataMap[username])});
+  Stat stat;
+
+  _mutex.lock();
+  if (_dataMap.find(username) != _dataMap.end()){
+    ++(std::get<1>(_dataMap[username])[1]);
+    stat = std::get<1>(_dataMap[username]);
+  }
+  else {
+    loadUserData(username);
+    ++(std::get<1>(_dataMap[username])[1]);
+    stat = std::get<1>(_dataMap[username]);
+    saveUserData(username);
+  }
+  _mutex.unlock();
+
+  updateLadderOnLoseDraw("Classic", {username, stat});
 }
 
 void Data::addUserClassicDraw(const std::string username){
-  ++(std::get<1>(_dataMap[username])[2]);
-  updateLadder("Classic", {username, std::get<1>(_dataMap[username])});
+  Stat stat;
+
+  _mutex.lock();
+  if (_dataMap.find(username) != _dataMap.end()){
+    ++(std::get<1>(_dataMap[username])[2]);
+    stat = std::get<1>(_dataMap[username]);
+  }
+  else {
+    loadUserData(username);
+    ++(std::get<1>(_dataMap[username])[2]);
+    stat = std::get<1>(_dataMap[username]);
+    saveUserData(username);
+  }
+  _mutex.unlock();
+
+  updateLadderOnLoseDraw("Classic", {username, stat});
 }
 
 void Data::addUserDarkWin(const std::string username){
-  ++(std::get<2>(_dataMap[username])[0]);
-  updateLadder("Dark", {username, std::get<2>(_dataMap[username])});
+  Stat stat;
+
+  _mutex.lock();
+  if (_dataMap.find(username) != _dataMap.end()){
+    ++(std::get<2>(_dataMap[username])[0]);
+    stat = std::get<2>(_dataMap[username]);
+  }
+  else {
+    loadUserData(username);
+    ++(std::get<2>(_dataMap[username])[0]);
+    stat = std::get<2>(_dataMap[username]);
+    saveUserData(username);
+  }
+  _mutex.unlock();
+
+  updateLadderOnWin("Dark", {username, stat});
 }
 
 void Data::addUserDarkLose(const std::string username){
-  ++(std::get<2>(_dataMap[username])[1]);
-  updateLadder("Dark", {username, std::get<2>(_dataMap[username])});
+  Stat stat;
+
+  _mutex.lock();
+  if (_dataMap.find(username) != _dataMap.end()){
+    ++(std::get<2>(_dataMap[username])[1]);
+    stat = std::get<2>(_dataMap[username]);
+  }
+  else {
+    loadUserData(username);
+    ++(std::get<2>(_dataMap[username])[1]);
+    stat = std::get<2>(_dataMap[username]);
+    saveUserData(username);
+  }
+  _mutex.unlock();
+
+  updateLadderOnLoseDraw("Dark", {username, stat});
 }
 
 void Data::addUserDarkDraw(const std::string username){
-  ++(std::get<2>(_dataMap[username])[2]);
-  updateLadder("Dark", {username, std::get<2>(_dataMap[username])});
+  Stat stat;
+
+  _mutex.lock();
+  if (_dataMap.find(username) != _dataMap.end()){
+    ++(std::get<2>(_dataMap[username])[2]);
+    stat = std::get<2>(_dataMap[username]);
+  }
+  else {
+    loadUserData(username);
+    ++(std::get<2>(_dataMap[username])[2]);
+    stat = std::get<2>(_dataMap[username]);
+    saveUserData(username);
+  }
+  _mutex.unlock();
+
+  updateLadderOnLoseDraw("Dark", {username, stat});
 }
 
 void Data::addUserHordeWin(const std::string username){
-  ++(std::get<3>(_dataMap[username])[0]);
-  updateLadder("Horde", {username, std::get<3>(_dataMap[username])});
+  Stat stat;
+
+  _mutex.lock();
+  if (_dataMap.find(username) != _dataMap.end()){
+    ++(std::get<3>(_dataMap[username])[0]);
+    stat = std::get<3>(_dataMap[username]);
+  }
+  else {
+    loadUserData(username);
+    ++(std::get<3>(_dataMap[username])[0]);
+    stat = std::get<3>(_dataMap[username]);
+    saveUserData(username);
+  }
+  _mutex.unlock();
+
+  updateLadderOnWin("Horde", {username, stat});
 }
 
 void Data::addUserHordeLose(const std::string username){
-  ++(std::get<3>(_dataMap[username])[1]);
-  updateLadder("Horde", {username, std::get<3>(_dataMap[username])});
+  Stat stat;
+
+  _mutex.lock();
+  if (_dataMap.find(username) != _dataMap.end()){
+    ++(std::get<3>(_dataMap[username])[1]);
+    stat = std::get<3>(_dataMap[username]);
+  }
+  else {
+    loadUserData(username);
+    ++(std::get<3>(_dataMap[username])[1]);
+    stat = std::get<3>(_dataMap[username]);
+    saveUserData(username);
+  }
+  _mutex.unlock();
+
+  updateLadderOnLoseDraw("Horde", {username, stat});
 }
 
 void Data::addUserHordeDraw(const std::string username){
-  ++(std::get<3>(_dataMap[username])[2]);
-  updateLadder("Horde", {username, std::get<3>(_dataMap[username])});
+  Stat stat;
+
+  _mutex.lock();
+  if (_dataMap.find(username) != _dataMap.end()){
+    ++(std::get<3>(_dataMap[username])[2]);
+    stat = std::get<3>(_dataMap[username]);
+  }
+  else {
+    loadUserData(username);
+    ++(std::get<3>(_dataMap[username])[2]);
+    stat = std::get<3>(_dataMap[username]);
+    saveUserData(username);
+  }
+  _mutex.unlock();
+
+  updateLadderOnLoseDraw("Horde", {username, stat});
 }
 
 void Data::addUserAliceWin(const std::string username){
-  ++(std::get<4>(_dataMap[username])[0]);
-  updateLadder("Alice", {username, std::get<4>(_dataMap[username])});
+  Stat stat;
+
+  _mutex.lock();
+  if (_dataMap.find(username) != _dataMap.end()){
+    ++(std::get<4>(_dataMap[username])[0]);
+    stat = std::get<4>(_dataMap[username]);
+  }
+  else {
+    loadUserData(username);
+    ++(std::get<4>(_dataMap[username])[0]);
+    stat = std::get<4>(_dataMap[username]);
+    saveUserData(username);
+  }
+  _mutex.unlock();
+
+  updateLadderOnWin("Alice", {username, stat});
 }
 
 void Data::addUserAliceLose(const std::string username){
-  ++(std::get<4>(_dataMap[username])[1]);
-  updateLadder("Alice", {username, std::get<4>(_dataMap[username])});
+  Stat stat;
+
+  _mutex.lock();
+  if (_dataMap.find(username) != _dataMap.end()){
+    ++(std::get<4>(_dataMap[username])[1]);
+    stat = std::get<4>(_dataMap[username]);
+  }
+  else {
+    loadUserData(username);
+    ++(std::get<4>(_dataMap[username])[1]);
+    stat = std::get<4>(_dataMap[username]);
+    saveUserData(username);
+  }
+  _mutex.unlock();
+
+  updateLadderOnLoseDraw("Alice", {username, stat});
 }
 
 void Data::addUserAliceDraw(const std::string username){
-  ++(std::get<4>(_dataMap[username])[2]);
-  updateLadder("Alice", {username, std::get<4>(_dataMap[username])});
+  Stat stat;
+
+  _mutex.lock();
+  if (_dataMap.find(username) != _dataMap.end()){
+    ++(std::get<4>(_dataMap[username])[2]);
+    stat = std::get<4>(_dataMap[username]);
+  }
+  else {
+    loadUserData(username);
+    ++(std::get<4>(_dataMap[username])[2]);
+    stat = std::get<4>(_dataMap[username]);
+    saveUserData(username);
+  }
+  _mutex.unlock();
+
+  updateLadderOnLoseDraw("Alice", {username, stat});
 }
 
 
@@ -434,40 +646,45 @@ bool Data::isInLadder(const std::string gamemode, const std::string username){
 }
 
 
-void Data::updateLadder(const std::string gamemode, UserLadderData data){
+void Data::updateLadderOnWin(const std::string gamemode, UserLadderData data){
   if (_ladders[gamemode].size() == 0){
     _ladders[gamemode].push_back(data);
+    return;
   }
-  else {
-    long unsigned int pos = _ladders[gamemode].size();
 
-    while (pos != 0 && std::get<1>(data)[0] > std::get<1>(_ladders[gamemode][pos-1])[0]){
-      // Si le joueur se trouvait dans le classement, le supprime et le replace
-      if (std::get<0>(data) == std::get<0>(_ladders[gamemode][pos-1])){
-        _ladders[gamemode].erase(_ladders[gamemode].begin() + pos-1);
-        if (pos != 1) --pos;
-      }
-      --pos;
+  unsigned int a = 0;
+
+  while (a < _ladders[gamemode].size() && std::get<1>(data)[0] >= std::get<1>(_ladders[gamemode][a])[0]){
+    if (std::get<0>(data) == std::get<0>(_ladders[gamemode][a])){
+      _ladders[gamemode].erase(_ladders[gamemode].begin()+a);
+      --a;
+    }
+    ++a;
+  }
+
+  _ladders[gamemode].insert(_ladders[gamemode].begin()+a, data);
+
+  if (_ladders[gamemode].size() > 10){
+    _ladders[gamemode].erase(_ladders[gamemode].begin());
+  }
+
+}
+
+
+void Data::updateLadderOnLoseDraw(const std::string gamemode, UserLadderData data){
+  unsigned int a = 0;
+  bool found = false;
+
+  while (a < _ladders[gamemode].size() && !found && std::get<1>(data)[0] <= std::get<1>(_ladders[gamemode][a])[0]){
+    if (std::get<0>(data) == std::get<0>(_ladders[gamemode][a])){
+      _ladders[gamemode][a] = data;
+      found = true;
     }
 
-    // Ajoute l'utilisateur au classement si joueur manquant dans top 10 ou si il a assez de points
-    if (pos != _ladders[gamemode].size() || (_ladders[gamemode].size() < 10 && !isInLadder(gamemode, std::get<0>(data))))
-      _ladders[gamemode].insert(_ladders[gamemode].begin() + pos, data);
-
-    // Supprime le joueur avec le moints de points si il y a plus de 10 joueurs
-    if (_ladders[gamemode].size() > 10)
-      _ladders[gamemode].pop_back();
+    ++a;
   }
 }
 
-
-void Data::printLadder(const std::string gamemode){
-  std::cout << "Classement du mode : " << gamemode << std::endl;
-  for (unsigned int a = 0; a < _ladders[gamemode].size(); ++a){
-    std::cout << a << ") " << std::get<0>(_ladders[gamemode][a]) << " " <<
-    std::get<1>(_ladders[gamemode][a])[0] << " points" << std::endl;
-   }
-}
 
 void Data::initLadder(){
   DIR* directory = opendir(_path.c_str());
@@ -479,10 +696,10 @@ void Data::initLadder(){
       if (filename != "." && filename != ".."){
         const std::string username = filename.substr(0, filename.length()-4);
         loadUserData(username);
-        updateLadder("Classic", {username, std::get<1>(_dataMap[username])});
-        updateLadder("Dark",    {username, std::get<2>(_dataMap[username])});
-        updateLadder("Horde",   {username, std::get<3>(_dataMap[username])});
-        updateLadder("Alice",   {username, std::get<4>(_dataMap[username])});
+        updateLadderOnWin("Classic", {username, std::get<1>(_dataMap[username])});
+        updateLadderOnWin("Dark",    {username, std::get<2>(_dataMap[username])});
+        updateLadderOnWin("Horde",   {username, std::get<3>(_dataMap[username])});
+        updateLadderOnWin("Alice",   {username, std::get<4>(_dataMap[username])});
         _dataMap.erase(username);
       }
     }
@@ -495,4 +712,54 @@ void Data::initLadder(){
 
 std::vector<UserLadderData> Data::getLadder(const std::string gamemode){
   return _ladders[gamemode];
+}
+
+
+void Data::printLadder(const std::string gamemode){
+  std::cout << "Classement du mode : " << gamemode << std::endl;
+  for (unsigned int a = 0; a < _ladders[gamemode].size(); ++a){
+    std::cout << a << ") " << std::get<0>(_ladders[gamemode][a]) << " " <<
+    std::get<1>(_ladders[gamemode][a])[0] << " " <<
+    std::get<1>(_ladders[gamemode][a])[1] << " " <<
+    std::get<1>(_ladders[gamemode][a])[2] << " points" << std::endl;
+   }
+}
+
+Stat Data::getUserStat(const std::string username, const std::string gamemode){
+  Stat user_stat;
+
+  if (!containsAccount(username)) return Stat(); // Joueur inexistant
+
+  if (_dataMap.find(username) != _dataMap.end()){
+    if (gamemode == "Classic")
+      user_stat = std::get<1>(_dataMap[username]);
+    else if (gamemode == "Dark")
+      user_stat = std::get<2>(_dataMap[username]);
+    else if (gamemode == "Horde")
+      user_stat = std::get<3>(_dataMap[username]);
+    else
+      user_stat = std::get<4>(_dataMap[username]);
+  }
+  else {
+    loadUserData(username);
+    if (gamemode == "Classic")
+      user_stat = std::get<1>(_dataMap[username]);
+    else if (gamemode == "Dark")
+      user_stat = std::get<2>(_dataMap[username]);
+    else if (gamemode == "Horde")
+      user_stat = std::get<3>(_dataMap[username]);
+    else
+      user_stat = std::get<4>(_dataMap[username]);
+    saveUserData(username);
+  }
+
+  return user_stat;
+}
+
+void Data::lockMutex(){
+  _mutex.lock();
+}
+
+void Data::unlockMutex(){
+  _mutex.unlock();
 }

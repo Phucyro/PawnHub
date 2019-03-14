@@ -314,7 +314,7 @@ void MenuHandler::update_chatw(int number, std::string sender, std::string messa
 
   if (number < y_max-4)
   {
-    mvwprintw(stats_w, 3+number, 1, "%s : %s", sender.c_str(), message.c_str());
+    mvwprintw(stats_w, 3+number, 1, "%s %s", sender.c_str(), message.c_str());
   }
 
 }
