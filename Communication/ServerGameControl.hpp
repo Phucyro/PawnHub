@@ -62,7 +62,7 @@ public:
     {'P', &ServerGameControl::receivePromotion},
   };
 
-  void handleMessage(Socket*);
+  void handleMessage(Player*);
   void startParty();
 };
 

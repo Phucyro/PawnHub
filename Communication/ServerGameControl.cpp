@@ -128,17 +128,18 @@ void ServerGameControl::sendAskPromotion(Socket* socket) {
   }
 }
 
-void ServerGameControl::handleMessage(Socket* socket) {
+void ServerGameControl::handleMessage(Player* player) {
 	std::string message;
 	try{
-		message = socket->receiveMessage();
+		message = player->readControlPipe();
 		char header = message[0];
   	std::cout << "HEADER : "<< header << " : " << message.substr(1) << '\n';
+    std::cout << "Taille du message : " << message.size() << std::endl;
   	(this->*(headerReceiveMap[header]))(message.substr(1));
 	}
 	catch(std::runtime_error e){
 		std::cout<<"error in handleMessageSocket: "<<e.what()<<std::endl;
-		_playerDisconected(socket);
+		_playerDisconected(player->getSocket());
 	}
 }
 
@@ -146,8 +147,6 @@ void ServerGameControl::startParty() {
   player1->setControl(this);
   player2->setControl(this);
   game->start();
-  player1->getSocket()->unlockMutex();
-  player2->getSocket()->unlockMutex();
 }
 void ServerGameControl::_playerDisconected(Socket* socket){
 	if(player1->getSocket() == socket) player1->surrend();

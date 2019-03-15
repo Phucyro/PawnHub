@@ -10,6 +10,7 @@ Player& Player::operator= (Player&& original) {
 		_sock = original._sock;
 		_control = original._control;
 		_pipe = original._pipe;
+		_pipeControl = original._pipeControl;
 		original._pipe = nullptr;
 		_name = original._name;
 		_recvActive = original._recvActive;
@@ -20,7 +21,7 @@ Player& Player::operator= (Player&& original) {
 std::string Player::askMove(){
 	_control->sendAskMove(getSocket());
 	_recvActive = true;
-	_control->handleMessage(getSocket());
+	_control->handleMessage(this);
 	char res[5];
 	read(_pipe[0], &res, sizeof(char)*4);
 	res[4] = '\0';
@@ -34,7 +35,7 @@ void Player::showBoard(std::string board){
 char Player::askPromotion(){
 	_control->sendAskPromotion(getSocket());
 	_recvActive = true;
-	_control->handleMessage(getSocket());
+	_control->handleMessage(this);
 	char res;
 	read(_pipe[0], &res, sizeof(char));
 	return res;
@@ -126,6 +127,21 @@ void Player::receivePromotion(std::string& message){
 void Player::surrend(){
 	char message[5]="/end";
 	write(_pipe[1], message, 4*sizeof(char));
+}
+
+std::string Player::readControlPipe(){
+	char buffer[MSG_LENGTH+1];
+
+	read(_pipeControl[0], buffer, sizeof(buffer));
+	std::string msg = buffer;
+	return msg;
+}
+
+void Player::writeControlPipe(std::string msg){
+	char buffer[MSG_LENGTH+1];
+
+	std::strcpy(buffer, msg.c_str());
+	write(_pipeControl[1], buffer, sizeof(buffer));
 }
 
 #endif
