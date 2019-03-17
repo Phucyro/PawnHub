@@ -87,9 +87,8 @@ void ClientGameControl::receiveAskPromotion(std::string message) {
 }
 
 void ClientGameControl::sendMove(std::string move) {
-  socket.sendMessage("30~move");
   std::string header = headerSendMap["move"];
-  socket.sendMessage(header + _color + move);
+  socket.sendMessage("30~" + header + _color + move);
 }
 
 void ClientGameControl::sendPromotion(std::string promotion) {

@@ -10,6 +10,7 @@ Player& Player::operator= (Player&& original) {
 		_sock = original._sock;
 		_control = original._control;
 		_pipe = original._pipe;
+		_pipeControl = original._pipeControl;
 		original._pipe = nullptr;
 		_name = original._name;
 		_recvActive = original._recvActive;
@@ -128,8 +129,24 @@ void Player::surrend(){
 	write(_pipe[1], message, 4*sizeof(char));
 }
 
+
 void Player::activateControlRecv(){
-	if (_control) _control->handleMessage(getSocket());
+	if (_control) _control->handleMessage(this);
+}
+
+std::string Player::readControlPipe(){
+	char buffer[MSG_LENGTH+1];
+
+	read(_pipeControl[0], buffer, sizeof(buffer));
+	std::string msg = buffer;
+	return msg;
+}
+
+void Player::writeControlPipe(std::string msg){
+	char buffer[MSG_LENGTH+1];
+
+	std::strcpy(buffer, msg.c_str());
+	write(_pipeControl[1], buffer, sizeof(buffer));
 }
 
 #endif

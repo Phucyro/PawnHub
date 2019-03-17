@@ -39,7 +39,9 @@ void inline signInHandler(Socket* socket, PlayersMap* players_map, Data* data, P
   }
   else if (data->checkUserPassword(username, pswd)){
     socket->printSend("2~1"); // Identification reussie
+    data->lockMutex();
     data->loadUserData(username);
+    data->unlockMutex();
     player->setName(username);
     player->setSocket(socket);
     (*players_map)[username] = player;
