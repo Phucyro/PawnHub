@@ -134,22 +134,22 @@ void Board::draw_infos()
 
   mvwprintw(infos_win , 10, 1, "PRESS Ctrl+C TO QUIT");
 
-  refresh_board();
+  //refresh_board();
 }
 
 void Board::set_mode(const char* game) {
   mode = game;
-  refresh_board();
+  //refresh_board();
 }
 
 void Board::set_colour(const char* player_colour) {
   colour = player_colour;
-  refresh_board();
+  //refresh_board();
 }
 
 void Board::update_turn(const char* turn) {
   mvwprintw(infos_win, 7, 14, "%s", turn);
-  refresh_board();
+  //refresh_board();
 }
 
 void Board::declare_check() {
@@ -185,14 +185,16 @@ void Board::draw_pieces(std::string board)
 /** Dessine les pions sur le board de depart **/
 {
   clear_board();
-  init_windows();
+  //init_windows();
+  box(infos_win,0,0);
+  draw_infos();
   stringToBoard(board);
   refresh_board();
 }
 
 void Board::draw_alice_pieces(std::string board)
 {
-  refresh_board();
+  //refresh_board();
   draw_alice_board();
   aliceToBoard(board);
   refresh_board();
@@ -237,14 +239,15 @@ void Board::clear_board(){
     			mvprintw((1+line)*OFFSET, 63+((column+1)*OFFSET), "%c", ' ');
 		}
 	}
-	refresh_board();
+	//refresh_board();
 }
 
 void Board::refresh_board()
 /** refresh le board (a faire apres chaque modification) **/
 {
-  refresh();
-  wrefresh(infos_win);
+  wnoutrefresh(stdscr);
+  wnoutrefresh(infos_win);
+  doupdate();
 }
 
 
