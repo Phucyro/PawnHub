@@ -91,6 +91,10 @@ void inline receiveMessageHandler(Socket* socket, Data* data, PlayersMap* player
           socket->sendMessage("20~stopChat");
           player->getSocket()->unlockMutex();
           break;
+        case 30 :
+          player->activateControlRecv();
+          player->getSocket()->unlockMutex();
+          break;
       }
     }
   }
@@ -98,7 +102,8 @@ void inline receiveMessageHandler(Socket* socket, Data* data, PlayersMap* player
     std::cout << error.what() << std::endl;
     // Supprime l'entrée username : Player()
   }
-
+  player->surrend();
+  player->waitEndGame();
   std::cout << "Deconnexion de " << player->getName() << std::endl;
 
   if (player->getQueueNumber() != -1)

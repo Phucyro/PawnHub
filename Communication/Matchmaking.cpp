@@ -4,6 +4,7 @@
 #include "../Code/Alice.hpp"
 #include "../Code/Horde.hpp"
 #include "../Code/Dark.hpp"
+#include "../Code/RealTimeClassic.hpp"
 #include "cleanThread.hpp"
 
 void delFinishedThread(std::list<ExecInfoThread*>&);
@@ -32,7 +33,7 @@ Matchmaking::~Matchmaking(){
 }
 
 void Matchmaking::addPlayer(Player* player, int queue_number){
-  _queues[queue_number].push_back(player); // 0 : Classic, 1 : Horde, 2 : Dark, 3 : Alice
+  _queues[queue_number].push_back(player); // 0 : Classic, 1 : Horde, 2 : Dark, 3 : Alice, 4 : RealTimeClassic
   player->setQueueNumber(queue_number);
   check(queue_number);
 }
@@ -71,6 +72,9 @@ void Matchmaking::check(int queue_number){
         break;
       case 3 :
         game = new Alice(player1,player2);
+        break;
+      case 4 :
+        game = new RealTimeClassic(player1,player2);
         break;
 
     }

@@ -26,6 +26,8 @@ TurnBasedGame& TurnBasedGame::operator= (TurnBasedGame&& original){
 
 void TurnBasedGame::start()
 {
+	_player1->setColor('w');
+	_player2->setColor('b');
 	std::cout << "Starting Game" << std::endl;
 	this->_initBoard();
 	this->_sendGameMode();

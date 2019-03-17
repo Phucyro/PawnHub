@@ -17,7 +17,7 @@ ChainedMove::ChainedMove(Piece* movingPiece, Coordinate end): _movingPiece(movin
 		rowMove -= rowDirection;
 		columnMove -= columnDirection;
 	}
-	int iStop = i; 
+	int iStop = i-1; 
 	while (rowMove){
 		_moves.push(Coordinate(int(start.getRealColumn()) + iStop*columnDirection, int(start.getRealRow()) + i*rowDirection));
 		i++;

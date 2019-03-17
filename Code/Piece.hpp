@@ -55,11 +55,6 @@ class Piece {
 			Piece* piece = board->getCase(place);
 			return piece->_str[TYP] == 'g' || piece->_isMoving;
 		}
-		void _setCoordinate(Coordinate newCoords){
-			_coords = newCoords;
-			_str[COL] = _coords.getAbstractColumn();
-			_str[ROW] = _coords.getAbstractRow();
-		}
 
 	public :
 		Piece& operator= (const Piece&);
@@ -84,8 +79,13 @@ class Piece {
 		void startMovingTo (Game&, Coordinate);
 		void stopMoving(Game& game);
 		unsigned getMovementStart() const {return _movementStart;}
-		bool isCoolingDown(Game& game) const {return _lastMoveEnd && COOLDOWN_TIME + _lastMoveEnd <= game.getTurn();}
+		bool isCoolingDown(Game& game) const {return _lastMoveEnd && COOLDOWN_TIME + _lastMoveEnd >= game.getTurn();}
 		Coordinate getDest() const {return _dest;}
+		void _setCoordinate(Coordinate newCoords){
+			_coords = newCoords;
+			_str[COL] = _coords.getAbstractColumn();
+			_str[ROW] = _coords.getAbstractRow();
+		}
 };
 
 #endif

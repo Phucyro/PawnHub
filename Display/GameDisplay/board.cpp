@@ -158,6 +158,7 @@ void Board::declare_check() {
 }
 
 void Board::endgame(const char* message) {
+  clear_get_movement();
   mvprintw(15, 30, "%s", message);
   refresh_board();
   getch();
@@ -183,10 +184,8 @@ void Board::draw_coordinates()
 void Board::draw_pieces(std::string board)
 /** Dessine les pions sur le board de depart **/
 {
-	clear();
-	refresh_board();
-	//exit();
-	init_windows();
+  clear_board();
+  init_windows();
   stringToBoard(board);
   refresh_board();
 }
@@ -228,7 +227,16 @@ void Board::draw_rectangle(int x1, int y1, int x2, int y2)
 // }
 
 void Board::clear_board(){
-	clear();
+	for (int line = 0; line < 8; line++){
+		for (int column = 0; column < 8; column++){
+    			mvprintw((line+1)*OFFSET, 1+((column+1)*OFFSET), "%c", ' ');
+		}
+	}
+	for (int line = 0; line < 8; line++){
+		for (int column = 0; column < 8; column++){
+    			mvprintw((1+line)*OFFSET, 63+((column+1)*OFFSET), "%c", ' ');
+		}
+	}
 	refresh_board();
 }
 
@@ -248,7 +256,6 @@ bool Board::isRunning()
 std::string Board::get_movement()
 {
   int move[4];
-
   // echo();    // would have been cool but can't clear it without brute force
   for (int i = 0; i < 5; ++i) {
     if (i == 0) {
@@ -267,8 +274,13 @@ std::string Board::get_movement()
   std::string effective_move = moveToString(move);
   // const char* this_move = effective_move.c_str();
   // mvprintw(18, 30, "%s", this_move);
-
+  clear_get_movement();
   return effective_move;
+}
+
+void Board::clear_get_movement(){
+  mvprintw(15, 30, "%s", "                                ");
+  mvprintw(16, 30, "%s", "                                ");
 }
 
 std::string Board::get_promotion() {
@@ -308,3 +320,30 @@ void Board::change_turn(std::string turn)
   refresh();
   wrefresh(infos_win);
 }
+
+
+void Board::ask_ipos(){
+	mvprintw(15, 30, "%s", "State initial piece position: ");
+	refresh_board();
+}
+
+void Board::print_ipos(int ch, int offset){
+	mvprintw(15, 60+offset, "%c", ch);
+	refresh_board();
+}
+
+void Board::ask_epos(){
+	mvprintw(16, 30, "%s", "State moved piece position: ");
+	refresh_board();
+}
+
+void Board::print_epos(int ch, int offset){
+	mvprintw(16, 60+offset, "%c", ch);
+	refresh_board();
+}
+
+char Board::getchar(){
+	return getch();
+}
+
+

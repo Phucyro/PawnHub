@@ -70,7 +70,7 @@ void authentificationMenu(MenuHandler* menu, Socket* socket){
 void gamemodeMenu(MenuHandler* menu, Socket* socket){
   menu->clear_windows();
   menu->init_choicesw();
-  int choice = menu->get_choice({"Classic", "Dark", "Horde", "Alice", "Retour"});
+  int choice = menu->get_choice({"Classic", "Dark", "Horde", "Alice", "Real-Time Classic", "Retour"});
   bool temp_b = true;
   std::vector<std::string> temp_v;
 
@@ -93,6 +93,10 @@ void gamemodeMenu(MenuHandler* menu, Socket* socket){
       receiveMessageHandler(menu, socket, &temp_b, &temp_v);
       break;
     case 4 :
+      playGame(socket, "4");
+      receiveMessageHandler(menu, socket, &temp_b, &temp_v);
+      break;
+    case 5 :
       break;
   }
 }

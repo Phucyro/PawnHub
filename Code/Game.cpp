@@ -87,9 +87,9 @@ void Game::_sendStart(){
 }
 
 void Game::_sendPlayerColour(){
-	std::string colour = "White";
+	std::string colour = "white";
 	_player1->transferColour(colour);
-	colour = "Black";
+	colour = "black";
 	_player2->transferColour(colour);
 }
 
@@ -99,10 +99,12 @@ void Game::_sendTurn(){
 }
 
 void Game::_sendBoard(){
-	std::string state;
-	this->_boardState(state);
-	_player1->showBoard(state);
-	_player2->showBoard(state);
+	if (!_winner){
+		std::string state;
+		this->_boardState(state);
+		_player1->showBoard(state);
+		_player2->showBoard(state);
+	}
 }
 
 

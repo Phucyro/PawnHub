@@ -1,6 +1,9 @@
 #include <iostream>
 #include <string>
 
+#ifndef __MOVE__PARSING__HPP__
+#define __MOVE__PARSING__HPP__
+
 std::string moveToString(int* move) {
   std::string  translated_move;
   for (int i = 0; i < 4; ++i) {
@@ -14,3 +17,5 @@ std::string moveToString(int* move) {
   }
   return translated_move;
 }
+
+#endif

@@ -143,11 +143,15 @@ void ServerGameControl::handleMessage(Socket* socket) {
 }
 
 void ServerGameControl::startParty() {
+  player1->startGame();
+  player2->startGame();
   player1->setControl(this);
   player2->setControl(this);
   game->start();
   player1->getSocket()->unlockMutex();
   player2->getSocket()->unlockMutex();
+  player1->endGame();
+  player2->endGame();
 }
 void ServerGameControl::_playerDisconected(Socket* socket){
 	if(player1->getSocket() == socket) player1->surrend();

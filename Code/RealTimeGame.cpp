@@ -43,9 +43,20 @@ void RealTimeGame::_sendBoard(){
 	_lastUpdate = _turn;
 }
 
+void RealTimeGame::_sendStart() {
+	std::string update = "start";
+	_player1->transferUpdate(update);
+	_player2->transferUpdate(update);
+	update = "realtime";
+	_player1->transferUpdate(update);
+	_player2->transferUpdate(update);
+}
+
 
 void RealTimeGame::start()
 {
+	_player1->setColor('w');
+	_player2->setColor('b');
 	std::cout << "Starting Game" << std::endl;
 	this->_initBoard();
 	this->_sendGameMode();
@@ -54,6 +65,15 @@ void RealTimeGame::start()
 	this->_sendBoard();
 	this->_mainLoop();
 	std::cout << "Game finished" << std::endl;
+}
+
+void RealTimeGame::_addToQueue(Coordinate moveStart, Coordinate moveEnd, std::queue<ChainedMove*>& movesQueue){
+	Piece* movingPiece = _board->getCase(moveStart);
+	ChainedMove* currentMove = new ChainedMove(movingPiece, moveEnd);
+	currentMove->setMoment(_turn + MOVE_TIME/2);
+	movesQueue.push(currentMove);
+	this->_getBoard()->lock(moveEnd);
+	movingPiece->startMovingTo(*this, moveEnd);
 }
 
 void RealTimeGame::_mainLoop(){
@@ -80,8 +100,8 @@ void RealTimeGame::_mainLoop(){
 			timeLeft.tv_usec = _timeBeforeUpdate()*1000;
 		}
 		else{
-			timeBeforeNextMove = _turn - movesQueue.front()->getMoment();
-			timeLeft.tv_usec = _timeBeforeUpdate() < timeBeforeNextMove ? _timeBeforeUpdate() : timeBeforeNextMove;
+			timeBeforeNextMove = movesQueue.front()->getMoment() - _turn;
+			timeLeft.tv_usec = _timeBeforeUpdate() < timeBeforeNextMove ? _timeBeforeUpdate()*1000 : timeBeforeNextMove*1000;
 		}
 		
 		FD_ZERO(&pipes);
@@ -106,23 +126,34 @@ void RealTimeGame::_mainLoop(){
 			}
 			read(currentPfd, &move, 4*sizeof(char));
 			move[4] = '\0';
+			if (move[0] == '/' && move[1] == 'e' && move[2] == 'n' && move[3] == 'd'){
+				if(_currentPlayer == _player1) _winner = _player2;
+				else _winner = _player1;
+			}
 			std::cout<<"mainLoop: Recieved move "<<move<<" from "<<_currentPlayer->getName()<<std::endl;
 			moveStart = Coordinate(move[0], move[1]);
 			moveEnd = Coordinate(move[2], move[3]);
 			
 			if (_isMovePossible(moveStart, moveEnd)){
-				//addToQueue(start, end);
-				currentMove = new ChainedMove(_board->getCase(moveStart), moveEnd);
-				currentMove->setMoment(_turn + MOVE_TIME/2);
-				movesQueue.push(currentMove);
-				this->_getBoard()->lock(moveEnd);
-				//
+				_addToQueue(moveStart, moveEnd, movesQueue);
+				//test for casteling
+				movingPiece = _board->getCase(moveStart);
+				if (movingPiece->getType() == 'k'){
+					if (moveStart == Coordinate('E','1')){
+						if (moveEnd == Coordinate('G','1')) _addToQueue(Coordinate('H','1'), Coordinate('F','1'), movesQueue);
+						else if (moveEnd == Coordinate('C','1')) _addToQueue(Coordinate('A','1'), Coordinate('D','1'), movesQueue);
+					}
+					else if (moveStart == Coordinate('E','8')){
+						if (moveEnd == Coordinate('G','8')) _addToQueue(Coordinate('H','8'), Coordinate('F','8'), movesQueue);
+						else if (moveEnd == Coordinate('C','8')) _addToQueue(Coordinate('A','8'), Coordinate('D','8'), movesQueue);
+					}
+				}
 			}
 		}
 		//no move recived before end of timer
 		else{
 			//move to do
-			while (!movesQueue.empty() && movesQueue.front()->getMoment() <= _turn){
+			while (!movesQueue.empty() && movesQueue.front()->getMoment() <= _turn && !this->_isFinish()){
 				currentMove = movesQueue.front();
 				movesQueue.pop();
 				movingPiece = currentMove->getPiece();
@@ -139,6 +170,7 @@ void RealTimeGame::_mainLoop(){
 					}
 					else{
 						this->_getBoard()->unlock(moveEnd);
+						currentMove->getPiece()->stopMoving(*this);
 						delete currentMove;
 					}
 				}
@@ -150,9 +182,10 @@ void RealTimeGame::_mainLoop(){
 }
 
 bool RealTimeGame::_isMovePossible(Coordinate start, Coordinate end){
+	if (! (_board->isInBoard(start) && _board->isInBoard(end)) ) return false;
 	RealTimeBoard* board = this->_getBoard();
 	Piece* movingPiece = board->getCase(start);
-	return movingPiece && (!movingPiece->isCoolingDown(*this)) && (!board->isLock(end)) && movingPiece->_checkMove(end, board, *this);
+	return movingPiece && _currentPlayer->getColor() == movingPiece->getColor() && (!movingPiece->isCoolingDown(*this)) && (!board->isLock(end)) && movingPiece->_checkMove(end, board, *this);
 }
 
 void RealTimeGame::_executeMove(Piece* movingPiece, Coordinate end){
@@ -165,20 +198,24 @@ void RealTimeGame::_executeMove(Piece* movingPiece, Coordinate end){
 		board->setCase(end, movingPiece);
 	}
 	
-	if (taken && taken->getColor() != movingPiece->getColor()){//collision
-		unsigned takenStart = taken->getMovementStart(), movingPieceStart = movingPiece->getMovementStart();
-		
-		if (!taken->isMoving()) taken->changeIsTaken(_turn, movingPiece, board);
-		else if(takenStart > movingPieceStart){// taken started moving before movingPiece
-			taken->changeIsTaken(_turn, movingPiece, board);
-			this->_getBoard()->unlock(taken->getDest());
-		}
-		else if(takenStart < movingPieceStart){// taken started moving after movingPiece
-			movingPiece->changeIsTaken(_turn, taken, board);
-			this->_getBoard()->unlock(movingPiece->getDest());
-			board->setCase(end, taken);
+	if (taken){//collision
+		if (taken->getColor() == movingPiece->getColor()) board->setCase(end, taken);
+		else{
+			unsigned takenStart = taken->getMovementStart(), movingPieceStart = movingPiece->getMovementStart();
+			if (!taken->isMoving()) taken->changeIsTaken(_turn, movingPiece, board);
+			else if(takenStart > movingPieceStart){// taken started moving before movingPiece
+				taken->changeIsTaken(_turn, movingPiece, board);
+				this->_getBoard()->unlock(taken->getDest());
+			}
+			else if(takenStart < movingPieceStart){// taken started moving after movingPiece
+				movingPiece->changeIsTaken(_turn, taken, board);
+				this->_getBoard()->unlock(movingPiece->getDest());
+				board->setCase(end, taken);
+			}
 		}
 	}
+	movingPiece->_setCoordinate(end);
+	if (end.getAbstractRow() == '8' && movingPiece->getType() == 'p') promote(movingPiece);
 }
 
 void RealTimeGame::promote(Piece* piece){
