@@ -169,11 +169,15 @@ bool Dark::_isFinish() {
 			std::cout << "Black Player win !" << std::endl;
 			data.addUserDarkWin(_player2->getName());
 			data.addUserDarkLose(_player1->getName());
+			data.updateRating(_player2->getName(),data.expectedWin(data.getEloRating(_player2->getName()),data.getEloRating(_player1->getName())),WIN);
+			data.updateRating(_player1->getName(),data.expectedWin(data.getEloRating(_player1->getName()),data.getEloRating(_player2->getName())),LOSE);
 		}
 		else {
 			std::cout << "White Player win !" << std::endl;
 			data.addUserDarkLose(_player2->getName());
 			data.addUserDarkWin(_player1->getName());
+			data.updateRating(_player2->getName(),data.expectedWin(data.getEloRating(_player2->getName()),data.getEloRating(_player1->getName())),LOSE);
+			data.updateRating(_player1->getName(),data.expectedWin(data.getEloRating(_player1->getName()),data.getEloRating(_player2->getName())),WIN);
 		}
 		_winner = currentPlayer;
 		_sendCheckmate();
@@ -224,7 +228,7 @@ bool Dark::_isVisible(Piece* piece, char color){
 		Piece* MaybePawn = nullptr;
 		if (_board->isInBoard(frontMaybePawn)) MaybePawn = TurnBasedGame::_board->getCase(frontMaybePawn);
 		if (MaybePawn && MaybePawn->getColor() == 'b' && (MaybePawn->getType() == 'p' || MaybePawn->getType() == 'r' || MaybePawn->getType() == 'q' || MaybePawn->getType() == 'k')) return true;
-		
+
 		frontMaybePawn2 = Coordinate(piece->getCoord().getRealColumn(), piece->getCoord().getRealRow()+2);
 		MaybePawn = nullptr;
 		if (_board->isInBoard(frontMaybePawn2)) MaybePawn = TurnBasedGame::_board->getCase(frontMaybePawn2);
@@ -254,7 +258,7 @@ bool Dark::_isVisible(Piece* piece, char color){
 		Piece* MaybePawn = nullptr;
 		if (_board->isInBoard(frontMaybePawn)) MaybePawn = TurnBasedGame::_board->getCase(frontMaybePawn);
 		if (MaybePawn && MaybePawn->getColor() == 'w' && (MaybePawn->getType() == 'p' || MaybePawn->getType() == 'r' || MaybePawn->getType() == 'q' || MaybePawn->getType() == 'k')) return true;
-		
+
 		frontMaybePawn2 = Coordinate(piece->getCoord().getRealColumn(), piece->getCoord().getRealRow()-2);
 		MaybePawn = nullptr;
 		if (_board->isInBoard(frontMaybePawn2)) MaybePawn = TurnBasedGame::_board->getCase(frontMaybePawn2);

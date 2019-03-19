@@ -113,14 +113,18 @@ bool RealTimeClassic::_isFinish() {
 			std::cout << "Black Player win !" << std::endl;
 			data.addUserRealTimeClassicWin(_player2->getName());
 			data.addUserRealTimeClassicLose(_player1->getName());
+			data.updateRating(_player2->getName(),data.expectedWin(data.getEloRating(_player2->getName()),data.getEloRating(_player1->getName())),WIN);
+			data.updateRating(_player1->getName(),data.expectedWin(data.getEloRating(_player1->getName()),data.getEloRating(_player2->getName())),LOSE);
 		}
 		else {
 			std::cout << "White Player win !" << std::endl;
 			data.addUserRealTimeClassicLose(_player2->getName());
 			data.addUserRealTimeClassicWin(_player1->getName());
+			data.updateRating(_player2->getName(),data.expectedWin(data.getEloRating(_player2->getName()),data.getEloRating(_player1->getName())),LOSE);
+			data.updateRating(_player1->getName(),data.expectedWin(data.getEloRating(_player1->getName()),data.getEloRating(_player2->getName())),WIN);
 		}
 		_winner = _currentPlayer;
-		_sendBoard();
+		_sendBoard(); //why Romain? 
 		_sendCheckmate();
 		return true;
 	}

@@ -11,9 +11,11 @@
 #include <algorithm>
 #include "dirent.h"
 #include <mutex>
+#include <cmath> //used in ELO calc
+#include <iomanip>
 
 typedef std::vector<unsigned int> Stat;
-typedef std::tuple<std::string, Stat, Stat, Stat, Stat, Stat, Stat, Stat, Stat, std::vector<std::string>, std::vector<std::string>, std::vector<std::string>> UserData;
+typedef std::tuple<std::string, Stat, Stat, Stat, Stat, Stat, Stat, Stat, Stat, std::vector<std::string>, std::vector<std::string>, std::vector<std::string>, double> UserData;
 typedef std::tuple<std::string, Stat> UserLadderData;
 
 class Data {
@@ -66,6 +68,10 @@ public:
   void addUserRealTimeAliceWin(const std::string username);
   void addUserRealTimeAliceLose(const std::string username);
   void addUserRealTimeAliceDraw(const std::string username);
+
+  double getEloRating(std::string);
+  void updateRating(const std::string, double, double);
+  double expectedWin(double,double);
 
   bool isInLadder(const std::string gamemode, const std::string username);
   void updateLadderOnLoseDraw(const std::string gamemode, UserLadderData data);
