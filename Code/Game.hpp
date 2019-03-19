@@ -8,6 +8,11 @@ class Player;
 class Piece;
 class Board;
 
+//Win-Lose-Tie score
+#define WIN 1
+#define LOSE 0
+#define TIE 0.5
+
 class Game
 {
 	protected:
