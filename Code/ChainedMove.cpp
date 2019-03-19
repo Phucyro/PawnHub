@@ -3,7 +3,7 @@
 
 #include "ChainedMove.hpp"
 
-ChainedMove::ChainedMove(Piece* movingPiece, Coordinate end): _movingPiece(movingPiece), _moves(), _currentMove(), _moment(0u){
+ChainedMove::ChainedMove(Piece* movingPiece, Coordinate end): _movingPiece(movingPiece), _moves(), _currentMove(), _moment(0u), _pieceMoving(true){
 	Coordinate start = _movingPiece->getCoord();
 	int rowMove = int(end.getRealRow()) - int(start.getRealRow());
 	int rowDirection = rowMove == 0 ? 0 : rowMove/std::abs(rowMove);
@@ -33,6 +33,7 @@ ChainedMove::ChainedMove(Piece* movingPiece, Coordinate end): _movingPiece(movin
 }
 
 Coordinate ChainedMove::nextMove(){
+	if (!_pieceMoving) return Coordinate('T','9');
 	_currentMove = _moves.front();
 	_moves.pop();
 	return _currentMove;

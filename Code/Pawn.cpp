@@ -8,13 +8,14 @@ Pawn::~Pawn() noexcept {
 	delete _ghost;
 }
 
-Pawn::Pawn(const Pawn& original) noexcept : BasicPawn(original), _ghost(nullptr) {
+Pawn::Pawn(const Pawn& original) noexcept : BasicPawn(original), _ghost(nullptr), _ghostPlacement(original._ghostPlacement) {
 	_ghost = new GhostPawn(*(original._ghost));
 }
 
 Pawn& Pawn::operator= (const Pawn& original){
 	this->BasicPawn::operator= (original);
 	_ghost = new GhostPawn(original._ghost);
+	_ghostPlacement = original._ghostPlacement;
 	return *this;
 }
 
@@ -22,6 +23,7 @@ Pawn& Pawn::operator= (Pawn&& original){
 	this->BasicPawn::operator= (original);
 	_ghost = original._ghost;
 	original._ghost = nullptr;
+	_ghostPlacement = original._ghostPlacement;
 	return *this;
 }
 
@@ -45,6 +47,22 @@ bool Pawn::move(Coordinate end, Board* board, Game& game){
 		return true;
 	}
 	return false;
+}
+
+void Pawn::startMovingTo(Game& game, Coordinate end){
+	this->BasicPawn::startMovingTo(game, end);
+	int rowMove = int(end.getRealRow()) - int(_coords.getRealRow());
+	int rowDirection = rowMove ? rowMove/std::abs(rowMove) : 0;
+	if (std::abs(rowMove) == 2) _ghostPlacement = rowDirection;
+}
+
+void Pawn::stopMoving(Game& game, Board* board){
+	this->BasicPawn::stopMoving(game, board);
+	if(_ghostPlacement){
+		_ghost = new GhostPawn(getColor(), Coordinate(_coords.getRealColumn(), _coords.getRealRow() - 1*_ghostPlacement), game.getTurn(), this, 10000);
+		board->setCase(Coordinate(_coords.getRealColumn(), _coords.getRealRow() - 1*_ghostPlacement), _ghost);
+		_ghostPlacement = 0;
+	}
 }
 
 #endif

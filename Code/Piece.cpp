@@ -11,6 +11,7 @@ Piece& Piece::operator= (const Piece& original){
 	_movementStart = original._movementStart;
 	_lastMoveEnd = original._lastMoveEnd;
 	_isMoving = original._isMoving;
+	_next = original._next;
 	for (int i = 0; i < 4; i++){
 		_str[i] = original._str[i];
 	}
@@ -71,8 +72,9 @@ void Piece::startMovingTo(Game& game, Coordinate dest){
 	_movementStart = game.getTurn();
 }
 
-void Piece::stopMoving(Game& game){
+void Piece::stopMoving(Game& game, Board* board){
 	_isMoving = false;
+	board->setCase(_coords, this);
 	_lastMoveEnd = game.getTurn();
 }
 

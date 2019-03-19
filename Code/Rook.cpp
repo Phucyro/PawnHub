@@ -58,4 +58,9 @@ bool Rook::_isMovePossible(Coordinate dest, Board* board, Game& game){
 	return res;
 }
 
+void Rook::startMovingTo(Game& game, Coordinate end){
+	this->Piece::startMovingTo(game, end);
+	_moved = true;
+}
+
 #endif

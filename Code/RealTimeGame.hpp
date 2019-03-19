@@ -10,7 +10,6 @@
 class RealTimeGame: public Game{
 	private:
 	int _timeBeforeUpdate(){return int(_lastUpdate)+UPDATE_RATE - int(_turn);}
-	void _addToQueue(Coordinate, Coordinate, std::queue<ChainedMove*>&);
 	
 	protected:
 	Player* _currentPlayer;
@@ -23,6 +22,8 @@ class RealTimeGame: public Game{
 	void _sendBoard() override;
 	void _executeMove(Piece*, Coordinate);
 	bool _isMovePossible(Coordinate, Coordinate);
+	void _addToQueue(Coordinate, Coordinate, std::queue<ChainedMove*>&);
+	virtual void _handleSpecialMove(Coordinate, Coordinate, std::queue<ChainedMove*>&);
 	
 	void _sendStart() override;
 	

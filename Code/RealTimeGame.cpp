@@ -7,6 +7,7 @@
 #include <sys/select.h>
 #include <chrono>
 #include <thread>
+#include <cmath>
 #include "RealTimeGame.hpp"
 #include "Queen.hpp"
 
@@ -76,6 +77,20 @@ void RealTimeGame::_addToQueue(Coordinate moveStart, Coordinate moveEnd, std::qu
 	movingPiece->startMovingTo(*this, moveEnd);
 }
 
+void RealTimeGame::_handleSpecialMove(Coordinate moveStart, Coordinate moveEnd, std::queue<ChainedMove*>& movesQueue){
+	Piece* movingPiece = _board->getCase(moveStart);
+	if (movingPiece->getType() == 'k'){
+		if (moveStart == Coordinate('E','1')){
+			if (moveEnd == Coordinate('G','1')) _addToQueue(Coordinate('H','1'), Coordinate('F','1'), movesQueue);
+			else if (moveEnd == Coordinate('C','1')) _addToQueue(Coordinate('A','1'), Coordinate('D','1'), movesQueue);
+		}
+		else if (moveStart == Coordinate('E','8')){
+			if (moveEnd == Coordinate('G','8')) _addToQueue(Coordinate('H','8'), Coordinate('F','8'), movesQueue);
+			else if (moveEnd == Coordinate('C','8')) _addToQueue(Coordinate('A','8'), Coordinate('D','8'), movesQueue);
+		}
+	}
+}
+
 void RealTimeGame::_mainLoop(){
 	int p1fd = _player1->getReadPipe();
 	int p2fd = _player2->getReadPipe();
@@ -136,18 +151,7 @@ void RealTimeGame::_mainLoop(){
 			
 			if (_isMovePossible(moveStart, moveEnd)){
 				_addToQueue(moveStart, moveEnd, movesQueue);
-				//test for casteling
-				movingPiece = _board->getCase(moveStart);
-				if (movingPiece->getType() == 'k'){
-					if (moveStart == Coordinate('E','1')){
-						if (moveEnd == Coordinate('G','1')) _addToQueue(Coordinate('H','1'), Coordinate('F','1'), movesQueue);
-						else if (moveEnd == Coordinate('C','1')) _addToQueue(Coordinate('A','1'), Coordinate('D','1'), movesQueue);
-					}
-					else if (moveStart == Coordinate('E','8')){
-						if (moveEnd == Coordinate('G','8')) _addToQueue(Coordinate('H','8'), Coordinate('F','8'), movesQueue);
-						else if (moveEnd == Coordinate('C','8')) _addToQueue(Coordinate('A','8'), Coordinate('D','8'), movesQueue);
-					}
-				}
+				_handleSpecialMove(moveStart, moveEnd, movesQueue);
 			}
 		}
 		//no move recived before end of timer
@@ -157,22 +161,24 @@ void RealTimeGame::_mainLoop(){
 				currentMove = movesQueue.front();
 				movesQueue.pop();
 				movingPiece = currentMove->getPiece();
+				moveEnd = currentMove->nextMove();
 				if (movingPiece->isTaken()){
 					delete currentMove;
 				}
+				else if(moveEnd == Coordinate('T','9')){
+					this->_getBoard()->unlock(movingPiece->getCoord());
+					movingPiece->stopMoving(*this, _board);
+					delete currentMove;
+				}
 				else{
-					moveEnd = currentMove->nextMove();
 					_executeMove(movingPiece, moveEnd);
 					
-					if (!currentMove->isEmpty()){
-						currentMove->setMoment(_turn + MOVE_TIME);
-						movesQueue.push(currentMove);
-					}
+					if (!currentMove->isEmpty()) currentMove->setMoment(_turn + MOVE_TIME);
 					else{
-						this->_getBoard()->unlock(moveEnd);
-						currentMove->getPiece()->stopMoving(*this);
-						delete currentMove;
+						currentMove->setMoment(_turn + MOVE_TIME/2);
+						currentMove->stopPieceMovingNext();
 					}
+					movesQueue.push(currentMove);
 				}
 			}
 			//send update
@@ -192,14 +198,26 @@ void RealTimeGame::_executeMove(Piece* movingPiece, Coordinate end){
 	RealTimeBoard* board = this->_getBoard();
 	Piece* taken;
 	Coordinate start = movingPiece->getCoord();
-	if (board->getCase(start) == movingPiece) taken = board->movePiece(start, end);
+	if (board->getCase(start) == movingPiece){
+		taken = board->movePiece(start, end);
+		board->setCase(start, movingPiece->getNext());
+		movingPiece->clearNext();
+		
+		if (movingPiece->getType() == 'h'){
+			board->setCase(end, taken);
+			movingPiece->_setCoordinate(end);
+		return;
+		}
+	}
 	else{
 		taken = board->getCase(end);
 		board->setCase(end, movingPiece);
 	}
-	
 	if (taken){//collision
-		if (taken->getColor() == movingPiece->getColor()) board->setCase(end, taken);
+		if (taken->getColor() == movingPiece->getColor()){
+			if (movingPiece->getType() != 'p' && taken->getType() == 'g') movingPiece->setNext(taken);
+			else board->setCase(end, taken);
+		}
 		else{
 			unsigned takenStart = taken->getMovementStart(), movingPieceStart = movingPiece->getMovementStart();
 			if (!taken->isMoving()) taken->changeIsTaken(_turn, movingPiece, board);
@@ -215,7 +233,7 @@ void RealTimeGame::_executeMove(Piece* movingPiece, Coordinate end){
 		}
 	}
 	movingPiece->_setCoordinate(end);
-	if (end.getAbstractRow() == '8' && movingPiece->getType() == 'p') promote(movingPiece);
+	if ((end.getAbstractRow() == '8' || end.getAbstractRow() == '1') && movingPiece->getType() == 'p') promote(movingPiece);
 }
 
 void RealTimeGame::promote(Piece* piece){
