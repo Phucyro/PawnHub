@@ -13,7 +13,7 @@
 #include <mutex>
 
 typedef std::vector<unsigned int> Stat;
-typedef std::tuple<std::string, Stat, Stat, Stat, Stat, std::vector<std::string>, std::vector<std::string>, std::vector<std::string>> UserData;
+typedef std::tuple<std::string, Stat, Stat, Stat, Stat, Stat, Stat, Stat, Stat, std::vector<std::string>, std::vector<std::string>, std::vector<std::string>> UserData;
 typedef std::tuple<std::string, Stat> UserLadderData;
 
 class Data {
@@ -53,6 +53,19 @@ public:
   void addUserAliceWin(const std::string username);
   void addUserAliceLose(const std::string username);
   void addUserAliceDraw(const std::string username);
+
+  void addUserRealTimeClassicWin(const std::string username);
+  void addUserRealTimeClassicLose(const std::string username);
+  void addUserRealTimeClassicDraw(const std::string username);
+  void addUserRealTimeDarkWin(const std::string username);
+  void addUserRealTimeDarkLose(const std::string username);
+  void addUserRealTimeDarkDraw(const std::string username);
+  void addUserRealTimeHordeWin(const std::string username);
+  void addUserRealTimeHordeLose(const std::string username);
+  void addUserRealTimeHordeDraw(const std::string username);
+  void addUserRealTimeAliceWin(const std::string username);
+  void addUserRealTimeAliceLose(const std::string username);
+  void addUserRealTimeAliceDraw(const std::string username);
 
   bool isInLadder(const std::string gamemode, const std::string username);
   void updateLadderOnLoseDraw(const std::string gamemode, UserLadderData data);

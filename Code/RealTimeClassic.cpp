@@ -111,13 +111,13 @@ bool RealTimeClassic::_isFinish() {
 	if (this->_isCheckmate(opponentColor)){
 		if (opponentColor == 'w'){
 			std::cout << "Black Player win !" << std::endl;
-			data.addUserDarkWin(_player2->getName());
-			data.addUserDarkLose(_player1->getName());
+			data.addUserRealTimeClassicWin(_player2->getName());
+			data.addUserRealTimeClassicLose(_player1->getName());
 		}
 		else {
 			std::cout << "White Player win !" << std::endl;
-			data.addUserDarkLose(_player2->getName());
-			data.addUserDarkWin(_player1->getName());
+			data.addUserRealTimeClassicLose(_player2->getName());
+			data.addUserRealTimeClassicWin(_player1->getName());
 		}
 		_winner = _currentPlayer;
 		_sendBoard();
