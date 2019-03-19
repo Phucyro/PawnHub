@@ -86,4 +86,9 @@ void BasicPawn::_promote(Game& game){
 	game.promote(this);
 }
 
+void BasicPawn::startMovingTo(Game& game, Coordinate end){
+	this->Piece::startMovingTo(game, end);
+	_moved = true;
+}
+
 #endif

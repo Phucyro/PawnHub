@@ -107,4 +107,9 @@ bool King::_isMovePossible(Coordinate dest, Board* board, Game& game){
 	return res;
 }
 
+void King::startMovingTo(Game& game, Coordinate end){
+	this->Piece::startMovingTo(game, end);
+	_moved = true;
+}
+
 #endif

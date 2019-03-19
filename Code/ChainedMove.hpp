@@ -15,6 +15,7 @@ class ChainedMove{
 	std::queue<Coordinate> _moves;
 	Coordinate _currentMove;
 	unsigned _moment;
+	bool _pieceMoving;
 	
 	public:
 	ChainedMove(Piece*, Coordinate);
@@ -28,6 +29,7 @@ class ChainedMove{
 	Piece* getPiece() const {return _movingPiece;}
 	bool isEmpty() const {return _moves.empty();}
 	Coordinate nextMove();
+	void stopPieceMovingNext(){_pieceMoving = false;}
 };
 
 #endif

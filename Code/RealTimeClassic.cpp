@@ -15,14 +15,14 @@ void RealTimeClassic::_Pieces() {
 	_pieces[5] = new Bishop('w', 'F', '1');
 	_pieces[6] = new Knight('w', 'G', '1');
 	_pieces[7] = new Rook('w', 'H', '1');
-	_pieces[8] = new BasicPawn('w', 'A', '2');		//8 -> 15 : pions blancs
-	_pieces[9] = new BasicPawn('w', 'B', '2');
-	_pieces[10] = new BasicPawn('w', 'C', '2');
-	_pieces[11] = new BasicPawn('w', 'D', '2');
-	_pieces[12] = new BasicPawn('w', 'E', '2');
-	_pieces[13] = new BasicPawn('w', 'F', '2');
-	_pieces[14] = new BasicPawn('w', 'G', '2');
-	_pieces[15] = new BasicPawn('w', 'H', '2');
+	_pieces[8] = new Pawn('w', 'A', '2');		//8 -> 15 : pions blancs
+	_pieces[9] = new Pawn('w', 'B', '2');
+	_pieces[10] = new Pawn('w', 'C', '2');
+	_pieces[11] = new Pawn('w', 'D', '2');
+	_pieces[12] = new Pawn('w', 'E', '2');
+	_pieces[13] = new Pawn('w', 'F', '2');
+	_pieces[14] = new Pawn('w', 'G', '2');
+	_pieces[15] = new Pawn('w', 'H', '2');
 
 	_pieces[16] = new Rook('b', 'A', '8');		//16 -> 23 : pièces fortes noires
 	_pieces[17] = new Knight('b', 'B', '8');
@@ -32,14 +32,14 @@ void RealTimeClassic::_Pieces() {
 	_pieces[21] = new Bishop('b', 'F', '8');
 	_pieces[22] = new Knight('b', 'G', '8');
 	_pieces[23] = new Rook('b', 'H', '8');
-	_pieces[24] = new BasicPawn('b', 'A', '7');		//24 -> 31 : pions noirs
-	_pieces[25] = new BasicPawn('b', 'B', '7');
-	_pieces[26] = new BasicPawn('b', 'C', '7');
-	_pieces[27] = new BasicPawn('b', 'D', '7');
-	_pieces[28] = new BasicPawn('b', 'E', '7');
-	_pieces[29] = new BasicPawn('b', 'F', '7');
-	_pieces[30] = new BasicPawn('b', 'G', '7');
-	_pieces[31] = new BasicPawn('b', 'H', '7');
+	_pieces[24] = new Pawn('b', 'A', '7');		//24 -> 31 : pions noirs
+	_pieces[25] = new Pawn('b', 'B', '7');
+	_pieces[26] = new Pawn('b', 'C', '7');
+	_pieces[27] = new Pawn('b', 'D', '7');
+	_pieces[28] = new Pawn('b', 'E', '7');
+	_pieces[29] = new Pawn('b', 'F', '7');
+	_pieces[30] = new Pawn('b', 'G', '7');
+	_pieces[31] = new Pawn('b', 'H', '7');
 }
 
 

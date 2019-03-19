@@ -36,6 +36,7 @@ class BasicPawn : public Piece {
 		bool _checkMove(Coordinate, Board*, Game&) override;
 		using Piece::_isMovePossible;
 		bool _isMovePossible(Coordinate, Board*, Game&) override;
+		void startMovingTo(Game&, Coordinate) override;
 };
 
 #endif

@@ -58,7 +58,7 @@ class Game
 	Player* getPlayer1(){return _player1;}
 	Player* getPlayer2(){return _player2;}
 	unsigned getTurn(){return _turn;}
-
+	//Board* getBoard(){return _board;}
 };
 #include "Player.hpp"
 #include "Piece.hpp"

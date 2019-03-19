@@ -144,7 +144,8 @@ void Horde::_changePawn(Piece *pawn, Piece* promotedPawn, Board* board){
 				break; // <3 <3 <3
 			}
 		}
-	}else{
+	}
+	else{
 		_lastStrongPieceBlack ++;
 		start = int(_lastStrongPieceBlack);
 		i = int(_lastStrongPieceBlack);
@@ -340,7 +341,6 @@ void Horde::_boardState(std::string& state){
 		if (!_pieces[i]->isTaken()) state += _pieces[i]->toString();
 	}
 	state += "#";
-	std::cout<<"Board state: "<<state<<std::endl;
 }
 
 #endif
