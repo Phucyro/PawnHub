@@ -1,8 +1,6 @@
 #ifndef __ALICE__KING__CPP__
 #define __ALICE__KING__CPP__
 
-void stopGdb(){}
-
 #include <iostream>
 #include "AliceKing.hpp"
 

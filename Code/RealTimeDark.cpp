@@ -1,11 +1,11 @@
-#ifndef __REAL__TIME__CLASSIC__CPP__
-#define __REAL__TIME__CLASSIC__CPP__
+#ifndef __REAL__TIME__DARK__CPP__
+#define __REAL__TIME__DARK__CPP__
 
-#include "RealTimeClassic.hpp"
+#include "RealTimeDark.hpp"
 
 extern Data data;
 
-void RealTimeClassic::_Pieces() {
+void RealTimeDark::_Pieces() {
 	_pieces = new Piece*[_piecesAmount];
 	_pieces[0] = new Rook('w', 'A', '1');		//0 -> 7 : pièces fortes blanches
 	_pieces[1] = new Knight('w', 'B', '1');
@@ -43,7 +43,7 @@ void RealTimeClassic::_Pieces() {
 }
 
 
-RealTimeClassic::~RealTimeClassic(){
+RealTimeDark::~RealTimeDark(){
 	for(int i = int(_piecesAmount) - 1; i>=0; i--)
 	{
 		delete _pieces[i];
@@ -52,7 +52,7 @@ RealTimeClassic::~RealTimeClassic(){
 }
 
 
-void RealTimeClassic::_initBoard() {
+void RealTimeDark::_initBoard() {
 
 	//White part
 
@@ -95,14 +95,14 @@ void RealTimeClassic::_initBoard() {
 	// _sendBoard();
 }
 
-void RealTimeClassic::_sendGameMode() {
-	std::string game = "RealTimeClassic";
+void RealTimeDark::_sendGameMode() {
+	std::string game = "RealTimeDark";
 	_player1->transferGameMode(game);
 	_player2->transferGameMode(game);
 }
 
 
-bool RealTimeClassic::_isFinish() {
+bool RealTimeDark::_isFinish() {
 	if (_winner){
 		_sendSurrend();
 		return true;
@@ -126,24 +126,32 @@ bool RealTimeClassic::_isFinish() {
 	return false;
 }
 
-bool RealTimeClassic::_isCheckmate(char playerColor){
+bool RealTimeDark::_isCheckmate(char playerColor){
 	int offset = _calculOffset(playerColor);
 	return _pieces[KING_INDEX+offset]->isTaken();
 }
 
-void RealTimeClassic::_boardState(std::string& state){
-	int i = 0;
-	for (; i < 16; i++){
-		if (!_pieces[i]->isTaken()) state += _pieces[i]->toString();
-	}
+void RealTimeDark::_sendBoard(){
+	std::string state;
+	state += 'w';
+	this->_boardState(state);
+	_player1->showBoard(state);
+	state[0] = 'b';
+	this->_boardState(state);
+	_player2->showBoard(state);
+	_lastUpdate = _turn;
+}
+
+void RealTimeDark::_boardState(std::string& state){
+	char color = state[0];
+	state.clear();
+	for (int i = 0; i < 16; i++) if ((!_pieces[i]->isTaken()) && _isVisible(_pieces[i], color)) state += _pieces[i]->toString();
 	state += "!";
-	for (; i < 32; i++){
-		if (!_pieces[i]->isTaken()) state += _pieces[i]->toString();
-	}
+	for (int i = 16; i < 32; i++) if ((!_pieces[i]->isTaken()) && _isVisible(_pieces[i], color)) state += _pieces[i]->toString();
 	state += "#";
 }
 
-void RealTimeClassic::_changePawn(Piece *pawn, Piece* promotedPawn, Board* board){
+void RealTimeDark::_changePawn(Piece *pawn, Piece* promotedPawn, Board* board){
 	int start, i, end;
 	if (pawn->getColor() == 'w'){
 		_lastStrongPiecesWhite ++;
@@ -174,6 +182,71 @@ void RealTimeClassic::_changePawn(Piece *pawn, Piece* promotedPawn, Board* board
 			}
 		}
 	}
+}
+
+bool RealTimeDark::_isVisible(Piece* piece, char color){
+	if (piece->getColor() == color) return true;
+	Coordinate leftMaybePawn, rightMaybePawn, frontMaybePawn, frontMaybePawn2;
+	if (piece->getColor() == 'w'){	//White
+
+		//Pawn
+		frontMaybePawn = Coordinate(piece->getCoord().getRealColumn(), piece->getCoord().getRealRow()+1);
+		Piece* MaybePawn = nullptr;
+		if (_board->isInBoard(frontMaybePawn)) MaybePawn = RealTimeGame::_board->getCase(frontMaybePawn);
+		if (MaybePawn && MaybePawn->getColor() == 'b' && (MaybePawn->getType() == 'p' || MaybePawn->getType() == 'r' || MaybePawn->getType() == 'q' || MaybePawn->getType() == 'k')) return true;
+		
+		frontMaybePawn2 = Coordinate(piece->getCoord().getRealColumn(), piece->getCoord().getRealRow()+2);
+		MaybePawn = nullptr;
+		if (_board->isInBoard(frontMaybePawn2)) MaybePawn = RealTimeGame::_board->getCase(frontMaybePawn2);
+		if (MaybePawn && MaybePawn->getColor() == 'b' && ((MaybePawn->getType() == 'p' && (!MaybePawn->hasMoved()) && ((!_board->getCase(frontMaybePawn)) || _board->getCase(frontMaybePawn)->getType() != 'g')) || MaybePawn->getType() == 'r' || MaybePawn->getType() == 'q')) return true;
+
+		leftMaybePawn = Coordinate(piece->getCoord().getRealColumn()+1, piece->getCoord().getRealRow()+1);
+		MaybePawn = nullptr;
+		if (_board->isInBoard(leftMaybePawn)) MaybePawn = RealTimeGame::_board->getCase(leftMaybePawn);
+		if (MaybePawn && MaybePawn->getColor() == 'b' && (MaybePawn->getType() == 'p' || MaybePawn->getType() == 'b' || MaybePawn->getType() == 'q' || MaybePawn->getType() == 'k')) return true;
+
+		rightMaybePawn = Coordinate(piece->getCoord().getRealColumn()-1, piece->getCoord().getRealRow()+1);
+		MaybePawn = nullptr;
+		if (_board->isInBoard(rightMaybePawn)) MaybePawn = RealTimeGame::_board->getCase(rightMaybePawn);
+		if (MaybePawn && MaybePawn->getColor() == 'b' && (MaybePawn->getType() == 'p' || MaybePawn->getType() == 'b' || MaybePawn->getType() == 'q' || MaybePawn->getType() == 'k')) return true;
+
+		//strong pieces
+		for (unsigned i = 16; i <= _lastStrongPieceBlack; ++i){
+			if (!_pieces[i]->isTaken())
+				if (_pieces[i]->_checkMove(piece->getCoord(), RealTimeGame::_board, *this)) return true;
+		}
+	}
+
+	else{	//Black
+
+		//Pawn
+		frontMaybePawn = Coordinate(piece->getCoord().getRealColumn(), piece->getCoord().getRealRow()-1);
+		Piece* MaybePawn = nullptr;
+		if (_board->isInBoard(frontMaybePawn)) MaybePawn = RealTimeGame::_board->getCase(frontMaybePawn);
+		if (MaybePawn && MaybePawn->getColor() == 'w' && (MaybePawn->getType() == 'p' || MaybePawn->getType() == 'r' || MaybePawn->getType() == 'q' || MaybePawn->getType() == 'k')) return true;
+		
+		frontMaybePawn2 = Coordinate(piece->getCoord().getRealColumn(), piece->getCoord().getRealRow()-2);
+		MaybePawn = nullptr;
+		if (_board->isInBoard(frontMaybePawn2)) MaybePawn = RealTimeGame::_board->getCase(frontMaybePawn2);
+		if (MaybePawn && MaybePawn->getColor() == 'w' && ((MaybePawn->getType() == 'p' && (!MaybePawn->hasMoved()) && ((!_board->getCase(frontMaybePawn)) || _board->getCase(frontMaybePawn)->getType() != 'g')) || MaybePawn->getType() == 'r' || MaybePawn->getType() == 'q')) return true;
+
+		leftMaybePawn = Coordinate(piece->getCoord().getRealColumn()-1, piece->getCoord().getRealRow()-1);
+		MaybePawn = nullptr;
+		if (_board->isInBoard(leftMaybePawn)) MaybePawn = RealTimeGame::_board->getCase(leftMaybePawn);
+		if (MaybePawn && MaybePawn->getColor() == 'w' && (MaybePawn->getType() == 'p' || MaybePawn->getType() == 'b' || MaybePawn->getType() == 'q' || MaybePawn->getType() == 'k')) return true;
+
+		rightMaybePawn = Coordinate(piece->getCoord().getRealColumn()+1, piece->getCoord().getRealRow()-1);
+		MaybePawn = nullptr;
+		if (_board->isInBoard(rightMaybePawn)) MaybePawn = RealTimeGame::_board->getCase(rightMaybePawn);
+		if (MaybePawn && MaybePawn->getColor() == 'w' && (MaybePawn->getType() == 'p' || MaybePawn->getType() == 'b' || MaybePawn->getType() == 'q' || MaybePawn->getType() == 'k')) return true;
+
+		//strong pieces
+		for (unsigned i = 0; i <= _lastStrongPiecesWhite; ++i){
+			if (!_pieces[i]->isTaken())
+				if (_pieces[i]->_checkMove(piece->getCoord(), RealTimeGame::_board, *this)) return true;
+		}
+	}
+	return false;
 }
 
 #endif

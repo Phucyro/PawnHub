@@ -67,10 +67,10 @@ void authentificationMenu(MenuHandler* menu, Socket* socket){
 
 ////////////////////////////////////////////////////////////////////////////////
 
-void gamemodeMenu(MenuHandler* menu, Socket* socket){
+void TurnByTurnMenu(MenuHandler* menu, Socket* socket){
   menu->clear_windows();
   menu->init_choicesw();
-  int choice = menu->get_choice({"Classic", "Dark", "Horde", "Alice", "Real-Time Classic", "Retour"});
+  int choice = menu->get_choice({"Classic", "Dark", "Horde", "Alice","Retour"});
   bool temp_b = true;
   std::vector<std::string> temp_v;
 
@@ -93,10 +93,52 @@ void gamemodeMenu(MenuHandler* menu, Socket* socket){
       receiveMessageHandler(menu, socket, &temp_b, &temp_v);
       break;
     case 4 :
+      break;
+  }
+}
+
+void RealTimeMenu(MenuHandler* menu, Socket* socket){
+  menu->clear_windows();
+  menu->init_choicesw();
+  int choice = menu->get_choice({"Classic", "Dark", "Horde", "Alice","Retour"});
+  bool temp_b = true;
+  std::vector<std::string> temp_v;
+
+  switch (choice){
+    case 0 :
       playGame(socket, "4");
       receiveMessageHandler(menu, socket, &temp_b, &temp_v);
       break;
-    case 5 :
+     case 1 :
+       playGame(socket, "6");
+       receiveMessageHandler(menu, socket, &temp_b, &temp_v);
+       break;
+     case 2 :
+      playGame(socket, "5");
+      receiveMessageHandler(menu, socket, &temp_b, &temp_v);
+      break;
+
+    case 3 :
+      //playGame(socket, "7");
+      //receiveMessageHandler(menu, socket, &temp_b, &temp_v);
+      break;
+    case 4 :
+      break;
+  }
+}
+
+void gamemodeMenu(MenuHandler* menu, Socket* socket){
+  menu->clear_windows();
+  menu->init_choicesw();
+  int choice = menu->get_choice({"Turn by turn", "Real-time", "Retour"});
+  switch (choice){
+    case 0 :
+      TurnByTurnMenu(menu, socket);
+      break;
+    case 1 :
+      RealTimeMenu(menu, socket);
+      break;
+    case 2:
       break;
   }
 }

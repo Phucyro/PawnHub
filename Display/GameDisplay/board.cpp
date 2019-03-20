@@ -153,7 +153,7 @@ void Board::update_turn(const char* turn) {
 }
 
 void Board::declare_check() {
-  mvprintw(15, 30, "%s", "CHECK");
+  mvprintw(14, 30, "%s", "CHECK");
   refresh_board();
 }
 

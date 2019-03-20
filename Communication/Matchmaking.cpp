@@ -5,6 +5,8 @@
 #include "../Code/Horde.hpp"
 #include "../Code/Dark.hpp"
 #include "../Code/RealTimeClassic.hpp"
+#include "../Code/RealTimeHorde.hpp"
+#include "../Code/RealTimeDark.hpp"
 #include "cleanThread.hpp"
 
 void delFinishedThread(std::list<ExecInfoThread*>&);
@@ -76,7 +78,12 @@ void Matchmaking::check(int queue_number){
       case 4 :
         game = new RealTimeClassic(player1,player2);
         break;
-
+     case 5 :
+        game = new RealTimeHorde(player1,player2);
+        break;
+     case 6 :
+        game = new RealTimeDark(player1,player2);
+        break;
     }
     ExecInfoThread *infoThread = new ExecInfoThread();
     std::thread *game_thread = new std::thread(startGame, game, player1, player2, infoThread);
