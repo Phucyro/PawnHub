@@ -68,10 +68,14 @@ void authentificationMenu(MenuHandler* menu, Client* client){
   client->setName(username);
 }
 
-void gamemodeMenu(MenuHandler* menu, Client* client){
+////////////////////////////////////////////////////////////////////////////////
+
+void normalGameMenu(MenuHandler* menu, Client* client){
   menu->clear_windows();
   menu->init_choicesw();
-  int choice = menu->get_choice({"Classic", "Dark", "Horde", "Alice", "Real-Time Classic", "Retour"});
+  bool play = true;
+  int choice = menu->get_choice({"Classic", "Dark", "Horde", "Alice", "Retour"});
+  menu->refresh_board();
 
   switch (choice){
     case 0 :
@@ -79,7 +83,7 @@ void gamemodeMenu(MenuHandler* menu, Client* client){
       break;
     case 1 :
       playGame(client->getSocket(), "1");
-       break;
+      break;
     case 2 :
       playGame(client->getSocket(), "2");
       break;
@@ -87,12 +91,54 @@ void gamemodeMenu(MenuHandler* menu, Client* client){
       playGame(client->getSocket(), "3");
       break;
     case 4 :
-      playGame(client->getSocket(), "4");
-      break;
-    case 5 :
+      play = false;
       break;
   }
-  client->readPipe();
+
+  if (play) client->readPipe();
+}
+
+void realTimeMenu(MenuHandler* menu, Client* client){
+  menu->clear_windows();
+  menu->init_choicesw();
+  bool play = true;
+  int choice = menu->get_choice({"Real-Time Classic", "Retour"});
+  menu->refresh_board();
+
+  switch (choice){
+    case 0 :
+      playGame(client->getSocket(), "4");
+      break;
+    case 1 :
+      play = false;
+      break;
+  }
+  if (play) client->readPipe();
+}
+
+
+
+void gamemodeMenu(MenuHandler* menu, Client* client){
+  bool leave = false;
+
+  while (!leave){
+    menu->clear_windows();
+    menu->init_choicesw();
+    int choice = menu->get_choice({"Normal", "Real-Time", "Retour"});
+    menu->refresh_board();
+
+    switch (choice){
+      case 0 :
+        normalGameMenu(menu, client);
+        break;
+      case 1 :
+        realTimeMenu(menu, client);
+        break;
+      case 2 :
+        leave = true;
+        break;
+    }
+  }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -489,6 +535,7 @@ void mainMenu(MenuHandler* menu, Client* client){
     menu->clear_windows();
     menu->init_choicesw();
     int choice = menu->get_choice({"Jouer", "Ami", "Chat", "Statistique", "Quitter"});
+    menu->refresh_board();
 
     switch (choice){
       case 0 :
@@ -505,6 +552,7 @@ void mainMenu(MenuHandler* menu, Client* client){
         break;
       case 4 :
         leave = true;
+        break;
     }
   }
 }
