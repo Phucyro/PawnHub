@@ -1,3 +1,4 @@
+#include "thread"
 #include <string>
 #include <map>
 #include <functional>
@@ -14,6 +15,8 @@ private:
   Socket& socket;
   bool game_ongoing;
   bool is_alice;
+  bool is_real_time;
+  char _color;
 
   std::map<std::string, std::string> headerSendMap = {
    {"board", "B"},
@@ -52,7 +55,7 @@ private:
     {'A', &ClientGameControl::receiveAskMove},
     {'P', &ClientGameControl::receiveAskPromotion},
   };
-
+  void listenSocketAndKeyboard();
   void handleMessage();
   void startParty();
 };

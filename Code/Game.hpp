@@ -8,6 +8,11 @@ class Player;
 class Piece;
 class Board;
 
+//Win-Lose-Tie score
+#define WIN 1
+#define LOSE 0
+#define TIE 0.5
+
 class Game
 {
 	protected:
@@ -26,16 +31,15 @@ class Game
 	virtual void _sendCheck();
 	virtual void _sendCheckmate();
 	virtual void _sendStalemate();
+	virtual void _sendSurrend();
 
 	virtual void _initBoard() = 0;
 	virtual void _sendGameMode() = 0;
-	virtual void _nextTurn() = 0;
 	virtual bool _isFinish() = 0;
-	virtual Player* _getCurrentPlayer() = 0;
 	virtual void _changePawn(Piece*, Piece*, Board*) = 0;
 	virtual void _boardState(std::string&) = 0;
 
-	Game(Piece**, unsigned, Player*, Player*, unsigned lastStrongPiecesWhite, unsigned lastStrongPieceBlack);
+	Game(Piece**, unsigned, Player*, Player*, unsigned lastStrongPiecesWhite, unsigned lastStrongPieceBlack, Board*);
 	Game(const Game&) = delete;
 	Game(Game&&);
 
@@ -45,16 +49,16 @@ class Game
 	Game& operator= (const Game&);
 	Game& operator= (Game&&);
 
-	void start();
+	virtual void start() = 0;
 	virtual bool testCheck(const char color) = 0;
 	unsigned getTurn() const {return _turn;}
-	void promote(Piece* pawn);
+	virtual void promote(Piece*);
 
 	Player* getWinner(){return _winner;}
 	Player* getPlayer1(){return _player1;}
 	Player* getPlayer2(){return _player2;}
 	unsigned getTurn(){return _turn;}
-
+	//Board* getBoard(){return _board;}
 };
 #include "Player.hpp"
 #include "Piece.hpp"

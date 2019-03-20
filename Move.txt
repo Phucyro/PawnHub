@@ -1,0 +1,25 @@
+Roque:
+e1e4
+a7a6
+f1e2
+a6a5
+g1f3
+a5a4*
+e1g1
+
+En passant:
+comme au dessus+*
+h7h6
+b2b4
+a4b3
+
+Promotion:
+e2e4
+f7f5
+e4f5
+g7g6
+f5g6
+a7a6
+g6h7
+a6a5*
+h7g8

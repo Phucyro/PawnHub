@@ -82,13 +82,14 @@ precondition: the original board have the same size than this one.
 postcondition: this board have the same state than original.
 */
 {
+	this->_delState();
 	_state = new Piece**[this->_column];
 	for (unsigned i = 0; i < this->_column; i++)
 	{
 		_state[i] = new Piece*[this->_row];
 		for (unsigned j = 0; j < this->_row; j++)
 		{
-			_state[i][j] = original._state[i][j];//getPiece? TODO
+			_state[i][j] = original._state[i][j];
 		}
 	}
 }

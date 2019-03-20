@@ -54,41 +54,41 @@ void Dark::_initBoard() {
 
 	//White part
 
-	Game::_board->setCase(Coordinate('A', '1'), Game::_pieces[0]);
-	Game::_board->setCase(Coordinate('B', '1'), Game::_pieces[1]);
-	Game::_board->setCase(Coordinate('C', '1'), Game::_pieces[2]);
-	Game::_board->setCase(Coordinate('D', '1'), Game::_pieces[3]);
-	Game::_board->setCase(Coordinate('E', '1'), Game::_pieces[4]);
-	Game::_board->setCase(Coordinate('F', '1'), Game::_pieces[5]);
-	Game::_board->setCase(Coordinate('G', '1'), Game::_pieces[6]);
-	Game::_board->setCase(Coordinate('H', '1'), Game::_pieces[7]);
-	Game::_board->setCase(Coordinate('A', '2'), Game::_pieces[8]);
-	Game::_board->setCase(Coordinate('B', '2'), Game::_pieces[9]);
-	Game::_board->setCase(Coordinate('C', '2'), Game::_pieces[10]);
-	Game::_board->setCase(Coordinate('D', '2'), Game::_pieces[11]);
-	Game::_board->setCase(Coordinate('E', '2'), Game::_pieces[12]);
-	Game::_board->setCase(Coordinate('F', '2'), Game::_pieces[13]);
-	Game::_board->setCase(Coordinate('G', '2'), Game::_pieces[14]);
-	Game::_board->setCase(Coordinate('H', '2'), Game::_pieces[15]);
+	TurnBasedGame::_board->setCase(Coordinate('A', '1'), TurnBasedGame::_pieces[0]);
+	TurnBasedGame::_board->setCase(Coordinate('B', '1'), TurnBasedGame::_pieces[1]);
+	TurnBasedGame::_board->setCase(Coordinate('C', '1'), TurnBasedGame::_pieces[2]);
+	TurnBasedGame::_board->setCase(Coordinate('D', '1'), TurnBasedGame::_pieces[3]);
+	TurnBasedGame::_board->setCase(Coordinate('E', '1'), TurnBasedGame::_pieces[4]);
+	TurnBasedGame::_board->setCase(Coordinate('F', '1'), TurnBasedGame::_pieces[5]);
+	TurnBasedGame::_board->setCase(Coordinate('G', '1'), TurnBasedGame::_pieces[6]);
+	TurnBasedGame::_board->setCase(Coordinate('H', '1'), TurnBasedGame::_pieces[7]);
+	TurnBasedGame::_board->setCase(Coordinate('A', '2'), TurnBasedGame::_pieces[8]);
+	TurnBasedGame::_board->setCase(Coordinate('B', '2'), TurnBasedGame::_pieces[9]);
+	TurnBasedGame::_board->setCase(Coordinate('C', '2'), TurnBasedGame::_pieces[10]);
+	TurnBasedGame::_board->setCase(Coordinate('D', '2'), TurnBasedGame::_pieces[11]);
+	TurnBasedGame::_board->setCase(Coordinate('E', '2'), TurnBasedGame::_pieces[12]);
+	TurnBasedGame::_board->setCase(Coordinate('F', '2'), TurnBasedGame::_pieces[13]);
+	TurnBasedGame::_board->setCase(Coordinate('G', '2'), TurnBasedGame::_pieces[14]);
+	TurnBasedGame::_board->setCase(Coordinate('H', '2'), TurnBasedGame::_pieces[15]);
 
 	//Black part
 
-	Game::_board->setCase(Coordinate('A', '8'), Game::_pieces[16]);
-	Game::_board->setCase(Coordinate('B', '8'), Game::_pieces[17]);
-	Game::_board->setCase(Coordinate('C', '8'), Game::_pieces[18]);
-	Game::_board->setCase(Coordinate('D', '8'), Game::_pieces[19]);
-	Game::_board->setCase(Coordinate('E', '8'), Game::_pieces[20]);
-	Game::_board->setCase(Coordinate('F', '8'), Game::_pieces[21]);
-	Game::_board->setCase(Coordinate('G', '8'), Game::_pieces[22]);
-	Game::_board->setCase(Coordinate('H', '8'), Game::_pieces[23]);
-	Game::_board->setCase(Coordinate('A', '7'), Game::_pieces[24]);
-	Game::_board->setCase(Coordinate('B', '7'), Game::_pieces[25]);
-	Game::_board->setCase(Coordinate('C', '7'), Game::_pieces[26]);
-	Game::_board->setCase(Coordinate('D', '7'), Game::_pieces[27]);
-	Game::_board->setCase(Coordinate('E', '7'), Game::_pieces[28]);
-	Game::_board->setCase(Coordinate('F', '7'), Game::_pieces[29]);
-	Game::_board->setCase(Coordinate('G', '7'), Game::_pieces[30]);
-	Game::_board->setCase(Coordinate('H', '7'), Game::_pieces[31]);
+	TurnBasedGame::_board->setCase(Coordinate('A', '8'), TurnBasedGame::_pieces[16]);
+	TurnBasedGame::_board->setCase(Coordinate('B', '8'), TurnBasedGame::_pieces[17]);
+	TurnBasedGame::_board->setCase(Coordinate('C', '8'), TurnBasedGame::_pieces[18]);
+	TurnBasedGame::_board->setCase(Coordinate('D', '8'), TurnBasedGame::_pieces[19]);
+	TurnBasedGame::_board->setCase(Coordinate('E', '8'), TurnBasedGame::_pieces[20]);
+	TurnBasedGame::_board->setCase(Coordinate('F', '8'), TurnBasedGame::_pieces[21]);
+	TurnBasedGame::_board->setCase(Coordinate('G', '8'), TurnBasedGame::_pieces[22]);
+	TurnBasedGame::_board->setCase(Coordinate('H', '8'), TurnBasedGame::_pieces[23]);
+	TurnBasedGame::_board->setCase(Coordinate('A', '7'), TurnBasedGame::_pieces[24]);
+	TurnBasedGame::_board->setCase(Coordinate('B', '7'), TurnBasedGame::_pieces[25]);
+	TurnBasedGame::_board->setCase(Coordinate('C', '7'), TurnBasedGame::_pieces[26]);
+	TurnBasedGame::_board->setCase(Coordinate('D', '7'), TurnBasedGame::_pieces[27]);
+	TurnBasedGame::_board->setCase(Coordinate('E', '7'), TurnBasedGame::_pieces[28]);
+	TurnBasedGame::_board->setCase(Coordinate('F', '7'), TurnBasedGame::_pieces[29]);
+	TurnBasedGame::_board->setCase(Coordinate('G', '7'), TurnBasedGame::_pieces[30]);
+	TurnBasedGame::_board->setCase(Coordinate('H', '7'), TurnBasedGame::_pieces[31]);
 }
 
 void Dark::_sendGameMode() {
@@ -145,7 +145,12 @@ void Dark::_nextTurn() {
 	std::string playerMove;
 	while(!isMoveValid){
 		playerMove = currentPlayer->askMove();
-		if (this->_fitInBoard(playerMove)){
+		if (playerMove[0] == '/' && playerMove[1] == 'e' && playerMove[2] == 'n' && playerMove[3] == 'd'){
+			if(currentPlayer == _player1) _winner = _player2;
+			else _winner = _player1;
+			isMoveValid = true;
+		}
+		else if (this->_fitInBoard(playerMove)){
 			Coordinate start = Coordinate(playerMove[0], playerMove[1]), end = Coordinate(playerMove[2], playerMove[3]);
 			isMoveValid = this->_executeMove(start, end, playerColor);
 		}
@@ -153,6 +158,10 @@ void Dark::_nextTurn() {
 }
 
 bool Dark::_isFinish() {
+	if (_winner){
+		_sendSurrend();
+		return true;
+	}
 	Player *currentPlayer = _getCurrentPlayer();
 	char opponentColor = currentPlayer == _player2 ? 'w':'b';
 	if (this->_isCheckmate(opponentColor)){
@@ -160,11 +169,15 @@ bool Dark::_isFinish() {
 			std::cout << "Black Player win !" << std::endl;
 			data.addUserDarkWin(_player2->getName());
 			data.addUserDarkLose(_player1->getName());
+			data.updateRating(_player2->getName(),data.expectedWin(data.getEloRating(_player2->getName()),data.getEloRating(_player1->getName())),WIN);
+			data.updateRating(_player1->getName(),data.expectedWin(data.getEloRating(_player1->getName()),data.getEloRating(_player2->getName())),LOSE);
 		}
 		else {
 			std::cout << "White Player win !" << std::endl;
 			data.addUserDarkLose(_player2->getName());
 			data.addUserDarkWin(_player1->getName());
+			data.updateRating(_player2->getName(),data.expectedWin(data.getEloRating(_player2->getName()),data.getEloRating(_player1->getName())),LOSE);
+			data.updateRating(_player1->getName(),data.expectedWin(data.getEloRating(_player1->getName()),data.getEloRating(_player2->getName())),WIN);
 		}
 		_winner = currentPlayer;
 		_sendCheckmate();
@@ -207,29 +220,34 @@ void Dark::_boardState(std::string& state){
 
 bool Dark::_isVisible(Piece* piece, char color){
 	if (piece->getColor() == color) return true;
-	Coordinate leftMaybePawn, rightMaybePawn, frontMaybePawn;
+	Coordinate leftMaybePawn, rightMaybePawn, frontMaybePawn, frontMaybePawn2;
 	if (piece->getColor() == 'w'){	//White
 
 		//Pawn
 		frontMaybePawn = Coordinate(piece->getCoord().getRealColumn(), piece->getCoord().getRealRow()+1);
 		Piece* MaybePawn = nullptr;
-		if (_board->isInBoard(frontMaybePawn)) MaybePawn = Game::_board->getCase(frontMaybePawn);
-		if (MaybePawn && MaybePawn->getColor() == 'b' && (MaybePawn->getType() == 'p' || MaybePawn->getType() == 'b' || MaybePawn->getType() == 'q' || MaybePawn->getType() == 'k')) return true;
+		if (_board->isInBoard(frontMaybePawn)) MaybePawn = TurnBasedGame::_board->getCase(frontMaybePawn);
+		if (MaybePawn && MaybePawn->getColor() == 'b' && (MaybePawn->getType() == 'p' || MaybePawn->getType() == 'r' || MaybePawn->getType() == 'q' || MaybePawn->getType() == 'k')) return true;
+
+		frontMaybePawn2 = Coordinate(piece->getCoord().getRealColumn(), piece->getCoord().getRealRow()+2);
+		MaybePawn = nullptr;
+		if (_board->isInBoard(frontMaybePawn2)) MaybePawn = TurnBasedGame::_board->getCase(frontMaybePawn2);
+		if (MaybePawn && MaybePawn->getColor() == 'b' && ((MaybePawn->getType() == 'p' && (!MaybePawn->hasMoved()) && ((!_board->getCase(frontMaybePawn)) || _board->getCase(frontMaybePawn)->getType() != 'g')) || MaybePawn->getType() == 'r' || MaybePawn->getType() == 'q')) return true;
 
 		leftMaybePawn = Coordinate(piece->getCoord().getRealColumn()+1, piece->getCoord().getRealRow()+1);
 		MaybePawn = nullptr;
-		if (_board->isInBoard(leftMaybePawn)) MaybePawn = Game::_board->getCase(leftMaybePawn);
+		if (_board->isInBoard(leftMaybePawn)) MaybePawn = TurnBasedGame::_board->getCase(leftMaybePawn);
 		if (MaybePawn && MaybePawn->getColor() == 'b' && (MaybePawn->getType() == 'p' || MaybePawn->getType() == 'b' || MaybePawn->getType() == 'q' || MaybePawn->getType() == 'k')) return true;
 
 		rightMaybePawn = Coordinate(piece->getCoord().getRealColumn()-1, piece->getCoord().getRealRow()+1);
 		MaybePawn = nullptr;
-		if (_board->isInBoard(rightMaybePawn)) MaybePawn = Game::_board->getCase(rightMaybePawn);
+		if (_board->isInBoard(rightMaybePawn)) MaybePawn = TurnBasedGame::_board->getCase(rightMaybePawn);
 		if (MaybePawn && MaybePawn->getColor() == 'b' && (MaybePawn->getType() == 'p' || MaybePawn->getType() == 'b' || MaybePawn->getType() == 'q' || MaybePawn->getType() == 'k')) return true;
 
 		//strong pieces
 		for (unsigned i = 16; i <= _lastStrongPieceBlack; ++i){
 			if (!_pieces[i]->isTaken())
-				if (_pieces[i]->_checkMove(piece->getCoord(), Game::_board, *this)) return true;
+				if (_pieces[i]->_checkMove(piece->getCoord(), TurnBasedGame::_board, *this)) return true;
 		}
 	}
 
@@ -238,23 +256,28 @@ bool Dark::_isVisible(Piece* piece, char color){
 		//Pawn
 		frontMaybePawn = Coordinate(piece->getCoord().getRealColumn(), piece->getCoord().getRealRow()-1);
 		Piece* MaybePawn = nullptr;
-		if (_board->isInBoard(frontMaybePawn)) MaybePawn = Game::_board->getCase(frontMaybePawn);
-		if (MaybePawn && MaybePawn->getColor() == 'w' && (MaybePawn->getType() == 'p' || MaybePawn->getType() == 'b' || MaybePawn->getType() == 'q' || MaybePawn->getType() == 'k')) return true;
+		if (_board->isInBoard(frontMaybePawn)) MaybePawn = TurnBasedGame::_board->getCase(frontMaybePawn);
+		if (MaybePawn && MaybePawn->getColor() == 'w' && (MaybePawn->getType() == 'p' || MaybePawn->getType() == 'r' || MaybePawn->getType() == 'q' || MaybePawn->getType() == 'k')) return true;
+
+		frontMaybePawn2 = Coordinate(piece->getCoord().getRealColumn(), piece->getCoord().getRealRow()-2);
+		MaybePawn = nullptr;
+		if (_board->isInBoard(frontMaybePawn2)) MaybePawn = TurnBasedGame::_board->getCase(frontMaybePawn2);
+		if (MaybePawn && MaybePawn->getColor() == 'w' && ((MaybePawn->getType() == 'p' && (!MaybePawn->hasMoved()) && ((!_board->getCase(frontMaybePawn)) || _board->getCase(frontMaybePawn)->getType() != 'g')) || MaybePawn->getType() == 'r' || MaybePawn->getType() == 'q')) return true;
 
 		leftMaybePawn = Coordinate(piece->getCoord().getRealColumn()-1, piece->getCoord().getRealRow()-1);
 		MaybePawn = nullptr;
-		if (_board->isInBoard(leftMaybePawn)) MaybePawn = Game::_board->getCase(leftMaybePawn);
+		if (_board->isInBoard(leftMaybePawn)) MaybePawn = TurnBasedGame::_board->getCase(leftMaybePawn);
 		if (MaybePawn && MaybePawn->getColor() == 'w' && (MaybePawn->getType() == 'p' || MaybePawn->getType() == 'b' || MaybePawn->getType() == 'q' || MaybePawn->getType() == 'k')) return true;
 
 		rightMaybePawn = Coordinate(piece->getCoord().getRealColumn()+1, piece->getCoord().getRealRow()-1);
 		MaybePawn = nullptr;
-		if (_board->isInBoard(rightMaybePawn)) MaybePawn = Game::_board->getCase(rightMaybePawn);
+		if (_board->isInBoard(rightMaybePawn)) MaybePawn = TurnBasedGame::_board->getCase(rightMaybePawn);
 		if (MaybePawn && MaybePawn->getColor() == 'w' && (MaybePawn->getType() == 'p' || MaybePawn->getType() == 'b' || MaybePawn->getType() == 'q' || MaybePawn->getType() == 'k')) return true;
 
 		//strong pieces
 		for (unsigned i = 0; i <= _lastStrongPiecesWhite; ++i){
 			if (!_pieces[i]->isTaken())
-				if (_pieces[i]->_checkMove(piece->getCoord(), Game::_board, *this)) return true;
+				if (_pieces[i]->_checkMove(piece->getCoord(), TurnBasedGame::_board, *this)) return true;
 		}
 	}
 	return false;

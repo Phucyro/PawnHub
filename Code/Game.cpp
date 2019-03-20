@@ -6,19 +6,17 @@
 #include "includesPieceHPP.hpp"
 
 //constructor
-Game::Game(Piece** pieces, unsigned piecesAmount, Player* player1, Player* player2, unsigned lastStrongPiecesWhite, unsigned lastStrongPieceBlack):
+Game::Game(Piece** pieces, unsigned piecesAmount, Player* player1, Player* player2, unsigned lastStrongPiecesWhite, unsigned lastStrongPieceBlack, Board* board):
 	_player1(player1),
 	_player2(player2),
 	_winner(nullptr),
 	_turn(0),
-	_board(nullptr),
+	_board(board),
 	_pieces(pieces),
 	_piecesAmount(piecesAmount),
 	_lastStrongPiecesWhite(lastStrongPiecesWhite),
 	_lastStrongPieceBlack(lastStrongPieceBlack)
-{
-	_board = new Board();
-}
+{}
 
 
 
@@ -83,35 +81,15 @@ Game& Game::operator= (Game&& original)
 	return *this;
 }
 
-
-void Game::start()
-{
-	std::cout << "Starting Game" << std::endl;
-	this->_initBoard();
-	this->_sendGameMode();
-	this->_sendPlayerColour();
-	this->_sendStart();
-	this->_sendBoard();
-	do
-	{
-		++_turn;
-		this->_sendTurn();
-		this->_nextTurn();
-		this->_sendBoard();
-	}
-	while(! this->_isFinish());
-	std::cout << "Game finished" << std::endl;
-}
-
 void Game::_sendStart(){
 	_player1->transferStart();
 	_player2->transferStart();
 }
 
 void Game::_sendPlayerColour(){
-	std::string colour = "White";
+	std::string colour = "white";
 	_player1->transferColour(colour);
-	colour = "Black";
+	colour = "black";
 	_player2->transferColour(colour);
 }
 
@@ -121,10 +99,12 @@ void Game::_sendTurn(){
 }
 
 void Game::_sendBoard(){
-	std::string state;
-	this->_boardState(state);
-	_player1->showBoard(state);
-	_player2->showBoard(state);
+	if (!_winner){
+		std::string state;
+		this->_boardState(state);
+		_player1->showBoard(state);
+		_player2->showBoard(state);
+	}
 }
 
 
@@ -134,6 +114,7 @@ void Game::_sendCheck() {
 }
 
 void Game::_sendCheckmate() {
+	_sendBoard();
 	std::string winner;
 	if (_winner == _player1) winner = "white";
 	else winner = "black";
@@ -146,9 +127,19 @@ void Game::_sendStalemate() {
 	_player2->transferStalemate();
 }
 
+void Game::_sendSurrend(){
+	_winner->transferSurrend();
+}
+
 void Game::promote(Piece* piece)
-{
-	char type = this->_getCurrentPlayer()->askPromotion();
+{	
+	this->_sendBoard();
+	Player *currentPlayer = piece->getColor() == 'w' ? _player1 : _player2;
+	char type = currentPlayer->askPromotion();
+	if (type == '/'){
+		if (currentPlayer == _player1) _winner = _player2;
+		else _winner = _player1;
+	}
 	Pawn *pawn = dynamic_cast<Pawn*>(piece);
 	if (!pawn) throw std::string("the piece to promote is not a pawn");
 	Piece* promotedPawn;
@@ -175,8 +166,6 @@ void Game::promote(Piece* piece)
 
 	}
 	this->_changePawn(pawn, promotedPawn, _board);
-
-	this->_sendBoard();
 }
 
 #endif

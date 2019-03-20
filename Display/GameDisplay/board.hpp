@@ -6,6 +6,7 @@
 #include "constants.hpp"
 #include <string>
 
+
 /**
 TO DO:
 -Tour du joueur
@@ -45,6 +46,8 @@ public:
   void draw_alice_pieces(std::string);
 
   void draw_infos();
+  void clear_board();
+  void clear_get_movement();
 
   // void move_piece(int, int, int, int, std::string);
 
@@ -65,6 +68,12 @@ public:
   void change_mode(std::string);
   void change_last_move(std::string);
   void change_turn(std::string);
+  
+  void ask_ipos();
+  void print_ipos(int, int);
+  void ask_epos();
+  void print_epos(int, int);
+  char getchar();
 
 
 private:

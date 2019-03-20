@@ -7,7 +7,9 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <string>
+#include <cstring>
 #include <iostream>
+#include <mutex>
 #include "Game.hpp"
 #include "Board.hpp"
 #include "../Communication/Socket.hpp"
@@ -20,24 +22,36 @@ class Player{
 	Socket *_sock;
 	ServerGameControl* _control;
 	int *_pipe;
+	int *_pipeControl;
 	std::string _name = "Guest";
 	int _queueNumber = -1; // Numero de file inexistante
 	bool _recvActive;
+	char _color;
+	std::mutex *_inGameMutex;
 
 
 	public :
-	Player(Socket* socket): _sock(socket), _control(nullptr), _pipe(nullptr), _recvActive(false) {
+	Player(Socket* socket): _sock(socket), _control(nullptr), _pipe(nullptr), _pipeControl(nullptr), _recvActive(false), _color('\0'), _inGameMutex(nullptr) {
 		_pipe = new int[2];
 		if ((pipe(_pipe)) == -1) throw std::runtime_error("Fail while constructing a pipe for an object of type 'Player': ");
+		
+		_pipeControl = new int[2];
+		if ((pipe(_pipeControl)) == -1) throw std::runtime_error("Fail while constructing a pipe for an object of type 'Player': ");
+		
+		_inGameMutex = new std::mutex();
 	}
 	Player(const Player&) = delete;
-	Player(Player&& original): _sock(original._sock), _control(original._control), _pipe(original._pipe), _name(original._name), _recvActive(original._recvActive) {original._pipe = nullptr;}
+	Player(Player&& original): _sock(original._sock), _control(original._control), _pipe(original._pipe), _pipeControl(original._pipeControl), _name(original._name), _recvActive(original._recvActive) {original._pipe = nullptr;}
 
 	~Player(){
 		delete _sock;
 		close(_pipe[0]);
 		close(_pipe[1]);
 		delete[] _pipe;
+		delete _inGameMutex;
+		close(_pipeControl[0]);
+		close(_pipeControl[1]);
+		delete[] _pipeControl;
 	}
 
 	Player& operator= (const Player&) = delete;
@@ -53,17 +67,28 @@ class Player{
 	void setControl(ServerGameControl*);
 	void setSocket(Socket*);
 	void setQueueNumber(int);
+	void setColor(char);
+	char getColor() const {return _color;}
+	int getReadPipe() const {return _pipe[0];}
+	void activateControlRecv();
 
 	void transferStart();
 	void transferUpdate(std::string&);
 	void transferCheck();
 	void transferCheckmate(std::string&);
 	void transferStalemate();
+	void transferSurrend();
 	void transferGameMode(std::string&);
 	void transferColour(std::string&);
 	void transferTurn(unsigned);
 	void receiveMove(std::string&);
 	void receivePromotion(std::string&);
+	void surrend();
+	void startGame(){_inGameMutex->lock();}
+	void endGame(){_inGameMutex->unlock();}
+	void waitEndGame(){startGame();endGame();}
+	std::string readControlPipe();
+	void writeControlPipe(std::string msg);
 };
 
 #endif

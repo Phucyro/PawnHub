@@ -8,7 +8,7 @@ int checkFormat(std::string username, std::string password, std::string confirma
 
   if (password != confirmation) return 1;
 
-  if (username.length() == 0 || username.length() > 10 || password.length() > 10){
+  if (username.length() == 0 || username.length() > 10 || password.length() == 0 || password.length() > 10){
     return 2;
   }
 

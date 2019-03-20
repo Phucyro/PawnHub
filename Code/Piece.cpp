@@ -6,11 +6,16 @@
 Piece& Piece::operator= (const Piece& original){
 	_color = original._color;
 	_coords = original._coords;
+	_dest = original._dest;
 	_isTaken = original._isTaken;
+	_movementStart = original._movementStart;
+	_lastMoveEnd = original._lastMoveEnd;
+	_isMoving = original._isMoving;
+	_next = original._next;
 	for (int i = 0; i < 4; i++){
-				_str[i] = original._str[i];
-			}
-			return *this;
+		_str[i] = original._str[i];
+	}
+	return *this;
 }
 
 Piece* Piece::_doMove(Coordinate end, Board* board, Game& game){
@@ -49,8 +54,8 @@ bool Piece::move(Coordinate end, Board* board, Game& game){
 }
 
 bool Piece::_isMovePossible(Coordinate dest, Board* board, Game& game){
-	Coordinate start = this->getCoord();
 	if (!board->isInBoard(dest))return false;
+	Coordinate start = this->getCoord();
 	Piece* takenPiece = board->getCase(dest);
 	if (!this->move(dest, board, game))return false;
 	board->movePiece(dest, start);
@@ -59,6 +64,18 @@ bool Piece::_isMovePossible(Coordinate dest, Board* board, Game& game){
 	_setCoordinate(start);
 
 	return true;
+}
+
+void Piece::startMovingTo(Game& game, Coordinate dest){
+	_isMoving = true;
+	_dest = dest;
+	_movementStart = game.getTurn();
+}
+
+void Piece::stopMoving(Game& game, Board* board){
+	_isMoving = false;
+	board->setCase(_coords, this);
+	_lastMoveEnd = game.getTurn();
 }
 
 #endif

@@ -86,12 +86,14 @@ void Board::draw_alice_coordinates()
 
   for (int i=0; i<lines; i++)
   {
-    mvprintw(1+(OFFSET*i), 54, "%d", i+1);
+    mvprintw(OFFSET*(i+1), 63, "%d", i+1);
+    mvprintw(OFFSET*(i+1), 63+25+OFFSET , "%d", i+1);//54
   }
 
   for (int i=0; i<columns; i++)
   {
-    mvprintw(24, 57+(OFFSET*i), "%c", 'A'+i);
+    mvprintw(26, 66+(OFFSET*i), "%c", 'A'+i);//57
+    mvprintw(1, 66+(OFFSET*i), "%c", 'A'+i);
   }
 
 
@@ -104,8 +106,8 @@ void Board::draw_alice_board()
   int board_height = lines*OFFSET;
   int board_width = columns*OFFSET;
 
-  for (int i=56; i<80; i+=OFFSET)
-    for (int j=0; j<24; j+=OFFSET)
+  for (int i=65; i<89; i+=OFFSET)//56->80
+    for (int j=2; j<25; j+=OFFSET)
     {
       draw_rectangle(i, j, i+SIDE_LENGTH, j+SIDE_LENGTH);
     }
@@ -132,22 +134,22 @@ void Board::draw_infos()
 
   mvwprintw(infos_win , 10, 1, "PRESS Ctrl+C TO QUIT");
 
-  refresh_board();
+  //refresh_board();
 }
 
 void Board::set_mode(const char* game) {
   mode = game;
-  refresh_board();
+  //refresh_board();
 }
 
 void Board::set_colour(const char* player_colour) {
   colour = player_colour;
-  refresh_board();
+  //refresh_board();
 }
 
 void Board::update_turn(const char* turn) {
   mvwprintw(infos_win, 7, 14, "%s", turn);
-  refresh_board();
+  //refresh_board();
 }
 
 void Board::declare_check() {
@@ -156,6 +158,7 @@ void Board::declare_check() {
 }
 
 void Board::endgame(const char* message) {
+  clear_get_movement();
   mvprintw(15, 30, "%s", message);
   refresh_board();
   getch();
@@ -181,17 +184,18 @@ void Board::draw_coordinates()
 void Board::draw_pieces(std::string board)
 /** Dessine les pions sur le board de depart **/
 {
-	clear();
-	refresh_board();
-	//exit();
-	init_windows();
+  clear_board();
+  //init_windows();
+  box(infos_win,0,0);
+  draw_infos();
   stringToBoard(board);
   refresh_board();
 }
 
 void Board::draw_alice_pieces(std::string board)
 {
-  refresh_board();
+  //refresh_board();
+  draw_alice_board();
   aliceToBoard(board);
   refresh_board();
 }
@@ -224,12 +228,26 @@ void Board::draw_rectangle(int x1, int y1, int x2, int y2)
 //   refresh_board();
 // }
 
+void Board::clear_board(){
+	for (int line = 0; line < 8; line++){
+		for (int column = 0; column < 8; column++){
+    			mvprintw((line+1)*OFFSET, 1+((column+1)*OFFSET), "%c", ' ');
+		}
+	}
+	for (int line = 0; line < 8; line++){
+		for (int column = 0; column < 8; column++){
+    			mvprintw((1+line)*OFFSET, 63+((column+1)*OFFSET), "%c", ' ');
+		}
+	}
+	//refresh_board();
+}
 
 void Board::refresh_board()
 /** refresh le board (a faire apres chaque modification) **/
 {
-  refresh();
-  wrefresh(infos_win);
+  wnoutrefresh(stdscr);
+  wnoutrefresh(infos_win);
+  doupdate();
 }
 
 
@@ -241,7 +259,6 @@ bool Board::isRunning()
 std::string Board::get_movement()
 {
   int move[4];
-
   // echo();    // would have been cool but can't clear it without brute force
   for (int i = 0; i < 5; ++i) {
     if (i == 0) {
@@ -250,7 +267,7 @@ std::string Board::get_movement()
     else if (i == 2) {
       mvprintw(16, 30, "%s", "State moved piece position: ");
     }
-    else if (i == 4) {break;}
+    else if (i == 4) break;
     move[i] = getch();
     mvprintw(15 + (i/2), 60 + (i%2), "%c", move[i]);
   }
@@ -260,8 +277,13 @@ std::string Board::get_movement()
   std::string effective_move = moveToString(move);
   // const char* this_move = effective_move.c_str();
   // mvprintw(18, 30, "%s", this_move);
-
+  clear_get_movement();
   return effective_move;
+}
+
+void Board::clear_get_movement(){
+  mvprintw(15, 30, "%s", "                                ");
+  mvprintw(16, 30, "%s", "                                ");
 }
 
 std::string Board::get_promotion() {
@@ -301,3 +323,30 @@ void Board::change_turn(std::string turn)
   refresh();
   wrefresh(infos_win);
 }
+
+
+void Board::ask_ipos(){
+	mvprintw(15, 30, "%s", "State initial piece position: ");
+	refresh_board();
+}
+
+void Board::print_ipos(int ch, int offset){
+	mvprintw(15, 60+offset, "%c", ch);
+	refresh_board();
+}
+
+void Board::ask_epos(){
+	mvprintw(16, 30, "%s", "State moved piece position: ");
+	refresh_board();
+}
+
+void Board::print_epos(int ch, int offset){
+	mvprintw(16, 60+offset, "%c", ch);
+	refresh_board();
+}
+
+char Board::getchar(){
+	return getch();
+}
+
+

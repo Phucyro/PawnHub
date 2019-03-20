@@ -28,8 +28,8 @@ void signIn(Socket* socket, std::string username, std::string pswd){
 }
 
 
-void chat(Socket *socket, std::string sender, std::string target, std::string text){
-  socket->sendMessage(std::string("3") + "~" + sender + "~" + target + "~" + text);
+void chat(Socket *socket, std::string target, std::string text){
+  socket->sendMessage(std::string("3") + "~" + target + "~" + text);
 }
 
 void playGame(Socket* socket, std::string game_mode){
@@ -66,6 +66,14 @@ void sendFriendRequest(Socket* socket, std::string name){
 
 void removeFriend(Socket* socket, std::string name){
   socket->sendMessage(std::string("13~") + name);
+}
+
+void viewSentRequest(Socket* socket){
+  socket->sendMessage("14~viewSentRequest");
+}
+
+void cancelRequest(Socket* socket, std::string name){
+  socket->sendMessage(std::string("15~") + name);
 }
 
 #endif

@@ -30,4 +30,12 @@ bool AliceBishop::_isMovePossible(Coordinate end, Board* board, Game& game){
 	return false;
 }
 
+bool AliceBishop::canMove(Board* board, Game& game){
+	if (this->_canMoveInLine(1, 1, board, game)) return true;
+	if (this->_canMoveInLine(-1, 1, board, game)) return true;
+	if (this->_canMoveInLine(1, -1, board, game)) return true;
+	if (this->_canMoveInLine(-1, -1, board, game)) return true;
+	return false;
+}
+
 #endif

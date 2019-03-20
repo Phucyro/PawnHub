@@ -33,6 +33,7 @@ class Rook : public Piece {
 		bool canMove(Board*, Game&) override;
 		using Piece::_isMovePossible;
 		bool _isMovePossible(Coordinate, Board*, Game&) override;
+		void startMovingTo(Game&, Coordinate) override;
 
 		friend TestRook;
 
