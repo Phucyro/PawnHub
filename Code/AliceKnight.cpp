@@ -30,4 +30,9 @@ bool AliceKnight::_isMovePossible(Coordinate end, Board* board, Game& game){
 	return false;
 }
 
+void AliceKnight::stopMoving(Game& game, Board* board){
+	this->Piece::stopMoving(game, board);
+	this->AlicePiece::stopMoving(game);
+}
+
 #endif

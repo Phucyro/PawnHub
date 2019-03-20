@@ -116,7 +116,7 @@ void realTimeMenu(MenuHandler* menu, Client* client){
       playGame(client->getSocket(), "5");
       break;
     case 3 :
-      //playGame(client->getSocket(), "7");
+      playGame(client->getSocket(), "7");
       break;
     case 4 :
       play = false;

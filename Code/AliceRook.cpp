@@ -38,4 +38,9 @@ bool AliceRook::canMove(Board* board, Game& game){
 	return false;
 }
 
+void AliceRook::stopMoving(Game& game, Board* board){
+	this->Piece::stopMoving(game, board);
+	this->AlicePiece::stopMoving(game);
+}
+
 #endif

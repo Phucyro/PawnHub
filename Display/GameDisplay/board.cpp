@@ -97,7 +97,7 @@ void Board::draw_alice_coordinates()
   }
 
 
-  refresh_board();
+  //refresh_board();
 }
 
 void Board::draw_alice_board()
@@ -114,7 +114,7 @@ void Board::draw_alice_board()
 
   draw_alice_coordinates();
 
-  refresh_board();
+  //refresh_board();
 
 
 }
@@ -189,7 +189,7 @@ void Board::draw_pieces(std::string board)
   box(infos_win,0,0);
   draw_infos();
   stringToBoard(board);
-  refresh_board();
+  //refresh_board();
 }
 
 void Board::draw_alice_pieces(std::string board)
@@ -197,7 +197,7 @@ void Board::draw_alice_pieces(std::string board)
   //refresh_board();
   draw_alice_board();
   aliceToBoard(board);
-  refresh_board();
+  //refresh_board();
 }
 
 

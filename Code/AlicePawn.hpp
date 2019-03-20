@@ -25,6 +25,7 @@ class AlicePawn: public BasicPawn, public AlicePiece{
 	bool _isMovePossible(int column, int row, Board* board, Game& game) override {return Piece::_isMovePossible(column, row, board, game);}
 	bool _isMovePossible(Coordinate, Board*, Game&) override;
 	bool canMove(Board*, Game&) override;
+	void stopMoving(Game& game, Board*) override;
 };
 
 #endif

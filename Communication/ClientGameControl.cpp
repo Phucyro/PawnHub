@@ -11,12 +11,14 @@ ClientGameControl::ClientGameControl(Socket& _socket): board(), socket(_socket),
 void ClientGameControl::receiveBoard(std::string message) {
   if (!is_alice) {
     board.draw_pieces(message);
+    board.refresh_board();
   }
   else if (message[0] == '1') {
     board.draw_pieces(message.erase(0,1));
   }
   else {
     board.draw_alice_pieces(message.erase(0,1));
+    board.refresh_board();
   }
 }
 
