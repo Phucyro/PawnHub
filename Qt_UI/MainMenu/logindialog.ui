@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>LoginDialog</string>
+   <string>Log In</string>
   </property>
   <widget class="QLabel" name="label">
    <property name="geometry">
@@ -37,7 +37,7 @@
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout">
     <item>
-     <widget class="QPushButton" name="cancel_push">
+     <widget class="QPushButton" name="cancel_button">
       <property name="text">
        <string>Cancel</string>
       </property>
@@ -47,7 +47,7 @@
      </widget>
     </item>
     <item>
-     <widget class="QPushButton" name="signup_push">
+     <widget class="QPushButton" name="signup_button">
       <property name="text">
        <string>Sign Up</string>
       </property>
@@ -57,7 +57,7 @@
      </widget>
     </item>
     <item>
-     <widget class="QPushButton" name="login_push">
+     <widget class="QPushButton" name="login_button">
       <property name="text">
        <string>Login</string>
       </property>
@@ -115,27 +115,10 @@
  <tabstops>
   <tabstop>username_edit</tabstop>
   <tabstop>password_edit</tabstop>
-  <tabstop>signup_push</tabstop>
-  <tabstop>login_push</tabstop>
-  <tabstop>cancel_push</tabstop>
+  <tabstop>signup_button</tabstop>
+  <tabstop>login_button</tabstop>
+  <tabstop>cancel_button</tabstop>
  </tabstops>
  <resources/>
- <connections>
-  <connection>
-   <sender>cancel_push</sender>
-   <signal>clicked()</signal>
-   <receiver>LoginDialog</receiver>
-   <slot>close()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>79</x>
-     <y>211</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>50</x>
-     <y>166</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
 </ui>

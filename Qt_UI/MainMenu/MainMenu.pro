@@ -32,18 +32,25 @@ SOURCES += \
         mainmenu.cpp \
     connectiondialog.cpp \
     logindialog.cpp \
-    ../../Communication/socket.cpp
+    ../../Communication/socket.cpp \
+    passwordrepeat.cpp \
+    message.cpp
 
 HEADERS += \
         mainmenu.h \
     connectiondialog.h \
     logindialog.h \
-    ../../Communication/socket.hpp
+    ../../Communication/socket.hpp \
+    passwordrepeat.h \
+    message.h
 
 FORMS += \
-        mainmenu.ui \
     connectiondialog.ui \
-    logindialog.ui
+    logindialog.ui \
+    passwordrepeat.ui \
+    message.ui \
+    message.ui \
+    mainmenu.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

@@ -65,3 +65,8 @@ void MainMenu::on_rules_button_clicked()
     QUrl url("https://en.wikipedia.org/wiki/Chess");
     QDesktopServices::openUrl(url);
 }
+
+void MainMenu::on_quit_button_clicked()
+{
+    exit(0);
+}

@@ -31,6 +31,8 @@ private slots:
 
     void on_rules_button_clicked();
 
+    void on_quit_button_clicked();
+
 private:
     Ui::MainMenu *ui;
     ConnectionDialog *connect;

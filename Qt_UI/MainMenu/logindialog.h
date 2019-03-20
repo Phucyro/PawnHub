@@ -3,6 +3,8 @@
 
 #include <QDialog>
 
+#include "passwordrepeat.h"
+
 namespace Ui {
 class LoginDialog;
 }
@@ -18,12 +20,14 @@ public:
     void getLoginDeets(QString&, QString&);
 
 private slots:
-    void on_login_push_clicked();
+    void on_login_button_clicked();
+    void on_signup_button_clicked();
 
-    void on_signup_push_clicked();
+    void on_cancel_button_clicked();
 
 private:
     Ui::LoginDialog *ui;
+    PasswordRepeat *pwd_repeat;
     QString *username, *password;
 };
 

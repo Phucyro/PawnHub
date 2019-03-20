@@ -217,22 +217,5 @@ Wassup?</string>
  <resources>
   <include location="calvin.qrc"/>
  </resources>
- <connections>
-  <connection>
-   <sender>quit_button</sender>
-   <signal>clicked()</signal>
-   <receiver>MainMenu</receiver>
-   <slot>close()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>56</x>
-     <y>315</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>-9</x>
-     <y>339</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
 </ui>

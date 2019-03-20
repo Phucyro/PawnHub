@@ -20,6 +20,8 @@ public:
 private slots:
     void on_done_push_clicked();
 
+    void on_cancel_push_clicked();
+
 private:
     Ui::ConnectionDialog *ui;
     QString hostname;

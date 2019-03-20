@@ -23,5 +23,10 @@ QString ConnectionDialog::askHostname()
 void ConnectionDialog::on_done_push_clicked()
 {
     hostname = ui->hostname_input->text();
-    this->close();
+    close();
+}
+
+void ConnectionDialog::on_cancel_push_clicked()
+{
+    exit(0);
 }
