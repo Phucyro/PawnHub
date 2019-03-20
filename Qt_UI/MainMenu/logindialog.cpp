@@ -16,33 +16,36 @@ LoginDialog::LoginDialog(QWidget *parent) :
 LoginDialog::~LoginDialog()
 {
     delete ui;
+    delete pwd_repeat;
+    delete username;
+    delete password;
 }
 
-void LoginDialog::getLoginDeets(QString& username_holder, QString& password_holder)
+void LoginDialog::get_login_deets(QString& username_holder, QString& password_holder)
 {
     username = &username_holder;
     password = &password_holder;
     this->exec();
 }
 
-void LoginDialog::on_login_button_clicked()
+void LoginDialog::on_loginButton_clicked()
 {
-    *username = ui->username_edit->text();
-    *password = ui->password_edit->text();
+    *username = ui->usernameInput->text();
+    *password = ui->passwordInput->text();
 }
 
-void LoginDialog::on_signup_button_clicked()
+void LoginDialog::on_signupButton_clicked()
 {
-    if (!pwd_repeat->checkPassword(ui->password_edit->text()))
+    if (!pwd_repeat->check_password(ui->passwordInput->text()))
      {
          Message* m = new Message();
-         m->setText("The passwords were not identical,\nplease try again.");
-         m->setTitle("Oh No: Mismatched Passwords");
+         m->set_text("The passwords were not identical,\nplease try again.");
+         m->set_title("Oh No: Mismatched Passwords");
          m->popup();
      }
 }
 
-void LoginDialog::on_cancel_button_clicked()
+void LoginDialog::on_cancelButton_clicked()
 {
     exit(0);
 }

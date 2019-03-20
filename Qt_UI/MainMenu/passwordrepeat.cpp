@@ -16,14 +16,19 @@ PasswordRepeat::~PasswordRepeat()
     delete ui;
 }
 
-bool PasswordRepeat::checkPassword(QString password1)
+bool PasswordRepeat::check_password(QString password1)
 {
     this->exec();
     return password2 == password1;
 }
 
-void PasswordRepeat::on_done_button_clicked()
+void PasswordRepeat::on_doneButton_clicked()
 {
-    password2 = ui->password_input->text();
+    password2 = ui->passwordInput->text();
     close();
+}
+
+void PasswordRepeat::on_cancelButton_clicked()
+{
+    exit(0);
 }

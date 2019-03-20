@@ -15,8 +15,8 @@ public:
     explicit Message(QWidget *parent = nullptr);
     ~Message();
 
-    void setText(QString);
-    void setTitle(QString);
+    void set_text(QString);
+    void set_title(QString);
     void popup();
 
 private slots:

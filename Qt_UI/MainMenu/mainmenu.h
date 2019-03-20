@@ -21,17 +21,17 @@ public:
     ~MainMenu();
 
 private slots:
-    void on_play_button_clicked();
+    void on_playButton_clicked();
 
-    void on_stats_button_clicked();
+    void on_statsButton_clicked();
 
-    void on_friends_button_clicked();
+    void on_friendsButton_clicked();
 
-    void on_chat_button_clicked();
+    void on_chatButton_clicked();
 
-    void on_rules_button_clicked();
+    void on_rulesButton_clicked();
 
-    void on_quit_button_clicked();
+    void on_quitButton_clicked();
 
 private:
     Ui::MainMenu *ui;
