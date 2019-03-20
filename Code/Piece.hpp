@@ -23,25 +23,26 @@ class Piece {
 		unsigned 		_movementStart;
 		unsigned	 	_lastMoveEnd	;
 		bool 				_isMoving			;
+		Piece* 			_next					;
 
-		Piece(const char color, const char column, const char row) : _color(color), _coords(column, row), _dest(), _isTaken(false),_str(),_movementStart(0),_lastMoveEnd(0),_isMoving(false){
+		Piece(const char color, const char column, const char row) : _color(color), _coords(column, row), _dest(), _isTaken(false),_str(),_movementStart(0),_lastMoveEnd(0),_isMoving(false), _next(nullptr){
 			_str[ROW] = _coords.getAbstractRow();
 			_str[COL] = _coords.getAbstractColumn();
 			_str[3] = '\0';
 		}
 
-		Piece(const char color,Coordinate coords) : _color(color),_coords(coords), _dest(), _isTaken(false),_str(),_movementStart(0),_lastMoveEnd(0),_isMoving(false) {
+		Piece(const char color,Coordinate coords) : _color(color),_coords(coords), _dest(), _isTaken(false),_str(),_movementStart(0),_lastMoveEnd(0),_isMoving(false), _next(nullptr) {
 			_str[ROW] = coords.getAbstractRow();
 			_str[COL] = coords.getAbstractColumn();
 		}
 
-		Piece(const Piece& original) : _color(original._color), _coords(original._coords), _dest(original._dest), _isTaken(original._isTaken), _str(), _movementStart(original._movementStart), _lastMoveEnd(original._lastMoveEnd), _isMoving(original._isMoving) {
+		Piece(const Piece& original) : _color(original._color), _coords(original._coords), _dest(original._dest), _isTaken(original._isTaken), _str(), _movementStart(original._movementStart), _lastMoveEnd(original._lastMoveEnd), _isMoving(original._isMoving), _next(original._next) {
 			for (int i = 0; i < 4; i++){
 				_str[i] = original._str[i];
 			}
 		}
 
-		Piece(const Piece* original) : _color(original->_color), _coords(original->_coords), _isTaken(original->_isTaken), _dest(original->_dest), _str(), _movementStart(original->_movementStart), _lastMoveEnd(original->_lastMoveEnd), _isMoving(original->_isMoving) {
+		Piece(const Piece* original) : _color(original->_color), _coords(original->_coords), _isTaken(original->_isTaken), _dest(original->_dest), _str(), _movementStart(original->_movementStart), _lastMoveEnd(original->_lastMoveEnd), _isMoving(original->_isMoving), _next(original->_next) {
 			for (int i = 0; i < 4; i++){
 				_str[i] = original->_str[i];
 			}
@@ -62,7 +63,7 @@ class Piece {
     virtual bool move(Coordinate, Board*, Game&);
     virtual bool _checkMove(Coordinate, Board*, Game&) = 0;
     virtual bool canMove(Board*, Game&) = 0;
-		virtual ~Piece() noexcept {}
+		virtual ~Piece() noexcept {_next = nullptr;}
 		char getType() const {return _str[TYP];}
 		Coordinate getCoord() const {return _coords;}
 		char getColor() const {return _color;}
@@ -76,11 +77,14 @@ class Piece {
 		virtual bool _isMovePossible(Coordinate, Board*, Game&);
 		bool _isMovePossible(int column, int row, Board* board, Game& game){return this->_isMovePossible(Coordinate(int (this->getColumn()) + column, int(this->getRow()) + row), board, game);}
 		bool isMoving() const {return _isMoving;}
-		void startMovingTo (Game&, Coordinate);
-		void stopMoving(Game& game);
+		virtual void startMovingTo (Game&, Coordinate);
+		virtual void stopMoving(Game& game, Board*);
 		unsigned getMovementStart() const {return _movementStart;}
 		bool isCoolingDown(Game& game) const {return _lastMoveEnd && COOLDOWN_TIME + _lastMoveEnd >= game.getTurn();}
 		Coordinate getDest() const {return _dest;}
+		void setNext(Piece* next){_next = next;}
+		void clearNext(){_next = nullptr;}
+		Piece* getNext() const {return _next;}
 		void _setCoordinate(Coordinate newCoords){
 			_coords = newCoords;
 			_str[COL] = _coords.getAbstractColumn();

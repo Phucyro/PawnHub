@@ -288,11 +288,15 @@ bool Alice::_isFinish() {
 			std::cout << "Black Player win !" << std::endl;
 			data.addUserAliceWin(_player2->getName());
 			data.addUserAliceLose(_player1->getName());
+			data.updateRating(_player2->getName(),data.expectedWin(data.getEloRating(_player2->getName()),data.getEloRating(_player1->getName())),WIN);
+			data.updateRating(_player1->getName(),data.expectedWin(data.getEloRating(_player1->getName()),data.getEloRating(_player2->getName())),LOSE);
 		}
 		else {
 			std::cout << "White Player win !" << std::endl;
 			data.addUserAliceLose(_player2->getName());
 			data.addUserAliceWin(_player1->getName());
+			data.updateRating(_player2->getName(),data.expectedWin(data.getEloRating(_player2->getName()),data.getEloRating(_player1->getName())),LOSE);
+			data.updateRating(_player1->getName(),data.expectedWin(data.getEloRating(_player1->getName()),data.getEloRating(_player2->getName())),WIN);
 		}
 		_winner = currentPlayer;
 		_sendCheckmate();
@@ -301,12 +305,16 @@ bool Alice::_isFinish() {
 	if (this->_isStalemate(opponentColor)) {
 		data.addUserAliceDraw(_player2->getName());
 		data.addUserAliceDraw(_player1->getName());
+		data.updateRating(_player2->getName(),data.expectedWin(data.getEloRating(_player2->getName()),data.getEloRating(_player1->getName())),TIE);
+		data.updateRating(_player1->getName(),data.expectedWin(data.getEloRating(_player1->getName()),data.getEloRating(_player2->getName())),TIE);
 		_sendStalemate();
 		return true;
 	}
 	if (this->_notEnoughtPieces()){
 		data.addUserAliceDraw(_player2->getName());
 		data.addUserAliceDraw(_player1->getName());
+		data.updateRating(_player2->getName(),data.expectedWin(data.getEloRating(_player2->getName()),data.getEloRating(_player1->getName())),TIE);
+		data.updateRating(_player1->getName(),data.expectedWin(data.getEloRating(_player1->getName()),data.getEloRating(_player2->getName())),TIE);
 		_sendStalemate();
 		return true;
 	}
@@ -340,7 +348,7 @@ void Alice::_boardState(std::string& state){
 }
 
 void Alice::promote(Piece* piece)
-{	
+{
 	this->_sendBoard();
 	char type = this->_getCurrentPlayer()->askPromotion();
 	if (type == 's'){

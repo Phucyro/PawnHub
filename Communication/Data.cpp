@@ -5,6 +5,10 @@ Data::Data(const std::string path) : _path(path), _dataMap({}), _ladders({}), _m
   _ladders["Dark"] = {};
   _ladders["Horde"] = {};
   _ladders["Alice"] = {};
+  _ladders["RealTimeClassic"] = {};
+  _ladders["RealTimeDark"] = {};
+  _ladders["RealTimeHorde"] = {};
+  _ladders["RealTimeAlice"] = {};
   initLadder();
 }
 
@@ -54,11 +58,15 @@ bool Data::createUserAccount(const std::string username, const std::string passw
   if (containsAccount(username))
     return false;
   // Si peut ajouter ami deco il faut creer le fichier dès la création
-  _dataMap[username] = UserData(password, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {}, {}, {});
+  _dataMap[username] = UserData(password, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {}, {}, {}, 0.0);
   updateLadderOnWin("Classic", {username, {0,0,0}});
   updateLadderOnWin("Dark", {username, {0,0,0}});
   updateLadderOnWin("Horde", {username, {0,0,0}});
   updateLadderOnWin("Alice", {username, {0,0,0}});
+  updateLadderOnWin("RealTimeClassic", {username, {0,0,0}});
+  updateLadderOnWin("RealTimeDark", {username, {0,0,0}});
+  updateLadderOnWin("RealTimeHorde", {username, {0,0,0}});
+  updateLadderOnWin("RealTimeAlice", {username, {0,0,0}});
   saveUserData(username);
   return true;
 }
@@ -75,8 +83,9 @@ void Data::loadUserData(const std::string username){
   if (file){
     std::string data_line;
     std::string password;
-    Stat classic, dark, horde, alice;
+    Stat classic, dark, horde, alice,realTimeClassic,realTimeDark,realTimeHorde,realTimeAlice;
     std::vector<std::string> friends, their_requests, my_requests;
+    double eloRank;
 
     std::getline(file, data_line);
     password = data_line;
@@ -93,6 +102,18 @@ void Data::loadUserData(const std::string username){
     std::getline(file, data_line);
     alice = toUIVector(splitString(data_line, ' '));
 
+    std::getline(file, data_line);  // RT Classic
+    realTimeClassic = toUIVector(splitString(data_line, ' '));
+
+    std::getline(file, data_line); // RT Dark
+    realTimeDark = toUIVector(splitString(data_line, ' '));
+
+    std::getline(file, data_line); // RT Horde
+    realTimeHorde = toUIVector(splitString(data_line, ' '));
+
+    std::getline(file, data_line); // Rt Alice
+    realTimeAlice = toUIVector(splitString(data_line, ' '));
+
     std::getline(file, data_line);
     friends = splitString(data_line, ' ');
 
@@ -102,7 +123,10 @@ void Data::loadUserData(const std::string username){
     std::getline(file, data_line);
     my_requests = splitString(data_line, ' ');
 
-    _dataMap[username] = UserData(password, classic, dark, horde, alice, friends, their_requests, my_requests);
+    std::getline(file, data_line);
+    eloRank = std::atof(data_line.c_str());
+
+    _dataMap[username] = UserData(password, classic, dark, horde, alice, realTimeClassic,realTimeDark,realTimeHorde,realTimeAlice, friends, their_requests, my_requests, eloRank);
   }
   else {
     std::cerr << "[Error] Data open file read" << std::endl;
@@ -125,9 +149,14 @@ void Data::saveUserData(const std::string username){
     file << unsignedIntVectorToStr(std::get<2>(_dataMap[username])) << std::endl; // Dark
     file << unsignedIntVectorToStr(std::get<3>(_dataMap[username])) << std::endl; // Horde
     file << unsignedIntVectorToStr(std::get<4>(_dataMap[username])) << std::endl; // Alice
-    file << strVectorToStr(std::get<5>(_dataMap[username])) << std::endl; // Liste amis
-    file << strVectorToStr(std::get<6>(_dataMap[username])) << std::endl; // Demande ami
-    file << strVectorToStr(std::get<7>(_dataMap[username])) << std::endl; // Mes demandes
+    file << unsignedIntVectorToStr(std::get<5>(_dataMap[username])) << std::endl; // RealTimeClassic
+    file << unsignedIntVectorToStr(std::get<6>(_dataMap[username])) << std::endl; // RealTimeDark
+    file << unsignedIntVectorToStr(std::get<7>(_dataMap[username])) << std::endl; // RealTimeHorde
+    file << unsignedIntVectorToStr(std::get<8>(_dataMap[username])) << std::endl; // RealTimeAlice
+    file << strVectorToStr(std::get<9>(_dataMap[username])) << std::endl; // Liste amis
+    file << strVectorToStr(std::get<10>(_dataMap[username])) << std::endl; // Demande ami
+    file << strVectorToStr(std::get<11>(_dataMap[username])) << std::endl; // Mes demandes
+    file << std::fixed << std::setprecision(2) << std::get<12>(_dataMap[username]) << std::endl; //ELO rank
     _dataMap.erase(username);
   }
   else {
@@ -157,26 +186,26 @@ bool Data::accceptFriendRequest(const std::string username, const std::string fr
 
   _mutex.lock();
   if (_dataMap.find(friend_name) != _dataMap.end()){ // Si friend_name est connecte
-    std::get<5>(_dataMap[friend_name]) = his_friends;
-    std::get<7>(_dataMap[friend_name]) = his_sent_requests;
+    std::get<9>(_dataMap[friend_name]) = his_friends;
+    std::get<11>(_dataMap[friend_name]) = his_sent_requests;
   }
   else {
     loadUserData(friend_name);
-    std::get<5>(_dataMap[friend_name]) = his_friends;
-    std::get<7>(_dataMap[friend_name]) = his_sent_requests;
+    std::get<9>(_dataMap[friend_name]) = his_friends;
+    std::get<11>(_dataMap[friend_name]) = his_sent_requests;
     saveUserData(friend_name);
   }
   _mutex.unlock();
 
   _mutex.lock();
   if (_dataMap.find(username) != _dataMap.end()){
-    std::get<5>(_dataMap[username]) = my_friends;
-    std::get<6>(_dataMap[username]) = my_requests; // Requete recue
+    std::get<9>(_dataMap[username]) = my_friends;
+    std::get<10>(_dataMap[username]) = my_requests; // Requete recue
   }
   else {
     loadUserData(username);
-    std::get<5>(_dataMap[username]) = my_friends;
-    std::get<6>(_dataMap[username]) = my_requests; // Requete recue
+    std::get<9>(_dataMap[username]) = my_friends;
+    std::get<10>(_dataMap[username]) = my_requests; // Requete recue
     saveUserData(username);
   }
   _mutex.unlock();
@@ -200,22 +229,22 @@ bool Data::refuseFriendRequest(const std::string username, const std::string fri
 
   _mutex.lock();
   if (_dataMap.find(friend_name) != _dataMap.end()){ // Si friend_name est connecte
-    std::get<7>(_dataMap[friend_name]) = his_sent_requests;
+    std::get<11>(_dataMap[friend_name]) = his_sent_requests;
   }
   else {
     loadUserData(friend_name);
-    std::get<7>(_dataMap[friend_name]) = his_sent_requests;
+    std::get<11>(_dataMap[friend_name]) = his_sent_requests;
     saveUserData(friend_name);
   }
   _mutex.unlock();
 
   _mutex.lock();
   if (_dataMap.find(username) != _dataMap.end()){
-    std::get<6>(_dataMap[username]) = my_requests; // Requete recue
+    std::get<10>(_dataMap[username]) = my_requests; // Requete recue
   }
   else {
     loadUserData(username);
-    std::get<6>(_dataMap[username]) = my_requests; // Requete recue
+    std::get<10>(_dataMap[username]) = my_requests; // Requete recue
     saveUserData(username);
   }
   _mutex.unlock();
@@ -254,11 +283,11 @@ int Data::sendFriendRequest(const std::string username, const std::string friend
   // Sinon envoie la demande
   _mutex.lock();
   if (_dataMap.find(friend_name) != _dataMap.end()){ // Si ami connecte
-    std::get<6>(_dataMap[friend_name]).push_back(username);
+    std::get<10>(_dataMap[friend_name]).push_back(username);
   }
   else {
     loadUserData(friend_name);
-    std::get<6>(_dataMap[friend_name]).push_back(username);
+    std::get<10>(_dataMap[friend_name]).push_back(username);
     saveUserData(friend_name);
   }
   _mutex.unlock();
@@ -266,11 +295,11 @@ int Data::sendFriendRequest(const std::string username, const std::string friend
   // Ajoute friend_name au demandes envoyees de username
   _mutex.lock();
   if (_dataMap.find(username) != _dataMap.end()){
-    std::get<7>(_dataMap[username]).push_back(friend_name);
+    std::get<11>(_dataMap[username]).push_back(friend_name);
   }
   else {
     loadUserData(username);
-    std::get<7>(_dataMap[username]).push_back(friend_name);
+    std::get<11>(_dataMap[username]).push_back(friend_name);
     saveUserData(username);
   }
   _mutex.unlock();
@@ -294,22 +323,22 @@ bool Data::removeFriend(const std::string username, const std::string friend_nam
 
   _mutex.lock();
   if (_dataMap.find(friend_name) != _dataMap.end()){ // Si friend_name est connecte
-    std::get<5>(_dataMap[friend_name]) = his_friends;
+    std::get<9>(_dataMap[friend_name]) = his_friends;
   }
   else {
     loadUserData(friend_name);
-    std::get<5>(_dataMap[friend_name]) = his_friends;
+    std::get<9>(_dataMap[friend_name]) = his_friends;
     saveUserData(friend_name);
   }
   _mutex.unlock();
 
   _mutex.lock();
   if (_dataMap.find(username) != _dataMap.end()){
-    std::get<5>(_dataMap[username]) = my_friends;
+    std::get<9>(_dataMap[username]) = my_friends;
   }
   else {
     loadUserData(username);
-    std::get<5>(_dataMap[username]) = my_friends;
+    std::get<9>(_dataMap[username]) = my_friends;
     saveUserData(username);
   }
   _mutex.unlock();
@@ -332,22 +361,22 @@ bool Data::cancelSentRequest(const std::string username, const std::string frien
 
   _mutex.lock();
   if (_dataMap.find(friend_name) != _dataMap.end()){
-    std::get<6>(_dataMap[friend_name]) = friend_request;
+    std::get<10>(_dataMap[friend_name]) = friend_request;
   }
   else {
     loadUserData(friend_name);
-    std::get<6>(_dataMap[friend_name]) = friend_request;
+    std::get<10>(_dataMap[friend_name]) = friend_request;
     saveUserData(friend_name);
   }
   _mutex.unlock();
 
   _mutex.lock();
   if (_dataMap.find(username) != _dataMap.end()){
-    std::get<7>(_dataMap[username]) = sent;
+    std::get<11>(_dataMap[username]) = sent;
   }
   else {
     loadUserData(username);
-    std::get<7>(_dataMap[username]) = sent;
+    std::get<11>(_dataMap[username]) = sent;
     saveUserData(username);
   }
   _mutex.unlock();
@@ -361,11 +390,11 @@ std::vector<std::string> Data::getUserFriends(const std::string username){
 
   _mutex.lock();
   if (_dataMap.find(username) != _dataMap.end()){
-    friends = std::get<5>(_dataMap[username]);
+    friends = std::get<9>(_dataMap[username]);
   }
   else {
     loadUserData(username);
-    friends = std::get<5>(_dataMap[username]);
+    friends = std::get<9>(_dataMap[username]);
     saveUserData(username);
   }
   _mutex.unlock();
@@ -379,11 +408,11 @@ std::vector<std::string> Data::getUserFriendRequests(const std::string username)
 
   _mutex.lock();
   if (_dataMap.find(username) != _dataMap.end()){
-    requests = std::get<6>(_dataMap[username]);
+    requests = std::get<10>(_dataMap[username]);
   }
   else {
     loadUserData(username);
-    requests = std::get<6>(_dataMap[username]);
+    requests = std::get<10>(_dataMap[username]);
     saveUserData(username);
   }
   _mutex.unlock();
@@ -396,11 +425,11 @@ std::vector<std::string> Data::getUserSentRequests(const std::string username){
 
   _mutex.lock();
   if (_dataMap.find(username) != _dataMap.end()){
-    requests_sent = std::get<7>(_dataMap[username]);
+    requests_sent = std::get<11>(_dataMap[username]);
   }
   else {
     loadUserData(username);
-    requests_sent = std::get<7>(_dataMap[username]);
+    requests_sent = std::get<11>(_dataMap[username]);
     saveUserData(username);
   }
   _mutex.unlock();
@@ -414,7 +443,7 @@ void Data::addUserClassicWin(const std::string username){
 
   _mutex.lock();
   if (_dataMap.find(username) != _dataMap.end()){
-    ++(std::get<1>(_dataMap[username])[0]);
+    ++(std::get<1>(_dataMap[username])[0]); //pass 1 and 0 over param?
     stat = std::get<1>(_dataMap[username]);
   }
   else {
@@ -425,7 +454,7 @@ void Data::addUserClassicWin(const std::string username){
   }
   _mutex.unlock();
 
-  updateLadderOnWin("Classic", {username, stat});
+  updateLadderOnWin("Classic", {username, stat}); //can be a type in game passed over param?
 }
 
 void Data::addUserClassicLose(const std::string username){
@@ -637,6 +666,235 @@ void Data::addUserAliceDraw(const std::string username){
   updateLadderOnLoseDraw("Alice", {username, stat});
 }
 
+void Data::addUserRealTimeClassicWin(const std::string username){
+  Stat stat;
+
+  _mutex.lock();
+  if (_dataMap.find(username) != _dataMap.end()){
+    ++(std::get<5>(_dataMap[username])[0]);
+    stat = std::get<5>(_dataMap[username]);
+  }
+  else {
+    loadUserData(username);
+    ++(std::get<5>(_dataMap[username])[0]);
+    stat = std::get<5>(_dataMap[username]);
+    saveUserData(username);
+  }
+  _mutex.unlock();
+
+  updateLadderOnWin("RealTimeClassic", {username, stat});
+}
+
+void Data::addUserRealTimeClassicLose(const std::string username){
+  Stat stat;
+
+  _mutex.lock();
+  if (_dataMap.find(username) != _dataMap.end()){
+    ++(std::get<5>(_dataMap[username])[1]);
+    stat = std::get<5>(_dataMap[username]);
+  }
+  else {
+    loadUserData(username);
+    ++(std::get<5>(_dataMap[username])[1]);
+    stat = std::get<5>(_dataMap[username]);
+    saveUserData(username);
+  }
+  _mutex.unlock();
+
+  updateLadderOnLoseDraw("RealTimeClassic", {username, stat});
+}
+
+void Data::addUserRealTimeClassicDraw(const std::string username){
+  Stat stat;
+
+  _mutex.lock();
+  if (_dataMap.find(username) != _dataMap.end()){
+    ++(std::get<5>(_dataMap[username])[2]);
+    stat = std::get<5>(_dataMap[username]);
+  }
+  else {
+    loadUserData(username);
+    ++(std::get<5>(_dataMap[username])[2]);
+    stat = std::get<5>(_dataMap[username]);
+    saveUserData(username);
+  }
+  _mutex.unlock();
+
+  updateLadderOnLoseDraw("RealTimeClassic", {username, stat});
+}
+
+void Data::addUserRealTimeDarkWin(const std::string username){
+  Stat stat;
+
+  _mutex.lock();
+  if (_dataMap.find(username) != _dataMap.end()){
+    ++(std::get<6>(_dataMap[username])[0]);
+    stat = std::get<6>(_dataMap[username]);
+  }
+  else {
+    loadUserData(username);
+    ++(std::get<6>(_dataMap[username])[0]);
+    stat = std::get<6>(_dataMap[username]);
+    saveUserData(username);
+  }
+  _mutex.unlock();
+
+  updateLadderOnWin("RealTimeDark", {username, stat});
+}
+
+void Data::addUserRealTimeDarkLose(const std::string username){
+  Stat stat;
+
+  _mutex.lock();
+  if (_dataMap.find(username) != _dataMap.end()){
+    ++(std::get<6>(_dataMap[username])[1]);
+    stat = std::get<6>(_dataMap[username]);
+  }
+  else {
+    loadUserData(username);
+    ++(std::get<6>(_dataMap[username])[1]);
+    stat = std::get<6>(_dataMap[username]);
+    saveUserData(username);
+  }
+  _mutex.unlock();
+
+  updateLadderOnLoseDraw("RealTimeDark", {username, stat});
+}
+
+void Data::addUserRealTimeDarkDraw(const std::string username){
+  Stat stat;
+
+  _mutex.lock();
+  if (_dataMap.find(username) != _dataMap.end()){
+    ++(std::get<6>(_dataMap[username])[2]);
+    stat = std::get<6>(_dataMap[username]);
+  }
+  else {
+    loadUserData(username);
+    ++(std::get<6>(_dataMap[username])[2]);
+    stat = std::get<6>(_dataMap[username]);
+    saveUserData(username);
+  }
+  _mutex.unlock();
+
+  updateLadderOnLoseDraw("RealTimeDark", {username, stat});
+}
+
+void Data::addUserRealTimeHordeWin(const std::string username){
+  Stat stat;
+
+  _mutex.lock();
+  if (_dataMap.find(username) != _dataMap.end()){
+    ++(std::get<7>(_dataMap[username])[0]);
+    stat = std::get<7>(_dataMap[username]);
+  }
+  else {
+    loadUserData(username);
+    ++(std::get<7>(_dataMap[username])[0]);
+    stat = std::get<7>(_dataMap[username]);
+    saveUserData(username);
+  }
+  _mutex.unlock();
+
+  updateLadderOnWin("RealTimeHorde", {username, stat});
+}
+
+void Data::addUserRealTimeHordeLose(const std::string username){
+  Stat stat;
+
+  _mutex.lock();
+  if (_dataMap.find(username) != _dataMap.end()){
+    ++(std::get<7>(_dataMap[username])[1]);
+    stat = std::get<7>(_dataMap[username]);
+  }
+  else {
+    loadUserData(username);
+    ++(std::get<7>(_dataMap[username])[1]);
+    stat = std::get<7>(_dataMap[username]);
+    saveUserData(username);
+  }
+  _mutex.unlock();
+
+  updateLadderOnLoseDraw("RealTimeHorde", {username, stat});
+}
+
+void Data::addUserRealTimeHordeDraw(const std::string username){
+  Stat stat;
+
+  _mutex.lock();
+  if (_dataMap.find(username) != _dataMap.end()){
+    ++(std::get<7>(_dataMap[username])[2]);
+    stat = std::get<7>(_dataMap[username]);
+  }
+  else {
+    loadUserData(username);
+    ++(std::get<7>(_dataMap[username])[2]);
+    stat = std::get<7>(_dataMap[username]);
+    saveUserData(username);
+  }
+  _mutex.unlock();
+
+  updateLadderOnLoseDraw("RealTimeHorde", {username, stat});
+}
+
+void Data::addUserRealTimeAliceWin(const std::string username){
+  Stat stat;
+
+  _mutex.lock();
+  if (_dataMap.find(username) != _dataMap.end()){
+    ++(std::get<8>(_dataMap[username])[0]);
+    stat = std::get<8>(_dataMap[username]);
+  }
+  else {
+    loadUserData(username);
+    ++(std::get<8>(_dataMap[username])[0]);
+    stat = std::get<8>(_dataMap[username]);
+    saveUserData(username);
+  }
+  _mutex.unlock();
+
+  updateLadderOnWin("RealTimeAlice", {username, stat});
+}
+
+void Data::addUserRealTimeAliceLose(const std::string username){
+  Stat stat;
+
+  _mutex.lock();
+  if (_dataMap.find(username) != _dataMap.end()){
+    ++(std::get<8>(_dataMap[username])[1]);
+    stat = std::get<8>(_dataMap[username]);
+  }
+  else {
+    loadUserData(username);
+    ++(std::get<8>(_dataMap[username])[1]);
+    stat = std::get<8>(_dataMap[username]);
+    saveUserData(username);
+  }
+  _mutex.unlock();
+
+  updateLadderOnLoseDraw("RealTimeAlice", {username, stat});
+}
+
+void Data::addUserRealTimeAliceDraw(const std::string username){
+  Stat stat;
+
+  _mutex.lock();
+  if (_dataMap.find(username) != _dataMap.end()){
+    ++(std::get<8>(_dataMap[username])[2]);
+    stat = std::get<8>(_dataMap[username]);
+  }
+  else {
+    loadUserData(username);
+    ++(std::get<8>(_dataMap[username])[2]);
+    stat = std::get<8>(_dataMap[username]);
+    saveUserData(username);
+  }
+  _mutex.unlock();
+
+  updateLadderOnLoseDraw("RealTimeAlice", {username, stat});
+}
+
+
 
 bool Data::isInLadder(const std::string gamemode, const std::string username){
   for (unsigned int a = 0; a < _ladders[gamemode].size(); ++a)
@@ -700,6 +958,10 @@ void Data::initLadder(){
         updateLadderOnWin("Dark",    {username, std::get<2>(_dataMap[username])});
         updateLadderOnWin("Horde",   {username, std::get<3>(_dataMap[username])});
         updateLadderOnWin("Alice",   {username, std::get<4>(_dataMap[username])});
+        updateLadderOnWin("RealTimeClassic", {username, std::get<5>(_dataMap[username])});
+        updateLadderOnWin("RealTimeDark",    {username, std::get<6>(_dataMap[username])});
+        updateLadderOnWin("RealTimeHorde",   {username, std::get<7>(_dataMap[username])});
+        updateLadderOnWin("RealTimeAlice",   {username, std::get<8>(_dataMap[username])});
         _dataMap.erase(username);
       }
     }
@@ -737,8 +999,16 @@ Stat Data::getUserStat(const std::string username, const std::string gamemode){
       user_stat = std::get<2>(_dataMap[username]);
     else if (gamemode == "Horde")
       user_stat = std::get<3>(_dataMap[username]);
-    else
+    else  if (gamemode == "Alice")
       user_stat = std::get<4>(_dataMap[username]);
+    else if (gamemode == "RealTimeClassic")
+      user_stat = std::get<5>(_dataMap[username]);
+    else if (gamemode == "RealTimeDark")
+      user_stat = std::get<6>(_dataMap[username]);
+    else if (gamemode == "RealTimeHorde")
+      user_stat = std::get<7>(_dataMap[username]);
+    else
+      user_stat = std::get<8>(_dataMap[username]);
   }
   else {
     loadUserData(username);
@@ -748,12 +1018,69 @@ Stat Data::getUserStat(const std::string username, const std::string gamemode){
       user_stat = std::get<2>(_dataMap[username]);
     else if (gamemode == "Horde")
       user_stat = std::get<3>(_dataMap[username]);
-    else
+    else  if (gamemode == "Alice")
       user_stat = std::get<4>(_dataMap[username]);
+    else if (gamemode == "RealTimeClassic")
+      user_stat = std::get<5>(_dataMap[username]);
+    else if (gamemode == "RealTimeDark")
+      user_stat = std::get<6>(_dataMap[username]);
+    else if (gamemode == "RealTimeHorde")
+      user_stat = std::get<7>(_dataMap[username]);
+    else
+      user_stat = std::get<8>(_dataMap[username]);
     saveUserData(username);
   }
 
   return user_stat;
+}
+
+double Data::getEloRating(std::string username){
+  double eloRating;
+
+  _mutex.lock();
+  if (_dataMap.find(username) != _dataMap.end()){
+    eloRating = std::get<12>(_dataMap[username]);
+  }
+  else {
+    loadUserData(username);
+    eloRating = std::get<12>(_dataMap[username]);
+    saveUserData(username);
+  }
+  _mutex.unlock();
+
+  return eloRating;
+}
+
+
+double Data::expectedWin(double ratingA,double ratingB){
+  //formula to calculate expected win depending on ELO rating
+  return 1/(1+pow(10,((ratingB-ratingA)/400)));
+}
+
+void Data::updateRating(const std::string username, double expectedWin, double score){
+  //formula to update ELO depending of win expectation
+  double eloRating;
+  double calc;
+
+  _mutex.lock();
+  if (_dataMap.find(username) != _dataMap.end()){
+    eloRating = std::get<12>(_dataMap[username]);
+    calc = (eloRating + 32 * (score - expectedWin)); //formule magique de Arpad Elo
+    if(calc<=0) calc = 0;// no negative ELO
+    eloRating = calc;
+    std::get<12>(_dataMap[username]) = eloRating;
+  }
+  else {
+    loadUserData(username);
+    eloRating = std::get<12>(_dataMap[username]);
+    eloRating = (eloRating + 32 * (score - expectedWin)); //formule magique de Arpad Elo
+    if(calc<=0) calc = 0; // no negative ELO
+    eloRating = calc;
+    std::get<12>(_dataMap[username]) = eloRating;
+    saveUserData(username);
+  }
+  _mutex.unlock();
+
 }
 
 void Data::lockMutex(){
