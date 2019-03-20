@@ -1,7 +1,12 @@
 #ifndef MAINMENU_H
 #define MAINMENU_H
 
+#include "../../Communication/Socket.hpp"
+
 #include <QWidget>
+
+#include "connectiondialog.h"
+#include "logindialog.h"
 
 namespace Ui {
 class MainMenu;
@@ -28,6 +33,12 @@ private slots:
 
 private:
     Ui::MainMenu *ui;
+    ConnectionDialog *connect;
+    LoginDialog *login;
+    Socket* socket;
+
+    void client_connect();
+    void client_login();
 };
 
 #endif // MAINMENU_H

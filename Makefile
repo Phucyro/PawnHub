@@ -14,7 +14,7 @@ GAME_SERVER=  Code/includesPieceHPP.hpp $(subst Code/%.cpp, Code/%.o, $(LOGIC)) 
 
 INCLUDE= -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets
 
-CLIENT_LFLAGS= -lpthread -lncurses -L/usr/lib/x86_64-linux-gnu -lQt5Gui -lQt5Core -lQt5Widgets
+CLIENT_LFLAGS= -lpthread -lncurses -L/usr/lib/x86_64-linux-gnu -L/usr/lib/qt5/bin -lQt5Gui -lQt5Core -lQt5Widgets
 SERVER_LFLAGS= -lpthread
 
 all: server client clean

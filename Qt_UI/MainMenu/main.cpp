@@ -3,9 +3,14 @@
 
 int main(int argc, char *argv[])
 {
-    QApplication a(argc, argv);
-    MainMenu w;
-    w.show();
+    try {
+        QApplication a(argc, argv);
+        MainMenu w;
+        w.show();
 
-    return a.exec();
+        return a.exec();
+    }
+    catch (std::runtime_error) {
+        return 1;
+    }
 }

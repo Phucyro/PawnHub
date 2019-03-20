@@ -24,15 +24,26 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 CONFIG += c++11
 
+INCLUDEPATH += ../../Communication
+#DEPENDPATH += $$(INCLUDEPATH)   #Not sure what that does yet
+
 SOURCES += \
         main.cpp \
-        mainmenu.cpp
+        mainmenu.cpp \
+    connectiondialog.cpp \
+    logindialog.cpp \
+    ../../Communication/socket.cpp
 
 HEADERS += \
-        mainmenu.h
+        mainmenu.h \
+    connectiondialog.h \
+    logindialog.h \
+    ../../Communication/socket.hpp
 
 FORMS += \
-        mainmenu.ui
+        mainmenu.ui \
+    connectiondialog.ui \
+    logindialog.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
