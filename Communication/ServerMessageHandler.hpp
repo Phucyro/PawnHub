@@ -26,11 +26,6 @@ void inline receiveMessageHandler(Socket* socket, Data* data, PlayersMap* player
 
       std::cout << "[ServerMessageHandler] Received Message " << msg[0] + " " + msg[1] << std::endl;
 
-     /* if (std::isalpha(msg[0][0])){
-        player->writeControlPipe(strVectorToStr(msg));
-        continue;
-      }*/
-
       int choice = atoi(msg[0].c_str());
 
       switch (choice){
@@ -65,19 +60,19 @@ void inline receiveMessageHandler(Socket* socket, Data* data, PlayersMap* player
           viewFriendRequestHandler(player, data);
           break;
         case 11 :
-          acceptRefuseRequestHandler(player, data, msg[1], msg[2]);
+          acceptRefuseRequestHandler(player, players_map, data, msg[1], msg[2]);
           break;
         case 12 :
-          sendFriendRequestHandler(player, data, msg[1]);
+          sendFriendRequestHandler(player, players_map, data, msg[1]);
           break;
         case 13 :
-          removeFriendHandler(player, data, msg[1]);
+          removeFriendHandler(player, players_map, data, msg[1]);
           break;
         case 14 :
           viewSentRequestHandler(player, data);
           break;
         case 15 :
-          cancelRequestHandler(player, data, msg[1]);
+          cancelRequestHandler(player,players_map, data, msg[1]);
           break;
         case 20 :
           socket->sendMessage("20~stopChat");
