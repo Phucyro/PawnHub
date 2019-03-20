@@ -292,15 +292,7 @@ bool Classic::_isFinish() {
 		_sendCheckmate();
 		return true;
 	}
-	if (this->_isStalemate(opponentColor)) {
-		data.addUserClassicDraw(_player2->getName());
-		data.addUserClassicDraw(_player1->getName());
-		data.updateRating(_player2->getName(),data.expectedWin(data.getEloRating(_player2->getName()),data.getEloRating(_player1->getName())),TIE);
-		data.updateRating(_player1->getName(),data.expectedWin(data.getEloRating(_player1->getName()),data.getEloRating(_player2->getName())),TIE);
-		_sendStalemate();
-		return true;
-	}
-	if (this->_notEnoughtPieces()){
+	if (this->_isStalemate(opponentColor) || this->_notEnoughtPieces()) {
 		data.addUserClassicDraw(_player2->getName());
 		data.addUserClassicDraw(_player1->getName());
 		data.updateRating(_player2->getName(),data.expectedWin(data.getEloRating(_player2->getName()),data.getEloRating(_player1->getName())),TIE);
