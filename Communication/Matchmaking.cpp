@@ -13,7 +13,11 @@ void startGame(Game* game, Player* player1, Player* player2, ExecInfoThread* inf
   // Lance le jeu avec le bon mode de jeu
   std::cout << "Une partie se lance : " << player1->getName() << " vs " <<
   player2->getName() << std::endl;
+
   ServerGameControl control(player1, player2, game, infoThread);
+  
+  std::cout << "Une partie s'est termine entre : " << player1->getName() << " vs " <<
+  player2->getName() << std::endl;
 }
 
 
