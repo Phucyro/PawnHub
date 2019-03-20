@@ -123,29 +123,34 @@ void RealTimeAlice::_sendStart() {
 }
 
 
+void RealTimeAlice::_updateStat(){
+	if (_winner == _player1){
+		std::cout << "White Player win !" << std::endl;
+		data.addUserRealTimeAliceLose(_player2->getName());
+		data.addUserRealTimeAliceWin(_player1->getName());
+		data.updateRating(_player2->getName(),data.expectedWin(data.getEloRating(_player2->getName()),data.getEloRating(_player1->getName())),LOSE);
+		data.updateRating(_player1->getName(),data.expectedWin(data.getEloRating(_player1->getName()),data.getEloRating(_player2->getName())),WIN);
+	}
+	else if (_winner == _player2) {
+		std::cout << "Black Player win !" << std::endl;
+		data.addUserRealTimeAliceWin(_player2->getName());
+		data.addUserRealTimeAliceLose(_player1->getName());
+		data.updateRating(_player2->getName(),data.expectedWin(data.getEloRating(_player2->getName()),data.getEloRating(_player1->getName())),WIN);
+		data.updateRating(_player1->getName(),data.expectedWin(data.getEloRating(_player1->getName()),data.getEloRating(_player2->getName())),LOSE);
+	}
+}
+
 bool RealTimeAlice::_isFinish() {
 	if (_winner){
 		_sendSurrend();
+		_updateStat();
 		return true;
 	}
 	char opponentColor = _currentPlayer == _player2 ? 'w':'b';
 	if (this->_isCheckmate(opponentColor)){
-		if (opponentColor == 'w'){
-			std::cout << "Black Player win !" << std::endl;
-			data.addUserRealTimeAliceWin(_player2->getName());
-			data.addUserRealTimeAliceLose(_player1->getName());
-			data.updateRating(_player2->getName(),data.expectedWin(data.getEloRating(_player2->getName()),data.getEloRating(_player1->getName())),WIN);
-			data.updateRating(_player1->getName(),data.expectedWin(data.getEloRating(_player1->getName()),data.getEloRating(_player2->getName())),LOSE);
-		}
-		else {
-			std::cout << "White Player win !" << std::endl;
-			data.addUserRealTimeAliceLose(_player2->getName());
-			data.addUserRealTimeAliceWin(_player1->getName());
-			data.updateRating(_player2->getName(),data.expectedWin(data.getEloRating(_player2->getName()),data.getEloRating(_player1->getName())),LOSE);
-			data.updateRating(_player1->getName(),data.expectedWin(data.getEloRating(_player1->getName()),data.getEloRating(_player2->getName())),WIN);
-		}
 		_winner = _currentPlayer;
 		_sendCheckmate();
+		_updateStat();
 		return true;
 	}
 	return false;

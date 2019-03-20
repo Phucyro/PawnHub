@@ -10,6 +10,7 @@ class RealTimeClassic: public RealTimeGame{
 	private:
 	void _Pieces();
 	int _calculOffset(char playerColor){return playerColor == 'w' ? 0 : 16;}
+	void _updateStat();
 	
 	protected:
 	void _initBoard() override;

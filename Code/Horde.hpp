@@ -20,6 +20,7 @@ class Horde: public TurnBasedGame{
 	bool _executeMove(Coordinate, Coordinate, char);
 	bool _isCheckmate(char);
 	bool _isStalemate(char);
+	void _updateStat();
 
 	protected :
 	void _initBoard() override;

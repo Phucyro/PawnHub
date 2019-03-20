@@ -25,6 +25,7 @@ class Dark: public TurnBasedGame{
 
 	int _calculOffset(char playerColor){return playerColor == 'w' ? 0 : 16;}
 	bool _isVisible(Piece*, char);
+	void _updateStat();
 
 	protected :
 

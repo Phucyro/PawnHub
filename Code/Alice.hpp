@@ -28,6 +28,7 @@ class Alice : public TurnBasedGame {
 	bool _notEnoughtPieces();
 
 	int _calculOffset(char playerColor){return playerColor == 'w' ? 0 : 16;}
+	void _updateStat();
 
 
 	protected :

@@ -102,25 +102,34 @@ void RealTimeDark::_sendGameMode() {
 }
 
 
+void RealTimeDark::_updateStat(){
+	if (_winner == _player1){
+		std::cout << "White Player win !" << std::endl;
+		data.addUserRealTimeDarkLose(_player2->getName());
+		data.addUserRealTimeDarkWin(_player1->getName());
+		data.updateRating(_player2->getName(),data.expectedWin(data.getEloRating(_player2->getName()),data.getEloRating(_player1->getName())),LOSE);
+		data.updateRating(_player1->getName(),data.expectedWin(data.getEloRating(_player1->getName()),data.getEloRating(_player2->getName())),WIN);
+	}
+	else if (_winner == _player2) {
+		std::cout << "Black Player win !" << std::endl;
+		data.addUserRealTimeDarkWin(_player2->getName());
+		data.addUserRealTimeDarkLose(_player1->getName());
+		data.updateRating(_player2->getName(),data.expectedWin(data.getEloRating(_player2->getName()),data.getEloRating(_player1->getName())),WIN);
+		data.updateRating(_player1->getName(),data.expectedWin(data.getEloRating(_player1->getName()),data.getEloRating(_player2->getName())),LOSE);
+	}
+}
+
 bool RealTimeDark::_isFinish() {
 	if (_winner){
 		_sendSurrend();
+		_updateStat();
 		return true;
 	}
 	char opponentColor = _currentPlayer == _player2 ? 'w':'b';
 	if (this->_isCheckmate(opponentColor)){
-		if (opponentColor == 'w'){
-			std::cout << "Black Player win !" << std::endl;
-			data.addUserDarkWin(_player2->getName());
-			data.addUserDarkLose(_player1->getName());
-		}
-		else {
-			std::cout << "White Player win !" << std::endl;
-			data.addUserDarkLose(_player2->getName());
-			data.addUserDarkWin(_player1->getName());
-		}
 		_winner = _currentPlayer;
 		_sendCheckmate();
+		_updateStat();
 		return true;
 	}
 	return false;
