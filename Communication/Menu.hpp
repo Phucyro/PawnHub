@@ -210,7 +210,8 @@ void myStatMenu(MenuHandler* menu, Client* client){
 
   checkMyStat(client->getSocket());
 
-  for (unsigned int a = 0; a < 4; ++a){
+  // 8 pour les 8 modes
+  for (unsigned int a = 0; a < 8; ++a){
     msg = splitString(client->readPipe(), ' ');
     menu->update_stats(atoi(msg[0].c_str()), msg[1], atoi(msg[2].c_str()), atoi(msg[3].c_str()), atoi(msg[4].c_str()));
   }

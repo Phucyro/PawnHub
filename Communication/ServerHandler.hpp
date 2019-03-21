@@ -84,9 +84,10 @@ void inline leaveQueueHandler(Matchmaking* matchmaking, Player* player){
 
 
 void inline myStatHandler(Player* player, Data* data){
-  std::vector<std::string> mode = {"Classic", "Dark", "Horde", "Alice"};
+  std::vector<std::string> mode = {"Classic", "Dark", "Horde", "Alice",
+    "RealTimeClassic", "RealTimeDark", "RealTimeHorde", "RealTimeAlice"};
 
-  for (unsigned int a = 0; a < 4; ++a){
+  for (unsigned int a = 0; a < mode.size(); ++a){
     std::string stat = unsignedIntVectorToStr(data->getUserStat(player->getName(), mode[a]));
     player->getSocket()->printSend(std::string("7~") + std::to_string(a) + "~" + mode[a] + "~" + stat);
   }

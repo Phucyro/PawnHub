@@ -84,7 +84,7 @@ void MenuHandler::print_warning2(std::string warning)
   int y_max, x_max;
   getmaxyx(stdscr, y_max, x_max);
 
-  mvprintw(y_max-1,1,"                                        ";
+  mvprintw(y_max-1,1,"                                        ");
   mvprintw(y_max-1,1,warning.c_str());
   refresh();
 }
