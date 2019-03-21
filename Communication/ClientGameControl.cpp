@@ -55,14 +55,14 @@ void ClientGameControl::receiveUpdate(std::string message) {
 }
 
 void ClientGameControl::receiveGameMode(std::string message) {
-  const char* msg = message.c_str();
-  board.set_mode(msg);
+  board.set_mode(message);
+  board.refresh_board();
 }
 
 void ClientGameControl::receivePlayerColour(std::string message) {
-  const char* msg = message.c_str();
-  board.set_colour(msg);
   _color = message[0];
+  board.set_colour(message);
+  board.refresh_board();
 }
 
 void ClientGameControl::receiveTurn(std::string message) {

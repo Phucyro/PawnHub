@@ -114,7 +114,6 @@ void Game::_sendCheck() {
 }
 
 void Game::_sendCheckmate() {
-	_sendBoard();
 	std::string winner;
 	if (_winner == _player1) winner = "white";
 	else winner = "black";

@@ -215,11 +215,8 @@ void RealTimeGame::_executeMove(Piece* movingPiece, Coordinate end){
 		board->setCase(end, movingPiece);
 	}
 	if (taken){//collision
-		if (taken->getColor() == movingPiece->getColor()){
-			if (movingPiece->getType() != 'p' && taken->getType() == 'g') movingPiece->setNext(taken);
-			else board->setCase(end, taken);
-		}
-		else{
+		if (movingPiece->getType() != 'p' && taken->getType() == 'g') movingPiece->setNext(taken);
+		else if(taken->getColor() != movingPiece->getColor()){
 			unsigned takenStart = taken->getMovementStart(), movingPieceStart = movingPiece->getMovementStart();
 			if (!taken->isMoving()) taken->changeIsTaken(_turn, movingPiece, board);
 			else if(takenStart > movingPieceStart){// taken started moving before movingPiece

@@ -127,6 +127,7 @@ bool RealTimeDark::_isFinish() {
 	}
 	char opponentColor = _currentPlayer == _player2 ? 'w':'b';
 	if (this->_isCheckmate(opponentColor)){
+		this->_sendBoard();
 		_winner = _currentPlayer;
 		_sendCheckmate();
 		_updateStat();
