@@ -8,7 +8,10 @@
 #include <mutex>
 #include <vector>
 #include <algorithm>
+#include <tuple>
+#include <map>
 
+typedef std::vector<std::tuple<std::string, std::string>> Conversation;
 
 class Client {
 private:
@@ -16,12 +19,26 @@ private:
   int* _pipeControl;
   bool _identified;
   std::string _nickname;
+  std::map<std::string, Conversation> _conversations;
+  bool _isChatting;
+  std::string _chatTarget;
   std::vector<std::string> _friendsList;
   std::vector<std::string> _sentRequest; // Demande d'ami envoyee
   std::vector<std::string> _recvRequest; // Demande d'ami recue
 
 public:
-  Client(Socket* socket) : _socket(socket), _pipeControl(nullptr), _nickname("Guest"), _identified(false), _friendsList({}), _sentRequest({}), _recvRequest({}) {
+  Client(Socket* socket) :
+    _socket(socket),
+    _pipeControl(nullptr),
+    _nickname("Guest"),
+    _conversations({}),
+    _isChatting(false),
+    _chatTarget("all"),
+    _identified(false),
+    _friendsList({}),
+    _sentRequest({}),
+    _recvRequest({})
+  {
     _pipeControl = new int[2];
 
     if ((pipe(_pipeControl)) == -1){
@@ -55,6 +72,13 @@ public:
   void removeSentRequest(std::string name);
   std::string readPipe();
 	void writePipe(std::string msg);
+  void setIsChatting(bool chatting);
+  bool isChatting();
+  void setIsChattingWith(std::string name);
+  bool isChattingWith(std::string name);
+  Conversation getConversation(std::string name);
+  void updateConversation(std::string target, std::string sender, std::string msg);
+
 };
 
 #endif

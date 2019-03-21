@@ -11,6 +11,7 @@
 #include "SplitString.hpp"
 #include <thread>
 #include "Client.hpp"
+#include "config.hpp"
 
 void authentificationMenu(MenuHandler* menu, Client* client){
   std::string username, password, confirmation;
@@ -478,16 +479,16 @@ void friendMenu(MenuHandler* menu, Client* client){
       case 0 :
         viewFriendsMenu(menu, client);
         break;
-      case 1 : // Y
+      case 1 :
         theirFriendRequestMenu(menu, client);
         break;
-      case 2 : // Y
+      case 2 :
         sendFriendRequestMenu(menu, client);
         break;
-      case 3 : // Y
+      case 3 :
         removeFriendMenu(menu, client);
         break;
-      case 4 : // Y
+      case 4 :
         cancelRequestMenu(menu, client);
         break;
       case 5 :
@@ -495,48 +496,78 @@ void friendMenu(MenuHandler* menu, Client* client){
     }
   }
 }
-/*
+
 ////////////////////////////////////////////////////////////////////////////////
 
-void chatThread(MenuHandler* menu,Socket* socket, bool* stop, std::vector<std::string>* messages){
-  while (!(*stop)){
-    receiveMessageHandler(menu, socket, stop, messages);
-  }
-}
-
-
-void chatMenu(MenuHandler* menu, Socket* socket){
-  bool stop = false;
-  std::vector<std::string> messages = {};
+void chatMenu(MenuHandler* menu, Client* client){
   menu->clear_windows();
-  menu->print_warning2("Quitter : /quit   Chat : /msg [destinaire] [message]");
+  menu->print_warning2("Quitter : /quit   Changer conversation : /change [name]");
   menu->refresh_board();
 
-  std::thread thread(chatThread, menu, socket, &stop, &messages);
-  thread.detach();
-
+  std::string target_name = "all";
   std::string command = "";
+
+  client->setIsChatting(true);
+  displayChat(menu, client, target_name);
 
   while (command != "/quit"){
     menu->init_dataw();
-    command = menu->get_infos("commande");
+    command = menu->get_infos("message");
     menu->refresh_board();
 
-    if (!checkInputFormat(command)) continue;
+    if (!checkInputFormat(command)){
+      menu->print_warning("Les caractères | et ~ sont interdits");
+      continue;
+    }
 
     std::vector<std::string> split = splitString(command, ' ');
 
-    if (split[0] == "/msg" && split.size() >= 3){
-      chat(socket, split[1], command.substr(6+split[1].size()));
+    if (split[0] == "/change"){
+      if (split.size() != 2){
+        menu->print_warning("Commande invalide");
+        menu->refresh_board();
+      }
+      else if (split[1].length() > 10){
+        menu->print_warning("La taille des noms est limitée à 10 caractères");
+        menu->refresh_board();
+      }
+      else if (split[1] == target_name){
+        menu->print_warning("Vous êtes déjà dans le canal");
+        menu->refresh_board();
+      }
+      else if (split[1] == client->getName()){
+        menu->print_warning("Vous ne pouvez pas parler avec vous même");
+        menu->refresh_board();
+      }
+      else if (!client->isFriendWith(split[1]) && split[1] != "all"){
+        menu->print_warning("Vous n'êtes pas ami avec cette personne");
+        menu->refresh_board();
+      }
+      else {
+        // Change de conversation
+        target_name = split[1];
+        client->setIsChattingWith(target_name);
+        displayChat(menu, client, target_name);
+        menu->print_warning(std::string("Vous parlez à présent avec ") + split[1]);
+        menu->refresh_board();
+      }
+    }
+    else {
+      if (command == "/quit") continue;
+
+      // Envoi du message (command = msg)
+      if (command.length() > MSG_LENGTH-24){ // Raccourci le msg si trop long
+        command = command.substr(0,MSG_LENGTH-24);
+      }
+      chat(client->getSocket(), target_name, command);
     }
   }
 
-  stop = true;
-  socket->sendMessage("20~StopChat");
+  client->setIsChatting(false);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-*/
+
 void mainMenu(MenuHandler* menu, Client* client){
   bool leave = false;
 
@@ -554,7 +585,7 @@ void mainMenu(MenuHandler* menu, Client* client){
         friendMenu(menu, client);
         break;
       case 2 :
-        //chatMenu(menu, socket);
+        chatMenu(menu, client);
         break;
       case 3 :
         statMenu(menu, client);

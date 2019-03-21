@@ -91,3 +91,37 @@ bool Client::hasSentTo(std::string name){
 void Client::removeSentRequest(std::string name){
   _sentRequest.erase(std::remove(_sentRequest.begin(), _sentRequest.end(), name), _sentRequest.end());
 }
+
+void Client::setIsChatting(bool chatting){
+  _isChatting = chatting;
+}
+
+bool Client::isChatting(){
+  return _isChatting;
+}
+
+void Client::setIsChattingWith(std::string name){
+  _chatTarget = name;
+}
+
+bool Client::isChattingWith(std::string name){
+  if (_chatTarget == name){
+    return true;
+  }
+  return false;
+}
+
+Conversation Client::getConversation(std::string name){
+  if (_conversations.find(name) == _conversations.end()){
+    return {};
+  }
+  return _conversations[name];
+}
+
+void Client::updateConversation(std::string target, std::string sender, std::string msg){
+  _conversations[target].push_back({sender, msg});
+
+  if (_conversations[target].size() > 30){
+    _conversations[target].erase(_conversations[target].begin());
+  }
+}

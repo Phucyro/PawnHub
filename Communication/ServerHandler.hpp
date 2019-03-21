@@ -57,14 +57,17 @@ void inline chatHandler(PlayersMap* players_map, Player* player, std::string tar
     for (auto elem : *players_map){
       elem.second->getSocket()->sendMessage(std::string("3~") + player->getName() + "~" + target + "~" + text);
     }
+    return;
   }
-  else {
-    if (players_map->find(target) != players_map->end()){ // Utilisateur connecte
-      (*players_map)[target]->getSocket()->sendMessage(std::string("3~") + player->getName() + "~" + target + "~" + text);
-    }
-    else { // Envoie msg pour dire que la cible est deconnecte
-      player->getSocket()->sendMessage(std::string("3~Guest~") + target + "~None");
-    }
+  // Envoit le message au sender (confirmation)
+  player->getSocket()->sendMessage(std::string("3~") + player->getName() + "~" + target + "~" + text);
+
+  // Si target est connecte alors lui envoit le message de sender
+  if (players_map->find(target) != players_map->end()){
+    (*players_map)[target]->getSocket()->sendMessage(std::string("3~") + player->getName() + "~" + player->getName() + "~" + text);
+  }
+  else { // Si target est deconnecte alors previens sender
+    player->getSocket()->sendMessage(std::string("3~[Server]~") + target + "~" + target + " est deconnecte actuellement");
   }
 }
 

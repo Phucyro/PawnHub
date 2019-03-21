@@ -7,6 +7,7 @@
 #include <string>
 #include <stdlib.h>
 #include "Client.hpp"
+#include "ClientFunctions.hpp"
 
 
 void signUpHandler(Client* client, char msg){
@@ -40,34 +41,12 @@ void signInHandler(Client* client, char msg){
 }
 
 
-void chatHandler(MenuHandler* menu, std::string sender, std::string target, std::string text, std::vector<std::string>* messages){
-  std::string msg_to_print;
+void chatHandler(MenuHandler* menu, Client* client, std::string sender, std::string target, std::string msg){
+  client->updateConversation(target, sender, msg);
 
-  if (target == "all"){
-    msg_to_print = std::string("[") + sender + "->" + target + "] " + text;
+  if (client->isChatting() && client->isChattingWith(target)){
+    displayChat(menu, client, target);
   }
-  else if (sender == "Guest"){
-    msg_to_print =  target + " est deconnecté ou n'existe pas";
-  }
-  else {
-    msg_to_print =  std::string("[") + sender + "->me] " + text;
-  }
-
-  if (messages->size() == 30){
-    messages->erase(messages->begin());
-    messages->push_back(msg_to_print);
-  }
-  else {
-    messages->push_back(msg_to_print);
-  }
-
-  menu->init_chatw();
-
-  for (unsigned int a = 0; a < messages->size(); ++a){
-    menu->update_chatw(a, "", (*messages)[a]);
-  }
-  menu->refresh_board();
-
 }
 
 

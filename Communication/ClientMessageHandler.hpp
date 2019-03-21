@@ -32,7 +32,7 @@ void receiveMessageHandler(MenuHandler* menu, Client* client){
         signInHandler(client, msg[1][0]);
         break;
       case 3 : // [3] [sender] [target] [text]
-        //chatHandler(menu, msg[1], msg[2], msg[3], v_option);
+        chatHandler(menu, client, msg[1], msg[2], msg[3]);
         break;
       case 4 :
         playGameHandler(menu, client);
