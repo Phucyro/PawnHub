@@ -5,6 +5,9 @@
 #include "../Code/Horde.hpp"
 #include "../Code/Dark.hpp"
 #include "../Code/RealTimeClassic.hpp"
+#include "../Code/RealTimeHorde.hpp"
+#include "../Code/RealTimeDark.hpp"
+#include "../Code/RealTimeAlice.hpp"
 #include "cleanThread.hpp"
 
 void delFinishedThread(std::list<ExecInfoThread*>&);
@@ -13,7 +16,11 @@ void startGame(Game* game, Player* player1, Player* player2, ExecInfoThread* inf
   // Lance le jeu avec le bon mode de jeu
   std::cout << "Une partie se lance : " << player1->getName() << " vs " <<
   player2->getName() << std::endl;
+
   ServerGameControl control(player1, player2, game, infoThread);
+  
+  std::cout << "Une partie s'est termine entre : " << player1->getName() << " vs " <<
+  player2->getName() << std::endl;
 }
 
 
@@ -76,7 +83,15 @@ void Matchmaking::check(int queue_number){
       case 4 :
         game = new RealTimeClassic(player1,player2);
         break;
-
+     case 5 :
+        game = new RealTimeHorde(player1,player2);
+        break;
+     case 6 :
+        game = new RealTimeDark(player1,player2);
+        break;
+     case 7 :
+        game = new RealTimeAlice(player1,player2);
+        break;
     }
     ExecInfoThread *infoThread = new ExecInfoThread();
     std::thread *game_thread = new std::thread(startGame, game, player1, player2, infoThread);

@@ -437,13 +437,12 @@ std::vector<std::string> Data::getUserSentRequests(const std::string username){
   return requests_sent;
 }
 
-
 void Data::addUserClassicWin(const std::string username){
   Stat stat;
 
   _mutex.lock();
   if (_dataMap.find(username) != _dataMap.end()){
-    ++(std::get<1>(_dataMap[username])[0]); //pass 1 and 0 over param?
+    ++(std::get<1>(_dataMap[username])[0]);
     stat = std::get<1>(_dataMap[username]);
   }
   else {
@@ -454,7 +453,7 @@ void Data::addUserClassicWin(const std::string username){
   }
   _mutex.unlock();
 
-  updateLadderOnWin("Classic", {username, stat}); //can be a type in game passed over param?
+  updateLadderOnWin("Classic", {username, stat});
 }
 
 void Data::addUserClassicLose(const std::string username){
@@ -992,6 +991,7 @@ Stat Data::getUserStat(const std::string username, const std::string gamemode){
 
   if (!containsAccount(username)) return Stat(); // Joueur inexistant
 
+  _mutex.lock();
   if (_dataMap.find(username) != _dataMap.end()){
     if (gamemode == "Classic")
       user_stat = std::get<1>(_dataMap[username]);
@@ -1007,7 +1007,7 @@ Stat Data::getUserStat(const std::string username, const std::string gamemode){
       user_stat = std::get<6>(_dataMap[username]);
     else if (gamemode == "RealTimeHorde")
       user_stat = std::get<7>(_dataMap[username]);
-    else
+    else if (gamemode == "RealTimeAlice")
       user_stat = std::get<8>(_dataMap[username]);
   }
   else {
@@ -1026,10 +1026,11 @@ Stat Data::getUserStat(const std::string username, const std::string gamemode){
       user_stat = std::get<6>(_dataMap[username]);
     else if (gamemode == "RealTimeHorde")
       user_stat = std::get<7>(_dataMap[username]);
-    else
+    else if (gamemode == "RealTimeAlice")
       user_stat = std::get<8>(_dataMap[username]);
     saveUserData(username);
   }
+  _mutex.unlock();
 
   return user_stat;
 }

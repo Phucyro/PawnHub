@@ -5,31 +5,37 @@
 #include "Socket.hpp"
 #include "Menu.hpp"
 #include "../Display/MenuHandler/MenuHandler.hpp"
-#include "../Qt_UI/Connection/connectiondialog.h"
+#include "Client.hpp"
+#include "ClientMessageHandler.hpp"
+#include "ClientFunctions.hpp"
 
 
 int main(){
-try {
+  try {
     // Connexion au serveur
     Socket* socket = new Socket;
     std::string hostname;
     bool good_hostname = false;
+
     while (!good_hostname) {
-      // std::cout << "Please enter hostname: ";
-      // std::cin >> hostname;
-      // std::cout << std::endl;
-      ConnectionDialog connection_w;
-      hostname = connection_w.askHostname();
+      std::cout << "Please enter hostname: ";
+      std::cin >> hostname;
+      std::cout << std::endl;
       good_hostname = socket->connectToServer(hostname);
     }
 
+    Client* client = new Client(socket);
     MenuHandler* menu = new MenuHandler();
-    authentificationMenu(menu, socket);
-    mainMenu(menu, socket);
 
-    quit(menu, socket);
+    std::thread receiveThread(receiveMessageHandler, menu, client);
+    receiveThread.detach();
+
+    authentificationMenu(menu, client);
+    initClientData(client);
+    mainMenu(menu, client);
+    quit(menu, client);
+
     delete menu;
-    delete socket;
   }
   catch(std::runtime_error& error) {
     std::cout << error.what() << std::endl;

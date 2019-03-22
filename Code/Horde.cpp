@@ -191,38 +191,46 @@ void Horde::_nextTurn() {
 }
 
 
+void Horde::_updateStat(){
+	if (_winner == _player1){
+		std::cout << "White Player win !" << std::endl;
+		data.addUserHordeLose(_player2->getName());
+		data.addUserHordeWin(_player1->getName());
+		data.updateRating(_player2->getName(),data.expectedWin(data.getEloRating(_player2->getName()),data.getEloRating(_player1->getName())),LOSE);
+		data.updateRating(_player1->getName(),data.expectedWin(data.getEloRating(_player1->getName()),data.getEloRating(_player2->getName())),WIN);
+	}
+	else if (_winner == _player2) {
+		std::cout << "Black Player win !" << std::endl;
+		data.addUserHordeWin(_player2->getName());
+		data.addUserHordeLose(_player1->getName());
+		data.updateRating(_player2->getName(),data.expectedWin(data.getEloRating(_player2->getName()),data.getEloRating(_player1->getName())),WIN);
+		data.updateRating(_player1->getName(),data.expectedWin(data.getEloRating(_player1->getName()),data.getEloRating(_player2->getName())),LOSE);
+	}
+	else{
+		data.addUserHordeDraw(_player2->getName());
+		data.addUserHordeDraw(_player1->getName());
+		data.updateRating(_player2->getName(),data.expectedWin(data.getEloRating(_player2->getName()),data.getEloRating(_player1->getName())),TIE);
+		data.updateRating(_player1->getName(),data.expectedWin(data.getEloRating(_player1->getName()),data.getEloRating(_player2->getName())),TIE);
+	}
+}
+
 bool Horde::_isFinish() {
 	if (_winner){
 		_sendSurrend();
+		_updateStat();
 		return true;
 	}
 	Player *currentPlayer = _getCurrentPlayer();
 	char opponentColor = currentPlayer == _player2 ? 'w':'b';
 	if (this->_isCheckmate(opponentColor)){
-		if (opponentColor == 'w'){
-			std::cout << "Black Player win !" << std::endl;
-			data.addUserHordeWin(_player2->getName());
-			data.addUserHordeLose(_player1->getName());
-			data.updateRating(_player2->getName(),data.expectedWin(data.getEloRating(_player2->getName()),data.getEloRating(_player1->getName())),WIN);
-			data.updateRating(_player1->getName(),data.expectedWin(data.getEloRating(_player1->getName()),data.getEloRating(_player2->getName())),LOSE);
-		}
-		else {
-			std::cout << "White Player win !" << std::endl;
-			data.addUserHordeLose(_player2->getName());
-			data.addUserHordeWin(_player1->getName());
-			data.updateRating(_player2->getName(),data.expectedWin(data.getEloRating(_player2->getName()),data.getEloRating(_player1->getName())),LOSE);
-			data.updateRating(_player1->getName(),data.expectedWin(data.getEloRating(_player1->getName()),data.getEloRating(_player2->getName())),WIN);
-		}
 		_winner = currentPlayer;
 		_sendCheckmate();
+		_updateStat();
 		return true;
 	}
 	if (this->_isStalemate(opponentColor)) {
-		data.addUserHordeDraw(_player2->getName());
-		data.addUserHordeDraw(_player1->getName());
-		data.updateRating(_player2->getName(),data.expectedWin(data.getEloRating(_player2->getName()),data.getEloRating(_player1->getName())),TIE);
-		data.updateRating(_player1->getName(),data.expectedWin(data.getEloRating(_player1->getName()),data.getEloRating(_player2->getName())),TIE);
 		_sendStalemate();
+		_updateStat();
 		return true;
 	}
 	return false;

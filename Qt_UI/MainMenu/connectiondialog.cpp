@@ -14,19 +14,29 @@ ConnectionDialog::~ConnectionDialog()
     delete ui;
 }
 
-QString ConnectionDialog::askHostname()
+QString ConnectionDialog::ask_hostname()
 {
-    this->exec();
+    exec();
     return hostname;
 }
 
-void ConnectionDialog::on_done_push_clicked()
+void ConnectionDialog::on_donePush_clicked()
 {
-    hostname = ui->hostname_input->text();
-    close();
+    hostname = ui->hostnameInput->text();
+    hide();
 }
 
-void ConnectionDialog::on_cancel_push_clicked()
+void ConnectionDialog::on_cancelPush_clicked()
+{
+    closeEvent();
+}
+
+void ConnectionDialog::on_ConnectionDialog_rejected()
+{
+    closeEvent();
+}
+
+void ConnectionDialog::closeEvent()
 {
     exit(0);
 }

@@ -13,12 +13,12 @@ Message::~Message()
     delete ui;
 }
 
-void Message::setText(QString message)
+void Message::set_text(QString message)
 {
-    ui->message_label->setText(message);
+    ui->messageLabel->setText(message);
 }
 
-void Message::setTitle(QString title)
+void Message::set_title(QString title)
 {
     setWindowTitle(title);
 }

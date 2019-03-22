@@ -42,7 +42,7 @@
       </spacer>
      </item>
      <item>
-      <widget class="QLabel" name="hostname_label">
+      <widget class="QLabel" name="hostnameLabel">
        <property name="layoutDirection">
         <enum>Qt::LeftToRight</enum>
        </property>
@@ -71,7 +71,7 @@
       </spacer>
      </item>
      <item alignment="Qt::AlignHCenter">
-      <widget class="QLineEdit" name="hostname_input">
+      <widget class="QLineEdit" name="hostnameInput">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
          <horstretch>0</horstretch>
@@ -135,7 +135,7 @@
       </spacer>
      </item>
      <item>
-      <widget class="QPushButton" name="cancel_push">
+      <widget class="QPushButton" name="cancelPush">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
          <horstretch>0</horstretch>
@@ -157,7 +157,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="done_push">
+      <widget class="QPushButton" name="donePush">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
          <horstretch>0</horstretch>
@@ -181,7 +181,7 @@
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <tabstops>
-  <tabstop>done_push</tabstop>
+  <tabstop>donePush</tabstop>
  </tabstops>
  <resources/>
  <connections/>

@@ -7,7 +7,8 @@ class TurnBasedGame: public Game{
 	
 	protected:
 	virtual void _nextTurn() = 0;
-	virtual Player* _getCurrentPlayer() = 0;
+	virtual Player* _getCurrentPlayer() const = 0;
+	virtual Player* _getOtherPlayer() const = 0;
 	
 	TurnBasedGame(Piece**, unsigned, Player*, Player*, unsigned lastStrongPiecesWhite, unsigned lastStrongPieceBlack);
 	TurnBasedGame(const TurnBasedGame&) = delete;

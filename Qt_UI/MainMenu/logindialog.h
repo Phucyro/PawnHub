@@ -17,13 +17,15 @@ public:
     explicit LoginDialog(QWidget *parent = nullptr);
     ~LoginDialog();
 
-    void getLoginDeets(QString&, QString&);
+    void get_login_deets(QString&, QString&);
 
 private slots:
-    void on_login_button_clicked();
-    void on_signup_button_clicked();
+    void on_loginButton_clicked();
+    void on_signupButton_clicked();
+    void on_cancelButton_clicked();
 
-    void on_cancel_button_clicked();
+    void on_LoginDialog_rejected();
+    void closeEvent();
 
 private:
     Ui::LoginDialog *ui;

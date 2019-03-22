@@ -10,8 +10,10 @@
 #include <cstring>
 #include <iostream>
 #include <mutex>
+#include <queue>
 #include "Game.hpp"
 #include "Board.hpp"
+#include "Premove.hpp"
 #include "../Communication/Socket.hpp"
 #include "../Communication/ServerGameControl.hpp"
 #include "../Communication/Data.hpp"
@@ -28,6 +30,7 @@ class Player{
 	bool _recvActive;
 	char _color;
 	std::mutex *_inGameMutex;
+	std::queue<PreMove*> _premoves;
 
 
 	public :
@@ -63,6 +66,7 @@ class Player{
 	std::string getName() const;
 	Socket* getSocket() const;
 	int getQueueNumber() const;
+	std::queue<PreMove*>& getPreMoves() {return _premoves;}
 	void setName(std::string);
 	void setControl(ServerGameControl*);
 	void setSocket(Socket*);

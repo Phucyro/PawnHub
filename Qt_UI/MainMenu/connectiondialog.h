@@ -15,12 +15,14 @@ public:
     explicit ConnectionDialog(QWidget *parent = nullptr);
     ~ConnectionDialog();
 
-    QString askHostname();
+    QString ask_hostname();
 
 private slots:
-    void on_done_push_clicked();
+    void on_donePush_clicked();
+    void on_cancelPush_clicked();
 
-    void on_cancel_push_clicked();
+    void on_ConnectionDialog_rejected();
+    void closeEvent();
 
 private:
     Ui::ConnectionDialog *ui;

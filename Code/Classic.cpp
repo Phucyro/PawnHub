@@ -144,12 +144,22 @@ bool Classic::_executeMove(Coordinate start, Coordinate end, char playerColor){
 
 void Classic::_nextTurn() {
 	Player *currentPlayer = _getCurrentPlayer();
+	Player *otherPlayer = _getOtherPlayer();
 	char playerColor = currentPlayer == _player1 ? 'w':'b';
 
 	bool isMoveValid = false;
+	bool PreMoved = false;
 	std::string playerMove;
 	while(!isMoveValid){
-		playerMove = currentPlayer->askMove();
+		if (!PreMoved && !currentPlayer->getPreMoves().empty()){
+			playerMove = currentPlayer->getPreMoves().front()->getPreMove();
+			currentPlayer->getPreMoves().pop();
+			PreMoved = true;
+		}
+		else {
+			if (PreMoved) {while (!!currentPlayer->getPreMoves().empty()) currentPlayer->getPreMoves().pop();}
+			playerMove = currentPlayer->askMove();
+		}
 		if (playerMove[0] == '/' && playerMove[1] == 'e' && playerMove[2] == 'n' && playerMove[3] == 'd'){
 			if(currentPlayer == _player1) _winner = _player2;
 			else _winner = _player1;
@@ -266,46 +276,46 @@ bool Classic::_notEnoughtPieces(){
 	return true;
 }
 
+void Classic::_updateStat(){
+	if (_winner == _player1){
+		std::cout << "White Player win !" << std::endl;
+		data.addUserClassicLose(_player2->getName());
+		data.addUserClassicWin(_player1->getName());
+		data.updateRating(_player2->getName(),data.expectedWin(data.getEloRating(_player2->getName()),data.getEloRating(_player1->getName())),LOSE);
+		data.updateRating(_player1->getName(),data.expectedWin(data.getEloRating(_player1->getName()),data.getEloRating(_player2->getName())),WIN);
+	}
+	else if (_winner == _player2) {
+		std::cout << "Black Player win !" << std::endl;
+		data.addUserClassicWin(_player2->getName());
+		data.addUserClassicLose(_player1->getName());
+		data.updateRating(_player2->getName(),data.expectedWin(data.getEloRating(_player2->getName()),data.getEloRating(_player1->getName())),WIN);
+		data.updateRating(_player1->getName(),data.expectedWin(data.getEloRating(_player1->getName()),data.getEloRating(_player2->getName())),LOSE);
+	}
+	else{
+		data.addUserClassicDraw(_player2->getName());
+		data.addUserClassicDraw(_player1->getName());
+		data.updateRating(_player2->getName(),data.expectedWin(data.getEloRating(_player2->getName()),data.getEloRating(_player1->getName())),TIE);
+		data.updateRating(_player1->getName(),data.expectedWin(data.getEloRating(_player1->getName()),data.getEloRating(_player2->getName())),TIE);
+	}
+}
+
 bool Classic::_isFinish() {
 	if (_winner){
 		_sendSurrend();
+		_updateStat();
 		return true;
 	}
 	Player *currentPlayer = _getCurrentPlayer();
 	char opponentColor = currentPlayer == _player2 ? 'w':'b';
 	if (this->_isCheckmate(opponentColor)){
-		if (opponentColor == 'w'){
-			std::cout << "Black Player win !" << std::endl;
-			data.addUserClassicWin(_player2->getName());
-			data.addUserClassicLose(_player1->getName());
-			data.updateRating(_player2->getName(),data.expectedWin(data.getEloRating(_player2->getName()),data.getEloRating(_player1->getName())),WIN);
-			data.updateRating(_player1->getName(),data.expectedWin(data.getEloRating(_player1->getName()),data.getEloRating(_player2->getName())),LOSE);
-		}
-		else {
-			std::cout << "White Player win !" << std::endl;
-			data.addUserClassicLose(_player2->getName());
-			data.addUserClassicWin(_player1->getName());
-			data.updateRating(_player2->getName(),data.expectedWin(data.getEloRating(_player2->getName()),data.getEloRating(_player1->getName())),LOSE);
-			data.updateRating(_player1->getName(),data.expectedWin(data.getEloRating(_player1->getName()),data.getEloRating(_player2->getName())),WIN);
-		}
 		_winner = currentPlayer;
 		_sendCheckmate();
+		_updateStat();
 		return true;
 	}
-	if (this->_isStalemate(opponentColor)) {
-		data.addUserClassicDraw(_player2->getName());
-		data.addUserClassicDraw(_player1->getName());
-		data.updateRating(_player2->getName(),data.expectedWin(data.getEloRating(_player2->getName()),data.getEloRating(_player1->getName())),TIE);
-		data.updateRating(_player1->getName(),data.expectedWin(data.getEloRating(_player1->getName()),data.getEloRating(_player2->getName())),TIE);
+	if (this->_isStalemate(opponentColor) || this->_notEnoughtPieces()){
 		_sendStalemate();
-		return true;
-	}
-	if (this->_notEnoughtPieces()){
-		data.addUserClassicDraw(_player2->getName());
-		data.addUserClassicDraw(_player1->getName());
-		data.updateRating(_player2->getName(),data.expectedWin(data.getEloRating(_player2->getName()),data.getEloRating(_player1->getName())),TIE);
-		data.updateRating(_player1->getName(),data.expectedWin(data.getEloRating(_player1->getName()),data.getEloRating(_player2->getName())),TIE);
-		_sendStalemate();
+		_updateStat();
 		return true;
 	}
 	return false;

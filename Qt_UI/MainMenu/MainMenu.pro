@@ -65,6 +65,7 @@ FORMS += \
     logindialog.ui \
     passwordrepeat.ui \
     message.ui \
+<<<<<<< HEAD
     message.ui \
     mainmenu.ui \
     game.ui \
@@ -75,6 +76,9 @@ FORMS += \
     gameChoiceStatistics.ui \
     friendTab.ui \
     statisticsTab.ui
+=======
+    mainmenu.ui
+>>>>>>> 801415dcb49c478e36ccb6cef5532774701e67d3
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

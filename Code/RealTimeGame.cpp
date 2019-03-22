@@ -11,6 +11,7 @@
 #include "RealTimeGame.hpp"
 #include "Queen.hpp"
 
+
 RealTimeGame::RealTimeGame(Piece** pieces, unsigned piecesAmount, Player* player1, Player* player2, unsigned lastStrongPiecesWhite, unsigned lastStrongPieceBlack):
 	Game(pieces,piecesAmount, player1, player2, lastStrongPiecesWhite, lastStrongPieceBlack, nullptr),
 	_currentPlayer(nullptr),
@@ -128,7 +129,7 @@ void RealTimeGame::_mainLoop(){
 		if (nfdSet == -1) throw std::runtime_error("Select failed");
 		timerStop = std::chrono::system_clock::now();
 		_turn += std::chrono::duration_cast<std::chrono::milliseconds>(timerStop - timerStart).count();
-		
+				
 		//move recieved
 		if (nfdSet){
 			if (FD_ISSET(p1fd, &pipes)){
@@ -214,11 +215,8 @@ void RealTimeGame::_executeMove(Piece* movingPiece, Coordinate end){
 		board->setCase(end, movingPiece);
 	}
 	if (taken){//collision
-		if (taken->getColor() == movingPiece->getColor()){
-			if (movingPiece->getType() != 'p' && taken->getType() == 'g') movingPiece->setNext(taken);
-			else board->setCase(end, taken);
-		}
-		else{
+		if (movingPiece->getType() != 'p' && taken->getType() == 'g') movingPiece->setNext(taken);
+		else if(taken->getColor() != movingPiece->getColor()){
 			unsigned takenStart = taken->getMovementStart(), movingPieceStart = movingPiece->getMovementStart();
 			if (!taken->isMoving()) taken->changeIsTaken(_turn, movingPiece, board);
 			else if(takenStart > movingPieceStart){// taken started moving before movingPiece

@@ -19,8 +19,8 @@ class Board
 
 protected:
   WINDOW* infos_win;
-  const char* mode;
-  const char* colour;
+  std::string mode;
+  std::string colour;
 
   void init_windows();
 
@@ -53,8 +53,8 @@ public:
 
   void refresh_board();
 
-  void set_mode(const char*);
-  void set_colour(const char*);
+  void set_mode(const std::string&);
+  void set_colour(const std::string&);
   void update_turn(const char*);
   void declare_check();
   void endgame(const char*);

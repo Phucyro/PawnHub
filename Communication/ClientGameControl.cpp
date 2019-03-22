@@ -11,12 +11,14 @@ ClientGameControl::ClientGameControl(Socket& _socket): board(), socket(_socket),
 void ClientGameControl::receiveBoard(std::string message) {
   if (!is_alice) {
     board.draw_pieces(message);
+    board.refresh_board();
   }
   else if (message[0] == '1') {
     board.draw_pieces(message.erase(0,1));
   }
   else {
     board.draw_alice_pieces(message.erase(0,1));
+    board.refresh_board();
   }
 }
 
@@ -53,14 +55,14 @@ void ClientGameControl::receiveUpdate(std::string message) {
 }
 
 void ClientGameControl::receiveGameMode(std::string message) {
-  const char* msg = message.c_str();
-  board.set_mode(msg);
+  board.set_mode(message);
+  board.refresh_board();
 }
 
 void ClientGameControl::receivePlayerColour(std::string message) {
-  const char* msg = message.c_str();
-  board.set_colour(msg);
   _color = message[0];
+  board.set_colour(message);
+  board.refresh_board();
 }
 
 void ClientGameControl::receiveTurn(std::string message) {
@@ -92,9 +94,8 @@ void ClientGameControl::sendMove(std::string move) {
 }
 
 void ClientGameControl::sendPromotion(std::string promotion) {
-  socket.sendMessage("30~promote");
   std::string header = headerSendMap["promote"];
-  socket.sendMessage(header + promotion);
+  socket.sendMessage("30~" + header + promotion);
 }
 
 void ClientGameControl::handleMessage() {

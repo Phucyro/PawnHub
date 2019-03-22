@@ -14,7 +14,7 @@ class RealTimeGame: public Game{
 	protected:
 	Player* _currentPlayer;
 	unsigned _lastUpdate;
-	RealTimeBoard* _getBoard() const {return dynamic_cast<RealTimeBoard*>(_board);}
+	RealTimeBoard* _getBoard() const {return static_cast<RealTimeBoard*>(_board);}
 	
 	RealTimeGame(Piece**, unsigned, Player*, Player*, unsigned lastStrongPiecesWhite, unsigned lastStrongPieceBlack);
 	RealTimeGame(const RealTimeGame&) = delete;

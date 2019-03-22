@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
+<<<<<<< HEAD
 <!-- Written by QtCreator 4.8.2, 2019-03-21T16:58:50. -->
+=======
+<!-- Written by QtCreator 4.7.1, 2019-03-22T11:11:58. -->
+>>>>>>> 801415dcb49c478e36ccb6cef5532774701e67d3
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -297,7 +301,12 @@
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName"></value>
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:/home/kryptonx/Documents/School/OneDrive/2018-2019/PROJOANNEE/groupe2/Qt_UI/MainMenu/MainMenu.pro</value>
     <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.ProFile">MainMenu.pro</value>
+<<<<<<< HEAD
     <value type="QString" key="RunConfiguration.Arguments"></value>
+=======
+    <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.UserWorkingDirectory"></value>
+    <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.UserWorkingDirectory.default"></value>
+>>>>>>> 801415dcb49c478e36ccb6cef5532774701e67d3
     <value type="uint" key="RunConfiguration.QmlDebugServerPort">3768</value>
     <value type="bool" key="RunConfiguration.UseCppDebugger">false</value>
     <value type="bool" key="RunConfiguration.UseCppDebuggerAuto">true</value>

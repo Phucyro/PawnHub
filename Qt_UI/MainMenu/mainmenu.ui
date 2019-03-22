@@ -10,6 +10,12 @@
     <height>461</height>
    </rect>
   </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
   <property name="windowTitle">
    <string>Main Menu</string>
   </property>
@@ -37,7 +43,7 @@
         <number>0</number>
        </property>
        <item>
-        <widget class="QPushButton" name="play_button">
+        <widget class="QPushButton" name="playButton">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
            <horstretch>0</horstretch>
@@ -50,7 +56,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="stats_button">
+        <widget class="QPushButton" name="statsButton">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
            <horstretch>0</horstretch>
@@ -63,7 +69,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="friends_button">
+        <widget class="QPushButton" name="friendsButton">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
            <horstretch>0</horstretch>
@@ -76,7 +82,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="chat_button">
+        <widget class="QPushButton" name="chatButton">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
            <horstretch>0</horstretch>
@@ -92,7 +98,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="rules_button">
+        <widget class="QPushButton" name="rulesButton">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
            <horstretch>0</horstretch>
@@ -105,7 +111,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="quit_button">
+        <widget class="QPushButton" name="quitButton">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
            <horstretch>0</horstretch>
@@ -191,7 +197,7 @@ Wassup?</string>
     </layout>
    </item>
    <item>
-    <widget class="QLabel" name="ad_banner">
+    <widget class="QLabel" name="adBanner">
      <property name="text">
       <string/>
      </property>
@@ -207,12 +213,12 @@ Wassup?</string>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <tabstops>
-  <tabstop>play_button</tabstop>
-  <tabstop>stats_button</tabstop>
-  <tabstop>friends_button</tabstop>
-  <tabstop>chat_button</tabstop>
-  <tabstop>rules_button</tabstop>
-  <tabstop>quit_button</tabstop>
+  <tabstop>playButton</tabstop>
+  <tabstop>statsButton</tabstop>
+  <tabstop>friendsButton</tabstop>
+  <tabstop>chatButton</tabstop>
+  <tabstop>rulesButton</tabstop>
+  <tabstop>quitButton</tabstop>
  </tabstops>
  <resources>
   <include location="calvin.qrc"/>

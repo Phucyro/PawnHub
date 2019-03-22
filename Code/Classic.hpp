@@ -15,10 +15,16 @@ class Classic : public TurnBasedGame {
 
 	void _Pieces();
 
-	Player* _getCurrentPlayer() override {
+	Player* _getCurrentPlayer() const override {
 		if(_turn%2) return _player1;
 		else return _player2;
 	}
+
+	Player* _getOtherPlayer() const override {
+		if(_turn%2) return _player2;
+		else return _player1;
+	}
+
 	bool _fitInBoard(std::string playerMove){return playerMove[0] >= 'A' && playerMove[0] <= 'H' && playerMove[1] >= '1' && playerMove[1] <= '8' && playerMove[2] >= 'A' && playerMove[2] <= 'H' && playerMove[3] >= '1' && playerMove[3] <= '8';}
 
 	bool _executeMove(Coordinate, Coordinate, char);
@@ -26,6 +32,7 @@ class Classic : public TurnBasedGame {
 	bool _isStalemate(char);
 	bool _notEnoughtPieces();
 	int _calculOffset(char playerColor){return playerColor == 'w' ? 0 : 16;}
+	void _updateStat();
 
 
 	protected :
