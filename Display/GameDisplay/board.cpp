@@ -2,13 +2,13 @@
 #include "BoardParsing.hpp"
 #include "MoveParsing.hpp"
 
-Board::Board(): infos_win(nullptr), columns(BOARD_COLS), lines(BOARD_LINES), running(false)
+Board::Board(): infos_win(nullptr), columns(BOARD_COLS), lines(BOARD_LINES), running(false), mode(), colour()
 {
 
 }
 
 
-Board::Board(int line_count, int col_count): infos_win(nullptr), columns(col_count), lines(line_count), running(false)
+Board::Board(int line_count, int col_count): infos_win(nullptr), columns(col_count), lines(line_count), running(false), mode(), colour()
 {
 
 }
@@ -97,7 +97,7 @@ void Board::draw_alice_coordinates()
   }
 
 
-  refresh_board();
+  //refresh_board();
 }
 
 void Board::draw_alice_board()
@@ -114,7 +114,7 @@ void Board::draw_alice_board()
 
   draw_alice_coordinates();
 
-  refresh_board();
+  //refresh_board();
 
 
 }
@@ -126,23 +126,23 @@ void Board::draw_infos()
   int x_win, y_win;
   getmaxyx(infos_win, y_win, x_win);
 
-  mvwprintw(infos_win, 1, 1, "GAME MODE : %s", mode);
+  mvwprintw(infos_win, 1, 1, "GAME MODE : %s", mode.c_str());
 
-  mvwprintw(infos_win, 4, 1, "YOUR COLOUR : %s", colour);
+  mvwprintw(infos_win, 4, 1, "YOUR COLOUR : %s", colour.c_str());
 
   mvwprintw(infos_win , 7, 1, "%s", "TURN COUNT : ");
 
-  mvwprintw(infos_win , 10, 1, "PRESS Ctrl+C TO QUIT");
+  mvwprintw(infos_win , 10, 1, "Enter /end to surrend");
 
   //refresh_board();
 }
 
-void Board::set_mode(const char* game) {
+void Board::set_mode(const std::string& game) {
   mode = game;
   //refresh_board();
 }
 
-void Board::set_colour(const char* player_colour) {
+void Board::set_colour(const std::string& player_colour) {
   colour = player_colour;
   //refresh_board();
 }
@@ -153,7 +153,7 @@ void Board::update_turn(const char* turn) {
 }
 
 void Board::declare_check() {
-  mvprintw(15, 30, "%s", "CHECK");
+  mvprintw(14, 30, "%s", "CHECK");
   refresh_board();
 }
 
@@ -189,7 +189,7 @@ void Board::draw_pieces(std::string board)
   box(infos_win,0,0);
   draw_infos();
   stringToBoard(board);
-  refresh_board();
+  //refresh_board();
 }
 
 void Board::draw_alice_pieces(std::string board)
@@ -197,7 +197,7 @@ void Board::draw_alice_pieces(std::string board)
   //refresh_board();
   draw_alice_board();
   aliceToBoard(board);
-  refresh_board();
+  //refresh_board();
 }
 
 

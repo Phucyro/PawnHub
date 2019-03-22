@@ -1,8 +1,6 @@
 #ifndef __ALICE__KING__CPP__
 #define __ALICE__KING__CPP__
 
-void stopGdb(){}
-
 #include <iostream>
 #include "AliceKing.hpp"
 
@@ -56,6 +54,11 @@ bool AliceKing::_isMovePossible(Coordinate end, Board* board, Game& game){
 		return true;
 	}
 	return false;
+}
+
+void AliceKing::stopMoving(Game& game, Board* board){
+	this->Piece::stopMoving(game, board);
+	this->AlicePiece::stopMoving(game);
 }
 
 #endif

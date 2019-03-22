@@ -54,7 +54,7 @@ class Piece {
 		{
 			if (board->isCaseEmpty(place)) return true;
 			Piece* piece = board->getCase(place);
-			return piece->_str[TYP] == 'g' || piece->_isMoving;
+			return piece && (piece->_str[TYP] == 'g' || piece->_isMoving);
 		}
 
 	public :

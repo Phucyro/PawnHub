@@ -57,14 +57,17 @@ void inline chatHandler(PlayersMap* players_map, Player* player, std::string tar
     for (auto elem : *players_map){
       elem.second->getSocket()->sendMessage(std::string("3~") + player->getName() + "~" + target + "~" + text);
     }
+    return;
   }
-  else {
-    if (players_map->find(target) != players_map->end()){ // Utilisateur connecte
-      (*players_map)[target]->getSocket()->sendMessage(std::string("3~") + player->getName() + "~" + target + "~" + text);
-    }
-    else { // Envoie msg pour dire que la cible est deconnecte
-      player->getSocket()->sendMessage(std::string("3~Guest~") + target + "~None");
-    }
+  // Envoit le message au sender (confirmation)
+  player->getSocket()->sendMessage(std::string("3~") + player->getName() + "~" + target + "~" + text);
+
+  // Si target est connecte alors lui envoit le message de sender
+  if (players_map->find(target) != players_map->end()){
+    (*players_map)[target]->getSocket()->sendMessage(std::string("3~") + player->getName() + "~" + player->getName() + "~" + text);
+  }
+  else { // Si target est deconnecte alors previens sender
+    player->getSocket()->sendMessage(std::string("3~[Server]~") + target + "~" + target + " est deconnecte actuellement");
   }
 }
 
@@ -81,9 +84,10 @@ void inline leaveQueueHandler(Matchmaking* matchmaking, Player* player){
 
 
 void inline myStatHandler(Player* player, Data* data){
-  std::vector<std::string> mode = {"Classic", "Dark", "Horde", "Alice"};
+  std::vector<std::string> mode = {"Classic", "Dark", "Horde", "Alice",
+    "RealTimeClassic", "RealTimeDark", "RealTimeHorde", "RealTimeAlice"};
 
-  for (unsigned int a = 0; a < 4; ++a){
+  for (unsigned int a = 0; a < mode.size(); ++a){
     std::string stat = unsignedIntVectorToStr(data->getUserStat(player->getName(), mode[a]));
     player->getSocket()->printSend(std::string("7~") + std::to_string(a) + "~" + mode[a] + "~" + stat);
   }
@@ -131,8 +135,6 @@ void inline viewFriendsHandler(Player* player, Data* data){
   for (unsigned int a = 0; a < friends.size(); ++a){
     player->getSocket()->sendMessage(std::string("9~") + friends[a]);
   }
-
-  player->getSocket()->sendMessage("9~Guest");
 }
 
 
@@ -142,38 +144,60 @@ void inline viewFriendRequestHandler(Player* player, Data* data){
   for (unsigned int a = 0; a < requests.size(); ++a){
     player->getSocket()->sendMessage(std::string("10~") + requests[a]);
   }
-
-  player->getSocket()->sendMessage("10~Guest");
 }
 
-void inline acceptRefuseRequestHandler(Player* player, Data* data, std::string name, std::string option){
-  if (player->getName() == name){
+void inline acceptRefuseRequestHandler(Player* player, PlayersMap* players_map, Data* data, std::string name, std::string option){
+  if (player->getName() == name){ // Gere du cote client actuellement
     player->getSocket()->sendMessage("11~0~0");
   }
 
   if (option == "1"){
     int res = data->accceptFriendRequest(player->getName(), name);
     player->getSocket()->sendMessage(std::string("11~1~") + std::to_string(res));
+
+    if (players_map->find(name) != players_map->end()){ // Si le joueur est connecte
+      (*players_map)[name]->getSocket()->sendMessage(std::string("16~") + player->getName() + "~1"); // Ajoute ami
+      (*players_map)[name]->getSocket()->sendMessage(std::string("18~") + player->getName() + "~0"); // Supprime requete envoyee
+    }
   }
   else {
     int res = data->refuseFriendRequest(player->getName(), name);
     player->getSocket()->sendMessage(std::string("11~2~") + std::to_string(res));
+
+    if (players_map->find(name) != players_map->end()){ // Si le joueur est connecte
+      (*players_map)[name]->getSocket()->sendMessage(std::string("18~") + player->getName() + "~0"); // Supprime requete envoyee
+    }
   }
 }
 
-void inline sendFriendRequestHandler(Player* player, Data* data, std::string name){
-  if (player->getName() == name){
+void inline sendFriendRequestHandler(Player* player, PlayersMap* players_map, Data* data, std::string name){
+  if (player->getName() == name){ // Gere actuellement du cote client
     player->getSocket()->sendMessage("12~0");
   }
   else {
     int res = data->sendFriendRequest(player->getName(), name);
     player->getSocket()->sendMessage(std::string("12~") + std::to_string(res));
+
+    if (players_map->find(name) != players_map->end()){ // Si le joueur est connecte
+      switch (res){
+        case 3 :
+          (*players_map)[name]->getSocket()->sendMessage(std::string("16~") + player->getName() + "~1"); // Ajoute ami
+          break;
+        case 4 :
+          (*players_map)[name]->getSocket()->sendMessage(std::string("17~") + player->getName() + "~1"); // Ajoute demande recue
+          break;
+      }
+    }
   }
 }
 
-void inline removeFriendHandler(Player* player, Data* data, std::string name){
+void inline removeFriendHandler(Player* player, PlayersMap* players_map, Data* data, std::string name){
   int res = data->removeFriend(player->getName(), name);
   player->getSocket()->sendMessage(std::string("13~") + std::to_string(res));
+
+  if (players_map->find(name) != players_map->end()){ // Si le joueur est connecte
+    (*players_map)[name]->getSocket()->sendMessage(std::string("16~") + player->getName() + "~0"); // Supprime ami
+  }
 }
 
 void inline viewSentRequestHandler(Player* player, Data* data){
@@ -182,13 +206,15 @@ void inline viewSentRequestHandler(Player* player, Data* data){
   for (unsigned int a = 0; a < sent_request.size(); ++a){
     player->getSocket()->sendMessage(std::string("14~") + sent_request[a]);
   }
-
-  player->getSocket()->sendMessage("14~Guest");
 }
 
-void inline cancelRequestHandler(Player* player, Data* data, std::string name){
+void inline cancelRequestHandler(Player* player, PlayersMap* players_map, Data* data, std::string name){
   int res = data->cancelSentRequest(player->getName(), name);
   player->getSocket()->sendMessage(std::string("15~" + std::to_string(res)));
+
+  if (players_map->find(name) != players_map->end()){ // Si le joueur est connecte
+    (*players_map)[name]->getSocket()->sendMessage(std::string("17~") + player->getName() + "~0"); // Supprime requete envoyee
+  }
 }
 
 #endif

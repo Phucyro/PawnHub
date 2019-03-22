@@ -19,4 +19,8 @@ bool AlicePiece::_canMoveInLine(int columnDirection, int rowDirection, Board* bo
 	return false;
 }
 
+void AlicePiece::stopMoving(Game& game){
+	_swapDimension();
+}
+
 #endif

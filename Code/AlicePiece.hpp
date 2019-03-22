@@ -34,6 +34,7 @@ class AlicePiece{
 	}
 	bool getDimension(){return _2Dimension;}
 	virtual bool _isMovePossible(int, int, Board*, Game&) = 0;
+	void stopMoving(Game& game);
 };
 
 #include "Game.hpp"

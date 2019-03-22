@@ -35,4 +35,9 @@ bool AlicePawn::canMove(Board* board, Game& game){
 	return this->BasicPawn::canMove(board, game) || this->_isMovePossible(0, 2*direction, board, game);
 }
 
+void AlicePawn::stopMoving(Game& game, Board* board){
+	this->Piece::stopMoving(game, board);
+	this->AlicePiece::stopMoving(game);
+}
+
 #endif

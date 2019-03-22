@@ -59,6 +59,7 @@ void Socket::printSend(std::string message) {
 // Might break but my balmer peak state says it's perfect
 void Socket::sendMessage(std::string message) {
   // if (message[0] == 'B') throw std::string("Sent board too early");
+  //std::cout<<"message send: "<<message<<std::endl;
   signal(SIGPIPE, handleSignal);
   
   size_t message_size = message.length();
