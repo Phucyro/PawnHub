@@ -39,7 +39,6 @@ bool LoginDialog::acceptable_format(QString pwdConfirmation)
     std::string usernameString = username->toStdString();
     std::string passwordString = password->toStdString();
     std::string pwdConfirmationString = pwdConfirmation.toStdString();
-//    std::cout << usernameString << passwordString << pwdConfirmationString << std::endl;
     int format = checkFormat(usernameString, passwordString, pwdConfirmationString);
     if (format != 5)
     {

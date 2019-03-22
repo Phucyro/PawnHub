@@ -24,7 +24,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 CONFIG += c++11
 
-INCLUDEPATH += ../../Communication
+INCLUDEPATH += ../../Communication ../Modified_Files
 #DEPENDPATH += $$(INCLUDEPATH)   #Not sure what that does yet
 
 SOURCES += \
@@ -33,6 +33,7 @@ SOURCES += \
     connectiondialog.cpp \
     logindialog.cpp \
     ../../Communication/socket.cpp \
+    ../Modified_Files/CheckFormat.cpp \
     passwordrepeat.cpp \
     message.cpp \
     game.cpp \
@@ -49,6 +50,7 @@ HEADERS += \
     connectiondialog.h \
     logindialog.h \
     ../../Communication/socket.hpp \
+    ../Modified_Files/CheckFormat.hpp \
     passwordrepeat.h \
     message.h \
     game.h \
