@@ -34,7 +34,15 @@ SOURCES += \
     logindialog.cpp \
     ../../Communication/socket.cpp \
     passwordrepeat.cpp \
-    message.cpp
+    message.cpp \
+    game.cpp \
+    gameWithoutChat.cpp \
+    gameWithoutChatWithAlice.cpp \
+    gameWithAlice.cpp \
+    gameChoiceStatistics.cpp \
+    gameChoice.cpp \
+    friendTab.cpp \
+    statisticsTab.cpp
 
 HEADERS += \
         mainmenu.h \
@@ -42,14 +50,30 @@ HEADERS += \
     logindialog.h \
     ../../Communication/socket.hpp \
     passwordrepeat.h \
-    message.h
+    message.h \
+    game.h \
+    gameWithoutChat.h \
+    gameWithoutChatWithAlice.h \
+    gameWithAlice.h \
+    gameChoice.h \
+    gameChoiceStatistics.h \
+    friendTab.h \
+    statisticsTab.h
 
 FORMS += \
     connectiondialog.ui \
     logindialog.ui \
     passwordrepeat.ui \
     message.ui \
-    mainmenu.ui
+    mainmenu.ui \
+    game.ui \
+    gameWithoutChat.ui \
+    gameWithAlice.ui \
+    gameWithoutChatWithAlice.ui \
+    gameChoice.ui \
+    gameChoiceStatistics.ui \
+    friendTab.ui \
+    statisticsTab.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -58,4 +82,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 RESOURCES += \
     calvin.qrc \
-    loremipsum.qrc
+    loremipsum.qrc \
+    catmeme.qrc
+
+DISTFILES +=
