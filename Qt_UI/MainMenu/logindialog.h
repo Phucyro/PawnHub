@@ -22,8 +22,10 @@ public:
 private slots:
     void on_loginButton_clicked();
     void on_signupButton_clicked();
-
     void on_cancelButton_clicked();
+
+    void on_LoginDialog_rejected();
+    void closeEvent();
 
 private:
     Ui::LoginDialog *ui;

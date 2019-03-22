@@ -16,17 +16,27 @@ ConnectionDialog::~ConnectionDialog()
 
 QString ConnectionDialog::ask_hostname()
 {
-    this->exec();
+    exec();
     return hostname;
 }
 
 void ConnectionDialog::on_donePush_clicked()
 {
     hostname = ui->hostnameInput->text();
-    close();
+    hide();
 }
 
 void ConnectionDialog::on_cancelPush_clicked()
+{
+    closeEvent();
+}
+
+void ConnectionDialog::on_ConnectionDialog_rejected()
+{
+    closeEvent();
+}
+
+void ConnectionDialog::closeEvent()
 {
     exit(0);
 }

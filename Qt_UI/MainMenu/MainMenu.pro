@@ -49,7 +49,6 @@ FORMS += \
     logindialog.ui \
     passwordrepeat.ui \
     message.ui \
-    message.ui \
     mainmenu.ui
 
 # Default rules for deployment.

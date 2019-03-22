@@ -36,7 +36,6 @@ void MainMenu::client_connect() {
         connected = socket->connectToServer(hostname);
         connected = true;
     } while (!connected);
-    delete connect;
 }
 
 void MainMenu::client_login() {
@@ -71,6 +70,11 @@ void MainMenu::on_rulesButton_clicked()
 }
 
 void MainMenu::on_quitButton_clicked()
+{
+    closeEvent();
+}
+
+void MainMenu::closeEvent()
 {
     exit(0);
 }

@@ -24,7 +24,8 @@ private slots:
 
 private:
     Ui::PasswordRepeat *ui;
-    QString password2;
+    bool matched;
+    QString password1, password2;
 };
 
 #endif // PASSWORDREPEAT_H

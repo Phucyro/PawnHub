@@ -19,8 +19,10 @@ public:
 
 private slots:
     void on_donePush_clicked();
-
     void on_cancelPush_clicked();
+
+    void on_ConnectionDialog_rejected();
+    void closeEvent();
 
 private:
     Ui::ConnectionDialog *ui;

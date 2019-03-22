@@ -25,27 +25,35 @@ void LoginDialog::get_login_deets(QString& username_holder, QString& password_ho
 {
     username = &username_holder;
     password = &password_holder;
-    this->exec();
+    exec();
 }
 
 void LoginDialog::on_loginButton_clicked()
 {
     *username = ui->usernameInput->text();
     *password = ui->passwordInput->text();
+    hide();
 }
 
 void LoginDialog::on_signupButton_clicked()
 {
-    if (!pwd_repeat->check_password(ui->passwordInput->text()))
-     {
-         Message* m = new Message();
-         m->set_text("The passwords were not identical,\nplease try again.");
-         m->set_title("Oh No: Mismatched Passwords");
-         m->popup();
-     }
+    if (pwd_repeat->check_password(ui->passwordInput->text()))
+    {
+//        sign up
+    }
 }
 
 void LoginDialog::on_cancelButton_clicked()
+{
+    closeEvent();
+}
+
+void LoginDialog::on_LoginDialog_rejected()
+{
+    closeEvent();
+}
+
+void LoginDialog::closeEvent()
 {
     exit(0);
 }
