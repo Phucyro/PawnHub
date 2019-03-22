@@ -29,8 +29,8 @@ void FriendTab::on_addPushButton_pressed()
         ui->inputLineEdit->clear();
     }else{
         Message* m = new Message();
-        m->setText("Please input at least something(not Guest) and not just empty space..");
-        m->setTitle("Oh No: Empty Field or Guest Detected");
+        m->set_text("Please input at least something(not Guest) and not just empty space..");
+        m->set_title("Oh No: Empty Field or Guest Detected");
         m->popup();
         ui->addPushButton->setDown(false);
     }
@@ -65,8 +65,8 @@ void FriendTab::on_inputLineEdit_returnPressed()
         ui->inputLineEdit->clear();
     }else{
         Message* m = new Message();
-        m->setText("Please input at least something(not Guest) and not just empty space..");
-        m->setTitle("Oh No: Empty Field or Guest Detected");
+        m->set_text("Please input at least something(not Guest) and not just empty space..");
+        m->set_title("Oh No: Empty Field or Guest Detected");
         m->popup();
         ui->addPushButton->setDown(false);
     }
