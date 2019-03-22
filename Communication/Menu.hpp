@@ -170,7 +170,8 @@ void leaveLadderMenu(MenuHandler* menu, Client* client, std::string mode){
   menu->get_choice({"Retour"});
 }
 
-void ladderMenu(MenuHandler* menu, Client* client){
+
+void normalLadderMenu(MenuHandler* menu, Client* client){
   bool leave = false;
 
   while (!leave){
@@ -200,6 +201,63 @@ void ladderMenu(MenuHandler* menu, Client* client){
     }
   }
 }
+
+
+void realTimeLadderMenu(MenuHandler* menu, Client* client){
+  bool leave = false;
+
+  while (!leave){
+    menu->clear_windows();
+    menu->init_choicesw();
+    int choice = menu->get_choice({"Classic", "Dark", "Horde", "Alice", "Retour"});
+
+    switch (choice){
+      case 0 :
+        viewLadder(client->getSocket(), "4");
+        leaveLadderMenu(menu, client, "Classic");
+        break;
+      case 1 :
+        viewLadder(client->getSocket(), "5");
+        leaveLadderMenu(menu, client, "Dark");
+        break;
+      case 2 :
+        viewLadder(client->getSocket(), "6");
+        leaveLadderMenu(menu, client, "Horde");
+        break;
+      case 3 :
+        viewLadder(client->getSocket(), "7");
+        leaveLadderMenu(menu, client, "Alice");
+        break;
+      case 4 :
+        leave = true;
+    }
+  }
+}
+
+
+void ladderMenu(MenuHandler* menu, Client* client){
+  bool leave = false;
+
+  while (!leave){
+    menu->clear_windows();
+    menu->init_choicesw();
+    int choice = menu->get_choice({"Normal", "Real-Time", "Retour"});
+    menu->refresh_board();
+
+    switch (choice){
+      case 0 :
+        normalLadderMenu(menu, client);
+        break;
+      case 1 :
+        realTimeLadderMenu(menu, client);
+        break;
+      case 2 :
+        leave = true;
+        break;
+    }
+  }
+}
+
 
 void myStatMenu(MenuHandler* menu, Client* client){
   menu->clear_windows();

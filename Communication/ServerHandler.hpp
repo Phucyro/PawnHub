@@ -98,17 +98,30 @@ void inline ladderHandler(Socket* socket, Data* data, std::string mode){
   std::string gamemode;
 
   switch (mode[0]){
-    case '0' :
+    case '0':
       gamemode = "Classic";
       break;
-    case '1' :
+    case '1':
       gamemode = "Dark";
       break;
-    case '2' :
+    case '2':
       gamemode = "Horde";
       break;
-    case '3' :
+    case '3':
       gamemode = "Alice";
+      break;
+    case '4':
+      gamemode = "RealTimeClassic";
+      break;
+    case '5':
+      gamemode = "RealTimeDark";
+      break;
+    case '6':
+      gamemode = "RealTimeHorde";
+      break;
+    case '7':
+      gamemode = "RealTimeAlice";
+      break;
   }
 
   std::vector<UserLadderData> ladder = data->getLadder(gamemode);
