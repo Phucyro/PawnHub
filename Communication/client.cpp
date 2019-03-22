@@ -9,8 +9,6 @@
 #include "ClientMessageHandler.hpp"
 #include "ClientFunctions.hpp"
 
-#include "../Qt_UI/Connection/connectiondialog.h"
-
 
 int main(){
   try {
@@ -20,11 +18,9 @@ int main(){
     bool good_hostname = false;
 
     while (!good_hostname) {
-      // std::cout << "Please enter hostname: ";
-      // std::cin >> hostname;
-      // std::cout << std::endl;
-      ConnectionDialog connection_w;
-      hostname = connection_w.askHostname();
+      std::cout << "Please enter hostname: ";
+      std::cin >> hostname;
+      std::cout << std::endl;
       good_hostname = socket->connectToServer(hostname);
     }
 
