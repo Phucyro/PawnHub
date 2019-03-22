@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainmenu.ui'
 **
-** Created by: Qt User Interface Compiler version 5.9.5
+** Created by: Qt User Interface Compiler version 5.12.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -10,11 +10,8 @@
 #define UI_MAINMENU_H
 
 #include <QtCore/QVariant>
-#include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
-#include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QHBoxLayout>
-#include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QPlainTextEdit>
 #include <QtWidgets/QPushButton>
@@ -41,24 +38,24 @@ public:
     void setupUi(QWidget *MainMenu)
     {
         if (MainMenu->objectName().isEmpty())
-            MainMenu->setObjectName(QStringLiteral("MainMenu"));
+            MainMenu->setObjectName(QString::fromUtf8("MainMenu"));
         MainMenu->resize(504, 461);
         verticalLayout_2 = new QVBoxLayout(MainMenu);
         verticalLayout_2->setSpacing(6);
         verticalLayout_2->setContentsMargins(11, 11, 11, 11);
-        verticalLayout_2->setObjectName(QStringLiteral("verticalLayout_2"));
+        verticalLayout_2->setObjectName(QString::fromUtf8("verticalLayout_2"));
         horizontalLayout = new QHBoxLayout();
         horizontalLayout->setSpacing(6);
-        horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
+        horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
         horizontalLayout->setSizeConstraint(QLayout::SetMinAndMaxSize);
         horizontalLayout->setContentsMargins(2, -1, 2, -1);
         verticalLayout = new QVBoxLayout();
         verticalLayout->setSpacing(6);
-        verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
+        verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
         verticalLayout->setSizeConstraint(QLayout::SetMinimumSize);
         verticalLayout->setContentsMargins(-1, 0, -1, -1);
         play_button = new QPushButton(MainMenu);
-        play_button->setObjectName(QStringLiteral("play_button"));
+        play_button->setObjectName(QString::fromUtf8("play_button"));
         QSizePolicy sizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
@@ -68,21 +65,21 @@ public:
         verticalLayout->addWidget(play_button);
 
         stats_button = new QPushButton(MainMenu);
-        stats_button->setObjectName(QStringLiteral("stats_button"));
+        stats_button->setObjectName(QString::fromUtf8("stats_button"));
         sizePolicy.setHeightForWidth(stats_button->sizePolicy().hasHeightForWidth());
         stats_button->setSizePolicy(sizePolicy);
 
         verticalLayout->addWidget(stats_button);
 
         friends_button = new QPushButton(MainMenu);
-        friends_button->setObjectName(QStringLiteral("friends_button"));
+        friends_button->setObjectName(QString::fromUtf8("friends_button"));
         sizePolicy.setHeightForWidth(friends_button->sizePolicy().hasHeightForWidth());
         friends_button->setSizePolicy(sizePolicy);
 
         verticalLayout->addWidget(friends_button);
 
         chat_button = new QPushButton(MainMenu);
-        chat_button->setObjectName(QStringLiteral("chat_button"));
+        chat_button->setObjectName(QString::fromUtf8("chat_button"));
         sizePolicy.setHeightForWidth(chat_button->sizePolicy().hasHeightForWidth());
         chat_button->setSizePolicy(sizePolicy);
         chat_button->setLayoutDirection(Qt::LeftToRight);
@@ -90,14 +87,14 @@ public:
         verticalLayout->addWidget(chat_button);
 
         rules_button = new QPushButton(MainMenu);
-        rules_button->setObjectName(QStringLiteral("rules_button"));
+        rules_button->setObjectName(QString::fromUtf8("rules_button"));
         sizePolicy.setHeightForWidth(rules_button->sizePolicy().hasHeightForWidth());
         rules_button->setSizePolicy(sizePolicy);
 
         verticalLayout->addWidget(rules_button);
 
         quit_button = new QPushButton(MainMenu);
-        quit_button->setObjectName(QStringLiteral("quit_button"));
+        quit_button->setObjectName(QString::fromUtf8("quit_button"));
         sizePolicy.setHeightForWidth(quit_button->sizePolicy().hasHeightForWidth());
         quit_button->setSizePolicy(sizePolicy);
 
@@ -107,7 +104,7 @@ public:
         horizontalLayout->addLayout(verticalLayout);
 
         plainTextEdit = new QPlainTextEdit(MainMenu);
-        plainTextEdit->setObjectName(QStringLiteral("plainTextEdit"));
+        plainTextEdit->setObjectName(QString::fromUtf8("plainTextEdit"));
         QSizePolicy sizePolicy1(QSizePolicy::Preferred, QSizePolicy::Preferred);
         sizePolicy1.setHorizontalStretch(0);
         sizePolicy1.setVerticalStretch(0);
@@ -125,7 +122,7 @@ public:
         verticalLayout_2->addLayout(horizontalLayout);
 
         ad_banner = new QLabel(MainMenu);
-        ad_banner->setObjectName(QStringLiteral("ad_banner"));
+        ad_banner->setObjectName(QString::fromUtf8("ad_banner"));
         ad_banner->setPixmap(QPixmap(QString::fromUtf8(":/Calvin.jpg")));
         ad_banner->setAlignment(Qt::AlignBottom|Qt::AlignHCenter);
 
@@ -140,20 +137,19 @@ public:
         QWidget::setTabOrder(rules_button, quit_button);
 
         retranslateUi(MainMenu);
-        QObject::connect(quit_button, SIGNAL(clicked()), MainMenu, SLOT(close()));
 
         QMetaObject::connectSlotsByName(MainMenu);
     } // setupUi
 
     void retranslateUi(QWidget *MainMenu)
     {
-        MainMenu->setWindowTitle(QApplication::translate("MainMenu", "Main Menu", Q_NULLPTR));
-        play_button->setText(QApplication::translate("MainMenu", "Play", Q_NULLPTR));
-        stats_button->setText(QApplication::translate("MainMenu", "Statistics", Q_NULLPTR));
-        friends_button->setText(QApplication::translate("MainMenu", "Friends List", Q_NULLPTR));
-        chat_button->setText(QApplication::translate("MainMenu", "Chat", Q_NULLPTR));
-        rules_button->setText(QApplication::translate("MainMenu", "View Rules", Q_NULLPTR));
-        quit_button->setText(QApplication::translate("MainMenu", "Quit", Q_NULLPTR));
+        MainMenu->setWindowTitle(QApplication::translate("MainMenu", "Main Menu", nullptr));
+        play_button->setText(QApplication::translate("MainMenu", "Play", nullptr));
+        stats_button->setText(QApplication::translate("MainMenu", "Statistics", nullptr));
+        friends_button->setText(QApplication::translate("MainMenu", "Friends List", nullptr));
+        chat_button->setText(QApplication::translate("MainMenu", "Chat", nullptr));
+        rules_button->setText(QApplication::translate("MainMenu", "View Rules", nullptr));
+        quit_button->setText(QApplication::translate("MainMenu", "Quit", nullptr));
         plainTextEdit->setPlainText(QApplication::translate("MainMenu", "Helloooo\n"
 "\n"
 "\n"
@@ -201,7 +197,7 @@ public:
 "\n"
 "\n"
 "\n"
-"Wassup?", Q_NULLPTR));
+"Wassup?", nullptr));
         ad_banner->setText(QString());
     } // retranslateUi
 

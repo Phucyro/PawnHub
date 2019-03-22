@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>GameChoiceStatistics</class>
+ <widget class="QDialog" name="GameChoiceStatistics">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>400</width>
+    <height>400</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>400</width>
+    <height>400</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>400</width>
+    <height>400</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>15</y>
+     <width>381</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="pixmap">
+    <pixmap resource="calvin.qrc">:/Calvin.jpg</pixmap>
+   </property>
+   <property name="scaledContents">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QWidget" name="horizontalLayoutWidget">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>70</y>
+     <width>381</width>
+     <height>321</height>
+    </rect>
+   </property>
+   <layout class="QHBoxLayout" name="horizontalLayout">
+    <item>
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <item>
+       <widget class="QPushButton" name="classicPushButton">
+        <property name="text">
+         <string>Classic</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="darkPushButton">
+        <property name="text">
+         <string>Dark</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="hordePushButton">
+        <property name="text">
+         <string>Horde</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="alicePushButton">
+        <property name="text">
+         <string>Alice</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="realTimeClassicPushButton">
+        <property name="text">
+         <string>RealTime Classic</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="realTimeDarkPushButton">
+        <property name="text">
+         <string>RealTime Dark</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="realTimeHordePushButton">
+        <property name="text">
+         <string>RealTime Horde</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="realTimeAlicePushButton">
+        <property name="text">
+         <string>RealTime Alice</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <resources>
+  <include location="calvin.qrc"/>
+ </resources>
+ <connections/>
+</ui>
