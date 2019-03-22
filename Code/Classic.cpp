@@ -277,25 +277,31 @@ bool Classic::_notEnoughtPieces(){
 }
 
 void Classic::_updateStat(){
+	double playerElo1 = data.getEloRating(_player1->getName(), CLASSIC);
+	double playerElo2 = data.getEloRating(_player2->getName(), CLASSIC);
+	double playerExptWin1 = data.getExpectedWin(playerElo1, playerElo2);
+	double playerExptWin2 = data.getExpectedWin(playerElo2, playerElo1);
+
+
 	if (_winner == _player1){
 		std::cout << "White Player win !" << std::endl;
 		data.addUserClassicLose(_player2->getName());
 		data.addUserClassicWin(_player1->getName());
-		data.updateRating(_player2->getName(),data.expectedWin(data.getEloRating(_player2->getName()),data.getEloRating(_player1->getName())),LOSE);
-		data.updateRating(_player1->getName(),data.expectedWin(data.getEloRating(_player1->getName()),data.getEloRating(_player2->getName())),WIN);
+		data.updateRating(_player2->getName(), playerExptWin2, LOSE, CLASSIC);
+		data.updateRating(_player1->getName(), playerExptWin1, WIN,  CLASSIC);
 	}
 	else if (_winner == _player2) {
 		std::cout << "Black Player win !" << std::endl;
 		data.addUserClassicWin(_player2->getName());
 		data.addUserClassicLose(_player1->getName());
-		data.updateRating(_player2->getName(),data.expectedWin(data.getEloRating(_player2->getName()),data.getEloRating(_player1->getName())),WIN);
-		data.updateRating(_player1->getName(),data.expectedWin(data.getEloRating(_player1->getName()),data.getEloRating(_player2->getName())),LOSE);
+		data.updateRating(_player2->getName(), playerExptWin2, WIN,  CLASSIC);
+		data.updateRating(_player1->getName(), playerExptWin1, LOSE, CLASSIC);
 	}
-	else{
+	else {
 		data.addUserClassicDraw(_player2->getName());
 		data.addUserClassicDraw(_player1->getName());
-		data.updateRating(_player2->getName(),data.expectedWin(data.getEloRating(_player2->getName()),data.getEloRating(_player1->getName())),TIE);
-		data.updateRating(_player1->getName(),data.expectedWin(data.getEloRating(_player1->getName()),data.getEloRating(_player2->getName())),TIE);
+		data.updateRating(_player2->getName(), playerExptWin2, TIE, CLASSIC);
+		data.updateRating(_player1->getName(), playerExptWin1, TIE, CLASSIC);
 	}
 }
 

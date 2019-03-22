@@ -58,7 +58,8 @@ bool Data::createUserAccount(const std::string username, const std::string passw
   if (containsAccount(username))
     return false;
   // Si peut ajouter ami deco il faut creer le fichier dès la création
-  _dataMap[username] = UserData(password, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {}, {}, {}, 0.0);
+  _dataMap[username] = UserData(password, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0},
+    {0,0,0}, {0,0,0}, {0,0,0}, {}, {}, {}, {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0});
   updateLadderOnWin("Classic", {username, {0,0,0}});
   updateLadderOnWin("Dark", {username, {0,0,0}});
   updateLadderOnWin("Horde", {username, {0,0,0}});
@@ -85,7 +86,7 @@ void Data::loadUserData(const std::string username){
     std::string password;
     Stat classic, dark, horde, alice,realTimeClassic,realTimeDark,realTimeHorde,realTimeAlice;
     std::vector<std::string> friends, their_requests, my_requests;
-    double eloRank;
+    std::vector<double> eloRank;
 
     std::getline(file, data_line);
     password = data_line;
@@ -124,7 +125,7 @@ void Data::loadUserData(const std::string username){
     my_requests = splitString(data_line, ' ');
 
     std::getline(file, data_line);
-    eloRank = std::atof(data_line.c_str());
+    eloRank = toDoubleVector(splitString(data_line, ' '));
 
     _dataMap[username] = UserData(password, classic, dark, horde, alice, realTimeClassic,realTimeDark,realTimeHorde,realTimeAlice, friends, their_requests, my_requests, eloRank);
   }
@@ -156,7 +157,7 @@ void Data::saveUserData(const std::string username){
     file << strVectorToStr(std::get<9>(_dataMap[username])) << std::endl; // Liste amis
     file << strVectorToStr(std::get<10>(_dataMap[username])) << std::endl; // Demande ami
     file << strVectorToStr(std::get<11>(_dataMap[username])) << std::endl; // Mes demandes
-    file << std::fixed << std::setprecision(2) << std::get<12>(_dataMap[username]) << std::endl; //ELO rank
+    file << doubleVectorToStr(std::get<12>(_dataMap[username])) << std::endl;
     _dataMap.erase(username);
   }
   else {
@@ -1035,16 +1036,16 @@ Stat Data::getUserStat(const std::string username, const std::string gamemode){
   return user_stat;
 }
 
-double Data::getEloRating(std::string username){
+double Data::getEloRating(std::string username, unsigned int mode){
   double eloRating;
 
   _mutex.lock();
   if (_dataMap.find(username) != _dataMap.end()){
-    eloRating = std::get<12>(_dataMap[username]);
+    eloRating = std::get<12>(_dataMap[username])[mode];
   }
   else {
     loadUserData(username);
-    eloRating = std::get<12>(_dataMap[username]);
+    eloRating = std::get<12>(_dataMap[username])[mode];
     saveUserData(username);
   }
   _mutex.unlock();
@@ -1053,35 +1054,34 @@ double Data::getEloRating(std::string username){
 }
 
 
-double Data::expectedWin(double ratingA,double ratingB){
+double Data::getExpectedWin(double ratingA,double ratingB){
   //formula to calculate expected win depending on ELO rating
   return 1/(1+pow(10,((ratingB-ratingA)/400)));
 }
 
-void Data::updateRating(const std::string username, double expectedWin, double score){
+void Data::updateRating(const std::string username, double expectedWin, double score, unsigned int mode){
   //formula to update ELO depending of win expectation
   double eloRating;
   double calc;
 
   _mutex.lock();
   if (_dataMap.find(username) != _dataMap.end()){
-    eloRating = std::get<12>(_dataMap[username]);
+    eloRating = std::get<12>(_dataMap[username])[mode];
     calc = (eloRating + 32 * (score - expectedWin)); //formule magique de Arpad Elo
     if(calc<=0) calc = 0;// no negative ELO
     eloRating = calc;
-    std::get<12>(_dataMap[username]) = eloRating;
+    std::get<12>(_dataMap[username])[mode] = eloRating;
   }
   else {
     loadUserData(username);
-    eloRating = std::get<12>(_dataMap[username]);
-    eloRating = (eloRating + 32 * (score - expectedWin)); //formule magique de Arpad Elo
+    eloRating = std::get<12>(_dataMap[username])[mode];
+    calc = (eloRating + 32 * (score - expectedWin)); //formule magique de Arpad Elo
     if(calc<=0) calc = 0; // no negative ELO
     eloRating = calc;
-    std::get<12>(_dataMap[username]) = eloRating;
+    std::get<12>(_dataMap[username])[mode] = eloRating;
     saveUserData(username);
   }
   _mutex.unlock();
-
 }
 
 void Data::lockMutex(){

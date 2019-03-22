@@ -158,19 +158,24 @@ void Dark::_nextTurn() {
 }
 
 void Dark::_updateStat(){
+	double playerElo1 = data.getEloRating(_player1->getName(), DARK);
+	double playerElo2 = data.getEloRating(_player2->getName(), DARK);
+	double playerExptWin1 = data.getExpectedWin(playerElo1, playerElo2);
+	double playerExptWin2 = data.getExpectedWin(playerElo2, playerElo1);
+
 	if (_winner == _player1){
 		std::cout << "White Player win !" << std::endl;
 		data.addUserDarkLose(_player2->getName());
 		data.addUserDarkWin(_player1->getName());
-		data.updateRating(_player2->getName(),data.expectedWin(data.getEloRating(_player2->getName()),data.getEloRating(_player1->getName())),LOSE);
-		data.updateRating(_player1->getName(),data.expectedWin(data.getEloRating(_player1->getName()),data.getEloRating(_player2->getName())),WIN);
+		data.updateRating(_player2->getName(), playerExptWin2, LOSE, DARK);
+		data.updateRating(_player1->getName(), playerExptWin1, WIN,  DARK);
 	}
 	else if (_winner == _player2) {
 		std::cout << "Black Player win !" << std::endl;
 		data.addUserDarkWin(_player2->getName());
 		data.addUserDarkLose(_player1->getName());
-		data.updateRating(_player2->getName(),data.expectedWin(data.getEloRating(_player2->getName()),data.getEloRating(_player1->getName())),WIN);
-		data.updateRating(_player1->getName(),data.expectedWin(data.getEloRating(_player1->getName()),data.getEloRating(_player2->getName())),LOSE);
+		data.updateRating(_player2->getName(), playerExptWin2, WIN,  DARK);
+		data.updateRating(_player1->getName(), playerExptWin1, LOSE, DARK);
 	}
 }
 

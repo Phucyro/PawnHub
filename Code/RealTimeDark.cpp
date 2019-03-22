@@ -103,19 +103,24 @@ void RealTimeDark::_sendGameMode() {
 
 
 void RealTimeDark::_updateStat(){
+	double playerElo1 = data.getEloRating(_player1->getName(), RTDARK);
+	double playerElo2 = data.getEloRating(_player2->getName(), RTDARK);
+	double playerExptWin1 = data.getExpectedWin(playerElo1, playerElo2);
+	double playerExptWin2 = data.getExpectedWin(playerElo2, playerElo1);
+
 	if (_winner == _player1){
 		std::cout << "White Player win !" << std::endl;
 		data.addUserRealTimeDarkLose(_player2->getName());
 		data.addUserRealTimeDarkWin(_player1->getName());
-		data.updateRating(_player2->getName(),data.expectedWin(data.getEloRating(_player2->getName()),data.getEloRating(_player1->getName())),LOSE);
-		data.updateRating(_player1->getName(),data.expectedWin(data.getEloRating(_player1->getName()),data.getEloRating(_player2->getName())),WIN);
+		data.updateRating(_player2->getName(), playerExptWin2, LOSE, RTDARK);
+		data.updateRating(_player1->getName(), playerExptWin1, WIN,  RTDARK);
 	}
 	else if (_winner == _player2) {
 		std::cout << "Black Player win !" << std::endl;
 		data.addUserRealTimeDarkWin(_player2->getName());
 		data.addUserRealTimeDarkLose(_player1->getName());
-		data.updateRating(_player2->getName(),data.expectedWin(data.getEloRating(_player2->getName()),data.getEloRating(_player1->getName())),WIN);
-		data.updateRating(_player1->getName(),data.expectedWin(data.getEloRating(_player1->getName()),data.getEloRating(_player2->getName())),LOSE);
+		data.updateRating(_player2->getName(), playerExptWin2, WIN,  RTDARK);
+		data.updateRating(_player1->getName(), playerExptWin1, LOSE, RTDARK);
 	}
 }
 
@@ -204,7 +209,7 @@ bool RealTimeDark::_isVisible(Piece* piece, char color){
 		Piece* MaybePawn = nullptr;
 		if (_board->isInBoard(frontMaybePawn)) MaybePawn = RealTimeGame::_board->getCase(frontMaybePawn);
 		if (MaybePawn && MaybePawn->getColor() == 'b' && (MaybePawn->getType() == 'p' || MaybePawn->getType() == 'r' || MaybePawn->getType() == 'q' || MaybePawn->getType() == 'k')) return true;
-		
+
 		frontMaybePawn2 = Coordinate(piece->getCoord().getRealColumn(), piece->getCoord().getRealRow()+2);
 		MaybePawn = nullptr;
 		if (_board->isInBoard(frontMaybePawn2)) MaybePawn = RealTimeGame::_board->getCase(frontMaybePawn2);
@@ -234,7 +239,7 @@ bool RealTimeDark::_isVisible(Piece* piece, char color){
 		Piece* MaybePawn = nullptr;
 		if (_board->isInBoard(frontMaybePawn)) MaybePawn = RealTimeGame::_board->getCase(frontMaybePawn);
 		if (MaybePawn && MaybePawn->getColor() == 'w' && (MaybePawn->getType() == 'p' || MaybePawn->getType() == 'r' || MaybePawn->getType() == 'q' || MaybePawn->getType() == 'k')) return true;
-		
+
 		frontMaybePawn2 = Coordinate(piece->getCoord().getRealColumn(), piece->getCoord().getRealRow()-2);
 		MaybePawn = nullptr;
 		if (_board->isInBoard(frontMaybePawn2)) MaybePawn = RealTimeGame::_board->getCase(frontMaybePawn2);

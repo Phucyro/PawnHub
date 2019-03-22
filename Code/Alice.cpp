@@ -277,25 +277,30 @@ bool Alice::_notEnoughtPieces(){
 }
 
 void Alice::_updateStat(){
+	double playerElo1 = data.getEloRating(_player1->getName(), ALICE);
+	double playerElo2 = data.getEloRating(_player2->getName(), ALICE);
+	double playerExptWin1 = data.getExpectedWin(playerElo1, playerElo2);
+	double playerExptWin2 = data.getExpectedWin(playerElo2, playerElo1);
+
 	if (_winner == _player1){
 		std::cout << "White Player win !" << std::endl;
 		data.addUserAliceLose(_player2->getName());
 		data.addUserAliceWin(_player1->getName());
-		data.updateRating(_player2->getName(),data.expectedWin(data.getEloRating(_player2->getName()),data.getEloRating(_player1->getName())),LOSE);
-		data.updateRating(_player1->getName(),data.expectedWin(data.getEloRating(_player1->getName()),data.getEloRating(_player2->getName())),WIN);
+		data.updateRating(_player2->getName(), playerExptWin2, LOSE, ALICE);
+		data.updateRating(_player1->getName(), playerExptWin1, WIN,  ALICE);
 	}
 	else if (_winner == _player2) {
 		std::cout << "Black Player win !" << std::endl;
 		data.addUserAliceWin(_player2->getName());
 		data.addUserAliceLose(_player1->getName());
-		data.updateRating(_player2->getName(),data.expectedWin(data.getEloRating(_player2->getName()),data.getEloRating(_player1->getName())),WIN);
-		data.updateRating(_player1->getName(),data.expectedWin(data.getEloRating(_player1->getName()),data.getEloRating(_player2->getName())),LOSE);
+		data.updateRating(_player2->getName(), playerExptWin2, WIN,  ALICE);
+		data.updateRating(_player1->getName(), playerExptWin1, LOSE, ALICE);
 	}
 	else{
 		data.addUserAliceDraw(_player2->getName());
 		data.addUserAliceDraw(_player1->getName());
-		data.updateRating(_player2->getName(),data.expectedWin(data.getEloRating(_player2->getName()),data.getEloRating(_player1->getName())),TIE);
-		data.updateRating(_player1->getName(),data.expectedWin(data.getEloRating(_player1->getName()),data.getEloRating(_player2->getName())),TIE);
+		data.updateRating(_player2->getName(), playerExptWin2, TIE, ALICE);
+		data.updateRating(_player1->getName(), playerExptWin1, TIE, ALICE);
 	}
 }
 
