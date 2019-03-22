@@ -13,8 +13,10 @@ MainMenu::MainMenu(QWidget *parent) :
     ui(new Ui::MainMenu),
     connect(new ConnectionDialog),
     login(new LoginDialog),
-    socket(new Socket)
+    socket(new Socket),
+    client(new Client(socket))
 {
+    ui->setupUi(this);
     client_connect();
     client_login();
 }
@@ -24,18 +26,16 @@ MainMenu::~MainMenu()
     delete ui;
     if (connect) delete connect;
     if (login) delete login;
-    delete socket;
+    delete client;
 }
 
 void MainMenu::client_connect() {
-    bool connected = false;
+    bool good_hostname = false;
     std::string hostname;
-    ui->setupUi(this);
     do {
         hostname = (connect->ask_hostname()).toStdString();
-        connected = socket->connectToServer(hostname);
-        connected = true;
-    } while (!connected);
+        good_hostname = socket->connectToServer(hostname);
+    } while (!good_hostname);
 }
 
 void MainMenu::client_login() {

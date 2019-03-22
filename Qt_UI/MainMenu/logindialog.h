@@ -31,6 +31,8 @@ private:
     Ui::LoginDialog *ui;
     PasswordRepeat *pwd_repeat;
     QString *username, *password;
+
+    bool acceptable_format(QString);
 };
 
 #endif // LOGINDIALOG_H

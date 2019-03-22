@@ -15,7 +15,7 @@ public:
     explicit PasswordRepeat(QWidget *parent = nullptr);
     ~PasswordRepeat();
 
-    bool check_password(QString);
+    QString get_confirmation();
 
 private slots:
     void on_doneButton_clicked();
@@ -24,8 +24,7 @@ private slots:
 
 private:
     Ui::PasswordRepeat *ui;
-    bool matched;
-    QString password1, password2;
+    QString pwdConfirmation;
 };
 
 #endif // PASSWORDREPEAT_H

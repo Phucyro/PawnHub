@@ -1,6 +1,8 @@
 #include "mainmenu.h"
 #include <QApplication>
 
+#include <stdio.h>
+
 int main(int argc, char *argv[])
 {
     try {
@@ -10,7 +12,8 @@ int main(int argc, char *argv[])
 
         return a.exec();
     }
-    catch (std::runtime_error) {
+    catch (std::runtime_error& error) {
+        std::cout << error.what() << std::endl;
         return 1;
     }
 }

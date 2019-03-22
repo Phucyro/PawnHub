@@ -30,11 +30,11 @@ public:
   Client(Socket* socket) :
     _socket(socket),
     _pipeControl(nullptr),
+    _identified(false),
     _nickname("Guest"),
     _conversations({}),
     _isChatting(false),
     _chatTarget("all"),
-    _identified(false),
     _friendsList({}),
     _sentRequest({}),
     _recvRequest({})
@@ -42,7 +42,7 @@ public:
     _pipeControl = new int[2];
 
     if ((pipe(_pipeControl)) == -1){
-      throw std::runtime_error("Fail while constructing a pipe for an object of type 'Client': ");
+      throw std::runtime_error("Fail while constructing a pipe for an object of type 'Client'");
     }
   }
 

@@ -2,6 +2,7 @@
 #define MAINMENU_H
 
 #include "../../Communication/Socket.hpp"
+#include "../../Communication/Client.hpp"
 
 #include <QWidget>
 
@@ -35,6 +36,7 @@ private:
     ConnectionDialog *connect;
     LoginDialog *login;
     Socket* socket;
+    Client* client;
 
     void client_connect();
     void client_login();

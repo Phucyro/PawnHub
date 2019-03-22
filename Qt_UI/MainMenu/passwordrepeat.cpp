@@ -6,8 +6,7 @@
 PasswordRepeat::PasswordRepeat(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::PasswordRepeat),
-    password2(),
-    matched(false)
+    pwdConfirmation()
 {
     ui->setupUi(this);
 }
@@ -17,28 +16,27 @@ PasswordRepeat::~PasswordRepeat()
     delete ui;
 }
 
-bool PasswordRepeat::check_password(QString _password1)
+QString PasswordRepeat::get_confirmation()
 {
     exec();
-    password1 = _password1;
-    return matched;
+    return pwdConfirmation;
 }
 
 void PasswordRepeat::on_doneButton_clicked()
 {
-    password2 = ui->passwordInput->text();
+    pwdConfirmation = ui->passwordInput->text();
     close();
-    if (password1 != password2)
-     {
-         Message* m = new Message();
-         m->set_text("The passwords were not identical,\nplease try again.");
-         m->set_title("Oh No: Mismatched Passwords");
-         m->popup();
-     }
-    else
-    {
-        matched = true;
-    }
+//    if (password1 != password2)
+//     {
+//         Message* m = new Message();
+//         m->set_text("The passwords were not identical,\nplease try again.");
+//         m->set_title("Oh No: Mismatched Passwords");
+//         m->popup();
+//     }
+//    else
+//    {
+//        matched = true;
+//    }
 }
 
 void PasswordRepeat::on_cancelButton_clicked()
