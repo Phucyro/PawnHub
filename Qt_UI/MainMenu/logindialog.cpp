@@ -2,6 +2,7 @@
 #include "ui_logindialog.h"
 
 #include "../../Communication/CheckFormat.hpp"
+#include "../Modified_Files/ClientFunctions.hpp"
 
 #include "message.h"
 
@@ -11,6 +12,7 @@ LoginDialog::LoginDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::LoginDialog),
     pwd_repeat(new PasswordRepeat),
+    socket(nullptr),
     username(nullptr),
     password(nullptr)
 {
@@ -21,12 +23,14 @@ LoginDialog::~LoginDialog()
 {
     delete ui;
     delete pwd_repeat;
-    delete username;
-    delete password;
+    socket = nullptr;
+    username = nullptr;
+    password = nullptr;
 }
 
-void LoginDialog::get_login_deets(QString& username_holder, QString& password_holder)
+void LoginDialog::get_login_deets(Socket* socket_, QString& username_holder, QString& password_holder)
 {
+    socket = socket_;
     username = &username_holder;
     password = &password_holder;
     exec();
@@ -36,10 +40,7 @@ bool LoginDialog::acceptable_format(QString pwdConfirmation)
 {
     bool acceptable = false;
 
-    std::string usernameString = username->toStdString();
-    std::string passwordString = password->toStdString();
-    std::string pwdConfirmationString = pwdConfirmation.toStdString();
-    int format = checkFormat(usernameString, passwordString, pwdConfirmationString);
+    int format = checkFormat(username->toStdString(), password->toStdString(), pwdConfirmation.toStdString());
     if (format != 5)
     {
         Message* m = new Message();
@@ -75,6 +76,7 @@ void LoginDialog::on_loginButton_clicked()
     *password = ui->passwordInput->text();
     if (acceptable_format(*password))
     {
+        signIn(socket, username->toStdString(), password->toStdString());
         hide();
     }
 }
@@ -84,7 +86,8 @@ void LoginDialog::on_signupButton_clicked()
     QString pwdConfirmation = pwd_repeat->get_confirmation();
     if (acceptable_format(pwdConfirmation))
     {
-//        sign up
+        signUp(socket, username->toStdString(), password->toStdString());
+        hide();
     }
 }
 

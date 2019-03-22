@@ -15,7 +15,7 @@ CXX           = g++
 DEFINES       = -DQT_DEPRECATED_WARNINGS -DQT_NO_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB
 CFLAGS        = -pipe -O2 -Wall -W -D_REENTRANT -fPIC $(DEFINES)
 CXXFLAGS      = -pipe -O2 -std=gnu++11 -Wall -W -D_REENTRANT -fPIC $(DEFINES)
-INCPATH       = -I. -I../../Communication -isystem /usr/include/x86_64-linux-gnu/qt5 -isystem /usr/include/x86_64-linux-gnu/qt5/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt5/QtGui -isystem /usr/include/x86_64-linux-gnu/qt5/QtCore -I. -isystem /usr/include/libdrm -I. -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++
+INCPATH       = -I. -I../../Communication -I../Modified_Files -isystem /usr/include/x86_64-linux-gnu/qt5 -isystem /usr/include/x86_64-linux-gnu/qt5/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt5/QtGui -isystem /usr/include/x86_64-linux-gnu/qt5/QtCore -I. -isystem /usr/include/libdrm -I. -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++
 QMAKE         = /usr/lib/qt5/bin/qmake
 DEL_FILE      = rm -f
 CHK_DIR_EXISTS= test -d
@@ -54,21 +54,67 @@ SOURCES       = main.cpp \
 		mainmenu.cpp \
 		connectiondialog.cpp \
 		logindialog.cpp \
-		../../Communication/Socket.cpp qrc_calvin.cpp \
+		../../Communication/Socket.cpp \
+		../../Communication/Client.cpp \
+		../Modified_Files/CheckFormat.cpp \
+		passwordrepeat.cpp \
+		message.cpp \
+		game.cpp \
+		gameWithoutChat.cpp \
+		gameWithoutChatWithAlice.cpp \
+		gameWithAlice.cpp \
+		gameChoiceStatistics.cpp \
+		gameChoice.cpp \
+		friendTab.cpp \
+		statisticsTab.cpp qrc_calvin.cpp \
 		qrc_loremipsum.cpp \
+		qrc_catmeme.cpp \
 		moc_mainmenu.cpp \
 		moc_connectiondialog.cpp \
-		moc_logindialog.cpp
+		moc_logindialog.cpp \
+		moc_passwordrepeat.cpp \
+		moc_message.cpp \
+		moc_game.cpp \
+		moc_gameWithoutChat.cpp \
+		moc_gameWithoutChatWithAlice.cpp \
+		moc_gameWithAlice.cpp \
+		moc_gameChoice.cpp \
+		moc_gameChoiceStatistics.cpp \
+		moc_friendTab.cpp \
+		moc_statisticsTab.cpp
 OBJECTS       = main.o \
 		mainmenu.o \
 		connectiondialog.o \
 		logindialog.o \
 		Socket.o \
+		Client.o \
+		CheckFormat.o \
+		passwordrepeat.o \
+		message.o \
+		game.o \
+		gameWithoutChat.o \
+		gameWithoutChatWithAlice.o \
+		gameWithAlice.o \
+		gameChoiceStatistics.o \
+		gameChoice.o \
+		friendTab.o \
+		statisticsTab.o \
 		qrc_calvin.o \
 		qrc_loremipsum.o \
+		qrc_catmeme.o \
 		moc_mainmenu.o \
 		moc_connectiondialog.o \
-		moc_logindialog.o
+		moc_logindialog.o \
+		moc_passwordrepeat.o \
+		moc_message.o \
+		moc_game.o \
+		moc_gameWithoutChat.o \
+		moc_gameWithoutChatWithAlice.o \
+		moc_gameWithAlice.o \
+		moc_gameChoice.o \
+		moc_gameChoiceStatistics.o \
+		moc_friendTab.o \
+		moc_statisticsTab.o
 DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/unix.conf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/linux.conf \
@@ -145,11 +191,41 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		MainMenu.pro mainmenu.h \
 		connectiondialog.h \
 		logindialog.h \
-		../../Communication/Socket.hpp main.cpp \
+		../../Communication/Socket.hpp \
+		../../Communication/Client.hpp \
+		../../Communication/SplitString.hpp \
+		../Modified_Files/ClientFunctions.hpp \
+		../Modified_Files/ClientHandler.hpp \
+		../Modified_Files/ClientMessageHandler.hpp \
+		../Modified_Files/CheckFormat.hpp \
+		passwordrepeat.h \
+		message.h \
+		game.h \
+		gameWithoutChat.h \
+		gameWithoutChatWithAlice.h \
+		gameWithAlice.h \
+		gameChoice.h \
+		gameChoiceStatistics.h \
+		friendTab.h \
+		statisticsTab.h \
+		../Modified_Files/ClientFunctions.hpp \
+		../Modified_Files/ClientFunctions.hpp main.cpp \
 		mainmenu.cpp \
 		connectiondialog.cpp \
 		logindialog.cpp \
-		../../Communication/Socket.cpp
+		../../Communication/Socket.cpp \
+		../../Communication/Client.cpp \
+		../Modified_Files/CheckFormat.cpp \
+		passwordrepeat.cpp \
+		message.cpp \
+		game.cpp \
+		gameWithoutChat.cpp \
+		gameWithoutChatWithAlice.cpp \
+		gameWithAlice.cpp \
+		gameChoiceStatistics.cpp \
+		gameChoice.cpp \
+		friendTab.cpp \
+		statisticsTab.cpp
 QMAKE_TARGET  = MainMenu
 DESTDIR       = 
 TARGET        = MainMenu
@@ -158,7 +234,7 @@ TARGET        = MainMenu
 first: all
 ####### Build rules
 
-$(TARGET): ui_mainmenu.h ui_connectiondialog.h ui_logindialog.h $(OBJECTS)  
+$(TARGET): ui_connectiondialog.h ui_logindialog.h ui_passwordrepeat.h ui_message.h ui_mainmenu.h ui_game.h ui_gameWithoutChat.h ui_gameWithAlice.h ui_gameWithoutChatWithAlice.h ui_gameChoice.h ui_gameChoiceStatistics.h ui_friendTab.h ui_statisticsTab.h $(OBJECTS)  
 	$(LINK) $(LFLAGS) -o $(TARGET) $(OBJECTS) $(OBJCOMP) $(LIBS)
 
 Makefile: MainMenu.pro /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++/qmake.conf /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
@@ -237,6 +313,7 @@ Makefile: MainMenu.pro /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++/qmake.con
 		MainMenu.pro \
 		calvin.qrc \
 		loremipsum.qrc \
+		catmeme.qrc \
 		/usr/lib/x86_64-linux-gnu/libQt5Widgets.prl \
 		/usr/lib/x86_64-linux-gnu/libQt5Gui.prl \
 		/usr/lib/x86_64-linux-gnu/libQt5Core.prl
@@ -317,6 +394,7 @@ Makefile: MainMenu.pro /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++/qmake.con
 MainMenu.pro:
 calvin.qrc:
 loremipsum.qrc:
+catmeme.qrc:
 /usr/lib/x86_64-linux-gnu/libQt5Widgets.prl:
 /usr/lib/x86_64-linux-gnu/libQt5Gui.prl:
 /usr/lib/x86_64-linux-gnu/libQt5Core.prl:
@@ -334,11 +412,11 @@ dist: distdir FORCE
 distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
-	$(COPY_FILE) --parents calvin.qrc loremipsum.qrc $(DISTDIR)/
+	$(COPY_FILE) --parents calvin.qrc loremipsum.qrc catmeme.qrc $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents mainmenu.h connectiondialog.h logindialog.h ../../Communication/Socket.hpp $(DISTDIR)/
-	$(COPY_FILE) --parents main.cpp mainmenu.cpp connectiondialog.cpp logindialog.cpp ../../Communication/Socket.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents mainmenu.ui connectiondialog.ui logindialog.ui $(DISTDIR)/
+	$(COPY_FILE) --parents mainmenu.h connectiondialog.h logindialog.h ../../Communication/Socket.hpp ../../Communication/Client.hpp ../../Communication/SplitString.hpp ../Modified_Files/ClientFunctions.hpp ../Modified_Files/ClientHandler.hpp ../Modified_Files/ClientMessageHandler.hpp ../Modified_Files/CheckFormat.hpp passwordrepeat.h message.h game.h gameWithoutChat.h gameWithoutChatWithAlice.h gameWithAlice.h gameChoice.h gameChoiceStatistics.h friendTab.h statisticsTab.h ../Modified_Files/ClientFunctions.hpp ../Modified_Files/ClientFunctions.hpp $(DISTDIR)/
+	$(COPY_FILE) --parents main.cpp mainmenu.cpp connectiondialog.cpp logindialog.cpp ../../Communication/Socket.cpp ../../Communication/Client.cpp ../Modified_Files/CheckFormat.cpp passwordrepeat.cpp message.cpp game.cpp gameWithoutChat.cpp gameWithoutChatWithAlice.cpp gameWithAlice.cpp gameChoiceStatistics.cpp gameChoice.cpp friendTab.cpp statisticsTab.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents connectiondialog.ui logindialog.ui passwordrepeat.ui message.ui mainmenu.ui game.ui gameWithoutChat.ui gameWithAlice.ui gameWithoutChatWithAlice.ui gameChoice.ui gameChoiceStatistics.ui friendTab.ui statisticsTab.ui $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -362,9 +440,9 @@ check: first
 
 benchmark: first
 
-compiler_rcc_make_all: qrc_calvin.cpp qrc_loremipsum.cpp
+compiler_rcc_make_all: qrc_calvin.cpp qrc_loremipsum.cpp qrc_catmeme.cpp
 compiler_rcc_clean:
-	-$(DEL_FILE) qrc_calvin.cpp qrc_loremipsum.cpp
+	-$(DEL_FILE) qrc_calvin.cpp qrc_loremipsum.cpp qrc_catmeme.cpp
 qrc_calvin.cpp: calvin.qrc \
 		/usr/lib/qt5/bin/rcc \
 		Calvin.jpg
@@ -375,43 +453,97 @@ qrc_loremipsum.cpp: loremipsum.qrc \
 		text.txt
 	/usr/lib/qt5/bin/rcc -name loremipsum loremipsum.qrc -o qrc_loremipsum.cpp
 
+qrc_catmeme.cpp: catmeme.qrc \
+		/usr/lib/qt5/bin/rcc \
+		catmeme.jpg
+	/usr/lib/qt5/bin/rcc -name catmeme catmeme.qrc -o qrc_catmeme.cpp
+
 compiler_moc_predefs_make_all: moc_predefs.h
 compiler_moc_predefs_clean:
 	-$(DEL_FILE) moc_predefs.h
 moc_predefs.h: /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp
 	g++ -pipe -O2 -std=gnu++11 -Wall -W -dM -E -o moc_predefs.h /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp
 
-compiler_moc_header_make_all: moc_mainmenu.cpp moc_connectiondialog.cpp moc_logindialog.cpp
+compiler_moc_header_make_all: moc_mainmenu.cpp moc_connectiondialog.cpp moc_logindialog.cpp moc_passwordrepeat.cpp moc_message.cpp moc_game.cpp moc_gameWithoutChat.cpp moc_gameWithoutChatWithAlice.cpp moc_gameWithAlice.cpp moc_gameChoice.cpp moc_gameChoiceStatistics.cpp moc_friendTab.cpp moc_statisticsTab.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_mainmenu.cpp moc_connectiondialog.cpp moc_logindialog.cpp
+	-$(DEL_FILE) moc_mainmenu.cpp moc_connectiondialog.cpp moc_logindialog.cpp moc_passwordrepeat.cpp moc_message.cpp moc_game.cpp moc_gameWithoutChat.cpp moc_gameWithoutChatWithAlice.cpp moc_gameWithAlice.cpp moc_gameChoice.cpp moc_gameChoiceStatistics.cpp moc_friendTab.cpp moc_statisticsTab.cpp
 moc_mainmenu.cpp: ../../Communication/Socket.hpp \
 		../../Communication/config.hpp \
+		../../Communication/Client.hpp \
 		connectiondialog.h \
 		logindialog.h \
+		passwordrepeat.h \
 		mainmenu.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
-	/usr/lib/qt5/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/frawni/Documents/Projet_Info/Qt_UI/MainMenu -I/home/frawni/Documents/Projet_Info/Communication -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include mainmenu.h -o moc_mainmenu.cpp
+	/usr/lib/qt5/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/frawni/Documents/Projet_Info/Qt_UI/MainMenu -I/home/frawni/Documents/Projet_Info/Communication -I/home/frawni/Documents/Projet_Info/Qt_UI/Modified_Files -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include mainmenu.h -o moc_mainmenu.cpp
 
 moc_connectiondialog.cpp: connectiondialog.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
-	/usr/lib/qt5/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/frawni/Documents/Projet_Info/Qt_UI/MainMenu -I/home/frawni/Documents/Projet_Info/Communication -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include connectiondialog.h -o moc_connectiondialog.cpp
+	/usr/lib/qt5/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/frawni/Documents/Projet_Info/Qt_UI/MainMenu -I/home/frawni/Documents/Projet_Info/Communication -I/home/frawni/Documents/Projet_Info/Qt_UI/Modified_Files -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include connectiondialog.h -o moc_connectiondialog.cpp
 
-moc_logindialog.cpp: logindialog.h \
+moc_logindialog.cpp: passwordrepeat.h \
+		logindialog.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
-	/usr/lib/qt5/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/frawni/Documents/Projet_Info/Qt_UI/MainMenu -I/home/frawni/Documents/Projet_Info/Communication -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include logindialog.h -o moc_logindialog.cpp
+	/usr/lib/qt5/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/frawni/Documents/Projet_Info/Qt_UI/MainMenu -I/home/frawni/Documents/Projet_Info/Communication -I/home/frawni/Documents/Projet_Info/Qt_UI/Modified_Files -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include logindialog.h -o moc_logindialog.cpp
+
+moc_passwordrepeat.cpp: passwordrepeat.h \
+		moc_predefs.h \
+		/usr/lib/qt5/bin/moc
+	/usr/lib/qt5/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/frawni/Documents/Projet_Info/Qt_UI/MainMenu -I/home/frawni/Documents/Projet_Info/Communication -I/home/frawni/Documents/Projet_Info/Qt_UI/Modified_Files -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include passwordrepeat.h -o moc_passwordrepeat.cpp
+
+moc_message.cpp: message.h \
+		moc_predefs.h \
+		/usr/lib/qt5/bin/moc
+	/usr/lib/qt5/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/frawni/Documents/Projet_Info/Qt_UI/MainMenu -I/home/frawni/Documents/Projet_Info/Communication -I/home/frawni/Documents/Projet_Info/Qt_UI/Modified_Files -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include message.h -o moc_message.cpp
+
+moc_game.cpp: game.h \
+		moc_predefs.h \
+		/usr/lib/qt5/bin/moc
+	/usr/lib/qt5/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/frawni/Documents/Projet_Info/Qt_UI/MainMenu -I/home/frawni/Documents/Projet_Info/Communication -I/home/frawni/Documents/Projet_Info/Qt_UI/Modified_Files -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include game.h -o moc_game.cpp
+
+moc_gameWithoutChat.cpp: gameWithoutChat.h \
+		moc_predefs.h \
+		/usr/lib/qt5/bin/moc
+	/usr/lib/qt5/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/frawni/Documents/Projet_Info/Qt_UI/MainMenu -I/home/frawni/Documents/Projet_Info/Communication -I/home/frawni/Documents/Projet_Info/Qt_UI/Modified_Files -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include gameWithoutChat.h -o moc_gameWithoutChat.cpp
+
+moc_gameWithoutChatWithAlice.cpp: gameWithoutChatWithAlice.h \
+		moc_predefs.h \
+		/usr/lib/qt5/bin/moc
+	/usr/lib/qt5/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/frawni/Documents/Projet_Info/Qt_UI/MainMenu -I/home/frawni/Documents/Projet_Info/Communication -I/home/frawni/Documents/Projet_Info/Qt_UI/Modified_Files -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include gameWithoutChatWithAlice.h -o moc_gameWithoutChatWithAlice.cpp
+
+moc_gameWithAlice.cpp: gameWithAlice.h \
+		moc_predefs.h \
+		/usr/lib/qt5/bin/moc
+	/usr/lib/qt5/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/frawni/Documents/Projet_Info/Qt_UI/MainMenu -I/home/frawni/Documents/Projet_Info/Communication -I/home/frawni/Documents/Projet_Info/Qt_UI/Modified_Files -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include gameWithAlice.h -o moc_gameWithAlice.cpp
+
+moc_gameChoice.cpp: gameChoice.h \
+		moc_predefs.h \
+		/usr/lib/qt5/bin/moc
+	/usr/lib/qt5/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/frawni/Documents/Projet_Info/Qt_UI/MainMenu -I/home/frawni/Documents/Projet_Info/Communication -I/home/frawni/Documents/Projet_Info/Qt_UI/Modified_Files -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include gameChoice.h -o moc_gameChoice.cpp
+
+moc_gameChoiceStatistics.cpp: gameChoiceStatistics.h \
+		moc_predefs.h \
+		/usr/lib/qt5/bin/moc
+	/usr/lib/qt5/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/frawni/Documents/Projet_Info/Qt_UI/MainMenu -I/home/frawni/Documents/Projet_Info/Communication -I/home/frawni/Documents/Projet_Info/Qt_UI/Modified_Files -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include gameChoiceStatistics.h -o moc_gameChoiceStatistics.cpp
+
+moc_friendTab.cpp: friendTab.h \
+		moc_predefs.h \
+		/usr/lib/qt5/bin/moc
+	/usr/lib/qt5/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/frawni/Documents/Projet_Info/Qt_UI/MainMenu -I/home/frawni/Documents/Projet_Info/Communication -I/home/frawni/Documents/Projet_Info/Qt_UI/Modified_Files -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include friendTab.h -o moc_friendTab.cpp
+
+moc_statisticsTab.cpp: statisticsTab.h \
+		moc_predefs.h \
+		/usr/lib/qt5/bin/moc
+	/usr/lib/qt5/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/frawni/Documents/Projet_Info/Qt_UI/MainMenu -I/home/frawni/Documents/Projet_Info/Communication -I/home/frawni/Documents/Projet_Info/Qt_UI/Modified_Files -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include statisticsTab.h -o moc_statisticsTab.cpp
 
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
-compiler_uic_make_all: ui_mainmenu.h ui_connectiondialog.h ui_logindialog.h
+compiler_uic_make_all: ui_connectiondialog.h ui_logindialog.h ui_passwordrepeat.h ui_message.h ui_mainmenu.h ui_game.h ui_gameWithoutChat.h ui_gameWithAlice.h ui_gameWithoutChatWithAlice.h ui_gameChoice.h ui_gameChoiceStatistics.h ui_friendTab.h ui_statisticsTab.h
 compiler_uic_clean:
-	-$(DEL_FILE) ui_mainmenu.h ui_connectiondialog.h ui_logindialog.h
-ui_mainmenu.h: mainmenu.ui \
-		/usr/lib/qt5/bin/uic
-	/usr/lib/qt5/bin/uic mainmenu.ui -o ui_mainmenu.h
-
+	-$(DEL_FILE) ui_connectiondialog.h ui_logindialog.h ui_passwordrepeat.h ui_message.h ui_mainmenu.h ui_game.h ui_gameWithoutChat.h ui_gameWithAlice.h ui_gameWithoutChatWithAlice.h ui_gameChoice.h ui_gameChoiceStatistics.h ui_friendTab.h ui_statisticsTab.h
 ui_connectiondialog.h: connectiondialog.ui \
 		/usr/lib/qt5/bin/uic
 	/usr/lib/qt5/bin/uic connectiondialog.ui -o ui_connectiondialog.h
@@ -419,6 +551,50 @@ ui_connectiondialog.h: connectiondialog.ui \
 ui_logindialog.h: logindialog.ui \
 		/usr/lib/qt5/bin/uic
 	/usr/lib/qt5/bin/uic logindialog.ui -o ui_logindialog.h
+
+ui_passwordrepeat.h: passwordrepeat.ui \
+		/usr/lib/qt5/bin/uic
+	/usr/lib/qt5/bin/uic passwordrepeat.ui -o ui_passwordrepeat.h
+
+ui_message.h: message.ui \
+		/usr/lib/qt5/bin/uic
+	/usr/lib/qt5/bin/uic message.ui -o ui_message.h
+
+ui_mainmenu.h: mainmenu.ui \
+		/usr/lib/qt5/bin/uic
+	/usr/lib/qt5/bin/uic mainmenu.ui -o ui_mainmenu.h
+
+ui_game.h: game.ui \
+		/usr/lib/qt5/bin/uic
+	/usr/lib/qt5/bin/uic game.ui -o ui_game.h
+
+ui_gameWithoutChat.h: gameWithoutChat.ui \
+		/usr/lib/qt5/bin/uic
+	/usr/lib/qt5/bin/uic gameWithoutChat.ui -o ui_gameWithoutChat.h
+
+ui_gameWithAlice.h: gameWithAlice.ui \
+		/usr/lib/qt5/bin/uic
+	/usr/lib/qt5/bin/uic gameWithAlice.ui -o ui_gameWithAlice.h
+
+ui_gameWithoutChatWithAlice.h: gameWithoutChatWithAlice.ui \
+		/usr/lib/qt5/bin/uic
+	/usr/lib/qt5/bin/uic gameWithoutChatWithAlice.ui -o ui_gameWithoutChatWithAlice.h
+
+ui_gameChoice.h: gameChoice.ui \
+		/usr/lib/qt5/bin/uic
+	/usr/lib/qt5/bin/uic gameChoice.ui -o ui_gameChoice.h
+
+ui_gameChoiceStatistics.h: gameChoiceStatistics.ui \
+		/usr/lib/qt5/bin/uic
+	/usr/lib/qt5/bin/uic gameChoiceStatistics.ui -o ui_gameChoiceStatistics.h
+
+ui_friendTab.h: friendTab.ui \
+		/usr/lib/qt5/bin/uic
+	/usr/lib/qt5/bin/uic friendTab.ui -o ui_friendTab.h
+
+ui_statisticsTab.h: statisticsTab.ui \
+		/usr/lib/qt5/bin/uic
+	/usr/lib/qt5/bin/uic statisticsTab.ui -o ui_statisticsTab.h
 
 compiler_yacc_decl_make_all:
 compiler_yacc_decl_clean:
@@ -433,15 +609,23 @@ compiler_clean: compiler_rcc_clean compiler_moc_predefs_clean compiler_moc_heade
 main.o: main.cpp mainmenu.h \
 		../../Communication/Socket.hpp \
 		../../Communication/config.hpp \
-		connectiondialog.h \
-		logindialog.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o main.cpp
-
-mainmenu.o: mainmenu.cpp mainmenu.h \
-		../../Communication/Socket.hpp \
-		../../Communication/config.hpp \
+		../../Communication/Client.hpp \
 		connectiondialog.h \
 		logindialog.h \
+		passwordrepeat.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o main.cpp
+
+mainmenu.o: mainmenu.cpp ../../Communication/Socket.hpp \
+		../../Communication/config.hpp \
+		../../Communication/Client.hpp \
+		../Modified_Files/ClientMessageHandler.hpp \
+		../../Communication/SplitString.hpp \
+		../Modified_Files/ClientFunctions.hpp \
+		../Modified_Files/ClientHandler.hpp \
+		mainmenu.h \
+		connectiondialog.h \
+		logindialog.h \
+		passwordrepeat.h \
 		ui_mainmenu.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainmenu.o mainmenu.cpp
 
@@ -450,18 +634,80 @@ connectiondialog.o: connectiondialog.cpp connectiondialog.h \
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o connectiondialog.o connectiondialog.cpp
 
 logindialog.o: logindialog.cpp logindialog.h \
-		ui_logindialog.h
+		passwordrepeat.h \
+		ui_logindialog.h \
+		../../Communication/CheckFormat.hpp \
+		../../Display/MenuHandler/MenuHandler.hpp \
+		../Modified_Files/ClientFunctions.hpp \
+		../../Communication/Socket.hpp \
+		../../Communication/config.hpp \
+		../../Communication/Client.hpp \
+		message.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o logindialog.o logindialog.cpp
 
 Socket.o: ../../Communication/Socket.cpp ../../Communication/Socket.hpp \
 		../../Communication/config.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Socket.o ../../Communication/Socket.cpp
 
+Client.o: ../../Communication/Client.cpp ../../Communication/Client.hpp \
+		../../Communication/Socket.hpp \
+		../../Communication/config.hpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Client.o ../../Communication/Client.cpp
+
+CheckFormat.o: ../Modified_Files/CheckFormat.cpp ../Modified_Files/CheckFormat.hpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o CheckFormat.o ../Modified_Files/CheckFormat.cpp
+
+passwordrepeat.o: passwordrepeat.cpp passwordrepeat.h \
+		ui_passwordrepeat.h \
+		message.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o passwordrepeat.o passwordrepeat.cpp
+
+message.o: message.cpp message.h \
+		ui_message.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o message.o message.cpp
+
+game.o: game.cpp game.h \
+		ui_game.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o game.o game.cpp
+
+gameWithoutChat.o: gameWithoutChat.cpp gameWithoutChat.h \
+		ui_gameWithoutChat.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o gameWithoutChat.o gameWithoutChat.cpp
+
+gameWithoutChatWithAlice.o: gameWithoutChatWithAlice.cpp gameWithoutChatWithAlice.h \
+		ui_gameWithoutChatWithAlice.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o gameWithoutChatWithAlice.o gameWithoutChatWithAlice.cpp
+
+gameWithAlice.o: gameWithAlice.cpp gameWithAlice.h \
+		ui_gameWithAlice.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o gameWithAlice.o gameWithAlice.cpp
+
+gameChoiceStatistics.o: gameChoiceStatistics.cpp gameChoiceStatistics.h \
+		ui_gameChoiceStatistics.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o gameChoiceStatistics.o gameChoiceStatistics.cpp
+
+gameChoice.o: gameChoice.cpp gameChoice.h \
+		ui_gameChoice.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o gameChoice.o gameChoice.cpp
+
+friendTab.o: friendTab.cpp friendTab.h \
+		ui_friendTab.h \
+		message.h \
+		ui_message.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o friendTab.o friendTab.cpp
+
+statisticsTab.o: statisticsTab.cpp statisticsTab.h \
+		ui_statisticsTab.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o statisticsTab.o statisticsTab.cpp
+
 qrc_calvin.o: qrc_calvin.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o qrc_calvin.o qrc_calvin.cpp
 
 qrc_loremipsum.o: qrc_loremipsum.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o qrc_loremipsum.o qrc_loremipsum.cpp
+
+qrc_catmeme.o: qrc_catmeme.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o qrc_catmeme.o qrc_catmeme.cpp
 
 moc_mainmenu.o: moc_mainmenu.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainmenu.o moc_mainmenu.cpp
@@ -471,6 +717,36 @@ moc_connectiondialog.o: moc_connectiondialog.cpp
 
 moc_logindialog.o: moc_logindialog.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_logindialog.o moc_logindialog.cpp
+
+moc_passwordrepeat.o: moc_passwordrepeat.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_passwordrepeat.o moc_passwordrepeat.cpp
+
+moc_message.o: moc_message.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_message.o moc_message.cpp
+
+moc_game.o: moc_game.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_game.o moc_game.cpp
+
+moc_gameWithoutChat.o: moc_gameWithoutChat.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_gameWithoutChat.o moc_gameWithoutChat.cpp
+
+moc_gameWithoutChatWithAlice.o: moc_gameWithoutChatWithAlice.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_gameWithoutChatWithAlice.o moc_gameWithoutChatWithAlice.cpp
+
+moc_gameWithAlice.o: moc_gameWithAlice.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_gameWithAlice.o moc_gameWithAlice.cpp
+
+moc_gameChoice.o: moc_gameChoice.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_gameChoice.o moc_gameChoice.cpp
+
+moc_gameChoiceStatistics.o: moc_gameChoiceStatistics.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_gameChoiceStatistics.o moc_gameChoiceStatistics.cpp
+
+moc_friendTab.o: moc_friendTab.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_friendTab.o moc_friendTab.cpp
+
+moc_statisticsTab.o: moc_statisticsTab.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_statisticsTab.o moc_statisticsTab.cpp
 
 ####### Install
 

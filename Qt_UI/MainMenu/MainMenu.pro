@@ -32,7 +32,9 @@ SOURCES += \
         mainmenu.cpp \
     connectiondialog.cpp \
     logindialog.cpp \
-    ../../Communication/socket.cpp \
+    ../../Communication/Socket.cpp \
+    ../../Communication/Client.cpp \
+    ../../Communication/SplitString.cpp \
     ../Modified_Files/CheckFormat.cpp \
     passwordrepeat.cpp \
     message.cpp \
@@ -49,7 +51,12 @@ HEADERS += \
         mainmenu.h \
     connectiondialog.h \
     logindialog.h \
-    ../../Communication/socket.hpp \
+    ../../Communication/Socket.hpp \
+    ../../Communication/Client.hpp \
+    ../../Communication/SplitString.hpp \
+    ../Modified_Files/ClientFunctions.hpp \
+    ../Modified_Files/ClientHandler.hpp \
+    ../Modified_Files/ClientMessageHandler.hpp \
     ../Modified_Files/CheckFormat.hpp \
     passwordrepeat.h \
     message.h \
@@ -60,7 +67,9 @@ HEADERS += \
     gameChoice.h \
     gameChoiceStatistics.h \
     friendTab.h \
-    statisticsTab.h
+    statisticsTab.h \
+    ../Modified_Files/ClientFunctions.hpp \
+    ../Modified_Files/ClientFunctions.hpp
 
 FORMS += \
     connectiondialog.ui \

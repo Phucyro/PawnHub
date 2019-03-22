@@ -5,6 +5,8 @@
 
 #include "passwordrepeat.h"
 
+class Socket;
+
 namespace Ui {
 class LoginDialog;
 }
@@ -17,7 +19,7 @@ public:
     explicit LoginDialog(QWidget *parent = nullptr);
     ~LoginDialog();
 
-    void get_login_deets(QString&, QString&);
+    void get_login_deets(Socket*, QString&, QString&);
 
 private slots:
     void on_loginButton_clicked();
@@ -30,6 +32,7 @@ private slots:
 private:
     Ui::LoginDialog *ui;
     PasswordRepeat *pwd_repeat;
+    Socket* socket;
     QString *username, *password;
 
     bool acceptable_format(QString);

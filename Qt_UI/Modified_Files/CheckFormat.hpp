@@ -1,5 +1,5 @@
-#ifndef _CHECKFORMAT_H_
-#define _CHECKFORMAT_H_
+#ifndef CHECKFORMAT_H
+#define CHECKFORMAT_H
 
 #include <string>
 #include <vector>

@@ -1,4 +1,6 @@
-//#include "../../Communication/Socket.hpp"
+#include "../../Communication/Socket.hpp"
+#include "../../Communication/Client.hpp"
+#include "../Modified_Files/ClientMessageHandler.hpp"
 
 #include "mainmenu.h"
 #include "ui_mainmenu.h"
@@ -7,6 +9,8 @@
 
 #include <QDesktopServices>
 #include <QUrl>
+
+#include <thread>
 
 MainMenu::MainMenu(QWidget *parent) :
     QWidget(parent),
@@ -18,14 +22,15 @@ MainMenu::MainMenu(QWidget *parent) :
 {
     ui->setupUi(this);
     client_connect();
+    std::thread receiveThread(receiveMessageHandler, client);
     client_login();
 }
 
 MainMenu::~MainMenu()
 {
     delete ui;
-    if (connect) delete connect;
-    if (login) delete login;
+    if (connect != nullptr) delete connect;
+    if (login != nullptr) delete login;
     delete client;
 }
 
@@ -36,11 +41,19 @@ void MainMenu::client_connect() {
         hostname = (connect->ask_hostname()).toStdString();
         good_hostname = socket->connectToServer(hostname);
     } while (!good_hostname);
+    connect->close();
 }
 
 void MainMenu::client_login() {
     QString username, password;
-    login->get_login_deets(username, password);
+    do
+    {
+        login->get_login_deets(socket, username, password);
+        std::cout << client->readPipe() << std::endl;
+    }
+    while (!(client->isIdentified()));
+    login->close();
+    client->setName(username.toStdString());
 }
 
 void MainMenu::on_playButton_clicked()
