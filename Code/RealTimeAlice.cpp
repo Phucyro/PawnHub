@@ -102,17 +102,19 @@ void RealTimeAlice::_sendGameMode() {
 }
 
 void RealTimeAlice::_sendBoard(){
-	std::string state;
-	state += '1';
-	this->_boardState(state);
-	_player1->showBoard(state);
-	_player2->showBoard(state);
-	state.clear();
-	state += '2';
-	this->_boardState(state);
-	_player1->showBoard(state);
-	_player2->showBoard(state);
-	_lastUpdate = _turn;
+	if(!_winner){
+		std::string state;
+		state += '1';
+		this->_boardState(state);
+		_player1->showBoard(state);
+		_player2->showBoard(state);
+		state.clear();
+		state += '2';
+		this->_boardState(state);
+		_player1->showBoard(state);
+		_player2->showBoard(state);
+		_lastUpdate = _turn;
+	}
 }
 
 void RealTimeAlice::_sendStart() {

@@ -4,6 +4,7 @@
 #include <functional>
 
 #include "Socket.hpp"
+#include "Timer.hpp"
 #include "../Display/GameDisplay/board.hpp"
 
 #ifndef _CCONTROL_H_
@@ -17,6 +18,7 @@ private:
   bool is_alice;
   bool is_real_time;
   char _color;
+  Timer timer;
 
   std::map<std::string, std::string> headerSendMap = {
    {"board", "B"},
@@ -24,9 +26,12 @@ private:
    {"gamemode", "G"},
    {"colour", "X"},
    {"turn", "T"},
+   {"time", "C"},
    {"askmove", "A"},
    {"promote", "P"},
    {"move", "M"},
+   {"goodmove", "L"},
+   {"first", "F"},
   };
 
 
@@ -40,8 +45,11 @@ private:
   void receiveGameMode(std::string);
   void receivePlayerColour(std::string);
   void receiveTurn(std::string);
+  void receiveTime(std::string);
+  void receiveGoodMove(std::string message);
   void receiveAskMove(std::string);
   void receiveAskPromotion(std::string);
+  void receiveFirstMessage(std::string);
 
   void sendMove(std::string);
   void sendPromotion(std::string);
@@ -52,12 +60,16 @@ private:
     {'G', &ClientGameControl::receiveGameMode},
     {'X', &ClientGameControl::receivePlayerColour},
     {'T', &ClientGameControl::receiveTurn},
+    {'C', &ClientGameControl::receiveTime},
     {'A', &ClientGameControl::receiveAskMove},
     {'P', &ClientGameControl::receiveAskPromotion},
+    {'L', &ClientGameControl::receiveGoodMove},
+    {'F', &ClientGameControl::receiveFirstMessage},
   };
   void listenSocketAndKeyboard();
   void handleMessage();
   void startParty();
+  void cleanOldMsg();
 };
 
 #endif

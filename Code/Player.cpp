@@ -71,6 +71,10 @@ void Player::setColor(char color){
 }
 
 
+void Player::transferFirstMsg(){
+	_control->sendFirstMsg(getSocket());
+}
+
 void Player::transferStart() {
 	_control->sendStart(getSocket());
 }
@@ -95,6 +99,10 @@ void Player::transferSurrend(){
 	_control->sendSurrend(getSocket());
 }
 
+void Player::transferTimeout(){
+	_control->sendTimeout(getSocket());
+}
+
 void Player::transferGameMode(std::string& game) {
 	_control->sendGameMode(getSocket(), game);
 }
@@ -105,6 +113,14 @@ void Player::transferColour(std::string& colour) {
 
 void Player::transferTurn(unsigned turn) {
 	_control->sendTurn(getSocket(), turn);
+}
+
+void Player::transferTime(int time) {
+	_control->sendTime(getSocket(), time);
+}
+
+void Player::transferGoodMove() {
+	_control->sendGoodMove(getSocket());
 }
 
 void Player::receiveMove(std::string& message){

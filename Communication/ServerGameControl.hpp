@@ -24,9 +24,12 @@ private:
    {"colour", "X"},
    {"gamemode", "G"},
    {"turn", "T"},
+   {"time", "C"},
    {"askmove", "A"},
    {"move", "M"},
    {"promote", "P"},
+   {"goodmove", "L"},
+   {"firstmsg", "F"},
   };
 
 	void _playerDisconected(Socket*);
@@ -43,6 +46,7 @@ private:
 
 public:
   void sendBoard(Socket*, std::string);
+  void sendFirstMsg(Socket*);
   void sendFirstBoard(Socket*, std::string);
   void sendSecondBoard(Socket*, std::string);
   void sendUpdate(Socket*, std::string);
@@ -51,9 +55,12 @@ public:
   void sendCheckmate(Socket*, std::string);
   void sendStalemate(Socket*);
   void sendSurrend(Socket*);
+  void sendTimeout(Socket*);
   void sendGameMode(Socket*, std::string);
   void sendPlayerColour(Socket*, std::string);
   void sendTurn(Socket*, unsigned);
+  void sendTime(Socket*, int);
+  void sendGoodMove(Socket*);
   void sendAskMove(Socket*);
   void sendAskPromotion(Socket*);
 

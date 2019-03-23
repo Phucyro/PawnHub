@@ -137,25 +137,6 @@ bool Dark::_executeMove(Coordinate start, Coordinate end, char playerColor){
 	return movingPiece->move(end, _board, *this);
 }
 
-void Dark::_nextTurn() {
-	Player *currentPlayer = _getCurrentPlayer();
-	char playerColor = currentPlayer == _player1 ? 'w':'b';
-
-	bool isMoveValid = false;
-	std::string playerMove;
-	while(!isMoveValid){
-		playerMove = currentPlayer->askMove();
-		if (playerMove[0] == '/' && playerMove[1] == 'e' && playerMove[2] == 'n' && playerMove[3] == 'd'){
-			if(currentPlayer == _player1) _winner = _player2;
-			else _winner = _player1;
-			isMoveValid = true;
-		}
-		else if (this->_fitInBoard(playerMove)){
-			Coordinate start = Coordinate(playerMove[0], playerMove[1]), end = Coordinate(playerMove[2], playerMove[3]);
-			isMoveValid = this->_executeMove(start, end, playerColor);
-		}
-	}
-}
 
 void Dark::_updateStat(){
 	if (_winner == _player1){
@@ -176,7 +157,6 @@ void Dark::_updateStat(){
 
 bool Dark::_isFinish() {
 	if (_winner){
-		_sendSurrend();
 		_updateStat();
 		return true;
 	}
@@ -205,13 +185,15 @@ bool Dark::_isStalemate(char playerColor){
 }
 
 void Dark::_sendBoard(){
-	std::string state;
-	state += 'w';
-	this->_boardState(state);
-	_player1->showBoard(state);
-	state[0] = 'b';
-	this->_boardState(state);
-	_player2->showBoard(state);
+	if (!_winner){
+		std::string state;
+		state += 'w';
+		this->_boardState(state);
+		_player1->showBoard(state);
+		state[0] = 'b';
+		this->_boardState(state);
+		_player2->showBoard(state);
+	}
 }
 
 void Dark::_boardState(std::string& state){

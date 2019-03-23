@@ -24,16 +24,15 @@ TurnBasedGame& TurnBasedGame::operator= (TurnBasedGame&& original){
 
 
 
+void TurnBasedGame::_sendTime(){
+	_player1->transferTime(600);
+	_player2->transferTime(600);
+}
+
+
 void TurnBasedGame::start()
 {
-	_player1->setColor('w');
-	_player2->setColor('b');
-	std::cout << "Starting Game" << std::endl;
-	this->_initBoard();
-	this->_sendGameMode();
-	this->_sendPlayerColour();
-	this->_sendStart();
-	this->_sendBoard();
+	this->Game::start();
 	do
 	{
 		++_turn;
@@ -43,6 +42,37 @@ void TurnBasedGame::start()
 	}
 	while(! this->_isFinish());
 	std::cout << "Game finished" << std::endl;
+}
+
+void TurnBasedGame::_nextTurn(){
+	Player *currentPlayer = _getCurrentPlayer();
+	char playerColor = currentPlayer == _player1 ? 'w':'b';
+	Coordinate start,end;
+
+	bool isMoveValid = false;
+	std::string playerMove;
+	while(!isMoveValid){
+		playerMove = currentPlayer->askMove();
+		std::cout<<"game received: "<<playerMove<<std::endl;
+		if (playerMove[0] == '/' && playerMove[1] == 'e' && playerMove[2] == 'n' && playerMove[3] == 'd'){
+			if(currentPlayer == _player1) _winner = _player2;
+			else _winner = _player1;
+			_sendSurrend();
+			isMoveValid = true;
+		}
+		else if (playerMove[0] == '/' && playerMove[1] == 't' && playerMove[2] == 'i' && playerMove[3] == 'm'){
+			if(currentPlayer == _player1) _winner = _player2;
+			else _winner = _player1;
+			_sendTimeout();
+			isMoveValid = true;
+		}
+		else if (this->_fitInBoard(playerMove)){
+			start = Coordinate(playerMove[0], playerMove[1]);
+			end = Coordinate(playerMove[2], playerMove[3]);
+			isMoveValid = this->_executeMove(start, end, playerColor);
+		}
+	}
+	currentPlayer->transferGoodMove();
 }
 
 #endif

@@ -149,28 +149,6 @@ bool Alice::_executeMove(Coordinate start, Coordinate end, char playerColor){
 	return movingPiece->move(end, _board, *this);
 }
 
-void Alice::_nextTurn() {
-	Player *currentPlayer = _getCurrentPlayer();
-	char playerColor = currentPlayer == _player1 ? 'w':'b';
-	Coordinate start,end;
-
-	bool isMoveValid = false;
-	std::string playerMove;
-	while(!isMoveValid){
-		playerMove = currentPlayer->askMove();
-		std::cout<<"game received: "<<playerMove<<std::endl;
-		if (playerMove[0] == '/' && playerMove[1] == 'e' && playerMove[2] == 'n' && playerMove[3] == 'd'){
-			if(currentPlayer == _player1) _winner = _player2;
-			else _winner = _player1;
-			isMoveValid = true;
-		}
-		else if (this->_fitInBoard(playerMove)){
-			start = Coordinate(playerMove[0], playerMove[1]);
-			end = Coordinate(playerMove[2], playerMove[3]);
-			isMoveValid = this->_executeMove(start, end, playerColor);
-		}
-	}
-}
 
 bool Alice::_isCheckmate(char playerColor){
 	Piece *dangerousPiece = nullptr, *inTest;
@@ -301,7 +279,6 @@ void Alice::_updateStat(){
 
 bool Alice::_isFinish() {
 	if (_winner){
-		_sendSurrend();
 		_updateStat();
 		return true;
 	}
@@ -322,16 +299,18 @@ bool Alice::_isFinish() {
 }
 
 void Alice::_sendBoard(){
-	std::string state;
-	state += '1';
-	this->_boardState(state);
-	_player1->showBoard(state);
-	_player2->showBoard(state);
-	state.clear();
-	state += '2';
-	this->_boardState(state);
-	_player1->showBoard(state);
-	_player2->showBoard(state);
+	if (!_winner){
+		std::string state;
+		state += '1';
+		this->_boardState(state);
+		_player1->showBoard(state);
+		_player2->showBoard(state);
+		state.clear();
+		state += '2';
+		this->_boardState(state);
+		_player1->showBoard(state);
+		_player2->showBoard(state);
+	}
 }
 
 void Alice::_boardState(std::string& state){

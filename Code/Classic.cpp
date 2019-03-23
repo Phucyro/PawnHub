@@ -157,12 +157,19 @@ void Classic::_nextTurn() {
 			PreMoved = true;
 		}
 		else {
-			if (PreMoved) {while (!!currentPlayer->getPreMoves().empty()) currentPlayer->getPreMoves().pop();}
+			if (PreMoved) {while (!currentPlayer->getPreMoves().empty()) currentPlayer->getPreMoves().pop();}
 			playerMove = currentPlayer->askMove();
 		}
 		if (playerMove[0] == '/' && playerMove[1] == 'e' && playerMove[2] == 'n' && playerMove[3] == 'd'){
 			if(currentPlayer == _player1) _winner = _player2;
 			else _winner = _player1;
+			_sendSurrend();
+			isMoveValid = true;
+		}
+		else if (playerMove[0] == '/' && playerMove[1] == 't' && playerMove[2] == 'i' && playerMove[3] == 'm'){
+			if(currentPlayer == _player1) _winner = _player2;
+			else _winner = _player1;
+			_sendSurrend();
 			isMoveValid = true;
 		}
 		else if (this->_fitInBoard(playerMove)){
@@ -170,6 +177,7 @@ void Classic::_nextTurn() {
 			isMoveValid = this->_executeMove(start, end, playerColor);
 		}
 	}
+	currentPlayer->transferGoodMove();
 }
 
 // yall have some unsigned/signed int to deal with in here, it's stupid and a mess
@@ -301,7 +309,6 @@ void Classic::_updateStat(){
 
 bool Classic::_isFinish() {
 	if (_winner){
-		_sendSurrend();
 		_updateStat();
 		return true;
 	}

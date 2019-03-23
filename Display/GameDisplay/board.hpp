@@ -65,9 +65,10 @@ public:
   bool isRunning();
 
   //change infos win
-  void change_mode(std::string);
-  void change_last_move(std::string);
-  void change_turn(std::string);
+  void change_mode(const std::string&);
+  void change_last_move(const std::string&);
+  void change_turn(const std::string&);
+  void show_time_left(const std::string&);
   
   void ask_ipos();
   void print_ipos(int, int);

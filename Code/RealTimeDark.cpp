@@ -142,14 +142,16 @@ bool RealTimeDark::_isCheckmate(char playerColor){
 }
 
 void RealTimeDark::_sendBoard(){
-	std::string state;
-	state += 'w';
-	this->_boardState(state);
-	_player1->showBoard(state);
-	state[0] = 'b';
-	this->_boardState(state);
-	_player2->showBoard(state);
-	_lastUpdate = _turn;
+	if (!_winner){
+		std::string state;
+		state += 'w';
+		this->_boardState(state);
+		_player1->showBoard(state);
+		state[0] = 'b';
+		this->_boardState(state);
+		_player2->showBoard(state);
+		_lastUpdate = _turn;
+	}
 }
 
 void RealTimeDark::_boardState(std::string& state){

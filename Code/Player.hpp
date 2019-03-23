@@ -76,15 +76,19 @@ class Player{
 	int getReadPipe() const {return _pipe[0];}
 	void activateControlRecv();
 
+	void transferFirstMsg();
 	void transferStart();
 	void transferUpdate(std::string&);
 	void transferCheck();
 	void transferCheckmate(std::string&);
 	void transferStalemate();
 	void transferSurrend();
+	void transferTimeout();
 	void transferGameMode(std::string&);
 	void transferColour(std::string&);
 	void transferTurn(unsigned);
+	void transferTime(int);
+	void transferGoodMove();
 	void receiveMove(std::string&);
 	void receivePromotion(std::string&);
 	void surrend();

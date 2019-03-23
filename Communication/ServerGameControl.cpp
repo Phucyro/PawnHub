@@ -46,6 +46,15 @@ void ServerGameControl::sendBoard(Socket* socket, std::string board) {
   }
 }
 
+void ServerGameControl::sendFirstMsg(Socket* socket) {
+  std::string header = headerSendMap["firstmsg"];
+  try{socket->sendMessage(header + "garbage");}
+  catch(std::runtime_error e){
+    std::cout<<"error in sendFirstMsg: "<<e.what()<<std::endl;
+    _playerDisconected(socket);
+  }
+}
+
 void ServerGameControl::sendFirstBoard(Socket* socket, std::string board) {
   sendBoard(socket, "1" + board);
 }
@@ -62,6 +71,7 @@ void ServerGameControl::sendUpdate(Socket* socket, std::string update) {
   	_playerDisconected(socket);
   }
 }
+
 
 void ServerGameControl::sendStart(Socket* socket) {
   sendUpdate(socket, "start");
@@ -81,6 +91,10 @@ void ServerGameControl::sendStalemate(Socket* socket) {
 
 void ServerGameControl::sendSurrend(Socket* socket) {
   sendUpdate(socket, "surrend");
+}
+
+void ServerGameControl::sendTimeout(Socket* socket) {
+  sendUpdate(socket, "timeout");
 }
 
 void ServerGameControl::sendGameMode(Socket* socket, std::string mode) {
@@ -106,6 +120,24 @@ void ServerGameControl::sendTurn(Socket* socket, unsigned turn) {
   try{socket->sendMessage(header + std::to_string(turn));}
   catch(std::runtime_error e){
   	std::cout<<"error in sendTurn: "<<e.what()<<std::endl;
+  	_playerDisconected(socket);
+  }
+}
+
+void ServerGameControl::sendTime(Socket* socket, int time) {
+  std::string header = headerSendMap["time"];
+  try{socket->sendMessage(header + std::to_string(time));}
+  catch(std::runtime_error e){
+  	std::cout<<"error in sendTime: "<<e.what()<<std::endl;
+  	_playerDisconected(socket);
+  }
+}
+
+void ServerGameControl::sendGoodMove(Socket* socket) {
+  std::string header = headerSendMap["goodmove"];
+  try{socket->sendMessage(header + "waw");}
+  catch(std::runtime_error e){
+  	std::cout<<"error in sendGoodMove: "<<e.what()<<std::endl;
   	_playerDisconected(socket);
   }
 }

@@ -23,7 +23,6 @@ class Dark: public TurnBasedGame{
 		else return _player1;
 	}
 	
-	bool _fitInBoard(std::string playerMove){return playerMove[0] >= 'A' && playerMove[0] <= 'H' && playerMove[1] >= '1' && playerMove[1] <= '8' && playerMove[2] >= 'A' && playerMove[2] <= 'H' && playerMove[3] >= '1' && playerMove[3] <= '8';}
 
 	bool _isCheckmate(char);
 	bool _isStalemate(char);
@@ -37,7 +36,6 @@ class Dark: public TurnBasedGame{
 
 	void _initBoard() override;
 	void _sendGameMode() override;
-	void _nextTurn() override;
 	bool _isFinish() override;
 	void _boardState(std::string&) override;
 	void _sendBoard() override;

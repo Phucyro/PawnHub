@@ -45,6 +45,11 @@ void RealTimeGame::_sendBoard(){
 	_lastUpdate = _turn;
 }
 
+void RealTimeGame::_sendTime(){
+	_player1->transferTime(-1);
+	_player2->transferTime(-1);
+}
+
 void RealTimeGame::_sendStart() {
 	std::string update = "start";
 	_player1->transferUpdate(update);
@@ -57,14 +62,7 @@ void RealTimeGame::_sendStart() {
 
 void RealTimeGame::start()
 {
-	_player1->setColor('w');
-	_player2->setColor('b');
-	std::cout << "Starting Game" << std::endl;
-	this->_initBoard();
-	this->_sendGameMode();
-	this->_sendPlayerColour();
-	this->_sendStart();
-	this->_sendBoard();
+	this->Game::start();
 	this->_mainLoop();
 	std::cout << "Game finished" << std::endl;
 }
