@@ -6,6 +6,7 @@
 #include "ui_mainmenu.h"
 #include "connectiondialog.h"
 #include "logindialog.h"
+#include "gameWithoutChat.h"
 
 #include <QDesktopServices>
 #include <QUrl>
@@ -15,8 +16,6 @@
 MainMenu::MainMenu(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::MainMenu),
-    connect(new ConnectionDialog),
-    login(new LoginDialog),
     client(new Client(new Socket))
 {
     ui->setupUi(this);
@@ -29,23 +28,26 @@ MainMenu::~MainMenu()
 {
     msgThread.join();
     delete client;
-    if (login != nullptr) delete login;
-    if (connect != nullptr) delete connect;
     delete ui;
 }
 
 void MainMenu::client_connect() {
+    ConnectionDialog* connect = new ConnectionDialog;
+
     bool good_hostname = false;
     std::string hostname;
     do {
         hostname = (connect->ask_hostname()).toStdString();
         good_hostname = client->getSocket()->connectToServer(hostname);
     } while (!good_hostname);
+
     connect->close();
     delete connect;
 }
 
 void MainMenu::client_login() {
+    LoginDialog* login = new LoginDialog;
+
     QString username, password;
     do
     {
@@ -53,8 +55,10 @@ void MainMenu::client_login() {
         std::cout << client->readPipe() << std::endl;
     }
     while (!(client->isIdentified()));
+
     login->close();
     delete login;
+
     client->setName(username.toStdString());
 }
 

@@ -5,9 +5,6 @@
 
 #include <thread>
 
-#include "connectiondialog.h"
-#include "logindialog.h"
-
 class Client;
 
 namespace Ui {
@@ -34,8 +31,6 @@ private slots:
 
 private:
     Ui::MainMenu *ui;
-    ConnectionDialog *connect;
-    LoginDialog *login;
     Client* client;
     std::thread msgThread;
 
