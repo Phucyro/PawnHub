@@ -28,6 +28,7 @@ class Player{
 	std::string _name = "Guest";
 	int _queueNumber = -1; // Numero de file inexistante
 	bool _recvActive;
+	bool _premoved;
 	char _color;
 	std::mutex *_inGameMutex;
 	std::queue<PreMove> _premoves;
@@ -61,7 +62,7 @@ class Player{
 	Player& operator= (Player&& original);
 
 	std::string askMove();
-	void cleanPreMove();
+	void cleanPreMove() {while (!_premoves.empty()) _premoves.pop();}
 	void showBoard(std::string);
 	char askPromotion();
 	std::string getName() const;

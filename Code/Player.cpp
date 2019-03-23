@@ -14,16 +14,25 @@ Player& Player::operator= (Player&& original) {
 		original._pipe = nullptr;
 		_name = original._name;
 		_recvActive = original._recvActive;
+		_color = original._color;
+		_premoves = original._premoves;
 		return *this;
 	}
 
 
 std::string Player::askMove(){
-	_control->sendAskMove(getSocket());
-	char res[5];
-	read(_pipe[0], &res, sizeof(char)*4);
-	res[4] = '\0';
-	return std::string(res);
+	if (_premoves.empty()){
+		_control->sendAskMove(getSocket());
+		char res[5];
+		read(_pipe[0], &res, sizeof(char)*4);
+		res[4] = '\0';
+		return std::string(res);
+	}
+	else {
+		std::string res = _premoves.front().getPreMove();
+		_premoves.pop();
+		return res;
+	} 
 }
 
 void Player::showBoard(std::string board){
@@ -165,6 +174,10 @@ void Player::writeControlPipe(std::string msg){
 
 	std::strcpy(buffer, msg.c_str());
 	write(_pipeControl[1], buffer, sizeof(buffer));
+}
+
+void Player::cleanPreMove() {
+	while (!_premoves.empty()) _premoves.pop();
 }
 
 #endif
