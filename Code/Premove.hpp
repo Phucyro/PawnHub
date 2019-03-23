@@ -15,7 +15,7 @@ class PreMove {
     constexpr PreMove(Coordinate&& start, Coordinate&& end) noexcept : _start(start), _end(end) {}
     std::string& getPreMove() const {std::string res; res[0] = _start.getAbstractColumn();
     res[1] = _start.getAbstractRow(); res[2] = _end.getAbstractColumn();
-    res[3] = _end.getAbstractRow(); return res;}
+    res[3] = _end.getAbstractRow(); res[4] = "\0" return res;}
     ~PreMove() noexcept = default;
 };
 

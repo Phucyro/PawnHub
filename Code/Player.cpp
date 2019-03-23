@@ -134,8 +134,10 @@ void Player::transferGoodMove() {
 
 void Player::receiveMove(std::string& message){
 	if (message[0] == _color){
+		if (message[1] == '/' && message[2] == 'e' && message[3] == 'n' && message[4] == 'd')
+			this->cleanPreMove();
 		char str[5+1];				// 4 characters for a move, 1 for \0
-		std::strcpy(str, message.c_str());
+		std::strcpy(str, message.c_str());	
 		write(_pipe[1], &(str[1]), 4*sizeof(char));
 	}
 }
