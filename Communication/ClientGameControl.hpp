@@ -67,6 +67,7 @@ private:
     {'F', &ClientGameControl::receiveFirstMessage},
   };
   void listenSocketAndKeyboard();
+  void listenSocketAndPremove();
   void handleMessage();
   void startParty();
   void cleanOldMsg();

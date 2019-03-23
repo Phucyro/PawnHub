@@ -30,11 +30,11 @@ class Player{
 	bool _recvActive;
 	char _color;
 	std::mutex *_inGameMutex;
-	std::queue<PreMove*> _premoves;
+	std::queue<PreMove> _premoves;
 
 
 	public :
-	Player(Socket* socket): _sock(socket), _control(nullptr), _pipe(nullptr), _pipeControl(nullptr), _recvActive(false), _color('\0'), _inGameMutex(nullptr) {
+	Player(Socket* socket): _sock(socket), _control(nullptr), _pipe(nullptr), _pipeControl(nullptr), _recvActive(false), _color('\0'), _inGameMutex(nullptr), _premoves() {
 		_pipe = new int[2];
 		if ((pipe(_pipe)) == -1) throw std::runtime_error("Fail while constructing a pipe for an object of type 'Player': ");
 		
@@ -61,6 +61,7 @@ class Player{
 	Player& operator= (Player&& original);
 
 	std::string askMove();
+	void cleanPreMove();
 	void showBoard(std::string);
 	char askPromotion();
 	std::string getName() const;

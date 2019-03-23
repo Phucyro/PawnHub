@@ -125,10 +125,12 @@ void Player::transferGoodMove() {
 
 void Player::receiveMove(std::string& message){
 	if (message[0] == _color){
-		char str[5+1];				// 4 characters for a move, 1 for \0
-		std::strcpy(str, message.c_str());
-		write(_pipe[1], &(str[1]), 4*sizeof(char));
-	}
+		if (_recvActive){
+			_recvActive = false;
+			char str[5+1];				// 4 characters for a move, 1 for \0
+			std::strcpy(str, message.c_str());
+			write(_pipe[1], &(str[1]), 4*sizeof(char));
+		}
 }
 
 void Player::receivePromotion(std::string& message){

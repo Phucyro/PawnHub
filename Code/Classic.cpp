@@ -176,6 +176,7 @@ void Classic::_nextTurn() {
 			Coordinate start = Coordinate(playerMove[0], playerMove[1]), end = Coordinate(playerMove[2], playerMove[3]);
 			isMoveValid = this->_executeMove(start, end, playerColor);
 		}
+		if (!isMoveValid) currentPlayer->cleanPreMove();
 	}
 	currentPlayer->transferGoodMove();
 }
