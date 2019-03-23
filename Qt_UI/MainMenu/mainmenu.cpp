@@ -64,7 +64,9 @@ void MainMenu::client_login() {
 
 void MainMenu::on_playButton_clicked()
 {
-
+    GameWithoutChat* game = new GameWithoutChat;
+    game->exec();
+    delete game;
 }
 
 void MainMenu::on_statsButton_clicked()
