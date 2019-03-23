@@ -29,7 +29,7 @@ std::string Player::askMove(){
 		return std::string(res);
 	}
 	else {
-		std::string res = _premoves.front().getPreMove();
+		std::string res = _premoves.front()->getPreMove();
 		_premoves.pop();
 		return res;
 	} 
@@ -132,13 +132,22 @@ void Player::transferGoodMove() {
 	_control->sendGoodMove(getSocket());
 }
 
-void Player::receiveMove(std::string& message){
+void Player::receiveMove(std::string& message, bool askMove){
 	if (message[0] == _color){
-		if (message[1] == '/' && message[2] == 'e' && message[3] == 'n' && message[4] == 'd')
-			this->cleanPreMove();
-		char str[5+1];				// 4 characters for a move, 1 for \0
-		std::strcpy(str, message.c_str());	
-		write(_pipe[1], &(str[1]), 4*sizeof(char));
+		if (!askMove) {
+			if (message[1] == '/' && message[2] == 'e' && message[3] == 'n' && message[4] == 'd'){
+				this->cleanPreMove();
+				char str[5+1];				
+				std::strcpy(str, message.c_str());	
+				write(_pipe[1], &(str[1]), 4*sizeof(char));
+			}
+			else _premoves.push(PreMove(message[1:]));
+		}
+		else{
+			char str[5+1];				// 4 characters for a move, 1 for \0
+			std::strcpy(str, message.c_str());	
+			write(_pipe[1], &(str[1]), 4*sizeof(char));
+		}	
 	}
 }
 

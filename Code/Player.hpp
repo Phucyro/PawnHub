@@ -91,7 +91,7 @@ class Player{
 	void transferTurn(unsigned);
 	void transferTime(int);
 	void transferGoodMove();
-	void receiveMove(std::string&);
+	void receiveMove(std::string&, bool askMove);
 	void receivePromotion(std::string&);
 	void surrend();
 	void startGame(){_inGameMutex->lock();}
