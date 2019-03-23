@@ -187,7 +187,7 @@ void MenuHandler::init_statst(std::string mode)
   int x_split = (x_box/5);
   int y_split = (y_box/10);
 
-  mvwprintw(stats_w, 1, x_title + x_title/2, "%s : Top 10 ", mode.c_str());
+  mvwprintw(stats_w, 1, x_title + x_title/3, "%s : Top 10 ", mode.c_str());
 
   mvwprintw(stats_w, 3, 5, "Username");
   mvwprintw(stats_w, 3, 5+1*x_split,"Wins");
@@ -217,7 +217,7 @@ void MenuHandler::init_statsp(std::string name)
   int x_split = (x_box/5);
   int y_split = (y_box/10);
 
-  mvwprintw(stats_w,1,x_title+x_title/2, "%s's stats", name.c_str());
+  mvwprintw(stats_w,1,x_title+x_title/3, "%s's stats", name.c_str());
   mvwprintw(stats_w, 3, 5, "Mode");
   mvwprintw(stats_w, 3, 5+1*x_split,"Wins");
   mvwprintw(stats_w, 3, 5+2*x_split, "Loses");
