@@ -64,6 +64,7 @@ int main()
   test->end_windows();
 
   test->init_friendsw(friends);
+  test->print_top("Test 1 2 3");
   test->init_choicesw();
   test->get_choice(choices);
 
@@ -72,9 +73,7 @@ int main()
 
   //TEST 6
   test->clear_windows();
-  test->init_chatw();
-
-
+  test->print_top("Test 1 2 3");
 
   for (int i=0; i<120; i++)
   {

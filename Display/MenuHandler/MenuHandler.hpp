@@ -43,7 +43,7 @@ public:
   void init_friendsw(const std::vector<std::string> friends);
 
   //chat
-  void init_chatw();
+  void print_top(std::string);
   void update_chatw(int, std::string, std::string);
 
   //windows utilites

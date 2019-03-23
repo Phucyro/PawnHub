@@ -267,8 +267,6 @@ void MenuHandler::init_friendsw(const std::vector<std::string> friends)
   }
   **/
 
-  mvwprintw(stats_w, 1, 5+2*x_split, "FRIENDS");
-
   unsigned count = 0;
   unsigned long max_count = friends.size();
 
@@ -306,12 +304,12 @@ void MenuHandler::init_friendsw(const std::vector<std::string> friends)
 
 }
 
-void MenuHandler::init_chatw()
+void MenuHandler::print_top(std::string msg)
 {
   init_statsw();
   int y_max, x_max;
   getmaxyx(stats_w, y_max, x_max);
-  mvwprintw(stats_w, 1, 1,"Messages recus");
+  mvwprintw(stats_w, 1, 2, "%s", msg.c_str());
   refresh_board();
 }
 
@@ -325,6 +323,7 @@ void MenuHandler::update_chatw(int number, std::string sender, std::string messa
 
   if (number < y_max-7)
   {
+    // space to avoir bug
     mvwprintw(stats_w, 3+number, 1, "%s %s", sender.c_str(), message.substr(0,length_max).c_str());
   }
 

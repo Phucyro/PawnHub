@@ -79,7 +79,7 @@ void quit(MenuHandler* menu, Client* client){
 void displayChat(MenuHandler* menu, Client* client, std::string target){
   Conversation conv = client->getConversation(target);
 
-  menu->init_chatw();
+  menu->print_top(std::string("Canal : ") + target);
 
   // Rempli le chat avec la conversation
   for (unsigned int a = 0; a < conv.size(); ++a)
