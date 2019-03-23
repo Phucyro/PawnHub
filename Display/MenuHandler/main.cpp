@@ -24,7 +24,7 @@ int main()
   //TEST 3
   test->init_statsw();
   test->init_statsp("Julien");
-  test->update_stats(0,"Horde",2, 3, 4);
+  test->update_stats(0,"Horde","2", "3", "4", "6");
   test->init_choicesw();
   std::vector<std::string> vecteur;
   vecteur.push_back("Quitter");
@@ -37,7 +37,7 @@ int main()
   //TEST 4
   test->init_statsw();
   test->init_statst("Horde");
-  test->update_stats(9,"Joe",4,6,8);
+  test->update_stats(9,"Joe","4","6","8", "4");
   test->init_choicesw();
   test->get_choice(vecteur);
   test->refresh_board();

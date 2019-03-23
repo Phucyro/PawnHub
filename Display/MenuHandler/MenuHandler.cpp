@@ -182,7 +182,7 @@ void MenuHandler::init_statst(std::string mode)
   int y_box , x_box;
   getmaxyx(stats_w, y_box, x_box);
 
-  int x_split = (x_box/4) + 2;
+  int x_split = (x_box/5);
   int y_split = (y_box/10);
 
   mvwprintw(stats_w, 1, x_title + x_title/2, "%s : Top 10 ", mode.c_str());
@@ -191,6 +191,8 @@ void MenuHandler::init_statst(std::string mode)
   mvwprintw(stats_w, 3, 5+1*x_split,"Wins");
   mvwprintw(stats_w, 3, 5+2*x_split, "Loses");
   mvwprintw(stats_w, 3, 5+3*x_split, "Draws");
+  mvwprintw(stats_w, 3, 5+4*x_split, "Elo");
+
 
   for (int k=0; k<10 ; k++)
   {
@@ -211,7 +213,7 @@ void MenuHandler::init_statsp(std::string name)
   int y_box, x_box;
   getmaxyx(stats_w, y_box, x_box);
 
-  int x_split = (x_box/4) + 2;
+  int x_split = (x_box/5);
   int y_split = (y_box/10);
 
   mvwprintw(stats_w,1,x_title+x_title/2, "%s's stats", name.c_str());
@@ -219,24 +221,26 @@ void MenuHandler::init_statsp(std::string name)
   mvwprintw(stats_w, 3, 5+1*x_split,"Wins");
   mvwprintw(stats_w, 3, 5+2*x_split, "Loses");
   mvwprintw(stats_w, 3, 5+3*x_split, "Draws");
+  mvwprintw(stats_w, 3, 5+4*x_split, "Elo");
 
   refresh_board();
 
 }
 
-void MenuHandler::update_stats(int number, std::string name, int wins, int loses, int draws)
+void MenuHandler::update_stats(int number, std::string name, std::string wins, std::string loses, std::string draws, std::string elo)
 /** update ligne joueur du menu stats (number commence en 0) **/
 {
   int y_box, x_box;
   int x_split;
 
   getmaxyx(stats_w, y_box, x_box);
-  x_split = (x_box/4)+2;
+  x_split = (x_box/5);
 
   mvwprintw(stats_w, 5+number, 5, name.c_str());
   mvwprintw(stats_w, 5+number, 5+x_split, "%d", wins);
   mvwprintw(stats_w, 5+number, 5+2*x_split, "%d", loses);
   mvwprintw(stats_w, 5+number, 5+3*x_split, "%d", draws);
+  mvwprintw(stats_w, 5+number, 5+4*x_split, "%d", draws);
 
   refresh_board();
 }
