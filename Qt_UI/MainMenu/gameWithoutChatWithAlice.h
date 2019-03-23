@@ -15,6 +15,9 @@ public:
     explicit GameWithoutChatWithAlice(QWidget *parent = nullptr);
     ~GameWithoutChatWithAlice();
 
+private slots:
+    void on_surrendButton_pressed();
+
 private:
     Ui::GameWithoutChatWithAlice *ui;
 };

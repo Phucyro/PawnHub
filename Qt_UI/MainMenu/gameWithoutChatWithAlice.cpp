@@ -12,3 +12,8 @@ GameWithoutChatWithAlice::~GameWithoutChatWithAlice()
 {
     delete ui;
 }
+
+void GameWithoutChatWithAlice::on_surrendButton_pressed()
+{
+    exit(0);
+}

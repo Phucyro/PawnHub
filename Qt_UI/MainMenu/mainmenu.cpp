@@ -6,7 +6,11 @@
 #include "ui_mainmenu.h"
 #include "connectiondialog.h"
 #include "logindialog.h"
-#include "gameWithoutChat.h"
+#include "gameChoice.h"
+#include "statisticsTab.h"
+#include "friendTab.h"
+#include "chat.h"
+
 
 #include <QDesktopServices>
 #include <QUrl>
@@ -64,24 +68,38 @@ void MainMenu::client_login() {
 
 void MainMenu::on_playButton_clicked()
 {
-    GameWithoutChat* game = new GameWithoutChat;
-    game->exec();
-    delete game;
+    GameChoice* choice = new GameChoice;
+    this->hide();
+    choice->exec();
+    this->show();
+    delete choice;
 }
 
 void MainMenu::on_statsButton_clicked()
 {
-
+    StatisticsTab* stats = new StatisticsTab;
+    this->hide();
+    stats->exec();
+    this->show();
+    delete stats;
 }
 
 void MainMenu::on_friendsButton_clicked()
 {
-
+    FriendTab* friendsTab = new FriendTab;
+    this->hide();
+    friendsTab->exec();
+    this->show();
+    delete friendsTab;
 }
 
 void MainMenu::on_chatButton_clicked()
 {
-
+    Chat* chat = new Chat;
+    this->hide();
+    chat->exec();
+    this->show();
+    delete chat;
 }
 
 void MainMenu::on_rulesButton_clicked()

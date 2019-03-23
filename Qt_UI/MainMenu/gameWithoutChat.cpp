@@ -12,3 +12,8 @@ GameWithoutChat::~GameWithoutChat()
 {
     delete ui;
 }
+
+void GameWithoutChat::on_surrendButton_pressed()
+{
+    exit(0);
+}

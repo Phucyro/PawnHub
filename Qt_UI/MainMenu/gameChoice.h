@@ -34,6 +34,7 @@ private slots:
     void on_realTimeHordePushButton_pressed();
 
     void on_realTimeAlicePushButton_pressed();
+    void on_returnPushButton_pressed();
 };
 
 #endif // GAMECHOICE_H
