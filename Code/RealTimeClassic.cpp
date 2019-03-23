@@ -103,19 +103,24 @@ void RealTimeClassic::_sendGameMode() {
 
 
 void RealTimeClassic::_updateStat(){
+	double playerElo1 = data.getEloRating(_player1->getName(), RTCLASSIC);
+	double playerElo2 = data.getEloRating(_player2->getName(), RTCLASSIC);
+	double playerExptWin1 = data.getExpectedWin(playerElo1, playerElo2);
+	double playerExptWin2 = data.getExpectedWin(playerElo2, playerElo1);
+
 	if (_winner == _player1){
 		std::cout << "White Player win !" << std::endl;
 		data.addUserRealTimeClassicLose(_player2->getName());
 		data.addUserRealTimeClassicWin(_player1->getName());
-		data.updateRating(_player2->getName(),data.expectedWin(data.getEloRating(_player2->getName()),data.getEloRating(_player1->getName())),LOSE);
-		data.updateRating(_player1->getName(),data.expectedWin(data.getEloRating(_player1->getName()),data.getEloRating(_player2->getName())),WIN);
+		data.updateRating(_player2->getName(), playerExptWin2, LOSE, RTCLASSIC);
+		data.updateRating(_player1->getName(), playerExptWin1, WIN,  RTCLASSIC);
 	}
 	else if (_winner == _player2) {
 		std::cout << "Black Player win !" << std::endl;
 		data.addUserRealTimeClassicWin(_player2->getName());
 		data.addUserRealTimeClassicLose(_player1->getName());
-		data.updateRating(_player2->getName(),data.expectedWin(data.getEloRating(_player2->getName()),data.getEloRating(_player1->getName())),WIN);
-		data.updateRating(_player1->getName(),data.expectedWin(data.getEloRating(_player1->getName()),data.getEloRating(_player2->getName())),LOSE);
+		data.updateRating(_player2->getName(), playerExptWin2, WIN,  RTCLASSIC);
+		data.updateRating(_player1->getName(), playerExptWin1, LOSE, RTCLASSIC);
 	}
 }
 

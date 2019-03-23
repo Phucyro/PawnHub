@@ -13,6 +13,16 @@ class Board;
 #define LOSE 0
 #define TIE 0.5
 
+// Mode
+#define CLASSIC 0
+#define DARK 1
+#define HORDE 2
+#define ALICE 3
+#define RTCLASSIC 4
+#define RTDARK 5
+#define RTHORDE 6
+#define RTALICE 7
+
 class Game
 {
 	protected:

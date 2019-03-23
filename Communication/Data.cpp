@@ -53,20 +53,22 @@ bool Data::checkUserPassword(const std::string username, const std::string passw
 bool Data::createUserAccount(const std::string username, const std::string password){
   /*
   Creer un nouveau compte utilisateur a partir d'un identifiant et d'un mot de passe
+  Initialise aussi les donnees statistiques et amis de l'utilisateur
   Si le compte existe deja alors renvoie false sinon le cree et retourne true
   */
   if (containsAccount(username))
     return false;
-  // Si peut ajouter ami deco il faut creer le fichier dès la création
-  _dataMap[username] = UserData(password, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {}, {}, {}, 0.0);
-  updateLadderOnWin("Classic", {username, {0,0,0}});
-  updateLadderOnWin("Dark", {username, {0,0,0}});
-  updateLadderOnWin("Horde", {username, {0,0,0}});
-  updateLadderOnWin("Alice", {username, {0,0,0}});
-  updateLadderOnWin("RealTimeClassic", {username, {0,0,0}});
-  updateLadderOnWin("RealTimeDark", {username, {0,0,0}});
-  updateLadderOnWin("RealTimeHorde", {username, {0,0,0}});
-  updateLadderOnWin("RealTimeAlice", {username, {0,0,0}});
+
+  _dataMap[username] = UserData(password, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0},
+    {0,0,0}, {0,0,0}, {0,0,0}, {}, {}, {}, {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0});
+
+  std::vector<std::string> gamemode = {"Classic", "Dark", "Horde", "Alice",
+    "RealTimeClassic", "RealTimeDark", "RealTimeHorde", "RealTimeAlice"};
+
+  for (unsigned int a = 0; a < gamemode.size(); ++a){
+    updateLadder(gamemode[a], {username, {0,0,0}, 0.0});
+  }
+
   saveUserData(username);
   return true;
 }
@@ -85,7 +87,7 @@ void Data::loadUserData(const std::string username){
     std::string password;
     Stat classic, dark, horde, alice,realTimeClassic,realTimeDark,realTimeHorde,realTimeAlice;
     std::vector<std::string> friends, their_requests, my_requests;
-    double eloRank;
+    std::vector<double> eloRank;
 
     std::getline(file, data_line);
     password = data_line;
@@ -124,7 +126,7 @@ void Data::loadUserData(const std::string username){
     my_requests = splitString(data_line, ' ');
 
     std::getline(file, data_line);
-    eloRank = std::atof(data_line.c_str());
+    eloRank = toDoubleVector(splitString(data_line, ' '));
 
     _dataMap[username] = UserData(password, classic, dark, horde, alice, realTimeClassic,realTimeDark,realTimeHorde,realTimeAlice, friends, their_requests, my_requests, eloRank);
   }
@@ -156,7 +158,7 @@ void Data::saveUserData(const std::string username){
     file << strVectorToStr(std::get<9>(_dataMap[username])) << std::endl; // Liste amis
     file << strVectorToStr(std::get<10>(_dataMap[username])) << std::endl; // Demande ami
     file << strVectorToStr(std::get<11>(_dataMap[username])) << std::endl; // Mes demandes
-    file << std::fixed << std::setprecision(2) << std::get<12>(_dataMap[username]) << std::endl; //ELO rank
+    file << doubleVectorToStr(std::get<12>(_dataMap[username])) << std::endl;
     _dataMap.erase(username);
   }
   else {
@@ -452,8 +454,6 @@ void Data::addUserClassicWin(const std::string username){
     saveUserData(username);
   }
   _mutex.unlock();
-
-  updateLadderOnWin("Classic", {username, stat});
 }
 
 void Data::addUserClassicLose(const std::string username){
@@ -471,8 +471,6 @@ void Data::addUserClassicLose(const std::string username){
     saveUserData(username);
   }
   _mutex.unlock();
-
-  updateLadderOnLoseDraw("Classic", {username, stat});
 }
 
 void Data::addUserClassicDraw(const std::string username){
@@ -490,8 +488,6 @@ void Data::addUserClassicDraw(const std::string username){
     saveUserData(username);
   }
   _mutex.unlock();
-
-  updateLadderOnLoseDraw("Classic", {username, stat});
 }
 
 void Data::addUserDarkWin(const std::string username){
@@ -509,8 +505,6 @@ void Data::addUserDarkWin(const std::string username){
     saveUserData(username);
   }
   _mutex.unlock();
-
-  updateLadderOnWin("Dark", {username, stat});
 }
 
 void Data::addUserDarkLose(const std::string username){
@@ -528,8 +522,6 @@ void Data::addUserDarkLose(const std::string username){
     saveUserData(username);
   }
   _mutex.unlock();
-
-  updateLadderOnLoseDraw("Dark", {username, stat});
 }
 
 void Data::addUserDarkDraw(const std::string username){
@@ -547,8 +539,6 @@ void Data::addUserDarkDraw(const std::string username){
     saveUserData(username);
   }
   _mutex.unlock();
-
-  updateLadderOnLoseDraw("Dark", {username, stat});
 }
 
 void Data::addUserHordeWin(const std::string username){
@@ -566,8 +556,6 @@ void Data::addUserHordeWin(const std::string username){
     saveUserData(username);
   }
   _mutex.unlock();
-
-  updateLadderOnWin("Horde", {username, stat});
 }
 
 void Data::addUserHordeLose(const std::string username){
@@ -585,8 +573,6 @@ void Data::addUserHordeLose(const std::string username){
     saveUserData(username);
   }
   _mutex.unlock();
-
-  updateLadderOnLoseDraw("Horde", {username, stat});
 }
 
 void Data::addUserHordeDraw(const std::string username){
@@ -604,8 +590,6 @@ void Data::addUserHordeDraw(const std::string username){
     saveUserData(username);
   }
   _mutex.unlock();
-
-  updateLadderOnLoseDraw("Horde", {username, stat});
 }
 
 void Data::addUserAliceWin(const std::string username){
@@ -623,8 +607,6 @@ void Data::addUserAliceWin(const std::string username){
     saveUserData(username);
   }
   _mutex.unlock();
-
-  updateLadderOnWin("Alice", {username, stat});
 }
 
 void Data::addUserAliceLose(const std::string username){
@@ -642,8 +624,6 @@ void Data::addUserAliceLose(const std::string username){
     saveUserData(username);
   }
   _mutex.unlock();
-
-  updateLadderOnLoseDraw("Alice", {username, stat});
 }
 
 void Data::addUserAliceDraw(const std::string username){
@@ -661,8 +641,6 @@ void Data::addUserAliceDraw(const std::string username){
     saveUserData(username);
   }
   _mutex.unlock();
-
-  updateLadderOnLoseDraw("Alice", {username, stat});
 }
 
 void Data::addUserRealTimeClassicWin(const std::string username){
@@ -680,8 +658,6 @@ void Data::addUserRealTimeClassicWin(const std::string username){
     saveUserData(username);
   }
   _mutex.unlock();
-
-  updateLadderOnWin("RealTimeClassic", {username, stat});
 }
 
 void Data::addUserRealTimeClassicLose(const std::string username){
@@ -699,8 +675,6 @@ void Data::addUserRealTimeClassicLose(const std::string username){
     saveUserData(username);
   }
   _mutex.unlock();
-
-  updateLadderOnLoseDraw("RealTimeClassic", {username, stat});
 }
 
 void Data::addUserRealTimeClassicDraw(const std::string username){
@@ -718,8 +692,6 @@ void Data::addUserRealTimeClassicDraw(const std::string username){
     saveUserData(username);
   }
   _mutex.unlock();
-
-  updateLadderOnLoseDraw("RealTimeClassic", {username, stat});
 }
 
 void Data::addUserRealTimeDarkWin(const std::string username){
@@ -737,8 +709,6 @@ void Data::addUserRealTimeDarkWin(const std::string username){
     saveUserData(username);
   }
   _mutex.unlock();
-
-  updateLadderOnWin("RealTimeDark", {username, stat});
 }
 
 void Data::addUserRealTimeDarkLose(const std::string username){
@@ -756,8 +726,6 @@ void Data::addUserRealTimeDarkLose(const std::string username){
     saveUserData(username);
   }
   _mutex.unlock();
-
-  updateLadderOnLoseDraw("RealTimeDark", {username, stat});
 }
 
 void Data::addUserRealTimeDarkDraw(const std::string username){
@@ -775,8 +743,6 @@ void Data::addUserRealTimeDarkDraw(const std::string username){
     saveUserData(username);
   }
   _mutex.unlock();
-
-  updateLadderOnLoseDraw("RealTimeDark", {username, stat});
 }
 
 void Data::addUserRealTimeHordeWin(const std::string username){
@@ -794,8 +760,6 @@ void Data::addUserRealTimeHordeWin(const std::string username){
     saveUserData(username);
   }
   _mutex.unlock();
-
-  updateLadderOnWin("RealTimeHorde", {username, stat});
 }
 
 void Data::addUserRealTimeHordeLose(const std::string username){
@@ -813,8 +777,6 @@ void Data::addUserRealTimeHordeLose(const std::string username){
     saveUserData(username);
   }
   _mutex.unlock();
-
-  updateLadderOnLoseDraw("RealTimeHorde", {username, stat});
 }
 
 void Data::addUserRealTimeHordeDraw(const std::string username){
@@ -832,8 +794,6 @@ void Data::addUserRealTimeHordeDraw(const std::string username){
     saveUserData(username);
   }
   _mutex.unlock();
-
-  updateLadderOnLoseDraw("RealTimeHorde", {username, stat});
 }
 
 void Data::addUserRealTimeAliceWin(const std::string username){
@@ -851,8 +811,6 @@ void Data::addUserRealTimeAliceWin(const std::string username){
     saveUserData(username);
   }
   _mutex.unlock();
-
-  updateLadderOnWin("RealTimeAlice", {username, stat});
 }
 
 void Data::addUserRealTimeAliceLose(const std::string username){
@@ -870,8 +828,6 @@ void Data::addUserRealTimeAliceLose(const std::string username){
     saveUserData(username);
   }
   _mutex.unlock();
-
-  updateLadderOnLoseDraw("RealTimeAlice", {username, stat});
 }
 
 void Data::addUserRealTimeAliceDraw(const std::string username){
@@ -889,56 +845,34 @@ void Data::addUserRealTimeAliceDraw(const std::string username){
     saveUserData(username);
   }
   _mutex.unlock();
-
-  updateLadderOnLoseDraw("RealTimeAlice", {username, stat});
 }
 
-
-
-bool Data::isInLadder(const std::string gamemode, const std::string username){
-  for (unsigned int a = 0; a < _ladders[gamemode].size(); ++a)
-    if (std::get<0>(_ladders[gamemode][a]) == username)
-      return true;
-  return false;
-}
-
-
-void Data::updateLadderOnWin(const std::string gamemode, UserLadderData data){
+void Data::updateLadder(const std::string gamemode, UserLadderData data){
   if (_ladders[gamemode].size() == 0){
     _ladders[gamemode].push_back(data);
     return;
   }
 
-  unsigned int a = 0;
-
-  while (a < _ladders[gamemode].size() && std::get<1>(data)[0] >= std::get<1>(_ladders[gamemode][a])[0]){
+  // Supprime le joueur du classement s'il se trouve dedans
+  for (unsigned int a = 0; a < _ladders[gamemode].size(); ++a){
     if (std::get<0>(data) == std::get<0>(_ladders[gamemode][a])){
       _ladders[gamemode].erase(_ladders[gamemode].begin()+a);
-      --a;
+      break;
     }
+  }
+
+  unsigned int a = 0;
+
+  // Cherche la place dans laquelle le joueur se situe
+  while (a < _ladders[gamemode].size() && std::get<2>(data) >= std::get<2>(_ladders[gamemode][a])){
     ++a;
   }
 
   _ladders[gamemode].insert(_ladders[gamemode].begin()+a, data);
 
-  if (_ladders[gamemode].size() > 10){
+  // Supprime si ce n'est plus un top avec une taille LADDERSIZE
+  if (_ladders[gamemode].size() > LADDERSIZE){
     _ladders[gamemode].erase(_ladders[gamemode].begin());
-  }
-
-}
-
-
-void Data::updateLadderOnLoseDraw(const std::string gamemode, UserLadderData data){
-  unsigned int a = 0;
-  bool found = false;
-
-  while (a < _ladders[gamemode].size() && !found && std::get<1>(data)[0] <= std::get<1>(_ladders[gamemode][a])[0]){
-    if (std::get<0>(data) == std::get<0>(_ladders[gamemode][a])){
-      _ladders[gamemode][a] = data;
-      found = true;
-    }
-
-    ++a;
   }
 }
 
@@ -953,14 +887,14 @@ void Data::initLadder(){
       if (filename != "." && filename != ".."){
         const std::string username = filename.substr(0, filename.length()-4);
         loadUserData(username);
-        updateLadderOnWin("Classic", {username, std::get<1>(_dataMap[username])});
-        updateLadderOnWin("Dark",    {username, std::get<2>(_dataMap[username])});
-        updateLadderOnWin("Horde",   {username, std::get<3>(_dataMap[username])});
-        updateLadderOnWin("Alice",   {username, std::get<4>(_dataMap[username])});
-        updateLadderOnWin("RealTimeClassic", {username, std::get<5>(_dataMap[username])});
-        updateLadderOnWin("RealTimeDark",    {username, std::get<6>(_dataMap[username])});
-        updateLadderOnWin("RealTimeHorde",   {username, std::get<7>(_dataMap[username])});
-        updateLadderOnWin("RealTimeAlice",   {username, std::get<8>(_dataMap[username])});
+        updateLadder("Classic", {username, std::get<1>(_dataMap[username]), std::get<12>(_dataMap[username])[0]});
+        updateLadder("Dark",    {username, std::get<2>(_dataMap[username]), std::get<12>(_dataMap[username])[1]});
+        updateLadder("Horde",   {username, std::get<3>(_dataMap[username]), std::get<12>(_dataMap[username])[2]});
+        updateLadder("Alice",   {username, std::get<4>(_dataMap[username]), std::get<12>(_dataMap[username])[3]});
+        updateLadder("RealTimeClassic", {username, std::get<5>(_dataMap[username]), std::get<12>(_dataMap[username])[4]});
+        updateLadder("RealTimeDark",    {username, std::get<6>(_dataMap[username]), std::get<12>(_dataMap[username])[5]});
+        updateLadder("RealTimeHorde",   {username, std::get<7>(_dataMap[username]), std::get<12>(_dataMap[username])[6]});
+        updateLadder("RealTimeAlice",   {username, std::get<8>(_dataMap[username]), std::get<12>(_dataMap[username])[7]});
         _dataMap.erase(username);
       }
     }
@@ -982,7 +916,8 @@ void Data::printLadder(const std::string gamemode){
     std::cout << a << ") " << std::get<0>(_ladders[gamemode][a]) << " " <<
     std::get<1>(_ladders[gamemode][a])[0] << " " <<
     std::get<1>(_ladders[gamemode][a])[1] << " " <<
-    std::get<1>(_ladders[gamemode][a])[2] << " points" << std::endl;
+    std::get<1>(_ladders[gamemode][a])[2] << " " <<
+    std::get<2>(_ladders[gamemode][a]) << std::endl;
    }
 }
 
@@ -1035,16 +970,16 @@ Stat Data::getUserStat(const std::string username, const std::string gamemode){
   return user_stat;
 }
 
-double Data::getEloRating(std::string username){
+double Data::getEloRating(std::string username, unsigned int mode){
   double eloRating;
 
   _mutex.lock();
   if (_dataMap.find(username) != _dataMap.end()){
-    eloRating = std::get<12>(_dataMap[username]);
+    eloRating = std::get<12>(_dataMap[username])[mode];
   }
   else {
     loadUserData(username);
-    eloRating = std::get<12>(_dataMap[username]);
+    eloRating = std::get<12>(_dataMap[username])[mode];
     saveUserData(username);
   }
   _mutex.unlock();
@@ -1053,35 +988,42 @@ double Data::getEloRating(std::string username){
 }
 
 
-double Data::expectedWin(double ratingA,double ratingB){
+double Data::getExpectedWin(double ratingA,double ratingB){
   //formula to calculate expected win depending on ELO rating
   return 1/(1+pow(10,((ratingB-ratingA)/400)));
 }
 
-void Data::updateRating(const std::string username, double expectedWin, double score){
+void Data::updateRating(const std::string username, double expectedWin, double score, unsigned int mode){
   //formula to update ELO depending of win expectation
   double eloRating;
   double calc;
 
   _mutex.lock();
   if (_dataMap.find(username) != _dataMap.end()){
-    eloRating = std::get<12>(_dataMap[username]);
+    eloRating = std::get<12>(_dataMap[username])[mode];
     calc = (eloRating + 32 * (score - expectedWin)); //formule magique de Arpad Elo
     if(calc<=0) calc = 0;// no negative ELO
     eloRating = calc;
-    std::get<12>(_dataMap[username]) = eloRating;
+    std::get<12>(_dataMap[username])[mode] = eloRating;
   }
   else {
     loadUserData(username);
-    eloRating = std::get<12>(_dataMap[username]);
-    eloRating = (eloRating + 32 * (score - expectedWin)); //formule magique de Arpad Elo
+    eloRating = std::get<12>(_dataMap[username])[mode];
+    calc = (eloRating + 32 * (score - expectedWin)); //formule magique de Arpad Elo
     if(calc<=0) calc = 0; // no negative ELO
     eloRating = calc;
-    std::get<12>(_dataMap[username]) = eloRating;
+    std::get<12>(_dataMap[username])[mode] = eloRating;
     saveUserData(username);
   }
   _mutex.unlock();
 
+  std::vector<std::string> gamemode = {"Classic", "Dark", "Horde", "Alice",
+    "RealTimeClassic", "RealTimeDark", "RealTimeHorde", "RealTimeAlice"};
+
+  // Mode+1 = position par rapport a UserData
+  Stat userStat = getUserStat(username, gamemode[mode-1]);
+
+  updateLadder(gamemode[mode], {username, userStat, eloRating});
 }
 
 void Data::lockMutex(){

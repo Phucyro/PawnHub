@@ -104,6 +104,10 @@ void Client::setIsChattingWith(std::string name){
   _chatTarget = name;
 }
 
+std::string Client::getIsChattingWith(){
+  return _chatTarget;
+}
+
 bool Client::isChattingWith(std::string name){
   if (_chatTarget == name){
     return true;

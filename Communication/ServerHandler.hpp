@@ -8,10 +8,12 @@
 #include <string>
 #include <tuple>
 #include <algorithm>
+#include <iomanip>
+#include <sstream>
 
 typedef std::map<std::string, Player*> PlayersMap;
 typedef std::vector<unsigned int> Stat;
-typedef std::tuple<std::string, Stat> UserLadderData;
+typedef std::tuple<std::string, Stat, double> UserLadderData;
 
 
 void inline disconnect(bool* leave){
@@ -84,12 +86,15 @@ void inline leaveQueueHandler(Matchmaking* matchmaking, Player* player){
 
 
 void inline myStatHandler(Player* player, Data* data){
+  std::stringstream elo;
   std::vector<std::string> mode = {"Classic", "Dark", "Horde", "Alice",
     "RealTimeClassic", "RealTimeDark", "RealTimeHorde", "RealTimeAlice"};
 
   for (unsigned int a = 0; a < mode.size(); ++a){
     std::string stat = unsignedIntVectorToStr(data->getUserStat(player->getName(), mode[a]));
-    player->getSocket()->printSend(std::string("7~") + std::to_string(a) + "~" + mode[a] + "~" + stat);
+    elo << std::fixed << std::setprecision(2) << data->getEloRating(player->getName(), a);
+    player->getSocket()->printSend(std::string("7~") + std::to_string(a) + "~" + mode[a] + "~" + stat + "~" + elo.str());
+    elo.str("");
   }
 }
 
@@ -98,33 +103,49 @@ void inline ladderHandler(Socket* socket, Data* data, std::string mode){
   std::string gamemode;
 
   switch (mode[0]){
-    case '0' :
+    case '0':
       gamemode = "Classic";
       break;
-    case '1' :
+    case '1':
       gamemode = "Dark";
       break;
-    case '2' :
+    case '2':
       gamemode = "Horde";
       break;
-    case '3' :
+    case '3':
       gamemode = "Alice";
+      break;
+    case '4':
+      gamemode = "RealTimeClassic";
+      break;
+    case '5':
+      gamemode = "RealTimeDark";
+      break;
+    case '6':
+      gamemode = "RealTimeHorde";
+      break;
+    case '7':
+      gamemode = "RealTimeAlice";
+      break;
   }
 
   std::vector<UserLadderData> ladder = data->getLadder(gamemode);
   std::reverse(ladder.begin(), ladder.end());
 
+  std::stringstream elo;
   unsigned int a = 0;
 
   while (a < ladder.size()){
     std::string username = std::get<0>(ladder[a]);
     std::string stat = unsignedIntVectorToStr(std::get<1>(ladder[a]));
-    socket->sendMessage(std::string("8~") + std::to_string(a) + "~" + username + "~" + stat);
+    elo << std::fixed << std::setprecision(2) << std::get<2>(ladder[a]);
+    socket->sendMessage(std::string("8~") + std::to_string(a) + "~" + username + "~" + stat + "~" + elo.str());
+    elo.str("");
     ++a;
   }
 
   for (unsigned int b = a; b < 10; ++b){
-    socket->sendMessage(std::string("8~") + std::to_string(b) + "~---~0 0 0");
+    socket->sendMessage(std::string("8~") + std::to_string(b) + "~---~- - -~-");
   }
 }
 

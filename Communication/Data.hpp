@@ -12,11 +12,14 @@
 #include "dirent.h"
 #include <mutex>
 #include <cmath> //used in ELO calc
-#include <iomanip>
+
+#define LADDERSIZE 10
 
 typedef std::vector<unsigned int> Stat;
-typedef std::tuple<std::string, Stat, Stat, Stat, Stat, Stat, Stat, Stat, Stat, std::vector<std::string>, std::vector<std::string>, std::vector<std::string>, double> UserData;
-typedef std::tuple<std::string, Stat> UserLadderData;
+typedef std::tuple<std::string, Stat, double> UserLadderData;
+typedef std::tuple<std::string, Stat, Stat, Stat, Stat, Stat, Stat, Stat, Stat,
+  std::vector<std::string>, std::vector<std::string>, std::vector<std::string>,
+  std::vector<double>> UserData;
 
 class Data {
 private:
@@ -69,17 +72,16 @@ public:
   void addUserRealTimeAliceLose(const std::string username);
   void addUserRealTimeAliceDraw(const std::string username);
 
-  double getEloRating(std::string);
-  void updateRating(const std::string, double, double);
-  double expectedWin(double,double);
-
   bool isInLadder(const std::string gamemode, const std::string username);
-  void updateLadderOnLoseDraw(const std::string gamemode, UserLadderData data);
-  void updateLadderOnWin(const std::string gamemode, UserLadderData data);
+  void updateLadder(const std::string gamemode, UserLadderData data);
   void initLadder();
   std::vector<UserLadderData> getLadder(const std::string gamemode);
   void printLadder(const std::string gamemode);
   Stat getUserStat(const std::string username, const std::string gamemode);
+
+  double getEloRating(std::string, unsigned int);
+  void updateRating(const std::string, double, double, unsigned int);
+  double getExpectedWin(double,double);
 
   void lockMutex();
   void unlockMutex();
