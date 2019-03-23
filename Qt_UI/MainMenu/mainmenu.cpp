@@ -17,21 +17,21 @@ MainMenu::MainMenu(QWidget *parent) :
     ui(new Ui::MainMenu),
     connect(new ConnectionDialog),
     login(new LoginDialog),
-    socket(new Socket),
-    client(new Client(socket))
+    client(new Client(new Socket))
 {
     ui->setupUi(this);
     client_connect();
-    std::thread receiveThread(receiveMessageHandler, client);
+    msgThread = std::thread(receiveMessageHandler, client);
     client_login();
 }
 
 MainMenu::~MainMenu()
 {
-    delete ui;
-    if (connect != nullptr) delete connect;
-    if (login != nullptr) delete login;
+    msgThread.join();
     delete client;
+    if (login != nullptr) delete login;
+    if (connect != nullptr) delete connect;
+    delete ui;
 }
 
 void MainMenu::client_connect() {
@@ -39,20 +39,22 @@ void MainMenu::client_connect() {
     std::string hostname;
     do {
         hostname = (connect->ask_hostname()).toStdString();
-        good_hostname = socket->connectToServer(hostname);
+        good_hostname = client->getSocket()->connectToServer(hostname);
     } while (!good_hostname);
     connect->close();
+    delete connect;
 }
 
 void MainMenu::client_login() {
     QString username, password;
     do
     {
-        login->get_login_deets(socket, username, password);
+        login->get_login_deets(client->getSocket(), username, password);
         std::cout << client->readPipe() << std::endl;
     }
     while (!(client->isIdentified()));
     login->close();
+    delete login;
     client->setName(username.toStdString());
 }
 

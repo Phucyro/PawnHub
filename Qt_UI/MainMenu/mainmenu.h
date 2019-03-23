@@ -1,13 +1,14 @@
 #ifndef MAINMENU_H
 #define MAINMENU_H
 
-#include "../../Communication/Socket.hpp"
-#include "../../Communication/Client.hpp"
-
 #include <QWidget>
+
+#include <thread>
 
 #include "connectiondialog.h"
 #include "logindialog.h"
+
+class Client;
 
 namespace Ui {
 class MainMenu;
@@ -35,8 +36,8 @@ private:
     Ui::MainMenu *ui;
     ConnectionDialog *connect;
     LoginDialog *login;
-    Socket* socket;
     Client* client;
+    std::thread msgThread;
 
     void client_connect();
     void client_login();

@@ -61,7 +61,7 @@ void Socket::sendMessage(std::string message) {
   // if (message[0] == 'B') throw std::string("Sent board too early");
   //std::cout<<"message send: "<<message<<std::endl;
   signal(SIGPIPE, handleSignal);
-  
+	
   size_t message_size = message.length();
   if ((message_size % MSG_LENGTH) == 0) {
     message = message.append(std::string(MSG_LENGTH, PADDING));
