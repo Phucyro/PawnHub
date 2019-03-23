@@ -13,8 +13,10 @@
 #include <mutex>
 #include <cmath> //used in ELO calc
 
+#define LADDERSIZE 10
+
 typedef std::vector<unsigned int> Stat;
-typedef std::tuple<std::string, Stat> UserLadderData;
+typedef std::tuple<std::string, Stat, double> UserLadderData;
 typedef std::tuple<std::string, Stat, Stat, Stat, Stat, Stat, Stat, Stat, Stat,
   std::vector<std::string>, std::vector<std::string>, std::vector<std::string>,
   std::vector<double>> UserData;
@@ -71,8 +73,7 @@ public:
   void addUserRealTimeAliceDraw(const std::string username);
 
   bool isInLadder(const std::string gamemode, const std::string username);
-  void updateLadderOnLoseDraw(const std::string gamemode, UserLadderData data);
-  void updateLadderOnWin(const std::string gamemode, UserLadderData data);
+  void updateLadder(const std::string gamemode, UserLadderData data);
   void initLadder();
   std::vector<UserLadderData> getLadder(const std::string gamemode);
   void printLadder(const std::string gamemode);
