@@ -162,7 +162,7 @@ void leaveLadderMenu(MenuHandler* menu, Client* client, std::string mode){
 
   for (unsigned int a = 0; a < 10; ++a){
     msg = splitString(client->readPipe(), ' ');
-    menu->update_stats(atoi(msg[0].c_str()), msg[1], atoi(msg[2].c_str()), atoi(msg[3].c_str()), atoi(msg[4].c_str()));
+    menu->update_stats(atoi(msg[0].c_str()), msg[1], msg[2], msg[3], msg[4]);
   }
 
   menu->refresh_board();
@@ -271,7 +271,7 @@ void myStatMenu(MenuHandler* menu, Client* client){
   // 8 pour les 8 modes
   for (unsigned int a = 0; a < 8; ++a){
     msg = splitString(client->readPipe(), ' ');
-    menu->update_stats(atoi(msg[0].c_str()), msg[1], atoi(msg[2].c_str()), atoi(msg[3].c_str()), atoi(msg[4].c_str()));
+    menu->update_stats(atoi(msg[0].c_str()), msg[1], msg[2], msg[3], msg[4]);
   }
 
   menu->refresh_board();

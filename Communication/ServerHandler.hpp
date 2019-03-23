@@ -145,7 +145,7 @@ void inline ladderHandler(Socket* socket, Data* data, std::string mode){
   }
 
   for (unsigned int b = a; b < 10; ++b){
-    socket->sendMessage(std::string("8~") + std::to_string(b) + "~---~0 0 0~0.00");
+    socket->sendMessage(std::string("8~") + std::to_string(b) + "~---~- - -~-");
   }
 }
 

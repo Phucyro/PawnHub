@@ -73,7 +73,7 @@ void MenuHandler::print_warning(std::string warning)
   int y_max, x_max;
   getmaxyx(stdscr, y_max, x_max);
 
-  mvprintw(y_max-2,1,"                                        ");
+  mvprintw(y_max-2,1, std::string(70,' ').c_str());
   mvprintw(y_max-2,1,warning.c_str());
   refresh();
 }
@@ -84,7 +84,7 @@ void MenuHandler::print_warning2(std::string warning)
   int y_max, x_max;
   getmaxyx(stdscr, y_max, x_max);
 
-  mvprintw(y_max-1,1,"                                        ");
+  mvprintw(y_max-1,1,std::string(70,' ').c_str());
   mvprintw(y_max-1,1,warning.c_str());
   refresh();
 }
@@ -226,7 +226,7 @@ void MenuHandler::init_statsp(std::string name)
 
 }
 
-void MenuHandler::update_stats(int number, std::string name, int wins, int loses, int draws)
+void MenuHandler::update_stats(int number, std::string name, std::string wins, std::string loses, std::string draws)
 /** update ligne joueur du menu stats (number commence en 0) **/
 {
   int y_box, x_box;
@@ -236,9 +236,9 @@ void MenuHandler::update_stats(int number, std::string name, int wins, int loses
   x_split = (x_box/4)+2;
 
   mvwprintw(stats_w, 5+number, 5, name.c_str());
-  mvwprintw(stats_w, 5+number, 5+x_split, "%d", wins);
-  mvwprintw(stats_w, 5+number, 5+2*x_split, "%d", loses);
-  mvwprintw(stats_w, 5+number, 5+3*x_split, "%d", draws);
+  mvwprintw(stats_w, 5+number, 5+x_split, "%s", wins.c_str());
+  mvwprintw(stats_w, 5+number, 5+2*x_split, "%s", loses.c_str());
+  mvwprintw(stats_w, 5+number, 5+3*x_split, "%s", draws.c_str());
 
   refresh_board();
 }
