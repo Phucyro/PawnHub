@@ -117,6 +117,7 @@ void ClientGameControl::receiveAskMove(std::string message) {
   }
   if (!timeLeft){
   	effective_move = "/tim";
+  	sendMove(effective_move);
   	game_ongoing = false;
   	board.clear_get_movement();
   	board.endgame("Time out! You lost.");

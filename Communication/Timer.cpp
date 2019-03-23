@@ -18,7 +18,17 @@ Timer::~Timer()
 
 Timer::operator std::string(){
 	update();
-	return  std::to_string(get_minutes_left()) + ":" + std::to_string(get_seconds_left());
+	int min = get_minutes_left();
+	std::string minDisplay;
+	if (min < 10) minDisplay = "0";
+	minDisplay += std::to_string(min);
+	
+	int sec = get_seconds_left();
+	std::string secDisplay;
+	if (sec < 10) secDisplay = "0";
+	secDisplay += std::to_string(sec);
+	
+	return  minDisplay + ":" + secDisplay;
 }
 
 

@@ -1021,7 +1021,7 @@ void Data::updateRating(const std::string username, double expectedWin, double s
     "RealTimeClassic", "RealTimeDark", "RealTimeHorde", "RealTimeAlice"};
 
   // Mode+1 = position par rapport a UserData
-  Stat userStat = getUserStat(username, gamemode[mode-1]);
+  Stat userStat = getUserStat(username, gamemode[mode]);
 
   updateLadder(gamemode[mode], {username, userStat, eloRating});
 }

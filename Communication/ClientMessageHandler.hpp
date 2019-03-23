@@ -18,7 +18,7 @@ void receiveMessageHandler(MenuHandler* menu, Client* client){
     msg = splitString(client->getSocket()->receiveMessage(), '~');
 
     if (std::isalpha(msg[0][0])){
-       client->writePipe(strVectorToStr(msg));
+       //client->writePipe(strVectorToStr(msg));
        continue;
     }
 
