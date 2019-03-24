@@ -321,10 +321,9 @@
    </property>
   </widget>
  </widget>
- <resources/>
  <resources>
   <include location="calvin.qrc"/>
   <include location="catmeme.qrc"/>
- </resources>why
+ </resources>
  <connections/>
 </ui>

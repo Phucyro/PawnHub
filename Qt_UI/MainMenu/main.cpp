@@ -23,15 +23,15 @@ int main(int argc, char *argv[])
     try {
         QApplication a(argc, argv);
 
-        // Actual code
-        MainMenu w;
-        w.show();
+//        // Actual code
+//        MainMenu w;
+//        w.show();
 
-//        // Cheat code for game integration - change hostname for full effect
-//        GameWithoutChat game;
-//        Socket socket;
-//        socket.connectToServer("frawni-thinks");
-//        Client client(&socket);
+        // Cheat code for game integration - change hostname for full effect
+        GameWithoutChat game;
+        Socket socket;
+        socket.connectToServer("KryptonX");
+        Client client(&socket);
 
 //        std::thread recvThread(receiveMessageHandler, &client);
 //        signIn(&socket, "Admin", "mdp");
