@@ -24,7 +24,7 @@ QT_BEGIN_NAMESPACE
 class Ui_GameRules
 {
 public:
-    QLabel *label;
+    QLabel *adsLabel;
     QWidget *horizontalLayoutWidget;
     QHBoxLayout *horizontalLayout;
     QVBoxLayout *verticalLayout;
@@ -43,17 +43,17 @@ public:
     {
         if (GameRules->objectName().isEmpty())
             GameRules->setObjectName(QString::fromUtf8("GameRules"));
-        GameRules->resize(400, 400);
-        GameRules->setMinimumSize(QSize(400, 400));
-        GameRules->setMaximumSize(QSize(400, 400));
-        label = new QLabel(GameRules);
-        label->setObjectName(QString::fromUtf8("label"));
-        label->setGeometry(QRect(10, 15, 381, 41));
-        label->setPixmap(QPixmap(QString::fromUtf8(":/Calvin.jpg")));
-        label->setScaledContents(true);
+        GameRules->resize(600, 600);
+        GameRules->setMinimumSize(QSize(600, 600));
+        GameRules->setMaximumSize(QSize(600, 600));
+        adsLabel = new QLabel(GameRules);
+        adsLabel->setObjectName(QString::fromUtf8("adsLabel"));
+        adsLabel->setGeometry(QRect(10, 15, 571, 41));
+        adsLabel->setPixmap(QPixmap(QString::fromUtf8(":/Calvin.jpg")));
+        adsLabel->setScaledContents(true);
         horizontalLayoutWidget = new QWidget(GameRules);
         horizontalLayoutWidget->setObjectName(QString::fromUtf8("horizontalLayoutWidget"));
-        horizontalLayoutWidget->setGeometry(QRect(10, 70, 381, 321));
+        horizontalLayoutWidget->setGeometry(QRect(10, 70, 581, 521));
         horizontalLayout = new QHBoxLayout(horizontalLayoutWidget);
         horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
         horizontalLayout->setContentsMargins(0, 0, 0, 0);
@@ -122,7 +122,7 @@ public:
     void retranslateUi(QDialog *GameRules)
     {
         GameRules->setWindowTitle(QApplication::translate("GameRules", "Dialog", nullptr));
-        label->setText(QString());
+        adsLabel->setText(QString());
         classicPushButton->setText(QApplication::translate("GameRules", "Classic", nullptr));
         darkPushButton->setText(QApplication::translate("GameRules", "Dark", nullptr));
         hordePushButton->setText(QApplication::translate("GameRules", "Horde", nullptr));
