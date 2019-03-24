@@ -14,7 +14,6 @@
 #include <QtWidgets/QDialog>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QLabel>
-#include <QtWidgets/QPlainTextEdit>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
@@ -37,7 +36,6 @@ public:
     QPushButton *realTimeHordePushButton;
     QPushButton *realTimeAlicePushButton;
     QPushButton *returnPushButton;
-    QPlainTextEdit *plainTextEdit;
 
     void setupUi(QDialog *GameChoice)
     {
@@ -106,12 +104,6 @@ public:
 
 
         horizontalLayout->addLayout(verticalLayout);
-
-        plainTextEdit = new QPlainTextEdit(horizontalLayoutWidget);
-        plainTextEdit->setObjectName(QString::fromUtf8("plainTextEdit"));
-        plainTextEdit->setReadOnly(true);
-
-        horizontalLayout->addWidget(plainTextEdit);
 
 
         retranslateUi(GameChoice);

@@ -18,6 +18,7 @@ void GameChoiceStatistics::on_classicPushButton_pressed()
 {
 
 }
+
 void GameChoiceStatistics::on_darkPushButton_pressed()
 {
 

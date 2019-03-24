@@ -87,5 +87,5 @@ void GameChoice::on_realTimeAlicePushButton_pressed()
 
 void GameChoice::on_returnPushButton_pressed()
 {
-    exit(0);
+    close();
 }

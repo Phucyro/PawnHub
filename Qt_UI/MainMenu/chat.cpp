@@ -27,7 +27,7 @@ void Chat::on_sendPushButton_pressed()
 
 void Chat::on_quitPushButton_pressed()
 {
-    exit(0);
+    close();
 }
 
 void Chat::on_changeChanPushButton_pressed()

@@ -27,5 +27,5 @@ void GameWithAlice::on_sendingTextField_returnPressed()
 
 void GameWithAlice::on_surrendButton_pressed()
 {
-    exit(0);
+    close();
 }

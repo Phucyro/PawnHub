@@ -15,5 +15,5 @@ StatisticsTab::~StatisticsTab()
 
 void StatisticsTab::on_returnPushButton_pressed()
 {
-    exit(0);
+    close();
 }

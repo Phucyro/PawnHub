@@ -74,5 +74,5 @@ void FriendTab::on_inputLineEdit_returnPressed()
 
 void FriendTab::on_returnPushButton_pressed()
 {
-    exit(0);
+    close();
 }
