@@ -65,12 +65,12 @@ void separateAlicePieces(unsigned a,std::string message,std::string colour) {
   int line = coor.getRealRow();
   if (colour == "white") {
     attron(COLOR_PAIR(WHITE_PLAYER));
-    mvprintw(1+(line)*OFFSET, 54+((column+1)*OFFSET), "%c", piece);
+    mvprintw((1+line)*OFFSET, 63+((column+1)*OFFSET), "%c", piece);//54
     attroff(COLOR_PAIR(WHITE_PLAYER));
   }
   else {
     attron(COLOR_PAIR(BLACK_PLAYER));
-    mvprintw(1+(line*OFFSET), 54+((column+1)*OFFSET), "%c", piece);
+    mvprintw((1+line)*OFFSET, 63+((column+1)*OFFSET), "%c", piece);
     attroff(COLOR_PAIR(BLACK_PLAYER));
   }
 }

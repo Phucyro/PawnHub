@@ -3,6 +3,7 @@
 
 #include "AlicePiece.hpp"
 #include "Rook.hpp"
+#include "AlicePawn.hpp"
 
 class AliceRook: public Rook, public AlicePiece{
 	protected:
@@ -13,6 +14,7 @@ class AliceRook: public Rook, public AlicePiece{
 	public:
 	AliceRook(const char color, const char column , const char row) : Rook(color,column,row), AlicePiece(false){}
 	AliceRook(const AliceRook& original) : Rook(original), AlicePiece(original){}
+	explicit AliceRook(const AlicePawn& original) : Rook(original), AlicePiece(original){}
 	virtual ~AliceRook() = default;
 	
 	AliceRook& operator= (const AliceRook& original){
@@ -22,7 +24,10 @@ class AliceRook: public Rook, public AlicePiece{
 	}
 	
 	bool _checkMove(Coordinate, Board*, Game&) override;
+	bool _isMovePossible(int column, int row, Board* board, Game& game) override {return Piece::_isMovePossible(column, row, board, game);}
 	bool _isMovePossible(Coordinate, Board*, Game&) override;
+	bool canMove(Board*, Game&) override;
+	void stopMoving(Game& game, Board*) override;
 };
 
 #endif

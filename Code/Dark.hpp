@@ -6,18 +6,23 @@
 #include <iostream>
 #include <string>
 #include "includesPieceHPP.hpp"
-#include "Game.hpp"
+#include "TurnBasedGame.hpp"
 
-class Dark: public Game{
+class Dark: public TurnBasedGame{
 	private :
 
 	void _Pieces();
 
-	Player* _getCurrentPlayer() override {
+	Player* _getCurrentPlayer() const override {
 		if(_turn%2) return _player1;
 		else return _player2;
 	}
-	bool _fitInBoard(std::string playerMove){return playerMove[0] >= 'A' && playerMove[0] <= 'H' && playerMove[1] >= '1' && playerMove[1] <= '8' && playerMove[2] >= 'A' && playerMove[2] <= 'H' && playerMove[3] >= '1' && playerMove[3] <= '8';}
+
+	Player* _getOtherPlayer() const override {
+		if(_turn%2) return _player2;
+		else return _player1;
+	}
+	
 
 	bool _isCheckmate(char);
 	bool _isStalemate(char);
@@ -25,12 +30,12 @@ class Dark: public Game{
 
 	int _calculOffset(char playerColor){return playerColor == 'w' ? 0 : 16;}
 	bool _isVisible(Piece*, char);
+	void _updateStat();
 
 	protected :
 
 	void _initBoard() override;
 	void _sendGameMode() override;
-	void _nextTurn() override;
 	bool _isFinish() override;
 	void _boardState(std::string&) override;
 	void _sendBoard() override;
@@ -38,16 +43,16 @@ class Dark: public Game{
 	void _changePawn(Piece*, Piece*, Board*) override;
 
 	public :
-	Dark(Player* player1, Player* player2) noexcept : Game(nullptr, 32, player1, player2, 7, 22) {_Pieces();}
+	Dark(Player* player1, Player* player2) noexcept : TurnBasedGame(nullptr, 32, player1, player2, 7, 22) {_Pieces();}
 	Dark(const Dark&) = delete;
 	virtual ~Dark();
 
 	Dark& operator=(const Dark& original){
-		this->Game::operator=(original);
+		this->TurnBasedGame::operator=(original);
 		return *this;
 	}
 	Dark& operator=(Dark&& original){
-		this->Game::operator=(original);
+		this->TurnBasedGame::operator=(original);
 		return *this;
 	}
 

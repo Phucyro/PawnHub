@@ -144,7 +144,8 @@ void Horde::_changePawn(Piece *pawn, Piece* promotedPawn, Board* board){
 				break; // <3 <3 <3
 			}
 		}
-	}else{
+	}
+	else{
 		_lastStrongPieceBlack ++;
 		start = int(_lastStrongPieceBlack);
 		i = int(_lastStrongPieceBlack);
@@ -168,44 +169,52 @@ bool Horde::_executeMove(Coordinate start, Coordinate end, char playerColor){
 	return movingPiece->move(end, _board, *this);
 }
 
-void Horde::_nextTurn() {
-	Player *currentPlayer = _getCurrentPlayer();
-	char playerColor = currentPlayer == _player1 ? 'w':'b';
 
-	bool isMoveValid = false;
-	std::string playerMove;
-	while(!isMoveValid){
-		playerMove = currentPlayer->askMove();
-		if (this->_fitInBoard(playerMove)){
-			Coordinate start = Coordinate(playerMove[0], playerMove[1]), end = Coordinate(playerMove[2], playerMove[3]);
-			isMoveValid = this->_executeMove(start, end, playerColor);
-		}
+
+void Horde::_updateStat(){
+	double playerElo1 = data.getEloRating(_player1->getName(), HORDE);
+	double playerElo2 = data.getEloRating(_player2->getName(), HORDE);
+	double playerExptWin1 = data.getExpectedWin(playerElo1, playerElo2);
+	double playerExptWin2 = data.getExpectedWin(playerElo2, playerElo1);
+
+	if (_winner == _player1){
+		std::cout << "White Player win !" << std::endl;
+		data.addUserHordeLose(_player2->getName());
+		data.addUserHordeWin(_player1->getName());
+		data.updateRating(_player2->getName(), playerExptWin2, LOSE, HORDE);
+		data.updateRating(_player1->getName(), playerExptWin1, WIN,  HORDE);
+	}
+	else if (_winner == _player2) {
+		std::cout << "Black Player win !" << std::endl;
+		data.addUserHordeWin(_player2->getName());
+		data.addUserHordeLose(_player1->getName());
+		data.updateRating(_player2->getName(), playerExptWin2, WIN,  HORDE);
+		data.updateRating(_player1->getName(), playerExptWin1, LOSE, HORDE);
+	}
+	else{
+		data.addUserHordeDraw(_player2->getName());
+		data.addUserHordeDraw(_player1->getName());
+		data.updateRating(_player2->getName(), playerExptWin2, TIE, HORDE);
+		data.updateRating(_player1->getName(), playerExptWin1, TIE, HORDE);
 	}
 }
 
-
 bool Horde::_isFinish() {
+	if (_winner){
+		_updateStat();
+		return true;
+	}
 	Player *currentPlayer = _getCurrentPlayer();
 	char opponentColor = currentPlayer == _player2 ? 'w':'b';
 	if (this->_isCheckmate(opponentColor)){
-		if (opponentColor == 'w'){
-			std::cout << "Black Player win !" << std::endl;
-			data.addUserHordeWin(_player2->getName());
-			data.addUserHordeLose(_player1->getName());
-		}
-		else {
-			std::cout << "White Player win !" << std::endl;
-			data.addUserHordeLose(_player2->getName());
-			data.addUserHordeWin(_player1->getName());
-		}
 		_winner = currentPlayer;
 		_sendCheckmate();
+		_updateStat();
 		return true;
 	}
 	if (this->_isStalemate(opponentColor)) {
-		data.addUserHordeDraw(_player2->getName());
-		data.addUserHordeDraw(_player1->getName());
 		_sendStalemate();
+		_updateStat();
 		return true;
 	}
 	return false;
@@ -276,6 +285,7 @@ bool Horde::_isCheckmate(char playerColor){
 }
 
 bool Horde::_isStalemate(char playerColor){
+	if (this->testCheck(playerColor)) return false;
 	if(playerColor == 'w'){
 		for (int i = 0; i < 16; i++){
 			if ((!_pieces[i]->isTaken()) && _pieces[i]->canMove(_board, *this)) return false;
@@ -296,18 +306,18 @@ bool Horde::testCheck(const char color){
 		//Pawn
 		leftMaybePawn = Coordinate(_pieces[KING_INDEX]->getCoord().getRealColumn()+1, _pieces[KING_INDEX]->getCoord().getRealRow()+1);
 		Piece* MaybePawn = nullptr;
-		if (_board->isInBoard(leftMaybePawn)) MaybePawn = Game::_board->getCase(leftMaybePawn);
+		if (_board->isInBoard(leftMaybePawn)) MaybePawn = TurnBasedGame::_board->getCase(leftMaybePawn);
 		if (MaybePawn && MaybePawn->getColor() == 'b' && (MaybePawn->getType() == 'p' || MaybePawn->getType() == 'b' || MaybePawn->getType() == 'q' || MaybePawn->getType() == 'k')) return true;
 
 		rightMaybePawn = Coordinate(_pieces[KING_INDEX]->getCoord().getRealColumn()-1, _pieces[KING_INDEX]->getCoord().getRealRow()+1);
 		MaybePawn = nullptr;
-		if (_board->isInBoard(rightMaybePawn)) MaybePawn = Game::_board->getCase(rightMaybePawn);
+		if (_board->isInBoard(rightMaybePawn)) MaybePawn = TurnBasedGame::_board->getCase(rightMaybePawn);
 		if (MaybePawn && MaybePawn->getColor() == 'b' && (MaybePawn->getType() == 'p' || MaybePawn->getType() == 'b' || MaybePawn->getType() == 'q' || MaybePawn->getType() == 'k')) return true;
 
 		//strong pieces
 		for (unsigned i = 16; i <= _lastStrongPieceBlack; ++i){
 			if (!_pieces[i]->isTaken())
-				if (_pieces[i]->_checkMove(_pieces[KING_INDEX]->getCoord(), Game::_board, *this)) return true;
+				if (_pieces[i]->_checkMove(_pieces[KING_INDEX]->getCoord(), TurnBasedGame::_board, *this)) return true;
 		}
 	}
 	return false;
@@ -323,7 +333,6 @@ void Horde::_boardState(std::string& state){
 		if (!_pieces[i]->isTaken()) state += _pieces[i]->toString();
 	}
 	state += "#";
-	std::cout<<"Board state: "<<state<<std::endl;
 }
 
 #endif

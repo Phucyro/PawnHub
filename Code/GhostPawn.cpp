@@ -11,6 +11,7 @@ GhostPawn& GhostPawn::operator= (const GhostPawn& original){
   this->Piece::operator= (original);
   _creationTurn = original._creationTurn;
   _target = original._target;
+  _activationTime = original._activationTime;
   return *this;
 }
 
@@ -25,7 +26,7 @@ void GhostPawn::changeIsTaken(unsigned turn, Piece* taker, Board* board){
 }
 
 bool GhostPawn::isActive(unsigned turn){
-  return turn == _creationTurn + 1;
+  return turn <= _creationTurn + _activationTime;
 }
 
 #endif

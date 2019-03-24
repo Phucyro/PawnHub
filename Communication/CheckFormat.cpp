@@ -8,7 +8,7 @@ int checkFormat(std::string username, std::string password, std::string confirma
 
   if (password != confirmation) return 1;
 
-  if (username.length() == 0 || username.length() > 10 || password.length() > 10){
+  if (username.length() == 0 || username.length() > 10 || password.length() == 0 || password.length() > 10){
     return 2;
   }
 
@@ -28,4 +28,22 @@ bool checkInputFormat(std::string message){
     if (message[a] == '|' || message[a] == '~') return false;
   }
   return true;
+}
+
+bool checkFriendInputFormat(MenuHandler* menu, std::vector<std::string> input){
+  bool correct = true;
+  if (input.size() <= 1){
+    menu->print_warning("Commande invalide");
+    correct = false;
+  }
+  else if (input[1].length() > 10){
+    menu->print_warning("La taille des noms est limitée à 10 caractères");
+    correct = false;
+  }
+  else if (!checkInputFormat(input[1])){
+    menu->print_warning("Les caractères | et ~ sont interdits");
+    correct = false;
+  }
+  menu->refresh_board();
+  return correct;
 }

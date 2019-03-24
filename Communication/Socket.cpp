@@ -1,5 +1,11 @@
 #include "Socket.hpp"
 #include <execinfo.h>
+#include <csignal>
+#include <iostream>
+
+void handleSignal(int signum){
+	std::cout<<"signal handling: "<<signum<<std::endl;
+}
 
 Socket::Socket() : file_descriptor(0), monMutex() {
   file_descriptor = socket(AF_INET, SOCK_STREAM, 0);
@@ -53,7 +59,9 @@ void Socket::printSend(std::string message) {
 // Might break but my balmer peak state says it's perfect
 void Socket::sendMessage(std::string message) {
   // if (message[0] == 'B') throw std::string("Sent board too early");
-
+  //std::cout<<"message send: "<<message<<std::endl;
+  signal(SIGPIPE, handleSignal);
+  
   size_t message_size = message.length();
   if ((message_size % MSG_LENGTH) == 0) {
     message = message.append(std::string(MSG_LENGTH, PADDING));
@@ -92,6 +100,7 @@ bool Socket::parseBuffer(std::string& message) {
 }
 
 std::string Socket::receiveMessage() {
+  signal(SIGPIPE, handleSignal);
   std::string message;
   bool message_done = false;
   while (!message_done) {

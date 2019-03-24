@@ -30,4 +30,14 @@ bool AlicePawn::_isMovePossible(Coordinate end, Board* board, Game& game){
 	return false;
 }
 
+bool AlicePawn::canMove(Board* board, Game& game){
+	int direction = this->getColor() == 'w' ? 1:-1;
+	return this->BasicPawn::canMove(board, game) || this->_isMovePossible(0, 2*direction, board, game);
+}
+
+void AlicePawn::stopMoving(Game& game, Board* board){
+	this->Piece::stopMoving(game, board);
+	this->AlicePiece::stopMoving(game);
+}
+
 #endif
