@@ -7,7 +7,7 @@ Timer::Timer():Timer(0)
 
 Timer::Timer(int maxTime): started(false), remaining_time(maxTime), time_start(), time_end(), pause_start(std::chrono::steady_clock::now()), pause_end(pause_start), elapsed_time(), pause_time()
 {
-	
+
 }
 
 
@@ -22,12 +22,12 @@ Timer::operator std::string(){
 	std::string minDisplay;
 	if (min < 10) minDisplay = "0";
 	minDisplay += std::to_string(min);
-	
+
 	int sec = get_seconds_left();
 	std::string secDisplay;
 	if (sec < 10) secDisplay = "0";
 	secDisplay += std::to_string(sec);
-	
+
 	return  minDisplay + ":" + secDisplay;
 }
 
@@ -134,4 +134,3 @@ void Timer::reset(int time)
     started = false;
     pause_start = pause_end;
 }
-

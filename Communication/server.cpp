@@ -23,7 +23,7 @@ int main(){
   std::cout << "Hostname: " << hostname << std::endl;
 
 
-    Matchmaking matchmaking(4);
+    Matchmaking matchmaking(8);
     PlayersMap players_map;
     BindSocket binding_socket;
 

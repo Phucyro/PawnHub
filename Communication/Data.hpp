@@ -82,6 +82,7 @@ public:
   double getEloRating(std::string, unsigned int);
   void updateRating(const std::string, double, double, unsigned int);
   double getExpectedWin(double,double);
+  int getRank(std::string username, unsigned int mode);
 
   void lockMutex();
   void unlockMutex();
