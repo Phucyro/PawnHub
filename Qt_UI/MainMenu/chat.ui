@@ -23,7 +23,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Chat</string>
   </property>
   <widget class="QPlainTextEdit" name="chatPlainTextEdit">
    <property name="geometry">

@@ -15,6 +15,8 @@ public:
     explicit GameWithoutChat(QWidget *parent = nullptr);
     ~GameWithoutChat();
 
+    void setPiece(QIcon, QString, QString);
+
 private slots:
     void on_surrendButton_pressed();
 
@@ -92,6 +94,12 @@ private slots:
 
 private:
     Ui::GameWithoutChat *ui;
+    QMap<QString, QPushButton*> *coordinateConversionMap;
+    QString move;
+
+    void on_button_pushed(QPushButton*);
+    void on_initialPosition_chosen(QPushButton*);
+    void on_finalPosition_chosen(QPushButton*);
 };
 
 #endif // GAMEWITHOUTCHAT_H

@@ -6,16 +6,113 @@ GameWithoutChat::GameWithoutChat(QWidget *parent) :
     ui(new Ui::GameWithoutChat)
 {
     ui->setupUi(this);
+    QMap<QString, QPushButton*> map =
+    {
+        {"A1", ui->a1PushButton},
+        {"A2", ui->a2PushButton},
+        {"A3", ui->a3PushButton},
+        {"A4", ui->a4PushButton},
+        {"A5", ui->a5PushButton},
+        {"A6", ui->a6PushButton},
+        {"A7", ui->a7PushButton},
+        {"A8", ui->a8PushButton},
+
+        {"B1", ui->b1PushButton},
+        {"B2", ui->b2PushButton},
+        {"B3", ui->b3PushButton},
+        {"B4", ui->b4PushButton},
+        {"B5", ui->b5PushButton},
+        {"B6", ui->b6PushButton},
+        {"B7", ui->b7PushButton},
+        {"B8", ui->b8PushButton},
+
+        {"C1", ui->c1PushButton},
+        {"C2", ui->c2PushButton},
+        {"C3", ui->c3PushButton},
+        {"C4", ui->c4PushButton},
+        {"C5", ui->c5PushButton},
+        {"C6", ui->c6PushButton},
+        {"C7", ui->c7PushButton},
+        {"C8", ui->c8PushButton},
+
+        {"D1", ui->d1PushButton},
+        {"D2", ui->d2PushButton},
+        {"D3", ui->d3PushButton},
+        {"D4", ui->d4PushButton},
+        {"D5", ui->d5PushButton},
+        {"D6", ui->d6PushButton},
+        {"D7", ui->d7PushButton},
+        {"D8", ui->d8PushButton},
+
+        {"E1", ui->e1PushButton},
+        {"E2", ui->e2PushButton},
+        {"E3", ui->e3PushButton},
+        {"E4", ui->e4PushButton},
+        {"E5", ui->e5PushButton},
+        {"E6", ui->e6PushButton},
+        {"E7", ui->e7PushButton},
+        {"E8", ui->e8PushButton},
+
+        {"F1", ui->f1PushButton},
+        {"F2", ui->f2PushButton},
+        {"F3", ui->f3PushButton},
+        {"F4", ui->f4PushButton},
+        {"F5", ui->f5PushButton},
+        {"F6", ui->f6PushButton},
+        {"F7", ui->f7PushButton},
+        {"F8", ui->f8PushButton},
+
+        {"G1", ui->g1PushButton},
+        {"G2", ui->g2PushButton},
+        {"G3", ui->g3PushButton},
+        {"G4", ui->g4PushButton},
+        {"G5", ui->g5PushButton},
+        {"G6", ui->g6PushButton},
+        {"G7", ui->g7PushButton},
+        {"G8", ui->g8PushButton},
+
+        {"H1", ui->h1PushButton},
+        {"H2", ui->h2PushButton},
+        {"H3", ui->h3PushButton},
+        {"H4", ui->h4PushButton},
+        {"H5", ui->h5PushButton},
+        {"H6", ui->h6PushButton},
+        {"H7", ui->h7PushButton},
+        {"H8", ui->h8PushButton},
+    };
+    coordinateConversionMap = &map;
 }
 
 GameWithoutChat::~GameWithoutChat()
 {
+    coordinateConversionMap = nullptr;
     delete ui;
+}
+
+void GameWithoutChat::setPiece(QIcon pieceIcon, QString piecePosition, QString pieceName) {
+    coordinateConversionMap->value(piecePosition)->setIcon(pieceIcon);
+    coordinateConversionMap->value(piecePosition)->setEnabled(true);
+    coordinateConversionMap->value(piecePosition)->setToolTip(pieceName);
+}
+
+void GameWithoutChat::on_button_pushed(QPushButton* origin)
+{
+
+}
+
+void GameWithoutChat::on_initialPosition_chosen(QPushButton* origin)
+{
+    QString pieceName = origin->toolTip();
+
+    move = origin->objectName();
+    // get potential moves for piece here and enable relevant buttons
+
 }
 
 void GameWithoutChat::on_surrendButton_pressed()
 {
-    close();
+    // send surrend
+    this->close();
 }
 
 void GameWithoutChat::on_a8PushButton_pressed()
@@ -274,4 +371,3 @@ void GameWithoutChat::on_h1PushButton_pressed()
 {
 
 }
-

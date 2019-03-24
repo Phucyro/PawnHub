@@ -75,6 +75,7 @@ public:
   void setIsChatting(bool chatting);
   bool isChatting();
   void setIsChattingWith(std::string name);
+  std::string getIsChattingWith();
   bool isChattingWith(std::string name);
   Conversation getConversation(std::string name);
   void updateConversation(std::string target, std::string sender, std::string msg);

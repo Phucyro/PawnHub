@@ -29,7 +29,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Chess</string>
   </property>
   <widget class="QGraphicsView" name="graphicsView">
    <property name="geometry">
@@ -124,7 +124,7 @@
        </widget>
       </item>
       <item row="0" column="1">
-       <widget class="QLabel" name="chgModelabel">
+       <widget class="QLabel" name="chgModeLabel">
         <property name="text">
          <string>mode</string>
         </property>
@@ -152,7 +152,7 @@
        </widget>
       </item>
       <item row="2" column="1">
-       <widget class="QLabel" name="chgLastMovelabel">
+       <widget class="QLabel" name="chgLastMoveLabel">
         <property name="text">
          <string>last move</string>
         </property>
@@ -166,7 +166,7 @@
        </widget>
       </item>
       <item row="3" column="1">
-       <widget class="QLabel" name="chgOpponentNamelabel">
+       <widget class="QLabel" name="chgOpponentNameLabel">
         <property name="text">
          <string>opponent</string>
         </property>
@@ -186,9 +186,9 @@
   <widget class="QWidget" name="verticalLayoutWidget_2">
    <property name="geometry">
     <rect>
-     <x>660</x>
+     <x>680</x>
      <y>20</y>
-     <width>131</width>
+     <width>111</width>
      <height>481</height>
     </rect>
    </property>
@@ -222,7 +222,7 @@
        </widget>
       </item>
       <item row="1" column="0">
-       <widget class="QLabel" name="checkUpdatelabel">
+       <widget class="QLabel" name="checkUpdateLabel">
         <property name="text">
          <string>TURN:</string>
         </property>
@@ -266,6 +266,9 @@
    </layout>
   </widget>
   <widget class="QPushButton" name="a1PushButton">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>250</x>
@@ -287,13 +290,28 @@
     </size>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color: rgb(0, 0, 0);</string>
+    <string notr="true">background-color: rgb(169, 169, 169);</string>
    </property>
    <property name="text">
     <string/>
    </property>
+   <property name="iconSize">
+    <size>
+     <width>36</width>
+     <height>36</height>
+    </size>
+   </property>
+   <property name="flat">
+    <bool>false</bool>
+   </property>
+   <attribute name="buttonGroup">
+    <string notr="true">board</string>
+   </attribute>
   </widget>
   <widget class="QPushButton" name="a3PushButton">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>250</x>
@@ -315,13 +333,25 @@
     </size>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color: rgb(0, 0, 0);</string>
+    <string notr="true">background-color: rgb(169, 169, 169);</string>
    </property>
    <property name="text">
     <string/>
    </property>
+   <property name="iconSize">
+    <size>
+     <width>36</width>
+     <height>36</height>
+    </size>
+   </property>
+   <attribute name="buttonGroup">
+    <string notr="true">board</string>
+   </attribute>
   </widget>
   <widget class="QPushButton" name="a2PushButton">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>250</x>
@@ -348,8 +378,20 @@
    <property name="text">
     <string/>
    </property>
+   <property name="iconSize">
+    <size>
+     <width>36</width>
+     <height>36</height>
+    </size>
+   </property>
+   <attribute name="buttonGroup">
+    <string notr="true">board</string>
+   </attribute>
   </widget>
   <widget class="QPushButton" name="a5PushButton">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>250</x>
@@ -371,13 +413,25 @@
     </size>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color: rgb(0, 0, 0);</string>
+    <string notr="true">background-color: rgb(169, 169, 169);</string>
    </property>
    <property name="text">
     <string/>
    </property>
+   <property name="iconSize">
+    <size>
+     <width>36</width>
+     <height>36</height>
+    </size>
+   </property>
+   <attribute name="buttonGroup">
+    <string notr="true">board</string>
+   </attribute>
   </widget>
   <widget class="QPushButton" name="a4PushButton">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>250</x>
@@ -404,8 +458,20 @@
    <property name="text">
     <string/>
    </property>
+   <property name="iconSize">
+    <size>
+     <width>36</width>
+     <height>36</height>
+    </size>
+   </property>
+   <attribute name="buttonGroup">
+    <string notr="true">board</string>
+   </attribute>
   </widget>
   <widget class="QPushButton" name="a7PushButton">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>250</x>
@@ -427,13 +493,25 @@
     </size>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color: rgb(0, 0, 0);</string>
+    <string notr="true">background-color: rgb(169, 169, 169);</string>
    </property>
    <property name="text">
     <string/>
    </property>
+   <property name="iconSize">
+    <size>
+     <width>36</width>
+     <height>36</height>
+    </size>
+   </property>
+   <attribute name="buttonGroup">
+    <string notr="true">board</string>
+   </attribute>
   </widget>
   <widget class="QPushButton" name="a6PushButton">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>250</x>
@@ -460,8 +538,20 @@
    <property name="text">
     <string/>
    </property>
+   <property name="iconSize">
+    <size>
+     <width>36</width>
+     <height>36</height>
+    </size>
+   </property>
+   <attribute name="buttonGroup">
+    <string notr="true">board</string>
+   </attribute>
   </widget>
   <widget class="QPushButton" name="a8PushButton">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>250</x>
@@ -488,8 +578,20 @@
    <property name="text">
     <string/>
    </property>
+   <property name="iconSize">
+    <size>
+     <width>36</width>
+     <height>36</height>
+    </size>
+   </property>
+   <attribute name="buttonGroup">
+    <string notr="true">board</string>
+   </attribute>
   </widget>
   <widget class="QPushButton" name="b8PushButton">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>300</x>
@@ -511,13 +613,25 @@
     </size>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color: rgb(0, 0, 0);</string>
+    <string notr="true">background-color: rgb(169, 169, 169);</string>
    </property>
    <property name="text">
     <string/>
    </property>
+   <property name="iconSize">
+    <size>
+     <width>36</width>
+     <height>36</height>
+    </size>
+   </property>
+   <attribute name="buttonGroup">
+    <string notr="true">board</string>
+   </attribute>
   </widget>
   <widget class="QPushButton" name="b5PushButton">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>300</x>
@@ -544,8 +658,20 @@
    <property name="text">
     <string/>
    </property>
+   <property name="iconSize">
+    <size>
+     <width>36</width>
+     <height>36</height>
+    </size>
+   </property>
+   <attribute name="buttonGroup">
+    <string notr="true">board</string>
+   </attribute>
   </widget>
   <widget class="QPushButton" name="b6PushButton">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>300</x>
@@ -567,13 +693,25 @@
     </size>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color: rgb(0, 0, 0);</string>
+    <string notr="true">background-color: rgb(169, 169, 169);</string>
    </property>
    <property name="text">
     <string/>
    </property>
+   <property name="iconSize">
+    <size>
+     <width>36</width>
+     <height>36</height>
+    </size>
+   </property>
+   <attribute name="buttonGroup">
+    <string notr="true">board</string>
+   </attribute>
   </widget>
   <widget class="QPushButton" name="b4PushButton">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>300</x>
@@ -595,13 +733,25 @@
     </size>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color: rgb(0, 0, 0);</string>
+    <string notr="true">background-color: rgb(169, 169, 169);</string>
    </property>
    <property name="text">
     <string/>
    </property>
+   <property name="iconSize">
+    <size>
+     <width>36</width>
+     <height>36</height>
+    </size>
+   </property>
+   <attribute name="buttonGroup">
+    <string notr="true">board</string>
+   </attribute>
   </widget>
   <widget class="QPushButton" name="b7PushButton">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>300</x>
@@ -628,8 +778,20 @@
    <property name="text">
     <string/>
    </property>
+   <property name="iconSize">
+    <size>
+     <width>36</width>
+     <height>36</height>
+    </size>
+   </property>
+   <attribute name="buttonGroup">
+    <string notr="true">board</string>
+   </attribute>
   </widget>
   <widget class="QPushButton" name="b1PushButton">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>300</x>
@@ -656,8 +818,20 @@
    <property name="text">
     <string/>
    </property>
+   <property name="iconSize">
+    <size>
+     <width>36</width>
+     <height>36</height>
+    </size>
+   </property>
+   <attribute name="buttonGroup">
+    <string notr="true">board</string>
+   </attribute>
   </widget>
   <widget class="QPushButton" name="b2PushButton">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>300</x>
@@ -679,13 +853,25 @@
     </size>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color: rgb(0, 0, 0);</string>
+    <string notr="true">background-color: rgb(169, 169, 169);</string>
    </property>
    <property name="text">
     <string/>
    </property>
+   <property name="iconSize">
+    <size>
+     <width>36</width>
+     <height>36</height>
+    </size>
+   </property>
+   <attribute name="buttonGroup">
+    <string notr="true">board</string>
+   </attribute>
   </widget>
   <widget class="QPushButton" name="b3PushButton">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>300</x>
@@ -712,8 +898,20 @@
    <property name="text">
     <string/>
    </property>
+   <property name="iconSize">
+    <size>
+     <width>36</width>
+     <height>36</height>
+    </size>
+   </property>
+   <attribute name="buttonGroup">
+    <string notr="true">board</string>
+   </attribute>
   </widget>
   <widget class="QPushButton" name="c7PushButton">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>350</x>
@@ -735,13 +933,25 @@
     </size>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color: rgb(0, 0, 0);</string>
+    <string notr="true">background-color: rgb(169, 169, 169);</string>
    </property>
    <property name="text">
     <string/>
    </property>
+   <property name="iconSize">
+    <size>
+     <width>36</width>
+     <height>36</height>
+    </size>
+   </property>
+   <attribute name="buttonGroup">
+    <string notr="true">board</string>
+   </attribute>
   </widget>
   <widget class="QPushButton" name="d3PushButton">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>400</x>
@@ -768,8 +978,20 @@
    <property name="text">
     <string/>
    </property>
+   <property name="iconSize">
+    <size>
+     <width>36</width>
+     <height>36</height>
+    </size>
+   </property>
+   <attribute name="buttonGroup">
+    <string notr="true">board</string>
+   </attribute>
   </widget>
   <widget class="QPushButton" name="d2PushButton">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>400</x>
@@ -791,13 +1013,25 @@
     </size>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color: rgb(0, 0, 0);</string>
+    <string notr="true">background-color: rgb(169, 169, 169);</string>
    </property>
    <property name="text">
     <string/>
    </property>
+   <property name="iconSize">
+    <size>
+     <width>36</width>
+     <height>36</height>
+    </size>
+   </property>
+   <attribute name="buttonGroup">
+    <string notr="true">board</string>
+   </attribute>
   </widget>
   <widget class="QPushButton" name="c4PushButton">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>350</x>
@@ -824,8 +1058,20 @@
    <property name="text">
     <string/>
    </property>
+   <property name="iconSize">
+    <size>
+     <width>36</width>
+     <height>36</height>
+    </size>
+   </property>
+   <attribute name="buttonGroup">
+    <string notr="true">board</string>
+   </attribute>
   </widget>
   <widget class="QPushButton" name="d1PushButton">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>400</x>
@@ -852,8 +1098,20 @@
    <property name="text">
     <string/>
    </property>
+   <property name="iconSize">
+    <size>
+     <width>36</width>
+     <height>36</height>
+    </size>
+   </property>
+   <attribute name="buttonGroup">
+    <string notr="true">board</string>
+   </attribute>
   </widget>
   <widget class="QPushButton" name="c5PushButton">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>350</x>
@@ -875,13 +1133,25 @@
     </size>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color: rgb(0, 0, 0);</string>
+    <string notr="true">background-color: rgb(169, 169, 169);</string>
    </property>
    <property name="text">
     <string/>
    </property>
+   <property name="iconSize">
+    <size>
+     <width>36</width>
+     <height>36</height>
+    </size>
+   </property>
+   <attribute name="buttonGroup">
+    <string notr="true">board</string>
+   </attribute>
   </widget>
   <widget class="QPushButton" name="d5PushButton">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>400</x>
@@ -908,8 +1178,20 @@
    <property name="text">
     <string/>
    </property>
+   <property name="iconSize">
+    <size>
+     <width>36</width>
+     <height>36</height>
+    </size>
+   </property>
+   <attribute name="buttonGroup">
+    <string notr="true">board</string>
+   </attribute>
   </widget>
   <widget class="QPushButton" name="c1PushButton">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>350</x>
@@ -931,13 +1213,25 @@
     </size>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color: rgb(0, 0, 0);</string>
+    <string notr="true">background-color: rgb(169, 169, 169);</string>
    </property>
    <property name="text">
     <string/>
    </property>
+   <property name="iconSize">
+    <size>
+     <width>36</width>
+     <height>36</height>
+    </size>
+   </property>
+   <attribute name="buttonGroup">
+    <string notr="true">board</string>
+   </attribute>
   </widget>
   <widget class="QPushButton" name="c8PushButton">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>350</x>
@@ -964,8 +1258,20 @@
    <property name="text">
     <string/>
    </property>
+   <property name="iconSize">
+    <size>
+     <width>36</width>
+     <height>36</height>
+    </size>
+   </property>
+   <attribute name="buttonGroup">
+    <string notr="true">board</string>
+   </attribute>
   </widget>
   <widget class="QPushButton" name="d8PushButton">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>400</x>
@@ -987,13 +1293,25 @@
     </size>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color: rgb(0, 0, 0);</string>
+    <string notr="true">background-color: rgb(169, 169, 169);</string>
    </property>
    <property name="text">
     <string/>
    </property>
+   <property name="iconSize">
+    <size>
+     <width>36</width>
+     <height>36</height>
+    </size>
+   </property>
+   <attribute name="buttonGroup">
+    <string notr="true">board</string>
+   </attribute>
   </widget>
   <widget class="QPushButton" name="c3PushButton">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>350</x>
@@ -1015,13 +1333,25 @@
     </size>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color: rgb(0, 0, 0);</string>
+    <string notr="true">background-color: rgb(169, 169, 169);</string>
    </property>
    <property name="text">
     <string/>
    </property>
+   <property name="iconSize">
+    <size>
+     <width>36</width>
+     <height>36</height>
+    </size>
+   </property>
+   <attribute name="buttonGroup">
+    <string notr="true">board</string>
+   </attribute>
   </widget>
   <widget class="QPushButton" name="d6PushButton">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>400</x>
@@ -1043,13 +1373,25 @@
     </size>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color: rgb(0, 0, 0);</string>
+    <string notr="true">background-color: rgb(169, 169, 169);</string>
    </property>
    <property name="text">
     <string/>
    </property>
+   <property name="iconSize">
+    <size>
+     <width>36</width>
+     <height>36</height>
+    </size>
+   </property>
+   <attribute name="buttonGroup">
+    <string notr="true">board</string>
+   </attribute>
   </widget>
   <widget class="QPushButton" name="c6PushButton">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>350</x>
@@ -1076,8 +1418,20 @@
    <property name="text">
     <string/>
    </property>
+   <property name="iconSize">
+    <size>
+     <width>36</width>
+     <height>36</height>
+    </size>
+   </property>
+   <attribute name="buttonGroup">
+    <string notr="true">board</string>
+   </attribute>
   </widget>
   <widget class="QPushButton" name="d4PushButton">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>400</x>
@@ -1099,13 +1453,25 @@
     </size>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color: rgb(0, 0, 0);</string>
+    <string notr="true">background-color: rgb(169, 169, 169);</string>
    </property>
    <property name="text">
     <string/>
    </property>
+   <property name="iconSize">
+    <size>
+     <width>36</width>
+     <height>36</height>
+    </size>
+   </property>
+   <attribute name="buttonGroup">
+    <string notr="true">board</string>
+   </attribute>
   </widget>
   <widget class="QPushButton" name="d7PushButton">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>400</x>
@@ -1132,8 +1498,20 @@
    <property name="text">
     <string/>
    </property>
+   <property name="iconSize">
+    <size>
+     <width>36</width>
+     <height>36</height>
+    </size>
+   </property>
+   <attribute name="buttonGroup">
+    <string notr="true">board</string>
+   </attribute>
   </widget>
   <widget class="QPushButton" name="c2PushButton">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>350</x>
@@ -1160,8 +1538,20 @@
    <property name="text">
     <string/>
    </property>
+   <property name="iconSize">
+    <size>
+     <width>36</width>
+     <height>36</height>
+    </size>
+   </property>
+   <attribute name="buttonGroup">
+    <string notr="true">board</string>
+   </attribute>
   </widget>
   <widget class="QPushButton" name="e2PushButton">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>450</x>
@@ -1188,8 +1578,20 @@
    <property name="text">
     <string/>
    </property>
+   <property name="iconSize">
+    <size>
+     <width>36</width>
+     <height>36</height>
+    </size>
+   </property>
+   <attribute name="buttonGroup">
+    <string notr="true">board</string>
+   </attribute>
   </widget>
   <widget class="QPushButton" name="e3PushButton">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>450</x>
@@ -1211,13 +1613,25 @@
     </size>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color: rgb(0, 0, 0);</string>
+    <string notr="true">background-color: rgb(169, 169, 169);</string>
    </property>
    <property name="text">
     <string/>
    </property>
+   <property name="iconSize">
+    <size>
+     <width>36</width>
+     <height>36</height>
+    </size>
+   </property>
+   <attribute name="buttonGroup">
+    <string notr="true">board</string>
+   </attribute>
   </widget>
   <widget class="QPushButton" name="e7PushButton">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>450</x>
@@ -1239,13 +1653,25 @@
     </size>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color: rgb(0, 0, 0);</string>
+    <string notr="true">background-color: rgb(169, 169, 169);</string>
    </property>
    <property name="text">
     <string/>
    </property>
+   <property name="iconSize">
+    <size>
+     <width>36</width>
+     <height>36</height>
+    </size>
+   </property>
+   <attribute name="buttonGroup">
+    <string notr="true">board</string>
+   </attribute>
   </widget>
   <widget class="QPushButton" name="g3PushButton">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>550</x>
@@ -1267,13 +1693,25 @@
     </size>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color: rgb(0, 0, 0);</string>
+    <string notr="true">background-color: rgb(169, 169, 169);</string>
    </property>
    <property name="text">
     <string/>
    </property>
+   <property name="iconSize">
+    <size>
+     <width>36</width>
+     <height>36</height>
+    </size>
+   </property>
+   <attribute name="buttonGroup">
+    <string notr="true">board</string>
+   </attribute>
   </widget>
   <widget class="QPushButton" name="f8PushButton">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>500</x>
@@ -1295,13 +1733,25 @@
     </size>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color: rgb(0, 0, 0);</string>
+    <string notr="true">background-color: rgb(169, 169, 169);</string>
    </property>
    <property name="text">
     <string/>
    </property>
+   <property name="iconSize">
+    <size>
+     <width>36</width>
+     <height>36</height>
+    </size>
+   </property>
+   <attribute name="buttonGroup">
+    <string notr="true">board</string>
+   </attribute>
   </widget>
   <widget class="QPushButton" name="f7PushButton">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>500</x>
@@ -1328,8 +1778,20 @@
    <property name="text">
     <string/>
    </property>
+   <property name="iconSize">
+    <size>
+     <width>36</width>
+     <height>36</height>
+    </size>
+   </property>
+   <attribute name="buttonGroup">
+    <string notr="true">board</string>
+   </attribute>
   </widget>
   <widget class="QPushButton" name="e4PushButton">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>450</x>
@@ -1356,8 +1818,20 @@
    <property name="text">
     <string/>
    </property>
+   <property name="iconSize">
+    <size>
+     <width>36</width>
+     <height>36</height>
+    </size>
+   </property>
+   <attribute name="buttonGroup">
+    <string notr="true">board</string>
+   </attribute>
   </widget>
   <widget class="QPushButton" name="g6PushButton">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>550</x>
@@ -1384,8 +1858,20 @@
    <property name="text">
     <string/>
    </property>
+   <property name="iconSize">
+    <size>
+     <width>36</width>
+     <height>36</height>
+    </size>
+   </property>
+   <attribute name="buttonGroup">
+    <string notr="true">board</string>
+   </attribute>
   </widget>
   <widget class="QPushButton" name="h2PushButton">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>600</x>
@@ -1407,13 +1893,25 @@
     </size>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color: rgb(0, 0, 0);</string>
+    <string notr="true">background-color: rgb(169, 169, 169);</string>
    </property>
    <property name="text">
     <string/>
    </property>
+   <property name="iconSize">
+    <size>
+     <width>36</width>
+     <height>36</height>
+    </size>
+   </property>
+   <attribute name="buttonGroup">
+    <string notr="true">board</string>
+   </attribute>
   </widget>
   <widget class="QPushButton" name="e5PushButton">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>450</x>
@@ -1435,13 +1933,25 @@
     </size>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color: rgb(0, 0, 0);</string>
+    <string notr="true">background-color: rgb(169, 169, 169);</string>
    </property>
    <property name="text">
     <string/>
    </property>
+   <property name="iconSize">
+    <size>
+     <width>36</width>
+     <height>36</height>
+    </size>
+   </property>
+   <attribute name="buttonGroup">
+    <string notr="true">board</string>
+   </attribute>
   </widget>
   <widget class="QPushButton" name="g5PushButton">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>550</x>
@@ -1463,13 +1973,25 @@
     </size>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color: rgb(0, 0, 0);</string>
+    <string notr="true">background-color: rgb(169, 169, 169);</string>
    </property>
    <property name="text">
     <string/>
    </property>
+   <property name="iconSize">
+    <size>
+     <width>36</width>
+     <height>36</height>
+    </size>
+   </property>
+   <attribute name="buttonGroup">
+    <string notr="true">board</string>
+   </attribute>
   </widget>
   <widget class="QPushButton" name="h4PushButton">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>600</x>
@@ -1491,13 +2013,25 @@
     </size>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color: rgb(0, 0, 0);</string>
+    <string notr="true">background-color: rgb(169, 169, 169);</string>
    </property>
    <property name="text">
     <string/>
    </property>
+   <property name="iconSize">
+    <size>
+     <width>36</width>
+     <height>36</height>
+    </size>
+   </property>
+   <attribute name="buttonGroup">
+    <string notr="true">board</string>
+   </attribute>
   </widget>
   <widget class="QPushButton" name="f6PushButton">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>500</x>
@@ -1519,13 +2053,25 @@
     </size>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color: rgb(0, 0, 0);</string>
+    <string notr="true">background-color: rgb(169, 169, 169);</string>
    </property>
    <property name="text">
     <string/>
    </property>
+   <property name="iconSize">
+    <size>
+     <width>36</width>
+     <height>36</height>
+    </size>
+   </property>
+   <attribute name="buttonGroup">
+    <string notr="true">board</string>
+   </attribute>
   </widget>
   <widget class="QPushButton" name="f1PushButton">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>500</x>
@@ -1552,8 +2098,20 @@
    <property name="text">
     <string/>
    </property>
+   <property name="iconSize">
+    <size>
+     <width>36</width>
+     <height>36</height>
+    </size>
+   </property>
+   <attribute name="buttonGroup">
+    <string notr="true">board</string>
+   </attribute>
   </widget>
   <widget class="QPushButton" name="g2PushButton">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>550</x>
@@ -1580,8 +2138,20 @@
    <property name="text">
     <string/>
    </property>
+   <property name="iconSize">
+    <size>
+     <width>36</width>
+     <height>36</height>
+    </size>
+   </property>
+   <attribute name="buttonGroup">
+    <string notr="true">board</string>
+   </attribute>
   </widget>
   <widget class="QPushButton" name="e6PushButton">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>450</x>
@@ -1608,8 +2178,20 @@
    <property name="text">
     <string/>
    </property>
+   <property name="iconSize">
+    <size>
+     <width>36</width>
+     <height>36</height>
+    </size>
+   </property>
+   <attribute name="buttonGroup">
+    <string notr="true">board</string>
+   </attribute>
   </widget>
   <widget class="QPushButton" name="h1PushButton">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>600</x>
@@ -1636,8 +2218,20 @@
    <property name="text">
     <string/>
    </property>
+   <property name="iconSize">
+    <size>
+     <width>36</width>
+     <height>36</height>
+    </size>
+   </property>
+   <attribute name="buttonGroup">
+    <string notr="true">board</string>
+   </attribute>
   </widget>
   <widget class="QPushButton" name="f4PushButton">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>500</x>
@@ -1659,13 +2253,25 @@
     </size>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color: rgb(0, 0, 0);</string>
+    <string notr="true">background-color: rgb(169, 169, 169);</string>
    </property>
    <property name="text">
     <string/>
    </property>
+   <property name="iconSize">
+    <size>
+     <width>36</width>
+     <height>36</height>
+    </size>
+   </property>
+   <attribute name="buttonGroup">
+    <string notr="true">board</string>
+   </attribute>
   </widget>
   <widget class="QPushButton" name="g4PushButton">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>550</x>
@@ -1692,8 +2298,20 @@
    <property name="text">
     <string/>
    </property>
+   <property name="iconSize">
+    <size>
+     <width>36</width>
+     <height>36</height>
+    </size>
+   </property>
+   <attribute name="buttonGroup">
+    <string notr="true">board</string>
+   </attribute>
   </widget>
   <widget class="QPushButton" name="f3PushButton">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>500</x>
@@ -1719,9 +2337,18 @@
    </property>
    <property name="text">
     <string/>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>36</width>
+     <height>36</height>
+    </size>
    </property>
   </widget>
   <widget class="QPushButton" name="h7PushButton">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>600</x>
@@ -1748,8 +2375,20 @@
    <property name="text">
     <string/>
    </property>
+   <property name="iconSize">
+    <size>
+     <width>36</width>
+     <height>36</height>
+    </size>
+   </property>
+   <attribute name="buttonGroup">
+    <string notr="true">board</string>
+   </attribute>
   </widget>
   <widget class="QPushButton" name="e8PushButton">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>450</x>
@@ -1776,8 +2415,20 @@
    <property name="text">
     <string/>
    </property>
+   <property name="iconSize">
+    <size>
+     <width>36</width>
+     <height>36</height>
+    </size>
+   </property>
+   <attribute name="buttonGroup">
+    <string notr="true">board</string>
+   </attribute>
   </widget>
   <widget class="QPushButton" name="g7PushButton">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>550</x>
@@ -1799,13 +2450,25 @@
     </size>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color: rgb(0, 0, 0);</string>
+    <string notr="true">background-color: rgb(169, 169, 169);</string>
    </property>
    <property name="text">
     <string/>
    </property>
+   <property name="iconSize">
+    <size>
+     <width>36</width>
+     <height>36</height>
+    </size>
+   </property>
+   <attribute name="buttonGroup">
+    <string notr="true">board</string>
+   </attribute>
   </widget>
   <widget class="QPushButton" name="h5PushButton">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>600</x>
@@ -1832,8 +2495,20 @@
    <property name="text">
     <string/>
    </property>
+   <property name="iconSize">
+    <size>
+     <width>36</width>
+     <height>36</height>
+    </size>
+   </property>
+   <attribute name="buttonGroup">
+    <string notr="true">board</string>
+   </attribute>
   </widget>
   <widget class="QPushButton" name="g8PushButton">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>550</x>
@@ -1860,8 +2535,20 @@
    <property name="text">
     <string/>
    </property>
+   <property name="iconSize">
+    <size>
+     <width>36</width>
+     <height>36</height>
+    </size>
+   </property>
+   <attribute name="buttonGroup">
+    <string notr="true">board</string>
+   </attribute>
   </widget>
   <widget class="QPushButton" name="h8PushButton">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>600</x>
@@ -1883,13 +2570,25 @@
     </size>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color: rgb(0, 0, 0);</string>
+    <string notr="true">background-color: rgb(169, 169, 169);</string>
    </property>
    <property name="text">
     <string/>
    </property>
+   <property name="iconSize">
+    <size>
+     <width>36</width>
+     <height>36</height>
+    </size>
+   </property>
+   <attribute name="buttonGroup">
+    <string notr="true">board</string>
+   </attribute>
   </widget>
   <widget class="QPushButton" name="h3PushButton">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>600</x>
@@ -1916,8 +2615,20 @@
    <property name="text">
     <string/>
    </property>
+   <property name="iconSize">
+    <size>
+     <width>36</width>
+     <height>36</height>
+    </size>
+   </property>
+   <attribute name="buttonGroup">
+    <string notr="true">board</string>
+   </attribute>
   </widget>
   <widget class="QPushButton" name="e1PushButton">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>450</x>
@@ -1939,13 +2650,25 @@
     </size>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color: rgb(0, 0, 0);</string>
+    <string notr="true">background-color: rgb(169, 169, 169);</string>
    </property>
    <property name="text">
     <string/>
    </property>
+   <property name="iconSize">
+    <size>
+     <width>36</width>
+     <height>36</height>
+    </size>
+   </property>
+   <attribute name="buttonGroup">
+    <string notr="true">board</string>
+   </attribute>
   </widget>
   <widget class="QPushButton" name="f2PushButton">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>500</x>
@@ -1967,13 +2690,25 @@
     </size>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color: rgb(0, 0, 0);</string>
+    <string notr="true">background-color: rgb(169, 169, 169);</string>
    </property>
    <property name="text">
     <string/>
    </property>
+   <property name="iconSize">
+    <size>
+     <width>36</width>
+     <height>36</height>
+    </size>
+   </property>
+   <attribute name="buttonGroup">
+    <string notr="true">board</string>
+   </attribute>
   </widget>
   <widget class="QPushButton" name="g1PushButton">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>550</x>
@@ -1995,13 +2730,25 @@
     </size>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color: rgb(0, 0, 0);</string>
+    <string notr="true">background-color: rgb(169, 169, 169);</string>
    </property>
    <property name="text">
     <string/>
    </property>
+   <property name="iconSize">
+    <size>
+     <width>36</width>
+     <height>36</height>
+    </size>
+   </property>
+   <attribute name="buttonGroup">
+    <string notr="true">board</string>
+   </attribute>
   </widget>
   <widget class="QPushButton" name="f5PushButton">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>500</x>
@@ -2028,8 +2775,20 @@
    <property name="text">
     <string/>
    </property>
+   <property name="iconSize">
+    <size>
+     <width>36</width>
+     <height>36</height>
+    </size>
+   </property>
+   <attribute name="buttonGroup">
+    <string notr="true">board</string>
+   </attribute>
   </widget>
   <widget class="QPushButton" name="h6PushButton">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>600</x>
@@ -2051,13 +2810,213 @@
     </size>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color: rgb(0, 0, 0);</string>
+    <string notr="true">background-color: rgb(169, 169, 169);</string>
    </property>
    <property name="text">
     <string/>
    </property>
+   <property name="iconSize">
+    <size>
+     <width>36</width>
+     <height>36</height>
+    </size>
+   </property>
+   <attribute name="buttonGroup">
+    <string notr="true">board</string>
+   </attribute>
+  </widget>
+  <widget class="QWidget" name="verticalLayoutWidget_3">
+   <property name="geometry">
+    <rect>
+     <x>649</x>
+     <y>100</y>
+     <width>21</width>
+     <height>401</height>
+    </rect>
+   </property>
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <widget class="QLabel" name="label_8">
+      <property name="text">
+       <string>8</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="label_7">
+      <property name="text">
+       <string>7</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="label_6">
+      <property name="text">
+       <string>6</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="label_5">
+      <property name="text">
+       <string>5</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="label_4">
+      <property name="text">
+       <string>4</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="label_3">
+      <property name="text">
+       <string>3</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="label_2">
+      <property name="text">
+       <string>2</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="label_1">
+      <property name="text">
+       <string>1</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="horizontalLayoutWidget">
+   <property name="geometry">
+    <rect>
+     <x>250</x>
+     <y>500</y>
+     <width>401</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <layout class="QHBoxLayout" name="horizontalLayout">
+    <item>
+     <widget class="QLabel" name="label_A">
+      <property name="text">
+       <string>A</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="label_B">
+      <property name="text">
+       <string>B</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="label_C">
+      <property name="text">
+       <string>C</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="label_D">
+      <property name="text">
+       <string>D</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="label_E">
+      <property name="text">
+       <string>E</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="label_F">
+      <property name="text">
+       <string>F</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="label_G">
+      <property name="text">
+       <string>G</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="label_H">
+      <property name="text">
+       <string>H</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </item>
+   </layout>
   </widget>
  </widget>
  <resources/>
  <connections/>
+ <buttongroups>
+  <buttongroup name="board">
+   <property name="exclusive">
+    <bool>true</bool>
+   </property>
+  </buttongroup>
+ </buttongroups>
 </ui>

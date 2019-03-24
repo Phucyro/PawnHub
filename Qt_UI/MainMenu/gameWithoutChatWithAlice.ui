@@ -29,7 +29,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Alice Chess</string>
   </property>
   <widget class="QGraphicsView" name="boardView">
    <property name="geometry">

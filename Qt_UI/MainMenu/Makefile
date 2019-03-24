@@ -58,6 +58,7 @@ SOURCES       = main.cpp \
 		../../Communication/Client.cpp \
 		../../Communication/SplitString.cpp \
 		../Modified_Files/CheckFormat.cpp \
+		../Modified_Files/ClientGameControl.cpp \
 		passwordrepeat.cpp \
 		message.cpp \
 		game.cpp \
@@ -67,7 +68,8 @@ SOURCES       = main.cpp \
 		gameChoiceStatistics.cpp \
 		gameChoice.cpp \
 		friendTab.cpp \
-		statisticsTab.cpp qrc_calvin.cpp \
+		statisticsTab.cpp \
+		chat.cpp qrc_calvin.cpp \
 		qrc_loremipsum.cpp \
 		qrc_catmeme.cpp \
 		moc_mainmenu.cpp \
@@ -82,7 +84,8 @@ SOURCES       = main.cpp \
 		moc_gameChoice.cpp \
 		moc_gameChoiceStatistics.cpp \
 		moc_friendTab.cpp \
-		moc_statisticsTab.cpp
+		moc_statisticsTab.cpp \
+		moc_chat.cpp
 OBJECTS       = main.o \
 		mainmenu.o \
 		connectiondialog.o \
@@ -91,6 +94,7 @@ OBJECTS       = main.o \
 		Client.o \
 		SplitString.o \
 		CheckFormat.o \
+		ClientGameControl.o \
 		passwordrepeat.o \
 		message.o \
 		game.o \
@@ -101,6 +105,7 @@ OBJECTS       = main.o \
 		gameChoice.o \
 		friendTab.o \
 		statisticsTab.o \
+		chat.o \
 		qrc_calvin.o \
 		qrc_loremipsum.o \
 		qrc_catmeme.o \
@@ -116,7 +121,8 @@ OBJECTS       = main.o \
 		moc_gameChoice.o \
 		moc_gameChoiceStatistics.o \
 		moc_friendTab.o \
-		moc_statisticsTab.o
+		moc_statisticsTab.o \
+		moc_chat.o
 DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/unix.conf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/linux.conf \
@@ -200,6 +206,9 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		../Modified_Files/ClientHandler.hpp \
 		../Modified_Files/ClientMessageHandler.hpp \
 		../Modified_Files/CheckFormat.hpp \
+		../Modified_Files/ClientGameControl.hpp \
+		../Modified_Files/BoardParsing.hpp \
+		../Modified_Files/MoveParsing.hpp \
 		passwordrepeat.h \
 		message.h \
 		game.h \
@@ -211,7 +220,8 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		friendTab.h \
 		statisticsTab.h \
 		../Modified_Files/ClientFunctions.hpp \
-		../Modified_Files/ClientFunctions.hpp main.cpp \
+		../Modified_Files/ClientFunctions.hpp \
+		chat.h main.cpp \
 		mainmenu.cpp \
 		connectiondialog.cpp \
 		logindialog.cpp \
@@ -219,6 +229,7 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		../../Communication/Client.cpp \
 		../../Communication/SplitString.cpp \
 		../Modified_Files/CheckFormat.cpp \
+		../Modified_Files/ClientGameControl.cpp \
 		passwordrepeat.cpp \
 		message.cpp \
 		game.cpp \
@@ -228,7 +239,8 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		gameChoiceStatistics.cpp \
 		gameChoice.cpp \
 		friendTab.cpp \
-		statisticsTab.cpp
+		statisticsTab.cpp \
+		chat.cpp
 QMAKE_TARGET  = MainMenu
 DESTDIR       = 
 TARGET        = MainMenu
@@ -237,7 +249,7 @@ TARGET        = MainMenu
 first: all
 ####### Build rules
 
-$(TARGET): ui_connectiondialog.h ui_logindialog.h ui_passwordrepeat.h ui_message.h ui_mainmenu.h ui_game.h ui_gameWithoutChat.h ui_gameWithAlice.h ui_gameWithoutChatWithAlice.h ui_gameChoice.h ui_gameChoiceStatistics.h ui_friendTab.h ui_statisticsTab.h $(OBJECTS)  
+$(TARGET): ui_connectiondialog.h ui_logindialog.h ui_passwordrepeat.h ui_message.h ui_mainmenu.h ui_game.h ui_gameWithoutChat.h ui_gameWithAlice.h ui_gameWithoutChatWithAlice.h ui_gameChoice.h ui_gameChoiceStatistics.h ui_friendTab.h ui_statisticsTab.h ui_chat.h $(OBJECTS)  
 	$(LINK) $(LFLAGS) -o $(TARGET) $(OBJECTS) $(OBJCOMP) $(LIBS)
 
 Makefile: MainMenu.pro /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++/qmake.conf /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
@@ -417,9 +429,9 @@ distdir: FORCE
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents calvin.qrc loremipsum.qrc catmeme.qrc $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents mainmenu.h connectiondialog.h logindialog.h ../../Communication/Socket.hpp ../../Communication/Client.hpp ../../Communication/SplitString.hpp ../Modified_Files/ClientFunctions.hpp ../Modified_Files/ClientHandler.hpp ../Modified_Files/ClientMessageHandler.hpp ../Modified_Files/CheckFormat.hpp passwordrepeat.h message.h game.h gameWithoutChat.h gameWithoutChatWithAlice.h gameWithAlice.h gameChoice.h gameChoiceStatistics.h friendTab.h statisticsTab.h ../Modified_Files/ClientFunctions.hpp ../Modified_Files/ClientFunctions.hpp $(DISTDIR)/
-	$(COPY_FILE) --parents main.cpp mainmenu.cpp connectiondialog.cpp logindialog.cpp ../../Communication/Socket.cpp ../../Communication/Client.cpp ../../Communication/SplitString.cpp ../Modified_Files/CheckFormat.cpp passwordrepeat.cpp message.cpp game.cpp gameWithoutChat.cpp gameWithoutChatWithAlice.cpp gameWithAlice.cpp gameChoiceStatistics.cpp gameChoice.cpp friendTab.cpp statisticsTab.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents connectiondialog.ui logindialog.ui passwordrepeat.ui message.ui mainmenu.ui game.ui gameWithoutChat.ui gameWithAlice.ui gameWithoutChatWithAlice.ui gameChoice.ui gameChoiceStatistics.ui friendTab.ui statisticsTab.ui $(DISTDIR)/
+	$(COPY_FILE) --parents mainmenu.h connectiondialog.h logindialog.h ../../Communication/Socket.hpp ../../Communication/Client.hpp ../../Communication/SplitString.hpp ../Modified_Files/ClientFunctions.hpp ../Modified_Files/ClientHandler.hpp ../Modified_Files/ClientMessageHandler.hpp ../Modified_Files/CheckFormat.hpp ../Modified_Files/ClientGameControl.hpp ../Modified_Files/BoardParsing.hpp ../Modified_Files/MoveParsing.hpp passwordrepeat.h message.h game.h gameWithoutChat.h gameWithoutChatWithAlice.h gameWithAlice.h gameChoice.h gameChoiceStatistics.h friendTab.h statisticsTab.h ../Modified_Files/ClientFunctions.hpp ../Modified_Files/ClientFunctions.hpp chat.h $(DISTDIR)/
+	$(COPY_FILE) --parents main.cpp mainmenu.cpp connectiondialog.cpp logindialog.cpp ../../Communication/Socket.cpp ../../Communication/Client.cpp ../../Communication/SplitString.cpp ../Modified_Files/CheckFormat.cpp ../Modified_Files/ClientGameControl.cpp passwordrepeat.cpp message.cpp game.cpp gameWithoutChat.cpp gameWithoutChatWithAlice.cpp gameWithAlice.cpp gameChoiceStatistics.cpp gameChoice.cpp friendTab.cpp statisticsTab.cpp chat.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents connectiondialog.ui logindialog.ui passwordrepeat.ui message.ui mainmenu.ui game.ui gameWithoutChat.ui gameWithAlice.ui gameWithoutChatWithAlice.ui gameChoice.ui gameChoiceStatistics.ui friendTab.ui statisticsTab.ui chat.ui $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -467,9 +479,9 @@ compiler_moc_predefs_clean:
 moc_predefs.h: /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp
 	g++ -pipe -O2 -std=gnu++11 -Wall -W -dM -E -o moc_predefs.h /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp
 
-compiler_moc_header_make_all: moc_mainmenu.cpp moc_connectiondialog.cpp moc_logindialog.cpp moc_passwordrepeat.cpp moc_message.cpp moc_game.cpp moc_gameWithoutChat.cpp moc_gameWithoutChatWithAlice.cpp moc_gameWithAlice.cpp moc_gameChoice.cpp moc_gameChoiceStatistics.cpp moc_friendTab.cpp moc_statisticsTab.cpp
+compiler_moc_header_make_all: moc_mainmenu.cpp moc_connectiondialog.cpp moc_logindialog.cpp moc_passwordrepeat.cpp moc_message.cpp moc_game.cpp moc_gameWithoutChat.cpp moc_gameWithoutChatWithAlice.cpp moc_gameWithAlice.cpp moc_gameChoice.cpp moc_gameChoiceStatistics.cpp moc_friendTab.cpp moc_statisticsTab.cpp moc_chat.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_mainmenu.cpp moc_connectiondialog.cpp moc_logindialog.cpp moc_passwordrepeat.cpp moc_message.cpp moc_game.cpp moc_gameWithoutChat.cpp moc_gameWithoutChatWithAlice.cpp moc_gameWithAlice.cpp moc_gameChoice.cpp moc_gameChoiceStatistics.cpp moc_friendTab.cpp moc_statisticsTab.cpp
+	-$(DEL_FILE) moc_mainmenu.cpp moc_connectiondialog.cpp moc_logindialog.cpp moc_passwordrepeat.cpp moc_message.cpp moc_game.cpp moc_gameWithoutChat.cpp moc_gameWithoutChatWithAlice.cpp moc_gameWithAlice.cpp moc_gameChoice.cpp moc_gameChoiceStatistics.cpp moc_friendTab.cpp moc_statisticsTab.cpp moc_chat.cpp
 moc_mainmenu.cpp: mainmenu.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
@@ -536,11 +548,16 @@ moc_statisticsTab.cpp: statisticsTab.h \
 		/usr/lib/qt5/bin/moc
 	/usr/lib/qt5/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/frawni/Documents/Projet_Info/Qt_UI/MainMenu -I/home/frawni/Documents/Projet_Info/Communication -I/home/frawni/Documents/Projet_Info/Qt_UI/Modified_Files -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include statisticsTab.h -o moc_statisticsTab.cpp
 
+moc_chat.cpp: chat.h \
+		moc_predefs.h \
+		/usr/lib/qt5/bin/moc
+	/usr/lib/qt5/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/frawni/Documents/Projet_Info/Qt_UI/MainMenu -I/home/frawni/Documents/Projet_Info/Communication -I/home/frawni/Documents/Projet_Info/Qt_UI/Modified_Files -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include chat.h -o moc_chat.cpp
+
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
-compiler_uic_make_all: ui_connectiondialog.h ui_logindialog.h ui_passwordrepeat.h ui_message.h ui_mainmenu.h ui_game.h ui_gameWithoutChat.h ui_gameWithAlice.h ui_gameWithoutChatWithAlice.h ui_gameChoice.h ui_gameChoiceStatistics.h ui_friendTab.h ui_statisticsTab.h
+compiler_uic_make_all: ui_connectiondialog.h ui_logindialog.h ui_passwordrepeat.h ui_message.h ui_mainmenu.h ui_game.h ui_gameWithoutChat.h ui_gameWithAlice.h ui_gameWithoutChatWithAlice.h ui_gameChoice.h ui_gameChoiceStatistics.h ui_friendTab.h ui_statisticsTab.h ui_chat.h
 compiler_uic_clean:
-	-$(DEL_FILE) ui_connectiondialog.h ui_logindialog.h ui_passwordrepeat.h ui_message.h ui_mainmenu.h ui_game.h ui_gameWithoutChat.h ui_gameWithAlice.h ui_gameWithoutChatWithAlice.h ui_gameChoice.h ui_gameChoiceStatistics.h ui_friendTab.h ui_statisticsTab.h
+	-$(DEL_FILE) ui_connectiondialog.h ui_logindialog.h ui_passwordrepeat.h ui_message.h ui_mainmenu.h ui_game.h ui_gameWithoutChat.h ui_gameWithAlice.h ui_gameWithoutChatWithAlice.h ui_gameChoice.h ui_gameChoiceStatistics.h ui_friendTab.h ui_statisticsTab.h ui_chat.h
 ui_connectiondialog.h: connectiondialog.ui \
 		/usr/lib/qt5/bin/uic
 	/usr/lib/qt5/bin/uic connectiondialog.ui -o ui_connectiondialog.h
@@ -593,6 +610,10 @@ ui_statisticsTab.h: statisticsTab.ui \
 		/usr/lib/qt5/bin/uic
 	/usr/lib/qt5/bin/uic statisticsTab.ui -o ui_statisticsTab.h
 
+ui_chat.h: chat.ui \
+		/usr/lib/qt5/bin/uic
+	/usr/lib/qt5/bin/uic chat.ui -o ui_chat.h
+
 compiler_yacc_decl_make_all:
 compiler_yacc_decl_clean:
 compiler_yacc_impl_make_all:
@@ -603,12 +624,20 @@ compiler_clean: compiler_rcc_clean compiler_moc_predefs_clean compiler_moc_heade
 
 ####### Compile
 
-main.o: main.cpp mainmenu.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o main.cpp
-
-mainmenu.o: mainmenu.cpp ../../Communication/Client.hpp \
+main.o: main.cpp mainmenu.h \
+		gameWithoutChat.h \
 		../../Communication/Socket.hpp \
 		../../Communication/config.hpp \
+		../../Communication/Client.hpp \
+		../Modified_Files/ClientMessageHandler.hpp \
+		../../Communication/SplitString.hpp \
+		../Modified_Files/ClientHandler.hpp \
+		../Modified_Files/ClientFunctions.hpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o main.cpp
+
+mainmenu.o: mainmenu.cpp ../../Communication/Socket.hpp \
+		../../Communication/config.hpp \
+		../../Communication/Client.hpp \
 		../Modified_Files/ClientMessageHandler.hpp \
 		../../Communication/SplitString.hpp \
 		../Modified_Files/ClientHandler.hpp \
@@ -617,7 +646,10 @@ mainmenu.o: mainmenu.cpp ../../Communication/Client.hpp \
 		connectiondialog.h \
 		logindialog.h \
 		passwordrepeat.h \
-		gameWithoutChat.h
+		gameChoice.h \
+		statisticsTab.h \
+		friendTab.h \
+		chat.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainmenu.o mainmenu.cpp
 
 connectiondialog.o: connectiondialog.cpp connectiondialog.h \
@@ -651,6 +683,13 @@ SplitString.o: ../../Communication/SplitString.cpp ../../Communication/SplitStri
 CheckFormat.o: ../Modified_Files/CheckFormat.cpp ../Modified_Files/CheckFormat.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o CheckFormat.o ../Modified_Files/CheckFormat.cpp
 
+ClientGameControl.o: ../Modified_Files/ClientGameControl.cpp ../Modified_Files/ClientGameControl.hpp \
+		../../Communication/Socket.hpp \
+		../../Communication/config.hpp \
+		../../Display/GameDisplay/board.hpp \
+		../../Display/GameDisplay/constants.hpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o ClientGameControl.o ../Modified_Files/ClientGameControl.cpp
+
 passwordrepeat.o: passwordrepeat.cpp passwordrepeat.h \
 		ui_passwordrepeat.h \
 		message.h
@@ -681,7 +720,9 @@ gameChoiceStatistics.o: gameChoiceStatistics.cpp gameChoiceStatistics.h \
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o gameChoiceStatistics.o gameChoiceStatistics.cpp
 
 gameChoice.o: gameChoice.cpp gameChoice.h \
-		ui_gameChoice.h
+		ui_gameChoice.h \
+		gameWithoutChat.h \
+		gameWithoutChatWithAlice.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o gameChoice.o gameChoice.cpp
 
 friendTab.o: friendTab.cpp friendTab.h \
@@ -693,6 +734,10 @@ friendTab.o: friendTab.cpp friendTab.h \
 statisticsTab.o: statisticsTab.cpp statisticsTab.h \
 		ui_statisticsTab.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o statisticsTab.o statisticsTab.cpp
+
+chat.o: chat.cpp chat.h \
+		ui_chat.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o chat.o chat.cpp
 
 qrc_calvin.o: qrc_calvin.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o qrc_calvin.o qrc_calvin.cpp
@@ -741,6 +786,9 @@ moc_friendTab.o: moc_friendTab.cpp
 
 moc_statisticsTab.o: moc_statisticsTab.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_statisticsTab.o moc_statisticsTab.cpp
+
+moc_chat.o: moc_chat.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_chat.o moc_chat.cpp
 
 ####### Install
 
