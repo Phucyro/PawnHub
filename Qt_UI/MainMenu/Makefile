@@ -58,6 +58,7 @@ SOURCES       = main.cpp \
 		../../Communication/Client.cpp \
 		../../Communication/SplitString.cpp \
 		../Modified_Files/CheckFormat.cpp \
+		../Modified_Files/ClientGameControl.cpp \
 		passwordrepeat.cpp \
 		message.cpp \
 		game.cpp \
@@ -93,6 +94,7 @@ OBJECTS       = main.o \
 		Client.o \
 		SplitString.o \
 		CheckFormat.o \
+		ClientGameControl.o \
 		passwordrepeat.o \
 		message.o \
 		game.o \
@@ -204,6 +206,9 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		../Modified_Files/ClientHandler.hpp \
 		../Modified_Files/ClientMessageHandler.hpp \
 		../Modified_Files/CheckFormat.hpp \
+		../Modified_Files/ClientGameControl.hpp \
+		../Modified_Files/BoardParsing.hpp \
+		../Modified_Files/MoveParsing.hpp \
 		passwordrepeat.h \
 		message.h \
 		game.h \
@@ -224,6 +229,7 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		../../Communication/Client.cpp \
 		../../Communication/SplitString.cpp \
 		../Modified_Files/CheckFormat.cpp \
+		../Modified_Files/ClientGameControl.cpp \
 		passwordrepeat.cpp \
 		message.cpp \
 		game.cpp \
@@ -423,8 +429,8 @@ distdir: FORCE
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents calvin.qrc loremipsum.qrc catmeme.qrc $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents mainmenu.h connectiondialog.h logindialog.h ../../Communication/Socket.hpp ../../Communication/Client.hpp ../../Communication/SplitString.hpp ../Modified_Files/ClientFunctions.hpp ../Modified_Files/ClientHandler.hpp ../Modified_Files/ClientMessageHandler.hpp ../Modified_Files/CheckFormat.hpp passwordrepeat.h message.h game.h gameWithoutChat.h gameWithoutChatWithAlice.h gameWithAlice.h gameChoice.h gameChoiceStatistics.h friendTab.h statisticsTab.h ../Modified_Files/ClientFunctions.hpp ../Modified_Files/ClientFunctions.hpp chat.h $(DISTDIR)/
-	$(COPY_FILE) --parents main.cpp mainmenu.cpp connectiondialog.cpp logindialog.cpp ../../Communication/Socket.cpp ../../Communication/Client.cpp ../../Communication/SplitString.cpp ../Modified_Files/CheckFormat.cpp passwordrepeat.cpp message.cpp game.cpp gameWithoutChat.cpp gameWithoutChatWithAlice.cpp gameWithAlice.cpp gameChoiceStatistics.cpp gameChoice.cpp friendTab.cpp statisticsTab.cpp chat.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents mainmenu.h connectiondialog.h logindialog.h ../../Communication/Socket.hpp ../../Communication/Client.hpp ../../Communication/SplitString.hpp ../Modified_Files/ClientFunctions.hpp ../Modified_Files/ClientHandler.hpp ../Modified_Files/ClientMessageHandler.hpp ../Modified_Files/CheckFormat.hpp ../Modified_Files/ClientGameControl.hpp ../Modified_Files/BoardParsing.hpp ../Modified_Files/MoveParsing.hpp passwordrepeat.h message.h game.h gameWithoutChat.h gameWithoutChatWithAlice.h gameWithAlice.h gameChoice.h gameChoiceStatistics.h friendTab.h statisticsTab.h ../Modified_Files/ClientFunctions.hpp ../Modified_Files/ClientFunctions.hpp chat.h $(DISTDIR)/
+	$(COPY_FILE) --parents main.cpp mainmenu.cpp connectiondialog.cpp logindialog.cpp ../../Communication/Socket.cpp ../../Communication/Client.cpp ../../Communication/SplitString.cpp ../Modified_Files/CheckFormat.cpp ../Modified_Files/ClientGameControl.cpp passwordrepeat.cpp message.cpp game.cpp gameWithoutChat.cpp gameWithoutChatWithAlice.cpp gameWithAlice.cpp gameChoiceStatistics.cpp gameChoice.cpp friendTab.cpp statisticsTab.cpp chat.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents connectiondialog.ui logindialog.ui passwordrepeat.ui message.ui mainmenu.ui game.ui gameWithoutChat.ui gameWithAlice.ui gameWithoutChatWithAlice.ui gameChoice.ui gameChoiceStatistics.ui friendTab.ui statisticsTab.ui chat.ui $(DISTDIR)/
 
 
@@ -618,7 +624,15 @@ compiler_clean: compiler_rcc_clean compiler_moc_predefs_clean compiler_moc_heade
 
 ####### Compile
 
-main.o: main.cpp mainmenu.h
+main.o: main.cpp mainmenu.h \
+		gameWithoutChat.h \
+		../../Communication/Socket.hpp \
+		../../Communication/config.hpp \
+		../../Communication/Client.hpp \
+		../Modified_Files/ClientMessageHandler.hpp \
+		../../Communication/SplitString.hpp \
+		../Modified_Files/ClientHandler.hpp \
+		../Modified_Files/ClientFunctions.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o main.cpp
 
 mainmenu.o: mainmenu.cpp ../../Communication/Socket.hpp \
@@ -668,6 +682,13 @@ SplitString.o: ../../Communication/SplitString.cpp ../../Communication/SplitStri
 
 CheckFormat.o: ../Modified_Files/CheckFormat.cpp ../Modified_Files/CheckFormat.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o CheckFormat.o ../Modified_Files/CheckFormat.cpp
+
+ClientGameControl.o: ../Modified_Files/ClientGameControl.cpp ../Modified_Files/ClientGameControl.hpp \
+		../../Communication/Socket.hpp \
+		../../Communication/config.hpp \
+		../../Display/GameDisplay/board.hpp \
+		../../Display/GameDisplay/constants.hpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o ClientGameControl.o ../Modified_Files/ClientGameControl.cpp
 
 passwordrepeat.o: passwordrepeat.cpp passwordrepeat.h \
 		ui_passwordrepeat.h \

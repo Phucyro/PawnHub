@@ -1,6 +1,6 @@
 #include "../../Communication/Socket.hpp"
 #include "../../Communication/Client.hpp"
-#include "../Modified_Files/ClientMessageHandler.hpp"
+//#include "../Modified_Files/ClientMessageHandler.hpp"
 
 #include "mainmenu.h"
 #include "ui_mainmenu.h"
@@ -24,13 +24,13 @@ MainMenu::MainMenu(QWidget *parent) :
 {
     ui->setupUi(this);
     client_connect();
-    msgThread = std::thread(receiveMessageHandler, client);
+//    msgThread = std::thread(receiveMessageHandler, client);
     client_login();
 }
 
 MainMenu::~MainMenu()
 {
-    msgThread.join();
+//    msgThread.join();
     delete client;
     delete ui;
 }

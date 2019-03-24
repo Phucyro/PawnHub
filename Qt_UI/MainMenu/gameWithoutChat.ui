@@ -29,7 +29,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Chess</string>
   </property>
   <widget class="QGraphicsView" name="graphicsView">
    <property name="geometry">
@@ -124,7 +124,7 @@
        </widget>
       </item>
       <item row="0" column="1">
-       <widget class="QLabel" name="chgModelabel">
+       <widget class="QLabel" name="chgModeLabel">
         <property name="text">
          <string>mode</string>
         </property>
@@ -152,7 +152,7 @@
        </widget>
       </item>
       <item row="2" column="1">
-       <widget class="QLabel" name="chgLastMovelabel">
+       <widget class="QLabel" name="chgLastMoveLabel">
         <property name="text">
          <string>last move</string>
         </property>
@@ -166,7 +166,7 @@
        </widget>
       </item>
       <item row="3" column="1">
-       <widget class="QLabel" name="chgOpponentNamelabel">
+       <widget class="QLabel" name="chgOpponentNameLabel">
         <property name="text">
          <string>opponent</string>
         </property>
@@ -222,7 +222,7 @@
        </widget>
       </item>
       <item row="1" column="0">
-       <widget class="QLabel" name="checkUpdatelabel">
+       <widget class="QLabel" name="checkUpdateLabel">
         <property name="text">
          <string>TURN:</string>
         </property>

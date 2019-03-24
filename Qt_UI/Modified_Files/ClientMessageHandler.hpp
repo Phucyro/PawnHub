@@ -13,8 +13,9 @@ class Client;
 
 void receiveMessageHandler(Client* client){
   std::vector<std::string> msg;
+  bool in_game = false;
 
-  while (true){
+  while (!in_game){
     msg = splitString(client->getSocket()->receiveMessage(), '~');
 
     if (std::isalpha(msg[0][0])){
@@ -35,7 +36,8 @@ void receiveMessageHandler(Client* client){
         chatHandler(client, msg[1], msg[2], msg[3]);
         break;
       case 4 :
-        playGameHandler(client);
+//        playGameHandler(client);
+        in_game = true;
         break;
       case 5 :
         leaveQueueHandler();

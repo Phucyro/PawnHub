@@ -29,7 +29,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Chess</string>
   </property>
   <widget class="QGraphicsView" name="graphicsView">
    <property name="geometry">
@@ -322,8 +322,8 @@
   </widget>
  </widget>
  <resources>
-  <include location="catmeme.qrc"/>
   <include location="calvin.qrc"/>
+  <include location="catmeme.qrc"/>
  </resources>
  <connections/>
 </ui>

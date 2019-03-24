@@ -23,7 +23,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Friends</string>
   </property>
   <widget class="QPushButton" name="returnPushButton">
    <property name="geometry">

@@ -2,7 +2,7 @@
 #include "ui_logindialog.h"
 
 #include "../../Communication/CheckFormat.hpp"
-#include "../Modified_Files/ClientFunctions.hpp"
+//#include "../Modified_Files/ClientFunctions.hpp"
 
 #include "message.h"
 
@@ -76,7 +76,7 @@ void LoginDialog::on_loginButton_clicked()
     *password = ui->passwordInput->text();
     if (acceptable_format(*password))
     {
-        signIn(socket, username->toStdString(), password->toStdString());
+//        signIn(socket, username->toStdString(), password->toStdString());
         hide();
     }
 }
@@ -86,7 +86,7 @@ void LoginDialog::on_signupButton_clicked()
     QString pwdConfirmation = pwd_repeat->get_confirmation();
     if (acceptable_format(pwdConfirmation))
     {
-        signUp(socket, username->toStdString(), password->toStdString());
+//        signUp(socket, username->toStdString(), password->toStdString());
         hide();
     }
 }
