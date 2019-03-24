@@ -110,9 +110,6 @@ void MainMenu::on_rulesButton_clicked()
     rules->exec();
     this->show();
     delete rules;
-
-    //QUrl url("https://en.wikipedia.org/wiki/Chess");
-    //QDesktopServices::openUrl(url);
 }
 
 void MainMenu::on_quitButton_clicked()
