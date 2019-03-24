@@ -277,11 +277,7 @@
      <x>640</x>
      <y>490</y>
      <width>401</width>
-<<<<<<< HEAD
-     <height>103</height>
-=======
      <height>105</height>
->>>>>>> 846faad9507bacc9bc54ebf19ca07816a4c5fdd9
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">

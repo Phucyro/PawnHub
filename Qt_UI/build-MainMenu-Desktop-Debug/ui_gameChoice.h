@@ -1,13 +1,13 @@
 /********************************************************************************
-** Form generated from reading UI file 'gameChoiceStatistics.ui'
+** Form generated from reading UI file 'gameChoice.ui'
 **
 ** Created by: Qt User Interface Compiler version 5.12.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
 
-#ifndef UI_GAMECHOICESTATISTICS_H
-#define UI_GAMECHOICESTATISTICS_H
+#ifndef UI_GAMECHOICE_H
+#define UI_GAMECHOICE_H
 
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
@@ -20,7 +20,7 @@
 
 QT_BEGIN_NAMESPACE
 
-class Ui_GameChoiceStatistics
+class Ui_GameChoice
 {
 public:
     QLabel *label;
@@ -37,19 +37,19 @@ public:
     QPushButton *realTimeAlicePushButton;
     QPushButton *returnPushButton;
 
-    void setupUi(QDialog *GameChoiceStatistics)
+    void setupUi(QDialog *GameChoice)
     {
-        if (GameChoiceStatistics->objectName().isEmpty())
-            GameChoiceStatistics->setObjectName(QString::fromUtf8("GameChoiceStatistics"));
-        GameChoiceStatistics->resize(400, 400);
-        GameChoiceStatistics->setMinimumSize(QSize(400, 400));
-        GameChoiceStatistics->setMaximumSize(QSize(400, 400));
-        label = new QLabel(GameChoiceStatistics);
+        if (GameChoice->objectName().isEmpty())
+            GameChoice->setObjectName(QString::fromUtf8("GameChoice"));
+        GameChoice->resize(400, 400);
+        GameChoice->setMinimumSize(QSize(400, 400));
+        GameChoice->setMaximumSize(QSize(400, 400));
+        label = new QLabel(GameChoice);
         label->setObjectName(QString::fromUtf8("label"));
         label->setGeometry(QRect(10, 15, 381, 41));
         label->setPixmap(QPixmap(QString::fromUtf8(":/Calvin.jpg")));
         label->setScaledContents(true);
-        horizontalLayoutWidget = new QWidget(GameChoiceStatistics);
+        horizontalLayoutWidget = new QWidget(GameChoice);
         horizontalLayoutWidget->setObjectName(QString::fromUtf8("horizontalLayoutWidget"));
         horizontalLayoutWidget->setGeometry(QRect(10, 70, 381, 321));
         horizontalLayout = new QHBoxLayout(horizontalLayoutWidget);
@@ -106,32 +106,32 @@ public:
         horizontalLayout->addLayout(verticalLayout);
 
 
-        retranslateUi(GameChoiceStatistics);
+        retranslateUi(GameChoice);
 
-        QMetaObject::connectSlotsByName(GameChoiceStatistics);
+        QMetaObject::connectSlotsByName(GameChoice);
     } // setupUi
 
-    void retranslateUi(QDialog *GameChoiceStatistics)
+    void retranslateUi(QDialog *GameChoice)
     {
-        GameChoiceStatistics->setWindowTitle(QApplication::translate("GameChoiceStatistics", "Game Types", nullptr));
+        GameChoice->setWindowTitle(QApplication::translate("GameChoice", "Game Rules", nullptr));
         label->setText(QString());
-        classicPushButton->setText(QApplication::translate("GameChoiceStatistics", "Classic", nullptr));
-        darkPushButton->setText(QApplication::translate("GameChoiceStatistics", "Dark", nullptr));
-        hordePushButton->setText(QApplication::translate("GameChoiceStatistics", "Horde", nullptr));
-        alicePushButton->setText(QApplication::translate("GameChoiceStatistics", "Alice", nullptr));
-        realTimeClassicPushButton->setText(QApplication::translate("GameChoiceStatistics", "RealTime Classic", nullptr));
-        realTimeDarkPushButton->setText(QApplication::translate("GameChoiceStatistics", "RealTime Dark", nullptr));
-        realTimeHordePushButton->setText(QApplication::translate("GameChoiceStatistics", "RealTime Horde", nullptr));
-        realTimeAlicePushButton->setText(QApplication::translate("GameChoiceStatistics", "RealTime Alice", nullptr));
-        returnPushButton->setText(QApplication::translate("GameChoiceStatistics", "Return", nullptr));
+        classicPushButton->setText(QApplication::translate("GameChoice", "Classic", nullptr));
+        darkPushButton->setText(QApplication::translate("GameChoice", "Dark", nullptr));
+        hordePushButton->setText(QApplication::translate("GameChoice", "Horde", nullptr));
+        alicePushButton->setText(QApplication::translate("GameChoice", "Alice", nullptr));
+        realTimeClassicPushButton->setText(QApplication::translate("GameChoice", "RealTime Classic", nullptr));
+        realTimeDarkPushButton->setText(QApplication::translate("GameChoice", "RealTime Dark", nullptr));
+        realTimeHordePushButton->setText(QApplication::translate("GameChoice", "RealTime Horde", nullptr));
+        realTimeAlicePushButton->setText(QApplication::translate("GameChoice", "RealTime Alice", nullptr));
+        returnPushButton->setText(QApplication::translate("GameChoice", "Return", nullptr));
     } // retranslateUi
 
 };
 
 namespace Ui {
-    class GameChoiceStatistics: public Ui_GameChoiceStatistics {};
+    class GameChoice: public Ui_GameChoice {};
 } // namespace Ui
 
 QT_END_NAMESPACE
 
-#endif // UI_GAMECHOICESTATISTICS_H
+#endif // UI_GAMECHOICE_H

@@ -1,13 +1,13 @@
 /********************************************************************************
-** Form generated from reading UI file 'gameWithAlice.ui'
+** Form generated from reading UI file 'game.ui'
 **
 ** Created by: Qt User Interface Compiler version 5.12.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
 
-#ifndef UI_GAMEWITHALICE_H
-#define UI_GAMEWITHALICE_H
+#ifndef UI_GAME_H
+#define UI_GAME_H
 
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
@@ -24,10 +24,10 @@
 
 QT_BEGIN_NAMESPACE
 
-class Ui_GameWithAlice
+class Ui_Game
 {
 public:
-    QGraphicsView *boardView;
+    QGraphicsView *graphicsView;
     QLabel *imageLabel;
     QWidget *formLayoutWidget_3;
     QFormLayout *formLayout_3;
@@ -62,33 +62,33 @@ public:
     QHBoxLayout *horizontalLayout;
     QLineEdit *sendingTextField;
     QPushButton *sendPushButton;
-    QGraphicsView *boardView2;
+    QLabel *secondAdsLabel;
 
-    void setupUi(QDialog *GameWithAlice)
+    void setupUi(QDialog *Game)
     {
-        if (GameWithAlice->objectName().isEmpty())
-            GameWithAlice->setObjectName(QString::fromUtf8("GameWithAlice"));
-        GameWithAlice->resize(1200, 600);
+        if (Game->objectName().isEmpty())
+            Game->setObjectName(QString::fromUtf8("Game"));
+        Game->resize(1200, 600);
         QSizePolicy sizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
-        sizePolicy.setHeightForWidth(GameWithAlice->sizePolicy().hasHeightForWidth());
-        GameWithAlice->setSizePolicy(sizePolicy);
-        GameWithAlice->setMinimumSize(QSize(1200, 600));
-        GameWithAlice->setMaximumSize(QSize(1200, 800));
-        boardView = new QGraphicsView(GameWithAlice);
-        boardView->setObjectName(QString::fromUtf8("boardView"));
-        boardView->setGeometry(QRect(230, 80, 400, 400));
-        sizePolicy.setHeightForWidth(boardView->sizePolicy().hasHeightForWidth());
-        boardView->setSizePolicy(sizePolicy);
-        imageLabel = new QLabel(GameWithAlice);
+        sizePolicy.setHeightForWidth(Game->sizePolicy().hasHeightForWidth());
+        Game->setSizePolicy(sizePolicy);
+        Game->setMinimumSize(QSize(1200, 600));
+        Game->setMaximumSize(QSize(1200, 800));
+        graphicsView = new QGraphicsView(Game);
+        graphicsView->setObjectName(QString::fromUtf8("graphicsView"));
+        graphicsView->setGeometry(QRect(250, 100, 400, 400));
+        sizePolicy.setHeightForWidth(graphicsView->sizePolicy().hasHeightForWidth());
+        graphicsView->setSizePolicy(sizePolicy);
+        imageLabel = new QLabel(Game);
         imageLabel->setObjectName(QString::fromUtf8("imageLabel"));
-        imageLabel->setGeometry(QRect(10, 400, 201, 141));
+        imageLabel->setGeometry(QRect(20, 440, 221, 141));
         imageLabel->setPixmap(QPixmap(QString::fromUtf8(":/catmeme.jpg")));
         imageLabel->setScaledContents(true);
-        formLayoutWidget_3 = new QWidget(GameWithAlice);
+        formLayoutWidget_3 = new QWidget(Game);
         formLayoutWidget_3->setObjectName(QString::fromUtf8("formLayoutWidget_3"));
-        formLayoutWidget_3->setGeometry(QRect(230, 490, 401, 61));
+        formLayoutWidget_3->setGeometry(QRect(250, 510, 401, 61));
         formLayout_3 = new QFormLayout(formLayoutWidget_3);
         formLayout_3->setObjectName(QString::fromUtf8("formLayout_3"));
         formLayout_3->setContentsMargins(0, 0, 0, 0);
@@ -102,9 +102,9 @@ public:
 
         formLayout_3->setWidget(0, QFormLayout::FieldRole, chgTakenLabel);
 
-        verticalLayoutWidget = new QWidget(GameWithAlice);
+        verticalLayoutWidget = new QWidget(Game);
         verticalLayoutWidget->setObjectName(QString::fromUtf8("verticalLayoutWidget"));
-        verticalLayoutWidget->setGeometry(QRect(10, 80, 201, 311));
+        verticalLayoutWidget->setGeometry(QRect(20, 100, 221, 321));
         verticalLayout_2 = new QVBoxLayout(verticalLayoutWidget);
         verticalLayout_2->setObjectName(QString::fromUtf8("verticalLayout_2"));
         verticalLayout_2->setContentsMargins(0, 0, 0, 0);
@@ -161,9 +161,9 @@ public:
 
         verticalLayout_2->addWidget(surrendButton);
 
-        verticalLayoutWidget_2 = new QWidget(GameWithAlice);
+        verticalLayoutWidget_2 = new QWidget(Game);
         verticalLayoutWidget_2->setObjectName(QString::fromUtf8("verticalLayoutWidget_2"));
-        verticalLayoutWidget_2->setGeometry(QRect(1050, 80, 101, 401));
+        verticalLayoutWidget_2->setGeometry(QRect(660, 100, 131, 401));
         verticalLayout_3 = new QVBoxLayout(verticalLayoutWidget_2);
         verticalLayout_3->setObjectName(QString::fromUtf8("verticalLayout_3"));
         verticalLayout_3->setContentsMargins(0, 0, 0, 0);
@@ -195,9 +195,9 @@ public:
 
         verticalLayout_3->addLayout(formLayout_2);
 
-        formLayoutWidget_5 = new QWidget(GameWithAlice);
+        formLayoutWidget_5 = new QWidget(Game);
         formLayoutWidget_5->setObjectName(QString::fromUtf8("formLayoutWidget_5"));
-        formLayoutWidget_5->setGeometry(QRect(230, 10, 401, 61));
+        formLayoutWidget_5->setGeometry(QRect(250, 30, 401, 61));
         formLayout_5 = new QFormLayout(formLayoutWidget_5);
         formLayout_5->setObjectName(QString::fromUtf8("formLayout_5"));
         formLayout_5->setLabelAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter);
@@ -213,9 +213,9 @@ public:
 
         formLayout_5->setWidget(0, QFormLayout::FieldRole, chgTakenEnnemyLabel);
 
-        verticalLayoutWidget_3 = new QWidget(GameWithAlice);
+        verticalLayoutWidget_3 = new QWidget(Game);
         verticalLayoutWidget_3->setObjectName(QString::fromUtf8("verticalLayoutWidget_3"));
-        verticalLayoutWidget_3->setGeometry(QRect(640, 490, 401, 105));
+        verticalLayoutWidget_3->setGeometry(QRect(800, 100, 381, 401));
         verticalLayout = new QVBoxLayout(verticalLayoutWidget_3);
         verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
         verticalLayout->setContentsMargins(0, 0, 0, 0);
@@ -240,47 +240,47 @@ public:
 
         verticalLayout->addLayout(horizontalLayout);
 
-        boardView2 = new QGraphicsView(GameWithAlice);
-        boardView2->setObjectName(QString::fromUtf8("boardView2"));
-        boardView2->setGeometry(QRect(640, 80, 400, 400));
-        sizePolicy.setHeightForWidth(boardView2->sizePolicy().hasHeightForWidth());
-        boardView2->setSizePolicy(sizePolicy);
+        secondAdsLabel = new QLabel(Game);
+        secondAdsLabel->setObjectName(QString::fromUtf8("secondAdsLabel"));
+        secondAdsLabel->setGeometry(QRect(800, 520, 381, 61));
+        secondAdsLabel->setPixmap(QPixmap(QString::fromUtf8(":/Calvin.jpg")));
 
-        retranslateUi(GameWithAlice);
+        retranslateUi(Game);
 
-        QMetaObject::connectSlotsByName(GameWithAlice);
+        QMetaObject::connectSlotsByName(Game);
     } // setupUi
 
-    void retranslateUi(QDialog *GameWithAlice)
+    void retranslateUi(QDialog *Game)
     {
-        GameWithAlice->setWindowTitle(QApplication::translate("GameWithAlice", "Alice Chess", nullptr));
+        Game->setWindowTitle(QApplication::translate("Game", "Chess", nullptr));
         imageLabel->setText(QString());
-        takenLabel->setText(QApplication::translate("GameWithAlice", "TAKEN :", nullptr));
-        chgTakenLabel->setText(QApplication::translate("GameWithAlice", "PQBR", nullptr));
-        modeLabel->setText(QApplication::translate("GameWithAlice", "<html><head/><body><p>MODE:</p></body></html>", nullptr));
-        chgModelabel->setText(QApplication::translate("GameWithAlice", "mode", nullptr));
-        colourLabel->setText(QApplication::translate("GameWithAlice", "<html><head/><body><p>COLOUR:</p></body></html>", nullptr));
-        chgColourLabel->setText(QApplication::translate("GameWithAlice", "colour", nullptr));
-        lastMoveLabel->setText(QApplication::translate("GameWithAlice", "LAST MOVE:", nullptr));
-        chgLastMovelabel->setText(QApplication::translate("GameWithAlice", "last move", nullptr));
-        opponentNameLabel->setText(QApplication::translate("GameWithAlice", "OPPONENT NAME:", nullptr));
-        chgOpponentNamelabel->setText(QApplication::translate("GameWithAlice", "opponent", nullptr));
-        surrendButton->setText(QApplication::translate("GameWithAlice", "Surrend", nullptr));
-        timeLabel->setText(QApplication::translate("GameWithAlice", "Time:", nullptr));
-        chgTimeLabel->setText(QApplication::translate("GameWithAlice", "0:00", nullptr));
-        checkUpdatelabel->setText(QApplication::translate("GameWithAlice", "TURN:", nullptr));
-        turnLabel->setText(QApplication::translate("GameWithAlice", "Black", nullptr));
-        takenEnnemyLabel->setText(QApplication::translate("GameWithAlice", "TAKEN :", nullptr));
-        chgTakenEnnemyLabel->setText(QApplication::translate("GameWithAlice", "PQBR", nullptr));
-        sendPushButton->setText(QApplication::translate("GameWithAlice", "Send", nullptr));
+        takenLabel->setText(QApplication::translate("Game", "TAKEN :", nullptr));
+        chgTakenLabel->setText(QApplication::translate("Game", "PQBR", nullptr));
+        modeLabel->setText(QApplication::translate("Game", "<html><head/><body><p>MODE:</p></body></html>", nullptr));
+        chgModelabel->setText(QApplication::translate("Game", "mode", nullptr));
+        colourLabel->setText(QApplication::translate("Game", "<html><head/><body><p>COLOUR:</p></body></html>", nullptr));
+        chgColourLabel->setText(QApplication::translate("Game", "colour", nullptr));
+        lastMoveLabel->setText(QApplication::translate("Game", "LAST MOVE:", nullptr));
+        chgLastMovelabel->setText(QApplication::translate("Game", "last move", nullptr));
+        opponentNameLabel->setText(QApplication::translate("Game", "OPPONENT NAME:", nullptr));
+        chgOpponentNamelabel->setText(QApplication::translate("Game", "opponent", nullptr));
+        surrendButton->setText(QApplication::translate("Game", "Surrend", nullptr));
+        timeLabel->setText(QApplication::translate("Game", "Time:", nullptr));
+        chgTimeLabel->setText(QApplication::translate("Game", "0:00", nullptr));
+        checkUpdatelabel->setText(QApplication::translate("Game", "TURN:", nullptr));
+        turnLabel->setText(QApplication::translate("Game", "Black", nullptr));
+        takenEnnemyLabel->setText(QApplication::translate("Game", "TAKEN :", nullptr));
+        chgTakenEnnemyLabel->setText(QApplication::translate("Game", "PQBR", nullptr));
+        sendPushButton->setText(QApplication::translate("Game", "Send", nullptr));
+        secondAdsLabel->setText(QString());
     } // retranslateUi
 
 };
 
 namespace Ui {
-    class GameWithAlice: public Ui_GameWithAlice {};
+    class Game: public Ui_Game {};
 } // namespace Ui
 
 QT_END_NAMESPACE
 
-#endif // UI_GAMEWITHALICE_H
+#endif // UI_GAME_H

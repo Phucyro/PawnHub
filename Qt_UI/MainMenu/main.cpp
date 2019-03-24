@@ -22,10 +22,6 @@ int main(int argc, char *argv[])
 {
     try {
         QApplication a(argc, argv);
-<<<<<<< HEAD
-        MainMenu w;
-        w.show();
-=======
 
 //        // Actual code
 //        MainMenu w;
@@ -34,7 +30,7 @@ int main(int argc, char *argv[])
         // Cheat code for game integration - change hostname for full effect
         GameWithoutChat game;
         Socket socket;
-        socket.connectToServer("frawni-thinks");
+        socket.connectToServer("KryptonX");
         Client client(&socket);
 
         std::thread recvThread(receiveMessageHandler, &client);
@@ -47,7 +43,6 @@ int main(int argc, char *argv[])
         std::cout << "Thread joined" << std::endl;
         game.show();
 
->>>>>>> 846faad9507bacc9bc54ebf19ca07816a4c5fdd9
         return a.exec();
     }
     catch (std::runtime_error& error) {
