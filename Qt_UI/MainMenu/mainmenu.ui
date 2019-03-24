@@ -202,7 +202,7 @@ Wassup?</string>
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap resource="calvin.qrc">:/Calvin.jpg</pixmap>
+      <pixmap>:/Calvin.jpg</pixmap>
      </property>
      <property name="alignment">
       <set>Qt::AlignBottom|Qt::AlignHCenter</set>
@@ -220,8 +220,6 @@ Wassup?</string>
   <tabstop>rulesButton</tabstop>
   <tabstop>quitButton</tabstop>
  </tabstops>
- <resources>
-  <include location="calvin.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

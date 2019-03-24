@@ -60,7 +60,7 @@
     <string/>
    </property>
    <property name="pixmap">
-    <pixmap resource="catmeme.qrc">:/catmeme.jpg</pixmap>
+    <pixmap>:/catmeme.jpg</pixmap>
    </property>
    <property name="scaledContents">
     <bool>true</bool>
@@ -317,13 +317,10 @@
     <string/>
    </property>
    <property name="pixmap">
-    <pixmap resource="calvin.qrc">:/Calvin.jpg</pixmap>
+    <pixmap>:/Calvin.jpg</pixmap>
    </property>
   </widget>
  </widget>
- <resources>
-  <include location="catmeme.qrc"/>
-  <include location="calvin.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

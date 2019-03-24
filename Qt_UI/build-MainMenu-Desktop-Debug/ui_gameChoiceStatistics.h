@@ -35,6 +35,7 @@ public:
     QPushButton *realTimeDarkPushButton;
     QPushButton *realTimeHordePushButton;
     QPushButton *realTimeAlicePushButton;
+    QPushButton *returnPushButton;
 
     void setupUi(QDialog *GameChoiceStatistics)
     {
@@ -96,6 +97,11 @@ public:
 
         verticalLayout->addWidget(realTimeAlicePushButton);
 
+        returnPushButton = new QPushButton(horizontalLayoutWidget);
+        returnPushButton->setObjectName(QString::fromUtf8("returnPushButton"));
+
+        verticalLayout->addWidget(returnPushButton);
+
 
         horizontalLayout->addLayout(verticalLayout);
 
@@ -117,6 +123,7 @@ public:
         realTimeDarkPushButton->setText(QApplication::translate("GameChoiceStatistics", "RealTime Dark", nullptr));
         realTimeHordePushButton->setText(QApplication::translate("GameChoiceStatistics", "RealTime Horde", nullptr));
         realTimeAlicePushButton->setText(QApplication::translate("GameChoiceStatistics", "RealTime Alice", nullptr));
+        returnPushButton->setText(QApplication::translate("GameChoiceStatistics", "Return", nullptr));
     } // retranslateUi
 
 };

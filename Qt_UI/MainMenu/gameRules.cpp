@@ -78,31 +78,28 @@ void GameRules::on_alicePushButton_pressed()
 
 }
 
-void GameRules::on_realTimeClassicPushButton_pressed()
+void GameRules::on_realTimePushButton_pressed()
 {
     ui->rulesTextEdit->clear();
-    ui->rulesTextEdit->appendPlainText("Realtime Classic");
-}
+    ui->rulesTextEdit->appendPlainText("The rules are the same as for Classic but we add the realtime on top of it.");
+    ui->rulesTextEdit->appendPlainText("");
+    ui->rulesTextEdit->appendPlainText("It's not turnbased, you may move any piece at any time");
+    ui->rulesTextEdit->appendPlainText("Your pawn will always promote to a Queen");
+    ui->rulesTextEdit->appendPlainText("There is no check or checkmate, you can move your King where you want and when you want, and you can castle disregarding the check rule.");
+    ui->rulesTextEdit->appendPlainText("There are no autodraws or claimed draws based on repetion of moves or number of moves");
+    ui->rulesTextEdit->appendPlainText("");
+    ui->rulesTextEdit->appendPlainText("You cannot move a piece, if it has a delaytime.");
+    ui->rulesTextEdit->appendPlainText("If any piece is moving to the field X.You cannot move a piece to the same field X. - Same destination blocking");
+    ui->rulesTextEdit->appendPlainText("If an opponent piece has started a move to a field Y before you. You cannot start a move of your piece X to a path through that field Y. - Move blocking This rule is ignored if and only if the piece X is a knight, they jump.");
+    ui->rulesTextEdit->appendPlainText("You may move your piece X through your own piece Y, if it's already moving. Only if the piece X's destination doesn't go though the piece Y's destination. This rule is ignored if and only if the piece X is a knight, they jump.");
+    ui->rulesTextEdit->appendPlainText("You can only do the enpassant move if the opponent pawn still has a delaytime");
+    ui->rulesTextEdit->appendPlainText("When it's possible to capture two pieces by enpassant move and a normal capture by the same pawn, the enpassant capture will not happen");
+    ui->rulesTextEdit->appendPlainText("When a King is taken the owner of that King loses the game. When a player resigns og leaves the game, that player loses the game.");
 
-void GameRules::on_realTimeDarkPushButton_pressed()
-{
-    ui->rulesTextEdit->clear();
-    ui->rulesTextEdit->appendPlainText("Realtime Dark");
-}
-
-void GameRules::on_realTimeHordePushButton_pressed()
-{
-    ui->rulesTextEdit->clear();
-    ui->rulesTextEdit->appendPlainText("Realtime Horde");
-}
-
-void GameRules::on_realTimeAlicePushButton_pressed()
-{
-    ui->rulesTextEdit->clear();
-    ui->rulesTextEdit->appendPlainText("Realtime Alice");
 }
 
 void GameRules::on_returnPushButton_pressed()
 {
     close();
 }
+

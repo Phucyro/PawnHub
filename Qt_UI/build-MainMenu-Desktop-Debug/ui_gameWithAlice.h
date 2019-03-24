@@ -215,7 +215,7 @@ public:
 
         verticalLayoutWidget_3 = new QWidget(GameWithAlice);
         verticalLayoutWidget_3->setObjectName(QString::fromUtf8("verticalLayoutWidget_3"));
-        verticalLayoutWidget_3->setGeometry(QRect(640, 490, 401, 101));
+        verticalLayoutWidget_3->setGeometry(QRect(640, 490, 401, 103));
         verticalLayout = new QVBoxLayout(verticalLayoutWidget_3);
         verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
         verticalLayout->setContentsMargins(0, 0, 0, 0);

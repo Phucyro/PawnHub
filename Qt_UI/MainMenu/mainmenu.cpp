@@ -8,6 +8,7 @@
 #include "logindialog.h"
 #include "gameChoice.h"
 #include "gameRules.h"
+#include "gameChoiceStatistics.h"
 #include "statisticsTab.h"
 #include "friendTab.h"
 #include "chat.h"
@@ -78,7 +79,7 @@ void MainMenu::on_playButton_clicked()
 
 void MainMenu::on_statsButton_clicked()
 {
-    StatisticsTab* stats = new StatisticsTab;
+    GameChoiceStatistics* stats = new GameChoiceStatistics;
     this->hide();
     stats->exec();
     this->show();
@@ -96,7 +97,7 @@ void MainMenu::on_friendsButton_clicked()
 
 void MainMenu::on_chatButton_clicked()
 {
-    Chat* chat = new Chat;
+    Chat* chat = new Chat(client);
     this->hide();
     chat->exec();
     this->show();
@@ -121,3 +122,5 @@ void MainMenu::closeEvent()
 {
     exit(0);
 }
+
+

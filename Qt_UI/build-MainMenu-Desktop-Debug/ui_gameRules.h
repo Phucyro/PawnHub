@@ -32,10 +32,7 @@ public:
     QPushButton *darkPushButton;
     QPushButton *hordePushButton;
     QPushButton *alicePushButton;
-    QPushButton *realTimeClassicPushButton;
-    QPushButton *realTimeDarkPushButton;
-    QPushButton *realTimeHordePushButton;
-    QPushButton *realTimeAlicePushButton;
+    QPushButton *realTimePushButton;
     QPushButton *returnPushButton;
     QPlainTextEdit *rulesTextEdit;
 
@@ -79,25 +76,10 @@ public:
 
         verticalLayout->addWidget(alicePushButton);
 
-        realTimeClassicPushButton = new QPushButton(horizontalLayoutWidget);
-        realTimeClassicPushButton->setObjectName(QString::fromUtf8("realTimeClassicPushButton"));
+        realTimePushButton = new QPushButton(horizontalLayoutWidget);
+        realTimePushButton->setObjectName(QString::fromUtf8("realTimePushButton"));
 
-        verticalLayout->addWidget(realTimeClassicPushButton);
-
-        realTimeDarkPushButton = new QPushButton(horizontalLayoutWidget);
-        realTimeDarkPushButton->setObjectName(QString::fromUtf8("realTimeDarkPushButton"));
-
-        verticalLayout->addWidget(realTimeDarkPushButton);
-
-        realTimeHordePushButton = new QPushButton(horizontalLayoutWidget);
-        realTimeHordePushButton->setObjectName(QString::fromUtf8("realTimeHordePushButton"));
-
-        verticalLayout->addWidget(realTimeHordePushButton);
-
-        realTimeAlicePushButton = new QPushButton(horizontalLayoutWidget);
-        realTimeAlicePushButton->setObjectName(QString::fromUtf8("realTimeAlicePushButton"));
-
-        verticalLayout->addWidget(realTimeAlicePushButton);
+        verticalLayout->addWidget(realTimePushButton);
 
         returnPushButton = new QPushButton(horizontalLayoutWidget);
         returnPushButton->setObjectName(QString::fromUtf8("returnPushButton"));
@@ -127,10 +109,7 @@ public:
         darkPushButton->setText(QApplication::translate("GameRules", "Dark", nullptr));
         hordePushButton->setText(QApplication::translate("GameRules", "Horde", nullptr));
         alicePushButton->setText(QApplication::translate("GameRules", "Alice", nullptr));
-        realTimeClassicPushButton->setText(QApplication::translate("GameRules", "RealTime Classic", nullptr));
-        realTimeDarkPushButton->setText(QApplication::translate("GameRules", "RealTime Dark", nullptr));
-        realTimeHordePushButton->setText(QApplication::translate("GameRules", "RealTime Horde", nullptr));
-        realTimeAlicePushButton->setText(QApplication::translate("GameRules", "RealTime Alice", nullptr));
+        realTimePushButton->setText(QApplication::translate("GameRules", "RealTime", nullptr));
         returnPushButton->setText(QApplication::translate("GameRules", "Return", nullptr));
     } // retranslateUi
 

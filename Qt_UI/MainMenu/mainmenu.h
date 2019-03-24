@@ -26,7 +26,6 @@ private slots:
     void on_chatButton_clicked();
     void on_rulesButton_clicked();
     void on_quitButton_clicked();
-
     void closeEvent();
 
 private:

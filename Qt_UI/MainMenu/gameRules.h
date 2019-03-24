@@ -27,13 +27,8 @@ private slots:
 
     void on_alicePushButton_pressed();
 
-    void on_realTimeClassicPushButton_pressed();
+    void on_realTimePushButton_pressed();
 
-    void on_realTimeDarkPushButton_pressed();
-
-    void on_realTimeHordePushButton_pressed();
-
-    void on_realTimeAlicePushButton_pressed();
     void on_returnPushButton_pressed();
 };
 
