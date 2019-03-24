@@ -74,8 +74,6 @@ HEADERS += \
     gameChoiceStatistics.h \
     friendTab.h \
     statisticsTab.h \
-    ../Modified_Files/ClientFunctions.hpp \
-    ../Modified_Files/ClientFunctions.hpp \
     chat.h \
     gameRules.h
 

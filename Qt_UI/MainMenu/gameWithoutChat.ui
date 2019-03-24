@@ -60,7 +60,7 @@
     <string/>
    </property>
    <property name="pixmap">
-    <pixmap>:/catmeme.jpg</pixmap>
+    <pixmap resource="catmeme.qrc">:/catmeme.jpg</pixmap>
    </property>
    <property name="scaledContents">
     <bool>true</bool>
@@ -265,9 +265,9 @@
     </item>
    </layout>
   </widget>
-  <widget class="QPushButton" name="a1PushButton">
+  <widget class="QPushButton" name="A1">
    <property name="enabled">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
    <property name="geometry">
     <rect>
@@ -308,9 +308,9 @@
     <string notr="true">board</string>
    </attribute>
   </widget>
-  <widget class="QPushButton" name="a3PushButton">
+  <widget class="QPushButton" name="A3">
    <property name="enabled">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
    <property name="geometry">
     <rect>
@@ -348,9 +348,9 @@
     <string notr="true">board</string>
    </attribute>
   </widget>
-  <widget class="QPushButton" name="a2PushButton">
+  <widget class="QPushButton" name="A2">
    <property name="enabled">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
    <property name="geometry">
     <rect>
@@ -388,9 +388,9 @@
     <string notr="true">board</string>
    </attribute>
   </widget>
-  <widget class="QPushButton" name="a5PushButton">
+  <widget class="QPushButton" name="A5">
    <property name="enabled">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
    <property name="geometry">
     <rect>
@@ -428,9 +428,9 @@
     <string notr="true">board</string>
    </attribute>
   </widget>
-  <widget class="QPushButton" name="a4PushButton">
+  <widget class="QPushButton" name="A4">
    <property name="enabled">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
    <property name="geometry">
     <rect>
@@ -468,9 +468,9 @@
     <string notr="true">board</string>
    </attribute>
   </widget>
-  <widget class="QPushButton" name="a7PushButton">
+  <widget class="QPushButton" name="A7">
    <property name="enabled">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
    <property name="geometry">
     <rect>
@@ -508,9 +508,9 @@
     <string notr="true">board</string>
    </attribute>
   </widget>
-  <widget class="QPushButton" name="a6PushButton">
+  <widget class="QPushButton" name="A6">
    <property name="enabled">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
    <property name="geometry">
     <rect>
@@ -548,9 +548,9 @@
     <string notr="true">board</string>
    </attribute>
   </widget>
-  <widget class="QPushButton" name="a8PushButton">
+  <widget class="QPushButton" name="A8">
    <property name="enabled">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
    <property name="geometry">
     <rect>
@@ -588,9 +588,9 @@
     <string notr="true">board</string>
    </attribute>
   </widget>
-  <widget class="QPushButton" name="b8PushButton">
+  <widget class="QPushButton" name="B8">
    <property name="enabled">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
    <property name="geometry">
     <rect>
@@ -628,9 +628,9 @@
     <string notr="true">board</string>
    </attribute>
   </widget>
-  <widget class="QPushButton" name="b5PushButton">
+  <widget class="QPushButton" name="B5">
    <property name="enabled">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
    <property name="geometry">
     <rect>
@@ -668,9 +668,9 @@
     <string notr="true">board</string>
    </attribute>
   </widget>
-  <widget class="QPushButton" name="b6PushButton">
+  <widget class="QPushButton" name="B6">
    <property name="enabled">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
    <property name="geometry">
     <rect>
@@ -708,9 +708,9 @@
     <string notr="true">board</string>
    </attribute>
   </widget>
-  <widget class="QPushButton" name="b4PushButton">
+  <widget class="QPushButton" name="B4">
    <property name="enabled">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
    <property name="geometry">
     <rect>
@@ -748,9 +748,9 @@
     <string notr="true">board</string>
    </attribute>
   </widget>
-  <widget class="QPushButton" name="b7PushButton">
+  <widget class="QPushButton" name="B7">
    <property name="enabled">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
    <property name="geometry">
     <rect>
@@ -788,9 +788,9 @@
     <string notr="true">board</string>
    </attribute>
   </widget>
-  <widget class="QPushButton" name="b1PushButton">
+  <widget class="QPushButton" name="B1">
    <property name="enabled">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
    <property name="geometry">
     <rect>
@@ -828,9 +828,9 @@
     <string notr="true">board</string>
    </attribute>
   </widget>
-  <widget class="QPushButton" name="b2PushButton">
+  <widget class="QPushButton" name="B2">
    <property name="enabled">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
    <property name="geometry">
     <rect>
@@ -868,9 +868,9 @@
     <string notr="true">board</string>
    </attribute>
   </widget>
-  <widget class="QPushButton" name="b3PushButton">
+  <widget class="QPushButton" name="B3">
    <property name="enabled">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
    <property name="geometry">
     <rect>
@@ -908,9 +908,9 @@
     <string notr="true">board</string>
    </attribute>
   </widget>
-  <widget class="QPushButton" name="c7PushButton">
+  <widget class="QPushButton" name="C7">
    <property name="enabled">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
    <property name="geometry">
     <rect>
@@ -948,9 +948,9 @@
     <string notr="true">board</string>
    </attribute>
   </widget>
-  <widget class="QPushButton" name="d3PushButton">
+  <widget class="QPushButton" name="D3">
    <property name="enabled">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
    <property name="geometry">
     <rect>
@@ -988,9 +988,9 @@
     <string notr="true">board</string>
    </attribute>
   </widget>
-  <widget class="QPushButton" name="d2PushButton">
+  <widget class="QPushButton" name="D2">
    <property name="enabled">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
    <property name="geometry">
     <rect>
@@ -1028,9 +1028,9 @@
     <string notr="true">board</string>
    </attribute>
   </widget>
-  <widget class="QPushButton" name="c4PushButton">
+  <widget class="QPushButton" name="C4">
    <property name="enabled">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
    <property name="geometry">
     <rect>
@@ -1068,9 +1068,9 @@
     <string notr="true">board</string>
    </attribute>
   </widget>
-  <widget class="QPushButton" name="d1PushButton">
+  <widget class="QPushButton" name="D1">
    <property name="enabled">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
    <property name="geometry">
     <rect>
@@ -1108,9 +1108,9 @@
     <string notr="true">board</string>
    </attribute>
   </widget>
-  <widget class="QPushButton" name="c5PushButton">
+  <widget class="QPushButton" name="C5">
    <property name="enabled">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
    <property name="geometry">
     <rect>
@@ -1148,9 +1148,9 @@
     <string notr="true">board</string>
    </attribute>
   </widget>
-  <widget class="QPushButton" name="d5PushButton">
+  <widget class="QPushButton" name="D5">
    <property name="enabled">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
    <property name="geometry">
     <rect>
@@ -1188,9 +1188,9 @@
     <string notr="true">board</string>
    </attribute>
   </widget>
-  <widget class="QPushButton" name="c1PushButton">
+  <widget class="QPushButton" name="C1">
    <property name="enabled">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
    <property name="geometry">
     <rect>
@@ -1228,9 +1228,9 @@
     <string notr="true">board</string>
    </attribute>
   </widget>
-  <widget class="QPushButton" name="c8PushButton">
+  <widget class="QPushButton" name="C8">
    <property name="enabled">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
    <property name="geometry">
     <rect>
@@ -1268,9 +1268,9 @@
     <string notr="true">board</string>
    </attribute>
   </widget>
-  <widget class="QPushButton" name="d8PushButton">
+  <widget class="QPushButton" name="D8">
    <property name="enabled">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
    <property name="geometry">
     <rect>
@@ -1308,9 +1308,9 @@
     <string notr="true">board</string>
    </attribute>
   </widget>
-  <widget class="QPushButton" name="c3PushButton">
+  <widget class="QPushButton" name="C3">
    <property name="enabled">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
    <property name="geometry">
     <rect>
@@ -1348,9 +1348,9 @@
     <string notr="true">board</string>
    </attribute>
   </widget>
-  <widget class="QPushButton" name="d6PushButton">
+  <widget class="QPushButton" name="D6">
    <property name="enabled">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
    <property name="geometry">
     <rect>
@@ -1388,9 +1388,9 @@
     <string notr="true">board</string>
    </attribute>
   </widget>
-  <widget class="QPushButton" name="c6PushButton">
+  <widget class="QPushButton" name="C6">
    <property name="enabled">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
    <property name="geometry">
     <rect>
@@ -1428,9 +1428,9 @@
     <string notr="true">board</string>
    </attribute>
   </widget>
-  <widget class="QPushButton" name="d4PushButton">
+  <widget class="QPushButton" name="D4">
    <property name="enabled">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
    <property name="geometry">
     <rect>
@@ -1468,9 +1468,9 @@
     <string notr="true">board</string>
    </attribute>
   </widget>
-  <widget class="QPushButton" name="d7PushButton">
+  <widget class="QPushButton" name="D7">
    <property name="enabled">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
    <property name="geometry">
     <rect>
@@ -1508,9 +1508,9 @@
     <string notr="true">board</string>
    </attribute>
   </widget>
-  <widget class="QPushButton" name="c2PushButton">
+  <widget class="QPushButton" name="C2">
    <property name="enabled">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
    <property name="geometry">
     <rect>
@@ -1548,9 +1548,9 @@
     <string notr="true">board</string>
    </attribute>
   </widget>
-  <widget class="QPushButton" name="e2PushButton">
+  <widget class="QPushButton" name="E2">
    <property name="enabled">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
    <property name="geometry">
     <rect>
@@ -1588,9 +1588,9 @@
     <string notr="true">board</string>
    </attribute>
   </widget>
-  <widget class="QPushButton" name="e3PushButton">
+  <widget class="QPushButton" name="E3">
    <property name="enabled">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
    <property name="geometry">
     <rect>
@@ -1628,9 +1628,9 @@
     <string notr="true">board</string>
    </attribute>
   </widget>
-  <widget class="QPushButton" name="e7PushButton">
+  <widget class="QPushButton" name="E7">
    <property name="enabled">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
    <property name="geometry">
     <rect>
@@ -1668,9 +1668,9 @@
     <string notr="true">board</string>
    </attribute>
   </widget>
-  <widget class="QPushButton" name="g3PushButton">
+  <widget class="QPushButton" name="G3">
    <property name="enabled">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
    <property name="geometry">
     <rect>
@@ -1708,9 +1708,9 @@
     <string notr="true">board</string>
    </attribute>
   </widget>
-  <widget class="QPushButton" name="f8PushButton">
+  <widget class="QPushButton" name="F8">
    <property name="enabled">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
    <property name="geometry">
     <rect>
@@ -1748,9 +1748,9 @@
     <string notr="true">board</string>
    </attribute>
   </widget>
-  <widget class="QPushButton" name="f7PushButton">
+  <widget class="QPushButton" name="F7">
    <property name="enabled">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
    <property name="geometry">
     <rect>
@@ -1788,9 +1788,9 @@
     <string notr="true">board</string>
    </attribute>
   </widget>
-  <widget class="QPushButton" name="e4PushButton">
+  <widget class="QPushButton" name="E4">
    <property name="enabled">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
    <property name="geometry">
     <rect>
@@ -1828,9 +1828,9 @@
     <string notr="true">board</string>
    </attribute>
   </widget>
-  <widget class="QPushButton" name="g6PushButton">
+  <widget class="QPushButton" name="G6">
    <property name="enabled">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
    <property name="geometry">
     <rect>
@@ -1868,9 +1868,9 @@
     <string notr="true">board</string>
    </attribute>
   </widget>
-  <widget class="QPushButton" name="h2PushButton">
+  <widget class="QPushButton" name="H2">
    <property name="enabled">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
    <property name="geometry">
     <rect>
@@ -1908,9 +1908,9 @@
     <string notr="true">board</string>
    </attribute>
   </widget>
-  <widget class="QPushButton" name="e5PushButton">
+  <widget class="QPushButton" name="E5">
    <property name="enabled">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
    <property name="geometry">
     <rect>
@@ -1948,9 +1948,9 @@
     <string notr="true">board</string>
    </attribute>
   </widget>
-  <widget class="QPushButton" name="g5PushButton">
+  <widget class="QPushButton" name="G5">
    <property name="enabled">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
    <property name="geometry">
     <rect>
@@ -1988,9 +1988,9 @@
     <string notr="true">board</string>
    </attribute>
   </widget>
-  <widget class="QPushButton" name="h4PushButton">
+  <widget class="QPushButton" name="H4">
    <property name="enabled">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
    <property name="geometry">
     <rect>
@@ -2028,9 +2028,9 @@
     <string notr="true">board</string>
    </attribute>
   </widget>
-  <widget class="QPushButton" name="f6PushButton">
+  <widget class="QPushButton" name="F6">
    <property name="enabled">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
    <property name="geometry">
     <rect>
@@ -2068,9 +2068,9 @@
     <string notr="true">board</string>
    </attribute>
   </widget>
-  <widget class="QPushButton" name="f1PushButton">
+  <widget class="QPushButton" name="F1">
    <property name="enabled">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
    <property name="geometry">
     <rect>
@@ -2108,9 +2108,9 @@
     <string notr="true">board</string>
    </attribute>
   </widget>
-  <widget class="QPushButton" name="g2PushButton">
+  <widget class="QPushButton" name="G2">
    <property name="enabled">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
    <property name="geometry">
     <rect>
@@ -2148,9 +2148,9 @@
     <string notr="true">board</string>
    </attribute>
   </widget>
-  <widget class="QPushButton" name="e6PushButton">
+  <widget class="QPushButton" name="E6">
    <property name="enabled">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
    <property name="geometry">
     <rect>
@@ -2188,9 +2188,9 @@
     <string notr="true">board</string>
    </attribute>
   </widget>
-  <widget class="QPushButton" name="h1PushButton">
+  <widget class="QPushButton" name="H1">
    <property name="enabled">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
    <property name="geometry">
     <rect>
@@ -2228,9 +2228,9 @@
     <string notr="true">board</string>
    </attribute>
   </widget>
-  <widget class="QPushButton" name="f4PushButton">
+  <widget class="QPushButton" name="F4">
    <property name="enabled">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
    <property name="geometry">
     <rect>
@@ -2268,9 +2268,9 @@
     <string notr="true">board</string>
    </attribute>
   </widget>
-  <widget class="QPushButton" name="g4PushButton">
+  <widget class="QPushButton" name="G4">
    <property name="enabled">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
    <property name="geometry">
     <rect>
@@ -2308,9 +2308,9 @@
     <string notr="true">board</string>
    </attribute>
   </widget>
-  <widget class="QPushButton" name="f3PushButton">
+  <widget class="QPushButton" name="F3">
    <property name="enabled">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
    <property name="geometry">
     <rect>
@@ -2344,10 +2344,13 @@
      <height>36</height>
     </size>
    </property>
+   <attribute name="buttonGroup">
+    <string notr="true">board</string>
+   </attribute>
   </widget>
-  <widget class="QPushButton" name="h7PushButton">
+  <widget class="QPushButton" name="H7">
    <property name="enabled">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
    <property name="geometry">
     <rect>
@@ -2385,9 +2388,9 @@
     <string notr="true">board</string>
    </attribute>
   </widget>
-  <widget class="QPushButton" name="e8PushButton">
+  <widget class="QPushButton" name="E8">
    <property name="enabled">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
    <property name="geometry">
     <rect>
@@ -2425,9 +2428,9 @@
     <string notr="true">board</string>
    </attribute>
   </widget>
-  <widget class="QPushButton" name="g7PushButton">
+  <widget class="QPushButton" name="G7">
    <property name="enabled">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
    <property name="geometry">
     <rect>
@@ -2465,9 +2468,9 @@
     <string notr="true">board</string>
    </attribute>
   </widget>
-  <widget class="QPushButton" name="h5PushButton">
+  <widget class="QPushButton" name="H5">
    <property name="enabled">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
    <property name="geometry">
     <rect>
@@ -2505,9 +2508,9 @@
     <string notr="true">board</string>
    </attribute>
   </widget>
-  <widget class="QPushButton" name="g8PushButton">
+  <widget class="QPushButton" name="G8">
    <property name="enabled">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
    <property name="geometry">
     <rect>
@@ -2545,9 +2548,9 @@
     <string notr="true">board</string>
    </attribute>
   </widget>
-  <widget class="QPushButton" name="h8PushButton">
+  <widget class="QPushButton" name="H8">
    <property name="enabled">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
    <property name="geometry">
     <rect>
@@ -2585,9 +2588,9 @@
     <string notr="true">board</string>
    </attribute>
   </widget>
-  <widget class="QPushButton" name="h3PushButton">
+  <widget class="QPushButton" name="H3">
    <property name="enabled">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
    <property name="geometry">
     <rect>
@@ -2625,9 +2628,9 @@
     <string notr="true">board</string>
    </attribute>
   </widget>
-  <widget class="QPushButton" name="e1PushButton">
+  <widget class="QPushButton" name="E1">
    <property name="enabled">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
    <property name="geometry">
     <rect>
@@ -2665,9 +2668,9 @@
     <string notr="true">board</string>
    </attribute>
   </widget>
-  <widget class="QPushButton" name="f2PushButton">
+  <widget class="QPushButton" name="F2">
    <property name="enabled">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
    <property name="geometry">
     <rect>
@@ -2705,9 +2708,9 @@
     <string notr="true">board</string>
    </attribute>
   </widget>
-  <widget class="QPushButton" name="g1PushButton">
+  <widget class="QPushButton" name="G1">
    <property name="enabled">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
    <property name="geometry">
     <rect>
@@ -2745,9 +2748,9 @@
     <string notr="true">board</string>
    </attribute>
   </widget>
-  <widget class="QPushButton" name="f5PushButton">
+  <widget class="QPushButton" name="F5">
    <property name="enabled">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
    <property name="geometry">
     <rect>
@@ -2785,9 +2788,9 @@
     <string notr="true">board</string>
    </attribute>
   </widget>
-  <widget class="QPushButton" name="h6PushButton">
+  <widget class="QPushButton" name="H6">
    <property name="enabled">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
    <property name="geometry">
     <rect>
@@ -3010,7 +3013,9 @@
    </layout>
   </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="catmeme.qrc"/>
+ </resources>
  <connections/>
  <buttongroups>
   <buttongroup name="board">
