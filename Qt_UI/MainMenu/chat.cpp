@@ -2,7 +2,7 @@
 #include "ui_chat.h"
 
 
-#include "../../Communication/Client.hpp"
+//#include "../../Communication/Client.hpp"
 #include "../Modified_Files/ClientFunctions.hpp"
 #include "../Modified_Files/CheckFormat.hpp"
 
