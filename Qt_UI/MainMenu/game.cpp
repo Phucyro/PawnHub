@@ -27,5 +27,5 @@ void Game::on_sendingTextField_returnPressed()
 
 void Game::on_surrendButton_pressed()
 {
-    exit(0);
+    close();
 }

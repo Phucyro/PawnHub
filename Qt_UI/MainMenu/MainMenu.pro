@@ -47,7 +47,8 @@ SOURCES += \
     gameChoice.cpp \
     friendTab.cpp \
     statisticsTab.cpp \
-    chat.cpp
+    chat.cpp \
+    gameRules.cpp
 
 HEADERS += \
         mainmenu.h \
@@ -75,7 +76,8 @@ HEADERS += \
     statisticsTab.h \
     ../Modified_Files/ClientFunctions.hpp \
     ../Modified_Files/ClientFunctions.hpp \
-    chat.h
+    chat.h \
+    gameRules.h
 
 FORMS += \
     connectiondialog.ui \
@@ -87,11 +89,12 @@ FORMS += \
     gameWithoutChat.ui \
     gameWithAlice.ui \
     gameWithoutChatWithAlice.ui \
-    gameChoice.ui \
     gameChoiceStatistics.ui \
     friendTab.ui \
     statisticsTab.ui \
-    chat.ui
+    chat.ui \
+    gameRules.ui \
+    gameChoice.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

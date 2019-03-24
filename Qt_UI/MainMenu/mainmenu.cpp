@@ -7,6 +7,7 @@
 #include "connectiondialog.h"
 #include "logindialog.h"
 #include "gameChoice.h"
+#include "gameRules.h"
 #include "statisticsTab.h"
 #include "friendTab.h"
 #include "chat.h"
@@ -104,8 +105,14 @@ void MainMenu::on_chatButton_clicked()
 
 void MainMenu::on_rulesButton_clicked()
 {
-    QUrl url("https://en.wikipedia.org/wiki/Chess");
-    QDesktopServices::openUrl(url);
+    GameRules* rules = new GameRules;
+    this->hide();
+    rules->exec();
+    this->show();
+    delete rules;
+
+    //QUrl url("https://en.wikipedia.org/wiki/Chess");
+    //QDesktopServices::openUrl(url);
 }
 
 void MainMenu::on_quitButton_clicked()
