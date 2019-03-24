@@ -13,7 +13,6 @@
 #include <queue>
 #include "Game.hpp"
 #include "Board.hpp"
-#include "Premove.hpp"
 #include "../Communication/Socket.hpp"
 #include "../Communication/ServerGameControl.hpp"
 #include "../Communication/Data.hpp"
@@ -28,14 +27,13 @@ class Player{
 	std::string _name = "Guest";
 	int _queueNumber = -1; // Numero de file inexistante
 	bool _recvActive;
-	bool _premoved;
 	char _color;
 	std::mutex *_inGameMutex;
-	std::queue<PreMove*> _premoves;
+	std::queue<std::string> _premoves;
 
 
 	public :
-	Player(Socket* socket): _sock(socket), _control(nullptr), _pipe(nullptr), _pipeControl(nullptr), _recvActive(false), _color('\0'), _inGameMutex(nullptr) {
+	Player(Socket* socket): _sock(socket), _control(nullptr), _pipe(nullptr), _pipeControl(nullptr), _recvActive(false), _color('\0'), _inGameMutex(nullptr), _premoves() {
 		_pipe = new int[2];
 		if ((pipe(_pipe)) == -1) throw std::runtime_error("Fail while constructing a pipe for an object of type 'Player': ");
 		
@@ -68,7 +66,7 @@ class Player{
 	std::string getName() const;
 	Socket* getSocket() const;
 	int getQueueNumber() const;
-	std::queue<PreMove*>& getPreMoves() {return _premoves;}
+	std::queue<std::string>& getPreMoves() {return _premoves;}
 	void setName(std::string);
 	void setControl(ServerGameControl*);
 	void setSocket(Socket*);
@@ -91,7 +89,7 @@ class Player{
 	void transferTurn(unsigned);
 	void transferTime(int);
 	void transferGoodMove();
-	void receiveMove(std::string&, bool askMove);
+	void receiveMove(std::string&);
 	void receivePromotion(std::string&);
 	void surrend();
 	void startGame(){_inGameMutex->lock();}

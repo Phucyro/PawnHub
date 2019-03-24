@@ -23,10 +23,10 @@ ServerGameControl::~ServerGameControl() {
   info = nullptr;
 }
 
-void ServerGameControl::receiveMove(std::string message, bool askMove) {
+void ServerGameControl::receiveMove(std::string message) {
   std::cout << "Received move " << message << std::endl;
-  player1->receiveMove(message, askMove);
-  player2->receiveMove(message, askMove);
+  player1->receiveMove(message);
+  player2->receiveMove(message);
 }
 
 void ServerGameControl::receivePromotion(std::string message) {

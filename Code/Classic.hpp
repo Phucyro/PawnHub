@@ -20,11 +20,6 @@ class Classic : public TurnBasedGame {
 		else return _player2;
 	}
 
-	Player* _getOtherPlayer() const override {
-		if(_turn%2) return _player2;
-		else return _player1;
-	}
-
 	bool _executeMove(Coordinate, Coordinate, char);
 	bool _isCheckmate(char);
 	bool _isStalemate(char);

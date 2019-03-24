@@ -14,12 +14,6 @@ class Horde: public TurnBasedGame{
 		else return _player2;
 	}
 
-	Player* _getOtherPlayer() const override {
-		if(_turn%2) return _player2;
-		else return _player1;
-	}
-	
-
 	int _calculOffset(char playerColor){return playerColor == 'w' ? 0 : 16;}
 
 	bool _executeMove(Coordinate, Coordinate, char);

@@ -20,13 +20,13 @@ run: all
 	./server
 
 client: Communication/client.o $(SOCKETS) $(GAME_CLIENT) $(LOGIN_CLIENT) $(DISPLAY_CLIENT) $(CONFIG)
-	$(CXX) -fpermissive -o $@ $^ $(CLIENT_LFLAGS)
+	$(CXX) $(FLAGS) -o $@ $^ $(CLIENT_LFLAGS)
 
 server: Communication/server.o $(SOCKETS) $(GAME_SERVER) $(LOGIN_SERVER) $(CONFIG)
-	$(CXX) -fpermissive -o $@ $^ $(SERVER_LFLAGS)
+	$(CXX) $(FLAGS) -o $@ $^ $(SERVER_LFLAGS)
 
 %.o: %.cpp %.hpp
-	$(CXX) -fpermissive -c -o $@ $<
+	$(CXX) $(FLAGS) -c -o $@ $<
 
 clean:
 	rm -f *.o Communication/*.o Display/GameDisplay/*.o Display/MenuHandler/*.o Code/*.o

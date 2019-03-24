@@ -22,6 +22,7 @@ Player& Player::operator= (Player&& original) {
 
 std::string Player::askMove(){
 	if (_premoves.empty()){
+		_recvActive = true;
 		_control->sendAskMove(getSocket());
 		char res[5];
 		read(_pipe[0], &res, sizeof(char)*4);
@@ -29,7 +30,7 @@ std::string Player::askMove(){
 		return std::string(res);
 	}
 	else {
-		std::string res = _premoves.front()->getPreMove();
+		std::string res = _premoves.front();
 		_premoves.pop();
 		return res;
 	} 
@@ -132,18 +133,19 @@ void Player::transferGoodMove() {
 	_control->sendGoodMove(getSocket());
 }
 
-void Player::receiveMove(std::string& message, bool askMove){
+void Player::receiveMove(std::string& message){
 	if (message[0] == _color){
-		if (!askMove) {
+		if (!_recvActive) {
 			if (message[1] == '/' && message[2] == 'e' && message[3] == 'n' && message[4] == 'd'){
 				this->cleanPreMove();
 				char str[5+1];				
 				std::strcpy(str, message.c_str());	
 				write(_pipe[1], &(str[1]), 4*sizeof(char));
 			}
-			else _premoves.push(PreMove(message[1:]));
+			else {message.erase(0, 1); _premoves.push(message);}
 		}
 		else{
+			_recvActive = false;
 			char str[5+1];				// 4 characters for a move, 1 for \0
 			std::strcpy(str, message.c_str());	
 			write(_pipe[1], &(str[1]), 4*sizeof(char));
@@ -183,10 +185,6 @@ void Player::writeControlPipe(std::string msg){
 
 	std::strcpy(buffer, msg.c_str());
 	write(_pipeControl[1], buffer, sizeof(buffer));
-}
-
-void Player::cleanPreMove() {
-	while (!_premoves.empty()) _premoves.pop();
 }
 
 #endif

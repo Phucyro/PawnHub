@@ -41,7 +41,7 @@ public:
   ~ServerGameControl();
 
 private:
-  void receiveMove(std::string, bool askMove);
+  void receiveMove(std::string);
   void receivePromotion(std::string);
 
 public:

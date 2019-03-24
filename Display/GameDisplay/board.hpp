@@ -48,6 +48,7 @@ public:
   void draw_infos();
   void clear_board();
   void clear_get_movement();
+  void clear_premove();
 
   // void move_piece(int, int, int, int, std::string);
 
@@ -74,6 +75,7 @@ public:
   void print_ipos(int, int);
   void ask_epos();
   void print_epos(int, int);
+  void print_premove();
   char getchar();
 
 

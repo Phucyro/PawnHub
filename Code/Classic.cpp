@@ -144,22 +144,12 @@ bool Classic::_executeMove(Coordinate start, Coordinate end, char playerColor){
 
 void Classic::_nextTurn() {
 	Player *currentPlayer = _getCurrentPlayer();
-	Player *otherPlayer = _getOtherPlayer();
 	char playerColor = currentPlayer == _player1 ? 'w':'b';
 
 	bool isMoveValid = false;
-	bool PreMoved = false;
 	std::string playerMove;
 	while(!isMoveValid){
-		if (!PreMoved && !currentPlayer->getPreMoves().empty()){
-			playerMove = currentPlayer->getPreMoves().front()->getPreMove();
-			currentPlayer->getPreMoves().pop();
-			PreMoved = true;
-		}
-		else {
-			if (PreMoved) {while (!currentPlayer->getPreMoves().empty()) currentPlayer->getPreMoves().pop();}
-			playerMove = currentPlayer->askMove();
-		}
+		playerMove = currentPlayer->askMove();
 		if (playerMove[0] == '/' && playerMove[1] == 'e' && playerMove[2] == 'n' && playerMove[3] == 'd'){
 			if(currentPlayer == _player1) _winner = _player2;
 			else _winner = _player1;
