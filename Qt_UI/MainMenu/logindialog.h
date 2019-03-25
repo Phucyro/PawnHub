@@ -4,6 +4,9 @@
 #include <QDialog>
 
 #include "passwordrepeat.h"
+#include "../../Communication/CheckFormat.hpp"
+#include "../Modified_Files/ClientFunctions.hpp"
+#include "message.h"
 
 class Socket;
 

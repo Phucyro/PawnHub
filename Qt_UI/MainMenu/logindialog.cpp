@@ -1,11 +1,6 @@
 #include "logindialog.h"
 #include "ui_logindialog.h"
 
-#include "../../Communication/CheckFormat.hpp"
-#include "../Modified_Files/ClientFunctions.hpp"
-
-#include "message.h"
-
 //#include <stdio.h>
 
 LoginDialog::LoginDialog(QWidget *parent) :

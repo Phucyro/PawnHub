@@ -5,8 +5,8 @@
 
 #include "Socket.hpp"
 
-#ifndef _CCONTROL_H_
-#define _CCONTROL_H_
+#ifndef _CGCONTROL_H_
+#define _CGCONTROL_H_
 
 class ClientGameControl {
 private:
