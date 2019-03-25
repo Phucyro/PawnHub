@@ -17,14 +17,12 @@ Player& Player::operator= (Player&& original) {
 		_realTime = original._realTime;
 		_color = original._color;
 		_premoves = original._premoves;
-		_wasPremove = original._wasPremove;
 		return *this;
 	}
 
 
 std::string Player::askMove(){
 	if (_premoves.empty()){
-		_wasPremove = false;
 		_recvActive = true;
 		_control->sendAskMove(getSocket());
 		char res[5];
@@ -35,7 +33,7 @@ std::string Player::askMove(){
 	else {
 		std::string res = _premoves.front();
 		_premoves.pop();
-		_wasPremove = true;
+		transferGoodPremove();
 		return res;
 	}
 }
@@ -134,21 +132,20 @@ void Player::transferTime(int time) {
 }
 
 void Player::transferGoodMove() {
-	if (_wasPremove){
-		_wasPremove = false;
-		_control->sendGoodPremove(getSocket());
-	}
 	_control->sendGoodMove(getSocket());
+}
+
+void Player::transferGoodPremove() {
+	_control->sendGoodPremove(getSocket());
 }
 
 void Player::receiveMove(std::string& message){
 	if (message[0] == _color){
 		if (!(_realTime || _recvActive)) {
-			if (message[1] == '/' && message[2] == 'e' && message[3] == 'n' && message[4] == 'd'){
+			if ((message[1] == '/' && message[2] == 'e' && message[3] == 'n' && message[4] == 'd') || (message[1] == '/' && message[2] == 't' && message[3] == 'i' && message[4] == 'm')){
 				this->cleanPreMove();
-				char str[5+1];				
-				std::strcpy(str, message.c_str());	
-				write(_pipe[1], &(str[1]), 4*sizeof(char));
+				message.erase(0, 1);
+				_premoves.push(message);
 			}
 			else if (message[1] == '/' && message[2] == 'd' && message[3] == 'e' && message[4] == 'l') this->cleanPreMove();
 			else {
@@ -161,7 +158,7 @@ void Player::receiveMove(std::string& message){
 			char str[5+1];				// 4 characters for a move, 1 for \0
 			std::strcpy(str, message.c_str());	
 			write(_pipe[1], &(str[1]), 4*sizeof(char));
-		}	
+		}
 	}
 }
 
@@ -197,6 +194,15 @@ void Player::writeControlPipe(std::string msg){
 
 	std::strcpy(buffer, msg.c_str());
 	write(_pipeControl[1], buffer, sizeof(buffer));
+}
+
+void Player::startGame(){
+	_inGameMutex->lock();
+}
+void Player::endGame(){
+	cleanPreMove();
+	_recvActive = false;
+	_inGameMutex->unlock();
 }
 
 #endif

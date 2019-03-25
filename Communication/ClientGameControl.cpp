@@ -118,8 +118,7 @@ void ClientGameControl::receiveAskMove(std::string message) {
 		board.show_time_left(timer);
   }
   if (!timeLeft){
-  	effective_move = "/tim";
-  	sendMove(effective_move);
+  	sendMove("/tim");
   	game_ongoing = false;
   	board.clear_get_movement();
   	board.endgame("Time out! You lost.");
@@ -146,6 +145,12 @@ void ClientGameControl::receiveGoodPremove(std::string message){
 	if (!is_real_time){
 		timer.remove(100);
 		board.show_time_left(timer);
+		if (timer.get_remaining_time()){
+			sendMove("/tim");
+  			game_ongoing = false;
+  			board.clear_get_movement();
+  			board.endgame("Time out! You lost.");
+		}
 	}
 }
 
