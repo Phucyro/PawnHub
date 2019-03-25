@@ -260,6 +260,8 @@ std::string Board::get_promotion() {
   int answer = getch();
   std::string promotion;
   promotion.append(1, answer);
+  mvprintw(18, 30, "%s", "                                         ");
+  mvprintw(19, 30, "%s", "                                           ");
   return promotion;
 }
 
@@ -317,8 +319,14 @@ void Board::print_premove(){
 	refresh_board();
 }
 
+void Board::print_your_turn(){
+	mvprintw(17, 30, "%s", "Your turn:");
+	Board::ask_ipos();
+	refresh_board();
+}
+
 void Board::clear_premove(){
-	mvprintw(17, 30, "%s", "        ");
+	mvprintw(17, 30, "%s", "          ");
 	clear_get_movement();
 	refresh_board();
 }

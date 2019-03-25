@@ -32,6 +32,7 @@ private:
    {"move", "M"},
    {"goodmove", "L"},
    {"first", "F"},
+   {"goodpremove", "D"}
   };
 
 
@@ -50,6 +51,7 @@ private:
   void receiveAskMove(std::string);
   void receiveAskPromotion(std::string);
   void receiveFirstMessage(std::string);
+  void receiveGoodPremove(std::string);
 
   void sendMove(std::string);
   void sendPromotion(std::string);
@@ -65,9 +67,9 @@ private:
     {'P', &ClientGameControl::receiveAskPromotion},
     {'L', &ClientGameControl::receiveGoodMove},
     {'F', &ClientGameControl::receiveFirstMessage},
+    {'D', &ClientGameControl::receiveGoodPremove},
   };
-  void listenSocketAndKeyboard();
-  void listenSocketAndPremove();
+  
   void handleMessage();
   void startParty();
   void cleanOldMsg();

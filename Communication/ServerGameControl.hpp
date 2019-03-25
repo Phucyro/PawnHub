@@ -29,6 +29,7 @@ private:
    {"move", "M"},
    {"promote", "P"},
    {"goodmove", "L"},
+   {"goodpremove", "D"},
    {"firstmsg", "F"},
   };
 
@@ -61,6 +62,7 @@ public:
   void sendTurn(Socket*, unsigned);
   void sendTime(Socket*, int);
   void sendGoodMove(Socket*);
+  void sendGoodPremove(Socket*);
   void sendAskMove(Socket*);
   void sendAskPromotion(Socket*);
 

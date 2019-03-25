@@ -25,8 +25,8 @@ TurnBasedGame& TurnBasedGame::operator= (TurnBasedGame&& original){
 
 
 void TurnBasedGame::_sendTime(){
-	_player1->transferTime(2700);
-	_player2->transferTime(2700);
+	_player1->transferTime(2700000);//milisecond
+	_player2->transferTime(2700000);
 }
 
 

@@ -21,8 +21,8 @@ class Timer {
     std::chrono::steady_clock::time_point pause_end;
 
     //duration
-    std::chrono::duration<double> elapsed_time;
-    std::chrono::duration<double> pause_time;
+    std::chrono::duration<double,std::milli> elapsed_time;
+    std::chrono::duration<double,std::milli> pause_time;
     
     
     int get_elapsed_time();

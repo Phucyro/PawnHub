@@ -27,13 +27,15 @@ class Player{
 	std::string _name = "Guest";
 	int _queueNumber = -1; // Numero de file inexistante
 	bool _recvActive;
+	bool _realTime;
+	bool _wasPremove;
 	char _color;
 	std::mutex *_inGameMutex;
 	std::queue<std::string> _premoves;
 
 
 	public :
-	Player(Socket* socket): _sock(socket), _control(nullptr), _pipe(nullptr), _pipeControl(nullptr), _recvActive(false), _color('\0'), _inGameMutex(nullptr), _premoves() {
+	Player(Socket* socket): _sock(socket), _control(nullptr), _pipe(nullptr), _pipeControl(nullptr), _recvActive(false), _realTime(false), _wasPremove(false), _color('\0'), _inGameMutex(nullptr), _premoves() {
 		_pipe = new int[2];
 		if ((pipe(_pipe)) == -1) throw std::runtime_error("Fail while constructing a pipe for an object of type 'Player': ");
 		
@@ -43,7 +45,7 @@ class Player{
 		_inGameMutex = new std::mutex();
 	}
 	Player(const Player&) = delete;
-	Player(Player&& original): _sock(original._sock), _control(original._control), _pipe(original._pipe), _pipeControl(original._pipeControl), _name(original._name), _recvActive(original._recvActive) {original._pipe = nullptr;}
+	Player(Player&& original): _sock(original._sock), _control(original._control), _pipe(original._pipe), _pipeControl(original._pipeControl), _name(original._name), _recvActive(original._recvActive), _realTime(false), _wasPremove(false) {original._pipe = nullptr;}
 
 	~Player(){
 		delete _sock;
@@ -75,6 +77,8 @@ class Player{
 	char getColor() const {return _color;}
 	int getReadPipe() const {return _pipe[0];}
 	void activateControlRecv();
+	void enterRealTime(){_realTime = true;}
+	void endRealTime(){_realTime = false;}
 
 	void transferFirstMsg();
 	void transferStart();

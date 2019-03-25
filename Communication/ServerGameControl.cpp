@@ -142,6 +142,15 @@ void ServerGameControl::sendGoodMove(Socket* socket) {
   }
 }
 
+void ServerGameControl::sendGoodPremove(Socket* socket) {
+  std::string header = headerSendMap["goodpremove"];
+  try{socket->sendMessage(header + "waw");}
+  catch(std::runtime_error e){
+  	std::cout<<"error in sendGoodPremove: "<<e.what()<<std::endl;
+  	_playerDisconected(socket);
+  }
+}
+
 void ServerGameControl::sendAskMove(Socket* socket) {
   std::string header = headerSendMap["askmove"];
   try{socket->sendMessage(header + "gimme");}

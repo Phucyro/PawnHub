@@ -112,7 +112,7 @@ void Timer::remove(int time)
 }
 
 int Timer::get_remaining_time()
-//in seconds
+//in milliseconds
 {
     update();
     return remaining_time;
@@ -120,12 +120,12 @@ int Timer::get_remaining_time()
 
 int Timer::get_minutes_left()
 {
-    return remaining_time / 60;
+    return remaining_time / 60000;
 }
 
 int Timer::get_seconds_left()
 {
-    return remaining_time % 60;
+    return (remaining_time/1000) % 60;
 }
 
 void Timer::reset(int time)

@@ -62,9 +62,13 @@ void RealTimeGame::_sendStart() {
 
 void RealTimeGame::start()
 {
+	_player1->enterRealTime();
+	_player2->enterRealTime();
 	this->Game::start();
 	this->_mainLoop();
 	std::cout << "Game finished" << std::endl;
+	_player1->endRealTime();
+	_player2->endRealTime();
 }
 
 void RealTimeGame::_addToQueue(Coordinate moveStart, Coordinate moveEnd, std::queue<ChainedMove*>& movesQueue){

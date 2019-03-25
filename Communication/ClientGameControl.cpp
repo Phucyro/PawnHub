@@ -91,6 +91,7 @@ void ClientGameControl::receiveAskMove(std::string message) {
 	std::string effective_move;
 	int timeLeft = timer.get_remaining_time();
 	
+	board.print_your_turn();
 	board.ask_ipos();
 	timer.start();
 	timer.unpause();
@@ -110,7 +111,7 @@ void ClientGameControl::receiveAskMove(std::string message) {
 			i++;
 			if (i == 2) board.ask_epos();
 			else if (i == 4){
-				board.clear_get_movement();
+				board.clear_premove();
 				effective_move = moveToString(move);
 			}
 		}
@@ -135,8 +136,17 @@ void ClientGameControl::receiveAskMove(std::string message) {
 }
 
 void ClientGameControl::receiveGoodMove(std::string message) {
-	timer.pause();
-	board.show_time_left(timer);
+	if (!is_real_time){
+		timer.pause();
+		board.show_time_left(timer);
+	}
+}
+
+void ClientGameControl::receiveGoodPremove(std::string message){
+	if (!is_real_time){
+		timer.remove(100);
+		board.show_time_left(timer);
+	}
 }
 
 
@@ -161,48 +171,6 @@ void ClientGameControl::receiveFirstMessage(std::string){
 }
 
 void ClientGameControl::handleMessage() {
-  //if (is_real_time) listenSocketAndKeyboard();
-  listenSocketAndPremove();
-}
-
-void ClientGameControl::listenSocketAndKeyboard(){
-	int move[4], i = 0, sockfd = socket.getFileDescriptor(), newch = STDIN_FILENO;
-	int nfd = sockfd < STDIN_FILENO ? STDIN_FILENO+1 : sockfd+1;
-	fd_set read;
-	std::string effective_move;
-	board.ask_ipos();
-	while(game_ongoing){
-		FD_ZERO(&read);
-		FD_SET(sockfd, &read);
-		FD_SET(newch, &read);
-		if (select(nfd, &read, nullptr, nullptr, nullptr) == -1) throw std::runtime_error("Select failed");
-		if (FD_ISSET(sockfd, &read)){
-			std::string message = socket.receiveMessage();
-  			char header = message[0];
-  			(this->*(headerReceiveMap[header]))(message.erase(0,1));
-		}
-		if(FD_ISSET(newch, &read)){
-			move[i] = board.getchar();
-			if (i < 2) board.print_ipos(move[i], i);
-			else board.print_epos(move[i], i%2);
-			i++;
-			if (i == 2) board.ask_epos();
-			else if (i == 4){
-				board.clear_get_movement();
-				effective_move = moveToString(move);
-				sendMove(effective_move);
-				i=0;
-				board.ask_ipos();
-				if (effective_move == "/end"){
-      					game_ongoing = false;
-      					board.endgame("You gave up.");
-    				}
-			}
-		}
-	}
-}
-
-void ClientGameControl::listenSocketAndPremove(){
 	int move[4], i = 0, sockfd = socket.getFileDescriptor(), newch = STDIN_FILENO;
 	int nfd = sockfd < STDIN_FILENO ? STDIN_FILENO+1 : sockfd+1;
 	fd_set read;
@@ -263,6 +231,6 @@ void ClientGameControl::cleanOldMsg(){
 void ClientGameControl::startParty() {
   game_ongoing = true;
   cleanOldMsg();
-  while(game_ongoing) {handleMessage();}
+  handleMessage();
   board.exit();
 }

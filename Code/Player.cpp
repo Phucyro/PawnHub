@@ -14,14 +14,17 @@ Player& Player::operator= (Player&& original) {
 		original._pipe = nullptr;
 		_name = original._name;
 		_recvActive = original._recvActive;
+		_realTime = original._realTime;
 		_color = original._color;
 		_premoves = original._premoves;
+		_wasPremove = original._wasPremove;
 		return *this;
 	}
 
 
 std::string Player::askMove(){
 	if (_premoves.empty()){
+		_wasPremove = false;
 		_recvActive = true;
 		_control->sendAskMove(getSocket());
 		char res[5];
@@ -32,8 +35,9 @@ std::string Player::askMove(){
 	else {
 		std::string res = _premoves.front();
 		_premoves.pop();
+		_wasPremove = true;
 		return res;
-	} 
+	}
 }
 
 void Player::showBoard(std::string board){
@@ -130,19 +134,27 @@ void Player::transferTime(int time) {
 }
 
 void Player::transferGoodMove() {
+	if (_wasPremove){
+		_wasPremove = false;
+		_control->sendGoodPremove(getSocket());
+	}
 	_control->sendGoodMove(getSocket());
 }
 
 void Player::receiveMove(std::string& message){
 	if (message[0] == _color){
-		if (!_recvActive) {
+		if (!(_realTime || _recvActive)) {
 			if (message[1] == '/' && message[2] == 'e' && message[3] == 'n' && message[4] == 'd'){
 				this->cleanPreMove();
 				char str[5+1];				
 				std::strcpy(str, message.c_str());	
 				write(_pipe[1], &(str[1]), 4*sizeof(char));
 			}
-			else {message.erase(0, 1); _premoves.push(message);}
+			else if (message[1] == '/' && message[2] == 'd' && message[3] == 'e' && message[4] == 'l') this->cleanPreMove();
+			else {
+				message.erase(0, 1);
+				_premoves.push(message);
+			}
 		}
 		else{
 			_recvActive = false;

@@ -76,6 +76,7 @@ public:
   void ask_epos();
   void print_epos(int, int);
   void print_premove();
+  void print_your_turn();
   char getchar();
 
 
