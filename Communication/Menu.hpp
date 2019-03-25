@@ -15,7 +15,7 @@
 
 void authentificationMenu(MenuHandler* menu, Client* client){
   std::string username, password, confirmation;
-  int format;
+  int format = -1;
 
   while (!client->isIdentified()){
     switch (format){
