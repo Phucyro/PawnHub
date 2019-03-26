@@ -203,6 +203,7 @@ void inline sendFriendRequestHandler(Player* player, PlayersMap* players_map, Da
       switch (res){
         case 3 :
           (*players_map)[name]->getSocket()->sendMessage(std::string("16~") + player->getName() + "~1"); // Ajoute ami
+          (*players_map)[name]->getSocket()->sendMessage(std::string("18~") + player->getName() + "~0"); // Retire des demandes envoyees
           break;
         case 4 :
           (*players_map)[name]->getSocket()->sendMessage(std::string("17~") + player->getName() + "~1"); // Ajoute demande recue
