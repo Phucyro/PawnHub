@@ -1,5 +1,10 @@
 #include "logindialog.h"
 #include "ui_logindialog.h"
+#include "message.h"
+
+#include "../../Communication/Socket.hpp"
+#include "../Modified_Files/CheckFormat.hpp"
+#include "../Modified_Files/ClientFunctions.hpp"
 
 //#include <stdio.h>
 

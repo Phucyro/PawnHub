@@ -93,10 +93,10 @@ GameWithoutChat::~GameWithoutChat()
     delete ui;
 }
 
-void GameWithoutChat::start()
-{
+//void GameWithoutChat::start()
+//{
 
-}
+//}
 
 void GameWithoutChat::setPiece(QIcon pieceIcon, QString piecePosition, QString pieceName) {
     coordinateConversionMap->value(piecePosition)->setIcon(pieceIcon);
