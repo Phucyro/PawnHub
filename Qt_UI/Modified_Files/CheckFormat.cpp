@@ -30,17 +30,13 @@ bool checkInputFormat(std::string message){
   return true;
 }
 
-bool checkFriendInputFormat(std::vector<std::string> input){
+bool checkFriendInputFormat(std::string input){
   bool correct = true;
-  if (input.size() <= 1){
-//    menu->print_warning("Commande invalide");
-    correct = false;
-  }
-  else if (input[1].length() > 10){
+  if (input.size() > 10){
 //    menu->print_warning("La taille des noms est limitée à 10 caractères");
     correct = false;
   }
-  else if (!checkInputFormat(input[1])){
+  else if (!checkInputFormat(input)){
 //    menu->print_warning("Les caractères | et ~ sont interdits");
     correct = false;
   }
