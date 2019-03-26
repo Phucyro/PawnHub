@@ -12,6 +12,7 @@ FriendTab::FriendTab(Client* clients, QWidget *parent) :
     client(clients)
 {
     ui->setupUi(this);
+    on_updatePushButton_clicked();
 }
 
 FriendTab::~FriendTab()
@@ -21,10 +22,13 @@ FriendTab::~FriendTab()
 
 void FriendTab::on_removePushButton_pressed()
 {
-    QListWidgetItem *it = ui->outgoingListWidget->takeItem(ui->outgoingListWidget->currentRow());
-    removeFriend(client->getSocket(), it->text().toStdString());
-    client->removeFriend(it->text().toStdString());
-    delete it;
+    QListWidgetItem *it = ui->friendListWidget->takeItem(ui->friendListWidget->currentRow());
+    if (it){
+        removeFriend(client->getSocket(), it->text().toStdString());
+        client->removeFriend(it->text().toStdString());
+        client->readPipe();
+        delete it;
+    }
 }
 
 void FriendTab::on_addPushButton_pressed()
@@ -56,32 +60,42 @@ void FriendTab::on_addPushButton_pressed()
 void FriendTab::on_cancelPushButton_pressed()
 {
     QListWidgetItem *it = ui->outgoingListWidget->takeItem(ui->outgoingListWidget->currentRow());
-    cancelRequest(client->getSocket(), it->text().toStdString());
-    client->removeSentRequest(it->text().toStdString());
+    if (it){
+        cancelRequest(client->getSocket(), it->text().toStdString());
+        client->removeSentRequest(it->text().toStdString());
+        client->readPipe();
+    }
     delete it;
 }
 
 void FriendTab::on_acceptPushButton_pressed()
 {
     QListWidgetItem *it = ui->incomingListWidget->takeItem(ui->incomingListWidget->currentRow());
-    acceptRefuseRequest(client->getSocket(), it->text().toStdString(),"1");
-    std::string feedback = client->readPipe();
-    if(feedback[0] != '2'){
-        popup("Error", QString::fromStdString(feedback.erase(0,1)));
-    }
-    else {
-        ui->friendListWidget->addItem(it);
-        delete it;
+    if (it){
+        acceptRefuseRequest(client->getSocket(), it->text().toStdString(),"1");
+        std::string feedback = client->readPipe();
+        if(feedback[0] != '2') {
+            popup("Error", QString::fromStdString(feedback.erase(0,1)));
+            delete it;
+        }
+        else {
+            client->removeRecvRequest(it->text().toStdString());
+            client->addFriend(it->text().toStdString());
+            ui->friendListWidget->addItem(it);
+        }
     }
 }
 
 void FriendTab::on_denyPushButton_pressed()
 {
     QListWidgetItem *it = ui->incomingListWidget->takeItem(ui->incomingListWidget->currentRow());
-    acceptRefuseRequest(client->getSocket(), it->text().toStdString(),"0");
-    std::string feedback = client->readPipe();
-    if(feedback[0] != '3') popup("Error", QString::fromStdString(feedback.erase(0,1)));
-    delete it;
+    if (it){
+        acceptRefuseRequest(client->getSocket(), it->text().toStdString(),"0");
+        client->removeRecvRequest(it->text().toStdString());
+        std::string feedback = client->readPipe();
+        if(feedback[0] != '3') popup("Error", QString::fromStdString(feedback.erase(0,1)));
+        delete it;
+    }
 }
 
 

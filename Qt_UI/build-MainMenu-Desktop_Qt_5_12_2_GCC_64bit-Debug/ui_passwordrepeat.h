@@ -61,6 +61,7 @@ public:
 
         passwordInput = new QLineEdit(PasswordRepeat);
         passwordInput->setObjectName(QString::fromUtf8("passwordInput"));
+        passwordInput->setEchoMode(QLineEdit::Password);
 
         verticalLayout->addWidget(passwordInput);
 
