@@ -1,7 +1,9 @@
 #include "gameWithoutChat.h"
 #include "ui_gameWithoutChat.h"
 
-#include <iostream>
+#include "../Modified_Files/ClientGameControl.hpp"
+
+//#include <iostream>
 
 GameWithoutChat::GameWithoutChat(QWidget *parent, Socket* socket_) :
     QDialog(parent),
@@ -93,15 +95,30 @@ GameWithoutChat::~GameWithoutChat()
     delete ui;
 }
 
-//void GameWithoutChat::start()
-//{
+void GameWithoutChat::start()
+{
+    ClientGameControl control(socket, this);
+}
 
-//}
+void GameWithoutChat::set_colour(QString colour)
+{
+    ui->chgColourLabel->setText(colour);
+}
 
-void GameWithoutChat::setPiece(QIcon pieceIcon, QString piecePosition, QString pieceName) {
+void GameWithoutChat::set_turn(QString turn)
+{
+    ui->chgTurnLabel->setText(turn);
+}
+
+void GameWithoutChat::set_piece(QIcon pieceIcon, QString piecePosition, QString pieceName) {
     coordinateConversionMap->value(piecePosition)->setIcon(pieceIcon);
     coordinateConversionMap->value(piecePosition)->setEnabled(true);
     coordinateConversionMap->value(piecePosition)->setToolTip(pieceName);
+}
+
+void GameWithoutChat::show_update(QString message)
+{
+    ui->chgUpdateLabel->setText(message);
 }
 
 void GameWithoutChat::on_button_pushed(QPushButton* origin)

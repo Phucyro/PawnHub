@@ -45,7 +45,7 @@ void stringToBoard(GameWithoutChat* game, std::string message) {
     currentPieceName = pieceMap[a];
     currentPieceIcon = piece_icon_fetcher(currentPieceName, colour);
     currentPosition = message[a+1] + message[a+2];
-    game->setPiece(currentPieceIcon, currentPosition, QString::fromStdString(currentPieceName));
+    game->set_piece(currentPieceIcon, currentPosition, QString::fromStdString(currentPieceName));
     a += CHAR_NUM;
   }
   a += 1;
@@ -54,7 +54,7 @@ void stringToBoard(GameWithoutChat* game, std::string message) {
     currentPieceName = pieceMap[a];
     currentPieceIcon = piece_icon_fetcher(currentPieceName, colour);
     currentPosition = message[a+1] + message[a+2];
-    game->setPiece(currentPieceIcon, currentPosition, QString::fromStdString(currentPieceName));
+    game->set_piece(currentPieceIcon, currentPosition, QString::fromStdString(currentPieceName));
     a += CHAR_NUM;
   }
 }

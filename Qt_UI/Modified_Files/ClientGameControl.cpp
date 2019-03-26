@@ -1,11 +1,23 @@
-#include <sys/select.h>
-#include <unistd.h>
 #include "ClientGameControl.hpp"
+#include "BoardParsing.hpp"
+
+#include "../MainMenu/gameWithoutChat.h"
+#include "../MainMenu/gameWithoutChatWithAlice.h"
 
 std::string moveToString(int*);
 
-ClientGameControl::ClientGameControl(Socket& _socket): socket(_socket), game_ongoing(true), is_alice(false), is_real_time(false), _color('\0') {
+ClientGameControl::ClientGameControl(Socket* _socket, GameWithoutChat* _game): socket(_socket), game(_game), game_ongoing(true), is_alice(false), is_real_time(false), colour('\0') {
 //  startParty();
+}
+
+ClientGameControl::ClientGameControl(Socket* _socket, GameWithoutChatWithAlice* _game): socket(_socket), alice_game(_game), game_ongoing(true), is_alice(true), is_real_time(false), colour('\0') {
+//  startParty();
+}
+
+ClientGameControl::~ClientGameControl()
+{
+    game = nullptr;
+    socket = nullptr;
 }
 
 void ClientGameControl::receiveBoard(std::string message) {
@@ -14,7 +26,7 @@ void ClientGameControl::receiveBoard(std::string message) {
 //    board.refresh_board();
   }
   else if (message[0] == '1') {
-//    board.draw_pieces(message.erase(0,1));
+    stringToBoard(game, message.erase(0,1));
   }
   else {
 //    board.draw_alice_pieces(message.erase(0,1));
@@ -24,33 +36,32 @@ void ClientGameControl::receiveBoard(std::string message) {
 
 void ClientGameControl::receiveUpdate(std::string message) {
   if (message == "start") {
-//    board.init_ncurses();
-  }
+    game->show_update("Game has started.");
+   }
   else if (message == "alice") {
-    is_alice = true;
 //    board.draw_alice_board();
   }
   else if (message == "realtime") {
     is_real_time = true;
   }
   else if (message == "check") {
-//    board.declare_check();
+    game->show_update("Check: protect your king!");
   }
   else {
     game_ongoing = false;
     if (message == "stalemate") {
-      message = "Stalemate !";
+      message = "Stalemate!";
     }
     else if (message == "surrend") {
-      message = "You win: your oppenent gave up !";
+      message = "You win: your oppenent gave up!";
     }
     else if (message == "white"){
-      message = "Checkmate: white player won !";
+      message = "Checkmate: white player won!";
     }
     else {
-      message = "Checkmate: black player won !";
+      message = "Checkmate: black player won!";
     }
-//    board.endgame(message.c_str());
+    game->show_update(QString::fromStdString(message));
   }
 }
 
@@ -60,14 +71,12 @@ void ClientGameControl::receiveGameMode(std::string message) {
 }
 
 void ClientGameControl::receivePlayerColour(std::string message) {
-  _color = message[0];
-//  board.set_colour(message);
-//  board.refresh_board();
+  colour = message[0];
+  game->set_colour(QString::fromStdString(message));
 }
 
 void ClientGameControl::receiveTurn(std::string message) {
-  const char* msg = message.c_str();
-//  board.update_turn(msg);
+  game->set_turn(QString::fromStdString(message));
 }
 
 void ClientGameControl::receiveAskMove(std::string message) {
@@ -90,18 +99,18 @@ void ClientGameControl::receiveAskPromotion(std::string message) {
 
 void ClientGameControl::sendMove(std::string move) {
   std::string header = headerSendMap["move"];
-  socket.sendMessage("30~" + header + _color + move);
+  socket->sendMessage("30~" + header + colour + move);
 }
 
 void ClientGameControl::sendPromotion(std::string promotion) {
   std::string header = headerSendMap["promote"];
-  socket.sendMessage("30~" + header + promotion);
+  socket->sendMessage("30~" + header + promotion);
 }
 
 void ClientGameControl::handleMessage() {
 //  if (is_real_time) listenSocketAndKeyboard();
 //  else{
-    std::string message = socket.receiveMessage();
+    std::string message = socket->receiveMessage();
     char header = message[0];
     (this->*(headerReceiveMap[header]))(message.erase(0,1));
 //  }

@@ -5,16 +5,21 @@
 
 #include "../../Communication/Socket.hpp"
 
+#include "../MainMenu/gameWithoutChat.h"
+#include "../MainMenu/gameWithoutChatWithAlice.h"
+
 #ifndef CCONTROL_H
 #define CCONTROL_H
 
 class ClientGameControl {
 private:
-  Socket& socket;
+  Socket* socket;
+  GameWithoutChat* game;
+  GameWithoutChatWithAlice* alice_game;
   bool game_ongoing;
   bool is_alice;
   bool is_real_time;
-  char _color;
+  char colour;
 
   std::map<std::string, std::string> headerSendMap = {
    {"board", "B"},
@@ -30,7 +35,9 @@ private:
 
 
 public:
-  ClientGameControl(Socket&);
+  ClientGameControl(Socket*, GameWithoutChat*);
+  ClientGameControl(Socket*, GameWithoutChatWithAlice*);
+  ~ClientGameControl();
 
 private:
   void receiveBoard(std::string);

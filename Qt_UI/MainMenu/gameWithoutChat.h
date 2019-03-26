@@ -17,7 +17,11 @@ public:
     explicit GameWithoutChat(QWidget *parent = nullptr, Socket* socket_=nullptr);
     ~GameWithoutChat();
 
-    void setPiece(QIcon, QString, QString);
+    void start();
+    void set_colour(QString);
+    void set_turn(QString);
+    void set_piece(QIcon, QString, QString);
+    void show_update(QString);
 
 private slots:
     void on_surrendButton_pressed();

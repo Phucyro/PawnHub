@@ -188,8 +188,8 @@
     <rect>
      <x>1050</x>
      <y>80</y>
-     <width>101</width>
-     <height>401</height>
+     <width>114</width>
+     <height>101</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -318,6 +318,22 @@
      <horstretch>0</horstretch>
      <verstretch>0</verstretch>
     </sizepolicy>
+   </property>
+  </widget>
+  <widget class="QLabel" name="chgUpdateLabel">
+   <property name="geometry">
+    <rect>
+     <x>1060</x>
+     <y>240</y>
+     <width>101</width>
+     <height>61</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
    </property>
   </widget>
  </widget>

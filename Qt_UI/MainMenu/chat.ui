@@ -126,6 +126,13 @@
    </property>
   </widget>
  </widget>
+ <tabstops>
+  <tabstop>inputLineEdit</tabstop>
+  <tabstop>sendPushButton</tabstop>
+  <tabstop>changeChanPushButton</tabstop>
+  <tabstop>friendListWidget</tabstop>
+  <tabstop>quitPushButton</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>
