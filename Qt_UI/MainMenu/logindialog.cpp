@@ -85,6 +85,8 @@ void LoginDialog::on_loginButton_clicked()
 
 void LoginDialog::on_signupButton_clicked()
 {
+    *username = ui->usernameInput->text();
+    *password = ui->passwordInput->text();
     QString pwdConfirmation = pwd_repeat->get_confirmation();
     if (acceptable_format(pwdConfirmation))
     {
