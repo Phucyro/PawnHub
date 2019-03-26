@@ -41,7 +41,12 @@ void FriendTab::on_addPushButton_pressed()
         else{
             sendFriendRequest(client->getSocket(), ui->inputLineEdit->text().toStdString());
             std::string feedback = client->readPipe();
-            if(feedback[0] != '4'){
+            if(feedback[0] == '3'){
+                client->addFriend(ui->inputLineEdit->text().toStdString());
+                client->removeRecvRequest(ui->inputLineEdit->text().toStdString());
+                ui->friendListWidget->addItem(ui->inputLineEdit->text());
+            }
+            else if(feedback[0] != '4'){
                 popup("Error", QString::fromStdString(feedback.erase(0,1)));
             }
             else {
