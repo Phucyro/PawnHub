@@ -3,7 +3,7 @@
 #include <map>
 #include <functional>
 
-#include "Socket.hpp"
+#include "../../Communication/Socket.hpp"
 
 #ifndef CCONTROL_H
 #define CCONTROL_H

@@ -2,12 +2,10 @@
 #define Chat_H
 
 #include <QDialog>
-//#include "../../Communication/Client.hpp"
-//#include "../../Communication/CheckFormat.hpp"
-//#include "../../Communication/Socket.hpp"
-//#include "../../Communication/ClientFunctions.hpp"
 #include "message.h"
 #include <string>
+#include "../Modified_Files/ClientFunctions.hpp"
+#include "../Modified_Files/CheckFormat.hpp"
 
 class Client;
 
