@@ -33,32 +33,50 @@ void FriendTab::on_removePushButton_pressed()
 
 void FriendTab::on_addPushButton_pressed()
 {
-    if(ui->inputLineEdit->text() != "" && ui->inputLineEdit->text() != "Guest"){
-        if(!checkFriendInputFormat(ui->inputLineEdit->text().toStdString())){
-            popup("Invalid Name", "A name must have between 1 and 10 characters and they must be digits or letters.");
-            ui->addPushButton->setDown(false);
-        }
-        else{
-            sendFriendRequest(client->getSocket(), ui->inputLineEdit->text().toStdString());
-            std::string feedback = client->readPipe();
-            if(feedback[0] == '3'){
+    if(ui->inputLineEdit->text() == "" || ui->inputLineEdit->text() == "Guest" || ui->inputLineEdit->text() == "all"){
+        popup("Empty Field Or Wrong Name", "Please input at least something (not Guest or all) and not just empty space.");
+        ui->addPushButton->setDown(false);
+        ui->inputLineEdit->clear();
+        return;
+    }
+
+    if(!checkFriendInputFormat(ui->inputLineEdit->text().toStdString())){
+        popup("Invalid Name", "A name must have between 1 and 10 characters and they must be digits or letters.");
+        ui->addPushButton->setDown(false);
+    }
+    else if (client->isFriendWith(ui->inputLineEdit->text().toStdString())){
+        popup("Already Friends", "You are already friends.");
+        ui->addPushButton->setDown(false);
+    }
+    else if (client->hasSentTo(ui->inputLineEdit->text().toStdString())){
+        popup("Already Sent", "You already have sent a request to this player.");
+        ui->addPushButton->setDown(false);
+    }
+    else if (client->getName() == ui->inputLineEdit->text().toStdString()){
+        popup("Alone", "You can not send a request to youself.");
+        ui->addPushButton->setDown(false);
+    }
+    else {
+        sendFriendRequest(client->getSocket(), ui->inputLineEdit->text().toStdString());
+        std::string feedback = client->readPipe();
+
+        switch (feedback[0]){
+            case '0' :
+                popup("Not Found", QString::fromStdString(feedback.erase(0,1)));
+                break;
+            case '3' :
+                popup("Match", QString::fromStdString(feedback.erase(0,1)));
                 client->addFriend(ui->inputLineEdit->text().toStdString());
                 client->removeRecvRequest(ui->inputLineEdit->text().toStdString());
                 ui->friendListWidget->addItem(ui->inputLineEdit->text());
-            }
-            else if(feedback[0] != '4'){
-                popup("Error", QString::fromStdString(feedback.erase(0,1)));
-            }
-            else {
+                break;
+            case '4' :
                 ui->outgoingListWidget->addItem(ui->inputLineEdit->text());
                 client->addSentRequest(ui->inputLineEdit->text().toStdString());
-            }
-       }
+                break;
+        }
     }
-    else{
-        popup("Oh No: Empty Field or Guest Detected", "Please input at least something(not Guest) and not just empty space..");
-        ui->addPushButton->setDown(false);
-    }
+
     ui->inputLineEdit->clear();
 }
 
