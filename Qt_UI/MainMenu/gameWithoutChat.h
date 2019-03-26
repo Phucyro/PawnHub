@@ -23,6 +23,8 @@ public:
     void set_piece(QIcon, QString, QString);
     void show_update(QString);
 
+    QString get_promotion();
+
 private slots:
     void on_surrendButton_pressed();
 

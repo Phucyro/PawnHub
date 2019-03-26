@@ -121,6 +121,13 @@ void GameWithoutChat::show_update(QString message)
     ui->chgUpdateLabel->setText(message);
 }
 
+QString GameWithoutChat::get_promotion()
+{
+    QString promotion;
+//    Message
+    return promotion;
+}
+
 void GameWithoutChat::on_button_pushed(QPushButton* origin)
 {
     if (move != "")

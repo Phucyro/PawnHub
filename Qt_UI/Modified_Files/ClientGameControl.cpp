@@ -93,8 +93,8 @@ void ClientGameControl::receiveAskMove(std::string message) {
 
 
 void ClientGameControl::receiveAskPromotion(std::string message) {
-//  std::string promotion = board.get_promotion();
-//  sendPromotion(promotion);
+    QString promotion = game->get_promotion();
+    sendPromotion(promotion.toStdString());
 }
 
 void ClientGameControl::sendMove(std::string move) {

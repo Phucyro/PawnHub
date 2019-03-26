@@ -67,6 +67,7 @@ void MainMenu::client_login() {
     delete login;
 
     client->setName(username.toStdString());
+    initClientData(client);
 }
 
 void MainMenu::on_playButton_clicked()
