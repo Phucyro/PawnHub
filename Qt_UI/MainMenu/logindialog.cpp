@@ -6,6 +6,11 @@
 #include "../Modified_Files/CheckFormat.hpp"
 #include "../Modified_Files/ClientFunctions.hpp"
 
+#include "../../Communication/CheckFormat.hpp"
+#include "../Modified_Files/ClientFunctions.hpp"
+
+#include "message.h"
+
 //#include <stdio.h>
 
 LoginDialog::LoginDialog(QWidget *parent) :
