@@ -3,9 +3,10 @@
 
 #include <iostream>
 
-GameWithoutChat::GameWithoutChat(QWidget *parent) :
+GameWithoutChat::GameWithoutChat(QWidget *parent, Socket* socket_) :
     QDialog(parent),
     ui(new Ui::GameWithoutChat),
+    socket(socket_),
     move("")
 {
     ui->setupUi(this);
@@ -90,6 +91,11 @@ GameWithoutChat::~GameWithoutChat()
 {
     coordinateConversionMap = nullptr;
     delete ui;
+}
+
+void GameWithoutChat::start()
+{
+
 }
 
 void GameWithoutChat::setPiece(QIcon pieceIcon, QString piecePosition, QString pieceName) {

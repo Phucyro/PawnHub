@@ -8,74 +8,74 @@
 typedef std::vector<std::tuple<std::string, std::string>> Conversation;
 
 
-void signUp(Socket* socket, std::string username, std::string pswd){
+inline void signUp(Socket* socket, std::string username, std::string pswd){
   socket->sendMessage(std::string("1") + "~" + username + "~" + pswd);
 }
 
-void signIn(Socket* socket, std::string username, std::string pswd){
+inline void signIn(Socket* socket, std::string username, std::string pswd){
   socket->sendMessage(std::string("2") + "~" + username + "~" + pswd);
 }
 
-void chat(Socket *socket, std::string target, std::string text){
+inline void chat(Socket *socket, std::string target, std::string text){
   socket->sendMessage(std::string("3") + "~" + target + "~" + text);
 }
 
-void playGame(Socket* socket, std::string game_mode){
+inline void playGame(Socket* socket, std::string game_mode){
   socket->sendMessage(std::string("4") + "~" + game_mode);
 }
 
-void leaveQueue(Socket* socket){
+inline void leaveQueue(Socket* socket){
   socket->sendMessage("5~leaveQueue");
 }
 
-void checkMyStat(Socket* socket){
+inline void checkMyStat(Socket* socket){
   socket->sendMessage("7~myStat");
 }
 
-void viewLadder(Socket* socket, std::string mode){
+inline void viewLadder(Socket* socket, std::string mode){
   socket->sendMessage(std::string("8~") + mode);
 }
 
-void viewFriendsList(Socket* socket){
+inline void viewFriendsList(Socket* socket){
   socket->sendMessage("9~viewFriends");
 }
 
-void viewTheirfriendRequest(Socket* socket){
+inline void viewTheirfriendRequest(Socket* socket){
   socket->sendMessage("10~viewRequest");
 }
 
-void acceptRefuseRequest(Socket* socket, std::string name, std::string option){
+inline void acceptRefuseRequest(Socket* socket, std::string name, std::string option){
   socket->sendMessage(std::string("11~") + name + "~" + option);
 }
 
-void sendFriendRequest(Socket* socket, std::string name){
+inline void sendFriendRequest(Socket* socket, std::string name){
   socket->sendMessage(std::string("12~") + name);
 }
 
-void removeFriend(Socket* socket, std::string name){
+inline void removeFriend(Socket* socket, std::string name){
   socket->sendMessage(std::string("13~") + name);
 }
 
-void viewSentRequest(Socket* socket){
+inline void viewSentRequest(Socket* socket){
   socket->sendMessage("14~viewSentRequest");
 }
 
-void cancelRequest(Socket* socket, std::string name){
+inline void cancelRequest(Socket* socket, std::string name){
   socket->sendMessage(std::string("15~") + name);
 }
 
-void initClientData(Client* client){
+inline void initClientData(Client* client){
   viewFriendsList(client->getSocket()); // Charge liste d'amis
   viewTheirfriendRequest(client->getSocket()); // Charge liste demandes recues
   viewSentRequest(client->getSocket()); // Charge liste demandes envoyees
 }
 
-void quit(Client* client){
+inline void quit(Client* client){
   client->getSocket()->sendMessage("0~Quit");
 //  menu->end_windows();
 }
 
-void displayChat(Client* client, std::string target){
+inline void displayChat(Client* client, std::string target){
   Conversation conv = client->getConversation(target);
 
 //  menu->init_chatw();

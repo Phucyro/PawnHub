@@ -1,6 +1,7 @@
 #include "../../Communication/Socket.hpp"
 #include "../../Communication/Client.hpp"
 #include "../Modified_Files/ClientMessageHandler.hpp"
+#include "../Modified_Files/ClientFunctions.hpp"
 
 #include "mainmenu.h"
 #include "ui_mainmenu.h"
@@ -25,13 +26,14 @@ MainMenu::MainMenu(QWidget *parent) :
 {
     ui->setupUi(this);
     client_connect();
-    msgThread = std::thread(receiveMessageHandler, client);
+    msgThread = new std::thread(receiveMessageHandler, client);
     client_login();
 }
 
 MainMenu::~MainMenu()
 {
-    msgThread.join();
+    msgThread->join();
+    delete msgThread;
     delete client;
     delete ui;
 }
@@ -69,11 +71,17 @@ void MainMenu::client_login() {
 
 void MainMenu::on_playButton_clicked()
 {
-    GameChoice* choice = new GameChoice;
+    GameChoice* choice = new GameChoice(nullptr, client, msgThread);
     this->hide();
     choice->exec();
-    this->show();
     delete choice;
+
+    if (msgThread == nullptr)
+    {
+        msgThread = new std::thread(receiveMessageHandler, client);
+    }
+
+    this->show();
 }
 
 void MainMenu::on_statsButton_clicked()
@@ -119,6 +127,7 @@ void MainMenu::on_quitButton_clicked()
 
 void MainMenu::closeEvent()
 {
+    quit(client);
     exit(0);
 }
 

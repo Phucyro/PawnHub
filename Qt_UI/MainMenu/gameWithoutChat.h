@@ -3,6 +3,8 @@
 
 #include <QDialog>
 
+class Socket;
+
 namespace Ui {
 class GameWithoutChat;
 }
@@ -12,7 +14,7 @@ class GameWithoutChat : public QDialog
     Q_OBJECT
 
 public:
-    explicit GameWithoutChat(QWidget *parent = nullptr);
+    explicit GameWithoutChat(QWidget *parent = nullptr, Socket* socket_=nullptr);
     ~GameWithoutChat();
 
     void setPiece(QIcon, QString, QString);
@@ -94,6 +96,7 @@ private slots:
 
 private:
     Ui::GameWithoutChat *ui;
+    Socket *socket;
     QMap<QString, QPushButton*> *coordinateConversionMap;
     QString move;
 

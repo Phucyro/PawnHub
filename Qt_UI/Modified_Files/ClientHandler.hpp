@@ -52,7 +52,7 @@ void chatHandler(Client* client, std::string sender, std::string target, std::st
 void playGameHandler(Client* client){
 //  menu->clear_windows();
 //  menu->end_windows();
-  //std::cout << "Vous avez rejoint une file d'attente" << std::endl;
+//  std::cout << "Vous avez rejoint une file d'attente" << std::endl;
 //  ClientGameControl control(*(client->getSocket()));
   client->writePipe("EndGame");
 }

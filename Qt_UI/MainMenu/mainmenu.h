@@ -30,8 +30,8 @@ private slots:
 
 private:
     Ui::MainMenu *ui;
-    Client* client;
-    std::thread msgThread;
+    Client *client;
+    std::thread *msgThread;
 
     void client_connect();
     void client_login();
