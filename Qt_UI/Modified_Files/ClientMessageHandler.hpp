@@ -10,8 +10,9 @@
 
 class Socket;
 class Client;
+class Chat;
 
-void receiveMessageHandler(Client* client){
+void receiveMessageHandler(Client* client,Chat *chat){
   std::vector<std::string> msg;
   bool in_game = false;
 
@@ -33,7 +34,7 @@ void receiveMessageHandler(Client* client){
         signInHandler(client, msg[1][0]);
         break;
       case 3 : // [3] [sender] [target] [text]
-        chatHandler(client, msg[1], msg[2], msg[3]);
+        chatHandler(client, msg[1], msg[2], msg[3],chat);
         break;
       case 4 :
 //        playGameHandler(client);

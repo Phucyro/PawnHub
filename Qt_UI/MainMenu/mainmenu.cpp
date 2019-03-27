@@ -9,8 +9,7 @@
 #include "logindialog.h"
 #include "gameChoice.h"
 #include "gameRules.h"
-#include "gameChoiceStatistics.h"
-#include "statisticsTab.h"
+#include "statisticsChoice.h"
 #include "friendTab.h"
 #include "chat.h"
 
@@ -22,11 +21,12 @@
 MainMenu::MainMenu(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::MainMenu),
-    client(new Client(new Socket))
+    client(new Client(new Socket)),
+    chat(new Chat (client))
 {
     ui->setupUi(this);
     client_connect();
-    msgThread = new std::thread(receiveMessageHandler, client);
+    msgThread = new std::thread(receiveMessageHandler, client,chat);
     client_login();
 }
 
@@ -79,7 +79,7 @@ void MainMenu::on_playButton_clicked()
 
     if (msgThread == nullptr)
     {
-        msgThread = new std::thread(receiveMessageHandler, client);
+        msgThread = new std::thread(receiveMessageHandler, client,chat);
     }
 
     this->show();
@@ -87,7 +87,7 @@ void MainMenu::on_playButton_clicked()
 
 void MainMenu::on_statsButton_clicked()
 {
-    GameChoiceStatistics* stats = new GameChoiceStatistics;
+    StatisticsChoice* stats = new StatisticsChoice(client);
     this->hide();
     stats->exec();
     this->show();

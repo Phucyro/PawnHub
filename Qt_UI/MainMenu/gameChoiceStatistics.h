@@ -2,6 +2,7 @@
 #define GAMECHOICESTATISTICS_H
 
 #include <QDialog>
+#include "../../Communication/Client.hpp"
 
 namespace Ui {
 class GameChoiceStatistics;
@@ -12,11 +13,15 @@ class GameChoiceStatistics : public QDialog
     Q_OBJECT
 
 public:
-    explicit GameChoiceStatistics(QWidget *parent = nullptr);
+    explicit GameChoiceStatistics(int,Client*,QWidget *parent = nullptr);
     ~GameChoiceStatistics();
 
 private:
     Ui::GameChoiceStatistics *ui;
+    int type;
+    Client *client;
+
+
 private slots:
     void on_classicPushButton_pressed();
 

@@ -4,6 +4,7 @@
 #include <string>
 #include "../../Communication/Socket.hpp"
 #include "../../Communication/Client.hpp"
+#include "chat.h"
 
 typedef std::vector<std::tuple<std::string, std::string>> Conversation;
 
@@ -75,24 +76,8 @@ inline void quit(Client* client){
 //  menu->end_windows();
 }
 
-inline void displayChat(Client* client, std::string target){
+inline void displayChat(Client* client, std::string target,Chat *chat){
   Conversation conv = client->getConversation(target);
-
-//  menu->init_chatw();
-
-  // Rempli le chat avec la conversation
-  for (unsigned int a = 0; a < conv.size(); ++a)
-  {
-//    menu->update_chatw(a, std::get<0>(conv[a]), std::get<1>(conv[a]));
-  }
-
-  // Comble avec des lignes vides
-  for (unsigned int a = 0; a < 30-conv.size(); ++a)
-  {
-//    menu->update_chatw(a,"","");
-  }
-
-//  menu->refresh_board();
+  chat->displayChat(client,client->getIsChattingWith());
 }
-
 #endif

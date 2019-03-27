@@ -107,7 +107,7 @@ void GameWithoutChat::set_colour(QString colour)
 
 void GameWithoutChat::set_turn(QString turn)
 {
-    ui->chgTurnLabel->setText(turn);
+    //ui->chgTurnLabel->setText(turn);
 }
 
 void GameWithoutChat::set_piece(QIcon pieceIcon, QString piecePosition, QString pieceName) {
@@ -118,7 +118,7 @@ void GameWithoutChat::set_piece(QIcon pieceIcon, QString piecePosition, QString 
 
 void GameWithoutChat::show_update(QString message)
 {
-    ui->chgUpdateLabel->setText(message);
+    //ui->chgUpdateLabel->setText(message);
 }
 
 QString GameWithoutChat::get_promotion()

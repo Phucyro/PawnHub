@@ -22,6 +22,8 @@ class Chat : public QDialog
 public:
     explicit Chat(Client *clients, QWidget *parent = nullptr);
     ~Chat();
+    void displayChat(Client *client, std::string target);
+
 
 private slots:
     void on_inputLineEdit_returnPressed();
@@ -32,7 +34,6 @@ private slots:
 
     void on_changeChanPushButton_pressed();
     void setupChat();
-    void displayChat(std::string target);
 
 
 private:

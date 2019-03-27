@@ -12,6 +12,7 @@ Chat::Chat(Client *clients,QWidget *parent) :
     client(clients)
 {
     ui->setupUi(this);
+    setupChat();
 }
 
 Chat::~Chat()
@@ -21,11 +22,16 @@ Chat::~Chat()
 
 void Chat::setupChat(){
     ui->chgChangeChannellabel->setText(QString::fromStdString(client->getIsChattingWith()));
+    ui->friendListWidget->clear();
     client->setIsChatting(true);
-    displayChat(client->getIsChattingWith());
+    displayChat(client,client->getIsChattingWith());
+    for ( std::vector<std::string>::iterator it=client->getFriends().begin(); it!=client->getFriends().end(); ++it){
+        std::cout << *it <<"\n";
+        ui->friendListWidget->addItem(QString::fromStdString(*it));
+    }
 }
 
-void Chat::displayChat(std::string target){
+void Chat::displayChat(Client *client, std::string target){
     Conversation conv = client->getConversation(target);
 
     ui->chatPlainTextEdit->clear(); //clears chat box
@@ -52,6 +58,7 @@ void Chat::on_sendPushButton_pressed()
 
     ui->chatPlainTextEdit->appendPlainText(ui->inputLineEdit->text());
     ui->inputLineEdit->clear();
+    displayChat(client,client->getIsChattingWith());
 }
 
 void Chat::on_inputLineEdit_returnPressed()
@@ -67,6 +74,7 @@ void Chat::on_inputLineEdit_returnPressed()
 
     ui->chatPlainTextEdit->appendPlainText(ui->inputLineEdit->text());
     ui->inputLineEdit->clear();
+    displayChat(client,client->getIsChattingWith());
 }
 
 void Chat::on_quitPushButton_pressed()
@@ -99,7 +107,7 @@ void Chat::on_changeChanPushButton_pressed()
                  m->popup();
     }else{
         client->setIsChattingWith(ui->friendListWidget->currentItem()->text().toStdString());
-        displayChat(ui->friendListWidget->currentItem()->text().toStdString());
+        displayChat(client,ui->friendListWidget->currentItem()->text().toStdString());
         ui->chatPlainTextEdit->clear();
     }
 }
