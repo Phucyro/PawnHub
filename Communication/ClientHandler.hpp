@@ -142,6 +142,7 @@ void updateFriendsListHandler(Client* client, std::string friend_name, std::stri
     client->removeFriend(friend_name);
   }
   else if (option == "1"){ // Ajoute l'ami
+    client->removeSentRequest(friend_name);
     client->addFriend(friend_name);
   }
 }

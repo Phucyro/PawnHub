@@ -38,6 +38,10 @@ void FriendTab::on_addPushButton_pressed()
             popup("Invalid Name", "A name must have between 1 and 10 characters and they must be digits or letters.");
             ui->addPushButton->setDown(false);
         }
+        else if(ui->inputLineEdit->text().toStdString() == client->getName()){
+            popup("Invalid Name", "I know you have no life but you can't be your own friend. Sorry");
+            ui->addPushButton->setDown(false);
+        }
         else{
             sendFriendRequest(client->getSocket(), ui->inputLineEdit->text().toStdString());
             std::string feedback = client->readPipe();
