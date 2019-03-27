@@ -2,8 +2,11 @@
 #define GAMEWITHOUTCHAT_H
 
 #include <QDialog>
+#include <QIcon>
+#include <QThread>
 
 class Socket;
+class ClientGameControl;
 
 namespace Ui {
 class GameWithoutChat;
@@ -18,12 +21,25 @@ public:
     ~GameWithoutChat();
 
     void start();
+//    void run_turn(ClientGameControl&);
+
+//    void set_gameOngoing(bool);
+
+public slots:
+    void set_mode(QString);
     void set_colour(QString);
     void set_turn(QString);
     void set_piece(QIcon, QString, QString);
-    void show_update(QString);
+    void show_update(QString="");
 
-    QString get_promotion();
+    void get_move(QString);
+    void get_promotion(QString);
+
+signals:
+    void move_declared(std::string);
+    void promotion_declared(std::string);
+    void game_ongoing_changed(bool);
+    void is_realtime();
 
 private slots:
     void on_surrendButton_pressed();
@@ -105,6 +121,7 @@ private:
     Socket *socket;
     QMap<QString, QPushButton*> *coordinateConversionMap;
     QString move;
+    bool gameOngoing;
 
     void on_button_pushed(QPushButton*);
     void on_position_chosen(QPushButton*);

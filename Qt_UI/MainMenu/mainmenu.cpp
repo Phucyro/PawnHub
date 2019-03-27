@@ -108,8 +108,8 @@ void MainMenu::on_chatButton_clicked()
     Chat* chat = new Chat(client);
     this->hide();
     chat->exec();
-    this->show();
     delete chat;
+    this->show();
 }
 
 void MainMenu::on_rulesButton_clicked()

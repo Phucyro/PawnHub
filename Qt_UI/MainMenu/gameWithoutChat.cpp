@@ -1,7 +1,9 @@
 #include "gameWithoutChat.h"
 #include "ui_gameWithoutChat.h"
+#include "message.h"
 
 #include "../Modified_Files/ClientGameControl.hpp"
+#include "../Modified_Files/BoardParsing.hpp"
 
 //#include <iostream>
 
@@ -97,7 +99,54 @@ GameWithoutChat::~GameWithoutChat()
 
 void GameWithoutChat::start()
 {
-    ClientGameControl control(socket, this);
+    QThread* thread = new QThread;
+    ClientGameControl* control  = new ClientGameControl(socket, this);
+    control->moveToThread(thread);
+    connect(thread, &QThread::started, control, &ClientGameControl::startParty);
+    connect(control, &ClientGameControl::finished, thread, &QThread::quit);
+    connect(thread, &QThread::finished, control, &ClientGameControl::deleteLater);
+    connect(thread, &QThread::finished, thread, &QThread::deleteLater);
+    thread->start();
+//    // get start
+//    control.handleMessage();
+//    // get mode
+//    control.handleMessage();
+//    // get colour
+//    control.handleMessage();
+
+    this->exec();
+
+//    while (gameOngoing)
+//    {
+//        run_turn(control);
+//    }
+}
+
+//void GameWithoutChat::run_turn(ClientGameControl& control)
+//{
+//    // board
+//    control.handleMessage();
+//    // turn
+//    control.handleMessage();
+//    // askmove
+//    control.handleMessage();
+//    show_update();
+//}
+
+//void GameWithoutChat::set_gameOngoing(bool value)
+//{
+//    gameOngoing = value;
+//}
+
+void GameWithoutChat::update_board(QString message)
+{
+  stringToBoard(this, message.toStdString());
+}
+
+
+void GameWithoutChat::set_mode(QString mode)
+{
+    ui->chgModeLabel->setText(mode);
 }
 
 void GameWithoutChat::set_colour(QString colour)
@@ -118,14 +167,44 @@ void GameWithoutChat::set_piece(QIcon pieceIcon, QString piecePosition, QString 
 
 void GameWithoutChat::show_update(QString message)
 {
+    if (message == "start") {
+      message = "Game has started.";
+     }
+    else if (message == "alice") {
+////        not sure yet
+    }
+    else if (message == "realtime") {
+      emit is_realtime();
+    }
+    else if (message == "check") {
+      message = "Check: protect your king!";
+    }
+    else {
+      if (message == "stalemate") {
+        message = "Stalemate!";
+      }
+      else if (message == "surrend") {
+        message = "You win: your oppenent gave up!";
+      }
+      else if (message == "white"){
+        message = "Checkmate: white player won!";
+      }
+      else {
+        message = "Checkmate: black player won!";
+      }
+      emit game_ongoing_changed(false);
+    }
     ui->chgUpdateLabel->setText(message);
 }
 
-QString GameWithoutChat::get_promotion()
+void GameWithoutChat::get_promotion(QString message)
 {
     QString promotion;
-//    Message
-    return promotion;
+    Message promotionEnquiry;
+    promotionEnquiry.promotion_choice();
+    promotionEnquiry.popup();
+    promotion = promotionEnquiry.get_choice();
+    emit promotion_declared(promotion.toStdString());
 }
 
 void GameWithoutChat::on_button_pushed(QPushButton* origin)
