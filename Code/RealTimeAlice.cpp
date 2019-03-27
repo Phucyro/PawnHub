@@ -102,17 +102,19 @@ void RealTimeAlice::_sendGameMode() {
 }
 
 void RealTimeAlice::_sendBoard(){
-	std::string state;
-	state += '1';
-	this->_boardState(state);
-	_player1->showBoard(state);
-	_player2->showBoard(state);
-	state.clear();
-	state += '2';
-	this->_boardState(state);
-	_player1->showBoard(state);
-	_player2->showBoard(state);
-	_lastUpdate = _turn;
+	if(!_winner){
+		std::string state;
+		state += '1';
+		this->_boardState(state);
+		_player1->showBoard(state);
+		_player2->showBoard(state);
+		state.clear();
+		state += '2';
+		this->_boardState(state);
+		_player1->showBoard(state);
+		_player2->showBoard(state);
+		_lastUpdate = _turn;
+	}
 }
 
 void RealTimeAlice::_sendStart() {
@@ -124,19 +126,24 @@ void RealTimeAlice::_sendStart() {
 
 
 void RealTimeAlice::_updateStat(){
+	double playerElo1 = data.getEloRating(_player1->getName(), RTALICE);
+	double playerElo2 = data.getEloRating(_player2->getName(), RTALICE);
+	double playerExptWin1 = data.getExpectedWin(playerElo1, playerElo2);
+	double playerExptWin2 = data.getExpectedWin(playerElo2, playerElo1);
+
 	if (_winner == _player1){
 		std::cout << "White Player win !" << std::endl;
 		data.addUserRealTimeAliceLose(_player2->getName());
 		data.addUserRealTimeAliceWin(_player1->getName());
-		data.updateRating(_player2->getName(),data.expectedWin(data.getEloRating(_player2->getName()),data.getEloRating(_player1->getName())),LOSE);
-		data.updateRating(_player1->getName(),data.expectedWin(data.getEloRating(_player1->getName()),data.getEloRating(_player2->getName())),WIN);
+		data.updateRating(_player2->getName(), playerExptWin2, LOSE, RTALICE);
+		data.updateRating(_player1->getName(), playerExptWin1, WIN,  RTALICE);
 	}
 	else if (_winner == _player2) {
 		std::cout << "Black Player win !" << std::endl;
 		data.addUserRealTimeAliceWin(_player2->getName());
 		data.addUserRealTimeAliceLose(_player1->getName());
-		data.updateRating(_player2->getName(),data.expectedWin(data.getEloRating(_player2->getName()),data.getEloRating(_player1->getName())),WIN);
-		data.updateRating(_player1->getName(),data.expectedWin(data.getEloRating(_player1->getName()),data.getEloRating(_player2->getName())),LOSE);
+		data.updateRating(_player2->getName(), playerExptWin2, WIN,  RTALICE);
+		data.updateRating(_player1->getName(), playerExptWin1, LOSE, RTALICE);
 	}
 }
 

@@ -18,7 +18,7 @@ void receiveMessageHandler(MenuHandler* menu, Client* client){
     msg = splitString(client->getSocket()->receiveMessage(), '~');
 
     if (std::isalpha(msg[0][0])){
-       client->writePipe(strVectorToStr(msg));
+       //client->writePipe(strVectorToStr(msg));
        continue;
     }
 
@@ -41,10 +41,10 @@ void receiveMessageHandler(MenuHandler* menu, Client* client){
         leaveQueueHandler();
         break;
       case 7 :
-        myStatHandler(client, msg[1], msg[2], msg[3]);
+        myStatHandler(client, msg[1], msg[2], msg[3], msg[4]);
         break;
       case 8 :
-        ladderHandler(client, msg[1], msg[2], msg[3]);
+        ladderHandler(client, msg[1], msg[2], msg[3], msg[4]);
         break;
       case 9 :
         viewFriendsHandler(client, msg[1]);

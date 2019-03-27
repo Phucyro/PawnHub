@@ -15,7 +15,7 @@
 
 void authentificationMenu(MenuHandler* menu, Client* client){
   std::string username, password, confirmation;
-  int format;
+  int format = -1;
 
   while (!client->isIdentified()){
     switch (format){
@@ -162,7 +162,7 @@ void leaveLadderMenu(MenuHandler* menu, Client* client, std::string mode){
 
   for (unsigned int a = 0; a < 10; ++a){
     msg = splitString(client->readPipe(), ' ');
-    menu->update_stats(atoi(msg[0].c_str()), msg[1], atoi(msg[2].c_str()), atoi(msg[3].c_str()), atoi(msg[4].c_str()));
+    menu->update_stats(atoi(msg[0].c_str()), msg[1], msg[2], msg[3], msg[4], msg[5]);
   }
 
   menu->refresh_board();
@@ -170,7 +170,8 @@ void leaveLadderMenu(MenuHandler* menu, Client* client, std::string mode){
   menu->get_choice({"Retour"});
 }
 
-void ladderMenu(MenuHandler* menu, Client* client){
+
+void normalLadderMenu(MenuHandler* menu, Client* client){
   bool leave = false;
 
   while (!leave){
@@ -201,6 +202,63 @@ void ladderMenu(MenuHandler* menu, Client* client){
   }
 }
 
+
+void realTimeLadderMenu(MenuHandler* menu, Client* client){
+  bool leave = false;
+
+  while (!leave){
+    menu->clear_windows();
+    menu->init_choicesw();
+    int choice = menu->get_choice({"Classic", "Dark", "Horde", "Alice", "Retour"});
+
+    switch (choice){
+      case 0 :
+        viewLadder(client->getSocket(), "4");
+        leaveLadderMenu(menu, client, "Classic");
+        break;
+      case 1 :
+        viewLadder(client->getSocket(), "5");
+        leaveLadderMenu(menu, client, "Dark");
+        break;
+      case 2 :
+        viewLadder(client->getSocket(), "6");
+        leaveLadderMenu(menu, client, "Horde");
+        break;
+      case 3 :
+        viewLadder(client->getSocket(), "7");
+        leaveLadderMenu(menu, client, "Alice");
+        break;
+      case 4 :
+        leave = true;
+    }
+  }
+}
+
+
+void ladderMenu(MenuHandler* menu, Client* client){
+  bool leave = false;
+
+  while (!leave){
+    menu->clear_windows();
+    menu->init_choicesw();
+    int choice = menu->get_choice({"Normal", "Real-Time", "Retour"});
+    menu->refresh_board();
+
+    switch (choice){
+      case 0 :
+        normalLadderMenu(menu, client);
+        break;
+      case 1 :
+        realTimeLadderMenu(menu, client);
+        break;
+      case 2 :
+        leave = true;
+        break;
+    }
+  }
+}
+
+
 void myStatMenu(MenuHandler* menu, Client* client){
   menu->clear_windows();
   menu->init_statsw();
@@ -213,7 +271,7 @@ void myStatMenu(MenuHandler* menu, Client* client){
   // 8 pour les 8 modes
   for (unsigned int a = 0; a < 8; ++a){
     msg = splitString(client->readPipe(), ' ');
-    menu->update_stats(atoi(msg[0].c_str()), msg[1], atoi(msg[2].c_str()), atoi(msg[3].c_str()), atoi(msg[4].c_str()));
+    menu->update_stats(atoi(msg[0].c_str()), msg[1], msg[2], msg[3], msg[4], msg[5]);
   }
 
   menu->refresh_board();
@@ -248,6 +306,7 @@ void statMenu(MenuHandler* menu, Client* client){
 void viewFriendsMenu(MenuHandler* menu, Client* client){
   menu->clear_windows();
   menu->init_friendsw(client->getFriends());
+  //menu->print_top("Votre liste d'amis :");
   menu->init_choicesw();
   menu->get_choice({"Retour"});
   menu->refresh_board();
@@ -262,6 +321,7 @@ void theirFriendRequestMenu(MenuHandler* menu, Client* client){
 
   while (command != "/quit"){
     menu->init_friendsw(client->getRecvRequest());
+    //menu->print_top("Vos demandes d'amis recues :");
     menu->refresh_board();
     menu->init_dataw();
     command = menu->get_infos("commande");
@@ -318,6 +378,7 @@ void sendFriendRequestMenu(MenuHandler* menu, Client* client){
 
   while (command != "/quit"){
     menu->init_friendsw(client->getFriends());
+    //menu->print_top("Votre liste d'amis :");
     menu->refresh_board();
     menu->init_dataw();
     command = menu->get_infos("commande");
@@ -380,6 +441,7 @@ void removeFriendMenu(MenuHandler* menu, Client* client){
 
   while (command != "/quit"){
     menu->init_friendsw(client->getFriends());
+    //menu->print_top("Votre liste d'amis :");
     menu->refresh_board();
     menu->init_dataw();
     command = menu->get_infos("commande");
@@ -425,6 +487,7 @@ void cancelRequestMenu(MenuHandler* menu, Client* client){
 
   while (command != "/quit"){
     menu->init_friendsw(client->getSentRequest());
+    //menu->print_top("Vos demande d'amis envoyées :");
     menu->refresh_board();
     menu->init_dataw();
     command = menu->get_infos("commande");
@@ -505,7 +568,7 @@ void chatMenu(MenuHandler* menu, Client* client){
   menu->print_warning2("Quitter : /quit   Changer conversation : /change [name]");
   menu->refresh_board();
 
-  std::string target_name = "all";
+  std::string target_name = client->getIsChattingWith();
   std::string command = "";
 
   client->setIsChatting(true);
@@ -549,7 +612,6 @@ void chatMenu(MenuHandler* menu, Client* client){
         target_name = split[1];
         client->setIsChattingWith(target_name);
         displayChat(menu, client, target_name);
-        menu->print_warning(std::string("Vous parlez à présent avec ") + split[1]);
         menu->refresh_board();
       }
     }

@@ -2,6 +2,7 @@
 #define FRIENDTAB_H
 
 #include <QDialog>
+class Client;
 
 namespace Ui {
 class FriendTab;
@@ -12,7 +13,7 @@ class FriendTab : public QDialog
     Q_OBJECT
 
 public:
-    explicit FriendTab(QWidget *parent = nullptr);
+    explicit FriendTab(Client* client, QWidget *parent = nullptr);
     ~FriendTab();
 
 private slots:
@@ -30,8 +31,13 @@ private slots:
 
     void on_returnPushButton_pressed();
 
+    void on_updatePushButton_clicked();
+
+    void popup(QString, QString);
+
 private:
     Ui::FriendTab *ui;
+    Client* client;
 };
 
 #endif // FRIENDTAB_H

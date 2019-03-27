@@ -1,3 +1,6 @@
+#ifndef CCONTROL_H
+#define CCONTROL_H
+
 #include "thread"
 #include <string>
 #include <map>
@@ -8,10 +11,12 @@
 #include "../MainMenu/gameWithoutChat.h"
 #include "../MainMenu/gameWithoutChatWithAlice.h"
 
-#ifndef CCONTROL_H
-#define CCONTROL_H
+class QIcon;
 
-class ClientGameControl {
+class ClientGameControl : public QObject {
+
+    Q_OBJECT
+
 private:
   Socket* socket;
   GameWithoutChat* game;
@@ -39,19 +44,30 @@ public:
   ClientGameControl(Socket*, GameWithoutChatWithAlice*);
   ~ClientGameControl();
 
-private:
-  void receiveBoard(std::string);
-  void receiveUpdate(std::string);
-  void receiveGameMode(std::string);
-  void receivePlayerColour(std::string);
-  void receiveTurn(std::string);
-  void receiveAskMove(std::string);
-  void receiveAskPromotion(std::string);
-
+public slots:
+  void startParty();
   void sendMove(std::string);
   void sendPromotion(std::string);
+  void setGameOngoing(bool);
+  void setRealTime();
 
-  std::map<char, void(ClientGameControl::*)(std::string)> headerReceiveMap = {
+signals:
+  void updatePiece(QIcon, QString, QString);
+  void receiveUpdate(QString);
+  void receiveGameMode(QString);
+  void receivePlayerColour(QString);
+  void receiveTurn(QString);
+  void receiveAskMove(QString);
+  void receiveAskPromotion(QString);
+
+  void finished();
+
+private:
+  void handleMessage();
+  void receiveBoard(QString);
+  void stringToBoard(std::string);
+
+  std::map<char, void(ClientGameControl::*)(QString)> headerReceiveMap = {
     {'B', &ClientGameControl::receiveBoard},
     {'U', &ClientGameControl::receiveUpdate},
     {'G', &ClientGameControl::receiveGameMode},
@@ -61,8 +77,6 @@ private:
     {'P', &ClientGameControl::receiveAskPromotion},
   };
   void listenSocketAndKeyboard();
-  void handleMessage();
-  void startParty();
 };
 
 #endif

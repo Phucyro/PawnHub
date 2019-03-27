@@ -7,6 +7,6 @@
 
 int checkFormat(std::string username, std::string password, std::string confirmation);
 bool checkInputFormat(std::string message);
-bool checkFriendInputFormat(std::vector<std::string> input);
+bool checkFriendInputFormat(std::string input);
 
 #endif

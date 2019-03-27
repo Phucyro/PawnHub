@@ -1,12 +1,14 @@
 #ifndef _TIMER_HPP_
 #define _TIMER_HPP_
 
+#include <string>
 #include <chrono>
 #include <ctime>
 #include <iostream>
 #include <unistd.h>
 
 class Timer {
+	bool started;
 
     //remaining time for the player
     int remaining_time;
@@ -19,33 +21,40 @@ class Timer {
     std::chrono::steady_clock::time_point pause_end;
 
     //duration
-    std::chrono::duration<double> elapsed_time;
-    std::chrono::duration<double> pause_time;
-
-public:
-
-    Timer(int);
-    ~Timer();
-
-    //game's time
-    void start_time();
-    void end_time();
+    std::chrono::duration<double,std::milli> elapsed_time;
+    std::chrono::duration<double,std::milli> pause_time;
+    
+    
     int get_elapsed_time();
 
+public:
+	Timer();
+    Timer(int);
+    ~Timer();
+	
+	operator std::string();		//update
+	
+    //game's time
+    void start();
+    void update();
+
     //pause's time
-    void start_pause();
-    void end_pause();
+    void pause();				//update
+    void unpause();
     int get_pause_time();
+    
+    //state informations
+    bool is_paused() const;
+    bool has_started() const;
 
-    // game's utilities
-    void remove_time(int);
+    //game's utilities
+    void remove(int);
 
-    int get_remaining_time();
+    int get_remaining_time();	//update
     int get_minutes_left();
     int get_seconds_left();
-    void reset_timer(int);
+    void reset(int);
 
-    void execution_example();
 };
 
 #endif

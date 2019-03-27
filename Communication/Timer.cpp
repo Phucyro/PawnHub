@@ -1,8 +1,13 @@
 #include "Timer.hpp"
-
-Timer::Timer(int maxTime): remaining_time(maxTime)
+Timer::Timer():Timer(0)
 {
 
+}
+
+
+Timer::Timer(int maxTime): started(false), remaining_time(maxTime), time_start(), time_end(), pause_start(std::chrono::steady_clock::now()), pause_end(pause_start), elapsed_time(), pause_time()
+{
+	
 }
 
 
@@ -11,16 +16,43 @@ Timer::~Timer()
 
 }
 
-void Timer::start_time()
-//start the timer at current time
-{
-    time_start = std::chrono::steady_clock::now();
+Timer::operator std::string(){
+	update();
+	int min = get_minutes_left();
+	std::string minDisplay;
+	if (min < 10) minDisplay = "0";
+	minDisplay += std::to_string(min);
+	
+	int sec = get_seconds_left();
+	std::string secDisplay;
+	if (sec < 10) secDisplay = "0";
+	secDisplay += std::to_string(sec);
+	
+	return  minDisplay + ":" + secDisplay;
 }
 
-void Timer::end_time()
-//set end timer at current time
+
+
+void Timer::start()
 {
-    time_end = std::chrono::steady_clock::now();
+    if (!started)
+    {
+    	time_start = std::chrono::steady_clock::now();
+    	started = true;
+    }
+}
+
+void Timer::update()
+{
+    if (started && !is_paused())
+    {
+    	time_end = std::chrono::steady_clock::now();
+    	int time_passed = get_elapsed_time();
+    	if (time_passed){
+    		remove(time_passed);
+    		time_start = time_end;
+    	}
+    }
 }
 
 int Timer::get_elapsed_time()
@@ -30,27 +62,47 @@ int Timer::get_elapsed_time()
     return int(elapsed_time.count());
 }
 
-void Timer::start_pause()
-//set start pause timer at current time
+
+
+void Timer::pause()
 {
-    pause_start = std::chrono::steady_clock::now();
+    if (!is_paused())
+    {
+    	update();
+    	pause_start = time_end;
+    }
 }
 
-void Timer::end_pause()
-//set end pause timer at current time
+void Timer::unpause()
 {
-    pause_end = std::chrono::steady_clock::now();
+    if (is_paused())
+    {
+    	pause_end = std::chrono::steady_clock::now();
+    	time_start = pause_end;
+    }
 }
 
 int Timer::get_pause_time()
-//get pause time
 {
-    pause_time = pause_end - pause_start;
+    pause_time = is_paused() ? pause_end - pause_start : std::chrono::steady_clock::now() - pause_start;
     return int(pause_time.count());
 }
 
-void Timer::remove_time(int time)
-//remove time from the remaining minutes
+
+
+bool Timer::is_paused() const
+{
+	return pause_start > pause_end;
+}
+
+bool Timer::has_started() const
+{
+	return started;
+}
+
+
+
+void Timer::remove(int time)
 {
     remaining_time -= time;
     if (remaining_time < 0)
@@ -60,44 +112,26 @@ void Timer::remove_time(int time)
 }
 
 int Timer::get_remaining_time()
-//get remaining time total in seconds
+//in milliseconds
 {
+    update();
     return remaining_time;
 }
 
 int Timer::get_minutes_left()
-//get the minutes left
 {
-    return remaining_time / 60;
+    return remaining_time / 60000;
 }
 
 int Timer::get_seconds_left()
 {
-    return remaining_time % 60;
+    return (remaining_time/1000) % 60;
 }
 
-void Timer::reset_timer(int time)
+void Timer::reset(int time)
 {
     remaining_time = time;
-}
-
-void Timer::execution_example()
-{
-    unsigned int execution_time = 10000000; // unite en microsecondes -> 10 secondes
-
-    std::cout << "REMAINING TIME:" << get_remaining_time() << "seconds = " << get_minutes_left() << " minutes et " << get_seconds_left() << "secondes" << std::endl;
-    start_time();
-
-    usleep(execution_time);
-
-    end_time();
-
-    std::cout << "ELAPSED TIME :" << get_elapsed_time() << std::endl;
-    remove_time(get_elapsed_time());
-
-    std::cout << "REMAINING TIME:" << get_remaining_time() << "seconds = " << get_minutes_left() << " minutes et " << get_seconds_left() << "secondes" << std::endl;
-    reset_timer(300);
-
-    std::cout << "REMAINING TIME:" << get_remaining_time() << "seconds = " << get_minutes_left() << " minutes et " << get_seconds_left() << "secondes" << std::endl;
+    started = false;
+    pause_start = pause_end;
 }
 

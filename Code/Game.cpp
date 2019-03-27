@@ -81,6 +81,11 @@ Game& Game::operator= (Game&& original)
 	return *this;
 }
 
+void Game::_sendFirstMsg(){
+	_player1->transferFirstMsg();
+	_player2->transferFirstMsg();
+}
+
 void Game::_sendStart(){
 	_player1->transferStart();
 	_player2->transferStart();
@@ -128,6 +133,24 @@ void Game::_sendStalemate() {
 
 void Game::_sendSurrend(){
 	_winner->transferSurrend();
+}
+
+void Game::_sendTimeout(){
+	_winner->transferTimeout();
+}
+
+void Game::start(){
+	_player1->setColor('w');
+	_player2->setColor('b');
+	std::cout << "Starting Game" << std::endl;
+	this->_sendFirstMsg();
+	this->_initBoard();
+	this->_sendGameMode();
+	this->_sendPlayerColour();
+	this->_sendStart();
+	this->_sendBoard();
+	this->_sendTurn();
+	this->_sendTime();
 }
 
 void Game::promote(Piece* piece)

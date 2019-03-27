@@ -107,4 +107,4 @@ RESOURCES += \
     loremipsum.qrc \
     catmeme.qrc
 
-DISTFILES +=
+#DISTFILES +=
