@@ -35,6 +35,25 @@ void Client::writePipe(std::string msg){
 	write(_pipeControl[1], buffer, sizeof(buffer));
 }
 
+std::string Client::readGame(){
+	char buffer[MSG_LENGTH+1];
+
+	read(_pipeGameMessage[0], buffer, sizeof(buffer));
+	std::string msg = buffer;
+	return msg;
+}
+
+void Client::writeGame(std::string msg){
+	char buffer[MSG_LENGTH+1];
+
+	std::strcpy(buffer, msg.c_str());
+	write(_pipeGameMessage[1], buffer, sizeof(buffer));
+}
+
+int Client::getReadGamePipe(){
+	return _pipeGameMessage[0];
+}
+
 std::vector<std::string> Client::getFriends(){
   return _friendsList;
 }

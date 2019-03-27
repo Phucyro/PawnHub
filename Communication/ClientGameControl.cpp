@@ -5,7 +5,7 @@
 
 std::string moveToString(int*);
 
-ClientGameControl::ClientGameControl(Socket& _socket): board(), socket(_socket), game_ongoing(true), is_alice(false), is_real_time(false), _color('\0'), timer() {
+ClientGameControl::ClientGameControl(Client& _client): board(), client(_client), game_ongoing(true), is_alice(false), is_real_time(false), _color('\0'), timer() {
   startParty();
 }
 
@@ -90,12 +90,12 @@ void ClientGameControl::receiveAskMove(std::string message) {
 	fd_set read;
 	std::string effective_move;
 	int timeLeft = timer.get_remaining_time();
-	
+
 	board.print_your_turn();
 	board.ask_ipos();
 	timer.start();
 	timer.unpause();
-	
+
   while (i < 4 && timeLeft){
   	updateRate.tv_sec = int(TIMER_UPDATE_RATE / 1000000);
   	updateRate.tv_usec = int(TIMER_UPDATE_RATE % 1000000);
@@ -103,7 +103,7 @@ void ClientGameControl::receiveAskMove(std::string message) {
 		FD_SET(newch, &read);
 		if (select(newch+1, &read, nullptr, nullptr, &updateRate) == -1) throw std::runtime_error("Select failed");
 		timeLeft = timer.get_remaining_time();
-		
+
 		if (FD_ISSET(newch, &read)){
 			move[i] = board.getchar();
 			if (i < 2) board.print_ipos(move[i], i);
@@ -123,7 +123,7 @@ void ClientGameControl::receiveAskMove(std::string message) {
   	board.clear_get_movement();
   	board.endgame("Time out! You lost.");
   }
-  
+
   if (game_ongoing){
     sendMove(effective_move);
     if (effective_move == "/end"){
@@ -162,12 +162,12 @@ void ClientGameControl::receiveAskPromotion(std::string message) {
 
 void ClientGameControl::sendMove(std::string move) {
   std::string header = headerSendMap["move"];
-  socket.sendMessage("30~" + header + _color + move);
+  client.getSocket()->sendMessage("30~" + header + _color + move);
 }
 
 void ClientGameControl::sendPromotion(std::string promotion) {
   std::string header = headerSendMap["promote"];
-  socket.sendMessage("30~" + header + promotion);
+  client.getSocket()->sendMessage("30~" + header + promotion);
 }
 
 void ClientGameControl::receiveFirstMessage(std::string){
@@ -176,8 +176,8 @@ void ClientGameControl::receiveFirstMessage(std::string){
 }
 
 void ClientGameControl::handleMessage() {
-	int move[4], i = 0, sockfd = socket.getFileDescriptor(), newch = STDIN_FILENO;
-	int nfd = sockfd < STDIN_FILENO ? STDIN_FILENO+1 : sockfd+1;
+	int move[4], i = 0, msgPipe = client.getReadGamePipe(), newch = STDIN_FILENO;
+	int nfd = msgPipe < STDIN_FILENO ? STDIN_FILENO+1 : msgPipe+1;
 	fd_set read;
 	std::string effective_move;
 	while(game_ongoing){
@@ -186,11 +186,11 @@ void ClientGameControl::handleMessage() {
 			else board.print_premove();
 		}
 		FD_ZERO(&read);
-		FD_SET(sockfd, &read);
+		FD_SET(msgPipe, &read);
 		FD_SET(newch, &read);
 		if (select(nfd, &read, nullptr, nullptr, nullptr) == -1) throw std::runtime_error("Select failed");
-		if (FD_ISSET(sockfd, &read)){
-			std::string message = socket.receiveMessage();
+		if (FD_ISSET(msgPipe, &read)){
+			std::string message = client.readGame();
   			char header = message[0];
   			if (header == headerSendMap["askmove"][0]){
   				i = 0;
@@ -224,7 +224,8 @@ void ClientGameControl::cleanOldMsg(){
 	bool firstMsgRecv = false;
 	std::string message;
 	while (!firstMsgRecv){
-		message = socket.receiveMessage();
+    std::cout<<"BLIAT"<<std::endl;
+		message = client.readGame();
 		if(message[0] == 'F'){
 			firstMsgRecv = true;
 			char header = message[0];
@@ -236,6 +237,7 @@ void ClientGameControl::cleanOldMsg(){
 void ClientGameControl::startParty() {
   game_ongoing = true;
   cleanOldMsg();
+  std::cout<<"BLIAT end"<<std::endl;
   handleMessage();
   board.exit();
 }

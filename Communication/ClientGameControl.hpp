@@ -3,7 +3,7 @@
 #include <map>
 #include <functional>
 
-#include "Socket.hpp"
+#include "Client.hpp"
 #include "Timer.hpp"
 #include "../Display/GameDisplay/board.hpp"
 
@@ -13,7 +13,7 @@
 class ClientGameControl {
 private:
   Board board;
-  Socket& socket;
+  Client& client;
   bool game_ongoing;
   bool is_alice;
   bool is_real_time;
@@ -38,7 +38,7 @@ private:
 
 
 public:
-  ClientGameControl(Socket&);
+  ClientGameControl(Client&);
 
 private:
   void receiveBoard(std::string);

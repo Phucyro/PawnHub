@@ -37,7 +37,7 @@ void ServerGameControl::receivePromotion(std::string message) {
 void ServerGameControl::sendBoard(Socket* socket, std::string board) {
   std::string header = headerSendMap["board"];
   try{
-    socket->sendMessage(header + board);
+    socket->sendMessage(std::string("30~") + header + board);
     sendTurn(socket, game->getTurn());
   }
   catch(std::runtime_error e){
@@ -48,7 +48,7 @@ void ServerGameControl::sendBoard(Socket* socket, std::string board) {
 
 void ServerGameControl::sendFirstMsg(Socket* socket) {
   std::string header = headerSendMap["firstmsg"];
-  try{socket->sendMessage(header + "garbage");}
+  try{socket->sendMessage(std::string("30~") + header + "garbage");}
   catch(std::runtime_error e){
     std::cout<<"error in sendFirstMsg: "<<e.what()<<std::endl;
     _playerDisconected(socket);
@@ -65,7 +65,7 @@ void ServerGameControl::sendSecondBoard(Socket* socket, std::string board) {
 
 void ServerGameControl::sendUpdate(Socket* socket, std::string update) {
   std::string header = headerSendMap["update"];
-  try{socket->sendMessage(header + update);}
+  try{socket->sendMessage(std::string("30~") + header + update);}
   catch(std::runtime_error e){
   	std::cout<<"error in sendUpdate: "<<e.what()<<std::endl;
   	_playerDisconected(socket);
@@ -99,7 +99,7 @@ void ServerGameControl::sendTimeout(Socket* socket) {
 
 void ServerGameControl::sendGameMode(Socket* socket, std::string mode) {
   std::string header = headerSendMap["gamemode"];
-  try{socket->sendMessage(header + mode);}
+  try{socket->sendMessage(std::string("30~") + header + mode);}
   catch(std::runtime_error e){
   	std::cout<<"error in sendGameMode: "<<e.what()<<std::endl;
   	_playerDisconected(socket);
@@ -108,7 +108,7 @@ void ServerGameControl::sendGameMode(Socket* socket, std::string mode) {
 
 void ServerGameControl::sendPlayerColour(Socket* socket, std::string colour) {
   std::string header = headerSendMap["colour"];
-  try{socket->sendMessage(header + colour);}
+  try{socket->sendMessage(std::string("30~") + header + colour);}
   catch(std::runtime_error e){
   	std::cout<<"error in sendPlayerColour: "<<e.what()<<std::endl;
   	_playerDisconected(socket);
@@ -117,7 +117,7 @@ void ServerGameControl::sendPlayerColour(Socket* socket, std::string colour) {
 
 void ServerGameControl::sendTurn(Socket* socket, unsigned turn) {
   std::string header = headerSendMap["turn"];
-  try{socket->sendMessage(header + std::to_string(turn));}
+  try{socket->sendMessage(std::string("30~") + header + std::to_string(turn));}
   catch(std::runtime_error e){
   	std::cout<<"error in sendTurn: "<<e.what()<<std::endl;
   	_playerDisconected(socket);
@@ -126,7 +126,7 @@ void ServerGameControl::sendTurn(Socket* socket, unsigned turn) {
 
 void ServerGameControl::sendTime(Socket* socket, int time) {
   std::string header = headerSendMap["time"];
-  try{socket->sendMessage(header + std::to_string(time));}
+  try{socket->sendMessage(std::string("30~") + header + std::to_string(time));}
   catch(std::runtime_error e){
   	std::cout<<"error in sendTime: "<<e.what()<<std::endl;
   	_playerDisconected(socket);
@@ -135,7 +135,7 @@ void ServerGameControl::sendTime(Socket* socket, int time) {
 
 void ServerGameControl::sendGoodMove(Socket* socket) {
   std::string header = headerSendMap["goodmove"];
-  try{socket->sendMessage(header + "waw");}
+  try{socket->sendMessage(std::string("30~") + header + "waw");}
   catch(std::runtime_error e){
   	std::cout<<"error in sendGoodMove: "<<e.what()<<std::endl;
   	_playerDisconected(socket);
@@ -144,7 +144,7 @@ void ServerGameControl::sendGoodMove(Socket* socket) {
 
 void ServerGameControl::sendGoodPremove(Socket* socket) {
   std::string header = headerSendMap["goodpremove"];
-  try{socket->sendMessage(header + "waw");}
+  try{socket->sendMessage(std::string("30~") + header + "waw");}
   catch(std::runtime_error e){
   	std::cout<<"error in sendGoodPremove: "<<e.what()<<std::endl;
   	_playerDisconected(socket);
@@ -153,7 +153,7 @@ void ServerGameControl::sendGoodPremove(Socket* socket) {
 
 void ServerGameControl::sendAskMove(Socket* socket) {
   std::string header = headerSendMap["askmove"];
-  try{socket->sendMessage(header + "gimme");}
+  try{socket->sendMessage(std::string("30~") + header + "gimme");}
   catch(std::runtime_error e){
   	std::cout<<"error in sendAskMove: "<<e.what()<<std::endl;
   	_playerDisconected(socket);
@@ -162,7 +162,7 @@ void ServerGameControl::sendAskMove(Socket* socket) {
 
 void ServerGameControl::sendAskPromotion(Socket* socket) {
   std::string header = headerSendMap["promote"];
-  try{socket->sendMessage(header + "please");}
+  try{socket->sendMessage(std::string("30~") + header + "please");}
   catch(std::runtime_error e){
   	std::cout<<"error in sendAskPromotion: "<<e.what()<<std::endl;
   	_playerDisconected(socket);

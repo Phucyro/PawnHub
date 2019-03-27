@@ -54,7 +54,7 @@ void playGameHandler(MenuHandler* menu, Client* client){
   menu->clear_windows();
   menu->end_windows();
   //std::cout << "Vous avez rejoint une file d'attente" << std::endl;
-  ClientGameControl control(*(client->getSocket()));
+  ClientGameControl control(*client);
   client->writePipe("EndGame");
 }
 

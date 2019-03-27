@@ -10,6 +10,8 @@
 #include "../Display/MenuHandler/MenuHandler.hpp"
 #include <stdlib.h>
 #include "Client.hpp"
+#include <iostream>
+#include <fstream>
 
 void receiveMessageHandler(MenuHandler* menu, Client* client){
   std::vector<std::string> msg;
@@ -17,12 +19,11 @@ void receiveMessageHandler(MenuHandler* menu, Client* client){
   while (true){
     msg = splitString(client->getSocket()->receiveMessage(), '~');
 
-    if (std::isalpha(msg[0][0])){
-       //client->writePipe(strVectorToStr(msg));
-       continue;
-    }
-
     int choice = atoi(msg[0].c_str());
+    std::cout << "Le message avant write " << msg[0] << std::endl;
+    std::ofstream flux("Duc.txt", std::ios_base::app);
+    flux << "Msg recue :" << std::endl;
+    flux << msg[0] << std::endl;
 
     switch(choice){
       case 1 : // [1] [resultat]
@@ -75,6 +76,9 @@ void receiveMessageHandler(MenuHandler* menu, Client* client){
         break;
       case 18 :
         updateSentRequestHandler(client, msg[1], msg[2]);
+        break;
+      case 30 :
+        client->writeGame(msg[1]);
         break;
     }
   }
