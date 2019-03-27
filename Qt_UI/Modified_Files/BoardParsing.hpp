@@ -34,30 +34,30 @@ QIcon piece_icon_fetcher(std::string pieceName, std::string colour) {
     return pieceIcon;
 }
 
-void stringToBoard(GameWithoutChat* game, std::string message) {
-  unsigned a = 0;
-  std::string currentPieceName;
-  QIcon currentPieceIcon;
-  QString currentPosition;
+//void stringToBoard(GameWithoutChat* game, std::string message) {
+//  unsigned a = 0;
+//  std::string currentPieceName;
+//  QIcon currentPieceIcon;
+//  QString currentPosition;
 
-  std::string colour = "white";
-  while (message[a] != '!'){
-    currentPieceName = pieceMap[a];
-    currentPieceIcon = piece_icon_fetcher(currentPieceName, colour);
-    currentPosition = message[a+1] + message[a+2];
-    game->set_piece(currentPieceIcon, currentPosition, QString::fromStdString(currentPieceName));
-    a += CHAR_NUM;
-  }
-  a += 1;
-  colour = "black";
-  while (message[a] != '#'){
-    currentPieceName = pieceMap[a];
-    currentPieceIcon = piece_icon_fetcher(currentPieceName, colour);
-    currentPosition = message[a+1] + message[a+2];
-    game->set_piece(currentPieceIcon, currentPosition, QString::fromStdString(currentPieceName));
-    a += CHAR_NUM;
-  }
-}
+//  std::string colour = "white";
+//  while (message[a] != '!'){
+//    currentPieceName = pieceMap[a];
+//    currentPieceIcon = piece_icon_fetcher(currentPieceName, colour);
+//    currentPosition = message[a+1] + message[a+2];
+//    game->set_piece(currentPieceIcon, currentPosition, QString::fromStdString(currentPieceName));
+//    a += CHAR_NUM;
+//  }
+//  a += 1;
+//  colour = "black";
+//  while (message[a] != '#'){
+//    currentPieceName = pieceMap[a];
+//    currentPieceIcon = piece_icon_fetcher(currentPieceName, colour);
+//    currentPosition = message[a+1] + message[a+2];
+//    game->set_piece(currentPieceIcon, currentPosition, QString::fromStdString(currentPieceName));
+//    a += CHAR_NUM;
+//  }
+//}
 
 void separateAlicePieces(unsigned a,std::string message,std::string colour) {
 //  const char piece = pieceMap[message[a]];

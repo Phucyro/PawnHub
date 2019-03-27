@@ -28,10 +28,12 @@ void GameChoice::send_game_request(std::string gameMode)
     Message message;
     message.set_title("In Queue");
     message.set_text("You have been placed in queue, please wait for an opponent.");
-    message.show();
+    message.popup();
+    this->hide();
 
     msgThread->join();
     msgThread = nullptr;
+
 }
 
 void GameChoice::on_classicPushButton_pressed()
@@ -39,10 +41,10 @@ void GameChoice::on_classicPushButton_pressed()
     GameWithoutChat* game = new GameWithoutChat(nullptr, client->getSocket());
     send_game_request("0");
 
-    this->hide();
-    game->exec();
+    game->start();
     game->close();
     delete game;
+    this->close();
 }
 void GameChoice::on_darkPushButton_pressed()
 {

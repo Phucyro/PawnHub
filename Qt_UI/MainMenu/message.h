@@ -18,12 +18,18 @@ public:
     void set_text(QString);
     void set_title(QString);
     void popup();
+    void promotion_choice();
+    QString get_choice();
 
 private slots:
-    void on_button_clicked();
+    void on_okButton_clicked();
+    void on_pushButton_1_clicked();
+    void on_pushButton_2_clicked();
+    void on_pushButton_3_clicked();
 
 private:
     Ui::Message *ui;
+    QString choice;
 };
 
 #endif // MESSAGE_H

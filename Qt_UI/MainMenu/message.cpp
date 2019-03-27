@@ -28,7 +28,41 @@ void Message::popup()
     this->exec();
 }
 
-void Message::on_button_clicked()
+void Message::promotion_choice()
 {
+    set_title("Promotion");
+    set_text("Please choose your pawn's promotion.");
+    ui->pushButton_1->setText("Queen");
+    ui->pushButton_2->setText("Bishop");
+    ui->pushButton_3->setText("Rook");
+    ui->okButton->setText("Knight");
+}
+
+QString Message::get_choice()
+{
+    return choice;
+}
+
+void Message::on_okButton_clicked()
+{
+    choice = ui->okButton->text();
+    close();
+}
+
+void Message::on_pushButton_1_clicked()
+{
+    choice = ui->pushButton_1->text();
+    close();
+}
+
+void Message::on_pushButton_2_clicked()
+{
+    choice = ui->pushButton_2->text();
+    close();
+}
+
+void Message::on_pushButton_3_clicked()
+{
+    choice = ui->pushButton_3->text();
     close();
 }
