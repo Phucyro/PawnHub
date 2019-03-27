@@ -160,9 +160,6 @@ void GameWithoutChat::set_piece(QIcon pieceIcon, QString piecePosition, QString 
 
 void GameWithoutChat::show_update(QString message)
 {
-<<<<<<< HEAD
-    //ui->chgUpdateLabel->setText(message);
-=======
     if (message == "start") {
       message = "Game has started.";
      }
@@ -191,7 +188,6 @@ void GameWithoutChat::show_update(QString message)
       emit game_ongoing_changed(false);
     }
     ui->chgUpdateLabel->setText(message);
->>>>>>> 1c59bd94100922fff5a545ec9c44d3da67bb0849
 }
 
 void GameWithoutChat::get_move(QString message)
