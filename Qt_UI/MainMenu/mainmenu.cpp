@@ -96,7 +96,7 @@ void MainMenu::on_statsButton_clicked()
 
 void MainMenu::on_friendsButton_clicked()
 {
-    FriendTab* friendsTab = new FriendTab;
+    FriendTab* friendsTab = new FriendTab(client);
     this->hide();
     friendsTab->exec();
     this->show();

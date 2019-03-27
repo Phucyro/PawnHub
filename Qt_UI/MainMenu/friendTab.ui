@@ -192,6 +192,13 @@
       </property>
      </widget>
     </item>
+    <item>
+     <widget class="QPushButton" name="updatePushButton">
+      <property name="text">
+       <string>Update</string>
+      </property>
+     </widget>
+    </item>
    </layout>
   </widget>
   <widget class="QLabel" name="adsLabel">
