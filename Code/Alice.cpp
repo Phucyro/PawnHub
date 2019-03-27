@@ -149,28 +149,6 @@ bool Alice::_executeMove(Coordinate start, Coordinate end, char playerColor){
 	return movingPiece->move(end, _board, *this);
 }
 
-void Alice::_nextTurn() {
-	Player *currentPlayer = _getCurrentPlayer();
-	char playerColor = currentPlayer == _player1 ? 'w':'b';
-	Coordinate start,end;
-
-	bool isMoveValid = false;
-	std::string playerMove;
-	while(!isMoveValid){
-		playerMove = currentPlayer->askMove();
-		std::cout<<"game received: "<<playerMove<<std::endl;
-		if (playerMove[0] == '/' && playerMove[1] == 'e' && playerMove[2] == 'n' && playerMove[3] == 'd'){
-			if(currentPlayer == _player1) _winner = _player2;
-			else _winner = _player1;
-			isMoveValid = true;
-		}
-		else if (this->_fitInBoard(playerMove)){
-			start = Coordinate(playerMove[0], playerMove[1]);
-			end = Coordinate(playerMove[2], playerMove[3]);
-			isMoveValid = this->_executeMove(start, end, playerColor);
-		}
-	}
-}
 
 bool Alice::_isCheckmate(char playerColor){
 	Piece *dangerousPiece = nullptr, *inTest;
@@ -277,31 +255,35 @@ bool Alice::_notEnoughtPieces(){
 }
 
 void Alice::_updateStat(){
+	double playerElo1 = data.getEloRating(_player1->getName(), ALICE);
+	double playerElo2 = data.getEloRating(_player2->getName(), ALICE);
+	double playerExptWin1 = data.getExpectedWin(playerElo1, playerElo2);
+	double playerExptWin2 = data.getExpectedWin(playerElo2, playerElo1);
+
 	if (_winner == _player1){
 		std::cout << "White Player win !" << std::endl;
 		data.addUserAliceLose(_player2->getName());
 		data.addUserAliceWin(_player1->getName());
-		data.updateRating(_player2->getName(),data.expectedWin(data.getEloRating(_player2->getName()),data.getEloRating(_player1->getName())),LOSE);
-		data.updateRating(_player1->getName(),data.expectedWin(data.getEloRating(_player1->getName()),data.getEloRating(_player2->getName())),WIN);
+		data.updateRating(_player2->getName(), playerExptWin2, LOSE, ALICE);
+		data.updateRating(_player1->getName(), playerExptWin1, WIN,  ALICE);
 	}
 	else if (_winner == _player2) {
 		std::cout << "Black Player win !" << std::endl;
 		data.addUserAliceWin(_player2->getName());
 		data.addUserAliceLose(_player1->getName());
-		data.updateRating(_player2->getName(),data.expectedWin(data.getEloRating(_player2->getName()),data.getEloRating(_player1->getName())),WIN);
-		data.updateRating(_player1->getName(),data.expectedWin(data.getEloRating(_player1->getName()),data.getEloRating(_player2->getName())),LOSE);
+		data.updateRating(_player2->getName(), playerExptWin2, WIN,  ALICE);
+		data.updateRating(_player1->getName(), playerExptWin1, LOSE, ALICE);
 	}
 	else{
 		data.addUserAliceDraw(_player2->getName());
 		data.addUserAliceDraw(_player1->getName());
-		data.updateRating(_player2->getName(),data.expectedWin(data.getEloRating(_player2->getName()),data.getEloRating(_player1->getName())),TIE);
-		data.updateRating(_player1->getName(),data.expectedWin(data.getEloRating(_player1->getName()),data.getEloRating(_player2->getName())),TIE);
+		data.updateRating(_player2->getName(), playerExptWin2, TIE, ALICE);
+		data.updateRating(_player1->getName(), playerExptWin1, TIE, ALICE);
 	}
 }
 
 bool Alice::_isFinish() {
 	if (_winner){
-		_sendSurrend();
 		_updateStat();
 		return true;
 	}
@@ -322,16 +304,18 @@ bool Alice::_isFinish() {
 }
 
 void Alice::_sendBoard(){
-	std::string state;
-	state += '1';
-	this->_boardState(state);
-	_player1->showBoard(state);
-	_player2->showBoard(state);
-	state.clear();
-	state += '2';
-	this->_boardState(state);
-	_player1->showBoard(state);
-	_player2->showBoard(state);
+	if (!_winner){
+		std::string state;
+		state += '1';
+		this->_boardState(state);
+		_player1->showBoard(state);
+		_player2->showBoard(state);
+		state.clear();
+		state += '2';
+		this->_boardState(state);
+		_player1->showBoard(state);
+		_player2->showBoard(state);
+	}
 }
 
 void Alice::_boardState(std::string& state){

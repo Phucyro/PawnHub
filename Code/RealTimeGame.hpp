@@ -20,6 +20,7 @@ class RealTimeGame: public Game{
 	RealTimeGame(const RealTimeGame&) = delete;
 	virtual void _mainLoop();
 	void _sendBoard() override;
+	void _sendTime() override;
 	void _executeMove(Piece*, Coordinate);
 	bool _isMovePossible(Coordinate, Coordinate);
 	void _addToQueue(Coordinate, Coordinate, std::queue<ChainedMove*>&);
