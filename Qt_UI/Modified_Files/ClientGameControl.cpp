@@ -1,4 +1,5 @@
 #include "ClientGameControl.hpp"
+#include "BoardParsing.hpp"
 
 #include "../MainMenu/gameWithoutChat.h"
 #include "../MainMenu/gameWithoutChatWithAlice.h"
@@ -6,7 +7,7 @@
 std::string moveToString(int*);
 
 ClientGameControl::ClientGameControl(Socket* _socket, GameWithoutChat* _game): socket(_socket), game(_game), game_ongoing(true), is_alice(false), is_real_time(false), colour('\0') {
-    connect(this, &ClientGameControl::receiveBoard, game, &GameWithoutChat::update_board);
+    connect(this, &ClientGameControl::updatePiece, game, &GameWithoutChat::set_piece);
     connect(this, &ClientGameControl::receiveUpdate, game, &GameWithoutChat::show_update);
     connect(this, &ClientGameControl::receiveGameMode, game, &GameWithoutChat::set_mode);
     connect(this, &ClientGameControl::receivePlayerColour, game, &GameWithoutChat::set_colour);
@@ -30,84 +31,85 @@ ClientGameControl::~ClientGameControl()
     socket = nullptr;
 }
 
-//void ClientGameControl::receiveBoard(QString message) {
-//  if (!is_alice) {
+void ClientGameControl::receiveBoard(QString message) {
+  if (!is_alice) {
 //    board.draw_pieces(message);
 //    board.refresh_board();
-//  }
-//  else if (message[0] == '1') {
-//    stringToBoard(game, message.toStdString());
-//  }
-//  else {
+  }
+  else if (message[0] == '1') {
+    stringToBoard(message.toStdString().erase(0,1));
+  }
+  else {
 //    board.draw_alice_pieces(message.erase(0,1));
 //    board.refresh_board();
+  }
+}
+
+//void ClientGameControl::receiveUpdate(QString message) {
+//  if (message == "start") {
+//    game->show_update("Game has started.");
+//   }
+//  else if (message == "alice") {
+//    board.draw_alice_board();
+//  }
+//  else if (message == "realtime") {
+//    is_real_time = true;
+//  }
+//  else if (message == "check") {
+//    game->show_update("Check: protect your king!");
+//  }
+//  else {
+//    game_ongoing = false;
+//    game->set_gameOngoing(false);
+//    if (message == "stalemate") {
+//      message = "Stalemate!";
+//    }
+//    else if (message == "surrend") {
+//      message = "You win: your oppenent gave up!";
+//    }
+//    else if (message == "white"){
+//      message = "Checkmate: white player won!";
+//    }
+//    else {
+//      message = "Checkmate: black player won!";
+//    }
+//    game->show_update(message);
 //  }
 //}
 
-void ClientGameControl::receiveUpdate(QString message) {
-  if (message == "start") {
-    game->show_update("Game has started.");
-   }
-  else if (message == "alice") {
-//    board.draw_alice_board();
-  }
-  else if (message == "realtime") {
-    is_real_time = true;
-  }
-  else if (message == "check") {
-    game->show_update("Check: protect your king!");
-  }
-  else {
-    game_ongoing = false;
-//    game->set_gameOngoing(false);
-    if (message == "stalemate") {
-      message = "Stalemate!";
-    }
-    else if (message == "surrend") {
-      message = "You win: your oppenent gave up!";
-    }
-    else if (message == "white"){
-      message = "Checkmate: white player won!";
-    }
-    else {
-      message = "Checkmate: black player won!";
-    }
-    game->show_update(message);
-  }
-}
+//void ClientGameControl::receiveGameMode(QString message) {
+//    game->set_mode(message);
+//}
 
-void ClientGameControl::receiveGameMode(QString message) {
-    game->set_mode(message);
-}
+//void ClientGameControl::receivePlayerColour(QString message) {
+////  will need to deal with this for alice
+////  colour = message.toStdString()[0];
+//  game->set_colour(message);
+//}
 
-void ClientGameControl::receivePlayerColour(QString message) {
-  colour = message.toStdString()[0];
-  game->set_colour(message);
-}
+//void ClientGameControl::receiveTurn(QString message) {
+//  game->set_turn(message);
+//}
 
-void ClientGameControl::receiveTurn(QString message) {
-  game->set_turn(message);
-}
+//void ClientGameControl::receiveAskMove(QString message) {
+//    game->show_update("Your turn: please choose your move");
 
-void ClientGameControl::receiveAskMove(QString message) {
-    game->show_update("Your turn: please choose your move");
-
-//  std::string move = board.get_movement();
-//  if (game_ongoing){
-//    sendMove(move);
-//    if (move == "/end"){
-//      game_ongoing = false;
-//      board.clear_get_movement();
-//      board.endgame("You gave up.");
-//    }
-//  }
-}
+////  std::string move = board.get_movement();
+////  if (game_ongoing){
+////    sendMove(move);
+////    if (move == "/end"){
+////      game_ongoing = false;
+////      board.clear_get_movement();
+////      board.endgame("You gave up.");
+////    }
+////  }
+//}
 
 
-void ClientGameControl::receiveAskPromotion(QString message) {
+//void ClientGameControl::receiveAskPromotion(QString message) {
 //    QString promotion = game->get_promotion();
 //    sendPromotion(promotion.toStdString());
-}
+//}
 
 void ClientGameControl::sendMove(std::string move) {
   std::string header = headerSendMap["move"];
@@ -177,4 +179,30 @@ void ClientGameControl::startParty() {
   game_ongoing = true;
   while(game_ongoing) {handleMessage();}
   emit finished();
+}
+
+// imported here because it's easier to emit the signal this way
+void ClientGameControl::stringToBoard(std::string message) {
+  unsigned a = 0;
+  std::string currentPieceName;
+  QIcon currentPieceIcon;
+  QString currentPosition;
+
+  std::string colour = "white";
+  while (message[a] != '!'){
+    currentPieceName = pieceMap[a];
+    currentPieceIcon = piece_icon_fetcher(currentPieceName, colour);
+    currentPosition = message[a+1] + message[a+2];
+    emit updatePiece(currentPieceIcon, currentPosition, QString::fromStdString(currentPieceName));
+    a += CHAR_NUM;
+  }
+  a += 1;
+  colour = "black";
+  while (message[a] != '#'){
+    currentPieceName = pieceMap[a];
+    currentPieceIcon = piece_icon_fetcher(currentPieceName, colour);
+    currentPosition = message[a+1] + message[a+2];
+    emit updatePiece(currentPieceIcon, currentPosition, QString::fromStdString(currentPieceName));
+    a += CHAR_NUM;
+  }
 }

@@ -3,7 +3,6 @@
 #include "message.h"
 
 #include "../Modified_Files/ClientGameControl.hpp"
-#include "../Modified_Files/BoardParsing.hpp"
 
 //#include <iostream>
 
@@ -138,12 +137,6 @@ void GameWithoutChat::start()
 //    gameOngoing = value;
 //}
 
-void GameWithoutChat::update_board(QString message)
-{
-  stringToBoard(this, message.toStdString());
-}
-
-
 void GameWithoutChat::set_mode(QString mode)
 {
     ui->chgModeLabel->setText(mode);
@@ -197,6 +190,13 @@ void GameWithoutChat::show_update(QString message)
     ui->chgUpdateLabel->setText(message);
 }
 
+void GameWithoutChat::get_move(QString message)
+{
+    move = "";
+    ui->chgUpdateLabel->setText("Your turn: please choose your move.");
+    ui->moveConfirmButton->setEnabled(true);
+}
+
 void GameWithoutChat::get_promotion(QString message)
 {
     QString promotion;
@@ -207,11 +207,11 @@ void GameWithoutChat::get_promotion(QString message)
     emit promotion_declared(promotion.toStdString());
 }
 
-void GameWithoutChat::on_button_pushed(QPushButton* origin)
+void GameWithoutChat::on_boardButton_pushed(QPushButton* origin)
 {
     if (move != "")
     {
-        if (origin->objectName() == move)
+        if (move.endsWith(origin->objectName()))
         {
             origin->setEnabled(true);
             move = "";
@@ -239,322 +239,335 @@ void GameWithoutChat::on_surrendButton_pressed()
     this->close();
 }
 
+void GameWithoutChat::on_moveConfirmButton_clicked()
+{
+    if (move.size() == 4)
+    {
+        ui->moveConfirmButton->setEnabled(false);
+        emit move_declared(move.toStdString());
+    }
+    else
+    {
+        ui->chgUpdateLabel->setText("Please choose initial and final positions of your piece by clicking on the board.");
+    }
+}
+
 void GameWithoutChat::on_A1_pressed()
 {
-    on_button_pushed(ui->A1);
+    on_boardButton_pushed(ui->A1);
 }
 
 void GameWithoutChat::on_A2_pressed()
 {
-    on_button_pushed(ui->A2);
+    on_boardButton_pushed(ui->A2);
 }
 
 void GameWithoutChat::on_A3_pressed()
 {
-    on_button_pushed(ui->A3);
+    on_boardButton_pushed(ui->A3);
 }
 
 void GameWithoutChat::on_A4_pressed()
 {
-    on_button_pushed(ui->A4);
+    on_boardButton_pushed(ui->A4);
 }
 
 void GameWithoutChat::on_A5_pressed()
 {
-    on_button_pushed(ui->A5);
+    on_boardButton_pushed(ui->A5);
 }
 
 void GameWithoutChat::on_A6_pressed()
 {
-    on_button_pushed(ui->A6);
+    on_boardButton_pushed(ui->A6);
 }
 
 void GameWithoutChat::on_A7_pressed()
 {
-    on_button_pushed(ui->A7);
+    on_boardButton_pushed(ui->A7);
 }
 
 void GameWithoutChat::on_A8_pressed()
 {
-    on_button_pushed(ui->A8);
+    on_boardButton_pushed(ui->A8);
 }
 
 void GameWithoutChat::on_B1_pressed()
 {
-    on_button_pushed(ui->B1);
+    on_boardButton_pushed(ui->B1);
 }
 
 void GameWithoutChat::on_B2_pressed()
 {
-    on_button_pushed(ui->B2);
+    on_boardButton_pushed(ui->B2);
 }
 
 void GameWithoutChat::on_B3_pressed()
 {
-    on_button_pushed(ui->B3);
+    on_boardButton_pushed(ui->B3);
 }
 
 void GameWithoutChat::on_B4_pressed()
 {
-    on_button_pushed(ui->B4);
+    on_boardButton_pushed(ui->B4);
 }
 
 void GameWithoutChat::on_B5_pressed()
 {
-    on_button_pushed(ui->B5);
+    on_boardButton_pushed(ui->B5);
 }
 
 void GameWithoutChat::on_B6_pressed()
 {
-    on_button_pushed(ui->B6);
+    on_boardButton_pushed(ui->B6);
 }
 
 void GameWithoutChat::on_B7_pressed()
 {
-    on_button_pushed(ui->B7);
+    on_boardButton_pushed(ui->B7);
 }
 
 void GameWithoutChat::on_B8_pressed()
 {
-    on_button_pushed(ui->B8);
+    on_boardButton_pushed(ui->B8);
 }
 
 void GameWithoutChat::on_C1_pressed()
 {
-    on_button_pushed(ui->C1);
+    on_boardButton_pushed(ui->C1);
 }
 
 void GameWithoutChat::on_C2_pressed()
 {
-    on_button_pushed(ui->C2);
+    on_boardButton_pushed(ui->C2);
 }
 
 void GameWithoutChat::on_C3_pressed()
 {
-    on_button_pushed(ui->C3);
+    on_boardButton_pushed(ui->C3);
 }
 
 void GameWithoutChat::on_C4_pressed()
 {
-    on_button_pushed(ui->C4);
+    on_boardButton_pushed(ui->C4);
 }
 
 void GameWithoutChat::on_C5_pressed()
 {
-    on_button_pushed(ui->C5);
+    on_boardButton_pushed(ui->C5);
 }
 
 void GameWithoutChat::on_C6_pressed()
 {
-    on_button_pushed(ui->C6);
+    on_boardButton_pushed(ui->C6);
 }
 
 void GameWithoutChat::on_C7_pressed()
 {
-    on_button_pushed(ui->C7);
+    on_boardButton_pushed(ui->C7);
 }
 
 void GameWithoutChat::on_C8_pressed()
 {
-    on_button_pushed(ui->C8);
+    on_boardButton_pushed(ui->C8);
 }
 
 void GameWithoutChat::on_D1_pressed()
 {
-    on_button_pushed(ui->D1);
+    on_boardButton_pushed(ui->D1);
 }
 
 void GameWithoutChat::on_D2_pressed()
 {
-    on_button_pushed(ui->D2);
+    on_boardButton_pushed(ui->D2);
 }
 
 void GameWithoutChat::on_D3_pressed()
 {
-    on_button_pushed(ui->D3);
+    on_boardButton_pushed(ui->D3);
 }
 
 void GameWithoutChat::on_D4_pressed()
 {
-    on_button_pushed(ui->D4);
+    on_boardButton_pushed(ui->D4);
 }
 
 void GameWithoutChat::on_D5_pressed()
 {
-    on_button_pushed(ui->D5);
+    on_boardButton_pushed(ui->D5);
 }
 
 void GameWithoutChat::on_D6_pressed()
 {
-    on_button_pushed(ui->D6);
+    on_boardButton_pushed(ui->D6);
 }
 
 void GameWithoutChat::on_D7_pressed()
 {
-    on_button_pushed(ui->D7);
+    on_boardButton_pushed(ui->D7);
 }
 
 void GameWithoutChat::on_D8_pressed()
 {
-    on_button_pushed(ui->D8);
+    on_boardButton_pushed(ui->D8);
 }
 
 void GameWithoutChat::on_E1_pressed()
 {
-    on_button_pushed(ui->E1);
+    on_boardButton_pushed(ui->E1);
 }
 
 void GameWithoutChat::on_E2_pressed()
 {
-    on_button_pushed(ui->E2);
+    on_boardButton_pushed(ui->E2);
 }
 
 void GameWithoutChat::on_E3_pressed()
 {
-    on_button_pushed(ui->E3);
+    on_boardButton_pushed(ui->E3);
 }
 
 void GameWithoutChat::on_E4_pressed()
 {
-    on_button_pushed(ui->E4);
+    on_boardButton_pushed(ui->E4);
 }
 
 void GameWithoutChat::on_E5_pressed()
 {
-    on_button_pushed(ui->E5);
+    on_boardButton_pushed(ui->E5);
 }
 
 void GameWithoutChat::on_E6_pressed()
 {
-    on_button_pushed(ui->E6);
+    on_boardButton_pushed(ui->E6);
 }
 
 void GameWithoutChat::on_E7_pressed()
 {
-    on_button_pushed(ui->E7);
+    on_boardButton_pushed(ui->E7);
 }
 
 void GameWithoutChat::on_E8_pressed()
 {
-    on_button_pushed(ui->E8);
+    on_boardButton_pushed(ui->E8);
 }
 
 void GameWithoutChat::on_F1_pressed()
 {
-    on_button_pushed(ui->F1);
+    on_boardButton_pushed(ui->F1);
 }
 
 void GameWithoutChat::on_F2_pressed()
 {
-    on_button_pushed(ui->F2);
+    on_boardButton_pushed(ui->F2);
 }
 
 void GameWithoutChat::on_F3_pressed()
 {
-    on_button_pushed(ui->F3);
+    on_boardButton_pushed(ui->F3);
 }
 
 void GameWithoutChat::on_F4_pressed()
 {
-    on_button_pushed(ui->F4);
+    on_boardButton_pushed(ui->F4);
 }
 
 void GameWithoutChat::on_F5_pressed()
 {
-    on_button_pushed(ui->F5);
+    on_boardButton_pushed(ui->F5);
 }
 
 void GameWithoutChat::on_F6_pressed()
 {
-    on_button_pushed(ui->F6);
+    on_boardButton_pushed(ui->F6);
 }
 
 void GameWithoutChat::on_F7_pressed()
 {
-    on_button_pushed(ui->F7);
+    on_boardButton_pushed(ui->F7);
 }
 
 void GameWithoutChat::on_F8_pressed()
 {
-    on_button_pushed(ui->F8);
+    on_boardButton_pushed(ui->F8);
 }
 
 void GameWithoutChat::on_G1_pressed()
 {
-    on_button_pushed(ui->G1);
+    on_boardButton_pushed(ui->G1);
 }
 
 void GameWithoutChat::on_G2_pressed()
 {
-    on_button_pushed(ui->G2);
+    on_boardButton_pushed(ui->G2);
 }
 
 void GameWithoutChat::on_G3_pressed()
 {
-    on_button_pushed(ui->G3);
+    on_boardButton_pushed(ui->G3);
 }
 
 void GameWithoutChat::on_G4_pressed()
 {
-    on_button_pushed(ui->G4);
+    on_boardButton_pushed(ui->G4);
 }
 
 void GameWithoutChat::on_G5_pressed()
 {
-    on_button_pushed(ui->G5);
+    on_boardButton_pushed(ui->G5);
 }
 
 void GameWithoutChat::on_G6_pressed()
 {
-    on_button_pushed(ui->G6);
+    on_boardButton_pushed(ui->G6);
 }
 
 void GameWithoutChat::on_G7_pressed()
 {
-    on_button_pushed(ui->G7);
+    on_boardButton_pushed(ui->G7);
 }
 
 void GameWithoutChat::on_G8_pressed()
 {
-    on_button_pushed(ui->G8);
+    on_boardButton_pushed(ui->G8);
 }
 
 void GameWithoutChat::on_H1_pressed()
 {
-    on_button_pushed(ui->H1);
+    on_boardButton_pushed(ui->H1);
 }
 
 void GameWithoutChat::on_H2_pressed()
 {
-    on_button_pushed(ui->H2);
+    on_boardButton_pushed(ui->H2);
 }
 
 void GameWithoutChat::on_H3_pressed()
 {
-    on_button_pushed(ui->H3);
+    on_boardButton_pushed(ui->H3);
 }
 
 void GameWithoutChat::on_H4_pressed()
 {
-    on_button_pushed(ui->H4);
+    on_boardButton_pushed(ui->H4);
 }
 
 void GameWithoutChat::on_H5_pressed()
 {
-    on_button_pushed(ui->H5);
+    on_boardButton_pushed(ui->H5);
 }
 
 void GameWithoutChat::on_H6_pressed()
 {
-    on_button_pushed(ui->H6);
+    on_boardButton_pushed(ui->H6);
 }
 
 void GameWithoutChat::on_H7_pressed()
 {
-    on_button_pushed(ui->H7);
+    on_boardButton_pushed(ui->H7);
 }
 
 void GameWithoutChat::on_H8_pressed()
 {
-    on_button_pushed(ui->H8);
+    on_boardButton_pushed(ui->H8);
 }

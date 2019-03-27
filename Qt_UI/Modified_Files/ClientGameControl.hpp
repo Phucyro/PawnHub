@@ -1,3 +1,6 @@
+#ifndef CCONTROL_H
+#define CCONTROL_H
+
 #include "thread"
 #include <string>
 #include <map>
@@ -8,8 +11,7 @@
 #include "../MainMenu/gameWithoutChat.h"
 #include "../MainMenu/gameWithoutChatWithAlice.h"
 
-#ifndef CCONTROL_H
-#define CCONTROL_H
+class QIcon;
 
 class ClientGameControl : public QObject {
 
@@ -50,7 +52,7 @@ public slots:
   void setRealTime();
 
 signals:
-  void receiveBoard(QString);
+  void updatePiece(QIcon, QString, QString);
   void receiveUpdate(QString);
   void receiveGameMode(QString);
   void receivePlayerColour(QString);
@@ -62,6 +64,8 @@ signals:
 
 private:
   void handleMessage();
+  void receiveBoard(QString);
+  void stringToBoard(std::string);
 
   std::map<char, void(ClientGameControl::*)(QString)> headerReceiveMap = {
     {'B', &ClientGameControl::receiveBoard},

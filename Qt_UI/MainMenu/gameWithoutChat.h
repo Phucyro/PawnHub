@@ -116,6 +116,8 @@ private slots:
     void on_H7_pressed();
     void on_H8_pressed();
 
+    void on_moveConfirmButton_clicked();
+
 private:
     Ui::GameWithoutChat *ui;
     Socket *socket;
@@ -123,7 +125,7 @@ private:
     QString move;
     bool gameOngoing;
 
-    void on_button_pushed(QPushButton*);
+    void on_boardButton_pushed(QPushButton*);
     void on_position_chosen(QPushButton*);
     void on_initialPosition_chosen(QPushButton*);
 };
