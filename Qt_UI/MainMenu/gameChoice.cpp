@@ -28,10 +28,6 @@ void GameChoice::send_game_request(std::string gameMode)
     message.set_title("In Queue");
     message.set_text("You have been placed in queue, please wait for an opponent.");
     message.popup();
-<<<<<<< HEAD
-=======
-    this->hide();
->>>>>>> 2a949cf9ba98261400338e17c3c9d675de1bbf2c
 }
 
 void GameChoice::on_classicPushButton_pressed()

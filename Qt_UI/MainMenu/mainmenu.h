@@ -20,6 +20,9 @@ public:
     explicit MainMenu(QWidget *parent = nullptr);
     ~MainMenu();
 
+signals:
+    void stopRecvMsg();
+
 private slots:
     void on_playButton_clicked();
     void on_statsButton_clicked();
@@ -27,7 +30,6 @@ private slots:
     void on_chatButton_clicked();
     void on_rulesButton_clicked();
     void on_quitButton_clicked();
-    void stopRecvMsg();
     void closeEvent();
 
 private:

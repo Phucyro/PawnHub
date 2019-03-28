@@ -85,6 +85,7 @@ private:
     {'G', &ClientGameControl::receiveGameMode},
     {'X', &ClientGameControl::receivePlayerColour},
     {'T', &ClientGameControl::receiveTurn},
+    {'C', &ClientGameControl::receiveTime},
     {'A', &ClientGameControl::receiveAskMove},
     {'P', &ClientGameControl::receiveAskPromotion},
     {'L', &ClientGameControl::receiveGoodMove},

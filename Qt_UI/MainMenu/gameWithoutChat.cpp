@@ -10,6 +10,7 @@ GameWithoutChat::GameWithoutChat(QWidget *parent, Client* client_) :
     QDialog(parent),
     ui(new Ui::GameWithoutChat),
     client(client_),
+    timer(),
     move("")
 {
     ui->setupUi(this);

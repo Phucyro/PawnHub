@@ -168,6 +168,7 @@ void ClientGameControl::setRealTime() {
 
 void ClientGameControl::handleMessage() {
     std::string message = client->readGame();
+    std::cout << message << std::endl;
 	char header = message[0];
     (this->*(headerReceiveMap[header]))(QString::fromStdString(message.erase(0,1)));
 }
