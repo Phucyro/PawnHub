@@ -54,20 +54,19 @@ void playGameHandler(MenuHandler* menu, Client* client){
   menu->clear_windows();
   menu->end_windows();
   //std::cout << "Vous avez rejoint une file d'attente" << std::endl;
-  ClientGameControl control(*(client->getSocket()));
-  client->writePipe("EndGame");
+  client->writePipe("StartGame");
 }
 
 void leaveQueueHandler(){
   //std::cout << "Vous avez quitte une file d'attente" << std::endl;
 }
 
-void myStatHandler(Client* client, std::string pos, std::string mode, std::string stat){
-  client->writePipe(pos + " " + mode + " " + stat);
+void myStatHandler(Client* client, std::string pos, std::string mode, std::string stat, std::string elo){
+  client->writePipe(pos + " " + mode + " " + stat + " " + elo);
 }
 
-void ladderHandler(Client* client, std::string pos, std::string username, std::string stat){
-  client->writePipe(pos + " " + username + " " + stat);
+void ladderHandler(Client* client, std::string pos, std::string username, std::string stat, std::string elo){
+  client->writePipe(pos + " " + username + " " + stat + " " + elo);
 }
 
 void viewFriendsHandler(Client* client, std::string friend_name){
@@ -142,6 +141,7 @@ void updateFriendsListHandler(Client* client, std::string friend_name, std::stri
     client->removeFriend(friend_name);
   }
   else if (option == "1"){ // Ajoute l'ami
+    client->removeSentRequest(friend_name);
     client->addFriend(friend_name);
   }
 }

@@ -4,6 +4,8 @@
 #include "../../Communication/Socket.hpp"
 //#include "../../Communication/ClientGameControl.hpp"
 #include "../../Communication/Client.hpp"
+#include "chat.h"
+
 
 #include <string>
 #include <stdlib.h>
@@ -40,11 +42,11 @@ void signInHandler(Client* client, char msg){
 }
 
 
-void chatHandler(Client* client, std::string sender, std::string target, std::string msg){
+void chatHandler(Client* client, std::string sender, std::string target, std::string msg,Chat *chat){
   client->updateConversation(target, sender, msg);
 
   if (client->isChatting() && client->isChattingWith(target)){
-//    displayChat(client, target);
+        chat->displayChat(client, target);
   }
 }
 

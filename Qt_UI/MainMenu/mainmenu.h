@@ -6,6 +6,7 @@
 #include <thread>
 
 class Client;
+class Chat;
 
 namespace Ui {
 class MainMenu;
@@ -32,6 +33,7 @@ private:
     Ui::MainMenu *ui;
     Client *client;
     std::thread *msgThread;
+    Chat *chat;
 
     void client_connect();
     void client_login();

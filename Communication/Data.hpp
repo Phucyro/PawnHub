@@ -12,11 +12,14 @@
 #include "dirent.h"
 #include <mutex>
 #include <cmath> //used in ELO calc
-#include <iomanip>
+
+#define LADDERSIZE 10
 
 typedef std::vector<unsigned int> Stat;
-typedef std::tuple<std::string, Stat, Stat, Stat, Stat, Stat, Stat, Stat, Stat, std::vector<std::string>, std::vector<std::string>, std::vector<std::string>, double> UserData;
-typedef std::tuple<std::string, Stat> UserLadderData;
+typedef std::tuple<std::string, Stat, double> UserLadderData;
+typedef std::tuple<std::string, Stat, Stat, Stat, Stat, Stat, Stat, Stat, Stat,
+  std::vector<std::string>, std::vector<std::string>, std::vector<std::string>,
+  std::vector<double>> UserData;
 
 class Data {
 private:
@@ -43,43 +46,25 @@ public:
   bool removeFriend(const std::string username, const std::string friend_name);
   bool cancelSentRequest(const std::string username, const std::string friend_name);
 
-  void addUserClassicWin(const std::string username);
-  void addUserClassicLose(const std::string username);
-  void addUserClassicDraw(const std::string username);
-  void addUserDarkWin(const std::string username);
-  void addUserDarkLose(const std::string username);
-  void addUserDarkDraw(const std::string username);
-  void addUserHordeWin(const std::string username);
-  void addUserHordeLose(const std::string username);
-  void addUserHordeDraw(const std::string username);
-  void addUserAliceWin(const std::string username);
-  void addUserAliceLose(const std::string username);
-  void addUserAliceDraw(const std::string username);
-
-  void addUserRealTimeClassicWin(const std::string username);
-  void addUserRealTimeClassicLose(const std::string username);
-  void addUserRealTimeClassicDraw(const std::string username);
-  void addUserRealTimeDarkWin(const std::string username);
-  void addUserRealTimeDarkLose(const std::string username);
-  void addUserRealTimeDarkDraw(const std::string username);
-  void addUserRealTimeHordeWin(const std::string username);
-  void addUserRealTimeHordeLose(const std::string username);
-  void addUserRealTimeHordeDraw(const std::string username);
-  void addUserRealTimeAliceWin(const std::string username);
-  void addUserRealTimeAliceLose(const std::string username);
-  void addUserRealTimeAliceDraw(const std::string username);
-
-  double getEloRating(std::string);
-  void updateRating(const std::string, double, double);
-  double expectedWin(double,double);
+  void updateClassicStat(std::string username, int option);
+  void updateDarkStat(std::string username, int option);
+  void updateHordeStat(std::string username, int option);
+  void updateAliceStat(std::string username, int option);
+  void updateRTClassicStat(std::string username, int option);
+  void updateRTDarkStat(std::string username, int option);
+  void updateRTHordeStat(std::string username, int option);
+  void updateRTAliceStat(std::string username, int option);
 
   bool isInLadder(const std::string gamemode, const std::string username);
-  void updateLadderOnLoseDraw(const std::string gamemode, UserLadderData data);
-  void updateLadderOnWin(const std::string gamemode, UserLadderData data);
+  void updateLadder(const std::string gamemode, UserLadderData data);
   void initLadder();
   std::vector<UserLadderData> getLadder(const std::string gamemode);
   void printLadder(const std::string gamemode);
   Stat getUserStat(const std::string username, const std::string gamemode);
+
+  double getEloRating(std::string, unsigned int);
+  void updateRating(const std::string, double, double, unsigned int);
+  double getExpectedWin(double,double);
 
   void lockMutex();
   void unlockMutex();

@@ -135,19 +135,24 @@ void RealTimeHorde::_sendGameMode() {
 
 
 void RealTimeHorde::_updateStat(){
+	double playerElo1 = data.getEloRating(_player1->getName(), RTHORDE);
+	double playerElo2 = data.getEloRating(_player2->getName(), RTHORDE);
+	double playerExptWin1 = data.getExpectedWin(playerElo1, playerElo2);
+	double playerExptWin2 = data.getExpectedWin(playerElo2, playerElo1);
+
 	if (_winner == _player1){
 		std::cout << "White Player win !" << std::endl;
-		data.addUserRealTimeHordeLose(_player2->getName());
-		data.addUserRealTimeHordeWin(_player1->getName());
-		data.updateRating(_player2->getName(),data.expectedWin(data.getEloRating(_player2->getName()),data.getEloRating(_player1->getName())),LOSE);
-		data.updateRating(_player1->getName(),data.expectedWin(data.getEloRating(_player1->getName()),data.getEloRating(_player2->getName())),WIN);
+		data.updateRTHordeStat(_player2->getName(), 1);
+		data.updateRTHordeStat(_player1->getName(), 0);
+		data.updateRating(_player2->getName(), playerExptWin2, LOSE, RTHORDE);
+		data.updateRating(_player1->getName(), playerExptWin1, WIN,  RTHORDE);
 	}
 	else if (_winner == _player2) {
 		std::cout << "Black Player win !" << std::endl;
-		data.addUserRealTimeHordeWin(_player2->getName());
-		data.addUserRealTimeHordeLose(_player1->getName());
-		data.updateRating(_player2->getName(),data.expectedWin(data.getEloRating(_player2->getName()),data.getEloRating(_player1->getName())),WIN);
-		data.updateRating(_player1->getName(),data.expectedWin(data.getEloRating(_player1->getName()),data.getEloRating(_player2->getName())),LOSE);
+		data.updateRTHordeStat(_player2->getName(), 0);
+		data.updateRTHordeStat(_player1->getName(), 1);
+		data.updateRating(_player2->getName(), playerExptWin2, WIN,  RTHORDE);
+		data.updateRating(_player1->getName(), playerExptWin1, LOSE, RTHORDE);
 	}
 }
 

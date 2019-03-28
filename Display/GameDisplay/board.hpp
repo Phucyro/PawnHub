@@ -48,6 +48,7 @@ public:
   void draw_infos();
   void clear_board();
   void clear_get_movement();
+  void clear_premove();
 
   // void move_piece(int, int, int, int, std::string);
 
@@ -65,14 +66,17 @@ public:
   bool isRunning();
 
   //change infos win
-  void change_mode(std::string);
-  void change_last_move(std::string);
-  void change_turn(std::string);
+  void change_mode(const std::string&);
+  void change_last_move(const std::string&);
+  void change_turn(const std::string&);
+  void show_time_left(const std::string&);
   
   void ask_ipos();
   void print_ipos(int, int);
   void ask_epos();
   void print_epos(int, int);
+  void print_premove();
+  void print_your_turn();
   char getchar();
 
 

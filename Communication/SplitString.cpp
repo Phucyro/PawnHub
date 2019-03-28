@@ -29,15 +29,30 @@ std::vector<std::string> splitString(std::string text, char delimiter){
   return res;
 }
 
+std::string strVectorToStr(std::vector<std::string> vector){
+  std::string res;
+
+  for (unsigned int a = 0; a < vector.size(); ++a){
+    if (a == vector.size()-1){
+      res += vector[a];
+    }
+    else {
+      res += (vector[a] + " ");
+    }
+  }
+
+  return res;
+}
+
+
 std::vector<unsigned int> toUIVector(std::vector<std::string> vector){
   std::vector<unsigned int> res;
 
   for (unsigned int a = 0; a < vector.size(); ++a){
-    res.push_back(unsigned(std::stoi(vector[a])));
+    res.push_back(std::stoi(vector[a]));
   }
   return res;
 }
-
 
 std::string unsignedIntVectorToStr(std::vector<unsigned int> vector){
   std::string res;
@@ -53,17 +68,29 @@ std::string unsignedIntVectorToStr(std::vector<unsigned int> vector){
   return res;
 }
 
-std::string strVectorToStr(std::vector<std::string> vector){
-  std::string res;
+std::vector<double> toDoubleVector(std::vector<std::string> vector){
+  std::vector<double> res;
 
   for (unsigned int a = 0; a < vector.size(); ++a){
+    res.push_back(std::atof(vector[a].c_str()));
+  }
+  return res;
+}
+
+std::string doubleVectorToStr(std::vector<double> vector){
+  std::string res;
+  std::stringstream stream;
+
+  for (unsigned int a = 0; a < vector.size(); ++a){
+    stream << std::fixed << std::setprecision(2) << vector[a];
+
     if (a == vector.size()-1){
-      res += vector[a];
+      res += stream.str();
     }
     else {
-      res += (vector[a] + " ");
+      res += (stream.str() + " ");
     }
+    stream.str("");
   }
-
   return res;
 }

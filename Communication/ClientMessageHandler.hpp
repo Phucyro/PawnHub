@@ -10,17 +10,14 @@
 #include "../Display/MenuHandler/MenuHandler.hpp"
 #include <stdlib.h>
 #include "Client.hpp"
+#include <iostream>
+#include <fstream>
 
 void receiveMessageHandler(MenuHandler* menu, Client* client){
   std::vector<std::string> msg;
 
   while (true){
     msg = splitString(client->getSocket()->receiveMessage(), '~');
-
-    if (std::isalpha(msg[0][0])){
-       client->writePipe(strVectorToStr(msg));
-       continue;
-    }
 
     int choice = atoi(msg[0].c_str());
 
@@ -41,10 +38,10 @@ void receiveMessageHandler(MenuHandler* menu, Client* client){
         leaveQueueHandler();
         break;
       case 7 :
-        myStatHandler(client, msg[1], msg[2], msg[3]);
+        myStatHandler(client, msg[1], msg[2], msg[3], msg[4]);
         break;
       case 8 :
-        ladderHandler(client, msg[1], msg[2], msg[3]);
+        ladderHandler(client, msg[1], msg[2], msg[3], msg[4]);
         break;
       case 9 :
         viewFriendsHandler(client, msg[1]);
@@ -75,6 +72,9 @@ void receiveMessageHandler(MenuHandler* menu, Client* client){
         break;
       case 18 :
         updateSentRequestHandler(client, msg[1], msg[2]);
+        break;
+      case 30 :
+        client->writeGame(msg[1]);
         break;
     }
   }

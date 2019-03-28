@@ -41,19 +41,6 @@ void Board::init_ncurses()
   init_pair(WHITE_PLAYER, COLOR_WHITE, COLOR_BLACK);
   init_pair(BLACK_PLAYER, COLOR_RED, COLOR_BLACK);
 
-  /**
-  init_pair(1,COLOR_WHITE, COLOR_BLUE);
-  init_pair(2,COLOR_WHITE, COLOR_RED);
-
-  attron(COLOR_PAIR(1));
-  mvprintw(1,1,"P");
-  attroff(COLOR_PAIR(1));
-
-  attron(COLOR_PAIR(2));
-  mvprintw(4,4,"T");
-  attroff(COLOR_PAIR(2));
-  **/
-
   init_windows();
 }
 
@@ -64,7 +51,7 @@ void Board::init_windows()
   int board_height = (lines+1)*OFFSET;
   int board_width = (columns+1)*OFFSET;
 
-  infos_win = newwin(board_height/2, board_width, 0, board_width+4);
+  infos_win = newwin(board_height/2 + 3, board_width+2, 0, board_width+5);
   box(infos_win,0,0);
 
   for (int i=0; i<(lines*OFFSET); i+=OFFSET)
@@ -97,7 +84,6 @@ void Board::draw_alice_coordinates()
   }
 
 
-  //refresh_board();
 }
 
 void Board::draw_alice_board()
@@ -114,7 +100,6 @@ void Board::draw_alice_board()
 
   draw_alice_coordinates();
 
-  //refresh_board();
 
 
 }
@@ -131,35 +116,40 @@ void Board::draw_infos()
   mvwprintw(infos_win, 4, 1, "YOUR COLOUR : %s", colour.c_str());
 
   mvwprintw(infos_win , 7, 1, "%s", "TURN COUNT : ");
+  
+  mvwprintw(infos_win , 10, 1, "%s", "TIME LEFT : ");
 
-  mvwprintw(infos_win , 10, 1, "Enter /end to surrend");
+  mvwprintw(infos_win , 13, 1, "ENTER /end TO SURREND");
 
-  //refresh_board();
 }
 
 void Board::set_mode(const std::string& game) {
   mode = game;
-  //refresh_board();
 }
 
 void Board::set_colour(const std::string& player_colour) {
   colour = player_colour;
-  //refresh_board();
 }
 
 void Board::update_turn(const char* turn) {
   mvwprintw(infos_win, 7, 14, "%s", turn);
-  //refresh_board();
+}
+
+void Board::show_time_left(const std::string& time)
+{
+  mvwprintw(infos_win,10, 13,time.c_str());
+  refresh();
+  wrefresh(infos_win);
 }
 
 void Board::declare_check() {
-  mvprintw(14, 30, "%s", "CHECK");
+  mvprintw(20, 30, "%s", "CHECK");
   refresh_board();
 }
 
 void Board::endgame(const char* message) {
-  clear_get_movement();
-  mvprintw(15, 30, "%s", message);
+  clear_premove();
+  mvprintw(18, 30, "%s", message);
   refresh_board();
   getch();
 }
@@ -185,19 +175,15 @@ void Board::draw_pieces(std::string board)
 /** Dessine les pions sur le board de depart **/
 {
   clear_board();
-  //init_windows();
   box(infos_win,0,0);
   draw_infos();
   stringToBoard(board);
-  //refresh_board();
 }
 
 void Board::draw_alice_pieces(std::string board)
 {
-  //refresh_board();
   draw_alice_board();
   aliceToBoard(board);
-  //refresh_board();
 }
 
 
@@ -214,20 +200,6 @@ void Board::draw_rectangle(int x1, int y1, int x2, int y2)
   mvaddch(y2, x2, ACS_LRCORNER);
 }
 
-
-// UNNECESSARY since we have the full board sent over - still here in case of apocalypse
-// void Board::move_piece(int x1, int y1, int x2, int y2, std::string piece_type)
-// /** permet de bouger un pion de la position (x1,y1) vers (x2,y2) **/
-// {
-//   mvprintw(1+OFFSET*x1, 1+OFFSET*y1, " ");
-//
-//   const char* piece = piece_type.c_str();
-//
-//   mvprintw(1+OFFSET*y2, 1+OFFSET*x2, piece);
-//
-//   refresh_board();
-// }
-
 void Board::clear_board(){
 	for (int line = 0; line < 8; line++){
 		for (int column = 0; column < 8; column++){
@@ -239,7 +211,6 @@ void Board::clear_board(){
     			mvprintw((1+line)*OFFSET, 63+((column+1)*OFFSET), "%c", ' ');
 		}
 	}
-	//refresh_board();
 }
 
 void Board::refresh_board()
@@ -259,40 +230,38 @@ bool Board::isRunning()
 std::string Board::get_movement()
 {
   int move[4];
-  // echo();    // would have been cool but can't clear it without brute force
   for (int i = 0; i < 5; ++i) {
     if (i == 0) {
-      mvprintw(15, 30, "%s", "State initial piece position: ");
+      mvprintw(18, 30, "%s", "State initial piece position: ");
     }
     else if (i == 2) {
-      mvprintw(16, 30, "%s", "State moved piece position: ");
+      mvprintw(19, 30, "%s", "State moved piece position: ");
     }
     else if (i == 4) break;
     move[i] = getch();
-    mvprintw(15 + (i/2), 60 + (i%2), "%c", move[i]);
+    mvprintw(18 + (i/2), 60 + (i%2), "%c", move[i]);
   }
-  // noecho();
   refresh_board();
 
   std::string effective_move = moveToString(move);
-  // const char* this_move = effective_move.c_str();
-  // mvprintw(18, 30, "%s", this_move);
   clear_get_movement();
   return effective_move;
 }
 
 void Board::clear_get_movement(){
-  mvprintw(15, 30, "%s", "                                ");
-  mvprintw(16, 30, "%s", "                                ");
+  mvprintw(18, 30, "%s", "                                 ");
+  mvprintw(19, 30, "%s", "                                 ");
 }
 
 std::string Board::get_promotion() {
-  mvprintw(15, 30, "%s", "What do you wish to promote your pawn to?");
-  mvprintw(16, 30, "%s", "Queen: q   Bishop: b   Knight: h    Rook: r");
+  mvprintw(18, 30, "%s", "What do you wish to promote your pawn to?");
+  mvprintw(19, 30, "%s", "Queen: q   Bishop: b   Knight: h    Rook: r");
 
   int answer = getch();
   std::string promotion;
   promotion.append(1, answer);
+  mvprintw(18, 30, "%s", "                                         ");
+  mvprintw(19, 30, "%s", "                                           ");
   return promotion;
 }
 
@@ -303,45 +272,62 @@ void Board::exit()
   endwin();
 }
 
-void Board::change_mode(std::string mode)
+void Board::change_mode(const std::string& mode)
 {
   mvwprintw(infos_win,1,13,mode.c_str());
   refresh();
   wrefresh(infos_win);
 }
 
-void Board::change_last_move(std::string move)
+void Board::change_last_move(const std::string& move)
 {
   mvwprintw(infos_win,4,13,move.c_str());
   refresh();
   wrefresh(infos_win);
 }
 
-void Board::change_turn(std::string turn)
+void Board::change_turn(const std::string& turn)
 {
   mvwprintw(infos_win,7,8,turn.c_str());
   refresh();
   wrefresh(infos_win);
 }
 
-
 void Board::ask_ipos(){
-	mvprintw(15, 30, "%s", "State initial piece position: ");
+	mvprintw(18, 30, "%s", "State initial piece position: ");
 	refresh_board();
 }
 
 void Board::print_ipos(int ch, int offset){
-	mvprintw(15, 60+offset, "%c", ch);
+	mvprintw(18, 60+offset, "%c", ch);
 	refresh_board();
 }
 
 void Board::ask_epos(){
-	mvprintw(16, 30, "%s", "State moved piece position: ");
+	mvprintw(19, 30, "%s", "State moved piece position: ");
 	refresh_board();
 }
 
 void Board::print_epos(int ch, int offset){
-	mvprintw(16, 60+offset, "%c", ch);
+	mvprintw(19, 60+offset, "%c", ch);
+	refresh_board();
+}
+
+void Board::print_premove(){
+	mvprintw(17, 30, "%s", "Premove:");
+	Board::ask_ipos();
+	refresh_board();
+}
+
+void Board::print_your_turn(){
+	mvprintw(17, 30, "%s", "Your turn:");
+	Board::ask_ipos();
+	refresh_board();
+}
+
+void Board::clear_premove(){
+	mvprintw(17, 30, "%s", "          ");
+	clear_get_movement();
 	refresh_board();
 }
 

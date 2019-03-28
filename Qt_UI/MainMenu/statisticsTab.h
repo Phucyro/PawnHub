@@ -2,6 +2,7 @@
 #define STATISTICSTAB_H
 
 #include <QDialog>
+#include "../../Communication/Client.hpp"
 
 namespace Ui {
 class StatisticsTab;
@@ -12,14 +13,20 @@ class StatisticsTab : public QDialog
     Q_OBJECT
 
 public:
-    explicit StatisticsTab(QWidget *parent = nullptr);
+    explicit StatisticsTab(int type,Client *client,int gamemode, QWidget *parent = nullptr);
     ~StatisticsTab();
+    int getGamemode();
 
 private slots:
     void on_returnPushButton_pressed();
+    void setupMyStats();
+    void setupGlobalStats();
 
 private:
     Ui::StatisticsTab *ui;
+    int type;
+    Client* client;
+    int gamemode;
 };
 
 #endif // STATISTICSTAB_H
