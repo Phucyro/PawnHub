@@ -25,10 +25,7 @@ void Chat::setupChat(){
     ui->friendListWidget->clear();
     client->setIsChatting(true);
     displayChat(QString::fromStdString(client->getIsChattingWith()));
-    for ( std::vector<std::string>::iterator it=client->getFriends().begin(); it!=client->getFriends().end(); ++it){
-        std::cout << *it <<"\n";
-        ui->friendListWidget->addItem(QString::fromStdString(*it));
-    }
+    reloadFriends();
 }
 
 void Chat::displayChat(QString target){
@@ -43,6 +40,8 @@ void Chat::displayChat(QString target){
         std::string text = std::get<0>(conv[a]) + " : " + std::get<1>(conv[a]);
         ui->chatPlainTextEdit->appendPlainText(QString::fromStdString(text));
     }
+    //to have always the latest friends
+    reloadFriends();
 }
 
 void Chat::on_sendPushButton_pressed()
@@ -102,3 +101,12 @@ void Chat::on_changeChanPushButton_pressed()
         ui->chatPlainTextEdit->clear();
     }
 }
+
+void Chat::reloadFriends(){
+    std::cout << "HEY " <<"\n";
+    for ( std::vector<std::string>::iterator it=client->getFriends().begin(); it!=client->getFriends().end(); ++it){
+        std::cout << *it <<"\n";
+        ui->friendListWidget->addItem(QString::fromStdString(*it));
+    }
+}
+

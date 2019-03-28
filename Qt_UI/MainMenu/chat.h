@@ -34,7 +34,7 @@ private slots:
 
     void on_changeChanPushButton_pressed();
     void setupChat();
-
+    void reloadFriends();
 
 
 private:
