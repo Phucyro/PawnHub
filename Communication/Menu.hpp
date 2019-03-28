@@ -9,7 +9,6 @@
 #include <string>
 #include <vector>
 #include "SplitString.hpp"
-#include <thread>
 #include "Client.hpp"
 #include "config.hpp"
 
@@ -396,6 +395,11 @@ void sendFriendRequestMenu(MenuHandler* menu, Client* client){
     if (!checkFriendInputFormat(menu, split)){
       continue;
     }
+    else if (split[1] == "all" || split[1] == "Guest"){
+      menu->print_warning("Vous ne pouvez pas envoyer de demande à Guest ou all");
+      menu->refresh_board();
+      continue;
+    }
     else if (client->isFriendWith(split[1])){
       menu->print_warning("Vous êtes déjà ami avec cette personne");
       menu->refresh_board();
@@ -584,6 +588,8 @@ void chatMenu(MenuHandler* menu, Client* client){
     menu->init_dataw();
     command = menu->get_infos("message");
     menu->refresh_board();
+
+    if (command.size() == 0) continue;
 
     if (!checkInputFormat(command)){
       menu->print_warning("Les caractères | et ~ sont interdits");

@@ -28,13 +28,12 @@ int main(){
     MenuHandler* menu = new MenuHandler();
 
     std::thread receiveThread(receiveMessageHandler, menu, client);
-    receiveThread.detach();
 
     authentificationMenu(menu, client);
     initClientData(client);
     mainMenu(menu, client);
     quit(menu, client);
-
+    receiveThread.join();
     delete menu;
   }
   catch(std::runtime_error& error) {
