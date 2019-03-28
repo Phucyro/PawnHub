@@ -33,8 +33,11 @@ int main(){
     initClientData(client);
     mainMenu(menu, client);
     quit(menu, client);
-    receiveThread.join();
+
+    delete client;
     delete menu;
+
+    receiveThread.join();
   }
   catch(std::runtime_error& error) {
     std::cout << error.what() << std::endl;
