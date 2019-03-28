@@ -26,10 +26,12 @@ private:
   const std::string _path;
   std::map<std::string, UserData> _dataMap;
   std::map<std::string, std::vector<UserLadderData>> _ladders;
-  std::mutex _mutex;
+  std::map<std::string, std::mutex*> _mutexs;
+  std::mutex _ladderMutex;
 
 public:
   Data(const std::string path);
+  ~Data();
   bool containsAccount(const std::string username);
   bool isConnected(const std::string username);
   bool checkUserPassword(const std::string username, const std::string password);
@@ -57,7 +59,7 @@ public:
 
   bool isInLadder(const std::string gamemode, const std::string username);
   void updateLadder(const std::string gamemode, UserLadderData data);
-  void initLadder();
+  void init();
   std::vector<UserLadderData> getLadder(const std::string gamemode);
   void printLadder(const std::string gamemode);
   Stat getUserStat(const std::string username, const std::string gamemode);
@@ -66,8 +68,8 @@ public:
   void updateRating(const std::string, double, double, unsigned int);
   double getExpectedWin(double,double);
 
-  void lockMutex();
-  void unlockMutex();
+  void lockMutex(std::string username);
+  void unlockMutex(std::string username);
 
 };
 #endif
