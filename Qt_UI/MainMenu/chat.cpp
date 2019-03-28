@@ -24,15 +24,15 @@ void Chat::setupChat(){
     ui->chgChangeChannellabel->setText(QString::fromStdString(client->getIsChattingWith()));
     ui->friendListWidget->clear();
     client->setIsChatting(true);
-    displayChat(client,client->getIsChattingWith());
+    displayChat(QString::fromStdString(client->getIsChattingWith()));
     for ( std::vector<std::string>::iterator it=client->getFriends().begin(); it!=client->getFriends().end(); ++it){
         std::cout << *it <<"\n";
         ui->friendListWidget->addItem(QString::fromStdString(*it));
     }
 }
 
-void Chat::displayChat(Client *client, std::string target){
-    Conversation conv = client->getConversation(target);
+void Chat::displayChat(QString target){
+    Conversation conv = client->getConversation(target.toStdString());
 
     ui->chatPlainTextEdit->clear(); //clears chat box
     ui->inputLineEdit->clear(); //clears input box
@@ -54,27 +54,18 @@ void Chat::on_sendPushButton_pressed()
                  m->popup();
     }
 
-    chat(client->getSocket(), client->getIsChattingWith(), ui->inputLineEdit->text().toStdString());
-
-    ui->chatPlainTextEdit->appendPlainText(ui->inputLineEdit->text());
-    ui->inputLineEdit->clear();
-    displayChat(client,client->getIsChattingWith());
-}
-
-void Chat::on_inputLineEdit_returnPressed()
-{
-    if (!checkInputFormat(ui->inputLineEdit->text().toStdString())){
+    if(ui->inputLineEdit->text()==""){
         Message* m = new Message();
-                 m->set_text("The caracters '|' and '~' are forbidden");
-                 m->set_title("Oh No: Wrong Characters detected");
+                 m->set_text("Please type something or don't type at all.");
+                 m->set_title("Oh No: Empty Field Error");
                  m->popup();
+    }else{
+        chat(client->getSocket(), client->getIsChattingWith(), ui->inputLineEdit->text().toStdString());
+
+        ui->chatPlainTextEdit->appendPlainText(ui->inputLineEdit->text());
+        ui->inputLineEdit->clear();
+        displayChat(QString::fromStdString(client->getIsChattingWith()));
     }
-
-    chat(client->getSocket(), client->getIsChattingWith(), ui->inputLineEdit->text().toStdString());
-
-    ui->chatPlainTextEdit->appendPlainText(ui->inputLineEdit->text());
-    ui->inputLineEdit->clear();
-    displayChat(client,client->getIsChattingWith());
 }
 
 void Chat::on_quitPushButton_pressed()
@@ -107,7 +98,7 @@ void Chat::on_changeChanPushButton_pressed()
                  m->popup();
     }else{
         client->setIsChattingWith(ui->friendListWidget->currentItem()->text().toStdString());
-        displayChat(client,ui->friendListWidget->currentItem()->text().toStdString());
+        displayChat(ui->friendListWidget->currentItem()->text());
         ui->chatPlainTextEdit->clear();
     }
 }

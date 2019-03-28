@@ -7,11 +7,10 @@
 #include "../../Communication/Client.hpp"
 #include "../Modified_Files/ClientFunctions.hpp"
 
-GameChoice::GameChoice(QWidget *parent, Client* client_, std::thread* msgThread_) :
+GameChoice::GameChoice(QWidget *parent, Client* client_) :
     QDialog(parent),
     ui(new Ui::GameChoice),
-    client(client_),
-    msgThread(msgThread_)
+    client(client_)
 {
     ui->setupUi(this);
 }
@@ -30,10 +29,6 @@ void GameChoice::send_game_request(std::string gameMode)
     message.set_text("You have been placed in queue, please wait for an opponent.");
     message.popup();
     this->hide();
-
-    msgThread->join();
-    msgThread = nullptr;
-
 }
 
 void GameChoice::on_classicPushButton_pressed()
