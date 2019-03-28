@@ -50,10 +50,10 @@
   <widget class="QLabel" name="imageLabel">
    <property name="geometry">
     <rect>
-     <x>20</x>
+     <x>10</x>
      <y>440</y>
      <width>221</width>
-     <height>141</height>
+     <height>151</height>
     </rect>
    </property>
    <property name="text">
@@ -95,7 +95,7 @@
   <widget class="QWidget" name="verticalLayoutWidget">
    <property name="geometry">
     <rect>
-     <x>20</x>
+     <x>10</x>
      <y>20</y>
      <width>221</width>
      <height>401</height>
@@ -146,6 +146,9 @@
       </item>
       <item row="2" column="0">
        <widget class="QLabel" name="lastMoveLabel">
+        <property name="enabled">
+         <bool>true</bool>
+        </property>
         <property name="text">
          <string>LAST MOVE:</string>
         </property>
@@ -153,6 +156,9 @@
       </item>
       <item row="2" column="1">
        <widget class="QLabel" name="chgLastMoveLabel">
+        <property name="enabled">
+         <bool>true</bool>
+        </property>
         <property name="text">
          <string>last move</string>
         </property>
@@ -160,6 +166,9 @@
       </item>
       <item row="3" column="0">
        <widget class="QLabel" name="opponentNameLabel">
+        <property name="enabled">
+         <bool>true</bool>
+        </property>
         <property name="text">
          <string>OPPONENT NAME:</string>
         </property>
@@ -167,6 +176,9 @@
       </item>
       <item row="3" column="1">
        <widget class="QLabel" name="chgOpponentNameLabel">
+        <property name="enabled">
+         <bool>true</bool>
+        </property>
         <property name="text">
          <string>opponent</string>
         </property>
@@ -177,7 +189,7 @@
     <item>
      <widget class="QPushButton" name="surrendButton">
       <property name="text">
-       <string>Surrend</string>
+       <string>Surrender</string>
       </property>
      </widget>
     </item>
@@ -243,7 +255,7 @@
    <property name="geometry">
     <rect>
      <x>250</x>
-     <y>30</y>
+     <y>10</y>
      <width>401</width>
      <height>61</height>
     </rect>
@@ -2839,7 +2851,7 @@
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
-     <widget class="QLabel" name="label_8">
+     <widget class="QLabel" name="label_8right">
       <property name="text">
        <string>8</string>
       </property>
@@ -2849,7 +2861,7 @@
      </widget>
     </item>
     <item>
-     <widget class="QLabel" name="label_7">
+     <widget class="QLabel" name="label_7right">
       <property name="text">
        <string>7</string>
       </property>
@@ -2859,7 +2871,7 @@
      </widget>
     </item>
     <item>
-     <widget class="QLabel" name="label_6">
+     <widget class="QLabel" name="label_6right">
       <property name="text">
        <string>6</string>
       </property>
@@ -2869,7 +2881,7 @@
      </widget>
     </item>
     <item>
-     <widget class="QLabel" name="label_5">
+     <widget class="QLabel" name="label_5right">
       <property name="text">
        <string>5</string>
       </property>
@@ -2879,7 +2891,7 @@
      </widget>
     </item>
     <item>
-     <widget class="QLabel" name="label_4">
+     <widget class="QLabel" name="label_4right">
       <property name="text">
        <string>4</string>
       </property>
@@ -2889,7 +2901,7 @@
      </widget>
     </item>
     <item>
-     <widget class="QLabel" name="label_3">
+     <widget class="QLabel" name="label_3right">
       <property name="text">
        <string>3</string>
       </property>
@@ -2899,7 +2911,7 @@
      </widget>
     </item>
     <item>
-     <widget class="QLabel" name="label_2">
+     <widget class="QLabel" name="label_2right">
       <property name="text">
        <string>2</string>
       </property>
@@ -2909,7 +2921,7 @@
      </widget>
     </item>
     <item>
-     <widget class="QLabel" name="label_1">
+     <widget class="QLabel" name="label_1right">
       <property name="text">
        <string>1</string>
       </property>
@@ -2931,7 +2943,7 @@
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout">
     <item>
-     <widget class="QLabel" name="label_A">
+     <widget class="QLabel" name="label_A_down">
       <property name="text">
        <string>A</string>
       </property>
@@ -2941,7 +2953,7 @@
      </widget>
     </item>
     <item>
-     <widget class="QLabel" name="label_B">
+     <widget class="QLabel" name="label_B_down">
       <property name="text">
        <string>B</string>
       </property>
@@ -2951,7 +2963,7 @@
      </widget>
     </item>
     <item>
-     <widget class="QLabel" name="label_C">
+     <widget class="QLabel" name="label_C_down">
       <property name="text">
        <string>C</string>
       </property>
@@ -2961,7 +2973,7 @@
      </widget>
     </item>
     <item>
-     <widget class="QLabel" name="label_D">
+     <widget class="QLabel" name="label_D_down">
       <property name="text">
        <string>D</string>
       </property>
@@ -2971,7 +2983,7 @@
      </widget>
     </item>
     <item>
-     <widget class="QLabel" name="label_E">
+     <widget class="QLabel" name="label_E_down">
       <property name="text">
        <string>E</string>
       </property>
@@ -2981,7 +2993,7 @@
      </widget>
     </item>
     <item>
-     <widget class="QLabel" name="label_F">
+     <widget class="QLabel" name="label_F_down">
       <property name="text">
        <string>F</string>
       </property>
@@ -2991,7 +3003,7 @@
      </widget>
     </item>
     <item>
-     <widget class="QLabel" name="label_G">
+     <widget class="QLabel" name="label_G_down">
       <property name="text">
        <string>G</string>
       </property>
@@ -3001,7 +3013,7 @@
      </widget>
     </item>
     <item>
-     <widget class="QLabel" name="label_H">
+     <widget class="QLabel" name="label_H_down">
       <property name="text">
        <string>H</string>
       </property>
@@ -3016,9 +3028,47 @@
    <property name="geometry">
     <rect>
      <x>680</x>
-     <y>240</y>
+     <y>190</y>
      <width>111</width>
-     <height>91</height>
+     <height>151</height>
+    </rect>
+   </property>
+   <property name="frameShape">
+    <enum>QFrame::Box</enum>
+   </property>
+   <property name="frameShadow">
+    <enum>QFrame::Sunken</enum>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+   </property>
+   <property name="wordWrap">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QLabel" name="moveLabel">
+   <property name="geometry">
+    <rect>
+     <x>681</x>
+     <y>351</y>
+     <width>91</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Chosen move:</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="chgMoveLabel">
+   <property name="geometry">
+    <rect>
+     <x>680</x>
+     <y>370</y>
+     <width>111</width>
+     <height>17</height>
     </rect>
    </property>
    <property name="text">
@@ -3028,26 +3078,299 @@
     <set>Qt::AlignCenter</set>
    </property>
   </widget>
-  <widget class="QPushButton" name="moveConfirmButton">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
+  <widget class="QWidget" name="verticalLayoutWidget_4">
    <property name="geometry">
     <rect>
-     <x>690</x>
-     <y>420</y>
-     <width>80</width>
-     <height>25</height>
+     <x>230</x>
+     <y>100</y>
+     <width>21</width>
+     <height>401</height>
     </rect>
    </property>
-   <property name="text">
-    <string>Done</string>
+   <layout class="QVBoxLayout" name="verticalLayout_4">
+    <item>
+     <widget class="QLabel" name="label_8left">
+      <property name="text">
+       <string>8</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="label_7left">
+      <property name="text">
+       <string>7</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="label_6left">
+      <property name="text">
+       <string>6</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="label_5left">
+      <property name="text">
+       <string>5</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="label_4left">
+      <property name="text">
+       <string>4</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="label_3left">
+      <property name="text">
+       <string>3</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="label_2left">
+      <property name="text">
+       <string>2</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="label_1left">
+      <property name="text">
+       <string>1</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="horizontalLayoutWidget_2">
+   <property name="geometry">
+    <rect>
+     <x>250</x>
+     <y>80</y>
+     <width>401</width>
+     <height>21</height>
+    </rect>
    </property>
-   <property name="flat">
-    <bool>false</bool>
+   <layout class="QHBoxLayout" name="horizontalLayout_2">
+    <item>
+     <widget class="QLabel" name="label_A_up">
+      <property name="text">
+       <string>A</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="label_B_up">
+      <property name="text">
+       <string>B</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="label_C_up">
+      <property name="text">
+       <string>C</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="label_D_up">
+      <property name="text">
+       <string>D</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="label_E_up">
+      <property name="text">
+       <string>E</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="label_F_up">
+      <property name="text">
+       <string>F</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="label_G_up">
+      <property name="text">
+       <string>G</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="label_H_up">
+      <property name="text">
+       <string>H</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="layoutWidget">
+   <property name="geometry">
+    <rect>
+     <x>680</x>
+     <y>390</y>
+     <width>111</width>
+     <height>58</height>
+    </rect>
    </property>
+   <layout class="QVBoxLayout" name="verticalLayout_5">
+    <item>
+     <widget class="QPushButton" name="moveConfirmButton">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <property name="text">
+       <string>Send Move</string>
+      </property>
+      <property name="flat">
+       <bool>false</bool>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="moveClearButton">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <property name="text">
+       <string>Clear Move</string>
+      </property>
+      <property name="flat">
+       <bool>false</bool>
+      </property>
+     </widget>
+    </item>
+   </layout>
   </widget>
  </widget>
+ <tabstops>
+  <tabstop>moveConfirmButton</tabstop>
+  <tabstop>moveClearButton</tabstop>
+  <tabstop>surrendButton</tabstop>
+  <tabstop>A1</tabstop>
+  <tabstop>B1</tabstop>
+  <tabstop>C1</tabstop>
+  <tabstop>D1</tabstop>
+  <tabstop>E1</tabstop>
+  <tabstop>F1</tabstop>
+  <tabstop>G1</tabstop>
+  <tabstop>H1</tabstop>
+  <tabstop>A2</tabstop>
+  <tabstop>B2</tabstop>
+  <tabstop>C2</tabstop>
+  <tabstop>D2</tabstop>
+  <tabstop>E2</tabstop>
+  <tabstop>F2</tabstop>
+  <tabstop>G2</tabstop>
+  <tabstop>H2</tabstop>
+  <tabstop>A3</tabstop>
+  <tabstop>B3</tabstop>
+  <tabstop>C3</tabstop>
+  <tabstop>D3</tabstop>
+  <tabstop>E3</tabstop>
+  <tabstop>F3</tabstop>
+  <tabstop>G3</tabstop>
+  <tabstop>H3</tabstop>
+  <tabstop>A4</tabstop>
+  <tabstop>B4</tabstop>
+  <tabstop>C4</tabstop>
+  <tabstop>D4</tabstop>
+  <tabstop>E4</tabstop>
+  <tabstop>F4</tabstop>
+  <tabstop>G4</tabstop>
+  <tabstop>H4</tabstop>
+  <tabstop>A5</tabstop>
+  <tabstop>B5</tabstop>
+  <tabstop>C5</tabstop>
+  <tabstop>D5</tabstop>
+  <tabstop>E5</tabstop>
+  <tabstop>F5</tabstop>
+  <tabstop>G5</tabstop>
+  <tabstop>H5</tabstop>
+  <tabstop>A6</tabstop>
+  <tabstop>B6</tabstop>
+  <tabstop>C6</tabstop>
+  <tabstop>D6</tabstop>
+  <tabstop>E6</tabstop>
+  <tabstop>F6</tabstop>
+  <tabstop>G6</tabstop>
+  <tabstop>H6</tabstop>
+  <tabstop>A7</tabstop>
+  <tabstop>B7</tabstop>
+  <tabstop>C7</tabstop>
+  <tabstop>D7</tabstop>
+  <tabstop>E7</tabstop>
+  <tabstop>F7</tabstop>
+  <tabstop>G7</tabstop>
+  <tabstop>H7</tabstop>
+  <tabstop>A8</tabstop>
+  <tabstop>B8</tabstop>
+  <tabstop>C8</tabstop>
+  <tabstop>D8</tabstop>
+  <tabstop>E8</tabstop>
+  <tabstop>F8</tabstop>
+  <tabstop>G8</tabstop>
+  <tabstop>H8</tabstop>
+  <tabstop>graphicsView</tabstop>
+ </tabstops>
  <resources>
   <include location="catmeme.qrc"/>
  </resources>
@@ -3055,7 +3378,7 @@
  <buttongroups>
   <buttongroup name="board">
    <property name="exclusive">
-    <bool>true</bool>
+    <bool>false</bool>
    </property>
   </buttongroup>
  </buttongroups>

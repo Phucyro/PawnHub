@@ -31,13 +31,20 @@ ClientGameControl::~ClientGameControl()
     socket = nullptr;
 }
 
+void ClientGameControl::callPieceUpdate(QIcon pieceIcon, QString piecePosition, QString pieceName)
+{
+    emit updatePiece(pieceIcon, piecePosition, pieceName);
+}
+
 void ClientGameControl::receiveBoard(QString message) {
   if (!is_alice) {
+      game->clear_board();
+      stringToBoard(this, message.toStdString());
 //    board.draw_pieces(message);
 //    board.refresh_board();
   }
   else if (message[0] == '1') {
-    stringToBoard(message.toStdString().erase(0,1));
+      // not sure
   }
   else {
 //    board.draw_alice_pieces(message.erase(0,1));
@@ -45,50 +52,10 @@ void ClientGameControl::receiveBoard(QString message) {
   }
 }
 
-//void ClientGameControl::receiveUpdate(QString message) {
-//  if (message == "start") {
-//    game->show_update("Game has started.");
-//   }
-//  else if (message == "alice") {
-//    board.draw_alice_board();
-//  }
-//  else if (message == "realtime") {
-//    is_real_time = true;
-//  }
-//  else if (message == "check") {
-//    game->show_update("Check: protect your king!");
-//  }
-//  else {
-//    game_ongoing = false;
-//    game->set_gameOngoing(false);
-//    if (message == "stalemate") {
-//      message = "Stalemate!";
-//    }
-//    else if (message == "surrend") {
-//      message = "You win: your oppenent gave up!";
-//    }
-//    else if (message == "white"){
-//      message = "Checkmate: white player won!";
-//    }
-//    else {
-//      message = "Checkmate: black player won!";
-//    }
-//    game->show_update(message);
-//  }
-//}
-
-//void ClientGameControl::receiveGameMode(QString message) {
-//    game->set_mode(message);
-//}
-
 //void ClientGameControl::receivePlayerColour(QString message) {
 ////  will need to deal with this for alice
 ////  colour = message.toStdString()[0];
 //  game->set_colour(message);
-//}
-
-//void ClientGameControl::receiveTurn(QString message) {
-//  game->set_turn(message);
 //}
 
 //void ClientGameControl::receiveAskMove(QString message) {
@@ -105,20 +72,15 @@ void ClientGameControl::receiveBoard(QString message) {
 ////  }
 //}
 
-
-//void ClientGameControl::receiveAskPromotion(QString message) {
-//    QString promotion = game->get_promotion();
-//    sendPromotion(promotion.toStdString());
-//}
-
-void ClientGameControl::sendMove(std::string move) {
+void ClientGameControl::sendMove(QString move) {
   std::string header = headerSendMap["move"];
-  socket->sendMessage("30~" + header + colour + move);
+  std::cout << "Sending: " << move.toStdString() << std::endl;
+  socket->sendMessage("30~" + header + colour + move.toStdString());
 }
 
-void ClientGameControl::sendPromotion(std::string promotion) {
+void ClientGameControl::sendPromotion(QString promotion) {
   std::string header = headerSendMap["promote"];
-  socket->sendMessage("30~" + header + promotion);
+  socket->sendMessage("30~" + header + promotion.toStdString());
 }
 
 void ClientGameControl::setGameOngoing(bool value) {
@@ -179,30 +141,4 @@ void ClientGameControl::startParty() {
   game_ongoing = true;
   while(game_ongoing) {handleMessage();}
   emit finished();
-}
-
-// imported here because it's easier to emit the signal this way
-void ClientGameControl::stringToBoard(std::string message) {
-  unsigned a = 0;
-  std::string currentPieceName;
-  QIcon currentPieceIcon;
-  QString currentPosition;
-
-  std::string colour = "white";
-  while (message[a] != '!'){
-    currentPieceName = pieceMap[a];
-    currentPieceIcon = piece_icon_fetcher(currentPieceName, colour);
-    currentPosition = message[a+1] + message[a+2];
-    emit updatePiece(currentPieceIcon, currentPosition, QString::fromStdString(currentPieceName));
-    a += CHAR_NUM;
-  }
-  a += 1;
-  colour = "black";
-  while (message[a] != '#'){
-    currentPieceName = pieceMap[a];
-    currentPieceIcon = piece_icon_fetcher(currentPieceName, colour);
-    currentPosition = message[a+1] + message[a+2];
-    emit updatePiece(currentPieceIcon, currentPosition, QString::fromStdString(currentPieceName));
-    a += CHAR_NUM;
-  }
 }

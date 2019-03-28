@@ -4,7 +4,7 @@
 
 #include "../Modified_Files/ClientGameControl.hpp"
 
-//#include <iostream>
+#include <iostream>
 
 GameWithoutChat::GameWithoutChat(QWidget *parent, Socket* socket_) :
     QDialog(parent),
@@ -13,86 +13,86 @@ GameWithoutChat::GameWithoutChat(QWidget *parent, Socket* socket_) :
     move("")
 {
     ui->setupUi(this);
-    QMap<QString, QPushButton*> map =
-    {
-        {"A1", ui->A1},
-        {"A2", ui->A2},
-        {"A3", ui->A3},
-        {"A4", ui->A4},
-        {"A5", ui->A5},
-        {"A6", ui->A6},
-        {"A7", ui->A7},
-        {"A8", ui->A8},
+//    QMap<QString, QPushButton*> map =
+//    {
+//        {"A1", ui->A1},
+//        {"A2", ui->A2},
+//        {"A3", ui->A3},
+//        {"A4", ui->A4},
+//        {"A5", ui->A5},
+//        {"A6", ui->A6},
+//        {"A7", ui->A7},
+//        {"A8", ui->A8},
 
-        {"B1", ui->B1},
-        {"B2", ui->B2},
-        {"B3", ui->B3},
-        {"B4", ui->B4},
-        {"B5", ui->B5},
-        {"B6", ui->B6},
-        {"B7", ui->B7},
-        {"B8", ui->B8},
+//        {"B1", ui->B1},
+//        {"B2", ui->B2},
+//        {"B3", ui->B3},
+//        {"B4", ui->B4},
+//        {"B5", ui->B5},
+//        {"B6", ui->B6},
+//        {"B7", ui->B7},
+//        {"B8", ui->B8},
 
-        {"C1", ui->C1},
-        {"C2", ui->C2},
-        {"C3", ui->C3},
-        {"C4", ui->C4},
-        {"C5", ui->C5},
-        {"C6", ui->C6},
-        {"C7", ui->C7},
-        {"C8", ui->C8},
+//        {"C1", ui->C1},
+//        {"C2", ui->C2},
+//        {"C3", ui->C3},
+//        {"C4", ui->C4},
+//        {"C5", ui->C5},
+//        {"C6", ui->C6},
+//        {"C7", ui->C7},
+//        {"C8", ui->C8},
 
-        {"D1", ui->D1},
-        {"D2", ui->D2},
-        {"D3", ui->D3},
-        {"D4", ui->D4},
-        {"D5", ui->D5},
-        {"D6", ui->D6},
-        {"D7", ui->D7},
-        {"D8", ui->D8},
+//        {"D1", ui->D1},
+//        {"D2", ui->D2},
+//        {"D3", ui->D3},
+//        {"D4", ui->D4},
+//        {"D5", ui->D5},
+//        {"D6", ui->D6},
+//        {"D7", ui->D7},
+//        {"D8", ui->D8},
 
-        {"E1", ui->E1},
-        {"E2", ui->E2},
-        {"E3", ui->E3},
-        {"E4", ui->E4},
-        {"E5", ui->E5},
-        {"E6", ui->E6},
-        {"E7", ui->E7},
-        {"E8", ui->E8},
+//        {"E1", ui->E1},
+//        {"E2", ui->E2},
+//        {"E3", ui->E3},
+//        {"E4", ui->E4},
+//        {"E5", ui->E5},
+//        {"E6", ui->E6},
+//        {"E7", ui->E7},
+//        {"E8", ui->E8},
 
-        {"F1", ui->F1},
-        {"F2", ui->F2},
-        {"F3", ui->F3},
-        {"F4", ui->F4},
-        {"F5", ui->F5},
-        {"F6", ui->F6},
-        {"F7", ui->F7},
-        {"F8", ui->F8},
+//        {"F1", ui->F1},
+//        {"F2", ui->F2},
+//        {"F3", ui->F3},
+//        {"F4", ui->F4},
+//        {"F5", ui->F5},
+//        {"F6", ui->F6},
+//        {"F7", ui->F7},
+//        {"F8", ui->F8},
 
-        {"G1", ui->G1},
-        {"G2", ui->G2},
-        {"G3", ui->G3},
-        {"G4", ui->G4},
-        {"G5", ui->G5},
-        {"G6", ui->G6},
-        {"G7", ui->G7},
-        {"G8", ui->G8},
+//        {"G1", ui->G1},
+//        {"G2", ui->G2},
+//        {"G3", ui->G3},
+//        {"G4", ui->G4},
+//        {"G5", ui->G5},
+//        {"G6", ui->G6},
+//        {"G7", ui->G7},
+//        {"G8", ui->G8},
 
-        {"H1", ui->H1},
-        {"H2", ui->H2},
-        {"H3", ui->H3},
-        {"H4", ui->H4},
-        {"H5", ui->H5},
-        {"H6", ui->H6},
-        {"H7", ui->H7},
-        {"H8", ui->H8},
-    };
-    coordinateConversionMap = &map;
+//        {"H1", ui->H1},
+//        {"H2", ui->H2},
+//        {"H3", ui->H3},
+//        {"H4", ui->H4},
+//        {"H5", ui->H5},
+//        {"H6", ui->H6},
+//        {"H7", ui->H7},
+//        {"H8", ui->H8},
+//    };
+//    coordinateConversionMap = &map;
 }
 
 GameWithoutChat::~GameWithoutChat()
 {
-    coordinateConversionMap = nullptr;
+//    coordinateConversionMap = nullptr;
     delete ui;
 }
 
@@ -137,6 +137,15 @@ void GameWithoutChat::start()
 //    gameOngoing = value;
 //}
 
+void GameWithoutChat::clear_board()
+{
+    QIcon empty;
+    foreach (QAbstractButton* button, ui->board->buttons())
+    {
+        button->setIcon(empty);
+    }
+}
+
 void GameWithoutChat::set_mode(QString mode)
 {
     ui->chgModeLabel->setText(mode);
@@ -153,9 +162,14 @@ void GameWithoutChat::set_turn(QString turn)
 }
 
 void GameWithoutChat::set_piece(QIcon pieceIcon, QString piecePosition, QString pieceName) {
-    coordinateConversionMap->value(piecePosition)->setIcon(pieceIcon);
-    coordinateConversionMap->value(piecePosition)->setEnabled(true);
-    coordinateConversionMap->value(piecePosition)->setToolTip(pieceName);
+    findChild<QPushButton*>(piecePosition)->setIcon(pieceIcon);
+//    findChild<QPushButton*>(piecePosition)->setEnabled(true);
+    findChild<QPushButton*>(piecePosition)->setToolTip(pieceName);
+
+//    probably to be erased
+//    coordinateConversionMap->value(piecePosition)->setIcon(pieceIcon);
+//    coordinateConversionMap->value(piecePosition)->setEnabled(true);
+//    coordinateConversionMap->value(piecePosition)->setToolTip(pieceName);
 }
 
 void GameWithoutChat::show_update(QString message)
@@ -190,21 +204,21 @@ void GameWithoutChat::show_update(QString message)
     ui->chgUpdateLabel->setText(message);
 }
 
-void GameWithoutChat::get_move(QString message)
+void GameWithoutChat::get_move(QString)
 {
     move = "";
     ui->chgUpdateLabel->setText("Your turn: please choose your move.");
     ui->moveConfirmButton->setEnabled(true);
 }
 
-void GameWithoutChat::get_promotion(QString message)
+void GameWithoutChat::get_promotion(QString)
 {
     QString promotion;
     Message promotionEnquiry;
     promotionEnquiry.promotion_choice();
     promotionEnquiry.popup();
     promotion = promotionEnquiry.get_choice();
-    emit promotion_declared(promotion.toStdString());
+    emit promotion_declared(promotion);
 }
 
 void GameWithoutChat::on_boardButton_pushed(QPushButton* origin)
@@ -214,28 +228,34 @@ void GameWithoutChat::on_boardButton_pushed(QPushButton* origin)
         if (move.endsWith(origin->objectName()))
         {
             origin->setEnabled(true);
-            move = "";
+            move.chop(2);
+        }
+        else if (move.size() == 2)
+        {
+            move += origin->objectName();
         }
         else
         {
-            move += origin->objectName();
-            on_initialPosition_chosen(origin);
+            ui->chgUpdateLabel->setText("Please send current move before adding another.");
         }
     }
     else
     {
         move += origin->objectName();
+        on_initialPosition_chosen(origin);
     }
+
+    ui->chgMoveLabel->setText(move);
 }
 
-void GameWithoutChat::on_initialPosition_chosen(QPushButton* origin)
+void GameWithoutChat::on_initialPosition_chosen(QPushButton*)
 {
     // get potential moves for piece here and enable relevant buttons
 }
 
 void GameWithoutChat::on_surrendButton_pressed()
 {
-    // send surrend
+    emit move_declared("/end");
     this->close();
 }
 
@@ -243,13 +263,22 @@ void GameWithoutChat::on_moveConfirmButton_clicked()
 {
     if (move.size() == 4)
     {
-        ui->moveConfirmButton->setEnabled(false);
-        emit move_declared(move.toStdString());
+        ui->chgUpdateLabel->setText("Move sent!");
+        move.clear();
+        ui->chgMoveLabel->setText(move);
+        emit move_declared(move);
     }
     else
     {
         ui->chgUpdateLabel->setText("Please choose initial and final positions of your piece by clicking on the board.");
     }
+}
+
+
+void GameWithoutChat::on_moveClearButton_clicked()
+{
+    move.clear();
+    ui->chgMoveLabel->setText(move);
 }
 
 void GameWithoutChat::on_A1_pressed()

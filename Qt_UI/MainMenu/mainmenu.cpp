@@ -32,10 +32,13 @@ MainMenu::MainMenu(QWidget *parent) :
 
 MainMenu::~MainMenu()
 {
-    msgThread->join();
-    delete msgThread;
+    if (msgThread != nullptr)
+    {
+        msgThread->join();
+        delete msgThread;
+    }
     delete client;
-    delete ui;
+    delete  ui;
 }
 
 void MainMenu::client_connect() {

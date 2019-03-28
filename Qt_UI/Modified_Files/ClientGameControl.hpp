@@ -44,10 +44,12 @@ public:
   ClientGameControl(Socket*, GameWithoutChatWithAlice*);
   ~ClientGameControl();
 
+  void callPieceUpdate(QIcon, QString, QString);
+
 public slots:
   void startParty();
-  void sendMove(std::string);
-  void sendPromotion(std::string);
+  void sendMove(QString);
+  void sendPromotion(QString);
   void setGameOngoing(bool);
   void setRealTime();
 
@@ -65,7 +67,6 @@ signals:
 private:
   void handleMessage();
   void receiveBoard(QString);
-  void stringToBoard(std::string);
 
   std::map<char, void(ClientGameControl::*)(QString)> headerReceiveMap = {
     {'B', &ClientGameControl::receiveBoard},
