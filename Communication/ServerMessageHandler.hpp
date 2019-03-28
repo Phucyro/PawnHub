@@ -99,9 +99,9 @@ void inline receiveMessageHandler(Socket* socket, Data* data, PlayersMap* player
   players_map->erase(player->getName());
 
   if (player->getName() != "Guest"){
-    data->lockMutex();
+    data->lockMutex(player->getName());
     data->saveUserData(player->getName());
-    data->unlockMutex();
+    data->unlockMutex(player->getName());
   }
 
   delete player;

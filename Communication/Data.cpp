@@ -1,6 +1,6 @@
 #include "Data.hpp"
 
-Data::Data(const std::string path) : _path(path), _dataMap({}), _ladders({}), _mutex() {
+Data::Data(const std::string path) : _path(path), _dataMap({}), _ladders({}), _mutexs({}), _ladderMutex() {
   _ladders["Classic"] = {};
   _ladders["Dark"] = {};
   _ladders["Horde"] = {};
@@ -9,7 +9,14 @@ Data::Data(const std::string path) : _path(path), _dataMap({}), _ladders({}), _m
   _ladders["RealTimeDark"] = {};
   _ladders["RealTimeHorde"] = {};
   _ladders["RealTimeAlice"] = {};
-  initLadder();
+  init();
+}
+
+Data::~Data(){
+  for (auto it : _mutexs){
+    delete it.second;
+    _mutexs.erase(it.first);
+  }
 }
 
 
@@ -38,10 +45,11 @@ bool Data::checkUserPassword(const std::string username, const std::string passw
   Renvoie true si les mots de passe correspondent sinon false
   Attention, il faut vérifier si un compte avec ce nom existe deja
   */
-
+  lockMutex(username);
   loadUserData(username);
   std::string file_password = std::get<0>(_dataMap[username]);
   saveUserData(username);
+  unlockMutex(username);
 
   if (file_password == password)
     return true;
@@ -53,11 +61,13 @@ bool Data::checkUserPassword(const std::string username, const std::string passw
 bool Data::createUserAccount(const std::string username, const std::string password){
   /*
   Creer un nouveau compte utilisateur a partir d'un identifiant et d'un mot de passe
-  Initialise aussi les donnees statistiques et amis de l'utilisateur
+  Initialise aussi les donnees statistiques et amis de l'utilisateur et attribue un mutex au joueur
   Si le compte existe deja alors renvoie false sinon le cree et retourne true
   */
   if (containsAccount(username))
     return false;
+
+  _mutexs[username] = new std::mutex;
 
   _dataMap[username] = UserData(password, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0},
     {0,0,0}, {0,0,0}, {0,0,0}, {}, {}, {}, {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0});
@@ -186,8 +196,8 @@ bool Data::accceptFriendRequest(const std::string username, const std::string fr
   my_friends.push_back(friend_name);
   his_friends.push_back(username);
 
-  _mutex.lock();
-  if (_dataMap.find(friend_name) != _dataMap.end()){ // Si friend_name est connecte
+  lockMutex(friend_name);
+  if (isConnected(friend_name)){
     std::get<9>(_dataMap[friend_name]) = his_friends;
     std::get<11>(_dataMap[friend_name]) = his_sent_requests;
   }
@@ -197,10 +207,10 @@ bool Data::accceptFriendRequest(const std::string username, const std::string fr
     std::get<11>(_dataMap[friend_name]) = his_sent_requests;
     saveUserData(friend_name);
   }
-  _mutex.unlock();
+  unlockMutex(friend_name);
 
-  _mutex.lock();
-  if (_dataMap.find(username) != _dataMap.end()){
+  lockMutex(username);
+  if (isConnected(username)){
     std::get<9>(_dataMap[username]) = my_friends;
     std::get<10>(_dataMap[username]) = my_requests; // Requete recue
   }
@@ -210,7 +220,7 @@ bool Data::accceptFriendRequest(const std::string username, const std::string fr
     std::get<10>(_dataMap[username]) = my_requests; // Requete recue
     saveUserData(username);
   }
-  _mutex.unlock();
+  unlockMutex(username);
 
   return 1;
 }
@@ -229,8 +239,8 @@ bool Data::refuseFriendRequest(const std::string username, const std::string fri
   his_sent_requests.erase(std::remove(his_sent_requests.begin(), his_sent_requests.end(), username), his_sent_requests.end());
   my_requests.erase(std::remove(my_requests.begin(), my_requests.end(), friend_name), my_requests.end());
 
-  _mutex.lock();
-  if (_dataMap.find(friend_name) != _dataMap.end()){ // Si friend_name est connecte
+  lockMutex(friend_name);
+  if (isConnected(friend_name)){
     std::get<11>(_dataMap[friend_name]) = his_sent_requests;
   }
   else {
@@ -238,10 +248,10 @@ bool Data::refuseFriendRequest(const std::string username, const std::string fri
     std::get<11>(_dataMap[friend_name]) = his_sent_requests;
     saveUserData(friend_name);
   }
-  _mutex.unlock();
+  unlockMutex(friend_name);
 
-  _mutex.lock();
-  if (_dataMap.find(username) != _dataMap.end()){
+  lockMutex(username);
+  if (isConnected(username)){
     std::get<10>(_dataMap[username]) = my_requests; // Requete recue
   }
   else {
@@ -249,7 +259,7 @@ bool Data::refuseFriendRequest(const std::string username, const std::string fri
     std::get<10>(_dataMap[username]) = my_requests; // Requete recue
     saveUserData(username);
   }
-  _mutex.unlock();
+  unlockMutex(username);
 
   return 1;
 }
@@ -283,8 +293,8 @@ int Data::sendFriendRequest(const std::string username, const std::string friend
   }
 
   // Sinon envoie la demande
-  _mutex.lock();
-  if (_dataMap.find(friend_name) != _dataMap.end()){ // Si ami connecte
+  lockMutex(friend_name);
+  if (isConnected(friend_name)){
     std::get<10>(_dataMap[friend_name]).push_back(username);
   }
   else {
@@ -292,11 +302,11 @@ int Data::sendFriendRequest(const std::string username, const std::string friend
     std::get<10>(_dataMap[friend_name]).push_back(username);
     saveUserData(friend_name);
   }
-  _mutex.unlock();
+  unlockMutex(friend_name);
 
   // Ajoute friend_name au demandes envoyees de username
-  _mutex.lock();
-  if (_dataMap.find(username) != _dataMap.end()){
+  lockMutex(username);
+  if (isConnected(username)){
     std::get<11>(_dataMap[username]).push_back(friend_name);
   }
   else {
@@ -304,7 +314,7 @@ int Data::sendFriendRequest(const std::string username, const std::string friend
     std::get<11>(_dataMap[username]).push_back(friend_name);
     saveUserData(username);
   }
-  _mutex.unlock();
+  unlockMutex(username);
 
   return 4; // Demande envoyee
 }
@@ -323,8 +333,8 @@ bool Data::removeFriend(const std::string username, const std::string friend_nam
   my_friends.erase(std::remove(my_friends.begin(), my_friends.end(), friend_name), my_friends.end());
   his_friends.erase(std::remove(his_friends.begin(), his_friends.end(), username), his_friends.end());
 
-  _mutex.lock();
-  if (_dataMap.find(friend_name) != _dataMap.end()){ // Si friend_name est connecte
+  lockMutex(friend_name);
+  if (isConnected(friend_name)){
     std::get<9>(_dataMap[friend_name]) = his_friends;
   }
   else {
@@ -332,10 +342,10 @@ bool Data::removeFriend(const std::string username, const std::string friend_nam
     std::get<9>(_dataMap[friend_name]) = his_friends;
     saveUserData(friend_name);
   }
-  _mutex.unlock();
+  unlockMutex(friend_name);
 
-  _mutex.lock();
-  if (_dataMap.find(username) != _dataMap.end()){
+  lockMutex(username);
+  if (isConnected(username)){
     std::get<9>(_dataMap[username]) = my_friends;
   }
   else {
@@ -343,7 +353,7 @@ bool Data::removeFriend(const std::string username, const std::string friend_nam
     std::get<9>(_dataMap[username]) = my_friends;
     saveUserData(username);
   }
-  _mutex.unlock();
+  unlockMutex(username);
 
   return 1;
 }
@@ -361,8 +371,8 @@ bool Data::cancelSentRequest(const std::string username, const std::string frien
   sent.erase(std::remove(sent.begin(), sent.end(), friend_name), sent.end());
   friend_request.erase(std::remove(friend_request.begin(), friend_request.end(), username), friend_request.end());
 
-  _mutex.lock();
-  if (_dataMap.find(friend_name) != _dataMap.end()){
+  lockMutex(friend_name);
+  if (isConnected(friend_name)){
     std::get<10>(_dataMap[friend_name]) = friend_request;
   }
   else {
@@ -370,10 +380,10 @@ bool Data::cancelSentRequest(const std::string username, const std::string frien
     std::get<10>(_dataMap[friend_name]) = friend_request;
     saveUserData(friend_name);
   }
-  _mutex.unlock();
+  unlockMutex(friend_name);
 
-  _mutex.lock();
-  if (_dataMap.find(username) != _dataMap.end()){
+  lockMutex(username);
+  if (isConnected(username)){
     std::get<11>(_dataMap[username]) = sent;
   }
   else {
@@ -381,7 +391,7 @@ bool Data::cancelSentRequest(const std::string username, const std::string frien
     std::get<11>(_dataMap[username]) = sent;
     saveUserData(username);
   }
-  _mutex.unlock();
+  unlockMutex(username);
 
   return 1;
 }
@@ -390,8 +400,8 @@ bool Data::cancelSentRequest(const std::string username, const std::string frien
 std::vector<std::string> Data::getUserFriends(const std::string username){
   std::vector<std::string> friends;
 
-  _mutex.lock();
-  if (_dataMap.find(username) != _dataMap.end()){
+  lockMutex(username);
+  if (isConnected(username)){
     friends = std::get<9>(_dataMap[username]);
   }
   else {
@@ -399,7 +409,7 @@ std::vector<std::string> Data::getUserFriends(const std::string username){
     friends = std::get<9>(_dataMap[username]);
     saveUserData(username);
   }
-  _mutex.unlock();
+  unlockMutex(username);
 
   return friends;
 }
@@ -408,8 +418,8 @@ std::vector<std::string> Data::getUserFriends(const std::string username){
 std::vector<std::string> Data::getUserFriendRequests(const std::string username){
   std::vector<std::string> requests;
 
-  _mutex.lock();
-  if (_dataMap.find(username) != _dataMap.end()){
+  lockMutex(username);
+  if (isConnected(username)){
     requests = std::get<10>(_dataMap[username]);
   }
   else {
@@ -417,7 +427,7 @@ std::vector<std::string> Data::getUserFriendRequests(const std::string username)
     requests = std::get<10>(_dataMap[username]);
     saveUserData(username);
   }
-  _mutex.unlock();
+  unlockMutex(username);
 
   return requests;
 }
@@ -425,8 +435,8 @@ std::vector<std::string> Data::getUserFriendRequests(const std::string username)
 std::vector<std::string> Data::getUserSentRequests(const std::string username){
   std::vector<std::string> requests_sent;
 
-  _mutex.lock();
-  if (_dataMap.find(username) != _dataMap.end()){
+  lockMutex(username);
+  if (isConnected(username)){
     requests_sent = std::get<11>(_dataMap[username]);
   }
   else {
@@ -434,14 +444,14 @@ std::vector<std::string> Data::getUserSentRequests(const std::string username){
     requests_sent = std::get<11>(_dataMap[username]);
     saveUserData(username);
   }
-  _mutex.unlock();
+  unlockMutex(username);
 
   return requests_sent;
 }
 
 void Data::updateClassicStat(std::string username, int option){
-  _mutex.lock();
-  if (_dataMap.find(username) != _dataMap.end()){
+  lockMutex(username);
+  if (isConnected(username)){
     ++(std::get<1>(_dataMap[username])[option]);
   }
   else {
@@ -449,12 +459,12 @@ void Data::updateClassicStat(std::string username, int option){
     ++(std::get<1>(_dataMap[username])[option]);
     saveUserData(username);
   }
-  _mutex.unlock();
+  unlockMutex(username);
 }
 
 void Data::updateDarkStat(std::string username, int option){
-  _mutex.lock();
-  if (_dataMap.find(username) != _dataMap.end()){
+  lockMutex(username);
+  if (isConnected(username)){
     ++(std::get<2>(_dataMap[username])[option]);
   }
   else {
@@ -462,12 +472,12 @@ void Data::updateDarkStat(std::string username, int option){
     ++(std::get<2>(_dataMap[username])[option]);
     saveUserData(username);
   }
-  _mutex.unlock();
+  unlockMutex(username);
 }
 
 void Data::updateHordeStat(std::string username, int option){
-  _mutex.lock();
-  if (_dataMap.find(username) != _dataMap.end()){
+  lockMutex(username);
+  if (isConnected(username)){
     ++(std::get<3>(_dataMap[username])[option]);
   }
   else {
@@ -475,12 +485,12 @@ void Data::updateHordeStat(std::string username, int option){
     ++(std::get<3>(_dataMap[username])[option]);
     saveUserData(username);
   }
-  _mutex.unlock();
+  unlockMutex(username);
 }
 
 void Data::updateAliceStat(std::string username, int option){
-  _mutex.lock();
-  if (_dataMap.find(username) != _dataMap.end()){
+  lockMutex(username);
+  if (isConnected(username)){
     ++(std::get<4>(_dataMap[username])[option]);
   }
   else {
@@ -488,12 +498,12 @@ void Data::updateAliceStat(std::string username, int option){
     ++(std::get<4>(_dataMap[username])[option]);
     saveUserData(username);
   }
-  _mutex.unlock();
+  unlockMutex(username);
 }
 
 void Data::updateRTClassicStat(std::string username, int option){
-  _mutex.lock();
-  if (_dataMap.find(username) != _dataMap.end()){
+  lockMutex(username);
+  if (isConnected(username)){
     ++(std::get<5>(_dataMap[username])[option]);
   }
   else {
@@ -501,12 +511,12 @@ void Data::updateRTClassicStat(std::string username, int option){
     ++(std::get<5>(_dataMap[username])[option]);
     saveUserData(username);
   }
-  _mutex.unlock();
+  unlockMutex(username);
 }
 
 void Data::updateRTDarkStat(std::string username, int option){
-  _mutex.lock();
-  if (_dataMap.find(username) != _dataMap.end()){
+  lockMutex(username);
+  if (isConnected(username)){
     ++(std::get<6>(_dataMap[username])[option]);
   }
   else {
@@ -514,12 +524,12 @@ void Data::updateRTDarkStat(std::string username, int option){
     ++(std::get<6>(_dataMap[username])[option]);
     saveUserData(username);
   }
-  _mutex.unlock();
+  unlockMutex(username);
 }
 
 void Data::updateRTHordeStat(std::string username, int option){
-  _mutex.lock();
-  if (_dataMap.find(username) != _dataMap.end()){
+  lockMutex(username);
+  if (isConnected(username)){
     ++(std::get<7>(_dataMap[username])[option]);
   }
   else {
@@ -527,12 +537,12 @@ void Data::updateRTHordeStat(std::string username, int option){
     ++(std::get<7>(_dataMap[username])[option]);
     saveUserData(username);
   }
-  _mutex.unlock();
+  unlockMutex(username);
 }
 
 void Data::updateRTAliceStat(std::string username, int option){
-  _mutex.lock();
-  if (_dataMap.find(username) != _dataMap.end()){
+  lockMutex(username);
+  if (isConnected(username)){
     ++(std::get<8>(_dataMap[username])[option]);
   }
   else {
@@ -540,12 +550,14 @@ void Data::updateRTAliceStat(std::string username, int option){
     ++(std::get<8>(_dataMap[username])[option]);
     saveUserData(username);
   }
-  _mutex.unlock();
+  unlockMutex(username);
 }
 
 void Data::updateLadder(const std::string gamemode, UserLadderData data){
+  _ladderMutex.lock();
   if (_ladders[gamemode].size() == 0){
     _ladders[gamemode].push_back(data);
+    _ladderMutex.unlock();
     return;
   }
 
@@ -570,10 +582,13 @@ void Data::updateLadder(const std::string gamemode, UserLadderData data){
   if (_ladders[gamemode].size() > LADDERSIZE){
     _ladders[gamemode].erase(_ladders[gamemode].begin());
   }
+  _ladderMutex.unlock();
 }
 
 
-void Data::initLadder(){
+void Data::init(){
+  /* Charge le classement general et attribue un mutex a chaque joueur
+  */
   DIR* directory = opendir(_path.c_str());
   struct dirent* entry;
 
@@ -582,6 +597,7 @@ void Data::initLadder(){
       const std::string filename = std::string(entry->d_name);
       if (filename != "." && filename != ".."){
         const std::string username = filename.substr(0, filename.length()-4);
+        _mutexs[username] = new std::mutex;
         loadUserData(username);
         updateLadder("Classic", {username, std::get<1>(_dataMap[username]), std::get<12>(_dataMap[username])[0]});
         updateLadder("Dark",    {username, std::get<2>(_dataMap[username]), std::get<12>(_dataMap[username])[1]});
@@ -622,8 +638,8 @@ Stat Data::getUserStat(const std::string username, const std::string gamemode){
 
   if (!containsAccount(username)) return Stat(); // Joueur inexistant
 
-  _mutex.lock();
-  if (_dataMap.find(username) != _dataMap.end()){
+  lockMutex(username);
+  if (isConnected(username)){
     if (gamemode == "Classic")
       user_stat = std::get<1>(_dataMap[username]);
     else if (gamemode == "Dark")
@@ -661,7 +677,7 @@ Stat Data::getUserStat(const std::string username, const std::string gamemode){
       user_stat = std::get<8>(_dataMap[username]);
     saveUserData(username);
   }
-  _mutex.unlock();
+  unlockMutex(username);
 
   return user_stat;
 }
@@ -669,8 +685,8 @@ Stat Data::getUserStat(const std::string username, const std::string gamemode){
 double Data::getEloRating(std::string username, unsigned int mode){
   double eloRating;
 
-  _mutex.lock();
-  if (_dataMap.find(username) != _dataMap.end()){
+  lockMutex(username);
+  if (isConnected(username)){
     eloRating = std::get<12>(_dataMap[username])[mode];
   }
   else {
@@ -678,7 +694,7 @@ double Data::getEloRating(std::string username, unsigned int mode){
     eloRating = std::get<12>(_dataMap[username])[mode];
     saveUserData(username);
   }
-  _mutex.unlock();
+  unlockMutex(username);
 
   return eloRating;
 }
@@ -694,8 +710,8 @@ void Data::updateRating(const std::string username, double expectedWin, double s
   double eloRating;
   double calc;
 
-  _mutex.lock();
-  if (_dataMap.find(username) != _dataMap.end()){
+  lockMutex(username);
+  if (isConnected(username)){
     eloRating = std::get<12>(_dataMap[username])[mode];
     calc = (eloRating + 32 * (score - expectedWin)); //formule magique de Arpad Elo
     if(calc<=0) calc = 0;// no negative ELO
@@ -711,7 +727,7 @@ void Data::updateRating(const std::string username, double expectedWin, double s
     std::get<12>(_dataMap[username])[mode] = eloRating;
     saveUserData(username);
   }
-  _mutex.unlock();
+  unlockMutex(username);
 
   std::vector<std::string> gamemode = {"Classic", "Dark", "Horde", "Alice",
     "RealTimeClassic", "RealTimeDark", "RealTimeHorde", "RealTimeAlice"};
@@ -722,10 +738,10 @@ void Data::updateRating(const std::string username, double expectedWin, double s
   updateLadder(gamemode[mode], {username, userStat, eloRating});
 }
 
-void Data::lockMutex(){
-  _mutex.lock();
+void Data::lockMutex(std::string username){
+  _mutexs[username]->lock();
 }
 
-void Data::unlockMutex(){
-  _mutex.unlock();
+void Data::unlockMutex(std::string username){
+  _mutexs[username]->unlock();
 }
