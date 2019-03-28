@@ -29,16 +29,11 @@ void GameChoice::send_game_request(std::string gameMode)
     message.set_title("In Queue");
     message.set_text("You have been placed in queue, please wait for an opponent.");
     message.popup();
-    this->hide();
-
-    msgThread->join();
-    msgThread = nullptr;
-
 }
 
 void GameChoice::on_classicPushButton_pressed()
 {
-    GameWithoutChat* game = new GameWithoutChat(nullptr, client->getSocket());
+    GameWithoutChat* game = new GameWithoutChat(nullptr, client);
     send_game_request("0");
 
     game->start();
@@ -48,7 +43,7 @@ void GameChoice::on_classicPushButton_pressed()
 }
 void GameChoice::on_darkPushButton_pressed()
 {
-    GameWithoutChat* game = new GameWithoutChat(nullptr, client->getSocket());
+    GameWithoutChat* game = new GameWithoutChat(nullptr, client);
     game->setWindowTitle("Dark Chess");
 
     this->hide();
@@ -57,7 +52,7 @@ void GameChoice::on_darkPushButton_pressed()
 }
 void GameChoice::on_hordePushButton_pressed()
 {
-    GameWithoutChat* game = new GameWithoutChat(nullptr, client->getSocket());
+    GameWithoutChat* game = new GameWithoutChat(nullptr, client);
     game->setWindowTitle("Horde Chess");
 
     this->hide();
@@ -76,7 +71,7 @@ void GameChoice::on_alicePushButton_pressed()
 
 void GameChoice::on_realTimeClassicPushButton_pressed()
 {
-    GameWithoutChat* game = new GameWithoutChat(nullptr, client->getSocket());
+    GameWithoutChat* game = new GameWithoutChat(nullptr, client);
     game->setWindowTitle("Classic Chess - Real Time");
 
     this->hide();
@@ -86,7 +81,7 @@ void GameChoice::on_realTimeClassicPushButton_pressed()
 
 void GameChoice::on_realTimeDarkPushButton_pressed()
 {
-    GameWithoutChat* game = new GameWithoutChat(nullptr, client->getSocket());
+    GameWithoutChat* game = new GameWithoutChat(nullptr, client);
     game->setWindowTitle("Dark Chess - Real Time");
 
     this->hide();
@@ -96,7 +91,7 @@ void GameChoice::on_realTimeDarkPushButton_pressed()
 
 void GameChoice::on_realTimeHordePushButton_pressed()
 {
-    GameWithoutChat* game = new GameWithoutChat(nullptr, client->getSocket());
+    GameWithoutChat* game = new GameWithoutChat(nullptr, client);
     game->setWindowTitle("Horde Chess - Real Time");
 
     this->hide();

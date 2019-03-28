@@ -5,7 +5,9 @@
 #include <QIcon>
 #include <QThread>
 
-class Socket;
+#include "../../Communication/Timer.hpp"
+
+class Client;
 class ClientGameControl;
 
 namespace Ui {
@@ -17,7 +19,7 @@ class GameWithoutChat : public QDialog
     Q_OBJECT
 
 public:
-    explicit GameWithoutChat(QWidget *parent = nullptr, Socket* socket_=nullptr);
+    explicit GameWithoutChat(QWidget *parent = nullptr, Client *client_=nullptr);
     ~GameWithoutChat();
 
     void start();
@@ -29,12 +31,16 @@ public slots:
     void set_mode(QString);
     void set_colour(QString);
     void set_turn(QString);
+    void set_time(QString);
     void set_piece(QIcon, QString, QString);
     void show_update(QString="");
 
     void clear_board();
     void get_move(QString);
     void get_promotion(QString);
+
+    void pause_timer();
+    void reduce_timer(int);
 
 signals:
     void move_declared(QString);
@@ -123,10 +129,9 @@ private slots:
 
 private:
     Ui::GameWithoutChat *ui;
-    Socket *socket;
-//    QMap<QString, QPushButton*> *coordinateConversionMap;
+    Client *client;
+    Timer timer;
     QString move;
-//    bool gameOngoing;
 
     void on_boardButton_pushed(QPushButton*);
     void on_position_chosen(QPushButton*);
