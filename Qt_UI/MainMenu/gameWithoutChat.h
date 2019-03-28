@@ -130,6 +130,7 @@ private slots:
 private:
     Ui::GameWithoutChat *ui;
     Client *client;
+    ClientGameControl *control;
     Timer timer;
     QString move;
 

@@ -10,6 +10,7 @@ GameWithoutChat::GameWithoutChat(QWidget *parent, Client* client_) :
     QDialog(parent),
     ui(new Ui::GameWithoutChat),
     client(client_),
+    control(nullptr),
     timer(),
     move("")
 {
@@ -18,13 +19,14 @@ GameWithoutChat::GameWithoutChat(QWidget *parent, Client* client_) :
 
 GameWithoutChat::~GameWithoutChat()
 {
+    if (control != nullptr) control->deleteLater();
     delete ui;
 }
 
 void GameWithoutChat::start()
 {
     QThread* thread = new QThread;
-    ClientGameControl* control  = new ClientGameControl(client, this);
+    control  = new ClientGameControl(client, this);
     control->moveToThread(thread);
     connect(thread, &QThread::started, control, &ClientGameControl::startParty);
     connect(control, &ClientGameControl::finished, thread, &QThread::quit);
@@ -222,9 +224,9 @@ void GameWithoutChat::on_moveConfirmButton_clicked()
     if (move.size() == 4)
     {
         ui->chgUpdateLabel->setText("Move sent!");
-        move.clear();
         ui->chgMoveLabel->setText(move);
-        emit move_declared(move);
+        control->sendMove(move);
+        move.clear();
     }
     else
     {
