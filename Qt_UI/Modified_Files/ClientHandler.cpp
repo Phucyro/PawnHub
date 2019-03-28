@@ -1,7 +1,7 @@
 #include "ClientHandler.hpp"
 #include "../../Communication/SplitString.hpp"
 
-ClientHandler::ClientHandler(Client* _client): QObject(), client(_client){}
+ClientHandler::ClientHandler(Client* _client): QObject(), client(_client), mustQuit(false){}
 
 ClientHandler::~ClientHandler(){
   client = nullptr;
@@ -48,11 +48,7 @@ void ClientHandler::chatHandler(QString sender, QString target, QString msg){
 
 
 void ClientHandler::playGameHandler(){
-//  menu->clear_windows();
-//  menu->end_windows();
-//  std::cout << "Vous avez rejoint une file d'attente" << std::endl;
-//  ClientGameControl control(*(client->getSocket()));
-  client->writePipe("EndGame");
+
 }
 
 void ClientHandler::leaveQueueHandler(){
@@ -163,15 +159,9 @@ void ClientHandler::updateSentRequestHandler(QString friend_name, QString option
 
 void ClientHandler::receiveMessageHandler(){
   std::vector<std::string> msg;
-  bool in_game = false;
 
-  while (!in_game){
+  while (!mustQuit){
     msg = splitString(client->getSocket()->receiveMessage(), '~');
-
-    if (std::isalpha(msg[0][0])){
-       client->writePipe(strVectorToStr(msg));
-       continue;
-    }
 
     int choice = atoi(msg[0].c_str());
 
@@ -186,8 +176,7 @@ void ClientHandler::receiveMessageHandler(){
         chatHandler(QString::fromStdString(msg[1]), QString::fromStdString(msg[2]), QString::fromStdString(msg[3]));
         break;
       case 4 :
-//        playGameHandler(client);
-        in_game = true;
+        playGameHandler();
         break;
       case 5 :
         leaveQueueHandler();
@@ -228,7 +217,14 @@ void ClientHandler::receiveMessageHandler(){
       case 18 :
         updateSentRequestHandler(QString::fromStdString(msg[1]), QString::fromStdString(msg[2]));
         break;
+      case 30 :
+        client->writeGame(msg[1]);
+        break;
     }
   }
   emit finished();
+}
+
+void quit(){
+	mustQuit = true;
 }
