@@ -224,7 +224,6 @@ void ClientGameControl::cleanOldMsg(){
 	bool firstMsgRecv = false;
 	std::string message;
 	while (!firstMsgRecv){
-    std::cout<<"BLIAT"<<std::endl;
 		message = client.readGame();
 		if(message[0] == 'F'){
 			firstMsgRecv = true;
@@ -237,7 +236,6 @@ void ClientGameControl::cleanOldMsg(){
 void ClientGameControl::startParty() {
   game_ongoing = true;
   cleanOldMsg();
-  std::cout<<"BLIAT end"<<std::endl;
   handleMessage();
   board.exit();
 }

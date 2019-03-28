@@ -20,10 +20,6 @@ void receiveMessageHandler(MenuHandler* menu, Client* client){
     msg = splitString(client->getSocket()->receiveMessage(), '~');
 
     int choice = atoi(msg[0].c_str());
-    std::cout << "Le message avant write " << msg[0] << std::endl;
-    std::ofstream flux("Duc.txt", std::ios_base::app);
-    flux << "Msg recue :" << std::endl;
-    flux << msg[0] << std::endl;
 
     switch(choice){
       case 1 : // [1] [resultat]
