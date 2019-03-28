@@ -78,6 +78,6 @@ inline void quit(Client* client){
 
 inline void displayChat(Client* client, std::string target,Chat *chat){
   Conversation conv = client->getConversation(target);
-  chat->displayChat(client,client->getIsChattingWith());
+  chat->displayChat(QString::fromStdString(client->getIsChattingWith()));
 }
 #endif

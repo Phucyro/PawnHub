@@ -16,7 +16,7 @@ class GameChoice : public QDialog
     Q_OBJECT
 
 public:
-    explicit GameChoice(QWidget *parent = nullptr, Client* client_=nullptr, std::thread* msgThread_=nullptr);
+    explicit GameChoice(QWidget *parent = nullptr, Client* client_=nullptr);
     ~GameChoice();
 
 private:

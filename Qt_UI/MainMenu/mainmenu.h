@@ -3,7 +3,7 @@
 
 #include <QWidget>
 
-#include <thread>
+#include <QThread>
 
 class Client;
 class Chat;
@@ -32,7 +32,7 @@ private slots:
 private:
     Ui::MainMenu *ui;
     Client *client;
-    std::thread *msgThread;
+    QThread *msgThread;
     Chat *chat;
 
     void client_connect();

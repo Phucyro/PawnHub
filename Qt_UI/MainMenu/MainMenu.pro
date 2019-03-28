@@ -36,6 +36,7 @@ SOURCES += \
     ../../Communication/Client.cpp \
     ../../Communication/SplitString.cpp \
     ../Modified_Files/CheckFormat.cpp \
+    ../Modified_Files/ClientHandler.cpp \
     ../Modified_Files/ClientGameControl.cpp \
     passwordrepeat.cpp \
     message.cpp \
@@ -60,7 +61,6 @@ HEADERS += \
     ../../Communication/SplitString.hpp \
     ../Modified_Files/ClientFunctions.hpp \
     ../Modified_Files/ClientHandler.hpp \
-    ../Modified_Files/ClientMessageHandler.hpp \
     ../Modified_Files/CheckFormat.hpp \
     ../Modified_Files/ClientGameControl.hpp \
     ../Modified_Files/BoardParsing.hpp \
