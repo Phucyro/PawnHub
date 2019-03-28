@@ -284,21 +284,21 @@ void Classic::_updateStat(){
 
 	if (_winner == _player1){
 		std::cout << "White Player win !" << std::endl;
-		data.addUserClassicLose(_player2->getName());
-		data.addUserClassicWin(_player1->getName());
+		data.updateClassicStat(_player2->getName(), 1);
+		data.updateClassicStat(_player1->getName(), 0);
 		data.updateRating(_player2->getName(), playerExptWin2, LOSE, CLASSIC);
 		data.updateRating(_player1->getName(), playerExptWin1, WIN,  CLASSIC);
 	}
 	else if (_winner == _player2) {
 		std::cout << "Black Player win !" << std::endl;
-		data.addUserClassicWin(_player2->getName());
-		data.addUserClassicLose(_player1->getName());
+		data.updateClassicStat(_player2->getName(), 0);
+		data.updateClassicStat(_player1->getName(), 1);
 		data.updateRating(_player2->getName(), playerExptWin2, WIN,  CLASSIC);
 		data.updateRating(_player1->getName(), playerExptWin1, LOSE, CLASSIC);
 	}
 	else {
-		data.addUserClassicDraw(_player2->getName());
-		data.addUserClassicDraw(_player1->getName());
+		data.updateClassicStat(_player2->getName(), 2);
+		data.updateClassicStat(_player1->getName(), 2);
 		data.updateRating(_player2->getName(), playerExptWin2, TIE, CLASSIC);
 		data.updateRating(_player1->getName(), playerExptWin1, TIE, CLASSIC);
 	}

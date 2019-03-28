@@ -179,21 +179,21 @@ void Horde::_updateStat(){
 
 	if (_winner == _player1){
 		std::cout << "White Player win !" << std::endl;
-		data.addUserHordeLose(_player2->getName());
-		data.addUserHordeWin(_player1->getName());
+		data.updateHordeStat(_player2->getName(), 1);
+		data.updateHordeStat(_player1->getName(), 0);
 		data.updateRating(_player2->getName(), playerExptWin2, LOSE, HORDE);
 		data.updateRating(_player1->getName(), playerExptWin1, WIN,  HORDE);
 	}
 	else if (_winner == _player2) {
 		std::cout << "Black Player win !" << std::endl;
-		data.addUserHordeWin(_player2->getName());
-		data.addUserHordeLose(_player1->getName());
+		data.updateHordeStat(_player2->getName(), 0);
+		data.updateHordeStat(_player1->getName(), 1);
 		data.updateRating(_player2->getName(), playerExptWin2, WIN,  HORDE);
 		data.updateRating(_player1->getName(), playerExptWin1, LOSE, HORDE);
 	}
 	else{
-		data.addUserHordeDraw(_player2->getName());
-		data.addUserHordeDraw(_player1->getName());
+		data.updateHordeStat(_player2->getName(), 2);
+		data.updateHordeStat(_player1->getName(), 2);
 		data.updateRating(_player2->getName(), playerExptWin2, TIE, HORDE);
 		data.updateRating(_player1->getName(), playerExptWin1, TIE, HORDE);
 	}

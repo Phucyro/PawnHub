@@ -262,21 +262,21 @@ void Alice::_updateStat(){
 
 	if (_winner == _player1){
 		std::cout << "White Player win !" << std::endl;
-		data.addUserAliceLose(_player2->getName());
-		data.addUserAliceWin(_player1->getName());
+		data.updateAliceStat(_player2->getName(), 1);
+		data.updateAliceStat(_player1->getName(), 0);
 		data.updateRating(_player2->getName(), playerExptWin2, LOSE, ALICE);
 		data.updateRating(_player1->getName(), playerExptWin1, WIN,  ALICE);
 	}
 	else if (_winner == _player2) {
 		std::cout << "Black Player win !" << std::endl;
-		data.addUserAliceWin(_player2->getName());
-		data.addUserAliceLose(_player1->getName());
+		data.updateAliceStat(_player2->getName(), 0);
+		data.updateAliceStat(_player1->getName(), 1);
 		data.updateRating(_player2->getName(), playerExptWin2, WIN,  ALICE);
 		data.updateRating(_player1->getName(), playerExptWin1, LOSE, ALICE);
 	}
 	else{
-		data.addUserAliceDraw(_player2->getName());
-		data.addUserAliceDraw(_player1->getName());
+		data.updateAliceStat(_player2->getName(), 2);
+		data.updateAliceStat(_player1->getName(), 2);
 		data.updateRating(_player2->getName(), playerExptWin2, TIE, ALICE);
 		data.updateRating(_player1->getName(), playerExptWin1, TIE, ALICE);
 	}

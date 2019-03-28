@@ -133,15 +133,15 @@ void RealTimeAlice::_updateStat(){
 
 	if (_winner == _player1){
 		std::cout << "White Player win !" << std::endl;
-		data.addUserRealTimeAliceLose(_player2->getName());
-		data.addUserRealTimeAliceWin(_player1->getName());
+		data.updateRTAliceStat(_player2->getName(), 1);
+		data.updateRTAliceStat(_player1->getName(), 0);
 		data.updateRating(_player2->getName(), playerExptWin2, LOSE, RTALICE);
 		data.updateRating(_player1->getName(), playerExptWin1, WIN,  RTALICE);
 	}
 	else if (_winner == _player2) {
 		std::cout << "Black Player win !" << std::endl;
-		data.addUserRealTimeAliceWin(_player2->getName());
-		data.addUserRealTimeAliceLose(_player1->getName());
+		data.updateRTAliceStat(_player2->getName(), 0);
+		data.updateRTAliceStat(_player1->getName(), 1);
 		data.updateRating(_player2->getName(), playerExptWin2, WIN,  RTALICE);
 		data.updateRating(_player1->getName(), playerExptWin1, LOSE, RTALICE);
 	}
