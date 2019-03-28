@@ -110,15 +110,15 @@ void RealTimeDark::_updateStat(){
 
 	if (_winner == _player1){
 		std::cout << "White Player win !" << std::endl;
-		data.addUserRealTimeDarkLose(_player2->getName());
-		data.addUserRealTimeDarkWin(_player1->getName());
+		data.updateRTDarkStat(_player2->getName(), 1);
+		data.updateRTDarkStat(_player1->getName(), 0);
 		data.updateRating(_player2->getName(), playerExptWin2, LOSE, RTDARK);
 		data.updateRating(_player1->getName(), playerExptWin1, WIN,  RTDARK);
 	}
 	else if (_winner == _player2) {
 		std::cout << "Black Player win !" << std::endl;
-		data.addUserRealTimeDarkWin(_player2->getName());
-		data.addUserRealTimeDarkLose(_player1->getName());
+		data.updateRTDarkStat(_player2->getName(), 0);
+		data.updateRTDarkStat(_player1->getName(), 1);
 		data.updateRating(_player2->getName(), playerExptWin2, WIN,  RTDARK);
 		data.updateRating(_player1->getName(), playerExptWin1, LOSE, RTDARK);
 	}

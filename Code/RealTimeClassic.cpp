@@ -110,15 +110,15 @@ void RealTimeClassic::_updateStat(){
 
 	if (_winner == _player1){
 		std::cout << "White Player win !" << std::endl;
-		data.addUserRealTimeClassicLose(_player2->getName());
-		data.addUserRealTimeClassicWin(_player1->getName());
+		data.updateRTClassicStat(_player2->getName(), 1);
+		data.updateRTClassicStat(_player1->getName(), 0);
 		data.updateRating(_player2->getName(), playerExptWin2, LOSE, RTCLASSIC);
 		data.updateRating(_player1->getName(), playerExptWin1, WIN,  RTCLASSIC);
 	}
 	else if (_winner == _player2) {
 		std::cout << "Black Player win !" << std::endl;
-		data.addUserRealTimeClassicWin(_player2->getName());
-		data.addUserRealTimeClassicLose(_player1->getName());
+		data.updateRTClassicStat(_player2->getName(), 0);
+		data.updateRTClassicStat(_player1->getName(), 1);
 		data.updateRating(_player2->getName(), playerExptWin2, WIN,  RTCLASSIC);
 		data.updateRating(_player1->getName(), playerExptWin1, LOSE, RTCLASSIC);
 	}

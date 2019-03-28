@@ -439,409 +439,105 @@ std::vector<std::string> Data::getUserSentRequests(const std::string username){
   return requests_sent;
 }
 
-void Data::addUserClassicWin(const std::string username){
-  Stat stat;
-
+void Data::updateClassicStat(std::string username, int option){
   _mutex.lock();
   if (_dataMap.find(username) != _dataMap.end()){
-    ++(std::get<1>(_dataMap[username])[0]);
-    stat = std::get<1>(_dataMap[username]);
+    ++(std::get<1>(_dataMap[username])[option]);
   }
   else {
     loadUserData(username);
-    ++(std::get<1>(_dataMap[username])[0]);
-    stat = std::get<1>(_dataMap[username]);
+    ++(std::get<1>(_dataMap[username])[option]);
     saveUserData(username);
   }
   _mutex.unlock();
 }
 
-void Data::addUserClassicLose(const std::string username){
-  Stat stat;
-
+void Data::updateDarkStat(std::string username, int option){
   _mutex.lock();
   if (_dataMap.find(username) != _dataMap.end()){
-    ++(std::get<1>(_dataMap[username])[1]);
-    stat = std::get<1>(_dataMap[username]);
+    ++(std::get<2>(_dataMap[username])[option]);
   }
   else {
     loadUserData(username);
-    ++(std::get<1>(_dataMap[username])[1]);
-    stat = std::get<1>(_dataMap[username]);
+    ++(std::get<2>(_dataMap[username])[option]);
     saveUserData(username);
   }
   _mutex.unlock();
 }
 
-void Data::addUserClassicDraw(const std::string username){
-  Stat stat;
-
+void Data::updateHordeStat(std::string username, int option){
   _mutex.lock();
   if (_dataMap.find(username) != _dataMap.end()){
-    ++(std::get<1>(_dataMap[username])[2]);
-    stat = std::get<1>(_dataMap[username]);
+    ++(std::get<3>(_dataMap[username])[option]);
   }
   else {
     loadUserData(username);
-    ++(std::get<1>(_dataMap[username])[2]);
-    stat = std::get<1>(_dataMap[username]);
+    ++(std::get<3>(_dataMap[username])[option]);
     saveUserData(username);
   }
   _mutex.unlock();
 }
 
-void Data::addUserDarkWin(const std::string username){
-  Stat stat;
-
+void Data::updateAliceStat(std::string username, int option){
   _mutex.lock();
   if (_dataMap.find(username) != _dataMap.end()){
-    ++(std::get<2>(_dataMap[username])[0]);
-    stat = std::get<2>(_dataMap[username]);
+    ++(std::get<4>(_dataMap[username])[option]);
   }
   else {
     loadUserData(username);
-    ++(std::get<2>(_dataMap[username])[0]);
-    stat = std::get<2>(_dataMap[username]);
+    ++(std::get<4>(_dataMap[username])[option]);
     saveUserData(username);
   }
   _mutex.unlock();
 }
 
-void Data::addUserDarkLose(const std::string username){
-  Stat stat;
-
+void Data::updateRTClassicStat(std::string username, int option){
   _mutex.lock();
   if (_dataMap.find(username) != _dataMap.end()){
-    ++(std::get<2>(_dataMap[username])[1]);
-    stat = std::get<2>(_dataMap[username]);
+    ++(std::get<5>(_dataMap[username])[option]);
   }
   else {
     loadUserData(username);
-    ++(std::get<2>(_dataMap[username])[1]);
-    stat = std::get<2>(_dataMap[username]);
+    ++(std::get<5>(_dataMap[username])[option]);
     saveUserData(username);
   }
   _mutex.unlock();
 }
 
-void Data::addUserDarkDraw(const std::string username){
-  Stat stat;
-
+void Data::updateRTDarkStat(std::string username, int option){
   _mutex.lock();
   if (_dataMap.find(username) != _dataMap.end()){
-    ++(std::get<2>(_dataMap[username])[2]);
-    stat = std::get<2>(_dataMap[username]);
+    ++(std::get<6>(_dataMap[username])[option]);
   }
   else {
     loadUserData(username);
-    ++(std::get<2>(_dataMap[username])[2]);
-    stat = std::get<2>(_dataMap[username]);
+    ++(std::get<6>(_dataMap[username])[option]);
     saveUserData(username);
   }
   _mutex.unlock();
 }
 
-void Data::addUserHordeWin(const std::string username){
-  Stat stat;
-
+void Data::updateRTHordeStat(std::string username, int option){
   _mutex.lock();
   if (_dataMap.find(username) != _dataMap.end()){
-    ++(std::get<3>(_dataMap[username])[0]);
-    stat = std::get<3>(_dataMap[username]);
+    ++(std::get<7>(_dataMap[username])[option]);
   }
   else {
     loadUserData(username);
-    ++(std::get<3>(_dataMap[username])[0]);
-    stat = std::get<3>(_dataMap[username]);
+    ++(std::get<7>(_dataMap[username])[option]);
     saveUserData(username);
   }
   _mutex.unlock();
 }
 
-void Data::addUserHordeLose(const std::string username){
-  Stat stat;
-
+void Data::updateRTAliceStat(std::string username, int option){
   _mutex.lock();
   if (_dataMap.find(username) != _dataMap.end()){
-    ++(std::get<3>(_dataMap[username])[1]);
-    stat = std::get<3>(_dataMap[username]);
+    ++(std::get<8>(_dataMap[username])[option]);
   }
   else {
     loadUserData(username);
-    ++(std::get<3>(_dataMap[username])[1]);
-    stat = std::get<3>(_dataMap[username]);
-    saveUserData(username);
-  }
-  _mutex.unlock();
-}
-
-void Data::addUserHordeDraw(const std::string username){
-  Stat stat;
-
-  _mutex.lock();
-  if (_dataMap.find(username) != _dataMap.end()){
-    ++(std::get<3>(_dataMap[username])[2]);
-    stat = std::get<3>(_dataMap[username]);
-  }
-  else {
-    loadUserData(username);
-    ++(std::get<3>(_dataMap[username])[2]);
-    stat = std::get<3>(_dataMap[username]);
-    saveUserData(username);
-  }
-  _mutex.unlock();
-}
-
-void Data::addUserAliceWin(const std::string username){
-  Stat stat;
-
-  _mutex.lock();
-  if (_dataMap.find(username) != _dataMap.end()){
-    ++(std::get<4>(_dataMap[username])[0]);
-    stat = std::get<4>(_dataMap[username]);
-  }
-  else {
-    loadUserData(username);
-    ++(std::get<4>(_dataMap[username])[0]);
-    stat = std::get<4>(_dataMap[username]);
-    saveUserData(username);
-  }
-  _mutex.unlock();
-}
-
-void Data::addUserAliceLose(const std::string username){
-  Stat stat;
-
-  _mutex.lock();
-  if (_dataMap.find(username) != _dataMap.end()){
-    ++(std::get<4>(_dataMap[username])[1]);
-    stat = std::get<4>(_dataMap[username]);
-  }
-  else {
-    loadUserData(username);
-    ++(std::get<4>(_dataMap[username])[1]);
-    stat = std::get<4>(_dataMap[username]);
-    saveUserData(username);
-  }
-  _mutex.unlock();
-}
-
-void Data::addUserAliceDraw(const std::string username){
-  Stat stat;
-
-  _mutex.lock();
-  if (_dataMap.find(username) != _dataMap.end()){
-    ++(std::get<4>(_dataMap[username])[2]);
-    stat = std::get<4>(_dataMap[username]);
-  }
-  else {
-    loadUserData(username);
-    ++(std::get<4>(_dataMap[username])[2]);
-    stat = std::get<4>(_dataMap[username]);
-    saveUserData(username);
-  }
-  _mutex.unlock();
-}
-
-void Data::addUserRealTimeClassicWin(const std::string username){
-  Stat stat;
-
-  _mutex.lock();
-  if (_dataMap.find(username) != _dataMap.end()){
-    ++(std::get<5>(_dataMap[username])[0]);
-    stat = std::get<5>(_dataMap[username]);
-  }
-  else {
-    loadUserData(username);
-    ++(std::get<5>(_dataMap[username])[0]);
-    stat = std::get<5>(_dataMap[username]);
-    saveUserData(username);
-  }
-  _mutex.unlock();
-}
-
-void Data::addUserRealTimeClassicLose(const std::string username){
-  Stat stat;
-
-  _mutex.lock();
-  if (_dataMap.find(username) != _dataMap.end()){
-    ++(std::get<5>(_dataMap[username])[1]);
-    stat = std::get<5>(_dataMap[username]);
-  }
-  else {
-    loadUserData(username);
-    ++(std::get<5>(_dataMap[username])[1]);
-    stat = std::get<5>(_dataMap[username]);
-    saveUserData(username);
-  }
-  _mutex.unlock();
-}
-
-void Data::addUserRealTimeClassicDraw(const std::string username){
-  Stat stat;
-
-  _mutex.lock();
-  if (_dataMap.find(username) != _dataMap.end()){
-    ++(std::get<5>(_dataMap[username])[2]);
-    stat = std::get<5>(_dataMap[username]);
-  }
-  else {
-    loadUserData(username);
-    ++(std::get<5>(_dataMap[username])[2]);
-    stat = std::get<5>(_dataMap[username]);
-    saveUserData(username);
-  }
-  _mutex.unlock();
-}
-
-void Data::addUserRealTimeDarkWin(const std::string username){
-  Stat stat;
-
-  _mutex.lock();
-  if (_dataMap.find(username) != _dataMap.end()){
-    ++(std::get<6>(_dataMap[username])[0]);
-    stat = std::get<6>(_dataMap[username]);
-  }
-  else {
-    loadUserData(username);
-    ++(std::get<6>(_dataMap[username])[0]);
-    stat = std::get<6>(_dataMap[username]);
-    saveUserData(username);
-  }
-  _mutex.unlock();
-}
-
-void Data::addUserRealTimeDarkLose(const std::string username){
-  Stat stat;
-
-  _mutex.lock();
-  if (_dataMap.find(username) != _dataMap.end()){
-    ++(std::get<6>(_dataMap[username])[1]);
-    stat = std::get<6>(_dataMap[username]);
-  }
-  else {
-    loadUserData(username);
-    ++(std::get<6>(_dataMap[username])[1]);
-    stat = std::get<6>(_dataMap[username]);
-    saveUserData(username);
-  }
-  _mutex.unlock();
-}
-
-void Data::addUserRealTimeDarkDraw(const std::string username){
-  Stat stat;
-
-  _mutex.lock();
-  if (_dataMap.find(username) != _dataMap.end()){
-    ++(std::get<6>(_dataMap[username])[2]);
-    stat = std::get<6>(_dataMap[username]);
-  }
-  else {
-    loadUserData(username);
-    ++(std::get<6>(_dataMap[username])[2]);
-    stat = std::get<6>(_dataMap[username]);
-    saveUserData(username);
-  }
-  _mutex.unlock();
-}
-
-void Data::addUserRealTimeHordeWin(const std::string username){
-  Stat stat;
-
-  _mutex.lock();
-  if (_dataMap.find(username) != _dataMap.end()){
-    ++(std::get<7>(_dataMap[username])[0]);
-    stat = std::get<7>(_dataMap[username]);
-  }
-  else {
-    loadUserData(username);
-    ++(std::get<7>(_dataMap[username])[0]);
-    stat = std::get<7>(_dataMap[username]);
-    saveUserData(username);
-  }
-  _mutex.unlock();
-}
-
-void Data::addUserRealTimeHordeLose(const std::string username){
-  Stat stat;
-
-  _mutex.lock();
-  if (_dataMap.find(username) != _dataMap.end()){
-    ++(std::get<7>(_dataMap[username])[1]);
-    stat = std::get<7>(_dataMap[username]);
-  }
-  else {
-    loadUserData(username);
-    ++(std::get<7>(_dataMap[username])[1]);
-    stat = std::get<7>(_dataMap[username]);
-    saveUserData(username);
-  }
-  _mutex.unlock();
-}
-
-void Data::addUserRealTimeHordeDraw(const std::string username){
-  Stat stat;
-
-  _mutex.lock();
-  if (_dataMap.find(username) != _dataMap.end()){
-    ++(std::get<7>(_dataMap[username])[2]);
-    stat = std::get<7>(_dataMap[username]);
-  }
-  else {
-    loadUserData(username);
-    ++(std::get<7>(_dataMap[username])[2]);
-    stat = std::get<7>(_dataMap[username]);
-    saveUserData(username);
-  }
-  _mutex.unlock();
-}
-
-void Data::addUserRealTimeAliceWin(const std::string username){
-  Stat stat;
-
-  _mutex.lock();
-  if (_dataMap.find(username) != _dataMap.end()){
-    ++(std::get<8>(_dataMap[username])[0]);
-    stat = std::get<8>(_dataMap[username]);
-  }
-  else {
-    loadUserData(username);
-    ++(std::get<8>(_dataMap[username])[0]);
-    stat = std::get<8>(_dataMap[username]);
-    saveUserData(username);
-  }
-  _mutex.unlock();
-}
-
-void Data::addUserRealTimeAliceLose(const std::string username){
-  Stat stat;
-
-  _mutex.lock();
-  if (_dataMap.find(username) != _dataMap.end()){
-    ++(std::get<8>(_dataMap[username])[1]);
-    stat = std::get<8>(_dataMap[username]);
-  }
-  else {
-    loadUserData(username);
-    ++(std::get<8>(_dataMap[username])[1]);
-    stat = std::get<8>(_dataMap[username]);
-    saveUserData(username);
-  }
-  _mutex.unlock();
-}
-
-void Data::addUserRealTimeAliceDraw(const std::string username){
-  Stat stat;
-
-  _mutex.lock();
-  if (_dataMap.find(username) != _dataMap.end()){
-    ++(std::get<8>(_dataMap[username])[2]);
-    stat = std::get<8>(_dataMap[username]);
-  }
-  else {
-    loadUserData(username);
-    ++(std::get<8>(_dataMap[username])[2]);
-    stat = std::get<8>(_dataMap[username]);
+    ++(std::get<8>(_dataMap[username])[option]);
     saveUserData(username);
   }
   _mutex.unlock();

@@ -46,31 +46,14 @@ public:
   bool removeFriend(const std::string username, const std::string friend_name);
   bool cancelSentRequest(const std::string username, const std::string friend_name);
 
-  void addUserClassicWin(const std::string username);
-  void addUserClassicLose(const std::string username);
-  void addUserClassicDraw(const std::string username);
-  void addUserDarkWin(const std::string username);
-  void addUserDarkLose(const std::string username);
-  void addUserDarkDraw(const std::string username);
-  void addUserHordeWin(const std::string username);
-  void addUserHordeLose(const std::string username);
-  void addUserHordeDraw(const std::string username);
-  void addUserAliceWin(const std::string username);
-  void addUserAliceLose(const std::string username);
-  void addUserAliceDraw(const std::string username);
-
-  void addUserRealTimeClassicWin(const std::string username);
-  void addUserRealTimeClassicLose(const std::string username);
-  void addUserRealTimeClassicDraw(const std::string username);
-  void addUserRealTimeDarkWin(const std::string username);
-  void addUserRealTimeDarkLose(const std::string username);
-  void addUserRealTimeDarkDraw(const std::string username);
-  void addUserRealTimeHordeWin(const std::string username);
-  void addUserRealTimeHordeLose(const std::string username);
-  void addUserRealTimeHordeDraw(const std::string username);
-  void addUserRealTimeAliceWin(const std::string username);
-  void addUserRealTimeAliceLose(const std::string username);
-  void addUserRealTimeAliceDraw(const std::string username);
+  void updateClassicStat(std::string username, int option);
+  void updateDarkStat(std::string username, int option);
+  void updateHordeStat(std::string username, int option);
+  void updateAliceStat(std::string username, int option);
+  void updateRTClassicStat(std::string username, int option);
+  void updateRTDarkStat(std::string username, int option);
+  void updateRTHordeStat(std::string username, int option);
+  void updateRTAliceStat(std::string username, int option);
 
   bool isInLadder(const std::string gamemode, const std::string username);
   void updateLadder(const std::string gamemode, UserLadderData data);
