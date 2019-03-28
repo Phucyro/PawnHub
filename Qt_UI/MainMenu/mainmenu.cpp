@@ -73,7 +73,7 @@ void MainMenu::client_login() {
     do
     {
         login->get_login_deets(client->getSocket(), username, password);
-        std::cout << client->readPipe() << std::endl;
+        //std::cout << client->readPipe() << std::endl;
     }
     while (!(client->isIdentified()));
 
@@ -81,6 +81,7 @@ void MainMenu::client_login() {
     delete login;
 
     client->setName(username.toStdString());
+
 }
 
 void MainMenu::on_playButton_clicked()
@@ -110,6 +111,7 @@ void MainMenu::on_friendsButton_clicked()
 
 void MainMenu::on_chatButton_clicked()
 {
+    initClientData(client);
     this->hide();
     chat->exec();
     this->show();

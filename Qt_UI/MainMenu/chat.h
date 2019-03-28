@@ -22,6 +22,8 @@ class Chat : public QDialog
 public:
     explicit Chat(Client *clients, QWidget *parent = nullptr);
     ~Chat();
+    void showEvent(QShowEvent*);
+
 
 public slots:
   void displayChat(QString target);
