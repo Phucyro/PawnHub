@@ -15,6 +15,11 @@ Chat::Chat(Client *clients,QWidget *parent) :
     setupChat();
 }
 
+void Chat::showEvent( QShowEvent* event ) {
+    QWidget::showEvent( event );
+    reloadFriends();
+}
+
 Chat::~Chat()
 {
     delete ui;
@@ -25,7 +30,6 @@ void Chat::setupChat(){
     ui->friendListWidget->clear();
     client->setIsChatting(true);
     displayChat(QString::fromStdString(client->getIsChattingWith()));
-    reloadFriends();
 }
 
 void Chat::displayChat(QString target){
@@ -60,7 +64,6 @@ void Chat::on_sendPushButton_pressed()
                  m->popup();
     }else{
         chat(client->getSocket(), client->getIsChattingWith(), ui->inputLineEdit->text().toStdString());
-
         ui->chatPlainTextEdit->appendPlainText(ui->inputLineEdit->text());
         ui->inputLineEdit->clear();
         displayChat(QString::fromStdString(client->getIsChattingWith()));
@@ -95,7 +98,7 @@ void Chat::on_changeChanPushButton_pressed()
                  m->set_text("You are not befriended with that person ?");
                  m->set_title("Oh No: Not befriended error");
                  m->popup();
-    }else{
+    }else {
         client->setIsChattingWith(ui->friendListWidget->currentItem()->text().toStdString());
         displayChat(ui->friendListWidget->currentItem()->text());
         ui->chatPlainTextEdit->clear();
@@ -103,10 +106,9 @@ void Chat::on_changeChanPushButton_pressed()
 }
 
 void Chat::reloadFriends(){
-    std::cout << "HEY " <<"\n";
-    for ( std::vector<std::string>::iterator it=client->getFriends().begin(); it!=client->getFriends().end(); ++it){
-        std::cout << *it <<"\n";
-        ui->friendListWidget->addItem(QString::fromStdString(*it));
-    }
+    ui->friendListWidget->clear();
+    std::vector<std::string> list = client->getFriends();
+    auto it = list.begin();
+    for (;it != list.end(); ++it) ui->friendListWidget->addItem(QString::fromStdString(*it));
 }
 

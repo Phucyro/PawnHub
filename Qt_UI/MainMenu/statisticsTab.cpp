@@ -39,7 +39,7 @@ void StatisticsTab::setupMyStats(){
       std::string temp = stat[b+1];
       ui->staisticsTableWidget->setItem(a,b,new QTableWidgetItem(QString::fromStdString(temp)));
     }
-    std::cout << strVectorToStr(stat) << std::endl;
+    //std::cout << strVectorToStr(stat) << std::endl;
   }
 }
 
@@ -58,7 +58,7 @@ void StatisticsTab::setupGlobalStats(){
       std::string temp = stat[b+1];
       ui->staisticsTableWidget->setItem(a,b,new QTableWidgetItem(QString::fromStdString(temp)));
     }
-    std::cout << strVectorToStr(stat) << std::endl;
+    //std::cout << strVectorToStr(stat) << std::endl;
   }
 }
 
