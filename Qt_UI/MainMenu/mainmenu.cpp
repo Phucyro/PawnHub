@@ -88,9 +88,7 @@ void MainMenu::on_playButton_clicked()
 void MainMenu::on_statsButton_clicked()
 {
     StatisticsChoice* stats = new StatisticsChoice(client);
-    this->hide();
     stats->exec();
-    this->show();
     delete stats;
 }
 
@@ -105,7 +103,6 @@ void MainMenu::on_friendsButton_clicked()
 
 void MainMenu::on_chatButton_clicked()
 {
-    Chat* chat = new Chat(client);
     this->hide();
     chat->exec();
     delete chat;

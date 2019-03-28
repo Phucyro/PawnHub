@@ -23,9 +23,7 @@ void StatisticsChoice::on_returnPushButton_pressed()
 void StatisticsChoice::on_myStatsPushButton_pressed()
 {
     GameChoiceStatistics* choice = new GameChoiceStatistics(0,client);
-    this->hide();
     choice->exec();
-    this->show();
     delete choice;
 }
 
@@ -33,8 +31,6 @@ void StatisticsChoice::on_myStatsPushButton_pressed()
 void StatisticsChoice::on_globalPushButton_pressed()
 {
     GameChoiceStatistics* choice = new GameChoiceStatistics(1,client);
-    this->hide();
     choice->exec();
-    this->show();
     delete choice;
 }
