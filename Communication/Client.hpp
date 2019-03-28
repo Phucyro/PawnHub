@@ -16,7 +16,7 @@ typedef std::vector<std::tuple<std::string, std::string>> Conversation;
 class Client {
 private:
   Socket* _socket;
-  int* _pipeControl;
+  int* _pipeControl, *_pipeGameMessage;
   bool _identified;
   std::string _nickname;
   std::map<std::string, Conversation> _conversations;
@@ -30,6 +30,7 @@ public:
   Client(Socket* socket) :
     _socket(socket),
     _pipeControl(nullptr),
+    _pipeGameMessage(nullptr),
     _identified(false),
     _nickname("Guest"),
     _conversations({}),
@@ -40,8 +41,12 @@ public:
     _recvRequest({})
   {
     _pipeControl = new int[2];
+    _pipeGameMessage = new int[2];
 
     if ((pipe(_pipeControl)) == -1){
+      throw std::runtime_error("Fail while constructing a pipe for an object of type 'Client'");
+    }
+    if ((pipe(_pipeGameMessage)) == -1){
       throw std::runtime_error("Fail while constructing a pipe for an object of type 'Client'");
     }
   }
@@ -51,6 +56,9 @@ public:
     close(_pipeControl[0]);
     close(_pipeControl[1]);
     delete[] _pipeControl;
+    close(_pipeGameMessage[0]);
+    close(_pipeGameMessage[1]);
+    delete[] _pipeGameMessage;
   }
 
   Socket* getSocket();
@@ -71,7 +79,10 @@ public:
   bool hasSentTo(std::string name);
   void removeSentRequest(std::string name);
   std::string readPipe();
-	void writePipe(std::string msg);
+  void writePipe(std::string msg);
+  std::string readGame();
+  void writeGame(std::string);
+  int getReadGamePipe();
   void setIsChatting(bool chatting);
   bool isChatting();
   void setIsChattingWith(std::string name);

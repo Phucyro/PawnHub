@@ -96,7 +96,10 @@ void normalGameMenu(MenuHandler* menu, Client* client){
       break;
   }
 
-  if (play) client->readPipe();
+  if (play) {
+  	client->readPipe();
+  	ClientGameControl control(*client);
+  }
 }
 
 void realTimeMenu(MenuHandler* menu, Client* client){
@@ -123,7 +126,10 @@ void realTimeMenu(MenuHandler* menu, Client* client){
       play = false;
       break;
   }
-  if (play) client->readPipe();
+  if (play) {
+  	client->readPipe();
+  	ClientGameControl control(*client);
+  }
 }
 
 
