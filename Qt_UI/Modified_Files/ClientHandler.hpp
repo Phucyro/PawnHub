@@ -21,6 +21,7 @@ public:
 public slots :
   void receiveMessageHandler();
   // chatHandler();
+  void quit();
 
 signals :
   void finished();
@@ -46,6 +47,7 @@ private:
   void updateSentRequestHandler(QString, QString);
 
   Client* client;
+  bool mustQuit;
 
 };
 #endif
