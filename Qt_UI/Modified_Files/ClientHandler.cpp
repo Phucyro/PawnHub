@@ -225,6 +225,6 @@ void ClientHandler::receiveMessageHandler(){
   emit finished();
 }
 
-void quit(){
+void ClientHandler::quit(){
 	mustQuit = true;
 }

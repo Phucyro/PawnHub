@@ -21,8 +21,8 @@ MainMenu::MainMenu(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::MainMenu),
     client(new Client(new Socket)),
-    chat(new Chat (client)),
-    msgThread(new QThread)
+    msgThread(new QThread),
+    chat(new Chat (client))
 
 {
     ui->setupUi(this);
@@ -50,7 +50,7 @@ MainMenu::~MainMenu()
       msgThread->deleteLater();
     }
     delete client;
-    delete ui;
+    delete  ui;
 }
 
 void MainMenu::client_connect() {
