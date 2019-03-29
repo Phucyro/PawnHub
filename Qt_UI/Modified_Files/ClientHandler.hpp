@@ -20,14 +20,14 @@ public:
 
 public slots :
   void receiveMessageHandler();
-  // chatHandler();
-  void quit();
+//  void quit();
 
 signals :
   void finished();
   void sigDisplayChat(QString);
 
 private:
+  void quitHandler();
   void signUpHandler(char);
   void signInHandler(char);
   void chatHandler(QString, QString, QString);

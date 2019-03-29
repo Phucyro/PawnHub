@@ -21,7 +21,7 @@ public:
     ~MainMenu();
 
 signals:
-    void stopRecvMsg();
+//    void stopRecvMsg();
 
 private slots:
     void on_playButton_clicked();

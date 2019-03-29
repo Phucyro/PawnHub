@@ -7,6 +7,10 @@ ClientHandler::~ClientHandler(){
   client = nullptr;
 }
 
+void ClientHandler::quitHandler(){
+    mustQuit = true;
+}
+
 void ClientHandler::signUpHandler(char msg){
   switch (msg){
     case '0' :
@@ -166,6 +170,9 @@ void ClientHandler::receiveMessageHandler(){
     int choice = atoi(msg[0].c_str());
 
     switch(choice){
+      case 0 :
+        quitHandler();
+        break;
       case 1 : // [1] [resultat]
         signUpHandler(msg[1][0]);
         break;
@@ -225,6 +232,6 @@ void ClientHandler::receiveMessageHandler(){
   emit finished();
 }
 
-void ClientHandler::quit(){
-	mustQuit = true;
-}
+//void ClientHandler::quit(){
+//	mustQuit = true;
+//}

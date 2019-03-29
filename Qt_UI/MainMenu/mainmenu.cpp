@@ -35,7 +35,7 @@ MainMenu::MainMenu(QWidget *parent) :
     connect(msgThread, &QThread::finished, handler, &ClientHandler::deleteLater);
     connect(msgThread, &QThread::finished, msgThread, &QThread::deleteLater);
     connect(handler, &ClientHandler::sigDisplayChat, chat, &Chat::displayChat);
-    connect(this, &MainMenu::stopRecvMsg, handler, &ClientHandler::quit);
+//    connect(this, &MainMenu::stopRecvMsg, handler, &ClientHandler::quit);
     msgThread->start();
 
     client_login();
@@ -135,6 +135,6 @@ void MainMenu::on_quitButton_clicked()
 void MainMenu::closeEvent()
 {
     quit(client);
-    stopRecvMsg();
+//    stopRecvMsg();
     exit(0);
 }
