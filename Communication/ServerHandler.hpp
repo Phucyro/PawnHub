@@ -16,7 +16,8 @@ typedef std::vector<unsigned int> Stat;
 typedef std::tuple<std::string, Stat, double> UserLadderData;
 
 
-void inline disconnect(bool* leave){
+void inline disconnect(Socket* socket, bool* leave){
+  socket->sendMessage("0~Quit");
   *leave = true;
 }
 

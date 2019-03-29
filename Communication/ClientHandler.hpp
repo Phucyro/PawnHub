@@ -9,6 +9,10 @@
 #include "Client.hpp"
 #include "ClientFunctions.hpp"
 
+void quitHandler(bool* stop_receive){
+  *stop_receive = true;
+}
+
 
 void signUpHandler(Client* client, char msg){
   switch (msg){

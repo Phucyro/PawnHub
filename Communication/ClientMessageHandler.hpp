@@ -15,13 +15,17 @@
 
 void receiveMessageHandler(MenuHandler* menu, Client* client){
   std::vector<std::string> msg;
+  bool stop_receive = false;
 
-  while (true){
+  while (!stop_receive){
     msg = splitString(client->getSocket()->receiveMessage(), '~');
 
     int choice = atoi(msg[0].c_str());
 
     switch(choice){
+      case 0 :
+        quitHandler(&stop_receive);
+        break;
       case 1 : // [1] [resultat]
         signUpHandler(client, msg[1][0]);
         break;

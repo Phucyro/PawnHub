@@ -30,7 +30,7 @@ void inline receiveMessageHandler(Socket* socket, Data* data, PlayersMap* player
 
       switch (choice){
         case 0 : // [0]
-          disconnect(&quit);
+          disconnect(socket, &quit);
           break;
         case 1 : // [1] [username] [password]
           signUpHandler(socket, data, msg[1], msg[2]);
