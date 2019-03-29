@@ -39,7 +39,7 @@ void Board::init_ncurses()
   }
   start_color();
   init_pair(WHITE_PLAYER, COLOR_WHITE, COLOR_BLACK);
-  init_pair(BLACK_PLAYER, COLOR_RED, COLOR_BLACK);
+  init_pair(BLACK_PLAYER, COLOR_CYAN, COLOR_BLACK);
 
   init_windows();
 }
