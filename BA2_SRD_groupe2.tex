@@ -32,7 +32,7 @@
 	\newpage
 	\section{Introduction}
 		\subsection{Description du Projet}
-			\paragraph{}Ce projet aura pour but de recréer un grand classique des jeux de plateau: les échecs. Le jeu sera jouable en réseau via un mode multijoueurs. Le joueur pourra jouer au mode classique ou à une de ses variantes telles que  {\itshape AliceChess, DarkChess} et {\itshape HordeChess}, décrites plus loin. De plus, il aura également la possibilité de créer un compte à partir duquel il pourra effectuer plusieurs actions qui seront détaillées ci-dessous. Néanmoins, le joueur pourra lancer une partie en tant que {\itshape visiteur} mais ne bénéficiera pas des avantages liés à la possession d'un compte.\\
+			\paragraph{}Ce projet aura pour but de recréer un grand classique des jeux de plateau: les échecs. Le jeu sera jouable en réseau via un mode multijoueurs.Le joueur aura la possibilité de joueur en mode tour par tour ou en temps réel, c'est à dire que les joueurs ne devront pas attendre leur tour pour jouer. Le joueur le plus rapide verra son coup s'effectuer en premier.Il devra ensuite choisir entre le mode classique ou à une de ses variantes telles que  {\itshape AliceChess, DarkChess} et {\itshape HordeChess}, décrites plus loin. De plus, il aura également la possibilité de créer un compte à partir duquel il pourra effectuer plusieurs actions qui seront détaillées ci-dessous. Néanmoins, le joueur pourra lancer une partie en tant que {\itshape visiteur} mais ne bénéficiera pas des avantages liés à la possession d'un compte.\\
 			\subsection{Fonctionnement du Jeu d'Échec}
 			\subsubsection{Règles du Jeu}
 			Chaque joueur commence le jeu avec 16 pions: un roi, une dame, deux tours, deux fous, deux cavaliers et huit pions. Le but du jeu est d'infliger à son adversaire un \textit{échec et mat}, une situation dans laquelle le roi d'un joueur est en prise sans qu'il soit possible d'y remédier\footnote{Wikipedia}.
@@ -52,7 +52,12 @@
 			\end{description}
 			\clearpage
 
-			\subsection{Les Modes de Jeu}
+			\subsection{Mécanismes Du Jeu}
+				\subsubsection{Tour par Tour}
+					\paragraph{}Comme son nom l'indique, avec cette option, le déroulement du jeu est divisé en parties bien définies et visibles, appelées tours. Les joueurs jouent donc l'un après l'autre. Chaque joueur dispose d'une limite de temps de 45 minutes pour jouer une partie. Le chronomètre se décrémente au tour du joueur et se met en pause lorsque c'est au tour de l'adversaire		
+				\subsubsection{En Temps Réel}
+					\paragraph{}Avec cette option, les joueurs peuvent joueur sans la contrainte de tour, c'est à dire que par exemple, ils pourraient jouer plusieurs fois d'affilé un coup. 
+			\subsection{Les Modes de Jeu}				
 				\subsubsection{Classique}
 					\paragraph{}Dans une partie de jeu d'échecs classique, le but est de mettre le roi adverse en échec sans qu'il ait la possibilité au tour suivant de ne plus l'être.
 				\subsubsection{Alice Chess}
@@ -65,7 +70,8 @@
 			\subsection{Fonctionnalités pour Utilisateur Enregistré et Utilisateur Non-Enregistré}Depuis le menu principal, les joueurs pourront accéder à l'option {\itshape View Rules} à travers lequel ils pourront lire en détail les règles du jeu d'échecs et de ses variantes. Les joueurs lanceront une partie via l'option {\itshape Game}. %Lors d'une partie, ils pourront s'envoyer des messages via un chat dédié. %TODO ne nous avancons pas, je dirais
 
 			\subsection{Fonctionnalités pour Utilisateur Enregistré}Les joueurs pourront communiquer via un chat global. Dans le système de matchmaking, ils auront le choix entre affronter un ami ou un joueur aléatoire parmi ceux qui sont connectés et libres\footnote{ne se trouvant pas en partie.}. À travers le menu principal, les utilisateurs accéderont à plusieurs sous-menus tels que {\itshape View Ranking, View Rules, View Statistics, Friends List}.%rajouter d'autres fonctionnalités au besoin.
-
+			\subsection{Fonctionnalités Supplémentaires}
+Le joueur aura la possibilité de jouer en mode console ou via une interface graphique. S'il choisit l'interface graphique, des publicités défileront pendant ses parties.
 		\subsection{Glossaire} Par souci de clarté et de lisibilité, toutes les informations relatives aux règles et au fonctionnement officiels des échecs et de ses variantes ne seront pas parcourues ci-dessous.
 		\begin{description}
 		\item[Un utilisateur non-enregistré :] Utilisateur ne s'étant pas identifié au système via un compte.
@@ -119,6 +125,7 @@ la case traversée par le roi n'est contrôlée par aucune pièce adverse\footno
 				 2.3 & 3/03 & Nguyen Duc & Protocole de communication du menu \\
 				 2.4 & 3/03 & Antunes André & Rajout des méthodes pour Alice, Dark, Horde, Classique \\
 				 2.5 & 3/03 & Boonen Jacques & Nouveaux Diagrammes de classes \\
+				 2.6 & 28/03 & Boonen Jacques & Realtime + diagrammes sytème + relecture finale \\
 				\hline
 \end{tabular}
 			\caption*{Historique des modifications}
@@ -233,8 +240,8 @@ la case traversée par le roi n'est contrôlée par aucune pièce adverse\footno
 %ceci peut changer en cours de developement
 
 \section{Besoins Utilisateurs : Non-Fonctionnels}
-Afin d'avoir des parties de jeux dynamiques, les joueurs se verront imposer une limite de temps pour pouvoir jouer leur tour. \\
-
+Afin d'avoir des parties de jeux dynamiques, les joueurs se verront imposer une limite de temps de 45 minutes pour pouvoir jouer une partie. \\
+Afin d'avoir des parties équilibrées, les joueurs se verront attribués des adversaires de même niveau via le matchmaking. Chaque joueur dispose d'un elo,celui-ci est calculé d'après la formule de Arpad Elo\footnote{est un scientifique, mathématicien et joueur d'échecs américain d'origine hongroise. Il est surtout connu pour son système d'estimation de la force des joueurs d'échecs, le classement Elo.Wikipedia}
 \section{Besoins Systèmes : Fonctionnels}
 
 \subsection{Connexion au Serveur}
@@ -357,7 +364,6 @@ Le système se doit de mettre assez rapidement à jour les statistiques personne
 \centering
 \includegraphics[scale=0.5]{ClassDiagram.png}
 \caption{Diagramme de classes général}
-\label{CD} %ClassDiagram
 \end{figure}
 
 \subsubsection{Les Différentes Pièces}
@@ -365,7 +371,6 @@ Le système se doit de mettre assez rapidement à jour les statistiques personne
 \centering
 \includegraphics[scale=0.5]{pieces_diagram.png}
 \caption{Diagramme des pièces et coordinate}
-\label{CD} %ClassDiagram
 \end{figure}
 
 \paragraph{Mode classique}Chaque type de pièces, c'est à dire, \textit{Queen,King,Bishop,Pawn,GhostPawn,Knight,Rook}, héritent de la classe mère \textit{Piece}.
@@ -380,13 +385,19 @@ Le système se doit de mettre assez rapidement à jour les statistiques personne
 \textbf{Move :} est une méthode qui selon \textit{checkMove} effectue ou non, le mouvement demandé par le joueur sur la pièce. Cette méthode effectue d'abord un \textit{checkMove} à l'endroit du coup désiré par le joueur. Si, le coup est possible, elle effectue un \textit{doMove} ce qui permet d'avancer la pièce à l'endroit du coup. Dans le cas où le coup met le \textit{King} du joueur en échec, on effectue un \textit{ReverseMove} qui remet le \textit{Board} dans son état initial. Si le \textit{Board} à changé, la fonction retourne true.\\
 \end{enumerate}
 
-%\paragraph{Mode Alice}
+\paragraph{Mode Alice}
+Tout comme dans le mode classique, les différentes pièces héritent de la classe mère \textit{AlicePiece}. Néanmoins dans le mode Alice, il existe 2 échiquiers, c'est pourquoi, les pièces ont un attribut booléen \textit{2Dimension} qui signale au système dans quel échiquier se trouve la pièce concernée.
+\begin{enumerate}
+\item
+\textbf{swapdimension:} Change l'attribut \textit{2Dimension} par son contraire. \\
+\textbf{isPlaceFree :} Retourne true si la case sur laquelle une pièce devrait arriver est libre ou non.\\
+\textbf{getdimension :}Retourne la variable \textit{2Dimension}.
+\end{enumerate}
 
 \begin{figure}[H]
 \centering
 \includegraphics[scale=0.5]{alice_pieces.png}
 \caption{Diagramme des pièces du mode de jeu Alice}
-\label{CD} %ClassDiagram
 \end{figure}
 
 
@@ -396,14 +407,22 @@ Le système se doit de mettre assez rapidement à jour les statistiques personne
 %\begin{sidewaysfigure}[ph]
 
 \subsubsection{Les Différents Modes De Jeu}
+\paragraph{}Que cela soit en tour par tour ou en temps réel, \textit{TurnBasedGame} et \textit{RealTimeGame} héritent de la classe mère \textit{Game}.
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.5]{game_diagram.png}
+\caption{Diagramme de Game}
+\end{figure}
+
+
+\paragraph{\underline{Tour Par Tour}}
 \begin{figure}[H]
 \centering
 \includegraphics[scale=0.5]{mode_chess.png}
-\caption{Diagramme des modes de jeu}
-\label{CD} %ClassDiagram
+\caption{Diagramme des modes de jeu en tour par tour}
 \end{figure}
-\begin{enumerate}
 
+\begin{enumerate}
 \item \textit{Méthodes Communes} \\
 \textbf{start :} Lance la partie et se termine en cas de victoire d'un des 2 joueurs ou en cas d'égalité. \\
 \textbf{initBoard :} Place les pièces sur leur case de départ dans le \textit{Board}. \\
@@ -432,19 +451,25 @@ Alice possède en plus:\\
 Dark possède en plus:\\
 \textbf{boardState :}  Le \textit{boardState} prend en considération la visibilité des différentes pièce, paramètre propre à ce mode de jeu. Le reste du code se comporte selon la méthode classique. \footnote{Voir méthodes Classique de l'échiquier 6.1.3}. \\
 \textbf{isVisible :} Cette méthode indique si la pièce est visible par l'adversaire, c'est à dire si celui-ci est dans la possibilité de prendre la pièce. Si tel est le cas, renvoi d'un true.
-
-
-
-
-
 \end{enumerate}
-%\subsubsection{Player}
 
-\subsubsection{Board et Player}
+\paragraph{\underline{Temps Réel}}
+Les modes en temps réel ne prennent plus en compte les tours des joueurs. Néanmoins, ils doivent gérer une file d'attente de coups \textit{addToQueue}.
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.5]{mode_chess_realtime.png}
+\caption{Diagramme des modes de jeu en temps réel}
+\end{figure}
+
+
+
+\subsubsection{Board et Player et ChainedMove}
+\textit{Player} se charge de transférer à la partie serveur bon nombre d'informations sur l'état de la partie via ses différentes fonctions \textit{transfer}. \textit{Board} renvoie les différentes positions des pièces.\textit{ChainedMove} ordonne dans quel ordre,les coups vont être joués. Classe très importante dans les parties en temps réel, où le joueur ayant demandé le coup en premier, est prioritaire.
+
 \begin{figure} [H]
 \centering
-\includegraphics[scale=0.50]{board_player_diagram.png}
-\caption{Diagram de Board et Player}
+\includegraphics[scale=0.50]{player_chainedmove_board.png}
+\caption{Diagramme de classe de \textit{Board} et \textit{Player}}
 \end{figure}
 
 \newpage
@@ -452,7 +477,12 @@ Dark possède en plus:\\
 \subsection{Connexion du Joueur}
 Le joueur se connecte à l'aide du \textit{hostname} du serveur, qui s'affiche à l'exécution de celui-ci. Il accède ensuite à un menu lui permettant de se connecter à son compte ou d'en créer un nouveau.
 
-\subsection{Les Actions du Joueur}
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.72]{client_server_control.png}
+\caption{Diagramme de classe des \textit{GameControl}}
+\end{figure}
+%\subsection{Les Actions du Joueur}
 
 \subsection{Client-Serveur}
 \paragraph{}Dans le cadre de ce projet, il a été décidé que la partie serveur s'occupera de toute la logique du jeu tandis que la partie client s'assurera d'afficher correctement l'interface du jeu en temps réel et pour ce faire, recevra des requêtes du serveur pour connaître les mouvements de pièces voulus par les joueurs.
@@ -535,6 +565,13 @@ Le joueur se connecte à l'aide du \textit{hostname} du serveur, qui s'affiche �
 \end{enumerate}
 
 \subsection{Menu}
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.72]{client_data.png}
+\caption{Diagramme de classe du \textit{Client} et \textit{Data}}.
+\end{figure}
+
 \begin{enumerate}
 
 \item \textit{Affichage du menu}\\
@@ -575,7 +612,7 @@ Le joueur se connecte à l'aide du \textit{hostname} du serveur, qui s'affiche �
 \textbf{Protocole :} Si l'utilisateur décide de voir ses statistiques, la fonction \textit{checkMyStat} est appelée et enverra un message au serveur qui retournera les statistiques de l'utilisateur qui seront affichées dans un rectangle. Si l'utilisateur veut voir le classement général, il sera redirigé vers un autre menu. Sinon, l'utilisateur retourne au menu principal.
 
 \item \textit{Choix d'option du menu Classement général}\\
-\textbf{Mise en pratique :} L'utilisateur a le choix entre 5 options : \textit{Classic}, \textit{Dark}, \textit{Horde}, \textit{Alice} et \textit{Retour}. \\
+\textbf{Mise en pratique :} L'utilisateur a le choix entre 9 options : \textit{Classic}, \textit{Dark}, \textit{Horde}, \textit{Alice} et ses variantes en \textit{RealTime} et \textit{Retour}. \\
 \textbf{Protocole :} Si l'utilisateur choisit une des 4 premières options, alors un messages est envoyé au serveur qui renverra le nom et les statistiques des 10 premiers joueurs du mode sélectionné. Ces informations seront ensuite affichées dans un rectangle. Sinon l'utilisateur revient au menu principal.
 
 
