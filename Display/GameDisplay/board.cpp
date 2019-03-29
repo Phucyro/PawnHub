@@ -60,7 +60,6 @@ void Board::init_windows()
       draw_rectangle(i+OFFSET,j+2,i+OFFSET+SIDE_LENGTH,j+2+SIDE_LENGTH);
     }
 
-
   draw_coordinates();
   draw_infos();
 
@@ -157,18 +156,32 @@ void Board::endgame(const char* message) {
 void Board::draw_coordinates()
 /** Initialise les coordonnees X et Y du board **/
 {
-  for (int i=0; i<lines; i++)
+
+  //print les chiffres du board en fonction de la couleur
+  if (colour == "black")
   {
-    mvprintw(OFFSET*(i+1), 1 , "%d", i+1);
-    mvprintw(OFFSET*(i+1), 25+OFFSET , "%d", i+1);
+    for (int i=0; i<lines; i++)
+    {
+      mvprintw(OFFSET*(i+1), 1 , "%d", i+1);
+      mvprintw(OFFSET*(i+1), 25+OFFSET , "%d", i+1);
+    }
   }
 
+  else if (colour == "white")
+  {
+    for (int i=0; i<lines; i++)
+    {
+      mvprintw(OFFSET*(i+1), 1 , "%d", 8-i);
+      mvprintw(OFFSET*(i+1), 25+OFFSET , "%d", 8-i);
+    }
+  }
+
+  //print les lettres du board
   for (int i=0; i<columns; i++)
   {
     mvprintw(1, 1+OFFSET*(i+1), "%c", 'A'+i);
     mvprintw(26, 1+OFFSET*(i+1), "%c", 'A'+i);
   }
-  refresh_board();
 }
 
 void Board::draw_pieces(std::string board)
