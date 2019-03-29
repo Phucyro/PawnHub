@@ -11,7 +11,7 @@ ClientGameControl::ClientGameControl(Client* _client, GameWithoutChat* _game): c
     connect(this, &ClientGameControl::updatePiece, game, &GameWithoutChat::set_piece);
     connect(this, &ClientGameControl::receiveUpdate, game, &GameWithoutChat::show_update);
     connect(this, &ClientGameControl::receiveGameMode, game, &GameWithoutChat::set_mode);
-    connect(this, &ClientGameControl::receivePlayerColour, game, &GameWithoutChat::set_colour);
+    connect(this, &ClientGameControl::setColour, game, &GameWithoutChat::set_colour);
     connect(this, &ClientGameControl::receiveTurn, game, &GameWithoutChat::set_turn);
     connect(this, &ClientGameControl::receiveTime, game, &GameWithoutChat::set_time);
     connect(this, &ClientGameControl::receiveAskMove, game, &GameWithoutChat::get_move);
@@ -56,11 +56,10 @@ void ClientGameControl::receiveBoard(QString message) {
   }
 }
 
-//void ClientGameControl::receivePlayerColour(QString message) {
-////  will need to deal with this for alice
-////  colour = message.toStdString()[0];
-//  game->set_colour(message);
-//}
+void ClientGameControl::receivePlayerColour(QString message) {
+  colour = message.toStdString()[0];
+  emit setColour(message);
+}
 
 //void ClientGameControl::receiveTime(std::string message) {
 //	int time = atoi(message.c_str());

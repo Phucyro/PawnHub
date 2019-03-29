@@ -59,9 +59,9 @@ public slots:
 
 signals:
   void updatePiece(QIcon, QString, QString);
+  void setColour(QString);
   void receiveUpdate(QString);
   void receiveGameMode(QString);
-  void receivePlayerColour(QString);
   void receiveTurn(QString);
   void receiveTime(QString);
   void receiveAskMove(QString);
@@ -73,6 +73,7 @@ signals:
 
 private:
   void handleMessage();
+  void receivePlayerColour(QString);
   void receiveBoard(QString);
   void receiveGoodMove(QString);
   void receiveFirstMessage(QString);
