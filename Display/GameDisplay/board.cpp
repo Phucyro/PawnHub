@@ -39,7 +39,7 @@ void Board::init_ncurses()
   }
   start_color();
   init_pair(WHITE_PLAYER, COLOR_WHITE, COLOR_BLACK);
-  init_pair(BLACK_PLAYER, COLOR_RED, COLOR_BLACK);
+  init_pair(BLACK_PLAYER, COLOR_CYAN, COLOR_BLACK);
 
   init_windows();
 }
@@ -71,17 +71,35 @@ void Board::init_windows()
 void Board::draw_alice_coordinates()
 {
 
-  for (int i=0; i<lines; i++)
-  {
-    mvprintw(OFFSET*(i+1), 63, "%d", i+1);
-    mvprintw(OFFSET*(i+1), 63+25+OFFSET , "%d", i+1);//54
-  }
+    if (colour == "black")
+    {
+        for (int i=0; i<lines; i++)
+        {
+            mvprintw(OFFSET*(i+1), 63, "%d", i+1);
+            mvprintw(OFFSET*(i+1), 63+25+OFFSET , "%d", i+1);//54
+        }
 
-  for (int i=0; i<columns; i++)
-  {
-    mvprintw(26, 66+(OFFSET*i), "%c", 'A'+i);//57
-    mvprintw(1, 66+(OFFSET*i), "%c", 'A'+i);
-  }
+        for (int i=0; i<columns; i++)
+        {
+            mvprintw(26, 66+(OFFSET*i), "%c", 'A'+i);//57
+            mvprintw(1, 66+(OFFSET*i), "%c", 'A'+i);
+        }
+    }
+
+    else if (colour == "white")
+    {
+        for (int i=0; i<lines; i++)
+        {
+            mvprintw(OFFSET*(i+1), 63, "%d", 8-i);
+            mvprintw(OFFSET*(i+1), 63+25+OFFSET , "%d", 8-i);//54
+        }
+
+        for (int i=0; i<columns; i++)
+        {
+            mvprintw(26, 66+(OFFSET*i), "%c", 'H'-i);//57
+            mvprintw(1, 66+(OFFSET*i), "%c", 'H'-i);
+        }
+    }
 
 
 }
@@ -157,18 +175,40 @@ void Board::endgame(const char* message) {
 void Board::draw_coordinates()
 /** Initialise les coordonnees X et Y du board **/
 {
-  for (int i=0; i<lines; i++)
+
+  //print les chiffres du board en fonction de la couleur
+  if (colour == "black")
   {
-    mvprintw(OFFSET*(i+1), 1 , "%d", i+1);
-    mvprintw(OFFSET*(i+1), 25+OFFSET , "%d", i+1);
+    for (int i=0; i<lines; i++)
+    {
+      mvprintw(OFFSET*(i+1), 1 , "%d", i+1);
+      mvprintw(OFFSET*(i+1), 25+OFFSET , "%d", i+1);
+    }
+
+
+    for (int i=0; i<columns; i++)
+    {
+        mvprintw(1, 1+OFFSET*(i+1), "%c", 'A'+i);
+        mvprintw(26, 1+OFFSET*(i+1), "%c", 'A'+i);
+    }
   }
 
-  for (int i=0; i<columns; i++)
+  else if (colour == "white")
   {
-    mvprintw(1, 1+OFFSET*(i+1), "%c", 'A'+i);
-    mvprintw(26, 1+OFFSET*(i+1), "%c", 'A'+i);
+    for (int i=0; i<lines; i++)
+    {
+      mvprintw(OFFSET*(i+1), 1 , "%d", 8-i);
+      mvprintw(OFFSET*(i+1), 25+OFFSET , "%d", 8-i);
+    }
+
+    for (int i=0; i<columns; i++)
+    {
+        mvprintw(1, 1+OFFSET*(i+1), "%c", 'H'-i);
+        mvprintw(26, 1+OFFSET*(i+1), "%c", 'H'-i);
+    }
   }
-  refresh_board();
+
+
 }
 
 void Board::draw_pieces(std::string board)
@@ -177,15 +217,14 @@ void Board::draw_pieces(std::string board)
   clear_board();
   box(infos_win,0,0);
   draw_infos();
-  stringToBoard(board);
+  stringToBoard(board,colour);
 }
 
 void Board::draw_alice_pieces(std::string board)
 {
   draw_alice_board();
-  aliceToBoard(board);
+  aliceToBoard(board, colour);
 }
-
 
 void Board::draw_rectangle(int x1, int y1, int x2, int y2)
 /** permet de dessiner des rectangles de (x1,y1) vers (x2, y2) **/
