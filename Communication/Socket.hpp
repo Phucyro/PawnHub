@@ -9,6 +9,7 @@ private:
   int file_descriptor;
   char recv_buffer[MSG_LENGTH];
   std::mutex monMutex;
+  std::mutex useMutex;
 
 public:
   Socket();
