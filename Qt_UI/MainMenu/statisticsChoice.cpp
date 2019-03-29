@@ -1,5 +1,6 @@
 #include "statisticsChoice.h"
 #include "ui_statisticsChoice.h"
+
 #include "gameChoiceStatistics.h"
 
 StatisticsChoice::StatisticsChoice(Client *c,QWidget *parent) :

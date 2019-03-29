@@ -1,10 +1,6 @@
-#include "../../Communication/Socket.hpp"
-#include "../../Communication/Client.hpp"
-#include "../Modified_Files/ClientHandler.hpp"
-#include "../Modified_Files/ClientFunctions.hpp"
-
 #include "mainmenu.h"
 #include "ui_mainmenu.h"
+
 #include "connectiondialog.h"
 #include "logindialog.h"
 #include "gameChoice.h"
@@ -13,9 +9,14 @@
 #include "friendTab.h"
 #include "chat.h"
 
+#include "../../Communication/Socket.hpp"
+#include "../../Communication/Client.hpp"
+#include "../Modified_Files/ClientHandler.hpp"
+#include "../Modified_Files/ClientFunctions.hpp"
+
 #include <QDesktopServices>
 #include <QUrl>
-#include <thread>
+#include <QThread>
 
 MainMenu::MainMenu(QWidget *parent) :
     QWidget(parent),

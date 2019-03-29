@@ -1,7 +1,7 @@
 #include "friendTab.h"
 #include "ui_friendTab.h"
+
 #include "message.h"
-#include "ui_message.h"
 
 #include "../Modified_Files/ClientFunctions.hpp"
 #include "../Modified_Files/CheckFormat.hpp"

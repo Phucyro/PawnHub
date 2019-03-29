@@ -1,5 +1,6 @@
 #ifndef STATISTICSCHOICE_H
 #define STATISTICSCHOICE_H
+
 #include "../../Communication/Client.hpp"
 
 #include <QDialog>

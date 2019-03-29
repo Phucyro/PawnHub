@@ -1,8 +1,9 @@
 #ifndef GAMECHOICESTATISTICS_H
 #define GAMECHOICESTATISTICS_H
 
-#include <QDialog>
 #include "../../Communication/Client.hpp"
+
+#include <QDialog>
 
 namespace Ui {
 class GameChoiceStatistics;

@@ -66,7 +66,6 @@ HEADERS += \
     ../Modified_Files/CheckFormat.hpp \
     ../Modified_Files/ClientGameControl.hpp \
     ../Modified_Files/BoardParsing.hpp \
-    ../Modified_Files/MoveParsing.hpp \
     passwordrepeat.h \
     message.h \
     game.h \

@@ -61,15 +61,6 @@ void ClientGameControl::receivePlayerColour(QString message) {
   emit setColour(message);
 }
 
-//void ClientGameControl::receiveTime(std::string message) {
-//	int time = atoi(message.c_str());
-//	if (time < 0) board.show_time_left(std::string("-"));
-//	else{
-//		timer.reset(time);
-//		board.show_time_left(timer);
-//	}
-//}
-
 // void ClientGameControl::receiveAskMove(std::string message) {
 // 	struct timeval updateRate;
 // 	int move[4], i = 0, newch = STDIN_FILENO;
@@ -155,15 +146,6 @@ void ClientGameControl::setGameOngoing(bool value) {
 void ClientGameControl::setRealTime() {
     is_real_time = true;
 }
-
-//void ClientGameControl::handleMessage() {
-////  if (is_real_time) listenSocketAndKeyboard();
-////  else{
-//    std::string message = socket->receiveMessage();
-//    char header = message[0];
-//    (this->*(headerReceiveMap[header]))(QString::fromStdString(message.erase(0,1)));
-////  }
-//}
 
 void ClientGameControl::handleMessage() {
     std::string message = client->readGame();

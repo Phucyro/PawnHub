@@ -1,11 +1,11 @@
 #ifndef GAMEWITHOUTCHAT_H
 #define GAMEWITHOUTCHAT_H
 
+#include "../../Communication/Timer.hpp"
+
 #include <QDialog>
 #include <QIcon>
 #include <QThread>
-
-#include "../../Communication/Timer.hpp"
 
 class Client;
 class ClientGameControl;

@@ -1,5 +1,6 @@
 #include "gameWithoutChat.h"
 #include "ui_gameWithoutChat.h"
+
 #include "message.h"
 
 #include "../Modified_Files/ClientGameControl.hpp"
