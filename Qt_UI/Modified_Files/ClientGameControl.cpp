@@ -14,6 +14,7 @@ ClientGameControl::ClientGameControl(Client* _client, GameWithoutChat* _game): c
     connect(this, &ClientGameControl::setColour, game, &GameWithoutChat::set_colour);
     connect(this, &ClientGameControl::receiveTurn, game, &GameWithoutChat::set_turn);
     connect(this, &ClientGameControl::receiveTime, game, &GameWithoutChat::set_time);
+    connect(this, &ClientGameControl::clearBoard, game, &GameWithoutChat::clear_board);
     connect(this, &ClientGameControl::receiveAskMove, game, &GameWithoutChat::get_move);
     connect(this, &ClientGameControl::receiveAskPromotion, game, &GameWithoutChat::get_promotion);
     connect(this, &ClientGameControl::pauseTimer, game, &GameWithoutChat::pause_timer);
@@ -32,6 +33,7 @@ ClientGameControl::ClientGameControl(Client* _client, GameWithoutChatWithAlice* 
     connect(this, &ClientGameControl::setColour, alice_game, &GameWithoutChatWithAlice::set_colour);
     connect(this, &ClientGameControl::receiveTurn, alice_game, &GameWithoutChatWithAlice::set_turn);
     connect(this, &ClientGameControl::receiveTime, alice_game, &GameWithoutChatWithAlice::set_time);
+    connect(this, &ClientGameControl::clearBoard, alice_game, &GameWithoutChatWithAlice::clear_board);
     connect(this, &ClientGameControl::receiveAskMove, alice_game, &GameWithoutChatWithAlice::get_move);
     connect(this, &ClientGameControl::receiveAskPromotion, alice_game, &GameWithoutChatWithAlice::get_promotion);
     connect(this, &ClientGameControl::pauseTimer, alice_game, &GameWithoutChatWithAlice::pause_timer);
@@ -56,7 +58,7 @@ void ClientGameControl::callPieceUpdate(QIcon pieceIcon, QString piecePosition, 
 
 void ClientGameControl::receiveBoard(QString message) {
   if (!is_alice) {
-      game->clear_board();
+      emit clearBoard();
       stringToBoard(this, message.toStdString());
 //    board.draw_pieces(message);
 //    board.refresh_board();

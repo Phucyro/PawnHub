@@ -132,7 +132,7 @@ void GameWithoutChat::show_update(QString message)
         message = "Stalemate.";
       }
       else if (message == "surrend") {
-        message = "You win!\nYour oppenent gave up :(";
+        message = "You win!\nYour opponent gave up :(";
       }
       else if (message == "timeout") {
           message = "Time's up!\nYou lost.";

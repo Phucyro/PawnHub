@@ -1,21 +1,22 @@
 #include "Socket.hpp"
+
 #include <execinfo.h>
 #include <csignal>
 #include <iostream>
 #include <unistd.h>
 
-void handleSignal(int signum){
-	std::cout<<"signal handling: "<<signum<<std::endl;
-}
+// void handleSignal(int signum){
+// 	std::cout<<"signal handling: "<<signum<<std::endl;
+// }
 
-Socket::Socket() : file_descriptor(0), monMutex() {
+Socket::Socket() : file_descriptor(0) {
   file_descriptor = socket(AF_INET, SOCK_STREAM, 0);
   if (file_descriptor < 0) {
     throw std::runtime_error("Instantiation failed");
   }
 }
 
-Socket::Socket(int fd) : file_descriptor(fd), monMutex() {}
+Socket::Socket(int fd) : file_descriptor(fd) {}
 
 Socket::~Socket() {
   std::cout << "Closing Socket" << std::endl;
@@ -57,41 +58,29 @@ void Socket::printSend(std::string message) {
   sendMessage(message);
 }
 
-// Might break but my balmer peak state says it's perfect
 void Socket::sendMessage(std::string message) {
   // if (message[0] == 'B') throw std::string("Sent board too early");
   //std::cout<<"message send: "<<message<<std::endl;
-  signal(SIGPIPE, handleSignal);
-	
+  // signal(SIGPIPE, handleSignal);
+
   size_t message_size = message.length();
   if ((message_size % MSG_LENGTH) == 0) {
-    message = message.append(std::string(MSG_LENGTH, PADDING));
+    message.append(MSG_LENGTH, PADDING);
   }
-  else message = message.append(std::string(MSG_LENGTH - (message_size % MSG_LENGTH), PADDING));
-  const char* str_ptr = message.c_str();
-	
+  else{
+		message.append(MSG_LENGTH - (message_size % MSG_LENGTH), PADDING);
+	}
+	const char* str_ptr = message.c_str();
+
 	ssize_t bytes_sent = 0;
   size_t total_sent = 0;
-  if (message.length() == MSG_LENGTH) {
-    while (total_sent < MSG_LENGTH){
-      str_ptr += bytes_sent;
-   	  bytes_sent = send(getFileDescriptor(), str_ptr, (MSG_LENGTH - total_sent), 0);
-      if (bytes_sent < 0) {
-        throw std::runtime_error("Send failed");
-      }
-      total_sent += bytes_sent;
+    while (total_sent < message.length()) {
+    str_ptr += bytes_sent;
+    bytes_sent = send(getFileDescriptor(), str_ptr, (message.length() - total_sent), MSG_NOSIGNAL);
+    if (bytes_sent < 0) {
+      throw std::runtime_error("Send failed");
     }
-  }
-  else {
-
-    while (total_sent <= message_size) {
-      str_ptr += bytes_sent;
-      bytes_sent = send(getFileDescriptor(), str_ptr, (message_size - total_sent), 0);
-      if (bytes_sent < 0) {
-        throw std::runtime_error("Send failed");
-      }
-      total_sent += bytes_sent;
-    }
+    total_sent += bytes_sent;
   }
 }
 
@@ -100,19 +89,21 @@ bool Socket::parseBuffer(std::string& message) {
     if (recv_buffer[i] == PADDING) {
       return true;
     }
-    else message += recv_buffer[i];
+		else {
+	    message += recv_buffer[i];
+		}
   }
   return false;
 }
 
 std::string Socket::receiveMessage() {
-  signal(SIGPIPE, handleSignal);
+  // signal(SIGPIPE, handleSignal);
   std::string message;
 
   bool message_done = false;
   while (!message_done) {
     ssize_t bytes_received = recv(getFileDescriptor(), recv_buffer, MSG_LENGTH, 0);
-    usleep(10);    
+    // usleep(10);
     if (bytes_received < 0) {
       throw std::runtime_error("Receive failed");
     }
@@ -125,12 +116,4 @@ std::string Socket::receiveMessage() {
     }
   }
   return message;
-}
-
-void Socket::lockMutex(){
-  monMutex.lock();
-}
-
-void Socket::unlockMutex(){
-  monMutex.unlock();
 }
