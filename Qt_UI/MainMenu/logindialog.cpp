@@ -72,7 +72,7 @@ bool LoginDialog::acceptable_format(QString pwdConfirmation)
     return acceptable;
 }
 
-void LoginDialog::on_loginButton_clicked()
+void LoginDialog::on_loginButton_pressed()
 {
     *username = ui->usernameInput->text();
     *password = ui->passwordInput->text();
@@ -83,7 +83,7 @@ void LoginDialog::on_loginButton_clicked()
     }
 }
 
-void LoginDialog::on_signupButton_clicked()
+void LoginDialog::on_signupButton_pressed()
 {
     *username = ui->usernameInput->text();
     *password = ui->passwordInput->text();
@@ -95,7 +95,7 @@ void LoginDialog::on_signupButton_clicked()
     }
 }
 
-void LoginDialog::on_cancelButton_clicked()
+void LoginDialog::on_cancelButton_pressed()
 {
     closeEvent();
 }

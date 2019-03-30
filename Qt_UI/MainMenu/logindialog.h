@@ -22,9 +22,9 @@ public:
     void get_login_deets(Socket*, QString&, QString&);
 
 private slots:
-    void on_loginButton_clicked();
-    void on_signupButton_clicked();
-    void on_cancelButton_clicked();
+    void on_loginButton_pressed();
+    void on_signupButton_pressed();
+    void on_cancelButton_pressed();
 
     void on_LoginDialog_rejected();
     void closeEvent();
