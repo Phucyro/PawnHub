@@ -12,4 +12,4 @@
 #define PORT 9797
 #define BACKLOG 20
 #define MSG_LENGTH 300
-#define PADDING '|'
+#define PADDING '\0'

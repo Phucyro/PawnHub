@@ -33,8 +33,8 @@ private:
   void chatHandler(QString, QString, QString);
   void playGameHandler();
   void leaveQueueHandler();
-  void myStatHandler(QString, QString, QString);
-  void ladderHandler(QString, QString, QString);
+  void myStatHandler(QString, QString, QString, QString);
+  void ladderHandler(QString, QString, QString, QString);
   void viewFriendsHandler(QString);
   void viewFriendRequestHandler(QString);
   void acceptRefuseRequestHandler(QString, QString);

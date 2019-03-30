@@ -89,6 +89,17 @@ void MenuHandler::print_warning2(std::string warning)
   refresh();
 }
 
+void MenuHandler::print_warning3(std::string warning)
+/** print le message d'erreur **/
+{
+  int y_max, x_max;
+  getmaxyx(stdscr, y_max, x_max);
+
+  mvprintw(y_max-3,1, std::string(70,' ').c_str());
+  mvprintw(y_max-3,1,warning.c_str());
+  refresh();
+}
+
 void MenuHandler::init_choicesw()
 /** Initialise les parametres windows du choices menu **/
 {

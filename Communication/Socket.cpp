@@ -2,6 +2,7 @@
 #include <execinfo.h>
 #include <csignal>
 #include <iostream>
+#include <unistd.h>
 
 void handleSignal(int signum){
 	std::cout<<"signal handling: "<<signum<<std::endl;
@@ -68,23 +69,28 @@ void Socket::sendMessage(std::string message) {
   }
   else message = message.append(std::string(MSG_LENGTH - (message_size % MSG_LENGTH), PADDING));
   const char* str_ptr = message.c_str();
-
+	
+	ssize_t bytes_sent = 0;
+  size_t total_sent = 0;
   if (message.length() == MSG_LENGTH) {
-    if (send(getFileDescriptor(), str_ptr, MSG_LENGTH, 0) < 0) {
-      throw std::runtime_error("Send failed");
+    while (total_sent < MSG_LENGTH){
+      str_ptr += bytes_sent;
+   	  bytes_sent = send(getFileDescriptor(), str_ptr, (MSG_LENGTH - total_sent), 0);
+      if (bytes_sent < 0) {
+        throw std::runtime_error("Send failed");
+      }
+      total_sent += bytes_sent;
     }
   }
   else {
-    ssize_t bytes_sent;
-    size_t total_sent = 0;
 
     while (total_sent <= message_size) {
-      str_ptr += total_sent;
+      str_ptr += bytes_sent;
       bytes_sent = send(getFileDescriptor(), str_ptr, (message_size - total_sent), 0);
       if (bytes_sent < 0) {
         throw std::runtime_error("Send failed");
       }
-      total_sent += unsigned(bytes_sent);
+      total_sent += bytes_sent;
     }
   }
 }
@@ -102,9 +108,11 @@ bool Socket::parseBuffer(std::string& message) {
 std::string Socket::receiveMessage() {
   signal(SIGPIPE, handleSignal);
   std::string message;
+
   bool message_done = false;
   while (!message_done) {
     ssize_t bytes_received = recv(getFileDescriptor(), recv_buffer, MSG_LENGTH, 0);
+    usleep(10);    
     if (bytes_received < 0) {
       throw std::runtime_error("Receive failed");
     }
