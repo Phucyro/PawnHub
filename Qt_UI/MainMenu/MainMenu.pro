@@ -88,8 +88,8 @@ FORMS += \
     mainmenu.ui \
     game.ui \
     gameWithoutChat.ui \
-    gameWithAlice.ui \
     gameWithoutChatWithAlice.ui \
+    gameWithAlice.ui \
     gameChoiceStatistics.ui \
     friendTab.ui \
     statisticsTab.ui \

@@ -7,7 +7,7 @@
 #define TIMER_UPDATE_RATE 1000000 //microsecond
 std::string moveToString(int*);
 
-ClientGameControl::ClientGameControl(Client* _client, GameWithoutChat* _game): client(_client), game(_game), game_ongoing(true), is_alice(false), is_real_time(false), colour('\0') {
+ClientGameControl::ClientGameControl(Client* _client, GameWithoutChat* _game): client(_client), game(_game), alice_game(nullptr), game_ongoing(true), is_alice(false), is_real_time(false), colour('\0') {
     connect(this, &ClientGameControl::updatePiece, game, &GameWithoutChat::set_piece);
     connect(this, &ClientGameControl::receiveUpdate, game, &GameWithoutChat::show_update);
     connect(this, &ClientGameControl::receiveGameMode, game, &GameWithoutChat::set_mode);
@@ -25,8 +25,22 @@ ClientGameControl::ClientGameControl(Client* _client, GameWithoutChat* _game): c
     connect(game, &GameWithoutChat::is_realtime, this, &ClientGameControl::setRealTime);
 }
 
-ClientGameControl::ClientGameControl(Client* _client, GameWithoutChatWithAlice* _game): client(_client), alice_game(_game), game_ongoing(true), is_alice(true), is_real_time(false), colour('\0') {
-//  startParty();
+ClientGameControl::ClientGameControl(Client* _client, GameWithoutChatWithAlice* _game): client(_client), game(nullptr), alice_game(_game), game_ongoing(true), is_alice(true), is_real_time(false), colour('\0') {
+    connect(this, &ClientGameControl::updatePiece, alice_game, &GameWithoutChatWithAlice::set_piece);
+    connect(this, &ClientGameControl::receiveUpdate, alice_game, &GameWithoutChatWithAlice::show_update);
+    connect(this, &ClientGameControl::receiveGameMode, alice_game, &GameWithoutChatWithAlice::set_mode);
+    connect(this, &ClientGameControl::setColour, alice_game, &GameWithoutChatWithAlice::set_colour);
+    connect(this, &ClientGameControl::receiveTurn, alice_game, &GameWithoutChatWithAlice::set_turn);
+    connect(this, &ClientGameControl::receiveTime, alice_game, &GameWithoutChatWithAlice::set_time);
+    connect(this, &ClientGameControl::receiveAskMove, alice_game, &GameWithoutChatWithAlice::get_move);
+    connect(this, &ClientGameControl::receiveAskPromotion, alice_game, &GameWithoutChatWithAlice::get_promotion);
+    connect(this, &ClientGameControl::pauseTimer, alice_game, &GameWithoutChatWithAlice::pause_timer);
+    connect(this, &ClientGameControl::reduceTimer, alice_game, &GameWithoutChatWithAlice::reduce_timer);
+
+    connect(alice_game, &GameWithoutChatWithAlice::move_declared, this, &ClientGameControl::sendMove);
+    connect(alice_game, &GameWithoutChatWithAlice::promotion_declared, this, &ClientGameControl::sendPromotion);
+    connect(alice_game, &GameWithoutChatWithAlice::game_ongoing_changed, this, &ClientGameControl::setGameOngoing);
+    connect(alice_game, &GameWithoutChatWithAlice::is_realtime, this, &ClientGameControl::setRealTime);
 }
 
 ClientGameControl::~ClientGameControl()
