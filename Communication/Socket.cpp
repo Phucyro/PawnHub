@@ -2,6 +2,7 @@
 #include <execinfo.h>
 #include <csignal>
 #include <iostream>
+#include <unistd.h>
 
 void handleSignal(int signum){
 	std::cout<<"signal handling: "<<signum<<std::endl;
@@ -107,9 +108,11 @@ bool Socket::parseBuffer(std::string& message) {
 std::string Socket::receiveMessage() {
   signal(SIGPIPE, handleSignal);
   std::string message;
+
   bool message_done = false;
   while (!message_done) {
     ssize_t bytes_received = recv(getFileDescriptor(), recv_buffer, MSG_LENGTH, 0);
+    usleep(10);    
     if (bytes_received < 0) {
       throw std::runtime_error("Receive failed");
     }
