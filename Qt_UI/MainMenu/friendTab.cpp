@@ -36,11 +36,8 @@ void FriendTab::on_addPushButton_pressed()
     if(ui->inputLineEdit->text() == "" || ui->inputLineEdit->text() == "Guest" || ui->inputLineEdit->text() == "all"){
         popup("Empty Field Or Wrong Name", "Please input at least something (not Guest or all) and not just empty space.");
         ui->addPushButton->setDown(false);
-        ui->inputLineEdit->clear();
-        return;
     }
-
-    if(!checkFriendInputFormat(ui->inputLineEdit->text().toStdString())){
+    else if(!checkFriendInputFormat(ui->inputLineEdit->text().toStdString())){
         popup("Invalid Name", "A name must have between 1 and 10 characters and they must be digits or letters.");
         ui->addPushButton->setDown(false);
     }
