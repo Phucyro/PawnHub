@@ -42,6 +42,7 @@ void Chat::displayChat(QString target){
         std::string text = std::get<0>(conv[a]) + " : " + std::get<1>(conv[a]);
         ui->chatPlainTextEdit->appendPlainText(QString::fromStdString(text));
     }
+
     //to have always the latest friends
     reloadFriends();
 }
@@ -100,13 +101,14 @@ void Chat::on_changeChanPushButton_pressed()
         client->setIsChattingWith(ui->friendListWidget->currentItem()->text().toStdString());
         displayChat(ui->friendListWidget->currentItem()->text());
         ui->chatPlainTextEdit->clear();
+        ui->chgChangeChannellabel->setText(QString::fromStdString(client->getIsChattingWith()));
     }
 }
 
 void Chat::reloadFriends(){
-    ui->friendListWidget->clear();
     std::vector<std::string> list = client->getFriends();
     auto it = list.begin();
+    ui->friendListWidget->clear();
     for (;it != list.end(); ++it) ui->friendListWidget->addItem(QString::fromStdString(*it));
 }
 

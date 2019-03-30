@@ -74,7 +74,11 @@ void MainMenu::client_login() {
     do
     {
         login->get_login_deets(client->getSocket(), username, password);
-        //std::cout << client->readPipe() << std::endl;
+        Message* m = new Message();
+                 m->set_text(QString::fromStdString(client->readPipe()));
+                 m->set_title("Oh No: Something went wrong");
+                 m->popup();
+
     }
     while (!(client->isIdentified()));
 

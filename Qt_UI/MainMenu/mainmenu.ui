@@ -137,54 +137,17 @@
         <bool>true</bool>
        </property>
        <property name="plainText">
-        <string>Helloooo
+        <string>This is a game proned with features.
 
+If you think it is a bug, well..
 
+It is a feature created by our devs..
 
+Mwahahahha..
 
+Have fun playing with our game..
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Wassup?</string>
+And we made sure you can do it one handed.. (think about pawn hub memes)</string>
        </property>
        <property name="overwriteMode">
         <bool>true</bool>
@@ -202,7 +165,7 @@ Wassup?</string>
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap>:/Calvin.jpg</pixmap>
+      <pixmap resource="calvin.qrc">:/Calvin.jpg</pixmap>
      </property>
      <property name="alignment">
       <set>Qt::AlignBottom|Qt::AlignHCenter</set>
@@ -220,6 +183,8 @@ Wassup?</string>
   <tabstop>rulesButton</tabstop>
   <tabstop>quitButton</tabstop>
  </tabstops>
- <resources/>
+ <resources>
+  <include location="calvin.qrc"/>
+ </resources>
  <connections/>
 </ui>
