@@ -1,6 +1,7 @@
 #include "statisticsChoice.h"
 #include "ui_statisticsChoice.h"
 #include "gameChoiceStatistics.h"
+#include "statisticsTab.h"
 
 StatisticsChoice::StatisticsChoice(Client *c,QWidget *parent) :
     QDialog(parent),
@@ -22,9 +23,9 @@ void StatisticsChoice::on_returnPushButton_pressed()
 
 void StatisticsChoice::on_myStatsPushButton_pressed()
 {
-    GameChoiceStatistics* choice = new GameChoiceStatistics(0,client);
-    choice->exec();
-    delete choice;
+    StatisticsTab* stats = new StatisticsTab(0,client,0);
+    stats->exec();
+    delete stats;
 }
 
 
