@@ -115,7 +115,6 @@ void MainMenu::on_friendsButton_clicked()
 
 void MainMenu::on_chatButton_clicked()
 {
-    initClientData(client);
     this->hide();
     chat->exec();
     this->show();
