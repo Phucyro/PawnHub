@@ -94,19 +94,19 @@ void ClientHandler::acceptRefuseRequestHandler(QString option, QString res){
 
 void ClientHandler::sendFriendRequestHandler(QString res){
   switch (res[0].digitValue()){
-    case '0' :
+    case 0 :
       client->writePipe("0Utilisateur inexistant");
       break;
-    case '1' : // Gere du cote client actuellement
+    case 1 : // Gere du cote client actuellement
       client->writePipe("1Utilisateur déjà dans la liste d'amis");
       break;
-    case '2' : // Gere du cote client actuellement
+    case 2 : // Gere du cote client actuellement
       client->writePipe("2Demande d'ami déjà envoyé");
       break;
-    case '3' :
+    case 3 :
       client->writePipe("3Vous êtes tout les deux devenus amis");
       break;
-    case '4' :
+    case 4 :
       client->writePipe("4Demande d'ami envoyé");
       break;
   }
@@ -114,10 +114,10 @@ void ClientHandler::sendFriendRequestHandler(QString res){
 
 void ClientHandler::removeFriendHandler(QString res){
   switch (res[0].digitValue()){
-    case '0' : // Gere actuellement du cote client
+    case 0 : // Gere actuellement du cote client
       client->writePipe("0Cet utilisateur ne fait pas partie de vos amis");
       break;
-    case '1' :
+    case 1 :
       client->writePipe("1Utilisateur retiré de votre liste d'amis");
       break;
   }
