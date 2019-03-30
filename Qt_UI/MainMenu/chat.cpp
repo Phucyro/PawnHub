@@ -1,8 +1,6 @@
 #include "chat.h"
 #include "ui_chat.h"
 
-
-//#include "../../Communication/Client.hpp"
 #include "../Modified_Files/ClientFunctions.hpp"
 #include "../Modified_Files/CheckFormat.hpp"
 

@@ -40,6 +40,5 @@ bool checkFriendInputFormat(std::string input){
 //    menu->print_warning("Les caractères | et ~ sont interdits");
     correct = false;
   }
-//  menu->refresh_board();
   return correct;
 }

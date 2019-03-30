@@ -1,8 +1,9 @@
 #ifndef STATISTICSTAB_H
 #define STATISTICSTAB_H
 
-#include <QDialog>
 #include "../../Communication/Client.hpp"
+
+#include <QDialog>
 
 namespace Ui {
 class StatisticsTab;

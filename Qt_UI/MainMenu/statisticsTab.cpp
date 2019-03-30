@@ -1,11 +1,13 @@
 #include "statisticsTab.h"
 #include "ui_statisticsTab.h"
+
 #include "gameChoiceStatistics.h"
-#include <iostream>
 #include "../Modified_Files/ClientFunctions.hpp"
 #include "../../Communication/SplitString.hpp"             // A modifier ici
+
 #include <vector>
 #include <string>
+#include <iostream>
 
 
 StatisticsTab::StatisticsTab(int t, Client *c, int mode, QWidget *parent) : // Rajouter client pour pouvoir y accéder
@@ -37,7 +39,7 @@ void StatisticsTab::setupMyStats(){
     std::vector<std::string> stat = splitString(client->readPipe(), ' ');
     for (unsigned int b = 0; b < stat.size()-1; ++b){
       std::string temp = stat[b+1];
-      ui->staisticsTableWidget->setItem(a,b,new QTableWidgetItem(QString::fromStdString(temp)));
+      ui->staisticsTableWidget->setItem(int(a), int(b), new QTableWidgetItem(QString::fromStdString(temp)));
     }
     //std::cout << strVectorToStr(stat) << std::endl;
   }
