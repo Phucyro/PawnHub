@@ -22,6 +22,8 @@ public:
     void promotion_choice();
     QString get_choice();
     bool getCancel();
+public slots:
+    void closeEvent();
 
 private slots:
     void on_okButton_clicked();

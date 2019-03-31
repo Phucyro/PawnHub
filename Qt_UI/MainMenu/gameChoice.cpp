@@ -24,17 +24,15 @@ void GameChoice::send_game_request(std::string gameMode)
 {
     playGame(client->getSocket(), gameMode);
 
-    //this leaves the queue v TODO: add a possibility to quit the message
+    message.set_okButton("Cancel");
+    message.set_title("In Queue");
+    message.set_text("You have been placed in queue, please wait for an opponent.");
+    message.popup();
 
-    //message.set_okButton("Cancel");
-    //message.set_title("In Queue");
-    //message.set_text("You have been placed in queue, please wait for an opponent.");
-    //message.popup();
-
-    //if(message.getCancel()){
-      //  leaveQueue(client->getSocket());
-        //cancel = true;
-    //}
+    if(message.getCancel()){
+        leaveQueue(client->getSocket());
+        cancel = true;
+    }
 }
 
 void GameChoice::run_game(GameWithoutChat* game)
@@ -59,7 +57,7 @@ void GameChoice::on_classicPushButton_pressed()
     send_game_request("0");
     if(!cancel){
         run_game(game);
-        delete game;
+        //delete game;
     }
 }
 void GameChoice::on_darkPushButton_pressed()
@@ -69,7 +67,7 @@ void GameChoice::on_darkPushButton_pressed()
     send_game_request("1");
     if(!cancel){
         run_game(game);
-        delete game;
+        //delete game;
     }
 }
 void GameChoice::on_hordePushButton_pressed()
@@ -80,7 +78,7 @@ void GameChoice::on_hordePushButton_pressed()
 
     if(!cancel){
         run_game(game);
-        delete game;
+        //delete game;
     }
 }
 void GameChoice::on_alicePushButton_pressed()
@@ -90,7 +88,7 @@ void GameChoice::on_alicePushButton_pressed()
 
     if(!cancel){
         run_game(game);
-        delete game;
+        //delete game;
     }
 }
 
@@ -102,7 +100,7 @@ void GameChoice::on_realTimeClassicPushButton_pressed()
 
     if(!cancel){
         run_game(game);
-        delete game;
+        //delete game;
     }
 }
 
@@ -114,7 +112,7 @@ void GameChoice::on_realTimeDarkPushButton_pressed()
 
     if(!cancel){
         run_game(game);
-        delete game;
+        //delete game;
     }
 }
 
@@ -126,7 +124,7 @@ void GameChoice::on_realTimeHordePushButton_pressed()
 
     if(!cancel){
         run_game(game);
-        delete game;
+        //delete game;
     }
 }
 
@@ -138,7 +136,7 @@ void GameChoice::on_realTimeAlicePushButton_pressed()
 
     if(!cancel){
         run_game(game);
-        delete game;
+        //delete game;
     }
 }
 
