@@ -37,6 +37,8 @@ private slots:
     void reloadFriends();
 
 
+    void on_friendListWidget_itemSelectionChanged();
+
 private:
     Ui::Chat *ui;
     Client  *client;

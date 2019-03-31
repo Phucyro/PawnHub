@@ -61,6 +61,14 @@ void MainMenu::client_connect() {
     do {
         hostname = (connect->ask_hostname()).toStdString();
         good_hostname = client->getSocket()->connectToServer(hostname);
+
+        if (!good_hostname){
+            Message* m = new Message();
+            m->set_text("Hostname not found");
+            m->set_title("Oh no: Something is Wrong");
+            m->popup();
+        }
+
     } while (!good_hostname);
 
     connect->close();

@@ -16,6 +16,8 @@ Chat::Chat(Client *clients,QWidget *parent) :
 void Chat::showEvent( QShowEvent* event ) {
     QWidget::showEvent( event );
     reloadFriends();
+    ui->changeChanPushButton->setEnabled(false);
+    displayChat(QString::fromStdString(client->getIsChattingWith()));
 }
 
 Chat::~Chat()
@@ -28,6 +30,7 @@ void Chat::setupChat(){
     ui->friendListWidget->clear();
     client->setIsChatting(true);
     displayChat(QString::fromStdString(client->getIsChattingWith()));
+    ui->changeChanPushButton->setEnabled(false);
 }
 
 void Chat::displayChat(QString target){
@@ -103,12 +106,20 @@ void Chat::on_changeChanPushButton_pressed()
         ui->chatPlainTextEdit->clear();
         ui->chgChangeChannellabel->setText(QString::fromStdString(client->getIsChattingWith()));
     }
+    displayChat(QString::fromStdString(client->getIsChattingWith()));
+
 }
 
 void Chat::reloadFriends(){
     std::vector<std::string> list = client->getFriends();
     auto it = list.begin();
     ui->friendListWidget->clear();
+    ui->friendListWidget->addItem("all");
     for (;it != list.end(); ++it) ui->friendListWidget->addItem(QString::fromStdString(*it));
 }
 
+
+void Chat::on_friendListWidget_itemSelectionChanged()
+{
+    ui->changeChanPushButton->setEnabled(true);
+}
