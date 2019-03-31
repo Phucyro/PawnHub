@@ -644,23 +644,23 @@ Le joueur se connecte à l'aide du \textit{hostname} du serveur, qui s'affiche �
 
 \subsubsection{Affichage du menu}
 \textbf{Mise en pratique :} Les méthodes de l'objet permettant l'affichage du menu sont utilisées et les options suivantes sont proposées à l'utilisateur : \textit{Jouer}, \textit{Amis}, \textit{Statistique} et \textit{Quitter}.\\
-\textbf{Protocole :} La méthode \textit{\_get\_choice}, toujours précédée par la méthode \textit{\_init\_choicew}, est utilisée afin de pouvoir afficher les différentes options.\\
+\textbf{Protocole :} Si l'utilisateur joue en mode console : La méthode \textit{\_get\_choice}, toujours précédée par la méthode \textit{\_init\_choicew}, est utilisée afin de pouvoir afficher les différentes options. Avec l'interface graphique\\
 
 \subsubsection{Choix d'une option}
 \textbf{Mise en pratique :} L'utilisateur peut parcourir les différentes options en utilisant les touches directionnelles \textit{Haut} et \textit{Bas} et valider son choix en appuyant sur la touche \textit{Entrée} \\
-\textbf{Protocole :} Après avoir appelé la méthode \textit{\_get\_choice}, le programme attend que l'utilisateur choisisse une option. Si le choix a été fait, une fonction est appelée pour diriger l'utilisateur vers un autre menu.\\
+\textbf{Protocole :} Si l'utilisateur joue en mode console :  Après avoir appelé la méthode \textit{\_get\_choice}, le programme attend que l'utilisateur choisisse une option. Si le choix a été fait, une fonction est appelée pour diriger l'utilisateur vers un autre menu.\\
 
 \subsubsection{Choix d'option du menu Jouer}
-\textbf{Mise en pratique :} Les 4 modes de jeu sont affichés et l'utilisateur peut rejoindre une file d'attente vers le mode de jeu approprié en sélectionnant une de ces 4 options ou revenir au menu principal en choisissant l'option \textit{Retour}.\\
+\textbf{Mise en pratique :} Les 4 modes de jeu sont affichés et l'utilisateur peut rejoindre une file d'attente vers le mode de jeu approprié en sélectionnant une de ces 6 options ou revenir au menu principal en choisissant l'option \textit{Retour}.\\
 \textbf{Protocole :} Si l'utilisateur choisit un mode de jeu, la fonction \textit{playGame} est appelée et elle envoie un message au serveur qui placera le joueur dans une file d'attente. Ensuite l'utilisateur sera bloqué jusqu'à ce qu'un autre joueur rejoigne la même file d'attente. Sinon l'utilisateur sera dirigé vers le menu principal.\\
 
 \subsubsection{Choix d'option du menu Ami}
 \textbf{Mise en pratique :} L'utilisateur a le choix entre 5 options : \textit{Voir sa liste d'amis}, \textit{Envoyer une demande d'ami}, \textit{Retirer un ami}, \textit{Accepter ou refuser une demande d'ami} et \textit{Retour}.\\
-\textbf{Protocole :} Après avoir appelé la méthode \textit{\_get\_choice}, le programme attend que l'utilisateur choisisse une option.Si un choix a été fait, une fonction est appelée pour diriger l'utilisateur vers un autre menu. \\
+\textbf{Protocole :} Après que l'utilisateur a cliqué sur le bouton correspondantant, le programme attend que l'utilisateur choisisse une option.Si un choix a été fait, une fonction est appelée pour diriger l'utilisateur vers un autre menu. \\
 
 \subsubsection{Voir sa liste d'amis}
 \textbf{Mise en pratique :} Après avoir choisi cette option, les noms des amis de l'utilisateur sont affichés dans un rectangle.\\
-\textbf{Protocole :} Un message est envoyé au serveur qui traitera la demande et qui renverra le nom de tous ses amis. Lorsque l'entièreté des noms des amis sont reçus du coté client, la méthode \textit{init\_friendsw} affiche le nom de tous ses amis sur l'écran.\\
+\textbf{Protocole :} Un message est envoyé au serveur qui traitera la demande et qui renverra le nom de tous ses amis. Lorsque l'entièreté des noms des amis sont reçus du coté client,  leur nom de est affiché sur l'écran de l'utilisateur.\\
 
 \subsubsection{Envoyer une demande d'ami}
 \textbf{Mise en pratique :} Après avoir choisi cette option, l'utilisateur est invité à rentrer un nom ou une autre commande pour retourner au menu des amis.\\
