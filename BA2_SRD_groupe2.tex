@@ -179,10 +179,10 @@ la case traversée par le roi n'est contrôlée par aucune pièce adverse\footno
 
 \subsubsection{Jouer}
 \textbf{Acteur :} \textit{User}.\\
-\textbf{Relations avec d'autres cas d'utilisation :} Modes de jeu proposés (\textit{Classic}, \textit{Alice}, \textit{Dark} ou \textit{Horde}).\\
+\textbf{Relations avec d'autres cas d'utilisation :} Modes de jeu proposés (\textit{TurnBasedGame},\textit{RealTimeGame},\textit{Classic}, \textit{Alice}, \textit{Dark} ou \textit{Horde}).\\
 \textbf{Pré-conditions :} Le \textit{user} doit avoir sélectionné l'option \textit{Game} dans le menu principal du jeu.\\
-\textbf{Post-conditions :} Le  \textit{user} sélectionne un mode de jeu parmi ceux proposés (\textit{Classic},\textit{Alice}, \textit{Dark} ou \textit{Horde}).\\
-\textbf{Cas général :} Le  \textit{user} peut sélectionner un mode de jeu parmi ceux proposés (\textit{Classic},\textit{Alice}, \textit{Dark} ou \textit{Horde}), ce qui lance une requête de \textit{matchmaking} (voir Figure \ref{SD_matchmaker}) au serveur.\\
+\textbf{Post-conditions :} Le  \textit{user} sélectionne un mode de jeu parmi ceux proposés (\textit{TurnBasedGame},\textit{RealTimeGame},\textit{Classic},\textit{Alice}, \textit{Dark} ou \textit{Horde}).\\
+\textbf{Cas général :} Le  \textit{user} peut sélectionner un mode de jeu parmi ceux proposés (\textit{TurnBasedGame},\textit{RealTimeGame},\textit{Classic},\textit{Alice}, \textit{Dark} ou \textit{Horde}), ce qui lance une requête de \textit{matchmaking} (voir Figure \ref{SD_matchmaker}) au serveur.\\
 \textbf{Cas exceptionnels :} Néant.
 
 
@@ -192,7 +192,7 @@ la case traversée par le roi n'est contrôlée par aucune pièce adverse\footno
 \textbf{Relations avec d'autres cas d'utilisation :} Néant.\\
 \textbf{Pré-conditions :} Le \textit{user} doit avoir sélectionné l'option \textit{View Statistics} dans le menu principal du jeu.\\
 \textbf{Post-conditions :} Le \textit{user} accède à ses statistiques personnelles.\\
-\textbf{Cas général :} Le \textit{user} peut consulter ses statistiques en envoyant une requête au serveur.\\
+\textbf{Cas général :} Le \textit{user} peut consulter ses statistiques en envoyant une requête au serveur.Il pourra consulter son nombre de victoires,défaites, matchs nuls et son elo.\\
 \textbf{Cas exceptionnels :} Néant.
 
 \subsubsection{Voir le Classement}
@@ -200,7 +200,7 @@ la case traversée par le roi n'est contrôlée par aucune pièce adverse\footno
 \textbf{Relations avec d'autres cas d'utilisation :} Néant.\\
 \textbf{Pré-conditions :} Le \textit{user} doit avoir sélectionné l'option \textit{View Ranking} dans le menu principal du jeu.\\
 \textbf{Post-conditions :} Le \textit{user} accède au classement global des joueurs (\textit{user} et \textit{others}).\\
-\textbf{Cas général :} Le \textit{user} peut consulter le classement global des joueurs (\textit{user} et \textit{others}) en envoyant une requête au serveur.\\
+\textbf{Cas général :} Le \textit{user} peut consulter le classement global des joueurs et leur elo associé. (\textit{user} et \textit{others}) en envoyant une requête au serveur.\\
 \textbf{Cas exceptionnels :} Néant.
 
 \subsubsection{Voir sa Liste d'Amis}
@@ -208,7 +208,47 @@ la case traversée par le roi n'est contrôlée par aucune pièce adverse\footno
 \textbf{Relations avec d'autres cas d'utilisation :} \textit{Chat}.\\
 \textbf{Pré-conditions :} Le \textit{user} doit avoir sélectionné l'option \textit{Friends List} dans le menu principal du jeu.\\
 \textbf{Post-conditions :} Le \textit{user} accède à sa liste d'utilisateurs "amis", avec lesquels il peut choisir de discuter via l'option \textit{chat}.\\
-\textbf{Cas général :} Le \textit{user} peut consulter sa liste d'utilisateurs "amis" en envoyant une requête au serveur. Il peut aussi discuter avec eux via messages instantanés et le serveur.\\
+\textbf{Cas général :} Le \textit{user} peut consulter sa liste d'utilisateurs "amis" en envoyant une requête au serveur. Il peut aussi discuter avec eux via messages instantanés.\\
+\textbf{Cas exceptionnels :} Néant.
+
+\subsubsection{Envoyer une Demande d'Ami}
+\textbf{Acteur :} \textit{User}. \\
+\textbf{Relations avec d'autres cas d'utilisation :} \textit{Friends List} \\
+\textbf{Pré-conditions :}  Le \textit{user} doit avoir sélectionné cette option dans le menu principal du jeu, ensuite il doit encoder le nom du joueur avec lequel il souhaite être ami.\\
+\textbf{Post-conditions :} Une demande d'ami a été envoyée.\\
+\textbf{Cas général :} Une demande d'ami a été envoyée.\\
+\textbf{Cas exceptionnels :} Il n'est pas possible d'envoyer une demande d'ami à "Guest" ou "all". Le \textit{user} est déjà ami avec la personne à qui il veut envoyer une demande. Une demande a déjà été envoyée à la personne à qui il veut envoyer une demande. Le \textit{user} ne peut pas s'envoyer une demande à lui-même. Le nom de l'ami ne peut exéder 10 caractères, ni être composé de '|' et '~'.
+
+\subsubsection{Annuler une Demande d'Ami}
+\textbf{Acteur :} \textit{User}. \\
+\textbf{Relations avec d'autres cas d'utilisation :} \textit{Friends List} \\
+\textbf{Pré-conditions :}  Le \textit{user} doit avoir sélectionné cette option dans le menu principal du jeu.\\
+\textbf{Post-conditions :} Annule la demandé d'ami.\\
+\textbf{Cas général :} La demande d'ami a été annulée et le joueur concerné ne peut plus l'accepter ou la refuser.\\
+\textbf{Cas exceptionnels :} Aucune demande n'a été envoyée à la personne à qui on veut annuler la demande.
+
+\subsubsection{Accepter/Refuser une Demande d'Ami}
+\textbf{Acteur :} \textit{User}.\\
+\textbf{Relations avec d'autres cas d'utilisation :} \textit{Friends List} et \textit{Envoyer une demande d'ami}.\\
+\textbf{Pré-conditions :} Le \textit{user} doit avoir sélectionné cette option dans le menu principal du jeu, ensuite il doit accepter ou refuser la demande d'ami qui lui a été envoyée. \\
+\textbf{Post-conditions :} Si le \textit{User} accepte la demande d'ami, le nouvel ami est rajouté à sa liste d'amis. Sinon, la demande cesse d'apparaitre et ils ne sont pas amis. \\
+\textbf{Cas général :} \\
+\textbf{Cas exceptionnels :} Aucune demande d'ami n'a été envoyée.
+
+\subsubsection{Retirer un Ami de sa Liste d'Amis}
+\textbf{Acteur :} \textit{User}.\\
+\textbf{Relations avec d'autres cas d'utilisation :} \textit{Friends List}\\
+\textbf{Pré-conditions :} Le \textit{user} doit avoir sélectionné cette option dans le menu principal du jeu et être ami avec la personne qu'il souhaite supprimer de sa liste d'amis.\\
+\textbf{Post-conditions :} L'ami est retiré de la liste d'amis.\\
+\textbf{Cas général :} \\
+\textbf{Cas exceptionnels :} La personne que le \textit{User} veut retirer de sa liste d'amis, n'est pas ami avec lui.
+
+\subsubsection{Discuter dans le Chat}
+\textbf{Acteur :} \textit{User}.\\
+\textbf{Relations avec d'autres cas d'utilisation :} \textit{Friends List}.\\
+\textbf{Pré-conditions :}Si le joueur veut parler avec une personne en particulier, il doit l'avoir en ami, sinon aucune.\\
+\textbf{Post-conditions :} Néant.\\
+\textbf{Cas général :} Le \textit{user} ouvre avec un bouton (à définir) le chat et peut écrire sur un textfield pour communiquer avec les autres personnes.\\ %TODO
 \textbf{Cas exceptionnels :} Néant.
 
 
@@ -222,14 +262,6 @@ la case traversée par le roi n'est contrôlée par aucune pièce adverse\footno
 \textbf{Cas général :} Le \textit{user} doit déplacer un pion lors de son tour de jeu. Il envoie ainsi une requête de déplacement au serveur qui vérifiera à son tour la validité ou non du coup. \\
 \textbf{Cas exceptionnels :} Le coup enregistré par le \textit{user} n'est pas valide. Il doit donc rejouer son tour. \\
 
-\subsubsection{Discuter dans le Chat}
-\textbf{Acteur :} \textit{User}.\\
-\textbf{Relations avec d'autres cas d'utilisation :} \textit{Friends List}.\\
-\textbf{Pré-conditions :} Avoir un ami ou "adversaire" et qu'il soit connecté.\\
-\textbf{Post-conditions :} Néant.\\
-\textbf{Cas général :} Le \textit{user} ouvre avec un bouton (à définir) le chat et peut écrire sur un textfield pour communiquer avec les autres personnes.\\ %TODO
-\textbf{Cas exceptionnels :} Néant.
-
 \subsubsection{Déclarer Forfait}
 \textbf{Acteur :} \textit{User}.\\
 \textbf{Relations avec d'autres cas d'utilisation :} Néant.\\
@@ -241,10 +273,12 @@ la case traversée par le roi n'est contrôlée par aucune pièce adverse\footno
 
 \section{Besoins Utilisateurs : Non-Fonctionnels}
 Afin d'avoir des parties de jeux dynamiques, les joueurs se verront imposer une limite de temps de 45 minutes pour pouvoir jouer une partie. \\
-Afin d'avoir des parties équilibrées, les joueurs se verront attribués des adversaires de même niveau via le matchmaking. Chaque joueur dispose d'un elo,celui-ci est calculé d'après la formule de Arpad Elo\footnote{est un scientifique, mathématicien et joueur d'échecs américain d'origine hongroise. Il est surtout connu pour son système d'estimation de la force des joueurs d'échecs, le classement Elo.Wikipedia}
+Afin d'avoir des parties équilibrées, les joueurs se verront attribués des adversaires de même niveau via le matchmaking. Chaque joueur dispose d'un elo,celui-ci est calculé d'après la formule de Arpad Elo.L'elo est donc un nombre.\footnote{Arpad Elo est un scientifique, mathématicien et joueur d'échecs américain d'origine hongroise. Il est surtout connu pour son système d'estimation de la force des joueurs d'échecs, le classement Elo.Wikipedia}
 \section{Besoins Systèmes : Fonctionnels}
 
-\subsection{Connexion au Serveur}
+\subsection{Connexion}
+
+\subsubsection{Connexion au Serveur}
 \textbf{Acteur :} \textit{Server}. \\
 \textbf{Relations avec d'autres cas d'utilisation :} \textit{Log In}. \\
 \textbf{Pré-conditions :} \textit{Server} en ligne et réception du signal correspondant. \\
@@ -252,7 +286,7 @@ Afin d'avoir des parties équilibrées, les joueurs se verront attribués des ad
 \textbf{Cas général :} Utilisateur connecté. \\
 \textbf{Cas exceptionnels :} Si un utilisateur est déjà connecté sur un compte, un autre joueur ne peut se connecter sur ce compte. De même, si l'utilisateur encode mal ses identifiants, le système lui renvoie un message d’erreur afin qu’il les réécrive correctement. \\
 
-\subsection{Enregistrement d'un Nouveau Compte}
+\subsubsection{Enregistrement d'un Nouveau Compte}
 \textbf{Acteur :} \textit{Server}. \\
 \textbf{Relations avec d'autres cas d'utilisation :} Créer un compte. \\
 \textbf{Pré-conditions :} \textit{Server} en ligne et réception du signal correspondant. \\
@@ -260,7 +294,9 @@ Afin d'avoir des parties équilibrées, les joueurs se verront attribués des ad
 \textbf{Cas général :} Compte enregistré. \\
 \textbf{Cas exceptionnels :} Si le compte est déjà existant, un message d'erreur est envoyé à l'utilisateur. \\
 
-\subsection{Création d'une Partie}
+\subsection{Menu Principal}
+
+\subsubsection{Création d'une Partie}
 \textbf{Acteur :} \textit{Server}. \\
 \textbf{Relations avec d'autres cas d'utilisation :} Choisir un mode de jeu. \\
 \textbf{Pré-conditions :} \textit{Server} en ligne et réception du signal correspondant. \\
@@ -268,7 +304,7 @@ Afin d'avoir des parties équilibrées, les joueurs se verront attribués des ad
 \textbf{Cas général :} Utilisateur mis en file d'attente si aucun adversaire n'est trouvé, sinon une partie est créée. \\
 \textbf{Cas exceptionnels :} Néant. \\
 
-\subsection{Voir les Statistiques Personnelles}
+\subsubsection{Voir les Statistiques Personnelles}
 \textbf{Acteur :} \textit{Server}. \\
 \textbf{Relations avec d'autres cas d'utilisation :} Néant. \\
 \textbf{Pré-conditions :} \textit{Server} en ligne et réception du signal correspondant. \\
@@ -276,7 +312,7 @@ Afin d'avoir des parties équilibrées, les joueurs se verront attribués des ad
 \textbf{Cas général :} Envoi des statistiques personnelles de l'utilisateur. \\
 \textbf{Cas exceptionnels :} Néant. \\
 
-\subsection{Voir le Classement}
+\subsubsection{Voir le Classement}
 \textbf{Acteur :} \textit{Server}. \\
 \textbf{Relations avec d'autres cas d'utilisation :} Néant. \\
 \textbf{Pré-conditions :} \textit{Server} en ligne et réception du signal correspondant. \\
@@ -284,7 +320,7 @@ Afin d'avoir des parties équilibrées, les joueurs se verront attribués des ad
 \textbf{Cas général :} Envoi du classement. \\
 \textbf{Cas exceptionnels :} Néant. \\
 
-\subsection{Voir sa Liste d'Amis}
+\subsubsection{Voir sa Liste d'Amis}
 \textbf{Acteur :} \textit{Server}. \\
 \textbf{Relations avec d'autres cas d'utilisation :} {\itshape Envoi de messages}. \\
 \textbf{Pré-conditions :} \textit{Server} en ligne et réception du signal correspondant. \\
@@ -292,12 +328,44 @@ Afin d'avoir des parties équilibrées, les joueurs se verront attribués des ad
 \textbf{Cas général :} L'utilisateur reçoit sa liste d'amis et peut interagir avec elle via des requêtes serveur (ajout d'un ami, suppression, etc).\\
 \textbf{Cas exceptionnels :} Néant. \\
 
-\subsection{Envoi de Messages}
+\subsubsection{Envoyer une Demande d'Ami}
+\textbf{Acteur :} \textit{Server}.\\
+\textbf{Relations avec d'autres cas d'utilisation :} Néant. \\
+\textbf{Pré-conditions :} \textit{Server} en ligne et réception du signal correspondant. \\
+\textbf{Post-conditions :} \\
+\textbf{Cas général :} \\
+\textbf{Cas exceptionnels :} Si le nom encodé n'existe pas, le \textit{User} retourne au menu principal. Si 2 \textit{User} se sont mutuellement envoyés une demande d'ami, ils deviennent directement ami sans devoir accepter l'invitation de l'autre.
+
+\subsubsection{Annuler une Demande d'Ami}
+\textbf{Acteur :} \\
+\textbf{Relations avec d'autres cas d'utilisation :} \\
+\textbf{Pré-conditions :} \textit{Server} en ligne et réception du signal correspondant. \\
+\textbf{Post-conditions :} \\
+\textbf{Cas général :} \\
+\textbf{Cas exceptionnels :}
+
+\subsubsection{Accepter/Refuser une Demande d'Ami}
+\textbf{Acteur :} \\
+\textbf{Relations avec d'autres cas d'utilisation :} \\
+\textbf{Pré-conditions :} \textit{Server} en ligne et réception du signal correspondant.\\
+\textbf{Post-conditions :} \\
+\textbf{Cas général :} \\
+\textbf{Cas exceptionnels :} 
+
+\subsubsection{Retirer un Ami de sa Liste d'Amis}
+\textbf{Acteur :} \\
+\textbf{Relations avec d'autres cas d'utilisation :} \textit{Friends List} \\
+\textbf{Pré-conditions :} \textit{Server} en ligne et réception du signal correspondant.\\
+\textbf{Post-conditions :} \\
+\textbf{Cas général :} \\
+\textbf{Cas exceptionnels :} 
+
+\subsubsection{Envoi de Messages}
 \textbf{Acteur :} \textit{Server}. \\
 \textbf{Relations avec d'autres cas d'utilisation :} \textit{Friends List}, jouer. \\
 \textbf{Pré-conditions :} \textit{Server} en ligne et réception du message à envoyer. \\
 \textbf{Post-conditions :} Envoi du message. \\
-\textbf{Cas général :} Les utilisateurs peuvent s'envoyer des messages durant une partie mais également en dehors d'une partie s'ils sont amis. \\
+\textbf{Cas général :} Les utilisateurs peuvent s'envoyer des messages privés en dehors d'une partie s'ils sont amis, sinon ils peuvent communiquer sur un chat commun avec tous les autres \textit{User}. \\
 \textbf{Cas exceptionnels :} Néant. \\
 
 \subsection{Gestion d'une Partie}
@@ -377,7 +445,7 @@ Le système se doit de mettre assez rapidement à jour les statistiques personne
 \textit{GhostPawn} est utilisé pour la prise en passant. Lorsqu'un \textit{Pawn} avance de deux case, il laisse sur la case où il serait s'il n'avait avancer que d'une case, un \textit{GhostPawn} qui est invisible pour le joueur. Un \textit{Pawn} considère un \textit{GhostPawn} comme une pièce prenable si cette dernière est active(elle est active uniquement le tour juste après sa création). Lorsqu'un \textit{GhostPawn} est pris par un \textit{Pawn} et qu'il est actif.Ensuite, le \textit{GhostPawn} se charge de faire disparaitre le \textit{Pawn} qui l'a créé du plateau.
 \textit{BasicPawn} est un \textit{Pawn} qui ne peut effectuer de prise en passant. En effet, il ne possède pas d'attribut \textit{ghost}. Cette pièce est indispensable dans le mode \textit{Alice} car après chaque \textit{Move}, les pièces changent de \textit{Board} et ne peuvent donc pas effectuer de prise en passant.
 \begin{enumerate}
-\item
+\item{}
 \textbf{canMove :} Retourne true si la pièce peut se déplacer. \\
 \textbf{checkMove :} Retourne true si le mouvement demandé d'une pièce par le joueur est un coup légal.\\
 \textbf{hasMoved :}Retourne true si la pièce a déjà été déplacée ou non.\\
@@ -469,7 +537,7 @@ Les modes en temps réel ne prennent plus en compte les tours des joueurs. Néan
 \begin{figure} [H]
 \centering
 \includegraphics[scale=0.50]{player_chainedmove_board.png}
-\caption{Diagramme de classe de \textit{Board} et \textit{Player}}
+\caption{Diagramme de classe de \textit{Board}, \textit{Player} et \textit{ChainedMove}.}
 \end{figure}
 
 \newpage
@@ -572,55 +640,55 @@ Le joueur se connecte à l'aide du \textit{hostname} du serveur, qui s'affiche �
 \caption{Diagramme de classe du \textit{Client} et \textit{Data}}.
 \end{figure}
 
-\begin{enumerate}
 
-\item \textit{Affichage du menu}\\
+
+\subsubsection{Affichage du menu}
 \textbf{Mise en pratique :} Les méthodes de l'objet permettant l'affichage du menu sont utilisées et les options suivantes sont proposées à l'utilisateur : \textit{Jouer}, \textit{Amis}, \textit{Statistique} et \textit{Quitter}.\\
-\textbf{Protocole :} La méthode \textit{\_get\_choice}, toujours précédée par la méthode \textit{\_init\_choicew}, est utilisée afin de pouvoir afficher les différentes options.
+\textbf{Protocole :} La méthode \textit{\_get\_choice}, toujours précédée par la méthode \textit{\_init\_choicew}, est utilisée afin de pouvoir afficher les différentes options.\\
 
-\item \textit{Choix d'une option}\\
+\subsubsection{Choix d'une option}
 \textbf{Mise en pratique :} L'utilisateur peut parcourir les différentes options en utilisant les touches directionnelles \textit{Haut} et \textit{Bas} et valider son choix en appuyant sur la touche \textit{Entrée} \\
-\textbf{Protocole :} Après avoir appelé la méthode \textit{\_get\_choice}, le programme attend que l'utilisateur choisisse une option. Si le choix a été fait, une fonction est appelée pour diriger l'utilisateur vers un autre menu.
+\textbf{Protocole :} Après avoir appelé la méthode \textit{\_get\_choice}, le programme attend que l'utilisateur choisisse une option. Si le choix a été fait, une fonction est appelée pour diriger l'utilisateur vers un autre menu.\\
 
-\item \textit{Choix d'option du menu Jouer}\\
+\subsubsection{Choix d'option du menu Jouer}
 \textbf{Mise en pratique :} Les 4 modes de jeu sont affichés et l'utilisateur peut rejoindre une file d'attente vers le mode de jeu approprié en sélectionnant une de ces 4 options ou revenir au menu principal en choisissant l'option \textit{Retour}.\\
-\textbf{Protocole :} Si l'utilisateur choisit un mode de jeu, la fonction \textit{playGame} est appelée et elle envoie un message au serveur qui placera le joueur dans une file d'attente. Ensuite l'utilisateur sera bloqué jusqu'à ce qu'un autre joueur rejoigne la même file d'attente. Sinon l'utilisateur sera dirigé vers le menu principal.
+\textbf{Protocole :} Si l'utilisateur choisit un mode de jeu, la fonction \textit{playGame} est appelée et elle envoie un message au serveur qui placera le joueur dans une file d'attente. Ensuite l'utilisateur sera bloqué jusqu'à ce qu'un autre joueur rejoigne la même file d'attente. Sinon l'utilisateur sera dirigé vers le menu principal.\\
 
-\item \textit{Choix d'option du menu Ami}\\
+\subsubsection{Choix d'option du menu Ami}
 \textbf{Mise en pratique :} L'utilisateur a le choix entre 5 options : \textit{Voir sa liste d'amis}, \textit{Envoyer une demande d'ami}, \textit{Retirer un ami}, \textit{Accepter ou refuser une demande d'ami} et \textit{Retour}.\\
-\textbf{Protocole :} Après avoir appelé la méthode \textit{\_get\_choice}, le programme attend que l'utilisateur choisisse une option.Si un choix a été fait, une fonction est appelée pour diriger l'utilisateur vers un autre menu. 
+\textbf{Protocole :} Après avoir appelé la méthode \textit{\_get\_choice}, le programme attend que l'utilisateur choisisse une option.Si un choix a été fait, une fonction est appelée pour diriger l'utilisateur vers un autre menu. \\
 
-\item \textit{Voir sa liste d'amis}\\
+\subsubsection{Voir sa liste d'amis}
 \textbf{Mise en pratique :} Après avoir choisi cette option, les noms des amis de l'utilisateur sont affichés dans un rectangle.\\
-\textbf{Protocole :} Un message est envoyé au serveur qui traitera la demande et qui renverra le nom de tous ses amis. Lorsque l'entièreté des noms des amis sont reçus du coté client, la méthode \textit{init\_friendsw} affiche le nom de tous ses amis sur l'écran.
+\textbf{Protocole :} Un message est envoyé au serveur qui traitera la demande et qui renverra le nom de tous ses amis. Lorsque l'entièreté des noms des amis sont reçus du coté client, la méthode \textit{init\_friendsw} affiche le nom de tous ses amis sur l'écran.\\
 
-\item \textit{Envoyer une demande d'ami}\\
+\subsubsection{Envoyer une demande d'ami}
 \textbf{Mise en pratique :} Après avoir choisi cette option, l'utilisateur est invité à rentrer un nom ou une autre commande pour retourner au menu des amis.\\
-\textbf{Protocole :} Si l'utilisateur ne rentre pas la commande pour quitter ce menu, alors un message est envoyé au serveur qui le traitera et renverra le résultat de l'opération. Plusieurs résultat sont possibles, soit la demande a été envoyée soit l'une de ces erreurs s'est produite : l'utilisateur s'est envoyé une demande d'ami à lui même, la personne se trouve déjà dans sa liste d'amis, le nom n'est lié à aucun compte ou alors une demande a déjà été envoyée. 
+\textbf{Protocole :} Si l'utilisateur ne rentre pas la commande pour quitter ce menu, alors un message est envoyé au serveur qui le traitera et renverra le résultat de l'opération. Plusieurs résultat sont possibles, soit la demande a été envoyée soit l'une de ces erreurs s'est produite : l'utilisateur s'est envoyé une demande d'ami à lui même, la personne se trouve déjà dans sa liste d'amis, le nom n'est lié à aucun compte ou alors une demande a déjà été envoyée. \\
 
-\item \textit{Retirer un ami}\\
+\subsubsection{Retirer un ami}
 \textbf{Mise en pratique :} Après avoir choisi cette option, l'utilisateur est invité à rentrer un nom ou une autre commande pour retourner au menu des amis.\\
-\textbf{Protocole :} Si l'utilisateur ne rentre pas la commande pour quitter ce menu, alors un message est envoyé au serveur qui le traitera et renverra le résultat de l'opération. Plusieurs résultats sont possibles, soit la personne a été retirée de la liste d'amis soit l'utilisateur a entré le nom d'une personne qui ne fait pas partie de ses amis.
+\textbf{Protocole :} Si l'utilisateur ne rentre pas la commande pour quitter ce menu, alors un message est envoyé au serveur qui le traitera et renverra le résultat de l'opération. Plusieurs résultats sont possibles, soit la personne a été retirée de la liste d'amis soit l'utilisateur a entré le nom d'une personne qui ne fait pas partie de ses amis.\\
 
-\item \textit{Accepter ou refuser une demande d'ami}\\
+\subsubsection{Accepter ou refuser une demande d'ami}
 \textbf{Mise en pratique :} Après avoir choisi cette option, l'utilisateur est invité à rentrer une commande suivi d'un nom ou autre une commande pour retourner au menu des amis.\\
-\textbf{Protocole :} Si l'utilisateur ne rentre pas la commande pour quitter ce menu, alors un message est envoyé au serveur qui le traitera et renverra le résultat de l'opération. Plusieurs résultats sont possibles, soit la demande a été acceptée ou refusée, soit aucune demande d'ami n'a été envoyée par le nom de la personne encodé.
+\textbf{Protocole :} Si l'utilisateur ne rentre pas la commande pour quitter ce menu, alors un message est envoyé au serveur qui le traitera et renverra le résultat de l'opération. Plusieurs résultats sont possibles, soit la demande a été acceptée ou refusée, soit aucune demande d'ami n'a été envoyée par le nom de la personne encodé.\\
 
 
-\item \textit{Choix d'option du menu Statistiques}\\
+\subsubsection{Choix d'option du menu Statistiques}
 \textbf{Mise en pratique :} L'utilisateur a le choix entre 3 options : \textit{Voir ses statistiques}, \textit{Voir le classement général} et \textit{Quitter}.\\
-\textbf{Protocole :} Si l'utilisateur décide de voir ses statistiques, la fonction \textit{checkMyStat} est appelée et enverra un message au serveur qui retournera les statistiques de l'utilisateur qui seront affichées dans un rectangle. Si l'utilisateur veut voir le classement général, il sera redirigé vers un autre menu. Sinon, l'utilisateur retourne au menu principal.
+\textbf{Protocole :} Si l'utilisateur décide de voir ses statistiques, la fonction \textit{checkMyStat} est appelée et enverra un message au serveur qui retournera les statistiques de l'utilisateur qui seront affichées dans un rectangle. Si l'utilisateur veut voir le classement général, il sera redirigé vers un autre menu. Sinon, l'utilisateur retourne au menu principal.\\
 
-\item \textit{Choix d'option du menu Classement général}\\
+\subsubsection{Choix d'option du menu Classement général}
 \textbf{Mise en pratique :} L'utilisateur a le choix entre 9 options : \textit{Classic}, \textit{Dark}, \textit{Horde}, \textit{Alice} et ses variantes en \textit{RealTime} et \textit{Retour}. \\
-\textbf{Protocole :} Si l'utilisateur choisit une des 4 premières options, alors un messages est envoyé au serveur qui renverra le nom et les statistiques des 10 premiers joueurs du mode sélectionné. Ces informations seront ensuite affichées dans un rectangle. Sinon l'utilisateur revient au menu principal.
+\textbf{Protocole :} Si l'utilisateur choisit une des 4 premières options, alors un messages est envoyé au serveur qui renverra le nom et les statistiques des 10 premiers joueurs du mode sélectionné. Ces informations seront ensuite affichées dans un rectangle. Sinon l'utilisateur revient au menu principal.\\
 
 
-\item \textit{Utilisation du chat}\\
-\textbf{Mise en pratique :} Une fois que l'utilisateur a sélectionné cette option, il peut discuter soit avec ses amis soit discuter avec n'importe quelle autre personne dans le canal global.\\
-\textbf{Protocole :} Une fois que l'utilisateur rentre la commande pour discuter, un message sera envoyé au serveur qui le traitera et renverra le résultat de l'opération. Plusieurs résultats sont possibles, soit le message de l'utilisateur s'est correctement envoyé, soit la commande a été mal entrée et dans ce cas, aucun message n'est envoyé.
+\subsubsection{Utilisation du chat}
+\textbf{Mise en pratique :} Une fois que l'utilisateur a sélectionné cette option, il peut discuter soit avec ses amis soit discuter avec n'importe quelle autre personne dans le canal global. L'utilisateur navigue entre les différens chats via la commande /change [nom ami] ou /change [all] pour le chat global.\\
+\textbf{Protocole :} Une fois que l'utilisateur rentre la commande pour discuter, un message sera envoyé au serveur qui le traitera et renverra le résultat de l'opération. Plusieurs résultats sont possibles, soit le message de l'utilisateur s'est correctement envoyé, soit la commande a été mal entrée et dans ce cas, aucun message n'est envoyé.\\
 
-\end{enumerate}
+
 
 \section{Annexe}
 
