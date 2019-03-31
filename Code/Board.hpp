@@ -27,10 +27,10 @@ class Board
 
 	unsigned getColumn() const {return _column;}
 	unsigned getRow() const {return _row;}
-	Piece* getCase(Coordinate) const;
+	virtual Piece* getCase(Coordinate) const;
 	char getCaseColor(Coordinate place) const{
-		if (!isInBoard(place)) throw std::out_of_range("the board is to small");
-		return place.getRealRow() + place.getRealColumn() % 2 ? 'w':'b';
+		if (!isInBoard(place)) throw std::out_of_range("this case does not exist.");
+		return (place.getRealRow() + place.getRealColumn()) % 2 ? 'w':'b';
 	}
 	Piece* movePiece(Coordinate, Coordinate);
 	void setCase(Coordinate, Piece*);

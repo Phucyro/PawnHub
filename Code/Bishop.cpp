@@ -9,7 +9,7 @@ Bishop& Bishop::operator= (const Bishop& original){
 	return *this;
 }
 
-bool Bishop::_checkMove(Coordinate end, Board* board, Game& game){
+bool Bishop::_checkMove(Coordinate end, Board* board, Game& game, bool careOfMoving){
 	int rowMove = int(end.getRealRow()) - int(_coords.getRealRow());
 	int rowDirection = rowMove == 0 ? 0 : rowMove/std::abs(rowMove);
 	int columnMove = int(end.getRealColumn()) - int(_coords.getRealColumn());
@@ -22,12 +22,12 @@ bool Bishop::_checkMove(Coordinate end, Board* board, Game& game){
 	//test if there is no piece in the way
 	unsigned row = _coords.getRealRow()+unsigned(rowDirection), column = _coords.getRealColumn()+unsigned(columnDirection);
 	while(row != end.getRealRow()){
-		if (!_isPlaceFree(Coordinate(column, row), board)) return false;
+		if (!_isPlaceFree(Coordinate(column, row), board, careOfMoving)) return false;
 		row += unsigned(rowDirection);
 		column += unsigned(columnDirection);
 	}
 
-	if ((!_isPlaceFree(end, board)) && board->getCase(end)->getColor() == this->getColor()) return false;
+	if ((!_isPlaceFree(end, board, careOfMoving)) && board->getCase(end)->getColor() == this->getColor()) return false;
 	return true;
 }
 

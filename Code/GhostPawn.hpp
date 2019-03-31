@@ -2,6 +2,7 @@
 #define __GHOSTPAWN__HPP__
 
 #include "Piece.hpp"
+#include "RealTimeBoard.hpp"
 class Pawn;
 
 class GhostPawn : public Piece{
@@ -11,7 +12,7 @@ class GhostPawn : public Piece{
       unsigned _activationTime;
       Pawn *_target ;
 
-      bool _checkMove(Coordinate, Board*, Game&) override {return false;}
+      bool _checkMove(Coordinate, Board*, Game&, bool = true) override {return false;}
 
   public :
       GhostPawn(const char color, Coordinate coords, unsigned turn, Pawn* target, unsigned activationTime = 1) : Piece(color, coords), _creationTurn(turn), _target(target), _activationTime(activationTime) {

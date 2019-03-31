@@ -40,12 +40,12 @@ bool AliceKing::move(Coordinate end, Board* board, Game& game){
 	return res && _reverseEnable;
 }
 
-bool AliceKing::_isPlaceFree(Coordinate place ,Board* board){
-	return this->King::_isPlaceFree(place, board) || this->AlicePiece::_isPlaceFree(place, board);
+bool AliceKing::_isPlaceFree(Coordinate place ,Board* board, bool careOfMoving){
+	return this->King::_isPlaceFree(place, board, careOfMoving) || this->AlicePiece::_isPlaceFree(place, board);
 }
 
-bool AliceKing::_checkMove(Coordinate end, Board* board, Game& game){
-	return this->AlicePiece::_checkMove(end, board, game) && this->King::_checkMove(end, board, game);
+bool AliceKing::_checkMove(Coordinate end, Board* board, Game& game, bool careOfMoving){
+	return this->AlicePiece::_checkMove(end, board, game) && this->King::_checkMove(end, board, game, careOfMoving);
 }
 
 bool AliceKing::_isMovePossible(Coordinate end, Board* board, Game& game){

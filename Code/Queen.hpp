@@ -6,9 +6,9 @@
 class Queen : public Piece {
 
 	protected :
-		bool _checkMoveRook(Coordinate, Board*, Game&);
-		bool _checkMoveBishop(Coordinate, Board*, Game&);
-		bool _checkMove(Coordinate, Board*, Game&) override;
+		bool _checkMoveRook(Coordinate, Board*, Game&, bool);
+		bool _checkMoveBishop(Coordinate, Board*, Game&, bool);
+		bool _checkMove(Coordinate, Board*, Game&, bool = true) override;
 		bool hasMoved() const override {return true;}
 
 

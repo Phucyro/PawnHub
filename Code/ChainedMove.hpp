@@ -24,7 +24,8 @@ class ChainedMove{
 	
 	ChainedMove& operator= (const ChainedMove&) = default;
 	
-	void setMoment(unsigned moment){_moment = moment;}
+	void setMoment(unsigned moment) {_moment = moment;}
+	void setPiece(Piece* movingPiece) {_movingPiece = movingPiece;}
 	unsigned getMoment() const {return _moment;}
 	Piece* getPiece() const {return _movingPiece;}
 	bool isEmpty() const {return _moves.empty();}
