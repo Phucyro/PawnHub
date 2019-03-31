@@ -70,7 +70,6 @@ void Socket::sendMessage(std::string message) {
   else{
 		message.append(MSG_LENGTH - (message_size % MSG_LENGTH), PADDING);
 	}
-  std::cout << "sending: " << message << std::endl;
 	const char* str_ptr = message.c_str();
 
 	ssize_t bytes_sent = 0;
@@ -116,6 +115,5 @@ std::string Socket::receiveMessage() {
       message_done = parseBuffer(message);
     }
   }
-  std::cout << "received: " << message << std::endl;
   return message;
 }
