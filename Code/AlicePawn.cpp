@@ -14,12 +14,12 @@ void AlicePawn::_reverseMove(Coordinate end, Board* board, Game& game, Piece* ta
 	_swapDimension();
 }
 
-bool AlicePawn::_isPlaceFree(Coordinate place ,Board* board){
-	return this->BasicPawn::_isPlaceFree(place, board) || this->AlicePiece::_isPlaceFree(place, board);
+bool AlicePawn::_isPlaceFree(Coordinate place ,Board* board, bool careOfMoving){
+	return this->BasicPawn::_isPlaceFree(place, board, careOfMoving) || this->AlicePiece::_isPlaceFree(place, board);
 }
 
-bool AlicePawn::_checkMove(Coordinate end, Board* board, Game& game){
-	return this->AlicePiece::_checkMove(end, board, game) && this->BasicPawn::_checkMove(end, board, game);
+bool AlicePawn::_checkMove(Coordinate end, Board* board, Game& game, bool careOfMoving){
+	return this->AlicePiece::_checkMove(end, board, game) && this->BasicPawn::_checkMove(end, board, game, careOfMoving);
 }
 
 bool AlicePawn::_isMovePossible(Coordinate end, Board* board, Game& game){

@@ -9,7 +9,7 @@ class Rook : public Piece {
 
 	protected :
 		bool _moved;
-		bool _checkMove(Coordinate, Board*, Game&) override;
+		bool _checkMove(Coordinate, Board*, Game&, bool = true) override;
 
 	public :
 		Rook(const char color, Coordinate coords) noexcept : Piece(color, coords), _moved(false) {

@@ -14,12 +14,12 @@ void AliceRook::_reverseMove(Coordinate end, Board* board, Game& game, Piece* ta
 	_swapDimension();
 }
 
-bool AliceRook::_isPlaceFree(Coordinate place ,Board* board){
-	return this->Rook::_isPlaceFree(place, board) || this->AlicePiece::_isPlaceFree(place, board);
+bool AliceRook::_isPlaceFree(Coordinate place ,Board* board, bool careOfMoving){
+	return this->Rook::_isPlaceFree(place, board, careOfMoving) || this->AlicePiece::_isPlaceFree(place, board);
 }
 
-bool AliceRook::_checkMove(Coordinate end, Board* board, Game& game){
-	return this->AlicePiece::_checkMove(end, board, game) && this->Rook::_checkMove(end, board, game);
+bool AliceRook::_checkMove(Coordinate end, Board* board, Game& game, bool careOfMoving){
+	return this->AlicePiece::_checkMove(end, board, game) && this->Rook::_checkMove(end, board, game, careOfMoving);
 }
 
 bool AliceRook::_isMovePossible(Coordinate end, Board* board, Game& game){

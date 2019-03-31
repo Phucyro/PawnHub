@@ -216,8 +216,15 @@ void RealTimeAlice::_changePawn(Piece *pawn, Piece* promotedPawn, Board* board){
 	}
 }
 
+bool RealTimeAlice::_canFight(Piece* p1, Piece* p2){
+	return RealTimeGame::_canFight(p1, p2) && dynamic_cast<AlicePiece*>(p1)->getDimension() == dynamic_cast<AlicePiece*>(p2)->getDimension();
+}
+
 void RealTimeAlice::promote(Piece* piece){
-	this->_changePawn(piece, new AliceQueen(*(dynamic_cast<AlicePawn*>(piece))), _board);
+	Piece* queen = new AliceQueen(*dynamic_cast<AlicePawn*>(piece));
+	this->_changePawn(piece, queen, _board);
+	this->_getBoard()->addTo(queen->getCoord(), queen);
+	this->_getBoard()->remove(piece);
 }
 
 #endif

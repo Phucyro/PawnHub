@@ -11,7 +11,6 @@ Piece& Piece::operator= (const Piece& original){
 	_movementStart = original._movementStart;
 	_lastMoveEnd = original._lastMoveEnd;
 	_isMoving = original._isMoving;
-	_next = original._next;
 	for (int i = 0; i < 4; i++){
 		_str[i] = original._str[i];
 	}
@@ -70,6 +69,7 @@ void Piece::startMovingTo(Game& game, Coordinate dest){
 	_isMoving = true;
 	_dest = dest;
 	_movementStart = game.getTurn();
+	_start = _coords;
 }
 
 void Piece::stopMoving(Game& game, Board* board){

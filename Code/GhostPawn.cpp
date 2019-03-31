@@ -17,12 +17,18 @@ GhostPawn& GhostPawn::operator= (const GhostPawn& original){
 
 void GhostPawn::changeIsTaken(unsigned turn, Piece* taker, Board* board){
   if (isActive(turn) && dynamic_cast<Pawn*>(taker)){
-    if(_isTaken) board->setCase(_target->getCoord(), _target);
-    else board->setCase(_target->getCoord(), nullptr);
+  	RealTimeBoard* rtboard= dynamic_cast<RealTimeBoard*>(board);
+  	if (rtboard){
+  		rtboard->remove(_target);
+  	}
+  	else{
+    	if(_isTaken) board->setCase(_target->getCoord(), _target);
+    	else board->setCase(_target->getCoord(), nullptr);
+    }
 
-    _target->changeIsTaken();
+    _target->changeIsTaken(turn, taker, board);
   }
-  this->Piece::changeIsTaken();
+  this->Piece::changeIsTaken(turn, taker, board);
 }
 
 bool GhostPawn::isActive(unsigned turn){

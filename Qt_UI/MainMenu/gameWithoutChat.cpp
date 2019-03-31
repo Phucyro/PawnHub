@@ -218,7 +218,7 @@ void GameWithoutChat::on_surrendButton_pressed()
 {
     emit move_declared("/end");
     show_update("giveup");
-//    this->close();    // not sure this is necessary
+    this->close();
 }
 
 void GameWithoutChat::on_moveConfirmButton_clicked()

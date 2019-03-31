@@ -33,10 +33,16 @@ void Message::popup()
 void Message::promotion_choice()
 {
     set_title("Promotion");
-    set_text("Please choose your pawn's promotion.");
+    set_text("Please choose your desired promotion.");
     ui->pushButton_1->setText("Queen");
+    ui->pushButton_1->setEnabled(true);
+    ui->pushButton_1->setFlat(false);
     ui->pushButton_2->setText("Bishop");
+    ui->pushButton_2->setEnabled(true);
+    ui->pushButton_2->setFlat(false);
     ui->pushButton_3->setText("Rook");
+    ui->pushButton_3->setEnabled(true);
+    ui->pushButton_3->setFlat(false);
     ui->okButton->setText("Knight");
 }
 

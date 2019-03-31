@@ -27,13 +27,13 @@ Pawn& Pawn::operator= (Pawn&& original){
 	return *this;
 }
 
-bool Pawn::_checkMove(Coordinate end, Board* board, Game& game){
+bool Pawn::_checkMove(Coordinate end, Board* board, Game& game, bool careOfMoving){
 	int rowMove = int(end.getRealRow()) - int(_coords.getRealRow());
 	int columnMove = int(end.getRealColumn()) - int(_coords.getRealColumn());
 	int colorDirection = _color == 'w' ? 1 : -1;
 	int rowDirection = rowMove ? rowMove/std::abs(rowMove) : 0;
 	GhostPawn* ghost =  dynamic_cast<GhostPawn*>(board->getCase(end));
-	return (ghost && ghost->getColor() != this->getColor() && ghost->isActive(game.getTurn()) && std::abs(rowMove) == 1 && rowDirection == colorDirection && std::abs(columnMove) == 1) || this->BasicPawn::_checkMove(end, board, game);
+	return (ghost && ghost->getColor() != this->getColor() && ghost->isActive(game.getTurn()) && std::abs(rowMove) == 1 && rowDirection == colorDirection && std::abs(columnMove) == 1) || this->BasicPawn::_checkMove(end, board, game, careOfMoving);
 }
 
 bool Pawn::move(Coordinate end, Board* board, Game& game){
