@@ -60,10 +60,8 @@ bool King::_checkMove(Coordinate end, Board* board, Game& game, bool careOfMovin
     Coordinate coords = _coords;
     if (this->hasMoved() || game.testCheck(this->getColor()))return false;   //King moved or is checked ?
 		Coordinate tmpcoord =  columnMove == 2 ? Coordinate(end.getRealColumn()+1, end.getRealRow()) : Coordinate(end.getRealColumn()-2, end.getRealRow());//coords of he rook
-    //if (columnMove == 2) tmpcoord = Coordinate(end.getRealColumn()+1, end.getRealRow()); //Petit Roque
-    //else tmpcoord = Coordinate(end.getRealColumn()-2, end.getRealRow()); //Grand roque
-    Piece* rook = dynamic_cast<Rook*>(board->getCase(tmpcoord));
-    if (!rook || rook->hasMoved()) return false; //Is the Rook validate ?
+    Piece* rook = dynamic_cast<Rook*>(board->getCase(tmpcoord));//might segfault because of g++ ?
+    if (!rook || rook->hasMoved()) return false;
 		//check if there is no piece in the way + if the king will not be checked in the way
 		bool res = true;
     Coordinate middleCoord = Coordinate(_coords.getRealColumn() + unsigned(1*columnDirection), _coords.getRealRow());
@@ -77,7 +75,6 @@ bool King::_checkMove(Coordinate end, Board* board, Game& game, bool careOfMovin
     if (game.testCheck(this->getColor()))res = false;	//0 a changer
     board->movePiece(end, coords);
     this->_setCoordinate(coords);
-		//columnMove == 2 ? rook->move(Coordinate(_coords.getRealColumn()+1, _coords.getRealRow()), board, game) : rook->move(Coordinate(_coords.getRealColumn()-1, _coords.getRealRow()), board, game);
     if (!_isPlaceFree(Coordinate(tmpcoord.getRealColumn() - 1*columnDirection, tmpcoord.getRealRow()), board, careOfMoving)) return false; //test if the case next to the rook is empty
     return res;
   }

@@ -1,6 +1,8 @@
 #ifndef __COORDINATE__HPP__
 #define __COORDINATE__HPP__
 
+#include <string>
+
 class Coordinate
 {
 	private:
@@ -18,6 +20,7 @@ class Coordinate
 	Coordinate& operator= (const Coordinate&) = default;
 	bool operator== (const Coordinate&) const;
 	bool operator!= (const Coordinate&) const;
+	operator std::string() const {return std::string() + getAbstractColumn() + getAbstractRow();}
 
 	unsigned getRealColumn() const {return _column;}
 	unsigned getRealRow() const {return _row;}

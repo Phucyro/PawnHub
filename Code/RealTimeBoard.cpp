@@ -6,13 +6,16 @@
 
 RealTimeBoard::RealTimeBoard(unsigned column, unsigned row): Board(column, row), _locks(nullptr), _movingPieces(nullptr){
 	_locks = new bool*[_column];
-	for (int i = 0; i < _column; i++) _locks[i] = new bool[_row];
+	for (int i = 0; i < _column; i++) {
+		_locks[i] = new bool[_row];
+		for (int j = 0; j < _row; j++) _locks[i][j] = false;
+	}
 	_movingPieces = new std::list<Piece*>*[_column];
 	for (int i = 0; i < _column; i++) _movingPieces[i] = new std::list<Piece*>[_row];
 }
 
 
-RealTimeBoard::RealTimeBoard(const RealTimeBoard& original): Board(original), _locks(nullptr){}
+RealTimeBoard::RealTimeBoard(const RealTimeBoard& original): Board(original), _locks(nullptr), _movingPieces(nullptr){}
 
 RealTimeBoard::RealTimeBoard(RealTimeBoard&& original): Board(original), _locks(original._locks), _movingPieces(original._movingPieces){
 	original._locks = nullptr;

@@ -12,6 +12,7 @@
 #include "RealTimeGame.hpp"
 #include "Queen.hpp"
 
+void stopGdb(){}
 
 RealTimeGame::RealTimeGame(Piece** pieces, unsigned piecesAmount, Player* player1, Player* player2, unsigned lastStrongPiecesWhite, unsigned lastStrongPieceBlack):
 	Game(pieces,piecesAmount, player1, player2, lastStrongPiecesWhite, lastStrongPieceBlack, nullptr),
@@ -202,6 +203,8 @@ void RealTimeGame::_mainLoop(){
 
 bool RealTimeGame::_isMovePossible(Coordinate start, Coordinate end){
 	if (! (_board->isInBoard(start) && _board->isInBoard(end)) ) return false;
+	if (_board->getCase(end)) std::cout<<_board->getCase(end)->getType()<<std::endl;
+	else std::cout<<"empty"<<std::endl;
 	RealTimeBoard* board = this->_getBoard();
 	Piece* movingPiece = board->getCase(start);
 	return movingPiece && !(movingPiece->isMoving()) && _currentPlayer->getColor() == movingPiece->getColor() && (!movingPiece->isCoolingDown(*this)) && (!board->isLock(end)) && movingPiece->_checkMove(end, board, *this);
