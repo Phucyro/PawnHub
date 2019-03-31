@@ -222,6 +222,7 @@ void Board::draw_pieces(std::string board)
 
 void Board::draw_alice_pieces(std::string board)
 {
+  clear_alice_board();
   draw_alice_board();
   aliceToBoard(board, colour);
 }
@@ -245,6 +246,9 @@ void Board::clear_board(){
     			mvprintw((line+1)*OFFSET, 1+((column+1)*OFFSET), "%c", ' ');
 		}
 	}
+}
+
+void Board::clear_alice_board(){
 	for (int line = 0; line < 8; line++){
 		for (int column = 0; column < 8; column++){
     			mvprintw((1+line)*OFFSET, 63+((column+1)*OFFSET), "%c", ' ');

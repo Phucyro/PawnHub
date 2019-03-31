@@ -9,7 +9,8 @@
 GameChoice::GameChoice(QWidget *parent, Client* client_) :
     QDialog(parent),
     ui(new Ui::GameChoice),
-    client(client_)
+    client(client_),
+    cancel(false)
 {
     ui->setupUi(this);
 }
@@ -23,10 +24,17 @@ void GameChoice::send_game_request(std::string gameMode)
 {
     playGame(client->getSocket(), gameMode);
 
-    Message message;
-    message.set_title("In Queue");
-    message.set_text("You have been placed in queue, please wait for an opponent.");
-    message.popup();
+    //this leaves the queue v TODO: add a possibility to quit the message
+
+    //message.set_okButton("Cancel");
+    //message.set_title("In Queue");
+    //message.set_text("You have been placed in queue, please wait for an opponent.");
+    //message.popup();
+
+    //if(message.getCancel()){
+      //  leaveQueue(client->getSocket());
+        //cancel = true;
+    //}
 }
 
 void GameChoice::run_game(GameWithoutChat* game)
@@ -51,16 +59,20 @@ void GameChoice::on_classicPushButton_pressed()
 {
     GameWithoutChat* game = new GameWithoutChat(nullptr, client);
     send_game_request("0");
-
-    run_game(game);
+    if(!cancel){
+        run_game(game);
+        delete game;
+    }
 }
 void GameChoice::on_darkPushButton_pressed()
 {
     GameWithoutChat* game = new GameWithoutChat(nullptr, client);
     game->setWindowTitle("Dark Chess");
     send_game_request("1");
-
-    run_game(game);
+    if(!cancel){
+        run_game(game);
+        delete game;
+    }
 }
 void GameChoice::on_hordePushButton_pressed()
 {
@@ -68,14 +80,20 @@ void GameChoice::on_hordePushButton_pressed()
     game->setWindowTitle("Horde Chess");
     send_game_request("2");
 
-    run_game(game);
+    if(!cancel){
+        run_game(game);
+        delete game;
+    }
 }
 void GameChoice::on_alicePushButton_pressed()
 {
     GameWithoutChatWithAlice* game = new GameWithoutChatWithAlice(nullptr, client);
     send_game_request("3");
 
-    run_game(game);
+    if(!cancel){
+        run_game(game);
+        delete game;
+    }
 }
 
 void GameChoice::on_realTimeClassicPushButton_pressed()
@@ -84,7 +102,10 @@ void GameChoice::on_realTimeClassicPushButton_pressed()
     game->setWindowTitle("Classic Chess - Real Time");
     send_game_request("4");
 
-    run_game(game);
+    if(!cancel){
+        run_game(game);
+        delete game;
+    }
 }
 
 void GameChoice::on_realTimeDarkPushButton_pressed()
@@ -93,7 +114,10 @@ void GameChoice::on_realTimeDarkPushButton_pressed()
     game->setWindowTitle("Dark Chess - Real Time");
     send_game_request("5");
 
-    run_game(game);
+    if(!cancel){
+        run_game(game);
+        delete game;
+    }
 }
 
 void GameChoice::on_realTimeHordePushButton_pressed()
@@ -102,7 +126,10 @@ void GameChoice::on_realTimeHordePushButton_pressed()
     game->setWindowTitle("Horde Chess - Real Time");
     send_game_request("6");
 
-    run_game(game);
+    if(!cancel){
+        run_game(game);
+        delete game;
+    }
 }
 
 void GameChoice::on_realTimeAlicePushButton_pressed()
@@ -111,7 +138,10 @@ void GameChoice::on_realTimeAlicePushButton_pressed()
     game->setWindowTitle("Alice Chess - Real Time");
     send_game_request("7");
 
-    run_game(game);
+    if(!cancel){
+        run_game(game);
+        delete game;
+    }
 }
 
 void GameChoice::on_returnPushButton_pressed()

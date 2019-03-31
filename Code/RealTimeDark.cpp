@@ -230,7 +230,7 @@ bool RealTimeDark::_isVisible(Piece* piece, char color){
 		//strong pieces
 		for (unsigned i = 16; i <= _lastStrongPieceBlack; ++i){
 			if (!_pieces[i]->isTaken())
-				if (_pieces[i]->_checkMove(piece->getCoord(), RealTimeGame::_board, *this)) return true;
+				if (_pieces[i]->_checkMove(piece->getCoord(), RealTimeGame::_board, *this, false)) return true;
 		}
 	}
 
@@ -260,7 +260,7 @@ bool RealTimeDark::_isVisible(Piece* piece, char color){
 		//strong pieces
 		for (unsigned i = 0; i <= _lastStrongPiecesWhite; ++i){
 			if (!_pieces[i]->isTaken())
-				if (_pieces[i]->_checkMove(piece->getCoord(), RealTimeGame::_board, *this)) return true;
+				if (_pieces[i]->_checkMove(piece->getCoord(), RealTimeGame::_board, *this, false)) return true;
 		}
 	}
 	return false;

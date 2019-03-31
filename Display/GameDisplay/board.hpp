@@ -47,6 +47,7 @@ public:
 
   void draw_infos();
   void clear_board();
+  void clear_alice_board();
   void clear_get_movement();
   void clear_premove();
 

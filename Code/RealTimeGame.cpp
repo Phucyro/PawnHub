@@ -4,6 +4,7 @@
 #include <iostream>
 #include <string>
 #include <queue>
+#include <list>
 #include <sys/select.h>
 #include <chrono>
 #include <thread>
@@ -76,7 +77,9 @@ void RealTimeGame::_addToQueue(Coordinate moveStart, Coordinate moveEnd, std::qu
 	ChainedMove* currentMove = new ChainedMove(movingPiece, moveEnd);
 	currentMove->setMoment(_turn + MOVE_TIME/2);
 	movesQueue.push(currentMove);
-	this->_getBoard()->lock(moveEnd);
+	RealTimeBoard* board = this->_getBoard();
+	board->lock(moveEnd);
+	board->startMoving(movingPiece);
 	movingPiece->startMovingTo(*this, moveEnd);
 }
 
@@ -164,17 +167,24 @@ void RealTimeGame::_mainLoop(){
 				currentMove = movesQueue.front();
 				movesQueue.pop();
 				movingPiece = currentMove->getPiece();
+				_currentPlayer = movingPiece->getColor() == 'w' ? _player1 : _player2;
 				moveEnd = currentMove->nextMove();
 				if (movingPiece->isTaken()){
 					delete currentMove;
 				}
 				else if(moveEnd == Coordinate('T','9')){
 					this->_getBoard()->unlock(movingPiece->getCoord());
+					this->_getBoard()->stopMoving(movingPiece);
 					movingPiece->stopMoving(*this, _board);
 					delete currentMove;
 				}
 				else{
 					_executeMove(movingPiece, moveEnd);
+					if ((moveEnd.getAbstractRow() == '8' || moveEnd.getAbstractRow() == '1') && movingPiece->getType() == 'p'){
+						promote(movingPiece);
+						movingPiece = _currentPlayer->getColor() == 'w' ? _pieces[_lastStrongPiecesWhite] : _pieces[_lastStrongPieceBlack];
+						currentMove->setPiece(movingPiece);
+					}
 					
 					if (!currentMove->isEmpty()) currentMove->setMoment(_turn + MOVE_TIME);
 					else{
@@ -194,50 +204,63 @@ bool RealTimeGame::_isMovePossible(Coordinate start, Coordinate end){
 	if (! (_board->isInBoard(start) && _board->isInBoard(end)) ) return false;
 	RealTimeBoard* board = this->_getBoard();
 	Piece* movingPiece = board->getCase(start);
-	return movingPiece && _currentPlayer->getColor() == movingPiece->getColor() && (!movingPiece->isCoolingDown(*this)) && (!board->isLock(end)) && movingPiece->_checkMove(end, board, *this);
+	return movingPiece && !(movingPiece->isMoving()) && _currentPlayer->getColor() == movingPiece->getColor() && (!movingPiece->isCoolingDown(*this)) && (!board->isLock(end)) && movingPiece->_checkMove(end, board, *this);
+}
+
+bool RealTimeGame::_canFight(Piece* p1, Piece* p2){
+	if (p1->getColor() == p2->getColor()) return false;
+	if (p2->getType() == 'g' && p1->getType() != 'p') return false;
+	if (p1->getType() == 'g' && p2->getType() != 'p') return false;
+	if (p1->getType() == 'h' && (p1->getCoord() != p1->getStartCoord() || p1->getCoord() != p1->getDest())) return false;
+	if (p2->getType() == 'h' && (p2->getCoord() != p2->getStartCoord() || p2->getCoord() != p2->getDest())) return false;
+	
+	return true;
+}
+
+void RealTimeGame::_fight(Piece* p1, Piece* p2){
+	if (p1->getMovementStart() < p2->getMovementStart()){
+		p1->changeIsTaken(this->getTurn(), p2, _board);
+		this->_getBoard()->remove(p1);
+	}
+	else if (p1->getMovementStart() > p2->getMovementStart()){
+		p2->changeIsTaken(this->getTurn(), p1, _board);
+		this->_getBoard()->remove(p2);
+	}
 }
 
 void RealTimeGame::_executeMove(Piece* movingPiece, Coordinate end){
 	RealTimeBoard* board = this->_getBoard();
-	Piece* taken;
 	Coordinate start = movingPiece->getCoord();
-	if (board->getCase(start) == movingPiece){
-		taken = board->movePiece(start, end);
-		board->setCase(start, movingPiece->getNext());
-		movingPiece->clearNext();
+	Piece* taken = board->getCase(end);
+	if (taken){
 		
-		if (movingPiece->getType() == 'h'){
-			board->setCase(end, taken);
-			movingPiece->_setCoordinate(end);
-		return;
+		if ((!taken->isMoving()) && _canFight(movingPiece, taken)){
+			taken->changeIsTaken(this->getTurn(), movingPiece, _board);
+			board->remove(taken);
 		}
-	}
-	else{
-		taken = board->getCase(end);
-		board->setCase(end, movingPiece);
-	}
-	if (taken){//collision
-		if (movingPiece->getType() != 'p' && taken->getType() == 'g') movingPiece->setNext(taken);
-		else if(taken->getColor() != movingPiece->getColor()){
-			unsigned takenStart = taken->getMovementStart(), movingPieceStart = movingPiece->getMovementStart();
-			if (!taken->isMoving()) taken->changeIsTaken(_turn, movingPiece, board);
-			else if(takenStart > movingPieceStart){// taken started moving before movingPiece
-				taken->changeIsTaken(_turn, movingPiece, board);
-				this->_getBoard()->unlock(taken->getDest());
-			}
-			else if(takenStart < movingPieceStart){// taken started moving after movingPiece
-				movingPiece->changeIsTaken(_turn, taken, board);
-				this->_getBoard()->unlock(movingPiece->getDest());
-				board->setCase(end, taken);
+		
+		std::list<Piece*> otherPieces = board->getMovingPiecesAt(end);
+		if (!otherPieces.empty()){
+			auto it = otherPieces.begin();
+			Piece* otherPiece;
+			while (it != otherPieces.end() && !movingPiece->isTaken()){
+				otherPiece = *it;
+				++it;
+				if (_canFight(movingPiece, otherPiece)) _fight(movingPiece, otherPiece);
 			}
 		}
 	}
-	movingPiece->_setCoordinate(end);
-	if ((end.getAbstractRow() == '8' || end.getAbstractRow() == '1') && movingPiece->getType() == 'p') promote(movingPiece);
+	if (!movingPiece->isTaken()){
+		board->moveTo(end, movingPiece);
+		movingPiece->_setCoordinate(end);
+	}
 }
 
 void RealTimeGame::promote(Piece* piece){
+	Piece* queen = new Queen(*piece);
 	this->_changePawn(piece, new Queen(*piece), _board);
+	this->_getBoard()->addTo(queen->getCoord(), queen);
+	this->_getBoard()->remove(piece);
 }
 
 #endif

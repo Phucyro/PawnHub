@@ -21,6 +21,7 @@ class RealTimeAlice: public RealTimeGame{
 	bool _isCheckmate(char);
 	void _boardState(std::string&) override;
 	void _changePawn(Piece*, Piece*, Board*) override;
+	bool _canFight(Piece*, Piece*) override;
 	RealTimeAlice(const RealTimeAlice&) = delete;
 	
 	public:

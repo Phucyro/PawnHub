@@ -29,7 +29,7 @@ class Pawn : public BasicPawn {
 		Pawn& operator= (Pawn&&);
 
 		bool move(Coordinate, Board*, Game&) override;
-		bool _checkMove(Coordinate, Board*, Game&) override;
+		bool _checkMove(Coordinate, Board*, Game&, bool careOfMoving = true) override;
 		void startMovingTo(Game&, Coordinate) override;
 		void stopMoving(Game&, Board*) override;
 };

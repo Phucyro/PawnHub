@@ -12,15 +12,14 @@ ClientGameControl::ClientGameControl(Client& _client): board(), client(_client),
 void ClientGameControl::receiveBoard(std::string message) {
   if (!is_alice) {
     board.draw_pieces(message);
-    board.refresh_board();
   }
   else if (message[0] == '1') {
     board.draw_pieces(message.erase(0,1));
   }
   else {
     board.draw_alice_pieces(message.erase(0,1));
-    board.refresh_board();
   }
+  board.refresh_board();
 }
 
 void ClientGameControl::receiveUpdate(std::string message) {

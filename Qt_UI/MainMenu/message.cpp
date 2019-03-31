@@ -5,13 +5,15 @@
 Message::Message(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Message),
-    is_promotion(false)
+    is_promotion(false),    
+    cancel(false)
 {
     ui->setupUi(this);
 }
 
 Message::~Message()
 {
+    cancel = false;
     delete ui;
 }
 
@@ -47,8 +49,13 @@ void Message::promotion_choice()
     is_promotion = true;
 }
 
+void Message::set_okButton(QString text){
+    ui->okButton->setText(text);
+}
+
 void Message::on_okButton_clicked()
 {
+    cancel = true;
     if (is_promotion)
     {
         emit promotion_chosen(ui->okButton->text());
@@ -74,4 +81,7 @@ void Message::on_pushButton_3_clicked()
 {
     emit promotion_chosen(ui->pushButton_3->text());
     close();
+}
+bool Message::getCancel(){
+    return cancel;
 }

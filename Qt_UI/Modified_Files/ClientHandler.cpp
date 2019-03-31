@@ -1,5 +1,6 @@
 #include "ClientHandler.hpp"
 #include "../../Communication/SplitString.hpp"
+#include "message.h"
 
 ClientHandler::ClientHandler(Client* _client): QObject(), client(_client), mustQuit(false){}
 
@@ -56,7 +57,10 @@ void ClientHandler::playGameHandler(){
 }
 
 void ClientHandler::leaveQueueHandler(){
-  //std::cout << "Vous avez quitte une file d'attente" << std::endl;
+    Message m;
+    m.set_title("Queue Left");
+    m.set_text("You have left the queue correctly.");
+    m.popup();
 }
 
 void ClientHandler::myStatHandler(QString pos, QString mode, QString stat, QString elo){
