@@ -94,6 +94,7 @@ void MainMenu::client_login() {
              {
                 m->set_title("Signed Up");
                 signIn(client->getSocket(), username.toStdString(), password.toStdString());
+                client->readPipe();
              }
              else m->set_title("Oh no: Something is Wrong");
              m->popup();
