@@ -74,10 +74,14 @@ void MainMenu::client_login() {
     do
     {
         login->get_login_deets(client->getSocket(), username, password);
-        Message* m = new Message();
-                 m->set_text(QString::fromStdString(client->readPipe()));
-                 m->set_title("Oh No: Something went wrong");
-                 m->popup();
+
+        // si vous voulez mettre ca, au moins changez le message recu en anglais, vu le RESTE du jeu est en anglais
+        // svp
+//        Message* m = new Message();
+//                 m->set_text(QString::fromStdString(client->readPipe()));
+//                 m->set_title("Connection result");
+//                 m->popup();
+        std::cout << client->readPipe() << std::endl;
 
     }
     while (!(client->isIdentified()));
@@ -139,6 +143,5 @@ void MainMenu::on_quitButton_clicked()
 void MainMenu::closeEvent()
 {
     quit(client);
-//    stopRecvMsg();
     exit(0);
 }

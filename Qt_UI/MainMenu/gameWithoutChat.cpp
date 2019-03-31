@@ -18,7 +18,7 @@ GameWithoutChat::GameWithoutChat(QWidget *parent, Client* client_) :
     move("")
 {
     ui->setupUi(this);
-    connect(ui->board, static_cast<void(QButtonGroup::*)(QAbstractButton *)>(&QButtonGroup::buttonPressed), this, &GameWithoutChat::on_boardButton_pressed);
+    connect(ui->board, static_cast<void(QButtonGroup::*)(QAbstractButton *)>(&QButtonGroup::buttonPressed), this, &GameWithoutChat::boardButton_pressed);
 }
 
 GameWithoutChat::~GameWithoutChat()
@@ -184,7 +184,7 @@ void GameWithoutChat::reduce_timer(int time)
     }
 }
 
-void GameWithoutChat::on_boardButton_pressed(QAbstractButton* origin)
+void GameWithoutChat::boardButton_pressed(QAbstractButton* origin)
 {
     QString position = origin->objectName();
     if (position.endsWith("_2")) position.chop(2);
