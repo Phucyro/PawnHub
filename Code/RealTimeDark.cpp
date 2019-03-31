@@ -215,7 +215,7 @@ bool RealTimeDark::_isVisible(Piece* piece, char color){
 		frontMaybePawn2 = Coordinate(piece->getCoord().getRealColumn(), piece->getCoord().getRealRow()+2);
 		MaybePawn = nullptr;
 		if (_board->isInBoard(frontMaybePawn2)) MaybePawn = RealTimeGame::_board->getCase(frontMaybePawn2);
-		if (MaybePawn && MaybePawn->getColor() == 'b' && (MaybePawn->getType() == 'p' && (!MaybePawn->hasMoved()) && ((!_board->getCase(frontMaybePawn)) || _board->getCase(frontMaybePawn)->getType() != 'g'))) return true;
+		if (MaybePawn && MaybePawn->getColor() == 'b' && (MaybePawn->getType() == 'p' && (!MaybePawn->hasMoved()) && ((!_board->getCase(frontMaybePawn)) || _board->getCase(frontMaybePawn)->getType() == 'g'))) return true;
 
 		leftMaybePawn = Coordinate(piece->getCoord().getRealColumn()+1, piece->getCoord().getRealRow()+1);
 		MaybePawn = nullptr;
@@ -245,7 +245,7 @@ bool RealTimeDark::_isVisible(Piece* piece, char color){
 		frontMaybePawn2 = Coordinate(piece->getCoord().getRealColumn(), piece->getCoord().getRealRow()-2);
 		MaybePawn = nullptr;
 		if (_board->isInBoard(frontMaybePawn2)) MaybePawn = RealTimeGame::_board->getCase(frontMaybePawn2);
-		if (MaybePawn && MaybePawn->getColor() == 'w' && (MaybePawn->getType() == 'p' && (!MaybePawn->hasMoved()) && ((!_board->getCase(frontMaybePawn)) || _board->getCase(frontMaybePawn)->getType() != 'g'))) return true;
+		if (MaybePawn && MaybePawn->getColor() == 'w' && (MaybePawn->getType() == 'p' && (!MaybePawn->hasMoved()) && ((!_board->getCase(frontMaybePawn)) || _board->getCase(frontMaybePawn)->getType() == 'g'))) return true;
 
 		leftMaybePawn = Coordinate(piece->getCoord().getRealColumn()-1, piece->getCoord().getRealRow()-1);
 		MaybePawn = nullptr;
