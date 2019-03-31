@@ -35,7 +35,6 @@ SOURCES += \
     ../../Communication/Socket.cpp \
     ../../Communication/Client.cpp \
     ../../Communication/SplitString.cpp \
-    ../../Communication/Timer.cpp \
     ../Modified_Files/CheckFormat.cpp \
     ../Modified_Files/ClientHandler.cpp \
     ../Modified_Files/ClientGameControl.cpp \
@@ -60,7 +59,6 @@ HEADERS += \
     ../../Communication/Socket.hpp \
     ../../Communication/Client.hpp \
     ../../Communication/SplitString.hpp \
-    ../../Communication/Timer.hpp \
     ../Modified_Files/ClientFunctions.hpp \
     ../Modified_Files/ClientHandler.hpp \
     ../Modified_Files/CheckFormat.hpp \

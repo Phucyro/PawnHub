@@ -36,8 +36,8 @@ ClientGameControl::ClientGameControl(Client* _client, GameWithoutChatWithAlice* 
 
 ClientGameControl::~ClientGameControl()
 {
-    if (game != nullptr) deleteLater();
-    else if (alice_game != nullptr) alice_game->deleteLater();
+    game = nullptr;
+    alice_game = nullptr;
     client = nullptr;
 }
 
@@ -120,9 +120,9 @@ void ClientGameControl::cleanOldMsg() {
     while (!firstMsgRecv) {
         message = client->readGame();
         if(message[0] == 'F') {
-			firstMsgRecv = true;
-			char header = message[0];
-            (this->*(headerReceiveMap[header]))(QString::fromStdString(message.erase(0,1)));
+    			firstMsgRecv = true;
+    			char header = message[0];
+          (this->*(headerReceiveMap[header]))(QString::fromStdString(message.erase(0,1)));
         }
     }
 }

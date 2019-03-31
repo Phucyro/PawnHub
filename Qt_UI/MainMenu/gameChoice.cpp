@@ -17,6 +17,7 @@ GameChoice::GameChoice(QWidget *parent, Client* client_) :
 
 GameChoice::~GameChoice()
 {
+    client = nullptr;
     delete ui;
 }
 
