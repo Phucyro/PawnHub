@@ -37,6 +37,7 @@ void GameChoice::send_game_request(std::string gameMode)
 
 void GameChoice::run_game(GameWithoutChat* game)
 {
+    this->hide();
     game->start();
     game->close();
     delete game;
@@ -45,6 +46,7 @@ void GameChoice::run_game(GameWithoutChat* game)
 
 void GameChoice::run_game(GameWithoutChatWithAlice* game)
 {
+    this->hide();
     game->start();
     game->close();
     delete game;
