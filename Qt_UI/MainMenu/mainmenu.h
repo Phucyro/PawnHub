@@ -6,6 +6,7 @@
 
 class Client;
 class Chat;
+class ClientHandler;
 
 namespace Ui {
 class MainMenu;
@@ -36,6 +37,7 @@ private:
     Client *client;
     QThread *msgThread;
     Chat *chat;
+    ClientHandler *handler;
 
     void client_connect();
     void client_login();

@@ -23,13 +23,13 @@ MainMenu::MainMenu(QWidget *parent) :
     ui(new Ui::MainMenu),
     client(new Client(new Socket)),
     msgThread(new QThread),
-    chat(new Chat (client))
+    chat(new Chat (client)),
+    handler(new ClientHandler(client))
 
 {
     ui->setupUi(this);
     client_connect();
 
-    ClientHandler* handler  = new ClientHandler(client);
     handler->moveToThread(msgThread);
     connect(msgThread, &QThread::started, handler, &ClientHandler::receiveMessageHandler);
     connect(handler, &ClientHandler::finished, msgThread, &QThread::quit);
@@ -113,6 +113,7 @@ void MainMenu::client_login() {
 void MainMenu::on_playButton_clicked()
 {
     GameChoice* choice = new GameChoice(nullptr, client);
+    connect(handler, &ClientHandler::sigStartGame, choice, &GameChoice::closeMessage);
     this->hide();
     choice->exec();
     delete choice;

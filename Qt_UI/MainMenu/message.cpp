@@ -85,3 +85,6 @@ void Message::on_pushButton_3_clicked()
 bool Message::getCancel(){
     return cancel;
 }
+void Message::closeEvent(){
+    close();
+}

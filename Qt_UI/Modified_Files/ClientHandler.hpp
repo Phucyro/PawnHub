@@ -25,6 +25,7 @@ public slots :
 signals :
   void finished();
   void sigDisplayChat(QString);
+  void sigStartGame();
 
 private:
   void quitHandler();

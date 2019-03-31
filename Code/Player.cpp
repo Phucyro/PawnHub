@@ -205,4 +205,10 @@ void Player::endGame(){
 	_inGameMutex->unlock();
 }
 
+bool Player::isInGame(){
+	if (!_inGameMutex->try_lock()) return true;
+	_inGameMutex->unlock();
+	return false;
+}
+
 #endif

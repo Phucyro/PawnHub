@@ -99,6 +99,7 @@ class Player{
 	void startGame();
 	void endGame();
 	void waitEndGame(){startGame();endGame();}
+	bool isInGame();
 	std::string readControlPipe();
 	void writeControlPipe(std::string msg);
 };

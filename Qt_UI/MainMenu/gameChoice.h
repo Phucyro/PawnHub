@@ -23,7 +23,8 @@ class GameChoice : public QDialog
 public:
     explicit GameChoice(QWidget *parent = nullptr, Client* client_=nullptr);
     ~GameChoice();
-
+public slots:
+    void closeMessage(){message.close();}
 private:
     Ui::GameChoice *ui;
     Client* client;
@@ -34,7 +35,6 @@ private:
     void send_game_request(std::string);
     void run_game(GameWithoutChat* game);
     void run_game(GameWithoutChatWithAlice* game);
-    void closeMessage(){message.close();}
 
 private slots:
     void on_classicPushButton_pressed();
