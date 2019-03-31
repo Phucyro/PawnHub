@@ -9,16 +9,23 @@
 
 #include <iostream>
 
+#define TIMER_UPDATE_RATE 1000000 //microsecond
+
 GameWithoutChat::GameWithoutChat(QWidget *parent, Client* client_) :
     QDialog(parent),
     ui(new Ui::GameWithoutChat),
     client(client_),
     control(nullptr),
-    timer(),
+    timer(new QTimer),
+    remainingTime(new QTime(0, 0)),
+    done(QTime(0, 0)),
     move("")
 {
     ui->setupUi(this);
     connect(ui->board, static_cast<void(QButtonGroup::*)(QAbstractButton *)>(&QButtonGroup::buttonPressed), this, &GameWithoutChat::boardButton_pressed);
+
+    timer->setTimerType(Qt::PreciseTimer);
+    connect(timer, &QTimer::timeout, this, &GameWithoutChat::update_time);
 }
 
 GameWithoutChat::~GameWithoutChat()
@@ -68,11 +75,12 @@ void GameWithoutChat::set_turn(QString turn)
 
 void GameWithoutChat::set_time(QString time)
 {
-    if (time < 0) ui->chgTimeLabel->setText("--:--");
+    if (time < 0) ui->chgTimeLabel->setText("--:--:---");
     else
     {
-        timer.reset(atoi(time.toStdString().c_str()));
-        ui->chgTimeLabel->setText(QString::fromStdString(timer));
+        *remainingTime = remainingTime->addSecs(10);    //time.toInt());
+//        timer.reset(atoia(time.toStdString().c_str()));
+        display_time();
     }
 }
 
@@ -116,6 +124,7 @@ void GameWithoutChat::show_update(QString message)
         message = "Checkmate\nBlack player won!";
       }
       control->setGameOngoing(false);
+      this->close();
     }
     ui->chgUpdateLabel->setText(message);
 }
@@ -124,7 +133,9 @@ void GameWithoutChat::get_move(QString)
 {
     ui->chgUpdateLabel->setText("Your turn: please choose your move.");
     ui->moveConfirmButton->setEnabled(true);
-    // run timer until move sent
+    // run timer until move sent - ie receiveGoodMove signal emitted from ClientGameControl
+//    run_timer();
+    timer->start(100);
 }
 
 void GameWithoutChat::get_promotion(QString)
@@ -141,17 +152,50 @@ void GameWithoutChat::promotion_declared(QString promotion)
     control->sendPromotion(promotion.toLower());
 }
 
+
+//void GameWithoutChat::run_timer()
+//{
+//    struct timeval updateRate;
+//    int timeLeft = timer.get_remaining_time();
+//    timer.start();
+//    timer.unpause();
+//    while(timeLeft)
+//    {
+//        updateRate.tv_sec = int(TIMER_UPDATE_RATE / 1000000);
+//        updateRate.tv_usec = int(TIMER_UPDATE_RATE % 1000000);
+//        timeLeft = timer.get_remaining_time();
+//        display_time();
+//    }
+//    if (!timeLeft)
+//    {
+//        control->sendMove("/tim");
+//        show_update("timeout");
+//    }
+//}
+
 void GameWithoutChat::pause_timer()
 {
-    timer.pause();
-    ui->chgTimeLabel->setText(QString::fromStdString(timer));
+    timer->stop();
+    display_time();
+}
+
+
+void GameWithoutChat::display_time()
+{
+    ui->chgTimeLabel->setText(remainingTime->toString("mm:ss:z"));
+}
+
+void GameWithoutChat::update_time()
+{
+    reduce_timer();
 }
 
 void GameWithoutChat::reduce_timer(int time)
 {
-    timer.remove(time);
-    ui->chgTimeLabel->setText(QString::fromStdString(timer));
-    if (!timer.get_remaining_time()){
+    *remainingTime = remainingTime->addMSecs(-time);
+    display_time();
+    if (*remainingTime == done){   // NOT SURE _ CHECK WITH SOMEONE WHO STILL HAS A BRAIN
+        timer->stop();
         control->sendMove("/tim");
         show_update("timeout");
     }
@@ -193,9 +237,7 @@ void GameWithoutChat::on_initialPosition_chosen(QAbstractButton*)
 
 void GameWithoutChat::on_surrendButton_pressed()
 {
-    control->sendMove("/end");
-    show_update("giveup");
-    this->close();
+    closeEvent();
 }
 
 void GameWithoutChat::on_moveConfirmButton_clicked()
@@ -218,4 +260,10 @@ void GameWithoutChat::on_moveClearButton_clicked()
 {
     move.clear();
     ui->chgMoveLabel->setText(move);
+}
+
+void GameWithoutChat::closeEvent()
+{
+    control->sendMove("/end");
+    show_update("giveup");
 }
