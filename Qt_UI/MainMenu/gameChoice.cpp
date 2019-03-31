@@ -39,7 +39,6 @@ void GameChoice::run_game(GameWithoutChat* game)
 {
     this->hide();
     game->start();
-    game->close();
     delete game;
     this->close();
 }
@@ -48,7 +47,6 @@ void GameChoice::run_game(GameWithoutChatWithAlice* game)
 {
     this->hide();
     game->start();
-    game->close();
     delete game;
     this->close();
 }

@@ -66,32 +66,6 @@
     <bool>true</bool>
    </property>
   </widget>
-  <widget class="QWidget" name="formLayoutWidget_3">
-   <property name="geometry">
-    <rect>
-     <x>250</x>
-     <y>530</y>
-     <width>401</width>
-     <height>61</height>
-    </rect>
-   </property>
-   <layout class="QFormLayout" name="formLayout_3">
-    <item row="0" column="0">
-     <widget class="QLabel" name="takenLabel">
-      <property name="text">
-       <string>TAKEN :</string>
-      </property>
-     </widget>
-    </item>
-    <item row="0" column="1">
-     <widget class="QLabel" name="chgTakenLabel">
-      <property name="text">
-       <string>PQBR</string>
-      </property>
-     </widget>
-    </item>
-   </layout>
-  </widget>
   <widget class="QWidget" name="verticalLayoutWidget">
    <property name="geometry">
     <rect>
@@ -141,46 +115,6 @@
        <widget class="QLabel" name="chgColourLabel">
         <property name="text">
          <string>colour</string>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="0">
-       <widget class="QLabel" name="lastMoveLabel">
-        <property name="enabled">
-         <bool>true</bool>
-        </property>
-        <property name="text">
-         <string>LAST MOVE:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="1">
-       <widget class="QLabel" name="chgLastMoveLabel">
-        <property name="enabled">
-         <bool>true</bool>
-        </property>
-        <property name="text">
-         <string>last move</string>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="0">
-       <widget class="QLabel" name="opponentNameLabel">
-        <property name="enabled">
-         <bool>true</bool>
-        </property>
-        <property name="text">
-         <string>OPPONENT NAME:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="1">
-       <widget class="QLabel" name="chgOpponentNameLabel">
-        <property name="enabled">
-         <bool>true</bool>
-        </property>
-        <property name="text">
-         <string>opponent</string>
         </property>
        </widget>
       </item>
@@ -248,32 +182,6 @@
        </widget>
       </item>
      </layout>
-    </item>
-   </layout>
-  </widget>
-  <widget class="QWidget" name="formLayoutWidget_5">
-   <property name="geometry">
-    <rect>
-     <x>250</x>
-     <y>20</y>
-     <width>401</width>
-     <height>61</height>
-    </rect>
-   </property>
-   <layout class="QFormLayout" name="formLayout_5">
-    <item row="0" column="0">
-     <widget class="QLabel" name="takenEnnemyLabel">
-      <property name="text">
-       <string>TAKEN :</string>
-      </property>
-     </widget>
-    </item>
-    <item row="0" column="1">
-     <widget class="QLabel" name="chgTakenEnnemyLabel">
-      <property name="text">
-       <string>PQBR</string>
-      </property>
-     </widget>
     </item>
    </layout>
   </widget>
@@ -3268,7 +3176,7 @@
      <x>680</x>
      <y>390</y>
      <width>111</width>
-     <height>58</height>
+     <height>89</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout_5">
@@ -3292,6 +3200,19 @@
       </property>
       <property name="text">
        <string>Clear Move</string>
+      </property>
+      <property name="flat">
+       <bool>false</bool>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="premoveClearButton">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <property name="text">
+       <string>Clear Premoves</string>
       </property>
       <property name="flat">
        <bool>false</bool>

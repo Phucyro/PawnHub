@@ -138,7 +138,7 @@ void GameWithoutChat::get_move(QString)
 {
     ui->chgUpdateLabel->setText("Your turn: please choose your move.");
     ui->moveConfirmButton->setEnabled(true);
-    // run timer until move sent - ie receiveGoodMove signal emitted from ClientGameControl
+    // run timer until move confirmed - ie receiveGoodMove signal emitted from ClientGameControl
     timer->start(100);
 }
 
@@ -230,9 +230,9 @@ void GameWithoutChat::on_moveConfirmButton_clicked()
     if (move.size() == 4)
     {
         ui->chgUpdateLabel->setText("Move sent!");
-        ui->chgMoveLabel->setText(move);
         control->sendMove(move);
-        move.clear();ui->chgMoveLabel->setText(move);
+        move.clear();
+        ui->chgMoveLabel->setText(move);
     }
     else
     {
@@ -245,6 +245,12 @@ void GameWithoutChat::on_moveClearButton_clicked()
 {
     move.clear();
     ui->chgMoveLabel->setText(move);
+}
+
+void GameWithoutChat::on_premoveClearButton_clicked()
+{
+    control->sendMove("/del");
+    ui->chgUpdateLabel->setText("Premoves cleared.");
 }
 
 void GameWithoutChat::closeEvent(QCloseEvent* event)

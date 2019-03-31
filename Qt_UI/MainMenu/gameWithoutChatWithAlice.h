@@ -1,11 +1,11 @@
 #ifndef GAMEWITHOUTCHATWITHALICE_H
 #define GAMEWITHOUTCHATWITHALICE_H
 
-#include "../../Communication/Timer.hpp"
-
 #include <QDialog>
 #include <QIcon>
 #include <QAbstractButton>
+#include <QTimer>
+#include <QTime>
 
 class Client;
 class ClientGameControl;
@@ -37,22 +37,29 @@ public slots:
     void get_promotion(QString);
 
     void pause_timer();
-    void reduce_timer(int);
+    void reduce_timer(int=100);
+
+    void closeEvent(QCloseEvent*);
 
 private slots:
+    void update_time();
     void boardButton_pressed(QAbstractButton*);
     void promotion_declared(QString);
     void on_surrendButton_pressed();
     void on_moveConfirmButton_clicked();
     void on_moveClearButton_clicked();
+    void on_premoveClearButton_clicked();
 
 private:
     Ui::GameWithoutChatWithAlice *ui;
     Client *client;
     ClientGameControl *control;
-    Timer timer;
+    QTimer *timer;
+    QTime *remainingTime;
+    QTime done;
     QString move;
 
+    void display_time();
     void on_initialPosition_chosen(QAbstractButton*);
 };
 

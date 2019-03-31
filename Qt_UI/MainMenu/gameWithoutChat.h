@@ -1,8 +1,6 @@
 #ifndef GAMEWITHOUTCHAT_H
 #define GAMEWITHOUTCHAT_H
 
-#include "../../Communication/Timer.hpp"
-
 #include <QDialog>
 #include <QIcon>
 #include <QAbstractButton>
@@ -50,6 +48,7 @@ private slots:
     void on_surrendButton_pressed();
     void on_moveConfirmButton_clicked();
     void on_moveClearButton_clicked();
+    void on_premoveClearButton_clicked();
 
 private:
     Ui::GameWithoutChat *ui;

@@ -6,6 +6,7 @@
 #include "../Modified_Files/ClientGameControl.hpp"
 
 #include <QThread>
+#include <QCloseEvent>
 
 #include <iostream>
 
@@ -14,17 +15,23 @@ GameWithoutChatWithAlice::GameWithoutChatWithAlice(QWidget *parent, Client* clie
     ui(new Ui::GameWithoutChatWithAlice),
     client(client_),
     control(nullptr),
-    timer(),
+    timer(new QTimer),
+    remainingTime(new QTime(0, 0)),
+    done(QTime(0, 0)),
     move("")
 {
     ui->setupUi(this);
     connect(ui->board, static_cast<void(QButtonGroup::*)(QAbstractButton *)>(&QButtonGroup::buttonPressed), this, &GameWithoutChatWithAlice::boardButton_pressed);
     connect(ui->board_2, static_cast<void(QButtonGroup::*)(QAbstractButton *)>(&QButtonGroup::buttonPressed), this, &GameWithoutChatWithAlice::boardButton_pressed);
+
+    timer->setTimerType(Qt::PreciseTimer);
+    connect(timer, &QTimer::timeout, this, &GameWithoutChatWithAlice::update_time);
 }
 
 GameWithoutChatWithAlice::~GameWithoutChatWithAlice()
 {
-    if (control != nullptr) control->deleteLater();
+    if (timer != nullptr) timer->deleteLater();
+    if (remainingTime != nullptr) delete remainingTime;
     delete ui;
 }
 
@@ -74,13 +81,19 @@ void GameWithoutChatWithAlice::set_turn(QString turn)
 
 void GameWithoutChatWithAlice::set_time(QString time)
 {
-    if (time < 0) ui->chgTimeLabel->setText("--:--");
+    if (time.toInt() < 0)
+    {
+        ui->chgTimeLabel->setText("--:--:-");
+        delete timer;
+        delete remainingTime;
+    }
     else
     {
-        timer.reset(atoi(time.toStdString().c_str()));
-        ui->chgTimeLabel->setText(QString::fromStdString(timer));
+        *remainingTime = remainingTime->addMSecs(time.toInt());
+        display_time();
     }
 }
+
 void GameWithoutChatWithAlice::set_piece(QIcon pieceIcon, QString piecePosition, QString pieceName) {
     findChild<QPushButton*>(piecePosition)->setIcon(pieceIcon);
 //    findChild<QPushButton*>(piecePosition)->setEnabled(true);
@@ -122,6 +135,7 @@ void GameWithoutChatWithAlice::show_update(QString message)
         message = "Checkmate\nBlack player won!";
       }
       control->setGameOngoing(false);
+      closeEvent(new QCloseEvent);
     }
     ui->chgUpdateLabel->setText(message);
 }
@@ -130,7 +144,8 @@ void GameWithoutChatWithAlice::get_move(QString)
 {
     ui->chgUpdateLabel->setText("Your turn: please choose your move.");
     ui->moveConfirmButton->setEnabled(true);
-    // run timer until move sent
+    // run timer until move confirmed - ie receiveGoodMove signal emitted from ClientGameControl
+    timer->start(100);
 }
 
 void GameWithoutChatWithAlice::get_promotion(QString)
@@ -150,15 +165,28 @@ void GameWithoutChatWithAlice::promotion_declared(QString promotion)
 
 void GameWithoutChatWithAlice::pause_timer()
 {
-    timer.pause();
-    ui->chgTimeLabel->setText(QString::fromStdString(timer));
+    timer->stop();
+    display_time();
+}
+
+
+void GameWithoutChatWithAlice::display_time()
+{
+    ui->chgTimeLabel->setText(remainingTime->toString("mm:ss:z"));
+}
+
+void GameWithoutChatWithAlice::update_time()
+{
+    reduce_timer();
 }
 
 void GameWithoutChatWithAlice::reduce_timer(int time)
 {
-    timer.remove(time);
-    ui->chgTimeLabel->setText(QString::fromStdString(timer));
-    if (!timer.get_remaining_time()){
+    *remainingTime = remainingTime->addMSecs(-time);
+    display_time();
+    if (*remainingTime == done)      // NOT GREAT _ CHECK WITH SOMEONE WHO STILL HAS A BRAIN
+    {
+        timer->stop();
         control->sendMove("/tim");
         show_update("timeout");
     }
@@ -202,7 +230,6 @@ void GameWithoutChatWithAlice::on_surrendButton_pressed()
 {
     control->sendMove("/end");
     show_update("giveup");
-    this->close();
 }
 
 void GameWithoutChatWithAlice::on_moveConfirmButton_clicked()
@@ -210,9 +237,9 @@ void GameWithoutChatWithAlice::on_moveConfirmButton_clicked()
     if (move.size() == 4)
     {
         ui->chgUpdateLabel->setText("Move sent!");
-        ui->chgMoveLabel->setText(move);
         control->sendMove(move);
         move.clear();
+        ui->chgMoveLabel->setText(move);
     }
     else
     {
@@ -225,4 +252,22 @@ void GameWithoutChatWithAlice::on_moveClearButton_clicked()
 {
     move.clear();
     ui->chgMoveLabel->setText(move);
+}
+
+void GameWithoutChatWithAlice::on_premoveClearButton_clicked()
+{
+    control->sendMove("/del");
+    ui->chgUpdateLabel->setText("Premoves cleared.");
+}
+
+void GameWithoutChatWithAlice::closeEvent(QCloseEvent* event)
+{
+    if (!control->isGameOngoing())
+    {
+        event->accept();
+    }
+    else
+    {
+        on_surrendButton_pressed();
+    }
 }
