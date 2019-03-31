@@ -216,7 +216,7 @@ void GameWithoutChat::on_initialPosition_chosen(QAbstractButton*)
 
 void GameWithoutChat::on_surrendButton_pressed()
 {
-    emit move_declared("/end");
+    control->sendMove("/end");
     show_update("giveup");
     this->close();
 }

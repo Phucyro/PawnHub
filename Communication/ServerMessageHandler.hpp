@@ -79,8 +79,10 @@ void inline receiveMessageHandler(Socket* socket, Data* data, PlayersMap* player
           break;
         case 30 :
           std::cout<<msg[1]<<std::endl;
-          player->writeControlPipe(msg[1]);
-          player->activateControlRecv();
+          if (player->isInGame()){
+          	player->writeControlPipe(msg[1]);
+          	player->activateControlRecv();
+          }
           break;
       }
     }
