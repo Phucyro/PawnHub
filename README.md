@@ -17,47 +17,47 @@ La compilation requiert g++ par défaut.
 
 Le Makefile du dossier principal permet de compiler le serveur et le client utilisant ncurses.
 Compiler les deux ensemble, ainsi que supprimer les fichiers intermédiaires, peut être effectué à l'aide de la commande:
-'make'
+``make``
 Compiler les deux ensembles, supprimer les fichiers intermédiaires, et exécuter le serveur prend la commande suivante:
-'make run'
+``make run``
 Supprimer les dossiers intermédiaires peut être effectué à l'aide de la commande:
-'make clean'
+``make clean``
 Supprimer les dossiers intermédiaires ainsi que les fichiers exécutables suite à la compilation est effectué avec la commande:
-'make deepclean'
+``make deepclean``
 
 ### Compiler le serveur
 
 Utilisez le Makefile se trouvant dans le dossier principal:
-'make server'
+``make server``
 
 ### Compiler le client - ncurses
 
 Utilisez le même Makefile que pour le serveur, se trouvant dans le dossier principal:
-'make client'
+``make client``
 
 ### Compiler le client - Qt
 
 Le fichier exécutable de cette version du client est généré par un Makefile généré automatiquement par QMake.
 
 Depuis le dossier Qt_UI/MainMenu, pour construire le fichier exécutable, effectuez:
-'qmake; make'
+``qmake; make``
 
 ## Exécution
 
 ### Exécuter le serveur
 
 Le serveur s'exécute depuis le dossier principal avec la commande:
-'./server'
+``./server``
 
 ### Exécuter le client - ncurses
 
 Le client s'exécute depuis le dossier principal avec la commande:
-'./client'
+``./client``
 
 ### Exécuter le client - Qt
 
 Le client s'exécute depuis le dossier Qt_UI/MainMenu avec la commande:
-'./MainMenu'
+``./MainMenu``
 
 ## Utilisation
 
