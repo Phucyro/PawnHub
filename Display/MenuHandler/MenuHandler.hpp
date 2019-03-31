@@ -24,6 +24,7 @@ public:
   std::string get_infos(std::string);
   void print_warning(std::string);
   void print_warning2(std::string);
+  void print_warning3(std::string);
 
 
   //choices menus

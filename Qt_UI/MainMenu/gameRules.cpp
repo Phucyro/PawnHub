@@ -1,7 +1,6 @@
 #include "gameRules.h"
 #include "ui_gameRules.h"
 
-
 GameRules::GameRules(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::GameRules)

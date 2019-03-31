@@ -67,6 +67,7 @@ signals:
   void receiveAskMove(QString);
   void receiveAskPromotion(QString);
 
+  void clearBoard();
   void pauseTimer();
   void reduceTimer(int);
   void finished();

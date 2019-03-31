@@ -66,7 +66,6 @@ HEADERS += \
     ../Modified_Files/CheckFormat.hpp \
     ../Modified_Files/ClientGameControl.hpp \
     ../Modified_Files/BoardParsing.hpp \
-    ../Modified_Files/MoveParsing.hpp \
     passwordrepeat.h \
     message.h \
     game.h \
@@ -89,8 +88,8 @@ FORMS += \
     mainmenu.ui \
     game.ui \
     gameWithoutChat.ui \
-    gameWithAlice.ui \
     gameWithoutChatWithAlice.ui \
+    gameWithAlice.ui \
     gameChoiceStatistics.ui \
     friendTab.ui \
     statisticsTab.ui \

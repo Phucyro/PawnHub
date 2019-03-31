@@ -1,8 +1,11 @@
 #include "gameWithoutChat.h"
 #include "ui_gameWithoutChat.h"
+
 #include "message.h"
 
 #include "../Modified_Files/ClientGameControl.hpp"
+
+#include <QThread>
 
 #include <iostream>
 
@@ -15,6 +18,7 @@ GameWithoutChat::GameWithoutChat(QWidget *parent, Client* client_) :
     move("")
 {
     ui->setupUi(this);
+    connect(ui->board, static_cast<void(QButtonGroup::*)(QAbstractButton *)>(&QButtonGroup::buttonPressed), this, &GameWithoutChat::boardButton_pressed);
 }
 
 GameWithoutChat::~GameWithoutChat()
@@ -70,6 +74,7 @@ void GameWithoutChat::clear_board()
     foreach (QAbstractButton* button, ui->board->buttons())
     {
         button->setIcon(empty);
+        button->setToolTip("");
     }
 }
 
@@ -102,11 +107,6 @@ void GameWithoutChat::set_piece(QIcon pieceIcon, QString piecePosition, QString 
     findChild<QPushButton*>(piecePosition)->setIcon(pieceIcon);
 //    findChild<QPushButton*>(piecePosition)->setEnabled(true);
     findChild<QPushButton*>(piecePosition)->setToolTip(pieceName);
-
-//    probably to be erased
-//    coordinateConversionMap->value(piecePosition)->setIcon(pieceIcon);
-//    coordinateConversionMap->value(piecePosition)->setEnabled(true);
-//    coordinateConversionMap->value(piecePosition)->setToolTip(pieceName);
 }
 
 void GameWithoutChat::show_update(QString message)
@@ -128,7 +128,7 @@ void GameWithoutChat::show_update(QString message)
         message = "Stalemate.";
       }
       else if (message == "surrend") {
-        message = "You win!\nYour oppenent gave up :(";
+        message = "You win!\nYour opponent gave up :(";
       }
       else if (message == "timeout") {
           message = "Time's up!\nYou lost.";
@@ -180,18 +180,20 @@ void GameWithoutChat::reduce_timer(int time)
     }
 }
 
-void GameWithoutChat::on_boardButton_pushed(QPushButton* origin)
+void GameWithoutChat::boardButton_pressed(QAbstractButton* origin)
 {
+    QString position = origin->objectName();
+    if (position.endsWith("_2")) position.chop(2);
     if (move != "")
     {
-        if (move.endsWith(origin->objectName()))
+        if (move.endsWith(position))
         {
             origin->setEnabled(true);
             move.chop(2);
         }
         else if (move.size() == 2)
         {
-            move += origin->objectName();
+            move += position;
         }
         else
         {
@@ -200,14 +202,14 @@ void GameWithoutChat::on_boardButton_pushed(QPushButton* origin)
     }
     else
     {
-        move += origin->objectName();
+        move += position;
         on_initialPosition_chosen(origin);
     }
 
     ui->chgMoveLabel->setText(move);
 }
 
-void GameWithoutChat::on_initialPosition_chosen(QPushButton*)
+void GameWithoutChat::on_initialPosition_chosen(QAbstractButton*)
 {
     // get potential moves for piece here and enable relevant buttons
 }
@@ -239,324 +241,4 @@ void GameWithoutChat::on_moveClearButton_clicked()
 {
     move.clear();
     ui->chgMoveLabel->setText(move);
-}
-
-void GameWithoutChat::on_A1_pressed()
-{
-    on_boardButton_pushed(ui->A1);
-}
-
-void GameWithoutChat::on_A2_pressed()
-{
-    on_boardButton_pushed(ui->A2);
-}
-
-void GameWithoutChat::on_A3_pressed()
-{
-    on_boardButton_pushed(ui->A3);
-}
-
-void GameWithoutChat::on_A4_pressed()
-{
-    on_boardButton_pushed(ui->A4);
-}
-
-void GameWithoutChat::on_A5_pressed()
-{
-    on_boardButton_pushed(ui->A5);
-}
-
-void GameWithoutChat::on_A6_pressed()
-{
-    on_boardButton_pushed(ui->A6);
-}
-
-void GameWithoutChat::on_A7_pressed()
-{
-    on_boardButton_pushed(ui->A7);
-}
-
-void GameWithoutChat::on_A8_pressed()
-{
-    on_boardButton_pushed(ui->A8);
-}
-
-void GameWithoutChat::on_B1_pressed()
-{
-    on_boardButton_pushed(ui->B1);
-}
-
-void GameWithoutChat::on_B2_pressed()
-{
-    on_boardButton_pushed(ui->B2);
-}
-
-void GameWithoutChat::on_B3_pressed()
-{
-    on_boardButton_pushed(ui->B3);
-}
-
-void GameWithoutChat::on_B4_pressed()
-{
-    on_boardButton_pushed(ui->B4);
-}
-
-void GameWithoutChat::on_B5_pressed()
-{
-    on_boardButton_pushed(ui->B5);
-}
-
-void GameWithoutChat::on_B6_pressed()
-{
-    on_boardButton_pushed(ui->B6);
-}
-
-void GameWithoutChat::on_B7_pressed()
-{
-    on_boardButton_pushed(ui->B7);
-}
-
-void GameWithoutChat::on_B8_pressed()
-{
-    on_boardButton_pushed(ui->B8);
-}
-
-void GameWithoutChat::on_C1_pressed()
-{
-    on_boardButton_pushed(ui->C1);
-}
-
-void GameWithoutChat::on_C2_pressed()
-{
-    on_boardButton_pushed(ui->C2);
-}
-
-void GameWithoutChat::on_C3_pressed()
-{
-    on_boardButton_pushed(ui->C3);
-}
-
-void GameWithoutChat::on_C4_pressed()
-{
-    on_boardButton_pushed(ui->C4);
-}
-
-void GameWithoutChat::on_C5_pressed()
-{
-    on_boardButton_pushed(ui->C5);
-}
-
-void GameWithoutChat::on_C6_pressed()
-{
-    on_boardButton_pushed(ui->C6);
-}
-
-void GameWithoutChat::on_C7_pressed()
-{
-    on_boardButton_pushed(ui->C7);
-}
-
-void GameWithoutChat::on_C8_pressed()
-{
-    on_boardButton_pushed(ui->C8);
-}
-
-void GameWithoutChat::on_D1_pressed()
-{
-    on_boardButton_pushed(ui->D1);
-}
-
-void GameWithoutChat::on_D2_pressed()
-{
-    on_boardButton_pushed(ui->D2);
-}
-
-void GameWithoutChat::on_D3_pressed()
-{
-    on_boardButton_pushed(ui->D3);
-}
-
-void GameWithoutChat::on_D4_pressed()
-{
-    on_boardButton_pushed(ui->D4);
-}
-
-void GameWithoutChat::on_D5_pressed()
-{
-    on_boardButton_pushed(ui->D5);
-}
-
-void GameWithoutChat::on_D6_pressed()
-{
-    on_boardButton_pushed(ui->D6);
-}
-
-void GameWithoutChat::on_D7_pressed()
-{
-    on_boardButton_pushed(ui->D7);
-}
-
-void GameWithoutChat::on_D8_pressed()
-{
-    on_boardButton_pushed(ui->D8);
-}
-
-void GameWithoutChat::on_E1_pressed()
-{
-    on_boardButton_pushed(ui->E1);
-}
-
-void GameWithoutChat::on_E2_pressed()
-{
-    on_boardButton_pushed(ui->E2);
-}
-
-void GameWithoutChat::on_E3_pressed()
-{
-    on_boardButton_pushed(ui->E3);
-}
-
-void GameWithoutChat::on_E4_pressed()
-{
-    on_boardButton_pushed(ui->E4);
-}
-
-void GameWithoutChat::on_E5_pressed()
-{
-    on_boardButton_pushed(ui->E5);
-}
-
-void GameWithoutChat::on_E6_pressed()
-{
-    on_boardButton_pushed(ui->E6);
-}
-
-void GameWithoutChat::on_E7_pressed()
-{
-    on_boardButton_pushed(ui->E7);
-}
-
-void GameWithoutChat::on_E8_pressed()
-{
-    on_boardButton_pushed(ui->E8);
-}
-
-void GameWithoutChat::on_F1_pressed()
-{
-    on_boardButton_pushed(ui->F1);
-}
-
-void GameWithoutChat::on_F2_pressed()
-{
-    on_boardButton_pushed(ui->F2);
-}
-
-void GameWithoutChat::on_F3_pressed()
-{
-    on_boardButton_pushed(ui->F3);
-}
-
-void GameWithoutChat::on_F4_pressed()
-{
-    on_boardButton_pushed(ui->F4);
-}
-
-void GameWithoutChat::on_F5_pressed()
-{
-    on_boardButton_pushed(ui->F5);
-}
-
-void GameWithoutChat::on_F6_pressed()
-{
-    on_boardButton_pushed(ui->F6);
-}
-
-void GameWithoutChat::on_F7_pressed()
-{
-    on_boardButton_pushed(ui->F7);
-}
-
-void GameWithoutChat::on_F8_pressed()
-{
-    on_boardButton_pushed(ui->F8);
-}
-
-void GameWithoutChat::on_G1_pressed()
-{
-    on_boardButton_pushed(ui->G1);
-}
-
-void GameWithoutChat::on_G2_pressed()
-{
-    on_boardButton_pushed(ui->G2);
-}
-
-void GameWithoutChat::on_G3_pressed()
-{
-    on_boardButton_pushed(ui->G3);
-}
-
-void GameWithoutChat::on_G4_pressed()
-{
-    on_boardButton_pushed(ui->G4);
-}
-
-void GameWithoutChat::on_G5_pressed()
-{
-    on_boardButton_pushed(ui->G5);
-}
-
-void GameWithoutChat::on_G6_pressed()
-{
-    on_boardButton_pushed(ui->G6);
-}
-
-void GameWithoutChat::on_G7_pressed()
-{
-    on_boardButton_pushed(ui->G7);
-}
-
-void GameWithoutChat::on_G8_pressed()
-{
-    on_boardButton_pushed(ui->G8);
-}
-
-void GameWithoutChat::on_H1_pressed()
-{
-    on_boardButton_pushed(ui->H1);
-}
-
-void GameWithoutChat::on_H2_pressed()
-{
-    on_boardButton_pushed(ui->H2);
-}
-
-void GameWithoutChat::on_H3_pressed()
-{
-    on_boardButton_pushed(ui->H3);
-}
-
-void GameWithoutChat::on_H4_pressed()
-{
-    on_boardButton_pushed(ui->H4);
-}
-
-void GameWithoutChat::on_H5_pressed()
-{
-    on_boardButton_pushed(ui->H5);
-}
-
-void GameWithoutChat::on_H6_pressed()
-{
-    on_boardButton_pushed(ui->H6);
-}
-
-void GameWithoutChat::on_H7_pressed()
-{
-    on_boardButton_pushed(ui->H7);
-}
-
-void GameWithoutChat::on_H8_pressed()
-{
-    on_boardButton_pushed(ui->H8);
 }

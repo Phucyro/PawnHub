@@ -2,7 +2,6 @@
 #define MAINMENU_H
 
 #include <QWidget>
-
 #include <QThread>
 
 class Client;

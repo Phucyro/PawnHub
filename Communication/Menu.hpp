@@ -311,7 +311,7 @@ void statMenu(MenuHandler* menu, Client* client){
 void viewFriendsMenu(MenuHandler* menu, Client* client){
   menu->clear_windows();
   menu->init_friendsw(client->getFriends());
-  //menu->print_top("Votre liste d'amis :");
+  menu->print_warning3("Votre liste d'amis");
   menu->init_choicesw();
   menu->get_choice({"Retour"});
   menu->refresh_board();
@@ -326,7 +326,7 @@ void theirFriendRequestMenu(MenuHandler* menu, Client* client){
 
   while (command != "/quit"){
     menu->init_friendsw(client->getRecvRequest());
-    //menu->print_top("Vos demandes d'amis recues :");
+    menu->print_warning3("Vos demandes d'amis recues");
     menu->refresh_board();
     menu->init_dataw();
     command = menu->get_infos("commande");
@@ -382,8 +382,8 @@ void sendFriendRequestMenu(MenuHandler* menu, Client* client){
   std::string command = "";
 
   while (command != "/quit"){
-    menu->init_friendsw(client->getFriends());
-    //menu->print_top("Votre liste d'amis :");
+    menu->init_friendsw(client->getSentRequest());
+    menu->print_warning3("Vos demande d'amis envoyées");
     menu->refresh_board();
     menu->init_dataw();
     command = menu->get_infos("commande");
@@ -451,7 +451,7 @@ void removeFriendMenu(MenuHandler* menu, Client* client){
 
   while (command != "/quit"){
     menu->init_friendsw(client->getFriends());
-    //menu->print_top("Votre liste d'amis :");
+    menu->print_warning3("Votre liste d'amis");
     menu->refresh_board();
     menu->init_dataw();
     command = menu->get_infos("commande");
@@ -497,7 +497,7 @@ void cancelRequestMenu(MenuHandler* menu, Client* client){
 
   while (command != "/quit"){
     menu->init_friendsw(client->getSentRequest());
-    //menu->print_top("Vos demande d'amis envoyées :");
+    menu->print_warning3("Vos demande d'amis envoyées");
     menu->refresh_board();
     menu->init_dataw();
     command = menu->get_infos("commande");

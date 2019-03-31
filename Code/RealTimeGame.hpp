@@ -4,7 +4,7 @@
 #include "Game.hpp"
 #include "RealTimeBoard.hpp"
 #include "ChainedMove.hpp"
-#define UPDATE_RATE 10 //milliseconds
+#define UPDATE_RATE 20 //milliseconds
 #define MOVE_TIME 1000u //milliseconds
 
 class RealTimeGame: public Game{

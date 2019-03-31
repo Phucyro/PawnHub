@@ -7,13 +7,14 @@
 #define TIMER_UPDATE_RATE 1000000 //microsecond
 std::string moveToString(int*);
 
-ClientGameControl::ClientGameControl(Client* _client, GameWithoutChat* _game): client(_client), game(_game), game_ongoing(true), is_alice(false), is_real_time(false), colour('\0') {
+ClientGameControl::ClientGameControl(Client* _client, GameWithoutChat* _game): client(_client), game(_game), alice_game(nullptr), game_ongoing(true), is_alice(false), is_real_time(false), colour('\0') {
     connect(this, &ClientGameControl::updatePiece, game, &GameWithoutChat::set_piece);
     connect(this, &ClientGameControl::receiveUpdate, game, &GameWithoutChat::show_update);
     connect(this, &ClientGameControl::receiveGameMode, game, &GameWithoutChat::set_mode);
     connect(this, &ClientGameControl::setColour, game, &GameWithoutChat::set_colour);
     connect(this, &ClientGameControl::receiveTurn, game, &GameWithoutChat::set_turn);
     connect(this, &ClientGameControl::receiveTime, game, &GameWithoutChat::set_time);
+    connect(this, &ClientGameControl::clearBoard, game, &GameWithoutChat::clear_board, Qt::DirectConnection);
     connect(this, &ClientGameControl::receiveAskMove, game, &GameWithoutChat::get_move);
     connect(this, &ClientGameControl::receiveAskPromotion, game, &GameWithoutChat::get_promotion);
     connect(this, &ClientGameControl::pauseTimer, game, &GameWithoutChat::pause_timer);
@@ -25,8 +26,23 @@ ClientGameControl::ClientGameControl(Client* _client, GameWithoutChat* _game): c
     connect(game, &GameWithoutChat::is_realtime, this, &ClientGameControl::setRealTime);
 }
 
-ClientGameControl::ClientGameControl(Client* _client, GameWithoutChatWithAlice* _game): client(_client), alice_game(_game), game_ongoing(true), is_alice(true), is_real_time(false), colour('\0') {
-//  startParty();
+ClientGameControl::ClientGameControl(Client* _client, GameWithoutChatWithAlice* _game): client(_client), game(nullptr), alice_game(_game), game_ongoing(true), is_alice(true), is_real_time(false), colour('\0') {
+    connect(this, &ClientGameControl::updatePiece, alice_game, &GameWithoutChatWithAlice::set_piece);
+    connect(this, &ClientGameControl::receiveUpdate, alice_game, &GameWithoutChatWithAlice::show_update);
+    connect(this, &ClientGameControl::receiveGameMode, alice_game, &GameWithoutChatWithAlice::set_mode);
+    connect(this, &ClientGameControl::setColour, alice_game, &GameWithoutChatWithAlice::set_colour);
+    connect(this, &ClientGameControl::receiveTurn, alice_game, &GameWithoutChatWithAlice::set_turn);
+    connect(this, &ClientGameControl::receiveTime, alice_game, &GameWithoutChatWithAlice::set_time);
+    connect(this, &ClientGameControl::clearBoard, alice_game, &GameWithoutChatWithAlice::clear_board, Qt::DirectConnection);
+    connect(this, &ClientGameControl::receiveAskMove, alice_game, &GameWithoutChatWithAlice::get_move);
+    connect(this, &ClientGameControl::receiveAskPromotion, alice_game, &GameWithoutChatWithAlice::get_promotion);
+    connect(this, &ClientGameControl::pauseTimer, alice_game, &GameWithoutChatWithAlice::pause_timer);
+    connect(this, &ClientGameControl::reduceTimer, alice_game, &GameWithoutChatWithAlice::reduce_timer);
+
+    connect(alice_game, &GameWithoutChatWithAlice::move_declared, this, &ClientGameControl::sendMove);
+    connect(alice_game, &GameWithoutChatWithAlice::promotion_declared, this, &ClientGameControl::sendPromotion);
+    connect(alice_game, &GameWithoutChatWithAlice::game_ongoing_changed, this, &ClientGameControl::setGameOngoing);
+    connect(alice_game, &GameWithoutChatWithAlice::is_realtime, this, &ClientGameControl::setRealTime);
 }
 
 ClientGameControl::~ClientGameControl()
@@ -41,34 +57,22 @@ void ClientGameControl::callPieceUpdate(QIcon pieceIcon, QString piecePosition, 
 }
 
 void ClientGameControl::receiveBoard(QString message) {
-  if (!is_alice) {
-      game->clear_board();
-      stringToBoard(this, message.toStdString());
-//    board.draw_pieces(message);
-//    board.refresh_board();
+  emit clearBoard();
+
+  bool is_second_board = false;
+  if (is_alice) {
+      if (message[0] == '2') {
+        is_second_board = true;
+      }
+      message.remove(0,1);
   }
-  else if (message[0] == '1') {
-      // not sure
-  }
-  else {
-//    board.draw_alice_pieces(message.erase(0,1));
-//    board.refresh_board();
-  }
+  stringToBoard(this, message.toStdString(), is_second_board);
 }
 
 void ClientGameControl::receivePlayerColour(QString message) {
   colour = message.toStdString()[0];
   emit setColour(message);
 }
-
-//void ClientGameControl::receiveTime(std::string message) {
-//	int time = atoi(message.c_str());
-//	if (time < 0) board.show_time_left(std::string("-"));
-//	else{
-//		timer.reset(time);
-//		board.show_time_left(timer);
-//	}
-//}
 
 // void ClientGameControl::receiveAskMove(std::string message) {
 // 	struct timeval updateRate;
@@ -156,18 +160,8 @@ void ClientGameControl::setRealTime() {
     is_real_time = true;
 }
 
-//void ClientGameControl::handleMessage() {
-////  if (is_real_time) listenSocketAndKeyboard();
-////  else{
-//    std::string message = socket->receiveMessage();
-//    char header = message[0];
-//    (this->*(headerReceiveMap[header]))(QString::fromStdString(message.erase(0,1)));
-////  }
-//}
-
 void ClientGameControl::handleMessage() {
     std::string message = client->readGame();
-    std::cout << message << std::endl;
     char header = message[0];
     (this->*(headerReceiveMap[header]))(QString::fromStdString(message.erase(0,1)));
 }

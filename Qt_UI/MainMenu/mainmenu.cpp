@@ -1,10 +1,6 @@
-#include "../../Communication/Socket.hpp"
-#include "../../Communication/Client.hpp"
-#include "../Modified_Files/ClientHandler.hpp"
-#include "../Modified_Files/ClientFunctions.hpp"
-
 #include "mainmenu.h"
 #include "ui_mainmenu.h"
+
 #include "connectiondialog.h"
 #include "logindialog.h"
 #include "gameChoice.h"
@@ -13,9 +9,14 @@
 #include "friendTab.h"
 #include "chat.h"
 
+#include "../../Communication/Socket.hpp"
+#include "../../Communication/Client.hpp"
+#include "../Modified_Files/ClientHandler.hpp"
+#include "../Modified_Files/ClientFunctions.hpp"
+
 #include <QDesktopServices>
 #include <QUrl>
-#include <thread>
+#include <QThread>
 
 MainMenu::MainMenu(QWidget *parent) :
     QWidget(parent),
@@ -60,6 +61,14 @@ void MainMenu::client_connect() {
     do {
         hostname = (connect->ask_hostname()).toStdString();
         good_hostname = client->getSocket()->connectToServer(hostname);
+
+        if (!good_hostname){
+            Message* m = new Message();
+            m->set_text("Hostname not found");
+            m->set_title("Oh no: Something is Wrong");
+            m->popup();
+        }
+
     } while (!good_hostname);
 
     connect->close();
@@ -73,7 +82,24 @@ void MainMenu::client_login() {
     do
     {
         login->get_login_deets(client->getSocket(), username, password);
-        //std::cout << client->readPipe() << std::endl;
+
+        // si vous voulez mettre ca, au moins changez le message recu en anglais, vu que le RESTE du jeu est en anglais
+        // svp
+        QString message = QString::fromStdString(client->readPipe());
+        if (!(message == "Succesfully logged in."))
+        {
+             Message* m = new Message();
+             m->set_text(message);
+             if (message == "Successfully created account!")
+             {
+                m->set_title("Signed Up");
+                signIn(client->getSocket(), username.toStdString(), password.toStdString());
+             }
+             else m->set_title("Oh no: Something is Wrong");
+             m->popup();
+        }
+
+
     }
     while (!(client->isIdentified()));
 
@@ -111,7 +137,6 @@ void MainMenu::on_friendsButton_clicked()
 
 void MainMenu::on_chatButton_clicked()
 {
-    initClientData(client);
     this->hide();
     chat->exec();
     this->show();
@@ -134,6 +159,5 @@ void MainMenu::on_quitButton_clicked()
 void MainMenu::closeEvent()
 {
     quit(client);
-//    stopRecvMsg();
     exit(0);
 }

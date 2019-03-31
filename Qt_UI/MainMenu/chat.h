@@ -1,12 +1,10 @@
 #ifndef Chat_H
 #define Chat_H
 
-#include <QDialog>
-//#include "../../Communication/Client.hpp"
-//#include "../../Communication/CheckFormat.hpp"
-//#include "../../Communication/Socket.hpp"
-//#include "../../Communication/ClientFunctions.hpp"
 #include "message.h"
+
+#include <QDialog>
+
 #include <string>
 
 class Client;
@@ -38,6 +36,8 @@ private slots:
     void setupChat();
     void reloadFriends();
 
+
+    void on_friendListWidget_itemSelectionChanged();
 
 private:
     Ui::Chat *ui;

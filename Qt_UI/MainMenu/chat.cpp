@@ -1,8 +1,6 @@
 #include "chat.h"
 #include "ui_chat.h"
 
-
-//#include "../../Communication/Client.hpp"
 #include "../Modified_Files/ClientFunctions.hpp"
 #include "../Modified_Files/CheckFormat.hpp"
 
@@ -18,6 +16,8 @@ Chat::Chat(Client *clients,QWidget *parent) :
 void Chat::showEvent( QShowEvent* event ) {
     QWidget::showEvent( event );
     reloadFriends();
+    ui->changeChanPushButton->setEnabled(false);
+    displayChat(QString::fromStdString(client->getIsChattingWith()));
 }
 
 Chat::~Chat()
@@ -30,6 +30,7 @@ void Chat::setupChat(){
     ui->friendListWidget->clear();
     client->setIsChatting(true);
     displayChat(QString::fromStdString(client->getIsChattingWith()));
+    ui->changeChanPushButton->setEnabled(false);
 }
 
 void Chat::displayChat(QString target){
@@ -44,6 +45,7 @@ void Chat::displayChat(QString target){
         std::string text = std::get<0>(conv[a]) + " : " + std::get<1>(conv[a]);
         ui->chatPlainTextEdit->appendPlainText(QString::fromStdString(text));
     }
+
     //to have always the latest friends
     reloadFriends();
 }
@@ -102,13 +104,22 @@ void Chat::on_changeChanPushButton_pressed()
         client->setIsChattingWith(ui->friendListWidget->currentItem()->text().toStdString());
         displayChat(ui->friendListWidget->currentItem()->text());
         ui->chatPlainTextEdit->clear();
+        ui->chgChangeChannellabel->setText(QString::fromStdString(client->getIsChattingWith()));
     }
+    displayChat(QString::fromStdString(client->getIsChattingWith()));
+
 }
 
 void Chat::reloadFriends(){
-    ui->friendListWidget->clear();
     std::vector<std::string> list = client->getFriends();
     auto it = list.begin();
+    ui->friendListWidget->clear();
+    ui->friendListWidget->addItem("all");
     for (;it != list.end(); ++it) ui->friendListWidget->addItem(QString::fromStdString(*it));
 }
 
+
+void Chat::on_friendListWidget_itemSelectionChanged()
+{
+    ui->changeChanPushButton->setEnabled(true);
+}

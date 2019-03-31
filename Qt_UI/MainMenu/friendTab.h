@@ -2,6 +2,7 @@
 #define FRIENDTAB_H
 
 #include <QDialog>
+
 class Client;
 
 namespace Ui {

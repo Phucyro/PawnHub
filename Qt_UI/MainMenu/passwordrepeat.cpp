@@ -26,17 +26,6 @@ void PasswordRepeat::on_doneButton_clicked()
 {
     pwdConfirmation = ui->passwordInput->text();
     close();
-//    if (password1 != password2)
-//     {
-//         Message* m = new Message();
-//         m->set_text("The passwords were not identical,\nplease try again.");
-//         m->set_title("Oh No: Mismatched Passwords");
-//         m->popup();
-//     }
-//    else
-//    {
-//        matched = true;
-//    }
 }
 
 void PasswordRepeat::on_cancelButton_clicked()

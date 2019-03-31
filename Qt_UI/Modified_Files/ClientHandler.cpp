@@ -14,10 +14,10 @@ void ClientHandler::quitHandler(){
 void ClientHandler::signUpHandler(char msg){
   switch (msg){
     case '0' :
-      client->writePipe("Le nom de compte a deja été pris");
+      client->writePipe("Someone already has this account name.\nPlease pick another one.");
       break;
     case '1' :
-      client->writePipe("Compte créé avec succes");
+      client->writePipe("Successfully created account!");
       break;
   }
 }
@@ -26,17 +26,17 @@ void ClientHandler::signUpHandler(char msg){
 void ClientHandler::signInHandler(char msg){
   switch (msg){
     case '0' :
-      client->writePipe("Nom de compte inexistant");
+      client->writePipe("Account name does not exist.");
       break;
     case '1' :
       client->setIdentified(); // Ne sera pas affiche
-      client->writePipe("Connexion réussie");
+      client->writePipe("Succesfully logged in.");
       break;
     case '2' :
-      client->writePipe("Mauvais mot de passe");
+      client->writePipe("Wrong password.\nPlease try again.");
       break;
     case '3' :
-      client->writePipe("Ce compte est déjà utilisé par quelqu'un");
+      client->writePipe("Someone is already logged into this account.");
       break;
   }
 }
@@ -59,12 +59,12 @@ void ClientHandler::leaveQueueHandler(){
   //std::cout << "Vous avez quitte une file d'attente" << std::endl;
 }
 
-void ClientHandler::myStatHandler(QString pos, QString mode, QString stat){
-  client->writePipe(pos.toStdString() + " " + mode.toStdString() + " " + stat.toStdString());
+void ClientHandler::myStatHandler(QString pos, QString mode, QString stat, QString elo){
+  client->writePipe(pos.toStdString() + " " + mode.toStdString() + " " + stat.toStdString() + " " + elo.toStdString());
 }
 
-void ClientHandler::ladderHandler(QString pos,QString username, QString stat){
-  client->writePipe(pos.toStdString() + " " + username.toStdString() + " " + stat.toStdString());
+void ClientHandler::ladderHandler(QString pos,QString username, QString stat, QString elo){
+  client->writePipe(pos.toStdString() + " " + username.toStdString() + " " + stat.toStdString() + " " + elo.toStdString());
 }
 
 void ClientHandler::viewFriendsHandler(QString friend_name){
@@ -77,48 +77,48 @@ void ClientHandler::viewFriendRequestHandler(QString username){
 
 void ClientHandler::acceptRefuseRequestHandler(QString option, QString res){
   if (option == "0") // Impossible normalement car gere lors du sendRequest
-    client->writePipe("0Vous ne pouvez pas être amis avec vous même");
+    client->writePipe("0You cannot befriend yourself.\nAt least not here.");
   else if (option == "1"){
     if (res == "0") // Est gere par le cote client actuellement
-      client->writePipe("1Vous n'avez pas recu de demande de cet utilisateur");
+      client->writePipe("1You have not received a request from this account.");
     else
-      client->writePipe("2Cet utilisateur a été ajouté à vos amis");
+      client->writePipe("2This account has been added to your friends' list.");
   }
   else {
     if (res == "0") // Est gere par le cote client actuellement
-      client->writePipe("1Vous n'avez pas recu de demande cet utilisateur");
+      client->writePipe("1You have not received a request from this account.");
     else
-      client->writePipe("3Cet utilisateur a été retiré de la liste");
+      client->writePipe("3The account was removed from your friends' list.");
   }
 }
 
 void ClientHandler::sendFriendRequestHandler(QString res){
   switch (res[0].digitValue()){
-    case '0' :
-      client->writePipe("0Utilisateur inexistant");
+    case 0 :
+      client->writePipe("0Unknown account.");
       break;
-    case '1' : // Gere du cote client actuellement
-      client->writePipe("1Utilisateur déjà dans la liste d'amis");
+    case 1 : // Gere du cote client actuellement
+      client->writePipe("1This account is already in your friends' list.");
       break;
-    case '2' : // Gere du cote client actuellement
-      client->writePipe("2Demande d'ami déjà envoyé");
+    case 2 : // Gere du cote client actuellement
+      client->writePipe("2Friend request has already been sent out.\nMaybe they just don't like you.");
       break;
-    case '3' :
-      client->writePipe("3Vous êtes tout les deux devenus amis");
+    case 3 :
+      client->writePipe("3You are now friends.");
       break;
-    case '4' :
-      client->writePipe("4Demande d'ami envoyé");
+    case 4 :
+      client->writePipe("4Friend request sent.");
       break;
   }
 }
 
 void ClientHandler::removeFriendHandler(QString res){
   switch (res[0].digitValue()){
-    case '0' : // Gere actuellement du cote client
-      client->writePipe("0Cet utilisateur ne fait pas partie de vos amis");
+    case 0 : // Gere actuellement du cote client
+      client->writePipe("0This account is not in your friends' list.");
       break;
-    case '1' :
-      client->writePipe("1Utilisateur retiré de votre liste d'amis");
+    case 1 :
+      client->writePipe("1Account has been removed from your friends' list.");
       break;
   }
 }
@@ -129,9 +129,9 @@ void ClientHandler::viewSentRequestHandler(QString username){
 
 void ClientHandler::cancelRequestHandler(QString res){
   if (res == "0") // Gere actuellement du cote client
-    client->writePipe("0Aucune requete n'a été envoyé à ce joueur");
+    client->writePipe("0No friend request has been sent to this account.");
   else
-    client->writePipe("1La demande d'ami a été annulée");
+    client->writePipe("1Friend request cancelled.");
 }
 
 void ClientHandler::updateFriendsListHandler(QString friend_name, QString option){
@@ -189,10 +189,10 @@ void ClientHandler::receiveMessageHandler(){
         leaveQueueHandler();
         break;
       case 7 :
-        myStatHandler(QString::fromStdString(msg[1]), QString::fromStdString(msg[2]), QString::fromStdString(msg[3]));
+        myStatHandler(QString::fromStdString(msg[1]), QString::fromStdString(msg[2]), QString::fromStdString(msg[3]), QString::fromStdString(msg[4]));
         break;
       case 8 :
-        ladderHandler(QString::fromStdString(msg[1]), QString::fromStdString(msg[2]), QString::fromStdString(msg[3]));
+        ladderHandler(QString::fromStdString(msg[1]), QString::fromStdString(msg[2]), QString::fromStdString(msg[3]), QString::fromStdString(msg[4]));
         break;
       case 9 :
         viewFriendsHandler(QString::fromStdString(msg[1]));
