@@ -14,7 +14,7 @@ ClientGameControl::ClientGameControl(Client* _client, GameWithoutChat* _game): c
     connect(this, &ClientGameControl::setColour, game, &GameWithoutChat::set_colour);
     connect(this, &ClientGameControl::receiveTurn, game, &GameWithoutChat::set_turn);
     connect(this, &ClientGameControl::receiveTime, game, &GameWithoutChat::set_time);
-    connect(this, &ClientGameControl::clearBoard, game, &GameWithoutChat::clear_board);
+    connect(this, &ClientGameControl::clearBoard, game, &GameWithoutChat::clear_board, Qt::DirectConnection);
     connect(this, &ClientGameControl::receiveAskMove, game, &GameWithoutChat::get_move);
     connect(this, &ClientGameControl::receiveAskPromotion, game, &GameWithoutChat::get_promotion);
     connect(this, &ClientGameControl::pauseTimer, game, &GameWithoutChat::pause_timer);
@@ -33,7 +33,7 @@ ClientGameControl::ClientGameControl(Client* _client, GameWithoutChatWithAlice* 
     connect(this, &ClientGameControl::setColour, alice_game, &GameWithoutChatWithAlice::set_colour);
     connect(this, &ClientGameControl::receiveTurn, alice_game, &GameWithoutChatWithAlice::set_turn);
     connect(this, &ClientGameControl::receiveTime, alice_game, &GameWithoutChatWithAlice::set_time);
-    connect(this, &ClientGameControl::clearBoard, alice_game, &GameWithoutChatWithAlice::clear_board);
+    connect(this, &ClientGameControl::clearBoard, alice_game, &GameWithoutChatWithAlice::clear_board, Qt::DirectConnection);
     connect(this, &ClientGameControl::receiveAskMove, alice_game, &GameWithoutChatWithAlice::get_move);
     connect(this, &ClientGameControl::receiveAskPromotion, alice_game, &GameWithoutChatWithAlice::get_promotion);
     connect(this, &ClientGameControl::pauseTimer, alice_game, &GameWithoutChatWithAlice::pause_timer);
@@ -61,13 +61,10 @@ void ClientGameControl::receiveBoard(QString message) {
 
   bool is_second_board = false;
   if (is_alice) {
-      if (message[0] == '1') {
-          message.remove(0,1);
+      if (message[0] == '2') {
+        is_second_board = true;
       }
-      else {
-          message.remove(0,1);
-          is_second_board = true;
-      }
+      message.remove(0,1);
   }
   stringToBoard(this, message.toStdString(), is_second_board);
 }
