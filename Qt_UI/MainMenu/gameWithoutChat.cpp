@@ -9,6 +9,8 @@
 
 #include <iostream>
 
+#define TIMER_UPDATE_RATE 1000000 //microsecond
+
 GameWithoutChat::GameWithoutChat(QWidget *parent, Client* client_) :
     QDialog(parent),
     ui(new Ui::GameWithoutChat),
@@ -124,7 +126,8 @@ void GameWithoutChat::get_move(QString)
 {
     ui->chgUpdateLabel->setText("Your turn: please choose your move.");
     ui->moveConfirmButton->setEnabled(true);
-    // run timer until move sent
+    // run timer until move sent - ie receiveGoodMove signal emitted from ClientGameControl
+    run_timer();
 }
 
 void GameWithoutChat::get_promotion(QString)
@@ -139,6 +142,27 @@ void GameWithoutChat::promotion_declared(QString promotion)
 {
     promotion.resize(1);
     control->sendPromotion(promotion.toLower());
+}
+
+
+void GameWithoutChat::run_timer()
+{
+    struct timeval updateRate;
+    int timeLeft = timer.get_remaining_time();
+    timer.start();
+    timer.unpause();
+    while(timeLeft)
+    {
+        updateRate.tv_sec = int(TIMER_UPDATE_RATE / 1000000);
+        updateRate.tv_usec = int(TIMER_UPDATE_RATE % 1000000);
+        timeLeft = timer.get_remaining_time();
+        ui->chgTimeLabel->setText(QString::fromStdString(timer));
+    }
+    if (!timeLeft)
+    {
+        control->sendMove("/tim");
+        show_update("timeout");
+    }
 }
 
 void GameWithoutChat::pause_timer()

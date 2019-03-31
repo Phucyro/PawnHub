@@ -53,6 +53,7 @@ private:
     Timer timer;
     QString move;
 
+    void run_timer();
     void on_initialPosition_chosen(QAbstractButton*);
 };
 
