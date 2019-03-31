@@ -4,11 +4,10 @@
 #include "../MainMenu/gameWithoutChat.h"
 #include "../MainMenu/gameWithoutChatWithAlice.h"
 
-#define TIMER_UPDATE_RATE 1000000 //microsecond
 std::string moveToString(int*);
 
-ClientGameControl::ClientGameControl(Client* _client, GameWithoutChat* _game): client(_client), game(_game), alice_game(nullptr), game_ongoing(true), is_alice(false), is_real_time(false), colour('\0') {
-    connect(this, &ClientGameControl::updatePiece, game, &GameWithoutChat::set_piece, Qt::DirectConnection);
+ClientGameControl::ClientGameControl(Client* _client, GameWithoutChat* _game): client(_client), game(_game), alice_game(nullptr), previous_board(), game_ongoing(true), is_alice(false), is_real_time(false), colour('\0') {
+    connect(this, &ClientGameControl::updatePiece, game, &GameWithoutChat::set_piece);
     connect(this, &ClientGameControl::receiveUpdate, game, &GameWithoutChat::show_update);
     connect(this, &ClientGameControl::receiveGameMode, game, &GameWithoutChat::set_mode);
     connect(this, &ClientGameControl::setColour, game, &GameWithoutChat::set_colour);
@@ -21,7 +20,7 @@ ClientGameControl::ClientGameControl(Client* _client, GameWithoutChat* _game): c
     connect(this, &ClientGameControl::reduceTimer, game, &GameWithoutChat::reduce_timer);
 }
 
-ClientGameControl::ClientGameControl(Client* _client, GameWithoutChatWithAlice* _game): client(_client), game(nullptr), alice_game(_game), game_ongoing(true), is_alice(true), is_real_time(false), colour('\0') {
+ClientGameControl::ClientGameControl(Client* _client, GameWithoutChatWithAlice* _game): client(_client), game(nullptr), alice_game(_game), previous_board(), game_ongoing(true), is_alice(true), is_real_time(false), colour('\0') {
     connect(this, &ClientGameControl::updatePiece, alice_game, &GameWithoutChatWithAlice::set_piece);
     connect(this, &ClientGameControl::receiveUpdate, alice_game, &GameWithoutChatWithAlice::show_update);
     connect(this, &ClientGameControl::receiveGameMode, alice_game, &GameWithoutChatWithAlice::set_mode);
@@ -37,7 +36,8 @@ ClientGameControl::ClientGameControl(Client* _client, GameWithoutChatWithAlice* 
 
 ClientGameControl::~ClientGameControl()
 {
-    game = nullptr;
+    if (game != nullptr) deleteLater();
+    else if (alice_game != nullptr) alice_game->deleteLater();
     client = nullptr;
 }
 
@@ -47,8 +47,6 @@ void ClientGameControl::callPieceUpdate(QIcon pieceIcon, QString piecePosition, 
 }
 
 void ClientGameControl::receiveBoard(QString message) {
-  emit clearBoard();
-
   bool is_second_board = false;
   if (is_alice) {
       if (message[0] == '2') {
@@ -56,63 +54,18 @@ void ClientGameControl::receiveBoard(QString message) {
       }
       message.remove(0,1);
   }
-  stringToBoard(this, message.toStdString(), is_second_board);
+  if (previous_board != message)
+  {
+      previous_board = message;
+      emit clearBoard();
+      stringToBoard(this, message.toStdString(), is_second_board);
+  }
 }
 
 void ClientGameControl::receivePlayerColour(QString message) {
   colour = message.toStdString()[0];
   emit setColour(message);
 }
-
-// void ClientGameControl::receiveAskMove(std::string message) {
-// 	struct timeval updateRate;
-// 	int move[4], i = 0, newch = STDIN_FILENO;
-// 	fd_set read;
-// 	std::string effective_move;
-// 	int timeLeft = timer.get_remaining_time();
-//
-// 	board.print_your_turn();
-// 	board.ask_ipos();
-// 	timer.start();
-// 	timer.unpause();
-//
-//   while (i < 4 && timeLeft){
-//   	updateRate.tv_sec = int(TIMER_UPDATE_RATE / 1000000);
-//   	updateRate.tv_usec = int(TIMER_UPDATE_RATE % 1000000);
-//   	FD_ZERO(&read);
-// 		FD_SET(newch, &read);
-// 		if (select(newch+1, &read, nullptr, nullptr, &updateRate) == -1) throw std::runtime_error("Select failed");
-// 		timeLeft = timer.get_remaining_time();
-//
-// 		if (FD_ISSET(newch, &read)){
-// 			move[i] = board.getchar();
-// 			if (i < 2) board.print_ipos(move[i], i);
-// 			else board.print_epos(move[i], i%2);
-// 			i++;
-// 			if (i == 2) board.ask_epos();
-// 			else if (i == 4){
-// 				board.clear_premove();
-// 				effective_move = moveToString(move);
-// 			}
-// 		}
-// 		board.show_time_left(timer);
-//   }
-//   if (!timeLeft){
-//   	sendMove("/tim");
-//   	game_ongoing = false;
-//   	board.clear_get_movement();
-//   	board.endgame("Time out! You lost.");
-//   }
-//
-//   if (game_ongoing){
-//     sendMove(effective_move);
-//     if (effective_move == "/end"){
-//       game_ongoing = false;
-//       board.clear_get_movement();
-//       board.endgame("You gave up.");
-//     }
-//   }
-// }
 
 void ClientGameControl::receiveGoodMove(QString) {
 	if (!is_real_time){
@@ -144,6 +97,10 @@ void ClientGameControl::sendPromotion(QString promotion) {
 
 void ClientGameControl::setGameOngoing(bool value) {
     game_ongoing = value;
+}
+
+bool ClientGameControl::isGameOngoing() {
+    return game_ongoing;
 }
 
 void ClientGameControl::setRealTime() {

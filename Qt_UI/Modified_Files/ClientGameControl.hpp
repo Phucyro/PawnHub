@@ -21,6 +21,7 @@ private:
   Client* client;
   GameWithoutChat* game;
   GameWithoutChatWithAlice* alice_game;
+  QString previous_board;
   bool game_ongoing;
   bool is_alice;
   bool is_real_time;
@@ -49,6 +50,7 @@ public:
   ~ClientGameControl();
 
   void callPieceUpdate(QIcon, QString, QString);
+  bool isGameOngoing();
 
 public slots:
   void startParty();

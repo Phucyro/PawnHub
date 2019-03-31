@@ -41,7 +41,7 @@ public slots:
     void pause_timer();
     void reduce_timer(int=100);
 
-    void closeEvent();
+    void closeEvent(QCloseEvent*);
 
 private slots:
     void update_time();
@@ -60,7 +60,6 @@ private:
     QTime done;
     QString move;
 
-//    void run_timer();
     void display_time();
     void on_initialPosition_chosen(QAbstractButton*);
 };
