@@ -1,4 +1,4 @@
-![PawnHub](pawnhub_banner.png)
+![PawnHub](Qt_UI/MainMenu/pawnhub_banner.png)
 > Jeu d'Échecs en Réseau Local
 
 Ce projet a pour but de développer un jeu d'échecs en réseau.
