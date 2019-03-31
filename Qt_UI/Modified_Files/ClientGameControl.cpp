@@ -57,19 +57,19 @@ void ClientGameControl::callPieceUpdate(QIcon pieceIcon, QString piecePosition, 
 }
 
 void ClientGameControl::receiveBoard(QString message) {
-  if (!is_alice) {
-      emit clearBoard();
-      stringToBoard(this, message.toStdString());
-//    board.draw_pieces(message);
-//    board.refresh_board();
+  emit clearBoard();
+
+  bool is_second_board = false;
+  if (is_alice) {
+      if (message[0] == '1') {
+          message.remove(0,1);
+      }
+      else {
+          message.remove(0,1);
+          is_second_board = true;
+      }
   }
-  else if (message[0] == '1') {
-      // not sure
-  }
-  else {
-//    board.draw_alice_pieces(message.erase(0,1));
-//    board.refresh_board();
-  }
+  stringToBoard(this, message.toStdString(), is_second_board);
 }
 
 void ClientGameControl::receivePlayerColour(QString message) {
@@ -165,7 +165,6 @@ void ClientGameControl::setRealTime() {
 
 void ClientGameControl::handleMessage() {
     std::string message = client->readGame();
-    std::cout << message << std::endl;
     char header = message[0];
     (this->*(headerReceiveMap[header]))(QString::fromStdString(message.erase(0,1)));
 }

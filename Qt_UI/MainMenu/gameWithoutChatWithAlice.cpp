@@ -18,8 +18,8 @@ GameWithoutChatWithAlice::GameWithoutChatWithAlice(QWidget *parent, Client* clie
     move("")
 {
     ui->setupUi(this);
-    connect(ui->board, static_cast<void(QButtonGroup::*)(QAbstractButton *)>(&QButtonGroup::buttonPressed), this, &GameWithoutChatWithAlice::on_boardButton_pressed);
-    connect(ui->board_2, static_cast<void(QButtonGroup::*)(QAbstractButton *)>(&QButtonGroup::buttonPressed), this, &GameWithoutChatWithAlice::on_boardButton_pressed);
+    connect(ui->board, static_cast<void(QButtonGroup::*)(QAbstractButton *)>(&QButtonGroup::buttonPressed), this, &GameWithoutChatWithAlice::boardButton_pressed);
+    connect(ui->board_2, static_cast<void(QButtonGroup::*)(QAbstractButton *)>(&QButtonGroup::buttonPressed), this, &GameWithoutChatWithAlice::boardButton_pressed);
 }
 
 GameWithoutChatWithAlice::~GameWithoutChatWithAlice()
@@ -75,6 +75,12 @@ void GameWithoutChatWithAlice::clear_board()
     foreach (QAbstractButton* button, ui->board->buttons())
     {
         button->setIcon(empty);
+        button->setToolTip("");
+    }
+    foreach (QAbstractButton* button, ui->board_2->buttons())
+    {
+        button->setIcon(empty);
+        button->setToolTip("");
     }
 }
 
@@ -102,16 +108,10 @@ void GameWithoutChatWithAlice::set_time(QString time)
         ui->chgTimeLabel->setText(QString::fromStdString(timer));
     }
 }
-
 void GameWithoutChatWithAlice::set_piece(QIcon pieceIcon, QString piecePosition, QString pieceName) {
     findChild<QPushButton*>(piecePosition)->setIcon(pieceIcon);
 //    findChild<QPushButton*>(piecePosition)->setEnabled(true);
     findChild<QPushButton*>(piecePosition)->setToolTip(pieceName);
-
-//    probably to be erased
-//    coordinateConversionMap->value(piecePosition)->setIcon(pieceIcon);
-//    coordinateConversionMap->value(piecePosition)->setEnabled(true);
-//    coordinateConversionMap->value(piecePosition)->setToolTip(pieceName);
 }
 
 void GameWithoutChatWithAlice::show_update(QString message)
@@ -120,9 +120,10 @@ void GameWithoutChatWithAlice::show_update(QString message)
       message = "Game has started.";
      }
     else if (message == "alice") {
-////        not sure yet
+      message = "Game has started.";
     }
     else if (message == "realtime") {
+      message = "Game has started.";
       emit is_realtime();
     }
     else if (message == "check") {
@@ -185,7 +186,7 @@ void GameWithoutChatWithAlice::reduce_timer(int time)
     }
 }
 
-void GameWithoutChatWithAlice::on_boardButton_pressed(QAbstractButton* origin)
+void GameWithoutChatWithAlice::boardButton_pressed(QAbstractButton* origin)
 {
     QString position = origin->objectName();
     if (position.endsWith("_2")) position.chop(2);

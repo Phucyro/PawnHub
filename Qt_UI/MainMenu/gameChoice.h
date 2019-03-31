@@ -1,6 +1,9 @@
 #ifndef GAMECHOICE_H
 #define GAMECHOICE_H
 
+#include "gameWithoutChat.h"
+#include "gameWithoutChatWithAlice.h"
+
 #include <QDialog>
 
 #include <thread>
@@ -25,22 +28,18 @@ private:
     std::thread* msgThread;
 
     void send_game_request(std::string);
+    void run_game(GameWithoutChat* game);
+    void run_game(GameWithoutChatWithAlice* game);
 
 private slots:
     void on_classicPushButton_pressed();
-
     void on_darkPushButton_pressed();
-
     void on_hordePushButton_pressed();
-
     void on_alicePushButton_pressed();
 
     void on_realTimeClassicPushButton_pressed();
-
     void on_realTimeDarkPushButton_pressed();
-
     void on_realTimeHordePushButton_pressed();
-
     void on_realTimeAlicePushButton_pressed();
 
     void on_returnPushButton_pressed();

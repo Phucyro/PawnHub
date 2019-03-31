@@ -35,15 +35,16 @@ QIcon piece_icon_fetcher(std::string pieceName, std::string colour) {
     return pieceIcon;
 }
 
-void convert_piece(ClientGameControl* control, char piece_symbol, char column, char line, std::string colour) {
+void convert_piece(ClientGameControl* control, char piece_symbol, char column, char line, std::string colour, bool is_alice) {
     std::string currentPieceName = pieceMap[piece_symbol];
     QIcon currentPieceIcon = piece_icon_fetcher(currentPieceName, colour);
     QString currentPiecePosition(column);
-    currentPiecePosition += line;
+    currentPiecePosition.append(line);
+    if (is_alice) currentPiecePosition.append("_2");
     control->callPieceUpdate(currentPieceIcon, currentPiecePosition, QString::fromStdString(currentPieceName));
 }
 
-void stringToBoard(ClientGameControl* control, std::string board_string) {
+void stringToBoard(ClientGameControl* control, std::string board_string, bool is_alice) {
   unsigned a = 0;
   std::string currentPieceName;
   QIcon currentPieceIcon;
@@ -51,45 +52,32 @@ void stringToBoard(ClientGameControl* control, std::string board_string) {
 
   std::string colour = "white";
   while (board_string[a] != '!'){
-    convert_piece(control, board_string[a], board_string[a+1], board_string[a+2], colour);
+    convert_piece(control, board_string[a], board_string[a+1], board_string[a+2], colour, is_alice);
     a += CHAR_NUM;
   }
   a += 1;
   colour = "black";
   while (board_string[a] != '#'){
-    convert_piece(control, board_string[a], board_string[a+1], board_string[a+2], colour);
+    convert_piece(control, board_string[a], board_string[a+1], board_string[a+2], colour, is_alice);
     a += CHAR_NUM;
   }
 }
 
-//void separateAlicePieces(unsigned a,std::string message,std::string colour) {
-//  const char piece = pieceMap[message[a]];
-//  Coordinate coor(message[a+1], message[a+2]);
-//  int column = coor.getRealColumn();
-//  int line = coor.getRealRow();
-//  if (colour == "white") {
-//    attron(COLOR_PAIR(WHITE_PLAYER));
-//    mvprintw((1+line)*OFFSET, 63+((column+1)*OFFSET), "%c", piece);//54
-//    attroff(COLOR_PAIR(WHITE_PLAYER));
-//  }
-//  else {
-//    attron(COLOR_PAIR(BLACK_PLAYER));
-//    mvprintw((1+line)*OFFSET, 63+((column+1)*OFFSET), "%c", piece);
-//    attroff(COLOR_PAIR(BLACK_PLAYER));
-//  }
-//}
+//void aliceToBoard(ClientGameControl* control, std::string board_string) {
+//  unsigned a = 0;
+//  std::string currentPieceName;
+//  QIcon currentPieceIcon;
+//  QString currentPosition;
 
-//void aliceToBoard(std::string message) {
-//  unsigned int a = 0;
 //  std::string colour = "white";
-//  while (message[a] != '!'){
-//    separateAlicePieces(a, message, colour);
+//  while (board_string[a] != '!'){
+//    convert_piece(control, board_string[a], board_string[a+1], board_string[a+2], colour, true);
 //    a += CHAR_NUM;
 //  }
 //  a += 1;
 //  colour = "black";
-//  while (message[a] != '#'){
-//    separateAlicePieces(a, message, colour);
+//  while (board_string[a] != '#'){
+//    convert_piece(control, board_string[a], board_string[a+1], board_string[a+2], colour, true);
 //    a += CHAR_NUM;
 //  }
 //}

@@ -74,6 +74,7 @@ void GameWithoutChat::clear_board()
     foreach (QAbstractButton* button, ui->board->buttons())
     {
         button->setIcon(empty);
+        button->setToolTip("");
     }
 }
 
@@ -106,11 +107,6 @@ void GameWithoutChat::set_piece(QIcon pieceIcon, QString piecePosition, QString 
     findChild<QPushButton*>(piecePosition)->setIcon(pieceIcon);
 //    findChild<QPushButton*>(piecePosition)->setEnabled(true);
     findChild<QPushButton*>(piecePosition)->setToolTip(pieceName);
-
-//    probably to be erased
-//    coordinateConversionMap->value(piecePosition)->setIcon(pieceIcon);
-//    coordinateConversionMap->value(piecePosition)->setEnabled(true);
-//    coordinateConversionMap->value(piecePosition)->setToolTip(pieceName);
 }
 
 void GameWithoutChat::show_update(QString message)
@@ -222,7 +218,7 @@ void GameWithoutChat::on_surrendButton_pressed()
 {
     emit move_declared("/end");
     show_update("giveup");
-    this->close();
+//    this->close();    // not sure this is necessary
 }
 
 void GameWithoutChat::on_moveConfirmButton_clicked()

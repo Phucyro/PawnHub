@@ -46,7 +46,7 @@ signals:
     void is_realtime();
 
 private slots:
-    void on_boardButton_pressed(QAbstractButton*);
+    void boardButton_pressed(QAbstractButton*);
     void on_surrendButton_pressed();
     void on_moveConfirmButton_clicked();
     void on_moveClearButton_clicked();
