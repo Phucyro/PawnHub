@@ -78,7 +78,7 @@ void GameWithoutChat::set_time(QString time)
     if (time.toInt() < 0)
     {
         ui->chgTimeLabel->setText("--:--:-");
-        timer->deleteLater();
+        delete timer;
         delete remainingTime;
     }
     else
