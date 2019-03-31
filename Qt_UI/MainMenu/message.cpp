@@ -1,9 +1,11 @@
 #include "message.h"
 #include "ui_message.h"
+#include <iostream>
 
 Message::Message(QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::Message)
+    ui(new Ui::Message),
+    is_promotion(false)
 {
     ui->setupUi(this);
 }
@@ -42,33 +44,34 @@ void Message::promotion_choice()
     ui->pushButton_3->setEnabled(true);
     ui->pushButton_3->setFlat(false);
     ui->okButton->setText("Knight");
-}
-
-QString Message::get_choice()
-{
-    return choice;
+    is_promotion = true;
 }
 
 void Message::on_okButton_clicked()
 {
-    choice = ui->okButton->text();
+    if (is_promotion)
+    {
+        emit promotion_chosen(ui->okButton->text());
+    }
     close();
 }
 
 void Message::on_pushButton_1_clicked()
 {
-    choice = ui->pushButton_1->text();
+    std::cout << "sending" << std::endl;
+    emit promotion_chosen(ui->pushButton_1->text());
+    std::cout << "sent" << std::endl;
     close();
 }
 
 void Message::on_pushButton_2_clicked()
 {
-    choice = ui->pushButton_2->text();
+    emit promotion_chosen(ui->pushButton_2->text());
     close();
 }
 
 void Message::on_pushButton_3_clicked()
 {
-    choice = ui->pushButton_3->text();
+    emit promotion_chosen(ui->pushButton_3->text());
     close();
 }

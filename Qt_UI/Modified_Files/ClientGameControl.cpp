@@ -8,7 +8,7 @@
 std::string moveToString(int*);
 
 ClientGameControl::ClientGameControl(Client* _client, GameWithoutChat* _game): client(_client), game(_game), alice_game(nullptr), game_ongoing(true), is_alice(false), is_real_time(false), colour('\0') {
-    connect(this, &ClientGameControl::updatePiece, game, &GameWithoutChat::set_piece);
+    connect(this, &ClientGameControl::updatePiece, game, &GameWithoutChat::set_piece, Qt::DirectConnection);
     connect(this, &ClientGameControl::receiveUpdate, game, &GameWithoutChat::show_update);
     connect(this, &ClientGameControl::receiveGameMode, game, &GameWithoutChat::set_mode);
     connect(this, &ClientGameControl::setColour, game, &GameWithoutChat::set_colour);
@@ -19,11 +19,6 @@ ClientGameControl::ClientGameControl(Client* _client, GameWithoutChat* _game): c
     connect(this, &ClientGameControl::receiveAskPromotion, game, &GameWithoutChat::get_promotion);
     connect(this, &ClientGameControl::pauseTimer, game, &GameWithoutChat::pause_timer);
     connect(this, &ClientGameControl::reduceTimer, game, &GameWithoutChat::reduce_timer);
-
-    connect(game, &GameWithoutChat::move_declared, this, &ClientGameControl::sendMove);
-    connect(game, &GameWithoutChat::promotion_declared, this, &ClientGameControl::sendPromotion);
-    connect(game, &GameWithoutChat::game_ongoing_changed, this, &ClientGameControl::setGameOngoing);
-    connect(game, &GameWithoutChat::is_realtime, this, &ClientGameControl::setRealTime);
 }
 
 ClientGameControl::ClientGameControl(Client* _client, GameWithoutChatWithAlice* _game): client(_client), game(nullptr), alice_game(_game), game_ongoing(true), is_alice(true), is_real_time(false), colour('\0') {
@@ -38,11 +33,6 @@ ClientGameControl::ClientGameControl(Client* _client, GameWithoutChatWithAlice* 
     connect(this, &ClientGameControl::receiveAskPromotion, alice_game, &GameWithoutChatWithAlice::get_promotion);
     connect(this, &ClientGameControl::pauseTimer, alice_game, &GameWithoutChatWithAlice::pause_timer);
     connect(this, &ClientGameControl::reduceTimer, alice_game, &GameWithoutChatWithAlice::reduce_timer);
-
-    connect(alice_game, &GameWithoutChatWithAlice::move_declared, this, &ClientGameControl::sendMove);
-    connect(alice_game, &GameWithoutChatWithAlice::promotion_declared, this, &ClientGameControl::sendPromotion);
-    connect(alice_game, &GameWithoutChatWithAlice::game_ongoing_changed, this, &ClientGameControl::setGameOngoing);
-    connect(alice_game, &GameWithoutChatWithAlice::is_realtime, this, &ClientGameControl::setRealTime);
 }
 
 ClientGameControl::~ClientGameControl()

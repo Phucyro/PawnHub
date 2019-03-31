@@ -39,14 +39,9 @@ public slots:
     void pause_timer();
     void reduce_timer(int);
 
-signals:
-    void move_declared(QString);
-    void promotion_declared(QString);
-    void game_ongoing_changed(bool);
-    void is_realtime();
-
 private slots:
     void boardButton_pressed(QAbstractButton*);
+    void promotion_declared(QString);
     void on_surrendButton_pressed();
     void on_moveConfirmButton_clicked();
     void on_moveClearButton_clicked();

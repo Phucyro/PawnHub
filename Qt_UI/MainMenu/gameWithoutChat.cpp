@@ -37,36 +37,9 @@ void GameWithoutChat::start()
     connect(thread, &QThread::finished, control, &ClientGameControl::deleteLater);
     connect(thread, &QThread::finished, thread, &QThread::deleteLater);
     thread->start();
-//    // get start
-//    control.handleMessage();
-//    // get mode
-//    control.handleMessage();
-//    // get colour
-//    control.handleMessage();
 
     this->exec();
-
-//    while (gameOngoing)
-//    {
-//        run_turn(control);
-//    }
 }
-
-//void GameWithoutChat::run_turn(ClientGameControl& control)
-//{
-//    // board
-//    control.handleMessage();
-//    // turn
-//    control.handleMessage();
-//    // askmove
-//    control.handleMessage();
-//    show_update();
-//}
-
-//void GameWithoutChat::set_gameOngoing(bool value)
-//{
-//    gameOngoing = value;
-//}
 
 void GameWithoutChat::clear_board()
 {
@@ -118,7 +91,7 @@ void GameWithoutChat::show_update(QString message)
 ////        not sure yet
     }
     else if (message == "realtime") {
-      emit is_realtime();
+      control->setRealTime();
     }
     else if (message == "check") {
       message = "Check.\nProtect your king!";
@@ -142,7 +115,7 @@ void GameWithoutChat::show_update(QString message)
       else {
         message = "Checkmate\nBlack player won!";
       }
-      emit game_ongoing_changed(false);
+      control->setGameOngoing(false);
     }
     ui->chgUpdateLabel->setText(message);
 }
@@ -156,12 +129,16 @@ void GameWithoutChat::get_move(QString)
 
 void GameWithoutChat::get_promotion(QString)
 {
-    QString promotion;
     Message promotionEnquiry;
+    connect(&promotionEnquiry, &Message::promotion_chosen, this, &GameWithoutChat::promotion_declared);
     promotionEnquiry.promotion_choice();
     promotionEnquiry.popup();
-    promotion = promotionEnquiry.get_choice();
-    emit promotion_declared(promotion);
+}
+
+void GameWithoutChat::promotion_declared(QString promotion)
+{
+    promotion.resize(1);
+    control->sendPromotion(promotion.toLower());
 }
 
 void GameWithoutChat::pause_timer()
@@ -175,7 +152,7 @@ void GameWithoutChat::reduce_timer(int time)
     timer.remove(time);
     ui->chgTimeLabel->setText(QString::fromStdString(timer));
     if (!timer.get_remaining_time()){
-        emit move_declared("/tim");
+        control->sendMove("/tim");
         show_update("timeout");
     }
 }
@@ -216,7 +193,7 @@ void GameWithoutChat::on_initialPosition_chosen(QAbstractButton*)
 
 void GameWithoutChat::on_surrendButton_pressed()
 {
-    emit move_declared("/end");
+    control->sendMove("/end");
     show_update("giveup");
     this->close();
 }
@@ -228,7 +205,7 @@ void GameWithoutChat::on_moveConfirmButton_clicked()
         ui->chgUpdateLabel->setText("Move sent!");
         ui->chgMoveLabel->setText(move);
         control->sendMove(move);
-        move.clear();
+        move.clear();ui->chgMoveLabel->setText(move);
     }
     else
     {

@@ -21,6 +21,9 @@ public:
     void promotion_choice();
     QString get_choice();
 
+signals:
+    void promotion_chosen(QString);
+
 private slots:
     void on_okButton_clicked();
     void on_pushButton_1_clicked();
@@ -29,7 +32,7 @@ private slots:
 
 private:
     Ui::Message *ui;
-    QString choice;
+    bool is_promotion;
 };
 
 #endif // MESSAGE_H
