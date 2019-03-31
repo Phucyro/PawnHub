@@ -22,6 +22,11 @@ public:
     void promotion_choice();
     QString get_choice();
     bool getCancel();
+public slots:
+    void closeEvent();
+
+signals:
+    void promotion_chosen(QString);
 
 private slots:
     void on_okButton_clicked();
@@ -31,7 +36,7 @@ private slots:
 
 private:
     Ui::Message *ui;
-    QString choice;
+    bool is_promotion;
     bool cancel;
 };
 

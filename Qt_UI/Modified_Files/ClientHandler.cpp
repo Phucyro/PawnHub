@@ -53,7 +53,7 @@ void ClientHandler::chatHandler(QString sender, QString target, QString msg){
 
 
 void ClientHandler::playGameHandler(){
-
+    sigStartGame();
 }
 
 void ClientHandler::leaveQueueHandler(){

@@ -38,36 +38,9 @@ void GameWithoutChatWithAlice::start()
     connect(thread, &QThread::finished, control, &ClientGameControl::deleteLater);
     connect(thread, &QThread::finished, thread, &QThread::deleteLater);
     thread->start();
-//    // get start
-//    control.handleMessage();
-//    // get mode
-//    control.handleMessage();
-//    // get colour
-//    control.handleMessage();
 
     this->exec();
-
-//    while (gameOngoing)
-//    {
-//        run_turn(control);
-//    }
 }
-
-//void GameWithoutChatWithAlice::run_turn(ClientGameControl& control)
-//{
-//    // board
-//    control.handleMessage();
-//    // turn
-//    control.handleMessage();
-//    // askmove
-//    control.handleMessage();
-//    show_update();
-//}
-
-//void GameWithoutChatWithAlice::set_gameOngoing(bool value)
-//{
-//    gameOngoing = value;
-//}
 
 void GameWithoutChatWithAlice::clear_board()
 {
@@ -124,7 +97,7 @@ void GameWithoutChatWithAlice::show_update(QString message)
     }
     else if (message == "realtime") {
       message = "Game has started.";
-      emit is_realtime();
+      control->setRealTime();
     }
     else if (message == "check") {
       message = "Check.\nProtect your king!";
@@ -148,7 +121,7 @@ void GameWithoutChatWithAlice::show_update(QString message)
       else {
         message = "Checkmate\nBlack player won!";
       }
-      emit game_ongoing_changed(false);
+      control->setGameOngoing(false);
     }
     ui->chgUpdateLabel->setText(message);
 }
@@ -166,8 +139,13 @@ void GameWithoutChatWithAlice::get_promotion(QString)
     Message promotionEnquiry;
     promotionEnquiry.promotion_choice();
     promotionEnquiry.popup();
-    promotion = promotionEnquiry.get_choice();
-    emit promotion_declared(promotion);
+    connect(&promotionEnquiry, &Message::promotion_chosen, this, &GameWithoutChatWithAlice::promotion_declared);
+}
+
+void GameWithoutChatWithAlice::promotion_declared(QString promotion)
+{
+    promotion.resize(1);
+    control->sendPromotion(promotion.toLower());
 }
 
 void GameWithoutChatWithAlice::pause_timer()
@@ -181,7 +159,7 @@ void GameWithoutChatWithAlice::reduce_timer(int time)
     timer.remove(time);
     ui->chgTimeLabel->setText(QString::fromStdString(timer));
     if (!timer.get_remaining_time()){
-        emit move_declared("/tim");
+        control->sendMove("/tim");
         show_update("timeout");
     }
 }
@@ -222,7 +200,7 @@ void GameWithoutChatWithAlice::on_initialPosition_chosen(QAbstractButton*)
 
 void GameWithoutChatWithAlice::on_surrendButton_pressed()
 {
-    emit move_declared("/end");
+    control->sendMove("/end");
     show_update("giveup");
     this->close();
 }
