@@ -28,7 +28,6 @@ int Socket::getFileDescriptor() {
 }
 
 bool Socket::connectToServer(std::string hostname) {
-  // const char* converted_name = hostname.c_str();
   hostent* host_addr;
   if((host_addr = gethostbyname(hostname.c_str())) == nullptr){
     std::cout << "Hostname not found" << std::endl;
@@ -59,8 +58,6 @@ void Socket::printSend(std::string message) {
 }
 
 void Socket::sendMessage(std::string message) {
-  // if (message[0] == 'B') throw std::string("Sent board too early");
-  //std::cout<<"message send: "<<message<<std::endl;
   // signal(SIGPIPE, handleSignal);
 
   size_t message_size = message.length();

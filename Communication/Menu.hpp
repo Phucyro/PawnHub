@@ -61,8 +61,14 @@ void authentificationMenu(MenuHandler* menu, Client* client){
       else
         signUp(client->getSocket(), username, password);
 
-      menu->print_warning(client->readPipe());
+      std::string msg = client->readPipe();
+      menu->print_warning(msg);
       menu->refresh_board();
+
+      if (msg == "Compte créé avec succes"){ // Connexion directe
+        signIn(client->getSocket(), username, password);
+        client->readPipe();
+      }
     }
   }
   client->setName(username);
