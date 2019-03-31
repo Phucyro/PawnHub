@@ -109,12 +109,15 @@
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
-      <widget class="QPushButton" name="cancelButton">
+      <widget class="QPushButton" name="loginButton">
        <property name="text">
-        <string>Cancel</string>
+        <string>Login</string>
        </property>
        <property name="autoDefault">
         <bool>false</bool>
+       </property>
+       <property name="default">
+        <bool>true</bool>
        </property>
       </widget>
      </item>
@@ -129,15 +132,12 @@
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="loginButton">
+      <widget class="QPushButton" name="cancelButton">
        <property name="text">
-        <string>Login</string>
+        <string>Cancel</string>
        </property>
        <property name="autoDefault">
         <bool>false</bool>
-       </property>
-       <property name="default">
-        <bool>true</bool>
        </property>
       </widget>
      </item>
@@ -149,8 +149,8 @@
  <tabstops>
   <tabstop>usernameInput</tabstop>
   <tabstop>passwordInput</tabstop>
-  <tabstop>signupButton</tabstop>
   <tabstop>loginButton</tabstop>
+  <tabstop>signupButton</tabstop>
   <tabstop>cancelButton</tabstop>
  </tabstops>
  <resources/>

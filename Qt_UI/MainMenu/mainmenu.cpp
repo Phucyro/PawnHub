@@ -75,13 +75,22 @@ void MainMenu::client_login() {
     {
         login->get_login_deets(client->getSocket(), username, password);
 
-        // si vous voulez mettre ca, au moins changez le message recu en anglais, vu le RESTE du jeu est en anglais
+        // si vous voulez mettre ca, au moins changez le message recu en anglais, vu que le RESTE du jeu est en anglais
         // svp
-//        Message* m = new Message();
-//                 m->set_text(QString::fromStdString(client->readPipe()));
-//                 m->set_title("Connection result");
-//                 m->popup();
-        std::cout << client->readPipe() << std::endl;
+        QString message = QString::fromStdString(client->readPipe());
+        if (!(message == "Succesfully logged in."))
+        {
+             Message* m = new Message();
+             m->set_text(message);
+             if (message == "Successfully created account!")
+             {
+                m->set_title("Signed Up");
+                signIn(client->getSocket(), username.toStdString(), password.toStdString());
+             }
+             else m->set_title("Oh no: Something is Wrong");
+             m->popup();
+        }
+
 
     }
     while (!(client->isIdentified()));
