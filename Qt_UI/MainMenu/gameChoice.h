@@ -8,6 +8,8 @@
 
 #include <thread>
 
+#include "message.h"
+
 class Client;
 
 namespace Ui {
@@ -26,10 +28,13 @@ private:
     Ui::GameChoice *ui;
     Client* client;
     std::thread* msgThread;
+    bool cancel;
+    Message message;
 
     void send_game_request(std::string);
     void run_game(GameWithoutChat* game);
     void run_game(GameWithoutChatWithAlice* game);
+    void closeMessage(){message.close();}
 
 private slots:
     void on_classicPushButton_pressed();

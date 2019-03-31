@@ -17,9 +17,11 @@ public:
 
     void set_text(QString);
     void set_title(QString);
+    void set_okButton(QString);
     void popup();
     void promotion_choice();
     QString get_choice();
+    bool getCancel();
 
 private slots:
     void on_okButton_clicked();
@@ -30,6 +32,7 @@ private slots:
 private:
     Ui::Message *ui;
     QString choice;
+    bool cancel;
 };
 
 #endif // MESSAGE_H

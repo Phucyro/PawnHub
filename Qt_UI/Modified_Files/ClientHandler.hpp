@@ -7,7 +7,7 @@
 #include "chat.h"
 #include <string>
 #include <stdlib.h>
-
+#include "gameChoice.h"
 
 class ClientHandler : public QObject {
 
