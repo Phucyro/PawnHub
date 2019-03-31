@@ -66,6 +66,7 @@ void cancelRequest(Socket* socket, std::string name){
 }
 
 void initClientData(Client* client){
+  client->setReceivedInfo(true);
   viewFriendsList(client->getSocket()); // Charge liste d'amis
   viewTheirfriendRequest(client->getSocket()); // Charge liste demandes recues
   viewSentRequest(client->getSocket()); // Charge liste demandes envoyees

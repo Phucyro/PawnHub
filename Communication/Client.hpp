@@ -25,6 +25,11 @@ private:
   std::vector<std::string> _friendsList;
   std::vector<std::string> _sentRequest; // Demande d'ami envoyee
   std::vector<std::string> _recvRequest; // Demande d'ami recue
+  std::mutex _friendsMutex;
+  std::mutex _sentMutex;
+  std::mutex _recvMutex;
+  std::mutex _convMutex;
+  bool _receivedInfo;
 
 public:
   Client(Socket* socket) :
@@ -38,7 +43,12 @@ public:
     _chatTarget("all"),
     _friendsList({}),
     _sentRequest({}),
-    _recvRequest({})
+    _recvRequest({}),
+    _friendsMutex(),
+    _sentMutex(),
+    _recvMutex(),
+    _convMutex(),
+    _receivedInfo(false)
   {
     _pipeControl = new int[2];
     _pipeGameMessage = new int[2];
@@ -90,7 +100,8 @@ public:
   bool isChattingWith(std::string name);
   Conversation getConversation(std::string name);
   void updateConversation(std::string target, std::string sender, std::string msg);
-
+  bool getReceivedInfo();
+  void setReceivedInfo(bool received);
 };
 
 #endif
