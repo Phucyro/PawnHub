@@ -5,6 +5,7 @@
 #include "ServerHandler.hpp"
 #include "Matchmaking.hpp"
 #include "Data.hpp"
+#include "ExecInfoThread.hpp"
 #include "../Code/Player.hpp"
 #include <vector>
 #include <string>
@@ -15,7 +16,7 @@
 typedef std::map<std::string, Player*> PlayersMap;
 
 
-void inline receiveMessageHandler(Socket* socket, Data* data, PlayersMap* players_map, Matchmaking* matchmaking){
+void inline receiveMessageHandler(Socket* socket, Data* data, PlayersMap* players_map, std::mutex* playerMapMutex, Matchmaking* matchmaking, ExecInfoThread* infoThread){
   bool quit = false;
   std::vector<std::string> msg;
   Player* player = new Player(socket);
@@ -36,10 +37,10 @@ void inline receiveMessageHandler(Socket* socket, Data* data, PlayersMap* player
           signUpHandler(socket, data, msg[1], msg[2]);
           break;
         case 2 : // [2] [username] [password]
-          signInHandler(socket, players_map, data, player, msg[1], msg[2]);
+          signInHandler(socket, players_map, playerMapMutex, data, player, msg[1], msg[2]);
           break;
         case 3 : // [3] [sender] [target] [text]
-          chatHandler(players_map, player, msg[1], msg[2]);
+          chatHandler(players_map, playerMapMutex, player, msg[1], msg[2]);
           break;
         case 4 :
           playGameHandler(matchmaking, player, msg[1]);
@@ -60,19 +61,19 @@ void inline receiveMessageHandler(Socket* socket, Data* data, PlayersMap* player
           viewFriendRequestHandler(player, data);
           break;
         case 11 :
-          acceptRefuseRequestHandler(player, players_map, data, msg[1], msg[2]);
+          acceptRefuseRequestHandler(player, players_map,playerMapMutex, data, msg[1], msg[2]);
           break;
         case 12 :
-          sendFriendRequestHandler(player, players_map, data, msg[1]);
+          sendFriendRequestHandler(player, players_map, playerMapMutex, data, msg[1]);
           break;
         case 13 :
-          removeFriendHandler(player, players_map, data, msg[1]);
+          removeFriendHandler(player, players_map, playerMapMutex, data, msg[1]);
           break;
         case 14 :
           viewSentRequestHandler(player, data);
           break;
         case 15 :
-          cancelRequestHandler(player,players_map, data, msg[1]);
+          cancelRequestHandler(player, players_map, playerMapMutex, data, msg[1]);
           break;
         case 20 :
           socket->sendMessage("20~stopChat");
@@ -98,7 +99,9 @@ void inline receiveMessageHandler(Socket* socket, Data* data, PlayersMap* player
   if (player->getQueueNumber() != -1)
     matchmaking->removePlayer(player);
 
+  playerMapMutex->lock();
   players_map->erase(player->getName());
+  playerMapMutex->unlock();
 
   if (player->getName() != "Guest"){
     data->lockMutex(player->getName());
@@ -107,6 +110,7 @@ void inline receiveMessageHandler(Socket* socket, Data* data, PlayersMap* player
   }
 
   delete player;
+  infoThread->setFinished(true);
 }
 
 #endif

@@ -5,6 +5,7 @@
 #include <thread>
 #include <list>
 #include <iterator>
+#include <mutex>
 #include "Data.hpp"
 #include "Matchmaking.hpp"
 #include "ServerGameControl.hpp"
@@ -22,41 +23,37 @@ int main(){
   gethostname(hostname, 50);
   std::cout << "Hostname: " << hostname << std::endl;
 
+  BindSocket binding_socket;
+  Matchmaking matchmaking(4);
+  PlayersMap players_map;
+  std::mutex playerMapMutex;
 
-    Matchmaking matchmaking(4);
-    PlayersMap players_map;
-    BindSocket binding_socket;
+  // Met le socket serveur en attente de connexions
+  binding_socket.activate();
 
-    // Met le socket serveur en attente de connexions
-    binding_socket.activate();
-
-    while (true){
-      try {
+  while (true){
+    try {
       // Accepte l'utilisateur dans le serveur et lui asssocie un socket
       Socket* client_socket = binding_socket.createSocket();
 
       // Traite la demande de connexion
       infoThread = new ExecInfoThread();
-      std::thread *thread = new std::thread(receiveMessageHandler, client_socket, &data, &players_map, &matchmaking);
-      //std::thread *thread = new std::thread(receiveMessageHandler, client_socket, &data, &players_map, &matchmaking, infoThread);
+      std::thread *thread = new std::thread(receiveMessageHandler, client_socket, &data, &players_map, &playerMapMutex, &matchmaking, infoThread);
       infoThread->setThread(thread);
       connectedPlayer.push_back(infoThread);
-
-    //   Player* player = new Player(client_socket);
-    //   matchmaking.addPlayer(player, 0);
-    //
-    //   matchmaking.check(0);
-      }
-      catch (std::runtime_error& error) {
-        std::cout << error.what() << std::endl;
-        continue;
-      }
-    delFinishedThread(connectedPlayer);
     }
+    catch (std::runtime_error& error) {
+      std::cout << error.what() << std::endl;
+      continue;
+    }
+    delFinishedThread(connectedPlayer);
+  }
+
   for (it = connectedPlayer.begin(); it != connectedPlayer.end(); ++it){
   	(*it)->getThread()->join();
   	delete (*it)->getThread();
   	delete *it;
   }
+
   return 0;
 }
