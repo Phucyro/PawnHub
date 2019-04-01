@@ -534,12 +534,6 @@ Les modes en temps réel ne prennent plus en compte les tours des joueurs. Néan
 \subsubsection{Board et Player et ChainedMove}
 \textit{Player} se charge de transférer à la partie serveur bon nombre d'informations sur l'état de la partie via ses différentes fonctions \textit{transfer}. \textit{Board} renvoie les différentes positions des pièces.\textit{ChainedMove} ordonne dans quel ordre,les coups vont être joués. Classe très importante dans les parties en temps réel, où le joueur ayant demandé le coup en premier, est prioritaire.
 
-\begin{figure} [H]
-\centering
-\includegraphics[scale=0.50]{player_chainedmove_board.png}
-\caption{Diagramme de classe de \textit{Board}, \textit{Player} et \textit{ChainedMove}.}
-\end{figure}
-
 \newpage
 
 \subsection{Connexion du Joueur}
@@ -565,6 +559,9 @@ Le joueur se connecte à l'aide du \textit{hostname} du serveur, qui s'affiche �
 \paragraph{}Afin d'identifier les messages échangés et le protocole à suivre suite à la réception d'un message, ceux-ci sont précédés d'un en-tête.
 
 \subsection{Déroulement d'une partie}
+
+Les différentes étapes de mise en place et de déroulement d'une partie sont décrites ici, telles qu'effectuées lors d'une connexion avec un client utilisant la GUI ncurses.
+
 \begin{enumerate}
 
 \item \textit{Initialisation du plateau côté serveur}\\
@@ -583,7 +580,7 @@ Le joueur se connecte à l'aide du \textit{hostname} du serveur, qui s'affiche �
 
 \item \textit{Assignation de la couleur des pièces aux joueurs} \\
 \textbf{Mise en pratique :} Le serveur envoie la couleur du joueur (noir ou blanc) à son client. \\
-\textbf{Protocole :} Le serveur envoie 'white' au premier joueur, le joueur blanc, et 'black' pour le second joueur, précédé de l'en-tête 'X' (colour). Pour l'instant, le premier client connecté devient le premier joueur.  Comme pour le point précèdent, ce message est placé dans une variable de l'instance d'affichage du jeu.
+\textbf{Protocole :} Le serveur envoie 'white' au premier joueur, le joueur blanc, et 'black' pour le second joueur, précédé de l'en-tête 'X' (colour).
 
 
 \item \textit{Envoi de la confirmation de début de partie par le serveur}\\
