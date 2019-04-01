@@ -42,10 +42,16 @@ void separatePieces(unsigned int a, std::string message, std::string colour, std
   int column = coor.getRealColumn();
   int line = coor.getRealRow();
 
-  if (playerColor == "white") {
+  if (playerColor == "black")
+  {
     column = reversePositionMap[column];
+  }
+
+  else if (playerColor == "white")
+  {
     line = reversePositionMap[line];
   }
+
 
   if (colour == "white") {
     attron(COLOR_PAIR(WHITE_PLAYER));
@@ -81,11 +87,17 @@ void separateAlicePieces(unsigned a,std::string message,std::string colour, std:
   int column = coor.getRealColumn();
   int line = coor.getRealRow();
 
-  if (playerColor == "white")
-  {
-      column = reversePositionMap[column];
-      line = reversePositionMap[line];
-  }
+
+    if (playerColor == "black")
+    {
+        column = reversePositionMap[column];
+    }
+
+    else if (playerColor == "white")
+    {
+        line = reversePositionMap[line];
+    }
+
 
   if (colour == "white") {
     attron(COLOR_PAIR(WHITE_PLAYER));

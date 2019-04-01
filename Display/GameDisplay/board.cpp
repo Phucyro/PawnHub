@@ -71,12 +71,12 @@ void Board::init_windows()
 void Board::draw_alice_coordinates()
 {
 
-    if (colour == "black")
+    if (colour == "white")
     {
         for (int i=0; i<lines; i++)
         {
-            mvprintw(OFFSET*(i+1), 63, "%d", i+1);
-            mvprintw(OFFSET*(i+1), 63+25+OFFSET , "%d", i+1);//54
+            mvprintw(OFFSET*(i+1), 63, "%d", 8-i);
+            mvprintw(OFFSET*(i+1), 63+25+OFFSET , "%d", 8-i);//54
         }
 
         for (int i=0; i<columns; i++)
@@ -86,12 +86,12 @@ void Board::draw_alice_coordinates()
         }
     }
 
-    else if (colour == "white")
+    else if (colour == "black")
     {
         for (int i=0; i<lines; i++)
         {
-            mvprintw(OFFSET*(i+1), 63, "%d", 8-i);
-            mvprintw(OFFSET*(i+1), 63+25+OFFSET , "%d", 8-i);//54
+            mvprintw(OFFSET*(i+1), 63, "%d", i+1);
+            mvprintw(OFFSET*(i+1), 63+25+OFFSET , "%d", i+1);//54
         }
 
         for (int i=0; i<columns; i++)
@@ -177,13 +177,13 @@ void Board::draw_coordinates()
 {
 
   //print les chiffres du board en fonction de la couleur
-  if (colour == "black")
+  if (colour == "white")
   {
-    for (int i=0; i<lines; i++)
-    {
-      mvprintw(OFFSET*(i+1), 1 , "%d", i+1);
-      mvprintw(OFFSET*(i+1), 25+OFFSET , "%d", i+1);
-    }
+      for (int i=0; i<lines; i++)
+      {
+          mvprintw(OFFSET*(i+1), 1 , "%d", 8-i);
+          mvprintw(OFFSET*(i+1), 25+OFFSET , "%d", 8-i);
+      }
 
 
     for (int i=0; i<columns; i++)
@@ -193,13 +193,14 @@ void Board::draw_coordinates()
     }
   }
 
-  else if (colour == "white")
+  else if (colour == "black")
   {
-    for (int i=0; i<lines; i++)
-    {
-      mvprintw(OFFSET*(i+1), 1 , "%d", 8-i);
-      mvprintw(OFFSET*(i+1), 25+OFFSET , "%d", 8-i);
-    }
+      for (int i=0; i<lines; i++)
+      {
+          mvprintw(OFFSET*(i+1), 1 , "%d", i+1);
+          mvprintw(OFFSET*(i+1), 25+OFFSET , "%d", i+1);
+      }
+
 
     for (int i=0; i<columns; i++)
     {

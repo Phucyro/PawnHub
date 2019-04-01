@@ -19,34 +19,34 @@ void authentificationMenu(MenuHandler* menu, Client* client){
   while (!client->isIdentified()){
     switch (format){
       case 0 :
-        menu->print_warning("Guest et all sont des noms interdits");
+        menu->print_warning("You may not use 'Guest' or 'all' as username");
         break;
       case 1 :
-        menu->print_warning("Les mots de passe ne correspondent pas");
+        menu->print_warning("Mismatched passwords");
         break;
       case 2 :
-        menu->print_warning("La longueur du nom et mot de passe doivent être comprise entre 1 et 10");
+        menu->print_warning("Size range is 1 to 10 characters");
         break;
       case 3 :
-        menu->print_warning("Votre nom ne peut être composé que de chiffres et lettres");
+        menu->print_warning("Username characters are limited to numbers and letters");
         break;
       case 4 :
-        menu->print_warning("Les caractères | et ~ sont interdits");
+        menu->print_warning("You may not use '|' and '~'");
     }
 
     menu->refresh_board();
     menu->init_choicesw();
-    int choice = menu->get_choice({"Connexion", "Inscription"});
+    int choice = menu->get_choice({"Sign In", "Sign Up"});
     menu->clear_windows();
 
     menu->init_dataw();
-    username = menu->get_infos("Nom d'utilisateur :");
+    username = menu->get_infos("Username :");
     menu->init_dataw();
-    password = menu->get_infos("Mot de passe :");
+    password = menu->get_infos("Password :");
 
     if (choice == 1){
       menu->init_dataw();
-      confirmation = menu->get_infos("Confirmation mot de passe :");
+      confirmation = menu->get_infos("Confirmation of password :");
     }
 
     if (choice == 0)
@@ -65,7 +65,7 @@ void authentificationMenu(MenuHandler* menu, Client* client){
       menu->print_warning(msg);
       menu->refresh_board();
 
-      if (msg == "Compte créé avec succes"){ // Connexion directe
+      if (msg == "Successfully created account"){ // Connexion directe
         signIn(client->getSocket(), username, password);
         client->readPipe();
       }
@@ -80,7 +80,7 @@ void normalGameMenu(MenuHandler* menu, Client* client){
   menu->clear_windows();
   menu->init_choicesw();
   bool play = true;
-  int choice = menu->get_choice({"Classic", "Dark", "Horde", "Alice", "Retour"});
+  int choice = menu->get_choice({"Classic", "Dark", "Horde", "Alice", "Return"});
   menu->refresh_board();
 
   switch (choice){
@@ -111,7 +111,7 @@ void realTimeMenu(MenuHandler* menu, Client* client){
   menu->clear_windows();
   menu->init_choicesw();
   bool play = true;
-  int choice = menu->get_choice({"Classic", "Dark", "Horde", "Alice", "Retour"});
+  int choice = menu->get_choice({"Classic", "Dark", "Horde", "Alice", "Return"});
   menu->refresh_board();
 
   switch (choice){
@@ -145,7 +145,7 @@ void gamemodeMenu(MenuHandler* menu, Client* client){
   while (!leave){
     menu->clear_windows();
     menu->init_choicesw();
-    int choice = menu->get_choice({"Normal", "Real-Time", "Retour"});
+    int choice = menu->get_choice({"Normal", "Real-Time", "Return"});
     menu->refresh_board();
 
     switch (choice){
@@ -178,7 +178,7 @@ void leaveLadderMenu(MenuHandler* menu, Client* client, std::string mode){
 
   menu->refresh_board();
   menu->init_choicesw();
-  menu->get_choice({"Retour"});
+  menu->get_choice({"Return"});
 }
 
 
@@ -188,7 +188,7 @@ void normalLadderMenu(MenuHandler* menu, Client* client){
   while (!leave){
     menu->clear_windows();
     menu->init_choicesw();
-    int choice = menu->get_choice({"Classic", "Dark", "Horde", "Alice", "Retour"});
+    int choice = menu->get_choice({"Classic", "Dark", "Horde", "Alice", "Return"});
 
     switch (choice){
       case 0 :
@@ -220,7 +220,7 @@ void realTimeLadderMenu(MenuHandler* menu, Client* client){
   while (!leave){
     menu->clear_windows();
     menu->init_choicesw();
-    int choice = menu->get_choice({"Classic", "Dark", "Horde", "Alice", "Retour"});
+    int choice = menu->get_choice({"Classic", "Dark", "Horde", "Alice", "Return"});
 
     switch (choice){
       case 0 :
@@ -252,7 +252,7 @@ void ladderMenu(MenuHandler* menu, Client* client){
   while (!leave){
     menu->clear_windows();
     menu->init_choicesw();
-    int choice = menu->get_choice({"Normal", "Real-Time", "Retour"});
+    int choice = menu->get_choice({"Normal", "Real-Time", "Return"});
     menu->refresh_board();
 
     switch (choice){
@@ -287,7 +287,7 @@ void myStatMenu(MenuHandler* menu, Client* client){
 
   menu->refresh_board();
   menu->init_choicesw();
-  menu->get_choice({"Retour"});
+  menu->get_choice({"Return"});
   menu->refresh_board();
 }
 
@@ -297,7 +297,7 @@ void statMenu(MenuHandler* menu, Client* client){
   while (!leave){
     menu->clear_windows();
     menu->init_choicesw();
-    int choice = menu->get_choice({"Mes statistiques", "Classement général", "Retour"});
+    int choice = menu->get_choice({"My Stats", "Global Stats", "Return"});
 
     switch (choice){
       case 0 :
@@ -317,25 +317,25 @@ void statMenu(MenuHandler* menu, Client* client){
 void viewFriendsMenu(MenuHandler* menu, Client* client){
   menu->clear_windows();
   menu->init_friendsw(client->getFriends());
-  menu->print_warning3("Votre liste d'amis");
+  menu->print_warning3("Your Friend List");
   menu->init_choicesw();
-  menu->get_choice({"Retour"});
+  menu->get_choice({"Return"});
   menu->refresh_board();
 }
 
 void theirFriendRequestMenu(MenuHandler* menu, Client* client){
   menu->clear_windows();
-  menu->print_warning2("Quiter : /quit   Accepter : /accept [name]   Refuser : /refuse [name]");
+  menu->print_warning2("Quit : /quit   Accept : /accept [name]   Deny : /refuse [name]");
   menu->refresh_board();
 
   std::string command = "";
 
   while (command != "/quit"){
     menu->init_friendsw(client->getRecvRequest());
-    menu->print_warning3("Vos demandes d'amis recues");
+    menu->print_warning3("Your Incoming Requests");
     menu->refresh_board();
     menu->init_dataw();
-    command = menu->get_infos("commande");
+    command = menu->get_infos("Command");
     menu->refresh_board();
 
     // [0] Commande [1] Nom
@@ -346,7 +346,7 @@ void theirFriendRequestMenu(MenuHandler* menu, Client* client){
       continue;
     }
     else if (!client->hasRequestFrom(split[1])){
-      menu->print_warning("Vous n'avez pas recu de demande de cette personne");
+      menu->print_warning("You didn't receive a request from this person");
       menu->refresh_board();
       continue;
     }
@@ -382,17 +382,17 @@ void theirFriendRequestMenu(MenuHandler* menu, Client* client){
 
 void sendFriendRequestMenu(MenuHandler* menu, Client* client){
   menu->clear_windows();
-  menu->print_warning2("Quitter : /quit   Envoyer : /send [name]");
+  menu->print_warning2("Quit : /quit   Send : /send [name]");
   menu->refresh_board();
 
   std::string command = "";
 
   while (command != "/quit"){
     menu->init_friendsw(client->getSentRequest());
-    menu->print_warning3("Vos demande d'amis envoyées");
+    menu->print_warning3("Your Outgoing Requests");
     menu->refresh_board();
     menu->init_dataw();
-    command = menu->get_infos("commande");
+    command = menu->get_infos("Command");
     menu->refresh_board();
 
     std::vector<std::string> split = splitString(command, ' ');
@@ -402,22 +402,22 @@ void sendFriendRequestMenu(MenuHandler* menu, Client* client){
       continue;
     }
     else if (split[1] == "all" || split[1] == "Guest"){
-      menu->print_warning("Vous ne pouvez pas envoyer de demande à Guest ou all");
+      menu->print_warning("You can not send a request to 'Guest' or 'all'");
       menu->refresh_board();
       continue;
     }
     else if (client->isFriendWith(split[1])){
-      menu->print_warning("Vous êtes déjà ami avec cette personne");
+      menu->print_warning("This person is already in your friend list");
       menu->refresh_board();
       continue;
     }
     else if (client->hasSentTo(split[1])){
-      menu->print_warning("Vous avez déjà envoyé une demande à cette personne");
+      menu->print_warning("You already sent a request to this person");
       menu->refresh_board();
       continue;
     }
     else if (split[1] == client->getName()){
-      menu->print_warning("Vous ne pouvez pas envoyer une demande à vous même");
+      menu->print_warning("You can not send a request to yourself");
       menu->refresh_board();
       continue;
     }
@@ -450,17 +450,17 @@ void sendFriendRequestMenu(MenuHandler* menu, Client* client){
 
 void removeFriendMenu(MenuHandler* menu, Client* client){
   menu->clear_windows();
-  menu->print_warning2("Quitter : /quit   Supprimer : /remove [name]");
+  menu->print_warning2("Quit : /quit   Remove : /remove [name]");
   menu->refresh_board();
 
   std::string command = "";
 
   while (command != "/quit"){
     menu->init_friendsw(client->getFriends());
-    menu->print_warning3("Votre liste d'amis");
+    menu->print_warning3("Your friend list");
     menu->refresh_board();
     menu->init_dataw();
-    command = menu->get_infos("commande");
+    command = menu->get_infos("Command");
     menu->refresh_board();
 
     std::vector<std::string> split = splitString(command, ' ');
@@ -470,7 +470,7 @@ void removeFriendMenu(MenuHandler* menu, Client* client){
       continue;
     }
     else if (!client->isFriendWith(split[1])){
-      menu->print_warning("Vous n'êtes pas ami avec cette personne");
+      menu->print_warning("You are not befriended to that person");
       menu->refresh_board();
       continue;
     }
@@ -496,17 +496,17 @@ void removeFriendMenu(MenuHandler* menu, Client* client){
 
 void cancelRequestMenu(MenuHandler* menu, Client* client){
   menu->clear_windows();
-  menu->print_warning2("Quitter : /quit   Annuler : /cancel [name]");
+  menu->print_warning2("Quit : /quit   Cancel : /cancel [name]");
   menu->refresh_board();
 
   std::string command = "";
 
   while (command != "/quit"){
     menu->init_friendsw(client->getSentRequest());
-    menu->print_warning3("Vos demande d'amis envoyées");
+    menu->print_warning3("Your Outgoing Requets");
     menu->refresh_board();
     menu->init_dataw();
-    command = menu->get_infos("commande");
+    command = menu->get_infos("Command");
     menu->refresh_board();
 
     std::vector<std::string> split = splitString(command, ' ');
@@ -516,7 +516,7 @@ void cancelRequestMenu(MenuHandler* menu, Client* client){
       continue;
     }
     else if (!client->hasSentTo(split[1])){
-      menu->print_warning("Aucune demande n'a été envoyée à cette personne");
+      menu->print_warning("No request has been sent to that person");
       menu->refresh_board();
       continue;
     }
@@ -547,12 +547,12 @@ void friendMenu(MenuHandler* menu, Client* client){
     menu->clear_windows();
     menu->init_choicesw();
     int choice = menu->get_choice({
-      "Consulter sa liste d'amis",
-      "Accepter ou refuser une demande d'ami",
-      "Envoyer une demande d'ami",
-      "Retirer un ami de sa liste d'amis",
-      "Annuler une demande d'ami",
-      "Retour"
+      "My friend list",
+      "Accept or deny a request",
+      "Send a request",
+      "Remove a friend",
+      "Cancel an outgoing request",
+      "Return"
     });
 
     switch (choice){
@@ -581,7 +581,7 @@ void friendMenu(MenuHandler* menu, Client* client){
 
 void chatMenu(MenuHandler* menu, Client* client){
   menu->clear_windows();
-  menu->print_warning2("Quitter : /quit   Changer conversation : /change [name]");
+  menu->print_warning2("Quit : /quit   Change conversation : /change [name]");
   menu->refresh_board();
 
   std::string target_name = client->getIsChattingWith();
@@ -592,13 +592,13 @@ void chatMenu(MenuHandler* menu, Client* client){
 
   while (command != "/quit"){
     menu->init_dataw();
-    command = menu->get_infos("message");
+    command = menu->get_infos("Message");
     menu->refresh_board();
 
     if (command.size() == 0) continue;
 
     if (!checkInputFormat(command)){
-      menu->print_warning("Les caractères | et ~ sont interdits");
+      menu->print_warning("You may not use '|' and '~'");
       continue;
     }
 
@@ -606,23 +606,23 @@ void chatMenu(MenuHandler* menu, Client* client){
 
     if (split[0] == "/change"){
       if (split.size() != 2){
-        menu->print_warning("Commande invalide");
+        menu->print_warning("Command invalid");
         menu->refresh_board();
       }
       else if (split[1].length() > 10){
-        menu->print_warning("La taille des noms est limitée à 10 caractères");
+        menu->print_warning("The size of the names is limited to 10 caracters.");
         menu->refresh_board();
       }
       else if (split[1] == target_name){
-        menu->print_warning("Vous êtes déjà dans le canal");
+        menu->print_warning("You are already in that channel.");
         menu->refresh_board();
       }
       else if (split[1] == client->getName()){
-        menu->print_warning("Vous ne pouvez pas parler avec vous même");
+        menu->print_warning("You can't talk to youself.");
         menu->refresh_board();
       }
       else if (!client->isFriendWith(split[1]) && split[1] != "all"){
-        menu->print_warning("Vous n'êtes pas ami avec cette personne");
+        menu->print_warning("You are not befriended to that person!");
         menu->refresh_board();
       }
       else {
@@ -654,7 +654,7 @@ void mainMenu(MenuHandler* menu, Client* client){
   while (!leave){
     menu->clear_windows();
     menu->init_choicesw();
-    int choice = menu->get_choice({"Jouer", "Ami", "Chat", "Statistique", "Quitter"});
+    int choice = menu->get_choice({"Play", "Friend List", "Chat", "Statistics", "Quit"});
     menu->refresh_board();
 
     switch (choice){

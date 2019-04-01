@@ -144,7 +144,7 @@ la case traversée par le roi n'est contrôlée par aucune pièce adverse\footno
 
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.5]{UC_connexion.png}
+\includegraphics[scale=0.5]{ConnectionUseCase.png}
 \caption{Diagramme de \textit{use case} des actions possibles d'un utilisateur quant à son identification}
 \label{UC_co} %UseCase_connexion
 \end{figure}
@@ -173,7 +173,7 @@ la case traversée par le roi n'est contrôlée par aucune pièce adverse\footno
 
 \begin{figure}[H]
 \begin{center}
-\includegraphics[scale=0.5]{UC_mainmenu.png}
+\includegraphics[scale=0.5]{MainMenuUseCase.png}
 \caption{Diagramme de \textit{use case} des actions possibles d'un utilisateur}
 \label{UC_menu} %UseCase_menu
 \end{center}
@@ -538,6 +538,7 @@ Si un mouvement doit s'exécuter, le jeu gère les collisions et ensuite, fait b
 \subsubsection{Player}
 \textit{Player} se charge de transférer à la partie serveur bon nombre d'informations sur l'état de la partie via ses différentes fonctions \textit{transfer}.
 
+
 \subsubsection{Board}
 \textit{Board} garde en mémoire les différentes positions des pièces. Ainsi, il est plus rapide de savoir si une case est occupée ou non.
 
@@ -572,6 +573,9 @@ Le joueur se connecte à l'aide du \textit{hostname} du serveur, qui s'affiche �
 \paragraph{}Afin d'identifier les messages échangés et le protocole à suivre suite à la réception d'un message, ceux-ci sont précédés d'un en-tête.
 
 \subsection{Déroulement d'une partie}
+
+Les différentes étapes de mise en place et de déroulement d'une partie sont décrites ici, telles qu'effectuées lors d'une connexion avec un client utilisant la GUI ncurses.
+
 \begin{enumerate}
 
 \item \textit{Initialisation du plateau côté serveur}\\
@@ -590,7 +594,7 @@ Le joueur se connecte à l'aide du \textit{hostname} du serveur, qui s'affiche �
 
 \item \textit{Assignation de la couleur des pièces aux joueurs} \\
 \textbf{Mise en pratique :} Le serveur envoie la couleur du joueur (noir ou blanc) à son client. \\
-\textbf{Protocole :} Le serveur envoie 'white' au premier joueur, le joueur blanc, et 'black' pour le second joueur, précédé de l'en-tête 'X' (colour). Pour l'instant, le premier client connecté devient le premier joueur.  Comme pour le point précèdent, ce message est placé dans une variable de l'instance d'affichage du jeu.
+\textbf{Protocole :} Le serveur envoie 'white' au premier joueur, le joueur blanc, et 'black' pour le second joueur, précédé de l'en-tête 'X' (colour).
 
 
 \item \textit{Envoi de la confirmation de début de partie par le serveur}\\
@@ -706,4 +710,4 @@ Le joueur se connecte à l'aide du \textit{hostname} du serveur, qui s'affiche �
 
 
 \end{document}
-o
+

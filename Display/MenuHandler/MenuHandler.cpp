@@ -48,7 +48,7 @@ void MenuHandler::init_dataw()
 std::string MenuHandler::get_infos(std::string type)
 /** permet d'obtenir l'input du joueur **/
 {
-  mvwprintw(data_menu,1,1,"Entrez votre %s", type.c_str());
+  mvwprintw(data_menu,1,1,"Please enter your %s", type.c_str());
 
   std::string input;
 
