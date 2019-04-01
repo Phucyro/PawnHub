@@ -130,6 +130,7 @@ la case traversée par le roi n'est contrôlée par aucune pièce adverse\footno
 				 3.1 & 01/04 & Antunes André & Relecture et Description de Matchmaking\\
 				 3.2 & 01/04 & Mardulyn Romain & Description de jeu en temps réel\\
 				 3.3 & 01/04 & Forest Caroline & Mise à jour des diagrammes de Use Case et gestion de messages\\
+				 2.7 & 1/04 & Nguyen Duc & Modification du protocole de communication du menu\\
 				\hline
 \end{tabular}
 			\caption*{Historique des modifications}
@@ -662,37 +663,45 @@ Les différentes étapes de mise en place et de déroulement d'une partie sont d
 
 
 \subsubsection{Affichage du menu}
-\textbf{Mise en pratique :} Les méthodes de l'objet permettant l'affichage du menu sont utilisées et les options suivantes sont proposées à l'utilisateur : \textit{Jouer}, \textit{Amis}, \textit{Statistique} et \textit{Quitter}.\\
-\textbf{Protocole :} Si l'utilisateur joue en mode console : La méthode \textit{\_get\_choice}, toujours précédée par la méthode \textit{\_init\_choicew}, est utilisée afin de pouvoir afficher les différentes options. Avec l'interface graphique\\
+\textbf{Mise en pratique :} Une fois que l'utilisateur s'est identifié, les options suivantes lui sont proposées : \textit{Jouer}, \textit{Amis}, \textit{Chatter}, \textit{Statistiques} et \textit{Quitter}.\\
+\textbf{Protocole :} Si l'utilisateur joue en mode console : La méthode \textit{\_get\_choice}, toujours précédée par la méthode \textit{\_init\_choicew}, est utilisée afin de pouvoir afficher les différentes options. Avec l'interface graphique, les différentes options sont représentées par des boutons sur lesquels l'utilisateur peut appuyer pour faire son choix.\\
 
 \subsubsection{Choix d'une option}
-\textbf{Mise en pratique :} L'utilisateur peut parcourir les différentes options en utilisant les touches directionnelles \textit{Haut} et \textit{Bas} et valider son choix en appuyant sur la touche \textit{Entrée} \\
-\textbf{Protocole :} Si l'utilisateur joue en mode console :  Après avoir appelé la méthode \textit{\_get\_choice}, le programme attend que l'utilisateur choisisse une option. Si le choix a été fait, une fonction est appelée pour diriger l'utilisateur vers un autre menu.\\
+\textbf{Mise en pratique :} L'utilisateur peut parcourir les différentes options en utilisant sur les touches directionnelles \textit{Haut} et \textit{Bas} et valider son choix en appuyant sur la touche \textit{Entrée}. Avec l'interface graphique,
+l'utilisateur, peut en plus utiliser la souris afin de cliquer sur les boutons pour effectuer son choix.\\
+\textbf{Protocole :} Si l'utilisateur joue en mode console :  Après avoir appelé la méthode \textit{\_get\_choice}, le programme attend que l'utilisateur choisisse une option. Avec l'interface graphique, chaque bouton est lié à une fonction qui ouvre une autre fenêtre lorsque celui-ci est cliqué dessus. Si le choix a été fait, une fonction est appelée pour diriger l'utilisateur vers le menu correspondant.\\
 
 \subsubsection{Choix d'option du menu Jouer}
-\textbf{Mise en pratique :} Les 4 modes de jeu sont affichés et l'utilisateur peut rejoindre une file d'attente vers le mode de jeu approprié en sélectionnant une de ces 6 options ou revenir au menu principal en choisissant l'option \textit{Retour}.\\
-\textbf{Protocole :} Si l'utilisateur choisit un mode de jeu, la fonction \textit{playGame} est appelée et elle envoie un message au serveur qui placera le joueur dans une file d'attente. Ensuite l'utilisateur sera bloqué jusqu'à ce qu'un autre joueur rejoigne la même file d'attente. Sinon l'utilisateur sera dirigé vers le menu principal.\\
+\textbf{Mise en pratique :} Les 4 modes de jeu sont affichés ainsi que leur variante en \textit{RealTime}. L'utilisateur peut rejoindre une file d'attente vers le mode de jeu approprié en sélectionnant une de ces 8 options ou revenir au menu principal en choisissant l'option \textit{Retour}.\\
+\textbf{Protocole :} Si l'utilisateur choisit un mode de jeu, la fonction \textit{playGame} est appelée et cette dernière envoit un message au serveur qui placera le joueur dans une file d'attente. Ensuite l'utilisateur sera bloqué jusqu'à ce qu'un autre joueur soit mis dans une partie avec l'utilisateur ou jusqu'à ce que l'utilisateur quitte la file d'attente (indisponible sous console). Sinon, si l'utilisateur sélectionne l'option retour, ce dernier sera dirigé vers le menu principal.\\
 
 \subsubsection{Choix d'option du menu Ami}
-\textbf{Mise en pratique :} L'utilisateur a le choix entre 5 options : \textit{Voir sa liste d'amis}, \textit{Envoyer une demande d'ami}, \textit{Retirer un ami}, \textit{Accepter ou refuser une demande d'ami} et \textit{Retour}.\\
-\textbf{Protocole :} Après que l'utilisateur a cliqué sur le bouton correspondantant, le programme attend que l'utilisateur choisisse une option.Si un choix a été fait, une fonction est appelée pour diriger l'utilisateur vers un autre menu. \\
+\textbf{Mise en pratique :} L'utilisateur a le choix entre 6 options : \textit{Voir sa liste d'amis}, \textit{Envoyer une demande d'ami}, \textit{Retirer un ami}, \textit{Accepter ou refuser une demande d'ami}, \textit{Annuler une demande d'ami} et \textit{Retour}.\\
+\textbf{Protocole :} Après que l'utilisateur ait choisi une option, ce dernier est dirigé vers le menu correspondant. \\
 
-\subsubsection{Voir sa liste d'amis}
+\subsubsection{Voir sa liste d'amis sous console}
 \textbf{Mise en pratique :} Après avoir choisi cette option, les noms des amis de l'utilisateur sont affichés dans un rectangle.\\
-\textbf{Protocole :} Un message est envoyé au serveur qui traitera la demande et qui renverra le nom de tous ses amis. Lorsque l'entièreté des noms des amis sont reçus du coté client,  leur nom de est affiché sur l'écran de l'utilisateur.\\
+\textbf{Protocole :} Les amis de l'utilisateur sont stockés dans un vecteur contenu dans l'objet \textit{Client}. Afin d'afficher le nom de ses amis, une fonction parcours ce vecteur-là et affiche chaque nom dans le rectangle. \\
 
-\subsubsection{Envoyer une demande d'ami}
-\textbf{Mise en pratique :} Après avoir choisi cette option, l'utilisateur est invité à rentrer un nom ou une autre commande pour retourner au menu des amis.\\
-\textbf{Protocole :} Si l'utilisateur ne rentre pas la commande pour quitter ce menu, alors un message est envoyé au serveur qui le traitera et renverra le résultat de l'opération. Plusieurs résultat sont possibles, soit la demande a été envoyée soit l'une de ces erreurs s'est produite : l'utilisateur s'est envoyé une demande d'ami à lui même, la personne se trouve déjà dans sa liste d'amis, le nom n'est lié à aucun compte ou alors une demande a déjà été envoyée. \\
+\subsubsection{Envoyer une demande d'ami sous console}
+\textbf{Mise en pratique :} Après avoir choisi cette option, l'utilisateur est invité à rentrer une commande. \\
+\textbf{Protocole :} Lorsque l'utilisateur rentre une commande plusieurs résultats sont possibles : le format de la commande est invalide, il n'est pas possible d'envoyer une demande d'ami à \textit{Guest} ou \textit{all}, la personne se trouve déjà dans la liste d'amis de l'utilisateur, il n'est pas possible de s'envoyer une demande d'ami, le nom de l'utilisateur entré est inexistant, la demande d'ami a été envoyée ou alors la personne et l'utilisateur sont devenus amis dans le cas où l'utilisateur aurait déjà reçu une demande d'ami de la part de ce joueur et que cette demande n'a pas encore été acceptée. \\
 
-\subsubsection{Retirer un ami}
-\textbf{Mise en pratique :} Après avoir choisi cette option, l'utilisateur est invité à rentrer un nom ou une autre commande pour retourner au menu des amis.\\
-\textbf{Protocole :} Si l'utilisateur ne rentre pas la commande pour quitter ce menu, alors un message est envoyé au serveur qui le traitera et renverra le résultat de l'opération. Plusieurs résultats sont possibles, soit la personne a été retirée de la liste d'amis soit l'utilisateur a entré le nom d'une personne qui ne fait pas partie de ses amis.\\
+\subsubsection{Retirer un ami sous console}
+\textbf{Mise en pratique :} Après avoir choisi cette option, l'utilisateur est invité à rentrer une commande. \\
+\textbf{Protocole :} Lorsque l'utilisateur rentre une commande plusieurs résultats sont possibles : le format de la commande est invalide, l'utilisateur n'est pas ami avec cette personne ou la personne a été retiré de la liste d'amis. \\
 
-\subsubsection{Accepter ou refuser une demande d'ami}
-\textbf{Mise en pratique :} Après avoir choisi cette option, l'utilisateur est invité à rentrer une commande suivi d'un nom ou autre une commande pour retourner au menu des amis.\\
-\textbf{Protocole :} Si l'utilisateur ne rentre pas la commande pour quitter ce menu, alors un message est envoyé au serveur qui le traitera et renverra le résultat de l'opération. Plusieurs résultats sont possibles, soit la demande a été acceptée ou refusée, soit aucune demande d'ami n'a été envoyée par le nom de la personne encodé.\\
+\subsubsection{Accepter ou refuser une demande d'ami sous console}
+\textbf{Mise en pratique :} Après avoir choisi cette option, l'utilisateur est invité à rentrer une commande. \\
+\textbf{Protocole :} Lorsque l'utilisateur rentre une commande plusieurs résultats sont possibles : le format de la commande est invalide, l'utilisateur n'a pas reçu de demande d'ami de cette personne, la requête a été acceptée ou refusée. \\
 
+\subsubsection{Annuler une demande d'ami sous console}
+\textbf{Mise en pratique :} Après avoir choisi cette option, l'utilisateur est invité à rentrer une commande. \\
+\textbf{Protocole :} Lorsque l'utilisateur rentre une commande plusieurs résultats sont possibles : le format de la commande est invalide, l'utilisateur n'a pas envoyé de demande d'ami à cette personne ou la demande d'ami a été annulée. \\
+
+\subsubsection{Opération concernant les amis sous l'interface graphique}
+\textbf{Mise en pratique :} Plusieurs rectangles sont affichés dans la fenêtre et chacun d'eux peut contenir des noms. \\
+\textbf{Protocole :} Si l'utilisateur veut ajouter une personne en ami, l'utilisateur doit écrire le nom de la personne concernée dans la zone de texte et ensuite appuyer sur le bouton correspondant. Pour toutes les autres opérations (Retirer un ami, accepter ou refuser une demande d'ami et annuler une demande d'ami), il faut cliquer sur le nom de la personne concernée si ce nom se trouve dans un des rectangles et d'appuyer sur un le bouton correspondant afin de choisir la bonne opération. \\
 
 \subsubsection{Choix d'option du menu Statistiques}
 \textbf{Mise en pratique :} L'utilisateur a le choix entre 3 options : \textit{Voir ses statistiques}, \textit{Voir le classement général} et \textit{Quitter}.\\
@@ -700,12 +709,12 @@ Les différentes étapes de mise en place et de déroulement d'une partie sont d
 
 \subsubsection{Choix d'option du menu Classement général}
 \textbf{Mise en pratique :} L'utilisateur a le choix entre 9 options : \textit{Classic}, \textit{Dark}, \textit{Horde}, \textit{Alice} et ses variantes en \textit{RealTime} et \textit{Retour}. \\
-\textbf{Protocole :} Si l'utilisateur choisit une des 4 premières options, alors un messages est envoyé au serveur qui renverra le nom et les statistiques des 10 premiers joueurs du mode sélectionné. Ces informations seront ensuite affichées dans un rectangle. Sinon l'utilisateur revient au menu principal.\\
+\textbf{Protocole :} Si l'utilisateur choisit une des 8 premières options, alors un messages est envoyé au serveur qui renverra le nom et les statistiques des 10 premiers joueurs du mode sélectionné. Ces informations seront ensuite affichées dans un rectangle. Sinon l'utilisateur revient au menu principal.\\
 
 
 \subsubsection{Utilisation du chat}
-\textbf{Mise en pratique :} Une fois que l'utilisateur a sélectionné cette option, il peut discuter soit avec ses amis soit discuter avec n'importe quelle autre personne dans le canal global. L'utilisateur navigue entre les différens chats via la commande /change [nom ami] ou /change [all] pour le chat global.\\
-\textbf{Protocole :} Une fois que l'utilisateur rentre la commande pour discuter, un message sera envoyé au serveur qui le traitera et renverra le résultat de l'opération. Plusieurs résultats sont possibles, soit le message de l'utilisateur s'est correctement envoyé, soit la commande a été mal entrée et dans ce cas, aucun message n'est envoyé.\\
+\textbf{Mise en pratique :} Une fois que l'utilisateur a sélectionné cette option, il peut discuter soit avec ses amis soit discuter avec n'importe quelle autre personne dans le canal global. L'utilisateur navigue entre les différents chats via la commande /change [nom ami] ou /change [all] pour le chat global (sous console) ou en sélectionnant un nom se trouvant dans le rectangle situé à droit de la fenêtre et ensuite en appuyant sur le bouton pour changer de canal. \\
+\textbf{Protocole :} Une fois que l'utilisateur rentre la commande pour discuter, un message sera envoyé au serveur qui le traitera et renverra le résultat de l'opération. Plusieurs résultats sont possibles : la commande est invalide (sous console), le destinataire a bien reçu le message ou alors le serveur envoit un message à l'envoyeur pour lui avertir que le destinataire n'est pas en ligne. \\
 
 
 
