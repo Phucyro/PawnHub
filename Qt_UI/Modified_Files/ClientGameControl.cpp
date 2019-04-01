@@ -6,7 +6,7 @@
 
 std::string moveToString(int*);
 
-ClientGameControl::ClientGameControl(Client* _client, GameWithoutChat* _game): client(_client), game(_game), alice_game(nullptr), previous_board(), game_ongoing(true), is_alice(false), is_real_time(false), colour('\0') {
+ClientGameControl::ClientGameControl(Client* _client, GameWithoutChat* _game): client(_client), game(_game), alice_game(nullptr), previous_board(), second_previous_board(), game_ongoing(true), is_alice(false), is_real_time(false), colour('\0') {
     connect(this, &ClientGameControl::updatePiece, game, &GameWithoutChat::set_piece);
     connect(this, &ClientGameControl::receiveUpdate, game, &GameWithoutChat::show_update);
     connect(this, &ClientGameControl::receiveGameMode, game, &GameWithoutChat::set_mode);
@@ -20,7 +20,7 @@ ClientGameControl::ClientGameControl(Client* _client, GameWithoutChat* _game): c
     connect(this, &ClientGameControl::reduceTimer, game, &GameWithoutChat::reduce_timer);
 }
 
-ClientGameControl::ClientGameControl(Client* _client, GameWithoutChatWithAlice* _game): client(_client), game(nullptr), alice_game(_game), previous_board(), game_ongoing(true), is_alice(true), is_real_time(false), colour('\0') {
+ClientGameControl::ClientGameControl(Client* _client, GameWithoutChatWithAlice* _game): client(_client), game(nullptr), alice_game(_game), previous_board(), second_previous_board(), game_ongoing(true), is_alice(true), is_real_time(false), colour('\0') {
     connect(this, &ClientGameControl::updatePiece, alice_game, &GameWithoutChatWithAlice::set_piece);
     connect(this, &ClientGameControl::receiveUpdate, alice_game, &GameWithoutChatWithAlice::show_update);
     connect(this, &ClientGameControl::receiveGameMode, alice_game, &GameWithoutChatWithAlice::set_mode);
@@ -54,10 +54,11 @@ void ClientGameControl::receiveBoard(QString message) {
       }
       message.remove(0,1);
   }
-  if (previous_board != message)
+  if ((previous_board != message) || (second_previous_board != message))
   {
-      previous_board = message;
-      emit clearBoard();
+      if (is_second_board) second_previous_board = message;
+      else previous_board = message;
+      emit clearBoard(is_second_board);
       stringToBoard(this, message.toStdString(), is_second_board);
   }
 }
@@ -114,22 +115,22 @@ void ClientGameControl::handleMessage() {
 }
 
 void ClientGameControl::cleanOldMsg() {
-	// to avoid message from previous game to break everything
-	bool firstMsgRecv = false;
-	std::string message;
+    // to avoid message from previous game to break everything
+    bool firstMsgRecv = false;
+    std::string message;
     while (!firstMsgRecv) {
         message = client->readGame();
         if(message[0] == 'F') {
-    			firstMsgRecv = true;
-    			char header = message[0];
-          (this->*(headerReceiveMap[header]))(QString::fromStdString(message.erase(0,1)));
+            firstMsgRecv = true;
+            char header = message[0];
+            (this->*(headerReceiveMap[header]))(QString::fromStdString(message.erase(0,1)));
         }
     }
 }
 
 void ClientGameControl::startParty() {
   game_ongoing = true;
-  cleanOldMsg();
+//  cleanOldMsg();
   while(game_ongoing) {handleMessage();}
   emit finished();
 }

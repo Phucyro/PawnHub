@@ -22,6 +22,7 @@ private:
   GameWithoutChat* game;
   GameWithoutChatWithAlice* alice_game;
   QString previous_board;
+  QString second_previous_board;
   bool game_ongoing;
   bool is_alice;
   bool is_real_time;
@@ -69,7 +70,7 @@ signals:
   void receiveAskMove(QString);
   void receiveAskPromotion(QString);
 
-  void clearBoard();
+  void clearBoard(bool);
   void pauseTimer();
   void reduceTimer(int);
   void finished();

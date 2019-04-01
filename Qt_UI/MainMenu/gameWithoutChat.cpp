@@ -48,7 +48,7 @@ void GameWithoutChat::start()
     this->exec();
 }
 
-void GameWithoutChat::clear_board()
+void GameWithoutChat::clear_board(bool)
 {
     QIcon empty;
     foreach (QAbstractButton* button, ui->board->buttons())
