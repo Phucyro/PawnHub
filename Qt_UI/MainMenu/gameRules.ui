@@ -42,7 +42,7 @@
     <string/>
    </property>
    <property name="pixmap">
-    <pixmap resource="calvin.qrc">:/Calvin.jpg</pixmap>
+    <pixmap resource="ads.qrc">:/Calvin.jpg</pixmap>
    </property>
    <property name="scaledContents">
     <bool>true</bool>
@@ -115,8 +115,8 @@
   </widget>
  </widget>
  <resources>
+  <include location="ads.qrc"/>
   <include location="pawnhub.qrc"/>
-  <include location="calvin.qrc"/>
  </resources>
  <connections/>
 </ui>
