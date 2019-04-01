@@ -25,6 +25,10 @@
   <property name="windowTitle">
    <string>Friends</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="pawnhub.qrc">
+    <normaloff>:/icon/pawnhub_icon.png</normaloff>:/icon/pawnhub_icon.png</iconset>
+  </property>
   <widget class="QPushButton" name="returnPushButton">
    <property name="geometry">
     <rect>
@@ -222,6 +226,7 @@
   </widget>
  </widget>
  <resources>
+  <include location="pawnhub.qrc"/>
   <include location="calvin.qrc"/>
  </resources>
  <connections/>

@@ -105,6 +105,7 @@ RESOURCES += \
     calvin.qrc \
     loremipsum.qrc \
     catmeme.qrc \
-    chess_pieces.qrc
+    chess_pieces.qrc \
+    pawnhub.qrc
 
 #DISTFILES +=

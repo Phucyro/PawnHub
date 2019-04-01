@@ -25,6 +25,10 @@
   <property name="windowTitle">
    <string>Game Statistics</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="pawnhub.qrc">
+    <normaloff>:/icon/pawnhub_icon.png</normaloff>:/icon/pawnhub_icon.png</iconset>
+  </property>
   <widget class="QTableWidget" name="staisticsTableWidget">
    <property name="geometry">
     <rect>
@@ -64,6 +68,8 @@
    </property>
   </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="pawnhub.qrc"/>
+ </resources>
  <connections/>
 </ui>

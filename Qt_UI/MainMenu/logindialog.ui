@@ -13,6 +13,10 @@
   <property name="windowTitle">
    <string>Log In</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="pawnhub.qrc">
+    <normaloff>:/icon/pawnhub_icon.png</normaloff>:/icon/pawnhub_icon.png</iconset>
+  </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <spacer name="verticalSpacer_3">
@@ -153,6 +157,8 @@
   <tabstop>signupButton</tabstop>
   <tabstop>cancelButton</tabstop>
  </tabstops>
- <resources/>
+ <resources>
+  <include location="pawnhub.qrc"/>
+ </resources>
  <connections/>
 </ui>

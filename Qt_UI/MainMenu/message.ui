@@ -13,6 +13,10 @@
   <property name="windowTitle">
    <string>Oh no.</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="pawnhub.qrc">
+    <normaloff>:/icon/pawnhub_icon.png</normaloff>:/icon/pawnhub_icon.png</iconset>
+  </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="1" column="1">
     <widget class="QPushButton" name="pushButton_2">
@@ -90,6 +94,8 @@
   <tabstop>pushButton_3</tabstop>
   <tabstop>okButton</tabstop>
  </tabstops>
- <resources/>
+ <resources>
+  <include location="pawnhub.qrc"/>
+ </resources>
  <connections/>
 </ui>

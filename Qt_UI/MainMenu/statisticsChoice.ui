@@ -25,6 +25,10 @@
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="pawnhub.qrc">
+    <normaloff>:/icon/pawnhub_icon.png</normaloff>:/icon/pawnhub_icon.png</iconset>
+  </property>
   <widget class="QWidget" name="verticalLayoutWidget">
    <property name="geometry">
     <rect>
@@ -62,6 +66,8 @@
    </layout>
   </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="pawnhub.qrc"/>
+ </resources>
  <connections/>
 </ui>

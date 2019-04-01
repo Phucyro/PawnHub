@@ -31,6 +31,10 @@
   <property name="windowTitle">
    <string>Chess</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="pawnhub.qrc">
+    <normaloff>:/icon/pawnhub_icon.png</normaloff>:/icon/pawnhub_icon.png</iconset>
+  </property>
   <widget class="QGraphicsView" name="graphicsView">
    <property name="geometry">
     <rect>
@@ -3293,6 +3297,7 @@
   <tabstop>graphicsView</tabstop>
  </tabstops>
  <resources>
+  <include location="pawnhub.qrc"/>
   <include location="catmeme.qrc"/>
  </resources>
  <connections/>

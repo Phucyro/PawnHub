@@ -25,6 +25,10 @@
   <property name="windowTitle">
    <string>Chat</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="pawnhub.qrc">
+    <normaloff>:/icon/pawnhub_icon.png</normaloff>:/icon/pawnhub_icon.png</iconset>
+  </property>
   <widget class="QPlainTextEdit" name="chatPlainTextEdit">
    <property name="geometry">
     <rect>
@@ -133,6 +137,8 @@
   <tabstop>friendListWidget</tabstop>
   <tabstop>quitPushButton</tabstop>
  </tabstops>
- <resources/>
+ <resources>
+  <include location="pawnhub.qrc"/>
+ </resources>
  <connections/>
 </ui>

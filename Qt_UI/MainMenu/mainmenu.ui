@@ -19,9 +19,13 @@
   <property name="windowTitle">
    <string>Main Menu</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout_2" stretch="5,1">
+  <property name="windowIcon">
+   <iconset resource="pawnhub.qrc">
+    <normaloff>:/icon/pawnhub_icon.png</normaloff>:/icon/pawnhub_icon.png</iconset>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout_2" stretch="5,0">
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout" stretch="1,5">
+    <layout class="QHBoxLayout" name="horizontalLayout" stretch="1,4">
      <property name="sizeConstraint">
       <enum>QLayout::SetMinAndMaxSize</enum>
      </property>
@@ -126,36 +130,43 @@
       </layout>
      </item>
      <item>
-      <widget class="QPlainTextEdit" name="plainTextEdit">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="readOnly">
-        <bool>true</bool>
-       </property>
-       <property name="plainText">
-        <string>This is a game proned with features.
+      <layout class="QVBoxLayout" name="verticalLayout_3" stretch="1,5">
+       <item>
+        <widget class="QLabel" name="logoLabel">
+         <property name="pixmap">
+          <pixmap resource="pawnhub.qrc">:/banner/pawnhub_banner.png</pixmap>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPlainTextEdit" name="plainTextEdit">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="readOnly">
+          <bool>true</bool>
+         </property>
+         <property name="plainText">
+          <string>This is a game filled with features.
+No, really, they're features.
 
-If you think it is a bug, well..
-
-It is a feature created by our devs..
-
-Mwahahahha..
-
-Have fun playing with our game..
-
-And we made sure you can do it one handed.. (think about pawn hub memes)</string>
-       </property>
-       <property name="overwriteMode">
-        <bool>true</bool>
-       </property>
-       <property name="textInteractionFlags">
-        <set>Qt::LinksAccessibleByKeyboard|Qt::LinksAccessibleByMouse|Qt::TextBrowserInteraction|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
-       </property>
-      </widget>
+Enjoy!</string>
+         </property>
+         <property name="overwriteMode">
+          <bool>true</bool>
+         </property>
+         <property name="textInteractionFlags">
+          <set>Qt::LinksAccessibleByKeyboard|Qt::LinksAccessibleByMouse|Qt::TextBrowserInteraction|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </item>
     </layout>
    </item>
@@ -184,6 +195,7 @@ And we made sure you can do it one handed.. (think about pawn hub memes)</string
   <tabstop>quitButton</tabstop>
  </tabstops>
  <resources>
+  <include location="pawnhub.qrc"/>
   <include location="calvin.qrc"/>
  </resources>
  <connections/>

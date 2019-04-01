@@ -19,6 +19,10 @@
   <property name="windowTitle">
    <string>Connection</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="pawnhub.qrc">
+    <normaloff>:/icon/pawnhub_icon.png</normaloff>:/icon/pawnhub_icon.png</iconset>
+  </property>
   <property name="layoutDirection">
    <enum>Qt::LeftToRight</enum>
   </property>
@@ -185,6 +189,8 @@
   <tabstop>donePush</tabstop>
   <tabstop>cancelPush</tabstop>
  </tabstops>
- <resources/>
+ <resources>
+  <include location="pawnhub.qrc"/>
+ </resources>
  <connections/>
 </ui>

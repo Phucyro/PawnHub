@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/icon">
+        <file>pawnhub_icon.png</file>
+    </qresource>
+    <qresource prefix="/banner">
+        <file>pawnhub_banner.png</file>
+    </qresource>
+</RCC>
