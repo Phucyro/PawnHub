@@ -96,10 +96,8 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 RESOURCES += \
-    calvin.qrc \
-    catmeme.qrc \
     chess_pieces.qrc \
     pawnhub.qrc \
-    jacopomeme.qrc
+    ads.qrc
 
 #DISTFILES +=

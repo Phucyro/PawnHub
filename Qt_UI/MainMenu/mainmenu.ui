@@ -136,6 +136,9 @@
          <property name="pixmap">
           <pixmap resource="pawnhub.qrc">:/banner/pawnhub_banner.png</pixmap>
          </property>
+         <property name="scaledContents">
+          <bool>false</bool>
+         </property>
          <property name="alignment">
           <set>Qt::AlignCenter</set>
          </property>
@@ -176,7 +179,7 @@ Enjoy!</string>
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap resource="calvin.qrc">:/Calvin.jpg</pixmap>
+      <pixmap resource="ads.qrc">:/Calvin.png</pixmap>
      </property>
      <property name="alignment">
       <set>Qt::AlignBottom|Qt::AlignHCenter</set>
@@ -195,7 +198,7 @@ Enjoy!</string>
   <tabstop>quitButton</tabstop>
  </tabstops>
  <resources>
-  <include location="calvin.qrc"/>
+  <include location="ads.qrc"/>
   <include location="pawnhub.qrc"/>
  </resources>
  <connections/>

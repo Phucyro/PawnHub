@@ -50,6 +50,8 @@ private slots:
     void on_moveClearButton_clicked();
     void on_premoveClearButton_clicked();
 
+    void on_pushButton_pressed();
+
 private:
     Ui::GameWithoutChat *ui;
     Client *client;
@@ -59,6 +61,7 @@ private:
     QTime done;
     QString move;
 
+    void changeAds();
     void display_time();
 };
 
