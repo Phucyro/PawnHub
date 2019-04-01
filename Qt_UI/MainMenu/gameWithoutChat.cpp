@@ -127,6 +127,10 @@ void GameWithoutChat::show_update(QString message)
       else {
         message = "Checkmate\nBlack player won!";
       }
+      ui->surrendButton->setEnabled(false);
+      ui->moveConfirmButton->setEnabled(false);
+      ui->moveClearButton->setEnabled(false);
+      ui->premoveClearButton->setEnabled(false);
       control->setGameOngoing(false);
       closeEvent(new QCloseEvent);
     }
@@ -220,6 +224,9 @@ void GameWithoutChat::on_surrendButton_pressed()
     control->sendMove("/end");
     show_update("giveup");
     ui->surrendButton->setEnabled(false);
+    ui->moveConfirmButton->setEnabled(false);
+    ui->moveClearButton->setEnabled(false);
+    ui->premoveClearButton->setEnabled(false);
 }
 
 void GameWithoutChat::on_moveConfirmButton_clicked()
