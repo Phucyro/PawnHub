@@ -37,13 +37,13 @@ void inline signUpHandler(Socket* socket, Data* data, std::string username, std:
 
 void inline signInHandler(Socket* socket, PlayersMap* players_map, std::mutex* playerMapMutex, Data* data, Player* player, std::string username, std::string pswd){
   if (!(data->containsAccount(username))){
-    socket->printSend("2~0"); // Compte inexistant
+    socket->printSend("2~0"); // Account inexistant
   }
   else if (data->isConnected(username)){
-    socket->printSend("2~3"); // Joueur deja connecte
+    socket->printSend("2~3"); // Player already connected
   }
   else if (data->checkUserPassword(username, pswd)){
-    socket->printSend("2~1"); // Identification reussie
+    socket->printSend("2~1"); // Identification successful
     data->lockMutex(username);
     data->loadUserData(username);
     data->unlockMutex(username);
@@ -54,13 +54,13 @@ void inline signInHandler(Socket* socket, PlayersMap* players_map, std::mutex* p
     playerMapMutex->unlock();
   }
   else {
-    socket->printSend("2~2"); // Mauvais mot de passe
+    socket->printSend("2~2"); // Wrong password
   }
 }
 
 
 void inline chatHandler(PlayersMap* players_map, std::mutex* playerMapMutex, Player* player, std::string target, std::string text){
-  if (target == "all"){ // Envoie le message a tous ceux connecte
+  if (target == "all"){ // Send the message to everybody connected
     playerMapMutex->lock();
     for (auto elem : *players_map){
       elem.second->getSocket()->sendMessage(std::string("3~") + player->getName() + "~" + target + "~" + text);
@@ -77,7 +77,7 @@ void inline chatHandler(PlayersMap* players_map, std::mutex* playerMapMutex, Pla
     (*players_map)[target]->getSocket()->sendMessage(std::string("3~") + player->getName() + "~" + player->getName() + "~" + text);
   }
   else { // Si target est deconnecte alors previens sender
-    player->getSocket()->sendMessage(std::string("3~[Server]~") + target + "~" + target + " est deconnecte actuellement");
+    player->getSocket()->sendMessage(std::string("3~[Server]~") + target + "~" + target + " is offline");
   }
   playerMapMutex->unlock();
 }
@@ -153,7 +153,7 @@ void inline viewFriendRequestHandler(Player* player, Data* data){
 }
 
 void inline acceptRefuseRequestHandler(Player* player, PlayersMap* players_map, std::mutex* playerMapMutex, Data* data, std::string name, std::string option){
-  if (player->getName() == name){ // Gere du cote client actuellement
+  if (player->getName() == name){ // Controls client side currently
     player->getSocket()->sendMessage("11~0~0");
   }
 
@@ -162,9 +162,9 @@ void inline acceptRefuseRequestHandler(Player* player, PlayersMap* players_map, 
     player->getSocket()->sendMessage(std::string("11~1~") + std::to_string(res));
 
     playerMapMutex->lock();
-    if (players_map->find(name) != players_map->end()){ // Si le joueur est connecte
-      (*players_map)[name]->getSocket()->sendMessage(std::string("16~") + player->getName() + "~1"); // Ajoute ami
-      (*players_map)[name]->getSocket()->sendMessage(std::string("18~") + player->getName() + "~0"); // Supprime requete envoyee
+    if (players_map->find(name) != players_map->end()){ // if player is connected
+      (*players_map)[name]->getSocket()->sendMessage(std::string("16~") + player->getName() + "~1"); // Add friend
+      (*players_map)[name]->getSocket()->sendMessage(std::string("18~") + player->getName() + "~0"); // Delete sent request
     }
     playerMapMutex->unlock();
   }
@@ -173,15 +173,15 @@ void inline acceptRefuseRequestHandler(Player* player, PlayersMap* players_map, 
     player->getSocket()->sendMessage(std::string("11~2~") + std::to_string(res));
 
     playerMapMutex->lock();
-    if (players_map->find(name) != players_map->end()){ // Si le joueur est connecte
-      (*players_map)[name]->getSocket()->sendMessage(std::string("18~") + player->getName() + "~0"); // Supprime requete envoyee
+    if (players_map->find(name) != players_map->end()){ // if player is connected
+      (*players_map)[name]->getSocket()->sendMessage(std::string("18~") + player->getName() + "~0"); // Deletes sent requets
     }
     playerMapMutex->unlock();
   }
 }
 
 void inline sendFriendRequestHandler(Player* player, PlayersMap* players_map, std::mutex* playerMapMutex, Data* data, std::string name){
-  if (player->getName() == name){ // Gere actuellement du cote client
+  if (player->getName() == name){ // Controls client side currently
     player->getSocket()->sendMessage("12~0");
   }
   else {
@@ -189,14 +189,14 @@ void inline sendFriendRequestHandler(Player* player, PlayersMap* players_map, st
     player->getSocket()->sendMessage(std::string("12~") + std::to_string(res));
 
     playerMapMutex->lock();
-    if (players_map->find(name) != players_map->end()){ // Si le joueur est connecte
+    if (players_map->find(name) != players_map->end()){ // if player is connected
       switch (res){
         case 3 :
-          (*players_map)[name]->getSocket()->sendMessage(std::string("16~") + player->getName() + "~1"); // Ajoute ami
-          (*players_map)[name]->getSocket()->sendMessage(std::string("18~") + player->getName() + "~0"); // Retire des demandes envoyees
+          (*players_map)[name]->getSocket()->sendMessage(std::string("16~") + player->getName() + "~1"); // Add friend
+          (*players_map)[name]->getSocket()->sendMessage(std::string("18~") + player->getName() + "~0"); // Remove sent requests
           break;
         case 4 :
-          (*players_map)[name]->getSocket()->sendMessage(std::string("17~") + player->getName() + "~1"); // Ajoute demande recue
+          (*players_map)[name]->getSocket()->sendMessage(std::string("17~") + player->getName() + "~1"); // Add received friend request
           break;
       }
     }
@@ -209,8 +209,8 @@ void inline removeFriendHandler(Player* player, PlayersMap* players_map, std::mu
   player->getSocket()->sendMessage(std::string("13~") + std::to_string(res));
 
   playerMapMutex->lock();
-  if (players_map->find(name) != players_map->end()){ // Si le joueur est connecte
-    (*players_map)[name]->getSocket()->sendMessage(std::string("16~") + player->getName() + "~0"); // Supprime ami
+  if (players_map->find(name) != players_map->end()){ // if player is connected
+    (*players_map)[name]->getSocket()->sendMessage(std::string("16~") + player->getName() + "~0"); // Delete friend
   }
   playerMapMutex->unlock();
 }
@@ -228,8 +228,8 @@ void inline cancelRequestHandler(Player* player, PlayersMap* players_map, std::m
   player->getSocket()->sendMessage(std::string("15~" + std::to_string(res)));
 
   playerMapMutex->lock();
-  if (players_map->find(name) != players_map->end()){ // Si le joueur est connecte
-    (*players_map)[name]->getSocket()->sendMessage(std::string("17~") + player->getName() + "~0"); // Supprime requete envoyee
+  if (players_map->find(name) != players_map->end()){ // if player is connected
+    (*players_map)[name]->getSocket()->sendMessage(std::string("17~") + player->getName() + "~0"); // remove sent request
   }
   playerMapMutex->unlock();
 }
