@@ -26,14 +26,12 @@ StatisticsTab::StatisticsTab(int t, Client *c, int mode, QWidget *parent) : // R
 }
 
 void StatisticsTab::setupMyStats(){
-  ui->staisticsTableWidget->setHorizontalHeaderLabels(QStringList({ "Name", "Win", "Lose", "Tie", "Elo" }));
-  ui->staisticsTableWidget->horizontalHeader()->setVisible(true);
-
+  ui->staisticsTableWidget->setRowCount(8);
+  ui->staisticsTableWidget->setColumnCount(5);
+  ui->staisticsTableWidget->setHorizontalHeaderLabels(QStringList({ "Gamemode", "Win", "Lose", "Tie", "Elo" }));
 
   checkMyStat(client->getSocket());
   ui->staisticsTableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);//disable editing
-  ui->staisticsTableWidget->setRowCount(8);
-  ui->staisticsTableWidget->setColumnCount(5);
 
   for (unsigned int a = 0; a < 8; ++a){
     std::vector<std::string> stat = splitString(client->readPipe(), ' ');
@@ -46,13 +44,12 @@ void StatisticsTab::setupMyStats(){
 }
 
 void StatisticsTab::setupGlobalStats(){
-  ui->staisticsTableWidget->setHorizontalHeaderLabels(QStringList({ "Gametype", "Win", "Lose", "Tie", "Elo" }));
-  ui->staisticsTableWidget->horizontalHeader()->setVisible(true);
+  ui->staisticsTableWidget->setRowCount(10);
+  ui->staisticsTableWidget->setColumnCount(5);
+  ui->staisticsTableWidget->setHorizontalHeaderLabels(QStringList({ "Username", "Win", "Lose", "Tie", "Elo" }));
 
   viewLadder(client->getSocket(), std::to_string(getGamemode()));
   ui->staisticsTableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);//disable editing
-  ui->staisticsTableWidget->setRowCount(10);
-  ui->staisticsTableWidget->setColumnCount(5);
 
   for (unsigned int a = 0; a < 10; ++a){
     std::vector<std::string> stat = splitString(client->readPipe(), ' ');
