@@ -26,7 +26,7 @@ class RealTimeGame: public Game{
 	bool _isMovePossible(Coordinate, Coordinate);
 	void _addToQueue(Coordinate, Coordinate, std::queue<ChainedMove*>&);
 	virtual void _handleSpecialMove(Coordinate, Coordinate, std::queue<ChainedMove*>&);
-	virtual bool _canFight(Piece*, Piece*);
+	virtual bool _canFight(Piece*, Piece*, Coordinate);
 	
 	void _sendStart() override;
 	

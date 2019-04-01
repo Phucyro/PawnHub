@@ -210,12 +210,12 @@ bool RealTimeGame::_isMovePossible(Coordinate start, Coordinate end){
 	return movingPiece && !(movingPiece->isMoving()) && _currentPlayer->getColor() == movingPiece->getColor() && (!movingPiece->isCoolingDown(*this)) && (!board->isLock(end)) && movingPiece->_checkMove(end, board, *this);
 }
 
-bool RealTimeGame::_canFight(Piece* p1, Piece* p2){
+bool RealTimeGame::_canFight(Piece* p1, Piece* p2, Coordinate end){
 	if (p1->getColor() == p2->getColor()) return false;
 	if (p2->getType() == 'g' && p1->getType() != 'p') return false;
 	if (p1->getType() == 'g' && p2->getType() != 'p') return false;
-	if (p1->getType() == 'h' && (p1->getCoord() != p1->getStartCoord() || p1->getCoord() != p1->getDest())) return false;
-	if (p2->getType() == 'h' && (p2->getCoord() != p2->getStartCoord() || p2->getCoord() != p2->getDest())) return false;
+	if (p1->getType() == 'h' && (!(p1->getCoord() == p1->getStartCoord() || end == p1->getDest()))) return false;
+	if (p2->getType() == 'h' && (!(p2->getCoord() == p2->getStartCoord() || end == p2->getDest()))) return false;
 	
 	return true;
 }
@@ -237,7 +237,7 @@ void RealTimeGame::_executeMove(Piece* movingPiece, Coordinate end){
 	Piece* taken = board->getCase(end);
 	if (taken){
 		
-		if ((!taken->isMoving()) && _canFight(movingPiece, taken)){
+		if ((!taken->isMoving()) && _canFight(movingPiece, taken, end)){
 			taken->changeIsTaken(this->getTurn(), movingPiece, _board);
 			board->remove(taken);
 		}
@@ -249,7 +249,7 @@ void RealTimeGame::_executeMove(Piece* movingPiece, Coordinate end){
 			while (it != otherPieces.end() && !movingPiece->isTaken()){
 				otherPiece = *it;
 				++it;
-				if (_canFight(movingPiece, otherPiece)) _fight(movingPiece, otherPiece);
+				if (_canFight(movingPiece, otherPiece,end)) _fight(movingPiece, otherPiece);
 			}
 		}
 	}

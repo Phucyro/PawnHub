@@ -100,7 +100,7 @@ std::string Socket::receiveMessage() {
   bool message_done = false;
   while (!message_done) {
     ssize_t bytes_received = recv(getFileDescriptor(), recv_buffer, MSG_LENGTH, 0);
-    // usleep(10);
+    usleep(10); // it just make it work
     if (bytes_received < 0) {
       throw std::runtime_error("Receive failed");
     }
