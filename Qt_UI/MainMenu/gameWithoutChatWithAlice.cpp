@@ -49,18 +49,24 @@ void GameWithoutChatWithAlice::start()
     this->exec();
 }
 
-void GameWithoutChatWithAlice::clear_board()
+void GameWithoutChatWithAlice::clear_board(bool is_second_board)
 {
     QIcon empty;
-    foreach (QAbstractButton* button, ui->board->buttons())
+    if (is_second_board)
     {
-        button->setIcon(empty);
-        button->setToolTip("");
+        foreach (QAbstractButton* button, ui->board_2->buttons())
+        {
+            button->setIcon(empty);
+            button->setToolTip("");
+        }
     }
-    foreach (QAbstractButton* button, ui->board_2->buttons())
+    else
     {
-        button->setIcon(empty);
-        button->setToolTip("");
+        foreach (QAbstractButton* button, ui->board->buttons())
+        {
+            button->setIcon(empty);
+            button->setToolTip("");
+        }
     }
 }
 
@@ -84,8 +90,6 @@ void GameWithoutChatWithAlice::set_time(QString time)
     if (time.toInt() < 0)
     {
         ui->chgTimeLabel->setText("--:--:-");
-        delete timer;
-        delete remainingTime;
     }
     else
     {

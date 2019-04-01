@@ -32,7 +32,7 @@ public slots:
     void set_piece(QIcon, QString, QString);
     void show_update(QString="");
 
-    void clear_board();
+    void clear_board(bool);
     void get_move(QString);
     void get_promotion(QString);
 
