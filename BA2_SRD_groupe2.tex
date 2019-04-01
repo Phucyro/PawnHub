@@ -636,6 +636,9 @@ Les différentes étapes de mise en place et de déroulement d'une partie sont d
 \textbf{Mise en pratique :} Une fois que le mouvement demandé par le joueur est identifié comme possible, le serveur met à jour son instance de plateau et renvoie le plateau aux deux clients afin qu'ils l'affichent.  \\
 \textbf{Protocole :} voir \ref{send_board}.
 
+\item \textit{Prémove} \\
+\textbf{Mise en pratique :} Lorsque le joueur envoie un mouvement alors que ce n'est pas sont tour, c'est considérer comme un prémove. Il est stocké dans \textit{Player} et sera donné directement à \textit{Game} sans que le joueur reçoive de askMove. Par contre, cela lui coûtera 0.1 seconde de sont temps sur sa pendule. \textit{Player} peut stocké plusieurs prémove qui seront passé dans l'ordre à game. Toutefois, si le mouvement reçu par game est incorrecte, la liste des prémoves du joueur est vidée et le joueur reçois un askMove. Le joueur peut vidée sa liste de prémove en rentrant /del comme mouvement.
+
 \item \textit{Promotion de pièce}\\
 \textbf{Mise en pratique :} Si le mouvement du joueur qui vient d'être effectué permet une promotion de pion (voir \ref{promote}), le serveur envoie une requête au client pour connaitre la promotion voulue. Une fois la demande reçue, le serveur met à jour le plateau et le renvoie.\\
 \textbf{Protocole :} Le serveur envoie un message ayant pour en-tête 'P' (promote) au client concerné. Celui-ci affiche la demande au joueur, qui choisit la pièce qu'il souhaite obtenir. Le client envoie la demande au serveur, qui consiste en un message de un caractère, représentant la pièce choisie ('q':  reine/queen, 'b': fou/bishop, 'h': cavalier/horse/knight, 'r': tour/rook), précédé de l'en-tête 'P' (promote).
