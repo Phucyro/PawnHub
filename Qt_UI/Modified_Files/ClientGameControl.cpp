@@ -114,23 +114,8 @@ void ClientGameControl::handleMessage() {
     (this->*(headerReceiveMap[header]))(QString::fromStdString(message.erase(0,1)));
 }
 
-void ClientGameControl::cleanOldMsg() {
-    // to avoid message from previous game to break everything
-    bool firstMsgRecv = false;
-    std::string message;
-    while (!firstMsgRecv) {
-        message = client->readGame();
-        if(message[0] == 'F') {
-            firstMsgRecv = true;
-            char header = message[0];
-            (this->*(headerReceiveMap[header]))(QString::fromStdString(message.erase(0,1)));
-        }
-    }
-}
-
 void ClientGameControl::startParty() {
   game_ongoing = true;
-//  cleanOldMsg();
   while(game_ongoing) {handleMessage();}
   emit finished();
 }

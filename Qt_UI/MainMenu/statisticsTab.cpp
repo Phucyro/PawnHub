@@ -20,44 +20,35 @@ StatisticsTab::StatisticsTab(int t, Client *c, int mode, QWidget *parent) : // R
     ui->setupUi(this);
 
     if (t == 0)
-      setupMyStats();
+      setupStats(true);
     else
-      setupGlobalStats();
+      setupStats(false);
 }
 
-void StatisticsTab::setupMyStats(){
-  ui->staisticsTableWidget->setRowCount(8);
-  ui->staisticsTableWidget->setColumnCount(5);
-  ui->staisticsTableWidget->setHorizontalHeaderLabels(QStringList({ "Gamemode", "Win", "Lose", "Tie", "Elo" }));
+void StatisticsTab::setupStats(bool mine){
+    unsigned int rows = (mine ? 8 : 10);
+    unsigned int columns = 5;
+  ui->statisticsTableWidget->setRowCount(int(rows));
+  ui->statisticsTableWidget->setColumnCount(int(columns));
 
-  checkMyStat(client->getSocket());
-  ui->staisticsTableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);//disable editing
-
-  for (unsigned int a = 0; a < 8; ++a){
-    std::vector<std::string> stat = splitString(client->readPipe(), ' ');
-    for (unsigned int b = 0; b < stat.size()-1; ++b){
-      std::string temp = stat[b+1];
-      ui->staisticsTableWidget->setItem(int(a), int(b), new QTableWidgetItem(QString::fromStdString(temp)));
-    }
-    //std::cout << strVectorToStr(stat) << std::endl;
+  if (mine)
+  {
+      ui->statisticsTableWidget->setHorizontalHeaderLabels(QStringList({ "Gamemode", "Win", "Lose", "Tie", "Elo" }));
+      checkMyStat(client->getSocket());
   }
-}
+  else
+  {
+      ui->statisticsTableWidget->setHorizontalHeaderLabels(QStringList({ "Username", "Win", "Lose", "Tie", "Elo" }));
+      viewLadder(client->getSocket(), std::to_string(getGamemode()));
+  }
+  ui->statisticsTableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);//disable editing
 
-void StatisticsTab::setupGlobalStats(){
-  ui->staisticsTableWidget->setRowCount(10);
-  ui->staisticsTableWidget->setColumnCount(5);
-  ui->staisticsTableWidget->setHorizontalHeaderLabels(QStringList({ "Username", "Win", "Lose", "Tie", "Elo" }));
-
-  viewLadder(client->getSocket(), std::to_string(getGamemode()));
-  ui->staisticsTableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);//disable editing
-
-  for (unsigned int a = 0; a < 10; ++a){
+  for (unsigned int a = 0; a < rows; ++a){
     std::vector<std::string> stat = splitString(client->readPipe(), ' ');
     for (unsigned int b = 0; b < stat.size()-1; ++b){
       std::string temp = stat[b+1];
-      ui->staisticsTableWidget->setItem(a,b,new QTableWidgetItem(QString::fromStdString(temp)));
+      ui->statisticsTableWidget->setItem(int(a), int(b), new QTableWidgetItem(QString::fromStdString(temp)));
     }
-    //std::cout << strVectorToStr(stat) << std::endl;
   }
 }
 

@@ -20,13 +20,9 @@ private:
 
 private slots:
     void on_classicPushButton_pressed();
-
     void on_darkPushButton_pressed();
-
     void on_hordePushButton_pressed();
-
     void on_alicePushButton_pressed();
-
     void on_realTimePushButton_pressed();
 
     void on_returnPushButton_pressed();

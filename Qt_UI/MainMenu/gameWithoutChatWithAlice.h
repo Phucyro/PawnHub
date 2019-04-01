@@ -60,7 +60,6 @@ private:
     QString move;
 
     void display_time();
-    void on_initialPosition_chosen(QAbstractButton*);
 };
 
 #endif // GAMEWITHOUTCHATWITHALICE_H

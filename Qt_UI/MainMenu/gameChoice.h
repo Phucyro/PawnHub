@@ -6,8 +6,6 @@
 
 #include <QDialog>
 
-#include <thread>
-
 #include "message.h"
 
 class Client;
@@ -28,7 +26,6 @@ public slots:
 private:
     Ui::GameChoice *ui;
     Client* client;
-    std::thread* msgThread;
     bool cancel;
     Message message;
 

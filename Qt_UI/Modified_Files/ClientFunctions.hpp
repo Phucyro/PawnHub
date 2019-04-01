@@ -73,7 +73,6 @@ inline void initClientData(Client* client){
 
 inline void quit(Client* client){
   client->getSocket()->sendMessage("0~Quit");
-//  menu->end_windows();
 }
 
 inline void displayChat(Client* client, std::string target,Chat *chat){

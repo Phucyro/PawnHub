@@ -2,6 +2,8 @@
 #include "ui_message.h"
 #include <iostream>
 
+#include <QCloseEvent>
+
 Message::Message(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Message),
@@ -46,6 +48,7 @@ void Message::promotion_choice()
     ui->pushButton_3->setEnabled(true);
     ui->pushButton_3->setFlat(false);
     ui->okButton->setText("Knight");
+    promotion = QString();
     is_promotion = true;
 }
 
@@ -58,33 +61,40 @@ void Message::on_okButton_clicked()
     cancel = true;
     if (is_promotion)
     {
-        emit promotion_chosen(ui->okButton->text());
+        promotion = ui->okButton->text();
+        emit promotion_chosen(promotion);
     }
     close();
 }
 
 void Message::on_pushButton_1_clicked()
 {
-    std::cout << "sending" << std::endl;
-    emit promotion_chosen(ui->pushButton_1->text());
-    std::cout << "sent" << std::endl;
+    promotion = ui->pushButton_1->text();
+    emit promotion_chosen(promotion);
     close();
 }
 
 void Message::on_pushButton_2_clicked()
 {
-    emit promotion_chosen(ui->pushButton_2->text());
+    promotion = ui->pushButton_2->text();
+    emit promotion_chosen(promotion);
     close();
 }
 
 void Message::on_pushButton_3_clicked()
 {
-    emit promotion_chosen(ui->pushButton_3->text());
+    promotion = ui->pushButton_3->text();
+    emit promotion_chosen(promotion);
     close();
 }
-bool Message::getCancel(){
+
+bool Message::getCancel()
+{
     return cancel;
 }
-void Message::closeEvent(){
-    close();
+
+void Message::closeEvent(QCloseEvent* event)
+{
+    if (is_promotion && promotion == "") event->ignore();
+    else event->accept();
 }

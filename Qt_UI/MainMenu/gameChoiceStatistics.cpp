@@ -17,59 +17,50 @@ GameChoiceStatistics::~GameChoiceStatistics()
     delete ui;
 }
 
+void GameChoiceStatistics::open_statistics_tab(int gameMode)
+{
+    StatisticsTab* stats = new StatisticsTab(type, client, gameMode);
+    stats->exec();
+    delete stats;
+}
+
 
 void GameChoiceStatistics::on_classicPushButton_pressed()
 {
-    StatisticsTab* stats = new StatisticsTab(type, client, 0);
-    stats->exec();
-    delete stats;
+    open_statistics_tab(0);
 }
 
 void GameChoiceStatistics::on_darkPushButton_pressed()
 {
-    StatisticsTab* stats = new StatisticsTab(type, client, 1);
-    stats->exec();
-    delete stats;
+    open_statistics_tab(1);
 }
 void GameChoiceStatistics::on_hordePushButton_pressed()
 {
-    StatisticsTab* stats = new StatisticsTab(type, client, 2);
-    stats->exec();
-    delete stats;
+    open_statistics_tab(2);
 }
 void GameChoiceStatistics::on_alicePushButton_pressed()
 {
-    StatisticsTab* stats = new StatisticsTab(type, client, 3);
-    stats->exec();
-    delete stats;
+    open_statistics_tab(3);
 }
 
 void GameChoiceStatistics::on_realTimeClassicPushButton_pressed()
 {
-    StatisticsTab* stats = new StatisticsTab(type, client, 4);
-    stats->exec();
-    delete stats;
+    open_statistics_tab(4);
 }
 
 void GameChoiceStatistics::on_realTimeDarkPushButton_pressed()
 {
-    StatisticsTab* stats = new StatisticsTab(type, client, 5);
-    stats->exec();
-    delete stats;
+   open_statistics_tab(5);
 }
 
 void GameChoiceStatistics::on_realTimeHordePushButton_pressed()
 {
-    StatisticsTab* stats = new StatisticsTab(type, client, 6);
-    stats->exec();
-    delete stats;
+    open_statistics_tab(6);
 }
 
 void GameChoiceStatistics::on_realTimeAlicePushButton_pressed()
 {
-    StatisticsTab* stats = new StatisticsTab(type, client, 7);
-    stats->exec();
-    delete stats;
+    open_statistics_tab(7);
 }
 
 void GameChoiceStatistics::on_returnPushButton_pressed()

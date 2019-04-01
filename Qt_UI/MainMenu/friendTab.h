@@ -19,19 +19,12 @@ public:
 
 private slots:
     void on_removePushButton_pressed();
-
-    void on_cancelPushButton_pressed();
-
     void on_acceptPushButton_pressed();
-
     void on_denyPushButton_pressed();
-
     void on_addPushButton_pressed();
-
+    void on_cancelPushButton_pressed();
     void on_inputLineEdit_returnPressed();
-
     void on_returnPushButton_pressed();
-
     void on_updatePushButton_clicked();
 
     void popup(QString, QString);

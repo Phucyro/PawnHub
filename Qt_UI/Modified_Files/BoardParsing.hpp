@@ -63,23 +63,4 @@ void stringToBoard(ClientGameControl* control, std::string board_string, bool is
   }
 }
 
-//void aliceToBoard(ClientGameControl* control, std::string board_string) {
-//  unsigned a = 0;
-//  std::string currentPieceName;
-//  QIcon currentPieceIcon;
-//  QString currentPosition;
-
-//  std::string colour = "white";
-//  while (board_string[a] != '!'){
-//    convert_piece(control, board_string[a], board_string[a+1], board_string[a+2], colour, true);
-//    a += CHAR_NUM;
-//  }
-//  a += 1;
-//  colour = "black";
-//  while (board_string[a] != '#'){
-//    convert_piece(control, board_string[a], board_string[a+1], board_string[a+2], colour, true);
-//    a += CHAR_NUM;
-//  }
-//}
-
 #endif
