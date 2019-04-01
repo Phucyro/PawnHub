@@ -32,8 +32,8 @@
 	\newpage
 	\section{Introduction}
 		\subsection{Description du Projet}
-			\paragraph{}Ce projet aura pour but de recréer un grand classique des jeux de plateau: les échecs. Le jeu sera jouable en réseau via un mode multijoueurs. Le joueur aura la possibilité de joueur en mode tour par tour ou en temps réel, c'est à dire que les joueurs ne devront pas attendre leur tour pour jouer. Le joueur le plus rapide verra son coup s'effectuer en premier. Il devra ensuite choisir entre le mode classique ou à une de ses variantes telles que  {\itshape AliceChess, DarkChess} et {\itshape HordeChess}, décrites plus loin. De plus, il aura également la possibilité de créer un compte à partir duquel il pourra effectuer plusieurs actions qui seront détaillées ci-dessous.
-
+			\paragraph{}Ce projet aura pour but de recréer un grand classique des jeux de plateau: les échecs. Le jeu sera jouable en réseau via un mode multijoueurs. Le joueur aura la possibilité de joueur en mode tour par tour ou en temps réel, c'est à dire que les joueurs ne devront pas attendre leur tour pour jouer. Le joueur le plus rapide verra son coup s'effectuer en premier. Il devra ensuite choisir entre le mode classique ou à une de ses variantes telles que  {\itshape AliceChess, DarkChess} et {\itshape HordeChess}, décrites plus loin. De plus, il aura également la possibilité de créer un compte à partir duquel il pourra effectuer plusieurs actions qui seront détaillées ci-dessous. 
+			
 			\subsection{Fonctionnement du Jeu d'Échec Classique}
 			\subsubsection{Règles du Jeu}
 			Chaque joueur commence le jeu avec 16 pions: un roi, une dame, deux tours, deux fous, deux cavaliers et huit pions. Le but du jeu est d'infliger à son adversaire un \textit{échec et mat}, une situation dans laquelle le roi d'un joueur est en prise sans qu'il soit possible d'y remédier\footnote{Wikipedia}.
@@ -55,11 +55,16 @@
 
 			\subsection{Mécanismes Du Jeu}
 				\subsubsection{Tour par Tour}
-					\paragraph{}Comme son nom l'indique, avec cette option, le déroulement du jeu est divisé en parties bien définies et visibles, appelées tours. Les joueurs jouent donc l'un après l'autre. Chaque joueur dispose d'une limite de temps de 45 minutes pour jouer une partie. Le chronomètre se décrémente au tour du joueur et se met en pause lorsque c'est au tour de l'adversaire
+					\paragraph{}Comme son nom l'indique, avec cette option, le déroulement du jeu est divisé en parties bien définies et visibles, appelées tours. Les joueurs jouent donc l'un après l'autre. Chaque joueur dispose d'une limite de temps de 45 minutes pour jouer une partie. Le chronomètre se décrémente au tour du joueur et se met en pause lorsque c'est au tour de l'adversaire		
 				\subsubsection{En Temps Réel}
+<<<<<<< HEAD
 					\paragraph{}Avec cette option, les joueurs peuvent joueur sans la contrainte de tour. Chaque joueur peut donc déplacer ses pièces quand bon lui semble à condition que la pièce déplacée ait terminé son dernier déplacement depuis plus de 10 secondes et que le mouvement soit légal du point de vue du mode de jeu "jouer en temps réel" sans prendre en compte le fait que le roi soit en échec. Le but du jeu est de prendre le roi adverse. La prise en passant\footnote{voir description des différent modes de jeux plus bas} est possible tant que le pion n'a pas dépassé les 10 secondes d'immobilité après avoir bougé.
 					\paragraph{}Le déplacement des pièces n'est plus instantané. Les pièces se déplacent avec une vitesse d'une case par seconde et commence et s'arrête de se déplacer au milieu d'une case. Lorsque 2 pièces de couleurs différentes se trouvent sur la même case il y a \textit{collision}. Si l'une des pièces ne bouge pas, elle se fait prendre, sinon c'est la dernière pièce à avoir bougée qui se fait prendre.\footnote{Pour une description plus complète des règles, voir http://kfc.kunuk.dk/rules.htm}
 			\subsection{Les Modes de Jeu}
+=======
+					\paragraph{}Avec cette option, les joueurs peuvent joueur sans la contrainte de tour, c'est à dire que par exemple, ils pourraient jouer plusieurs fois d'affilé un coup. 
+			\subsection{Les Modes de Jeu}				
+>>>>>>> 90a25b8c811720be82f36b19ec0722ff77ef0b3c
 				\subsubsection{Classique}
 					\paragraph{}Dans une partie de jeu d'échecs classique, le but est de mettre le roi adverse en échec sans qu'il ait la possibilité au tour suivant de ne plus l'être.
 				\subsubsection{Alice Chess}
@@ -130,7 +135,7 @@ la case traversée par le roi n'est contrôlée par aucune pièce adverse\footno
 				 3.1 & 01/04 & Antunes André & Relecture et Description de Matchmaking\\
 				 3.2 & 01/04 & Mardulyn Romain & Description de jeu en temps réel\\
 				 3.3 & 01/04 & Forest Caroline & Mise à jour des diagrammes de Use Case et gestion de messages\\
-				 2.7 & 1/04 & Nguyen Duc & Modification du protocole de communication du menu\\
+				 3.4 & 01/04 & Nguyen Duc & Mise à jour des diagrammes de Use Case et gestion de messages\\
 				\hline
 \end{tabular}
 			\caption*{Historique des modifications}
@@ -355,7 +360,7 @@ Afin d'avoir des parties équilibrées, les joueurs se verront attribués des ad
 \textbf{Pré-conditions :} \textit{Server} en ligne et réception du signal correspondant.\\
 \textbf{Post-conditions :} \\
 \textbf{Cas général :} \\
-\textbf{Cas exceptionnels :}
+\textbf{Cas exceptionnels :} 
 
 \subsubsection{Retirer un Ami de sa Liste d'Amis}
 \textbf{Acteur :} \\
@@ -363,7 +368,7 @@ Afin d'avoir des parties équilibrées, les joueurs se verront attribués des ad
 \textbf{Pré-conditions :} \textit{Server} en ligne et réception du signal correspondant. L'ami en question doit être présent dans la liste d'ami concernée.\\
 \textbf{Post-conditions :} L'ami en question est effacé de la liste d'aami concernée.\\
 \textbf{Cas général :} \\
-\textbf{Cas exceptionnels :}
+\textbf{Cas exceptionnels :} 
 
 \subsubsection{Envoi de Messages}
 \textbf{Acteur :} \textit{Server}. \\
@@ -424,16 +429,6 @@ Le jeu se joue en réseau local, une connexion internet est donc requise. Le ser
 Le système se doit de mettre assez rapidement à jour les statistiques personnelles et le classement global après chaque partie.
 
 \section{Design du Système}
-
-\begin{figure}[H]
-\centering
-\includegraphics[scale=0.72]{SequenceMatchmaking.png}
-\caption{Diagramme de séquence pour le \textit{Matchmaking}}
-\label{SD_matchmaker} %SequenceDiagram_matchmaking
-\end{figure}
-
-\subsection{Matchmaking}
-Le système de Matchmaking classe les différents joueurs selon leur \textit{Elo} dans différentes files d'attente. Par exemple, la file d'attente 1 contiendrait tous les joueurs entre 1000 et 1200 d'elo. Si il n'y a pas assez de joueurs dans une file d'attente , on regarde dans la file d'attente supérieur, par exemple, la file d'attente 2 qui contiendrait les joueurs entre 1200 et 1400 d'elo. S'il y a un nombre impair de joueurs dans les différentes files d'attente, le dernier joueur sera enlevé du système de matchmaking actuel et sera mis en première place dans le prochain matchmaking. En effet, l'ordre de priorité dans le matchmaking est fait selon l'ordre d'arrivée des joueurs.
 
 \subsection{Diagrammes de Classes}
 \begin{figure}[H]
@@ -521,7 +516,7 @@ Le rôle des méthodes de \textit{Horde,Alice et Dark} sont les mêmes que pour 
 
 \item \textit{Méthodes Alice} \\
 Alice possède en plus:\\
-\textbf{boardState :} Le \textit{boardState} prend en considération la dimension du plateau, paramètre propre à ce mode de jeu. Le reste du code se comporte selon la méthode classique. \footnote{Voir méthodes Classique de l'échiquier 6.1.3}.
+\textbf{boardState :} Le \textit{boardState} prend en considération la dimension du plateau, paramètre propre à ce mode de jeu. Le reste du code se comporte selon la méthode classique. \footnote{Voir méthodes Classique de l'échiquier 6.1.3}. 
 
 \item \textit{Méthodes Dark} \\
 Dark possède en plus:\\
@@ -530,15 +525,21 @@ Dark possède en plus:\\
 \end{enumerate}
 
 \paragraph{\underline{Temps Réel}}
+<<<<<<< HEAD
 Les modes en temps réel ne prenant pas en compte les tours des joueurs, il attend dans sa boucle principale de recevoir le mouvement d'un joueur, de devoir déplacer une pièce ou de devoir envoyer au joueur l'état actuel de l'échiquier. \\
 Quand un mouvement est reçu, s'il est légal, on construit un \textit{ChainedMove} et le met dans une file d'attente où il sera exécuter au moment voulut. \\
 Si un mouvement doit s'exécuter, le jeu gère les collisions et ensuite, fait bouger la pièce. La gestion des collisions se fait dans l'ordre suivant: on commence par gérer le cas où il y a une pièce immobile sur la case, ensuite, la pièce va se "battre" un à un avec chacune des pièces d'une autre couleur qu'elle présentent sur la case dans l'ordre où elles se sont arrivées sur la case, en commençant par la première arrivée. Si la pièce en mouvement perd, elle ne se "battra" pas avec les suivantes. Chaque pièce "battue" devenant une pièce prise. Une pièce gagne une "bataille" si elle a commencé à se déplacer avant l'autre.
+=======
+Les modes en temps réel ne prennent plus en compte les tours des joueurs. Néanmoins, ils doivent gérer une file d'attente de coups \textit{addToQueue}.
+
+>>>>>>> 90a25b8c811720be82f36b19ec0722ff77ef0b3c
 \begin{figure}[H]
 \centering
 \includegraphics[scale=0.5]{mode_chess_realtime.png}
 \caption{Diagramme des modes de jeu en temps réel}
 \end{figure}
 
+<<<<<<< HEAD
 
 
 \subsubsection{Player}
@@ -552,6 +553,10 @@ Si un mouvement doit s'exécuter, le jeu gère les collisions et ensuite, fait b
 
 \subsubsection{ChainedMove}
 \textit{ChainedMove} décompose le mouvement d'une pièces en une série de déplacements de 1 case et permet aussi de garder en mémoire le moment où le prochain déplacement sera effectué ainsi que la pièce à déplacer.
+=======
+\subsubsection{Board et Player et ChainedMove}
+\textit{Player} se charge de transférer à la partie serveur bon nombre d'informations sur l'état de la partie via ses différentes fonctions \textit{transfer}. \textit{Board} renvoie les différentes positions des pièces. \textit{ChainedMove} ordonne dans quel ordre, les coups vont être joués. Classe très importante dans les parties en temps réel, où le joueur ayant demandé le coup en premier, est prioritaire.
+>>>>>>> 90a25b8c811720be82f36b19ec0722ff77ef0b3c
 
 \newpage
 
@@ -649,9 +654,6 @@ Les différentes étapes de mise en place et de déroulement d'une partie sont d
 \textbf{Mise en pratique :} Une fois que le mouvement demandé par le joueur est identifié comme possible, le serveur met à jour son instance de plateau et renvoie le plateau aux deux clients afin qu'ils l'affichent.  \\
 \textbf{Protocole :} voir \ref{send_board}.
 
-\item \textit{Prémove} \\
-\textbf{Mise en pratique :} Lorsque le joueur envoie un mouvement alors que ce n'est pas sont tour, c'est considérer comme un prémove. Il est stocké dans \textit{Player} et sera donné directement à \textit{Game} sans que le joueur reçoive de askMove. Par contre, cela lui coûtera 0.1 seconde de sont temps sur sa pendule. \textit{Player} peut stocké plusieurs prémove qui seront passé dans l'ordre à game. Toutefois, si le mouvement reçu par game est incorrecte, la liste des prémoves du joueur est vidée et le joueur reçois un askMove. Le joueur peut vidée sa liste de prémove en rentrant /del comme mouvement.
-
 \item \textit{Promotion de pièce}\\
 \textbf{Mise en pratique :} Si le mouvement du joueur qui vient d'être effectué permet une promotion de pion (voir \ref{promote}), le serveur envoie une requête au client pour connaitre la promotion voulue. Une fois la demande reçue, le serveur met à jour le plateau et le renvoie.\\
 \textbf{Protocole :} Le serveur envoie un message ayant pour en-tête 'P' (promote) au client concerné. Celui-ci affiche la demande au joueur, qui choisit la pièce qu'il souhaite obtenir. Le client envoie la demande au serveur, qui consiste en un message de un caractère, représentant la pièce choisie ('q':  reine/queen, 'b': fou/bishop, 'h': cavalier/horse/knight, 'r': tour/rook), précédé de l'en-tête 'P' (promote).
@@ -673,45 +675,37 @@ Les différentes étapes de mise en place et de déroulement d'une partie sont d
 
 
 \subsubsection{Affichage du menu}
-\textbf{Mise en pratique :} Une fois que l'utilisateur s'est identifié, les options suivantes lui sont proposées : \textit{Jouer}, \textit{Amis}, \textit{Chatter}, \textit{Statistiques} et \textit{Quitter}.\\
-\textbf{Protocole :} Si l'utilisateur joue en mode console : La méthode \textit{\_get\_choice}, toujours précédée par la méthode \textit{\_init\_choicew}, est utilisée afin de pouvoir afficher les différentes options. Avec l'interface graphique, les différentes options sont représentées par des boutons sur lesquels l'utilisateur peut appuyer pour faire son choix.\\
+\textbf{Mise en pratique :} Les méthodes de l'objet permettant l'affichage du menu sont utilisées et les options suivantes sont proposées à l'utilisateur : \textit{Jouer}, \textit{Amis}, \textit{Statistique} et \textit{Quitter}.\\
+\textbf{Protocole :} Si l'utilisateur joue en mode console : La méthode \textit{\_get\_choice}, toujours précédée par la méthode \textit{\_init\_choicew}, est utilisée afin de pouvoir afficher les différentes options. Avec l'interface graphique\\
 
 \subsubsection{Choix d'une option}
-\textbf{Mise en pratique :} L'utilisateur peut parcourir les différentes options en utilisant sur les touches directionnelles \textit{Haut} et \textit{Bas} et valider son choix en appuyant sur la touche \textit{Entrée}. Avec l'interface graphique,
-l'utilisateur, peut en plus utiliser la souris afin de cliquer sur les boutons pour effectuer son choix.\\
-\textbf{Protocole :} Si l'utilisateur joue en mode console :  Après avoir appelé la méthode \textit{\_get\_choice}, le programme attend que l'utilisateur choisisse une option. Avec l'interface graphique, chaque bouton est lié à une fonction qui ouvre une autre fenêtre lorsque celui-ci est cliqué dessus. Si le choix a été fait, une fonction est appelée pour diriger l'utilisateur vers le menu correspondant.\\
+\textbf{Mise en pratique :} L'utilisateur peut parcourir les différentes options en utilisant les touches directionnelles \textit{Haut} et \textit{Bas} et valider son choix en appuyant sur la touche \textit{Entrée} \\
+\textbf{Protocole :} Si l'utilisateur joue en mode console :  Après avoir appelé la méthode \textit{\_get\_choice}, le programme attend que l'utilisateur choisisse une option. Si le choix a été fait, une fonction est appelée pour diriger l'utilisateur vers un autre menu.\\
 
 \subsubsection{Choix d'option du menu Jouer}
-\textbf{Mise en pratique :} Les 4 modes de jeu sont affichés ainsi que leur variante en \textit{RealTime}. L'utilisateur peut rejoindre une file d'attente vers le mode de jeu approprié en sélectionnant une de ces 8 options ou revenir au menu principal en choisissant l'option \textit{Retour}.\\
-\textbf{Protocole :} Si l'utilisateur choisit un mode de jeu, la fonction \textit{playGame} est appelée et cette dernière envoit un message au serveur qui placera le joueur dans une file d'attente. Ensuite l'utilisateur sera bloqué jusqu'à ce qu'un autre joueur soit mis dans une partie avec l'utilisateur ou jusqu'à ce que l'utilisateur quitte la file d'attente (indisponible sous console). Sinon, si l'utilisateur sélectionne l'option retour, ce dernier sera dirigé vers le menu principal.\\
+\textbf{Mise en pratique :} Les 4 modes de jeu sont affichés et l'utilisateur peut rejoindre une file d'attente vers le mode de jeu approprié en sélectionnant une de ces 6 options ou revenir au menu principal en choisissant l'option \textit{Retour}.\\
+\textbf{Protocole :} Si l'utilisateur choisit un mode de jeu, la fonction \textit{playGame} est appelée et elle envoie un message au serveur qui placera le joueur dans une file d'attente. Ensuite l'utilisateur sera bloqué jusqu'à ce qu'un autre joueur rejoigne la même file d'attente. Sinon l'utilisateur sera dirigé vers le menu principal.\\
 
 \subsubsection{Choix d'option du menu Ami}
-\textbf{Mise en pratique :} L'utilisateur a le choix entre 6 options : \textit{Voir sa liste d'amis}, \textit{Envoyer une demande d'ami}, \textit{Retirer un ami}, \textit{Accepter ou refuser une demande d'ami}, \textit{Annuler une demande d'ami} et \textit{Retour}.\\
-\textbf{Protocole :} Après que l'utilisateur ait choisi une option, ce dernier est dirigé vers le menu correspondant. \\
+\textbf{Mise en pratique :} L'utilisateur a le choix entre 5 options : \textit{Voir sa liste d'amis}, \textit{Envoyer une demande d'ami}, \textit{Retirer un ami}, \textit{Accepter ou refuser une demande d'ami} et \textit{Retour}.\\
+\textbf{Protocole :} Après que l'utilisateur a cliqué sur le bouton correspondantant, le programme attend que l'utilisateur choisisse une option.Si un choix a été fait, une fonction est appelée pour diriger l'utilisateur vers un autre menu. \\
 
-\subsubsection{Voir sa liste d'amis sous console}
+\subsubsection{Voir sa liste d'amis}
 \textbf{Mise en pratique :} Après avoir choisi cette option, les noms des amis de l'utilisateur sont affichés dans un rectangle.\\
-\textbf{Protocole :} Les amis de l'utilisateur sont stockés dans un vecteur contenu dans l'objet \textit{Client}. Afin d'afficher le nom de ses amis, une fonction parcours ce vecteur-là et affiche chaque nom dans le rectangle. \\
+\textbf{Protocole :} Un message est envoyé au serveur qui traitera la demande et qui renverra le nom de tous ses amis. Lorsque l'entièreté des noms des amis sont reçus du coté client,  leur nom de est affiché sur l'écran de l'utilisateur.\\
 
-\subsubsection{Envoyer une demande d'ami sous console}
-\textbf{Mise en pratique :} Après avoir choisi cette option, l'utilisateur est invité à rentrer une commande. \\
-\textbf{Protocole :} Lorsque l'utilisateur rentre une commande plusieurs résultats sont possibles : le format de la commande est invalide, il n'est pas possible d'envoyer une demande d'ami à \textit{Guest} ou \textit{all}, la personne se trouve déjà dans la liste d'amis de l'utilisateur, il n'est pas possible de s'envoyer une demande d'ami, le nom de l'utilisateur entré est inexistant, la demande d'ami a été envoyée ou alors la personne et l'utilisateur sont devenus amis dans le cas où l'utilisateur aurait déjà reçu une demande d'ami de la part de ce joueur et que cette demande n'a pas encore été acceptée. \\
+\subsubsection{Envoyer une demande d'ami}
+\textbf{Mise en pratique :} Après avoir choisi cette option, l'utilisateur est invité à rentrer un nom ou une autre commande pour retourner au menu des amis.\\
+\textbf{Protocole :} Si l'utilisateur ne rentre pas la commande pour quitter ce menu, alors un message est envoyé au serveur qui le traitera et renverra le résultat de l'opération. Plusieurs résultat sont possibles, soit la demande a été envoyée soit l'une de ces erreurs s'est produite : l'utilisateur s'est envoyé une demande d'ami à lui même, la personne se trouve déjà dans sa liste d'amis, le nom n'est lié à aucun compte ou alors une demande a déjà été envoyée. \\
 
-\subsubsection{Retirer un ami sous console}
-\textbf{Mise en pratique :} Après avoir choisi cette option, l'utilisateur est invité à rentrer une commande. \\
-\textbf{Protocole :} Lorsque l'utilisateur rentre une commande plusieurs résultats sont possibles : le format de la commande est invalide, l'utilisateur n'est pas ami avec cette personne ou la personne a été retiré de la liste d'amis. \\
+\subsubsection{Retirer un ami}
+\textbf{Mise en pratique :} Après avoir choisi cette option, l'utilisateur est invité à rentrer un nom ou une autre commande pour retourner au menu des amis.\\
+\textbf{Protocole :} Si l'utilisateur ne rentre pas la commande pour quitter ce menu, alors un message est envoyé au serveur qui le traitera et renverra le résultat de l'opération. Plusieurs résultats sont possibles, soit la personne a été retirée de la liste d'amis soit l'utilisateur a entré le nom d'une personne qui ne fait pas partie de ses amis.\\
 
-\subsubsection{Accepter ou refuser une demande d'ami sous console}
-\textbf{Mise en pratique :} Après avoir choisi cette option, l'utilisateur est invité à rentrer une commande. \\
-\textbf{Protocole :} Lorsque l'utilisateur rentre une commande plusieurs résultats sont possibles : le format de la commande est invalide, l'utilisateur n'a pas reçu de demande d'ami de cette personne, la requête a été acceptée ou refusée. \\
+\subsubsection{Accepter ou refuser une demande d'ami}
+\textbf{Mise en pratique :} Après avoir choisi cette option, l'utilisateur est invité à rentrer une commande suivi d'un nom ou autre une commande pour retourner au menu des amis.\\
+\textbf{Protocole :} Si l'utilisateur ne rentre pas la commande pour quitter ce menu, alors un message est envoyé au serveur qui le traitera et renverra le résultat de l'opération. Plusieurs résultats sont possibles, soit la demande a été acceptée ou refusée, soit aucune demande d'ami n'a été envoyée par le nom de la personne encodé.\\
 
-\subsubsection{Annuler une demande d'ami sous console}
-\textbf{Mise en pratique :} Après avoir choisi cette option, l'utilisateur est invité à rentrer une commande. \\
-\textbf{Protocole :} Lorsque l'utilisateur rentre une commande plusieurs résultats sont possibles : le format de la commande est invalide, l'utilisateur n'a pas envoyé de demande d'ami à cette personne ou la demande d'ami a été annulée. \\
-
-\subsubsection{Opération concernant les amis sous l'interface graphique}
-\textbf{Mise en pratique :} Plusieurs rectangles sont affichés dans la fenêtre et chacun d'eux peut contenir des noms. \\
-\textbf{Protocole :} Si l'utilisateur veut ajouter une personne en ami, l'utilisateur doit écrire le nom de la personne concernée dans la zone de texte et ensuite appuyer sur le bouton correspondant. Pour toutes les autres opérations (Retirer un ami, accepter ou refuser une demande d'ami et annuler une demande d'ami), il faut cliquer sur le nom de la personne concernée si ce nom se trouve dans un des rectangles et d'appuyer sur un le bouton correspondant afin de choisir la bonne opération. \\
 
 \subsubsection{Choix d'option du menu Statistiques}
 \textbf{Mise en pratique :} L'utilisateur a le choix entre 3 options : \textit{Voir ses statistiques}, \textit{Voir le classement général} et \textit{Quitter}.\\
@@ -719,12 +713,12 @@ l'utilisateur, peut en plus utiliser la souris afin de cliquer sur les boutons p
 
 \subsubsection{Choix d'option du menu Classement général}
 \textbf{Mise en pratique :} L'utilisateur a le choix entre 9 options : \textit{Classic}, \textit{Dark}, \textit{Horde}, \textit{Alice} et ses variantes en \textit{RealTime} et \textit{Retour}. \\
-\textbf{Protocole :} Si l'utilisateur choisit une des 8 premières options, alors un messages est envoyé au serveur qui renverra le nom et les statistiques des 10 premiers joueurs du mode sélectionné. Ces informations seront ensuite affichées dans un rectangle. Sinon l'utilisateur revient au menu principal.\\
+\textbf{Protocole :} Si l'utilisateur choisit une des 4 premières options, alors un messages est envoyé au serveur qui renverra le nom et les statistiques des 10 premiers joueurs du mode sélectionné. Ces informations seront ensuite affichées dans un rectangle. Sinon l'utilisateur revient au menu principal.\\
 
 
 \subsubsection{Utilisation du chat}
-\textbf{Mise en pratique :} Une fois que l'utilisateur a sélectionné cette option, il peut discuter soit avec ses amis soit discuter avec n'importe quelle autre personne dans le canal global. L'utilisateur navigue entre les différents chats via la commande /change [nom ami] ou /change [all] pour le chat global (sous console) ou en sélectionnant un nom se trouvant dans le rectangle situé à droit de la fenêtre et ensuite en appuyant sur le bouton pour changer de canal. \\
-\textbf{Protocole :} Une fois que l'utilisateur rentre la commande pour discuter, un message sera envoyé au serveur qui le traitera et renverra le résultat de l'opération. Plusieurs résultats sont possibles : la commande est invalide (sous console), le destinataire a bien reçu le message ou alors le serveur envoit un message à l'envoyeur pour lui avertir que le destinataire n'est pas en ligne. \\
+\textbf{Mise en pratique :} Une fois que l'utilisateur a sélectionné cette option, il peut discuter soit avec ses amis soit discuter avec n'importe quelle autre personne dans le canal global. L'utilisateur navigue entre les différens chats via la commande /change [nom ami] ou /change [all] pour le chat global.\\
+\textbf{Protocole :} Une fois que l'utilisateur rentre la commande pour discuter, un message sera envoyé au serveur qui le traitera et renverra le résultat de l'opération. Plusieurs résultats sont possibles, soit le message de l'utilisateur s'est correctement envoyé, soit la commande a été mal entrée et dans ce cas, aucun message n'est envoyé.\\
 
 
 
@@ -737,3 +731,4 @@ l'utilisateur, peut en plus utiliser la souris afin de cliquer sur les boutons p
 
 
 \end{document}
+o
