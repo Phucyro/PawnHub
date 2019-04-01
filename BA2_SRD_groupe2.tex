@@ -108,7 +108,7 @@ la case traversée par le roi n'est contrôlée par aucune pièce adverse\footno
 
 			\begin{tabular}{|c|c|c|p{50mm}|}
 				\hline
-				 \textbf{version} & \textbf{date} & \textbf{auteur}  & \textbf{description} \\ \hline
+				 \textbf{Version} & \textbf{Date} & \textbf{Auteur}  & \textbf{Description} \\ \hline
 				 1 & 4/12 & Pham Hong Phuc & Création du SRD + ajout structure\\
 				 1.1 & 6/12 & Forest Caroline & Ajout de diagrammes UML\\
 				 1.2 & 8/12 & Boonen Jacques & 1.Introduction\\
@@ -123,9 +123,11 @@ la case traversée par le roi n'est contrôlée par aucune pièce adverse\footno
 				 2.2.1 & 02/03 & Forest Caroline & Diagrammes de séquences pour le déroulement d'une partie \\
 				 2.3 & 3/03 & Nguyen Duc & Protocole de communication du menu \\
 				 2.4 & 3/03 & Antunes André & Rajout des méthodes pour Alice, Dark, Horde, Classique \\
-				 2.5 & 3/03 & Boonen Jacques & Nouveaux Diagrammes de classes \\
-				 2.6 & 28/03 & Boonen Jacques & Realtime + diagrammes sytème + relecture finale \\
-				 2.7 & 28/03 & Antunes André et Forest Caroline & Relecture \\
+				 2.5 & 3/03 & Boonen Jacques & Nouveaux Diagrammes de classes \\ \hline
+				 3 & 28/03 & Boonen Jacques & Realtime + diagrammes sytème + relecture finale \\
+				 3.1 & 01/04 & Antunes André & Relecture et Description de Matchmaking\\
+				 3.2 & 01/04 & Mardulyn Romain & Description de jeu en temps réel\\
+				 3.3 & 01/04 & Forest Caroline & Mise à jour des diagrammes de Use Case et gestion de messages\\
 				\hline
 \end{tabular}
 			\caption*{Historique des modifications}
@@ -147,7 +149,7 @@ la case traversée par le roi n'est contrôlée par aucune pièce adverse\footno
 \label{UC_co} %UseCase_connexion
 \end{figure}
 
-\subsubsection{S'identifier}
+\subsubsection{S'Identifier}
 \textbf{Acteur :} \textit{User}.\\
 \textbf{Relations avec d'autres cas d'utilisation :} Néant.\\
 \textbf{Pré-conditions :} Le \textit{user} doit avoir sélectionné le sous-menu \textit{Connexion} puis l'option {\itshape Log In} dans le menu principal du jeu.\\
@@ -179,10 +181,10 @@ la case traversée par le roi n'est contrôlée par aucune pièce adverse\footno
 
 \subsubsection{Jouer}
 \textbf{Acteur :} \textit{User}.\\
-\textbf{Relations avec d'autres cas d'utilisation :} Modes de jeu proposés (\textit{TurnBasedGame},\textit{RealTimeGame},\textit{Classic}, \textit{Alice}, \textit{Dark} ou \textit{Horde}).\\
+\textbf{Relations avec d'autres cas d'utilisation :} Modes de jeu proposés (\textit{TurnBasedGame}, \textit{RealTimeGame}, \textit{Classic}, \textit{Alice}, \textit{Dark} ou \textit{Horde}).\\
 \textbf{Pré-conditions :} Le \textit{user} doit avoir sélectionné l'option \textit{Game} dans le menu principal du jeu.\\
-\textbf{Post-conditions :} Le  \textit{user} sélectionne un mode de jeu parmi ceux proposés (\textit{TurnBasedGame},\textit{RealTimeGame},\textit{Classic},\textit{Alice}, \textit{Dark} ou \textit{Horde}).\\
-\textbf{Cas général :} Le  \textit{user} peut sélectionner un mode de jeu parmi ceux proposés (\textit{TurnBasedGame},\textit{RealTimeGame},\textit{Classic},\textit{Alice}, \textit{Dark} ou \textit{Horde}), ce qui lance une requête de \textit{matchmaking} (voir Figure \ref{SD_matchmaker}) au serveur.\\
+\textbf{Post-conditions :} Le  \textit{user} sélectionne un mode de jeu parmi ceux proposés (\textit{TurnBasedGame}, \textit{RealTimeGame}, \textit{Classic}, \textit{Alice}, \textit{Dark} ou \textit{Horde}).\\
+\textbf{Cas général :} Le  \textit{user} peut sélectionner un mode de jeu parmi ceux proposés (\textit{TurnBasedGame}, \textit{RealTimeGame}, \textit{Classic}, \textit{Alice}, \textit{Dark} ou \textit{Horde}), ce qui lance une requête de \textit{matchmaking} (voir Figure \ref{SD_matchmaker}) au serveur.\\
 \textbf{Cas exceptionnels :} Néant.
 
 
@@ -420,13 +422,6 @@ Le système se doit de mettre assez rapidement à jour les statistiques personne
 
 \section{Design du Système}
 
-\begin{figure}[H]
-\centering
-\includegraphics[scale=0.72]{SequenceDiagramMatchmaking.png}
-\caption{Diagramme de séquence pour le \textit{Matchmaking}}
-\label{SD_matchmaker} %SequenceDiagram_matchmaking
-\end{figure}
-
 \subsection{Diagrammes de Classes}
 \begin{figure}[H]
 \centering
@@ -532,18 +527,13 @@ Les modes en temps réel ne prennent plus en compte les tours des joueurs. Néan
 
 
 \subsubsection{Board et Player et ChainedMove}
-\textit{Player} se charge de transférer à la partie serveur bon nombre d'informations sur l'état de la partie via ses différentes fonctions \textit{transfer}. \textit{Board} renvoie les différentes positions des pièces.\textit{ChainedMove} ordonne dans quel ordre,les coups vont être joués. Classe très importante dans les parties en temps réel, où le joueur ayant demandé le coup en premier, est prioritaire.
+\textit{Player} se charge de transférer à la partie serveur bon nombre d'informations sur l'état de la partie via ses différentes fonctions \textit{transfer}. \textit{Board} renvoie les différentes positions des pièces. \textit{ChainedMove} ordonne dans quel ordre,les coups vont être joués. Classe très importante dans les parties en temps réel, où le joueur ayant demandé le coup en premier, est prioritaire.
 
 \newpage
 
 \subsection{Connexion du Joueur}
 Le joueur se connecte à l'aide du \textit{hostname} du serveur, qui s'affiche à l'exécution de celui-ci. Il accède ensuite à un menu lui permettant de se connecter à son compte ou d'en créer un nouveau.
 
-\begin{figure}[H]
-\centering
-\includegraphics[scale=0.72]{client_server_control.png}
-\caption{Diagramme de classe des \textit{GameControl}}
-\end{figure}
 %\subsection{Les Actions du Joueur}
 
 \subsection{Client-Serveur}
@@ -556,9 +546,25 @@ Le joueur se connecte à l'aide du \textit{hostname} du serveur, qui s'affiche �
 \end{enumerate}
 \paragraph{}Si l'on souhaite tout de même envoyer des messages plus longs que la taille standard définie, le système de messagerie utilise du padding à l'aide du symbole '|' afin d'identifier la fin du message. La classe \textit{Socket} effectue ce padding ainsi que l'envoi et la réception de messages à l'aide des méthodes \textit{sendMessage} et \textit{receiveMessage}.
 \paragraph{}Le serveur tâchera de vérifier les différentes actions des joueurs et veillera également à envoyer régulièrement la disposition du plateau aux clients afin qu'il s'affiche correctement pour les joueurs.
-\paragraph{}Afin d'identifier les messages échangés et le protocole à suivre suite à la réception d'un message, ceux-ci sont précédés d'un en-tête.
+\paragraph{}Afin d'identifier les messages échangés et le protocole à suivre suite à la réception d'un message, ceux-ci sont précédés d'un en-tête, éliminant ainsi le besoin d'un ordre prédéfini. La gestion de messages est faite à l'aide de fonctions, reprises, dans le cas du client avec Qt, dans une classe \textit{ClientHandler} afin de pouvoir le passer dans un QThread.
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.72]{diagram_clienthandler.jpg}
+\caption{Diagramme de classe de \textit{ClientHandler}}
+\end{figure}
 
 \subsection{Déroulement d'une partie}
+
+Afin de gérer les différents messages échangés entre le client et le serveur spécifiques à une partie, les classes de contrôle de jeu, \textit{GameControl}, sont instanciées. À l'aide d'une \textit{map} de méthodes ou signaux (dans le cas du client avec Qt) dont les clés sont les headers des messages reçu, l'appel à la fonction pertinente est effectué.\\
+Dans le cas de Qt, la plupart des réactions à des messages du serveur émettent des signaux, ce afin de pouvoir mettre l'interface courante à jour.\\
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.72]{client_server_control.png}
+\includegraphics[scale=0.72]{diagram_clientgamecontrolqt.png}
+\caption{Diagramme de classe des \textit{GameControl}}
+\end{figure}
 
 Les différentes étapes de mise en place et de déroulement d'une partie sont décrites ici, telles qu'effectuées lors d'une connexion avec un client utilisant la GUI ncurses.
 
