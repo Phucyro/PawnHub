@@ -9,6 +9,7 @@
 #include <QCloseEvent>
 
 #include <iostream>
+#include <cstdlib>
 
 GameWithoutChatWithAlice::GameWithoutChatWithAlice(QWidget *parent, Client* client_) :
     QDialog(parent),
@@ -141,6 +142,7 @@ void GameWithoutChatWithAlice::show_update(QString message)
       closeEvent(new QCloseEvent);
     }
     ui->chgUpdateLabel->setText(message);
+    changeAds();
 }
 
 void GameWithoutChatWithAlice::get_move(QString)
@@ -221,12 +223,15 @@ void GameWithoutChatWithAlice::boardButton_pressed(QAbstractButton* origin)
     }
 
     ui->chgMoveLabel->setText(move);
+    changeAds();
+
 }
 
 void GameWithoutChatWithAlice::on_surrendButton_pressed()
 {
     control->sendMove("/end");
     show_update("giveup");
+    ui->surrendButton->setEnabled(false);
 }
 
 void GameWithoutChatWithAlice::on_moveConfirmButton_clicked()
@@ -268,3 +273,34 @@ void GameWithoutChatWithAlice::closeEvent(QCloseEvent* event)
         on_surrendButton_pressed();
     }
 }
+
+void GameWithoutChatWithAlice::changeAds(){
+    int random = rand() % 4 + 1 ;
+
+    QPixmap mypix;
+    switch (random) {
+        case 1:
+        {
+            mypix = QPixmap (":/jacopo.png");
+            break;
+        }
+        case 2:
+        {
+            mypix = QPixmap (":/catmeme.jpg");
+            break;
+        }
+        case 3:
+        {
+        mypix = QPixmap (":/francois.png");
+            break;
+        }
+        case 4:
+        {
+        mypix = QPixmap (":/keno2.png");
+            break;
+        }
+    }
+    ui->imageLabel->setPixmap(mypix);
+
+}
+

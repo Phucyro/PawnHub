@@ -131,6 +131,7 @@ void GameWithoutChat::show_update(QString message)
       closeEvent(new QCloseEvent);
     }
     ui->chgUpdateLabel->setText(message);
+    changeAds();
 }
 
 void GameWithoutChat::get_move(QString)
@@ -210,12 +211,15 @@ void GameWithoutChat::boardButton_pressed(QAbstractButton* origin)
     }
 
     ui->chgMoveLabel->setText(move);
+    changeAds();
+
 }
 
 void GameWithoutChat::on_surrendButton_pressed()
 {
     control->sendMove("/end");
     show_update("giveup");
+    ui->surrendButton->setEnabled(false);
 }
 
 void GameWithoutChat::on_moveConfirmButton_clicked()
@@ -256,4 +260,44 @@ void GameWithoutChat::closeEvent(QCloseEvent* event)
     {
         on_surrendButton_pressed();
     }
+}
+
+void GameWithoutChat::changeAds(){
+    int random = rand() % 4 + 1 ;
+
+    QPixmap mypix;
+    switch (random) {
+        case 1:
+        {
+            mypix = QPixmap (":/jacopo.png");
+            break;
+        }
+        case 2:
+        {
+            mypix = QPixmap (":/catmeme.jpg");
+            break;
+        }
+        case 3:
+        {
+        mypix = QPixmap (":/francois.png");
+            break;
+        }
+        case 4:
+        {
+        mypix = QPixmap (":/keno2.png");
+            break;
+        }
+    }
+    ui->imageLabel->setPixmap(mypix);
+
+}
+
+void GameWithoutChat::on_pushButton_pressed()
+{
+
+    QPixmap mypix;
+
+    mypix = QPixmap (":/keno.png");
+    ui->imageLabel->setPixmap(mypix);
+
 }

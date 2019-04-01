@@ -65,8 +65,28 @@
     </item>
    </layout>
   </widget>
+  <widget class="QLabel" name="adslabel">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>20</y>
+     <width>361</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="pixmap">
+    <pixmap resource="ads.qrc">:/Calvin.png</pixmap>
+   </property>
+   <property name="scaledContents">
+    <bool>true</bool>
+   </property>
+  </widget>
  </widget>
  <resources>
+  <include location="ads.qrc"/>
   <include location="pawnhub.qrc"/>
  </resources>
  <connections/>

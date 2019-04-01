@@ -76,7 +76,7 @@
     <string/>
    </property>
    <property name="pixmap">
-    <pixmap resource="catmeme.qrc">:/catmeme.jpg</pixmap>
+    <pixmap resource="ads.qrc">:/catmeme.jpg</pixmap>
    </property>
    <property name="scaledContents">
     <bool>true</bool>
@@ -6148,8 +6148,8 @@
   <tabstop>graphicsView</tabstop>
  </tabstops>
  <resources>
+  <include location="ads.qrc"/>
   <include location="pawnhub.qrc"/>
-  <include location="catmeme.qrc"/>
  </resources>
  <connections/>
  <buttongroups>

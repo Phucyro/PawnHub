@@ -59,6 +59,8 @@ private:
     QTime done;
     QString move;
 
+    void changeAds();
+
     void display_time();
 };
 
