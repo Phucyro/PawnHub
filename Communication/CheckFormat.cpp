@@ -33,15 +33,15 @@ bool checkInputFormat(std::string message){
 bool checkFriendInputFormat(MenuHandler* menu, std::vector<std::string> input){
  bool correct = true;
  if (input.size() <= 1){
-   menu->print_warning("Commande invalide");
+   menu->print_warning("Invalid command");
    correct = false;
  }
  else if (input[1].length() > 10){
-   menu->print_warning("La taille des noms est limitée à 10 caractères");
+   menu->print_warning("Username size range is 1 to 10 characters");
    correct = false;
  }
  else if (!checkInputFormat(input[1])){
-   menu->print_warning("Les caractères | et ~ sont interdits");
+   menu->print_warning("Username characters are limited to numbers and letters");
    correct = false;
  }
  menu->refresh_board();
