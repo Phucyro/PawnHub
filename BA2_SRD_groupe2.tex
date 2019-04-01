@@ -1,4 +1,4 @@
-i\documentclass[10pt, a4paper]{article}
+\documentclass[10pt, a4paper]{article}
 \usepackage{float} % display graphics at the demanded place
 \usepackage{hyperref} % display table des matières
 \usepackage{subcaption} % authorize subfigure
@@ -32,8 +32,9 @@ i\documentclass[10pt, a4paper]{article}
 	\newpage
 	\section{Introduction}
 		\subsection{Description du Projet}
-			\paragraph{}Ce projet aura pour but de recréer un grand classique des jeux de plateau: les échecs. Le jeu sera jouable en réseau via un mode multijoueurs.Le joueur aura la possibilité de joueur en mode tour par tour ou en temps réel, c'est à dire que les joueurs ne devront pas attendre leur tour pour jouer. Le joueur le plus rapide verra son coup s'effectuer en premier.Il devra ensuite choisir entre le mode classique ou à une de ses variantes telles que  {\itshape AliceChess, DarkChess} et {\itshape HordeChess}, décrites plus loin. De plus, il aura également la possibilité de créer un compte à partir duquel il pourra effectuer plusieurs actions qui seront détaillées ci-dessous. Néanmoins, le joueur pourra lancer une partie en tant que {\itshape visiteur} mais ne bénéficiera pas des avantages liés à la possession d'un compte.\\
-			\subsection{Fonctionnement du Jeu d'Échec}
+			\paragraph{}Ce projet aura pour but de recréer un grand classique des jeux de plateau: les échecs. Le jeu sera jouable en réseau via un mode multijoueurs. Le joueur aura la possibilité de joueur en mode tour par tour ou en temps réel, c'est à dire que les joueurs ne devront pas attendre leur tour pour jouer. Le joueur le plus rapide verra son coup s'effectuer en premier. Il devra ensuite choisir entre le mode classique ou à une de ses variantes telles que  {\itshape AliceChess, DarkChess} et {\itshape HordeChess}, décrites plus loin. De plus, il aura également la possibilité de créer un compte à partir duquel il pourra effectuer plusieurs actions qui seront détaillées ci-dessous. 
+			
+			\subsection{Fonctionnement du Jeu d'Échec Classique}
 			\subsubsection{Règles du Jeu}
 			Chaque joueur commence le jeu avec 16 pions: un roi, une dame, deux tours, deux fous, deux cavaliers et huit pions. Le but du jeu est d'infliger à son adversaire un \textit{échec et mat}, une situation dans laquelle le roi d'un joueur est en prise sans qu'il soit possible d'y remédier\footnote{Wikipedia}.
 			\subsubsection{Les Pièces}
@@ -67,18 +68,16 @@ i\documentclass[10pt, a4paper]{article}
 				\subsubsection{Horde Chess}
 					\paragraph{} Le jeu d'échecs de horde est une variante du jeu d'échecs où le joueur noir possède 32 pions et le joueur blanc la collection standard du jeu d'échecs classique. Pour gagner la partie, le joueur blanc doit prendre tous les pions du joueur noir tandis que celui-ci doit mettre le roi blanc en échec et mat. À part cela, le jeu se déroule selon les règles habituelles du jeu d'échecs.
 
-			\subsection{Fonctionnalités pour Utilisateur Enregistré et Utilisateur Non-Enregistré}Depuis le menu principal, les joueurs pourront accéder à l'option {\itshape View Rules} à travers lequel ils pourront lire en détail les règles du jeu d'échecs et de ses variantes. Les joueurs lanceront une partie via l'option {\itshape Game}. %Lors d'une partie, ils pourront s'envoyer des messages via un chat dédié. %TODO ne nous avancons pas, je dirais
-
-			\subsection{Fonctionnalités pour Utilisateur Enregistré}Les joueurs pourront communiquer via un chat global. Dans le système de matchmaking, ils auront le choix entre affronter un ami ou un joueur aléatoire parmi ceux qui sont connectés et libres\footnote{ne se trouvant pas en partie.}. À travers le menu principal, les utilisateurs accéderont à plusieurs sous-menus tels que {\itshape View Ranking, View Rules, View Statistics, Friends List}.%rajouter d'autres fonctionnalités au besoin.
+			\subsection{Fonctionnalités pour Utilisateur}Depuis le menu principal, les joueurs pourront accéder à l'option {\itshape View Rules} à travers lequel ils pourront lire en détail les règles du jeu d'échecs et de ses variantes. Les joueurs lanceront une partie via l'option {\itshape Play}. \\ \\
+			Les joueurs pourront communiquer via un chat global. À travers le menu principal, les utilisateurs accéderont à plusieurs sous-menus tels que {\itshape  View Rules, Statistics, Friends List}.%rajouter d'autres fonctionnalités au besoin.
 			\subsection{Fonctionnalités Supplémentaires}
-Le joueur aura la possibilité de jouer en mode console ou via une interface graphique. S'il choisit l'interface graphique, des publicités défileront pendant ses parties.
+			Le joueur aura la possibilité de jouer en mode console ou via une interface graphique. S'il choisit l'interface graphique, des publicités défileront pendant ses parties.
 		\subsection{Glossaire} Par souci de clarté et de lisibilité, toutes les informations relatives aux règles et au fonctionnement officiels des échecs et de ses variantes ne seront pas parcourues ci-dessous.
 		\begin{description}
-		\item[Un utilisateur non-enregistré :] Utilisateur ne s'étant pas identifié au système via un compte.
-		\item[Un utilisateur enregistré :] Utilisateur s'étant identifié au système via un compte.
+		\item[Un utilisateur :] Utilisateur s'étant identifié au système via un compte.
 		\item[Joueur :] Utilisateur en partie.
 		\item[Matchmaking :] Système qui met en relation deux joueurs avant le lancement d'une partie.
-		\item[Chat :] Système de communication par messages instantanés entre deux joueurs.
+		\item[Chat :] Système de communication par messages instantanés entre deux joueurs, ou plus.
 		%\item[AliceChess :] Variante du jeu d'échec jouée en utilisant 2 plateaux. Lorsqu'un coup est joué, la pièce est déplacée à la case correspondante mais dans l'autre plateau. À part cela, le jeu se déroule selon les règles habituelles du jeu d'échecs .
 		%\item[DarkChess :] Variante du jeu d'échec où le joueur ne voit que ses propres pièces et les cases où il peut légalement les déplacer.
 		%\item[HordeChess :] Variante du jeu d'échec où un joueur possède 32 pions et l'autre la collection standard du jeu d'échec traditionnel.
@@ -126,6 +125,7 @@ la case traversée par le roi n'est contrôlée par aucune pièce adverse\footno
 				 2.4 & 3/03 & Antunes André & Rajout des méthodes pour Alice, Dark, Horde, Classique \\
 				 2.5 & 3/03 & Boonen Jacques & Nouveaux Diagrammes de classes \\
 				 2.6 & 28/03 & Boonen Jacques & Realtime + diagrammes sytème + relecture finale \\
+				 2.7 & 28/03 & Antunes André et Forest Caroline & Relecture \\
 				\hline
 \end{tabular}
 			\caption*{Historique des modifications}

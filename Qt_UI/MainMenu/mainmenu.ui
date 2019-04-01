@@ -130,7 +130,7 @@
       </layout>
      </item>
      <item>
-      <layout class="QVBoxLayout" name="verticalLayout_3" stretch="1,5">
+      <layout class="QVBoxLayout" name="verticalLayout_3" stretch="1,4">
        <item>
         <widget class="QLabel" name="logoLabel">
          <property name="pixmap">
@@ -195,8 +195,8 @@ Enjoy!</string>
   <tabstop>quitButton</tabstop>
  </tabstops>
  <resources>
-  <include location="pawnhub.qrc"/>
   <include location="calvin.qrc"/>
+  <include location="pawnhub.qrc"/>
  </resources>
  <connections/>
 </ui>
