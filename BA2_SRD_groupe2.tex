@@ -57,7 +57,8 @@
 				\subsubsection{Tour par Tour}
 					\paragraph{}Comme son nom l'indique, avec cette option, le déroulement du jeu est divisé en parties bien définies et visibles, appelées tours. Les joueurs jouent donc l'un après l'autre. Chaque joueur dispose d'une limite de temps de 45 minutes pour jouer une partie. Le chronomètre se décrémente au tour du joueur et se met en pause lorsque c'est au tour de l'adversaire		
 				\subsubsection{En Temps Réel}
-					\paragraph{}Avec cette option, les joueurs peuvent joueur sans la contrainte de tour, c'est à dire que par exemple, ils pourraient jouer plusieurs fois d'affilé un coup. 
+					\paragraph{}Avec cette option, les joueurs peuvent joueur sans la contrainte de tour. Chaque joueur peut donc déplacé ses pièces quand bon lui semble à condition que la pièce déplacée ai terminé son dernier déplacement depuis plus de 10 secondes et que le mouvement soit légal du point de vue du mode de jeu jouer en temps réel sans prendre en compte le fait que le roi soit en échec. Le but du jeu est de prendre le roi adverse. La prise en passant\footnote{voir description des différent modes de jeux plus bas} est possible tant que le pion n'a pas dépasser les 10 secondes d'immobilité après avoir bougé.
+					\paragraph{}Le déplacement des pièces n'est plus instantané. Les pièces se déplacent avec une vitesse d'une case par seconde et commence et s'arrête de se déplacer au milieu d'une case. Lorsque 2 pièce de couleurs différente se trouve sur la même case il y a \textit{collision}. Si l'une des pièces ne bouge pas, elle se fait prendre, sinon c'est la dernière pièce à avoir bougé qui se fait prendre.\footnote{Pour une description plus complète des règles voir http://kfc.kunuk.dk/rules.htm}
 			\subsection{Les Modes de Jeu}				
 				\subsubsection{Classique}
 					\paragraph{}Dans une partie de jeu d'échecs classique, le but est de mettre le roi adverse en échec sans qu'il ait la possibilité au tour suivant de ne plus l'être.
@@ -85,6 +86,7 @@
 		\item[Coup/Mouvement :] Déplacement d'une pièce d'une case à une autre de l'échiquier.
 		\item{Coup Légal :} est un coup qu'un joueur a le droit de jouer en vertu des règles du jeu (par opposition à un coup illégal\footnote{source Wikipedia})
 		\item[Prise :] Déplacement d'une pièce sur une case où se trouve une pièce adverse, ce qui implique un retrait du jeu de la pièce adverse.
+		\item[Collision :] Pour les modes de jeux en temps réel, c'est le cas où plusieurs pièces de couleurs différentes se trouve sur une même case.
 		\item[Echec :] Un joueur est en échec lorsque son roi est dans une position telle qu'il peut être pris par son adversaire.
 		\item[Echec et mat :] Un joueur est échec et mat il est en situation d'échec et qu'il n'a aucun coup légal lui permettant de se sortir de cette situation.
 		\item[Pat :] Il y a pat lorsque au tour du joueur, son roi n'est pas en échec mais ne peut effectuer de coups légaux sans se mettre en échec. Le pat met immédiatement fin à la partie et la partie est considérée comme une égalité.
@@ -522,7 +524,9 @@ Dark possède en plus:\\
 \end{enumerate}
 
 \paragraph{\underline{Temps Réel}}
-Les modes en temps réel ne prennent plus en compte les tours des joueurs. Néanmoins, ils doivent gérer une file d'attente de coups \textit{addToQueue}.
+Les modes en temps réel ne prenant pas en compte les tours des joueurs, il attend dans sa boucle principale de recevoir le mouvement d'un joueur, de devoir déplacé une pièce ou de devoir envoyer au joueur l'état actuel de l'échiquier. \\
+Quand un mouvement est reçus, si il est légal, on construit un \textit{ChainedMove} et le met dans une file d'attente où il sera exécuter au moment voulut. \\
+Si un mouvement doit s'exécuter, le jeu gère les collisions et ensuite, fait bouger la pièce. La gestion des collisions se fait dans l'ordre suivant: on commence par gérer le cas où il y a une pièce immobile sur la case, ensuite, la pièce vas se "battre" un à un avec chacune des pièces d'une autre couleur qu'elle présentent sur la case dans l'ordre où elle se sont arrivée sur la case, en commençant par la première arrivée. Si la pièce en mouvement perd, elle ne se "battra" pas avec les suivantes. Chaque pièce "battue" devenant une pièce prise. Une pièce gagne une "bataille" si elle à commencer à se déplacer avant l'autre.
 \begin{figure}[H]
 \centering
 \includegraphics[scale=0.5]{mode_chess_realtime.png}
@@ -531,14 +535,17 @@ Les modes en temps réel ne prennent plus en compte les tours des joueurs. Néan
 
 
 
-\subsubsection{Board et Player et ChainedMove}
-\textit{Player} se charge de transférer à la partie serveur bon nombre d'informations sur l'état de la partie via ses différentes fonctions \textit{transfer}. \textit{Board} renvoie les différentes positions des pièces.\textit{ChainedMove} ordonne dans quel ordre,les coups vont être joués. Classe très importante dans les parties en temps réel, où le joueur ayant demandé le coup en premier, est prioritaire.
+\subsubsection{Player}
+\textit{Player} se charge de transférer à la partie serveur bon nombre d'informations sur l'état de la partie via ses différentes fonctions \textit{transfer}.
 
-\begin{figure} [H]
-\centering
-\includegraphics[scale=0.50]{player_chainedmove_board.png}
-\caption{Diagramme de classe de \textit{Board}, \textit{Player} et \textit{ChainedMove}.}
-\end{figure}
+\subsubsection{Board}
+\textit{Board} garde en mémoire les différentes positions des pièces. Ainsi, il est plus rapide de savoir si une case est occupée ou non.
+
+\subsubsection{RealTimeBoard}
+\textit{RealTimeBoard} et un \textit{Board} mais qui permet en plus de lock\footnote{Une case est lock si le mouvement d'une pièce se terminera sur cette case.}/unlock une case et qui permet à plusieurs pièces d'être sur la même case à condition qu'il n'y ai au maximum qu'une seule pièce qui n'est pas en train de se déplacer par case.
+
+\subsubsection{ChainedMove}
+\textit{ChainedMove} décompose le mouvement d'une pièces en une séries de déplacements de 1 case et permet aussi de garder en mémoire le moment où le prochain déplacement sera effectué ainsi que la pièce à déplacée.
 
 \newpage
 

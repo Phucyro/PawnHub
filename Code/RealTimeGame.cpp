@@ -235,6 +235,7 @@ void RealTimeGame::_executeMove(Piece* movingPiece, Coordinate end){
 	RealTimeBoard* board = this->_getBoard();
 	Coordinate start = movingPiece->getCoord();
 	Piece* taken = board->getCase(end);
+	movingPiece->_setCoordinate(end);
 	if (taken){
 		
 		if ((!taken->isMoving()) && _canFight(movingPiece, taken, end)){
@@ -255,7 +256,6 @@ void RealTimeGame::_executeMove(Piece* movingPiece, Coordinate end){
 	}
 	if (!movingPiece->isTaken()){
 		board->moveTo(end, movingPiece);
-		movingPiece->_setCoordinate(end);
 	}
 }
 
