@@ -20,7 +20,9 @@ void delFinishedThread(std::list<ExecInfoThread*>&);
 void matchScheduling(const bool& end, Matchmaking* mm){
   int gamemode = 0;
   while (!end){
+    _mutex.lock();
     mm->check(gamemode);
+    _mutex.unlock();
     usleep(TIME_BETWEEN_MATCH/8);
     if (gamemode >= 7) gamemode = 0;
     else gamemode++;
