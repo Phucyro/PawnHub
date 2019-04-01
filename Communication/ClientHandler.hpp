@@ -13,7 +13,6 @@ void quitHandler(bool* stop_receive){
   *stop_receive = true;
 }
 
-
 void signUpHandler(Client* client, char msg){
   switch (msg){
     case '0' :
@@ -24,7 +23,6 @@ void signUpHandler(Client* client, char msg){
       break;
   }
 }
-
 
 void signInHandler(Client* client, char msg){
   switch (msg){
@@ -44,7 +42,6 @@ void signInHandler(Client* client, char msg){
   }
 }
 
-
 void chatHandler(MenuHandler* menu, Client* client, std::string sender, std::string target, std::string msg){
   client->updateConversation(target, sender, msg);
 
@@ -52,7 +49,6 @@ void chatHandler(MenuHandler* menu, Client* client, std::string sender, std::str
     displayChat(menu, client, target);
   }
 }
-
 
 void playGameHandler(MenuHandler* menu, Client* client){
   menu->clear_windows();
