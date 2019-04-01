@@ -5,6 +5,7 @@
 #include "Socket.hpp"
 #include "../Code/Player.hpp"
 #include "../Code/Game.hpp"
+#include "ExecInfoThread.hpp"
 
 #ifndef _SCONTROL_H_
 #define _SCONTROL_H_
@@ -15,6 +16,7 @@ class ServerGameControl {
 private:
   Player *player1, *player2;
   Game *game;
+  ExecInfoThread* info;
 
   std::map<std::string, std::string> headerSendMap = {
    {"board", "B"},
@@ -22,15 +24,19 @@ private:
    {"colour", "X"},
    {"gamemode", "G"},
    {"turn", "T"},
+   {"time", "C"},
    {"askmove", "A"},
    {"move", "M"},
    {"promote", "P"},
+   {"goodmove", "L"},
+   {"goodpremove", "D"},
+   {"firstmsg", "F"},
   };
 
-
+	void _playerDisconected(Socket*);
 
 public:
-  ServerGameControl(Player*, Player*, Game*);
+  ServerGameControl(Player*, Player*, Game*, ExecInfoThread*);
   ServerGameControl(const ServerGameControl&);
   ServerGameControl& operator=(const ServerGameControl&);
   ~ServerGameControl();
@@ -41,6 +47,7 @@ private:
 
 public:
   void sendBoard(Socket*, std::string);
+  void sendFirstMsg(Socket*);
   void sendFirstBoard(Socket*, std::string);
   void sendSecondBoard(Socket*, std::string);
   void sendUpdate(Socket*, std::string);
@@ -48,9 +55,14 @@ public:
   void sendCheck(Socket*);
   void sendCheckmate(Socket*, std::string);
   void sendStalemate(Socket*);
+  void sendSurrend(Socket*);
+  void sendTimeout(Socket*);
   void sendGameMode(Socket*, std::string);
   void sendPlayerColour(Socket*, std::string);
   void sendTurn(Socket*, unsigned);
+  void sendTime(Socket*, int);
+  void sendGoodMove(Socket*);
+  void sendGoodPremove(Socket*);
   void sendAskMove(Socket*);
   void sendAskPromotion(Socket*);
 
@@ -59,7 +71,7 @@ public:
     {'P', &ServerGameControl::receivePromotion},
   };
 
-  void handleMessage(Socket*);
+  void handleMessage(Player*);
   void startParty();
 };
 

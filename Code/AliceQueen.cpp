@@ -14,12 +14,12 @@ void AliceQueen::_reverseMove(Coordinate end, Board* board, Game& game, Piece* t
 	_swapDimension();
 }
 
-bool AliceQueen::_isPlaceFree(Coordinate place ,Board* board){
-	return this->Queen::_isPlaceFree(place, board) || this->AlicePiece::_isPlaceFree(place, board);
+bool AliceQueen::_isPlaceFree(Coordinate place ,Board* board, bool careOfMoving){
+	return this->Queen::_isPlaceFree(place, board, careOfMoving) || this->AlicePiece::_isPlaceFree(place, board);
 }
 
-bool AliceQueen::_checkMove(Coordinate end, Board* board, Game& game){
-	return this->AlicePiece::_checkMove(end, board, game) && this->Queen::_checkMove(end, board, game);
+bool AliceQueen::_checkMove(Coordinate end, Board* board, Game& game, bool careOfMoving){
+	return this->AlicePiece::_checkMove(end, board, game) && this->Queen::_checkMove(end, board, game, careOfMoving);
 }
 
 bool AliceQueen::_isMovePossible(Coordinate end, Board* board, Game& game){
@@ -28,6 +28,23 @@ bool AliceQueen::_isMovePossible(Coordinate end, Board* board, Game& game){
 		return true;
 	}
 	return false;
+}
+
+bool AliceQueen::canMove(Board* board, Game& game){
+	if (this->_canMoveInLine(1, 1, board, game)) return true;
+	if (this->_canMoveInLine(0, 1, board, game)) return true;
+	if (this->_canMoveInLine(-1, 1, board, game)) return true;
+	if (this->_canMoveInLine(1, 0, board, game)) return true;
+	if (this->_canMoveInLine(-1, 0, board, game)) return true;
+	if (this->_canMoveInLine(1, -1, board, game)) return true;
+	if (this->_canMoveInLine(0, -1, board, game)) return true;
+	if (this->_canMoveInLine(-1, -1, board, game)) return true;
+	return false;
+}
+
+void AliceQueen::stopMoving(Game& game, Board* board){
+	this->Piece::stopMoving(game, board);
+	this->AlicePiece::stopMoving(game);
 }
 
 #endif

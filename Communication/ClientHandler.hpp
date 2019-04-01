@@ -6,133 +6,166 @@
 #include "../Display/MenuHandler/MenuHandler.hpp"
 #include <string>
 #include <stdlib.h>
+#include "Client.hpp"
+#include "ClientFunctions.hpp"
 
-
-void signUpHandler(MenuHandler* menu, char msg){
-  switch (msg){
-    case '0' :
-      menu->print_warning("Le nom de compte a deja été pris");
-      break;
-    case '1' :
-      menu->print_warning("Compte créé avec succes");
-  }
-  menu->refresh_board();
+void quitHandler(bool* stop_receive){
+  *stop_receive = true;
 }
 
 
-void signInHandler(MenuHandler* menu, char msg, bool* connected){ // Fonction bool
+void signUpHandler(Client* client, char msg){
   switch (msg){
     case '0' :
-      menu->print_warning("Nom de compte inexistant");
+      client->writePipe("Le nom de compte a deja été pris");
       break;
     case '1' :
-      *connected = true; // Connexion réussie
+      client->writePipe("Compte créé avec succes");
+      break;
+  }
+}
+
+
+void signInHandler(Client* client, char msg){
+  switch (msg){
+    case '0' :
+      client->writePipe("Nom de compte inexistant");
+      break;
+    case '1' :
+      client->setIdentified(); // Ne sera pas affiche
+      client->writePipe("Connexion réussie");
       break;
     case '2' :
-      menu->print_warning("Mauvais mot de passe");
-  }
-  menu->refresh_board();
-}
-
-void chatHandler(std::string sender, std::string target, std::string text){
-  if (target == "all"){
-    std::cout << "[" << sender << "->all] " << text << std::endl;
-  }
-  else if (sender == "server"){
-    std::cout << target << " est deconnecte" << std::endl;
-  }
-  else {
-    std::cout << "[" << sender << "->me] " << text << std::endl;
+      client->writePipe("Mauvais mot de passe");
+      break;
+    case '3' :
+      client->writePipe("Ce compte est déjà utilisé par quelqu'un");
+      break;
   }
 }
 
-void playGameHandler(Socket* socket){
-  std::cout << "Vous avez rejoint une file d'attente" << std::endl;
-  ClientGameControl control(*socket);
+
+void chatHandler(MenuHandler* menu, Client* client, std::string sender, std::string target, std::string msg){
+  client->updateConversation(target, sender, msg);
+
+  if (client->isChatting() && client->isChattingWith(target)){
+    displayChat(menu, client, target);
+  }
+}
+
+
+void playGameHandler(MenuHandler* menu, Client* client){
+  menu->clear_windows();
+  menu->end_windows();
+  //std::cout << "Vous avez rejoint une file d'attente" << std::endl;
+  client->writePipe("StartGame");
 }
 
 void leaveQueueHandler(){
-  std::cout << "Vous avez quitte une file d'attente" << std::endl;
+  //std::cout << "Vous avez quitte une file d'attente" << std::endl;
 }
 
-void myStatHandler(MenuHandler* menu, std::string pos, std::string mode, std::string stat){
-  std::vector<std::string> stat_v = splitString(stat, ' ');
-  menu->update_stats(atoi(pos.c_str()), mode, atoi(stat_v[0].c_str()), atoi(stat_v[1].c_str()), atoi(stat_v[2].c_str()));
+void myStatHandler(Client* client, std::string pos, std::string mode, std::string stat, std::string elo){
+  client->writePipe(pos + " " + mode + " " + stat + " " + elo);
 }
 
-void ladderHandler(MenuHandler* menu, std::string pos, std::string username, std::string stat){
-  std::vector<std::string> stat_v = splitString(stat, ' ');
-  menu->update_stats(atoi(pos.c_str()), username, atoi(stat_v[0].c_str()), atoi(stat_v[1].c_str()), atoi(stat_v[2].c_str()));
+void ladderHandler(Client* client, std::string pos, std::string username, std::string stat, std::string elo){
+  client->writePipe(pos + " " + username + " " + stat + " " + elo);
 }
 
-void viewFriendsHandler(MenuHandler* menu, std::string friend_name, bool* stop, std::vector<std::string>* friends_list){
-  if (friend_name != "Guest"){
-    friends_list->push_back(friend_name);
-  }
-  else {
-    menu->init_friendsw(*friends_list);
-    *stop = true;
-  }
+void viewFriendsHandler(Client* client, std::string friend_name){
+  client->addFriend(friend_name);
 }
 
-void viewFriendRequestHandler(MenuHandler* menu, std::string request, bool* stop, std::vector<std::string>* request_list){
-  if (request != "Guest"){
-    request_list->push_back(request);
-  }
-  else {
-    menu->init_friendsw(*request_list);
-    *stop = true;
-  }
+void viewFriendRequestHandler(Client* client, std::string username){
+  client->addRecvRequest(username);
 }
 
-void acceptRefuseRequestHandler(MenuHandler* menu, std::string option, std::string res){
-  if (option == "0")
-    menu->print_warning("Vous ne pouvez pas être amis avec vous même");
+void acceptRefuseRequestHandler(Client* client, std::string option, std::string res){
+  if (option == "0") // Impossible normalement car gere lors du sendRequest
+    client->writePipe("0Vous ne pouvez pas être amis avec vous même");
   else if (option == "1"){
-    if (res == "0")
-      menu->print_warning("Vous n'avez pas recu de demande de cet utilisateur");
+    if (res == "0") // Est gere par le cote client actuellement
+      client->writePipe("1Vous n'avez pas recu de demande de cet utilisateur");
     else
-      menu->print_warning("Cet utilisateur a été ajouté à vos amis");
+      client->writePipe("2Cet utilisateur a été ajouté à vos amis");
   }
   else {
-    if (res == "0")
-      menu->print_warning("Vous n'avez pas recu de demande cet utilisateur");
+    if (res == "0") // Est gere par le cote client actuellement
+      client->writePipe("1Vous n'avez pas recu de demande cet utilisateur");
     else
-      menu->print_warning("Cet utilisateur a été retiré de vos amis");
+      client->writePipe("3Cet utilisateur a été retiré de la liste");
   }
-  menu->refresh_board();
 }
 
-void sendFriendRequestHandler(MenuHandler* menu, std::string res){
+void sendFriendRequestHandler(Client* client, std::string res){
   switch (res[0]){
     case '0' :
-      menu->print_warning("Utilisateur inexistant");
+      client->writePipe("0Utilisateur inexistant");
       break;
-    case '1' :
-      menu->print_warning("Utilisateur déjà dans la liste d'amis");
+    case '1' : // Gere du cote client actuellement
+      client->writePipe("1Utilisateur déjà dans la liste d'amis");
       break;
-    case '2' :
-      menu->print_warning("Demande d'ami déjà envoyé");
+    case '2' : // Gere du cote client actuellement
+      client->writePipe("2Demande d'ami déjà envoyé");
       break;
     case '3' :
-      menu->print_warning("Vous êtes tout les deux devenus amis");
+      client->writePipe("3Vous êtes tout les deux devenus amis");
       break;
     case '4' :
-      menu->print_warning("Demande d'ami envoyé");
+      client->writePipe("4Demande d'ami envoyé");
+      break;
   }
-  menu->refresh_board();
 }
 
-void removeFriendHandler(MenuHandler* menu, std::string res){
+void removeFriendHandler(Client* client, std::string res){
   switch (res[0]){
-    case '0' :
-      menu->print_warning("Cet utilisateur ne fait pas partie de vos amis");
+    case '0' : // Gere actuellement du cote client
+      client->writePipe("0Cet utilisateur ne fait pas partie de vos amis");
       break;
     case '1' :
-      menu->print_warning("Utilisateur retiré de votre liste d'amis");
+      client->writePipe("1Utilisateur retiré de votre liste d'amis");
+      break;
   }
-  menu->refresh_board();
 }
 
+void viewSentRequestHandler(Client* client, std::string username){
+  client->addSentRequest(username);
+}
+
+void cancelRequestHandler(Client* client, std::string res){
+  if (res == "0") // Gere actuellement du cote client
+    client->writePipe("0Aucune requete n'a été envoyé à ce joueur");
+  else
+    client->writePipe("1La demande d'ami a été annulée");
+}
+
+void updateFriendsListHandler(Client* client, std::string friend_name, std::string option){
+  if (option == "0"){ // Retire l'ami
+    client->removeFriend(friend_name);
+  }
+  else if (option == "1"){ // Ajoute l'ami
+    client->removeSentRequest(friend_name);
+    client->addFriend(friend_name);
+  }
+}
+
+void updateRecvRequestHandler(Client* client, std::string friend_name, std::string option){
+  if (option == "0"){ // Retire l'ami
+    client->removeRecvRequest(friend_name);
+  }
+  else if (option == "1"){ // Ajoute l'ami
+    client->addRecvRequest(friend_name);
+  }
+}
+
+void updateSentRequestHandler(Client* client, std::string friend_name, std::string option){
+  if (option == "0"){ // Retire l'ami
+    client->removeSentRequest(friend_name);
+  }
+  else if (option == "1"){ // Ajoute l'ami
+    client->addSentRequest(friend_name);
+  }
+}
 
 #endif

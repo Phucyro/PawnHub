@@ -24,7 +24,7 @@ int main()
   //TEST 3
   test->init_statsw();
   test->init_statsp("Julien");
-  test->update_stats(0,"Horde",2, 3, 4);
+  test->update_stats(0,"Horde","~", "~", "~", "~");
   test->init_choicesw();
   std::vector<std::string> vecteur;
   vecteur.push_back("Quitter");
@@ -37,7 +37,7 @@ int main()
   //TEST 4
   test->init_statsw();
   test->init_statst("Horde");
-  test->update_stats(9,"Joe",4,6,8);
+  test->update_stats(9,"Joe","4","6","8", "200");
   test->init_choicesw();
   test->get_choice(vecteur);
   test->refresh_board();
@@ -48,9 +48,13 @@ int main()
   std::vector<std::string> choices;
   choices.push_back("Ajouter ami");
   choices.push_back("Supprimer ami");
+  choices.push_back("Supprimer ami");
+  choices.push_back("Supprimer ami");
+  choices.push_back("Supprimer ami");
+  choices.push_back("Supprimer ami");
 
 
-  for (int i=0; i<80; i++)
+  for (int i=0; i<200; i++)
   {
     friends.push_back("Allan");
   }
@@ -60,6 +64,7 @@ int main()
   test->end_windows();
 
   test->init_friendsw(friends);
+  test->print_top("Test 1 2 3");
   test->init_choicesw();
   test->get_choice(choices);
 
@@ -68,11 +73,11 @@ int main()
 
   //TEST 6
   test->clear_windows();
-  test->init_chatw();
+  test->print_top("Test 1 2 3");
 
-  for (int i=0; i<30; i++)
+  for (int i=0; i<120; i++)
   {
-    test->update_chatw(i,"Julien", "Bien le bonsoir");
+    test->update_chatw(i,"Julien", "Bien le bonsoirrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
   }
   test->refresh_board();
 

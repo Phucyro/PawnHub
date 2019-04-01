@@ -25,11 +25,28 @@ std::map<const char,const char> pieceMap = {
   {'k', 'K'}
 };
 
-void separatePieces(unsigned int a, std::string message, std::string colour) {
+std::map<const int, const int> reversePositionMap = {
+        {0,7},
+        {1,6},
+        {2,5},
+        {3,4},
+        {4,3},
+        {5,2},
+        {6,1},
+        {7,0}
+};
+
+void separatePieces(unsigned int a, std::string message, std::string colour, std::string playerColor) {
   const char piece = pieceMap[message[a]];
   Coordinate coor(message[a+1], message[a+2]);
   int column = coor.getRealColumn();
   int line = coor.getRealRow();
+
+  if (playerColor == "white") {
+    column = reversePositionMap[column];
+    line = reversePositionMap[line];
+  }
+
   if (colour == "white") {
     attron(COLOR_PAIR(WHITE_PLAYER));
     mvprintw((line+1)*OFFSET, 1+((column+1)*OFFSET), "%c", piece);
@@ -42,50 +59,57 @@ void separatePieces(unsigned int a, std::string message, std::string colour) {
   }
 }
 
-void stringToBoard(std::string message) {
+void stringToBoard(std::string message, std::string playerColor) {
 
   unsigned int a = 0;
   std::string colour = "white";
   while (message[a] != '!'){
-    separatePieces(a, message, colour);
+    separatePieces(a, message, colour, playerColor);
     a += CHAR_NUM;
   }
   a += 1;
   colour = "black";
   while (message[a] != '#'){
-    separatePieces(a, message, colour);
+    separatePieces(a, message, colour, playerColor);
     a += CHAR_NUM;
   }
 }
 
-void separateAlicePieces(unsigned a,std::string message,std::string colour) {
+void separateAlicePieces(unsigned a,std::string message,std::string colour, std::string playerColor) {
   const char piece = pieceMap[message[a]];
   Coordinate coor(message[a+1], message[a+2]);
   int column = coor.getRealColumn();
   int line = coor.getRealRow();
+
+  if (playerColor == "white")
+  {
+      column = reversePositionMap[column];
+      line = reversePositionMap[line];
+  }
+
   if (colour == "white") {
     attron(COLOR_PAIR(WHITE_PLAYER));
-    mvprintw(1+(line)*OFFSET, 54+((column+1)*OFFSET), "%c", piece);
+    mvprintw((1+line)*OFFSET, 63+((column+1)*OFFSET), "%c", piece);//54
     attroff(COLOR_PAIR(WHITE_PLAYER));
   }
   else {
     attron(COLOR_PAIR(BLACK_PLAYER));
-    mvprintw(1+(line*OFFSET), 54+((column+1)*OFFSET), "%c", piece);
+    mvprintw((1+line)*OFFSET, 63+((column+1)*OFFSET), "%c", piece);
     attroff(COLOR_PAIR(BLACK_PLAYER));
   }
 }
 
-void aliceToBoard(std::string message) {
+void aliceToBoard(std::string message, std::string playerColor) {
   unsigned int a = 0;
   std::string colour = "white";
   while (message[a] != '!'){
-    separateAlicePieces(a, message, colour);
+    separateAlicePieces(a, message, colour, playerColor);
     a += CHAR_NUM;
   }
   a += 1;
   colour = "black";
   while (message[a] != '#'){
-    separateAlicePieces(a, message, colour);
+    separateAlicePieces(a, message, colour, playerColor);
     a += CHAR_NUM;
   }
 }

@@ -9,32 +9,33 @@ class TestBoard;
 
 class Board
 {
-	private:
+	protected:
 	unsigned _column;
 	unsigned _row;
 	Piece*** _state;
-	void _copyState(const Board&);
-	void _delState();
+	virtual void _copyState(const Board&);
+	virtual void _delState();
 
 	public:
 	Board(unsigned = 8, unsigned = 8);
 	Board(const Board&);
 	Board(Board&&);
-	~Board();
+	virtual ~Board();
 
 	Board& operator= (const Board&);
 	Board& operator= (Board&&);
 
 	unsigned getColumn() const {return _column;}
 	unsigned getRow() const {return _row;}
-	Piece* getCase(Coordinate) const;
+	virtual Piece* getCase(Coordinate) const;
 	char getCaseColor(Coordinate place) const{
-		if (!isInBoard(place)) throw std::out_of_range("the board is to small");
-		return place.getRealRow() + place.getRealColumn() % 2 ? 'w':'b';
+		if (!isInBoard(place)) throw std::out_of_range("this case does not exist.");
+		return (place.getRealRow() + place.getRealColumn()) % 2 ? 'w':'b';
 	}
 	Piece* movePiece(Coordinate, Coordinate);
 	void setCase(Coordinate, Piece*);
 	bool isInBoard(Coordinate place) const {return place.getRealRow() < _row && place.getRealColumn() < _column;}
+	virtual bool isCaseEmpty(Coordinate place) const {return !_state[place.getRealColumn()][place.getRealRow()];}
 
 	friend TestBoard;
 };

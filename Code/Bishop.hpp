@@ -9,7 +9,7 @@ class TestBishop;
 class Bishop : public Piece {
 
 	protected :
-		bool _checkMove(Coordinate, Board*, Game&) override;
+		bool _checkMove(Coordinate, Board*, Game&, bool = true) override;
 		bool hasMoved() const override {return false;}
 
 	public :

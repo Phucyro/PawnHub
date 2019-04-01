@@ -57,41 +57,41 @@ void Classic::_initBoard() {
 
 	//White part
 
-	Game::_board->setCase(Coordinate('A', '1'), Game::_pieces[0]);
-	Game::_board->setCase(Coordinate('B', '1'), Game::_pieces[1]);
-	Game::_board->setCase(Coordinate('C', '1'), Game::_pieces[2]);
-	Game::_board->setCase(Coordinate('D', '1'), Game::_pieces[3]);
-	Game::_board->setCase(Coordinate('E', '1'), Game::_pieces[4]);
-	Game::_board->setCase(Coordinate('F', '1'), Game::_pieces[5]);
-	Game::_board->setCase(Coordinate('G', '1'), Game::_pieces[6]);
-	Game::_board->setCase(Coordinate('H', '1'), Game::_pieces[7]);
-	Game::_board->setCase(Coordinate('A', '2'), Game::_pieces[8]);
-	Game::_board->setCase(Coordinate('B', '2'), Game::_pieces[9]);
-	Game::_board->setCase(Coordinate('C', '2'), Game::_pieces[10]);
-	Game::_board->setCase(Coordinate('D', '2'), Game::_pieces[11]);
-	Game::_board->setCase(Coordinate('E', '2'), Game::_pieces[12]);
-	Game::_board->setCase(Coordinate('F', '2'), Game::_pieces[13]);
-	Game::_board->setCase(Coordinate('G', '2'), Game::_pieces[14]);
-	Game::_board->setCase(Coordinate('H', '2'), Game::_pieces[15]);
+	TurnBasedGame::_board->setCase(Coordinate('A', '1'), TurnBasedGame::_pieces[0]);
+	TurnBasedGame::_board->setCase(Coordinate('B', '1'), TurnBasedGame::_pieces[1]);
+	TurnBasedGame::_board->setCase(Coordinate('C', '1'), TurnBasedGame::_pieces[2]);
+	TurnBasedGame::_board->setCase(Coordinate('D', '1'), TurnBasedGame::_pieces[3]);
+	TurnBasedGame::_board->setCase(Coordinate('E', '1'), TurnBasedGame::_pieces[4]);
+	TurnBasedGame::_board->setCase(Coordinate('F', '1'), TurnBasedGame::_pieces[5]);
+	TurnBasedGame::_board->setCase(Coordinate('G', '1'), TurnBasedGame::_pieces[6]);
+	TurnBasedGame::_board->setCase(Coordinate('H', '1'), TurnBasedGame::_pieces[7]);
+	TurnBasedGame::_board->setCase(Coordinate('A', '2'), TurnBasedGame::_pieces[8]);
+	TurnBasedGame::_board->setCase(Coordinate('B', '2'), TurnBasedGame::_pieces[9]);
+	TurnBasedGame::_board->setCase(Coordinate('C', '2'), TurnBasedGame::_pieces[10]);
+	TurnBasedGame::_board->setCase(Coordinate('D', '2'), TurnBasedGame::_pieces[11]);
+	TurnBasedGame::_board->setCase(Coordinate('E', '2'), TurnBasedGame::_pieces[12]);
+	TurnBasedGame::_board->setCase(Coordinate('F', '2'), TurnBasedGame::_pieces[13]);
+	TurnBasedGame::_board->setCase(Coordinate('G', '2'), TurnBasedGame::_pieces[14]);
+	TurnBasedGame::_board->setCase(Coordinate('H', '2'), TurnBasedGame::_pieces[15]);
 
 	//Black part
 
-	Game::_board->setCase(Coordinate('A', '8'), Game::_pieces[16]);
-	Game::_board->setCase(Coordinate('B', '8'), Game::_pieces[17]);
-	Game::_board->setCase(Coordinate('C', '8'), Game::_pieces[18]);
-	Game::_board->setCase(Coordinate('D', '8'), Game::_pieces[19]);
-	Game::_board->setCase(Coordinate('E', '8'), Game::_pieces[20]);
-	Game::_board->setCase(Coordinate('F', '8'), Game::_pieces[21]);
-	Game::_board->setCase(Coordinate('G', '8'), Game::_pieces[22]);
-	Game::_board->setCase(Coordinate('H', '8'), Game::_pieces[23]);
-	Game::_board->setCase(Coordinate('A', '7'), Game::_pieces[24]);
-	Game::_board->setCase(Coordinate('B', '7'), Game::_pieces[25]);
-	Game::_board->setCase(Coordinate('C', '7'), Game::_pieces[26]);
-	Game::_board->setCase(Coordinate('D', '7'), Game::_pieces[27]);
-	Game::_board->setCase(Coordinate('E', '7'), Game::_pieces[28]);
-	Game::_board->setCase(Coordinate('F', '7'), Game::_pieces[29]);
-	Game::_board->setCase(Coordinate('G', '7'), Game::_pieces[30]);
-	Game::_board->setCase(Coordinate('H', '7'), Game::_pieces[31]);
+	TurnBasedGame::_board->setCase(Coordinate('A', '8'), TurnBasedGame::_pieces[16]);
+	TurnBasedGame::_board->setCase(Coordinate('B', '8'), TurnBasedGame::_pieces[17]);
+	TurnBasedGame::_board->setCase(Coordinate('C', '8'), TurnBasedGame::_pieces[18]);
+	TurnBasedGame::_board->setCase(Coordinate('D', '8'), TurnBasedGame::_pieces[19]);
+	TurnBasedGame::_board->setCase(Coordinate('E', '8'), TurnBasedGame::_pieces[20]);
+	TurnBasedGame::_board->setCase(Coordinate('F', '8'), TurnBasedGame::_pieces[21]);
+	TurnBasedGame::_board->setCase(Coordinate('G', '8'), TurnBasedGame::_pieces[22]);
+	TurnBasedGame::_board->setCase(Coordinate('H', '8'), TurnBasedGame::_pieces[23]);
+	TurnBasedGame::_board->setCase(Coordinate('A', '7'), TurnBasedGame::_pieces[24]);
+	TurnBasedGame::_board->setCase(Coordinate('B', '7'), TurnBasedGame::_pieces[25]);
+	TurnBasedGame::_board->setCase(Coordinate('C', '7'), TurnBasedGame::_pieces[26]);
+	TurnBasedGame::_board->setCase(Coordinate('D', '7'), TurnBasedGame::_pieces[27]);
+	TurnBasedGame::_board->setCase(Coordinate('E', '7'), TurnBasedGame::_pieces[28]);
+	TurnBasedGame::_board->setCase(Coordinate('F', '7'), TurnBasedGame::_pieces[29]);
+	TurnBasedGame::_board->setCase(Coordinate('G', '7'), TurnBasedGame::_pieces[30]);
+	TurnBasedGame::_board->setCase(Coordinate('H', '7'), TurnBasedGame::_pieces[31]);
 
 	// _sendBoard();
 }
@@ -150,13 +150,25 @@ void Classic::_nextTurn() {
 	std::string playerMove;
 	while(!isMoveValid){
 		playerMove = currentPlayer->askMove();
-		std::cout<<"game received: "<<playerMove<<std::endl;
-		if (this->_fitInBoard(playerMove)){
+		if (playerMove[0] == '/' && playerMove[1] == 'e' && playerMove[2] == 'n' && playerMove[3] == 'd'){
+			if(currentPlayer == _player1) _winner = _player2;
+			else _winner = _player1;
+			_sendSurrend();
+			isMoveValid = true;
+		}
+		else if (playerMove[0] == '/' && playerMove[1] == 't' && playerMove[2] == 'i' && playerMove[3] == 'm'){
+			if(currentPlayer == _player1) _winner = _player2;
+			else _winner = _player1;
+			_sendSurrend();
+			isMoveValid = true;
+		}
+		else if (this->_fitInBoard(playerMove)){
 			Coordinate start = Coordinate(playerMove[0], playerMove[1]), end = Coordinate(playerMove[2], playerMove[3]);
 			isMoveValid = this->_executeMove(start, end, playerColor);
 		}
+		if (!isMoveValid) currentPlayer->cleanPreMove();
 	}
-
+	currentPlayer->transferGoodMove();
 }
 
 // yall have some unsigned/signed int to deal with in here, it's stupid and a mess
@@ -222,6 +234,7 @@ bool Classic::_isCheckmate(char playerColor){
 }
 
 bool Classic::_isStalemate(char playerColor){
+	if (this->testCheck(playerColor)) return false;
 	int offset = _calculOffset(playerColor);
 	for (int i = offset; i < 16+offset; i++){
 		if ((!_pieces[i]->isTaken()) && _pieces[i]->canMove(_board, *this)) return false;
@@ -262,34 +275,51 @@ bool Classic::_notEnoughtPieces(){
 	return true;
 }
 
+void Classic::_updateStat(){
+	double playerElo1 = data.getEloRating(_player1->getName(), CLASSIC);
+	double playerElo2 = data.getEloRating(_player2->getName(), CLASSIC);
+	double playerExptWin1 = data.getExpectedWin(playerElo1, playerElo2);
+	double playerExptWin2 = data.getExpectedWin(playerElo2, playerElo1);
+
+
+	if (_winner == _player1){
+		std::cout << "White Player win !" << std::endl;
+		data.updateClassicStat(_player2->getName(), 1);
+		data.updateClassicStat(_player1->getName(), 0);
+		data.updateRating(_player2->getName(), playerExptWin2, LOSE, CLASSIC);
+		data.updateRating(_player1->getName(), playerExptWin1, WIN,  CLASSIC);
+	}
+	else if (_winner == _player2) {
+		std::cout << "Black Player win !" << std::endl;
+		data.updateClassicStat(_player2->getName(), 0);
+		data.updateClassicStat(_player1->getName(), 1);
+		data.updateRating(_player2->getName(), playerExptWin2, WIN,  CLASSIC);
+		data.updateRating(_player1->getName(), playerExptWin1, LOSE, CLASSIC);
+	}
+	else {
+		data.updateClassicStat(_player2->getName(), 2);
+		data.updateClassicStat(_player1->getName(), 2);
+		data.updateRating(_player2->getName(), playerExptWin2, TIE, CLASSIC);
+		data.updateRating(_player1->getName(), playerExptWin1, TIE, CLASSIC);
+	}
+}
+
 bool Classic::_isFinish() {
+	if (_winner){
+		_updateStat();
+		return true;
+	}
 	Player *currentPlayer = _getCurrentPlayer();
 	char opponentColor = currentPlayer == _player2 ? 'w':'b';
 	if (this->_isCheckmate(opponentColor)){
-		if (opponentColor == 'w'){
-			std::cout << "Black Player win !" << std::endl;
-			data.addUserClassicWin(_player2->getName());
-			data.addUserClassicLose(_player1->getName());
-		}
-		else {
-			std::cout << "White Player win !" << std::endl;
-			data.addUserClassicLose(_player2->getName());
-			data.addUserClassicWin(_player1->getName());
-		}
 		_winner = currentPlayer;
 		_sendCheckmate();
+		_updateStat();
 		return true;
 	}
-	if (this->_isStalemate(opponentColor)) {
-		data.addUserClassicDraw(_player2->getName());
-		data.addUserClassicDraw(_player1->getName());
+	if (this->_isStalemate(opponentColor) || this->_notEnoughtPieces()){
 		_sendStalemate();
-		return true;
-	}
-	if (this->_notEnoughtPieces()){
-		data.addUserClassicDraw(_player2->getName());
-		data.addUserClassicDraw(_player1->getName());
-		_sendStalemate();
+		_updateStat();
 		return true;
 	}
 	return false;

@@ -9,7 +9,7 @@ class Rook : public Piece {
 
 	protected :
 		bool _moved;
-		bool _checkMove(Coordinate, Board*, Game&) override;
+		bool _checkMove(Coordinate, Board*, Game&, bool = true) override;
 
 	public :
 		Rook(const char color, Coordinate coords) noexcept : Piece(color, coords), _moved(false) {
@@ -33,6 +33,7 @@ class Rook : public Piece {
 		bool canMove(Board*, Game&) override;
 		using Piece::_isMovePossible;
 		bool _isMovePossible(Coordinate, Board*, Game&) override;
+		void startMovingTo(Game&, Coordinate) override;
 
 		friend TestRook;
 

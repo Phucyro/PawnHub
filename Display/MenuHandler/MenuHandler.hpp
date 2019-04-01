@@ -24,6 +24,7 @@ public:
   std::string get_infos(std::string);
   void print_warning(std::string);
   void print_warning2(std::string);
+  void print_warning3(std::string);
 
 
   //choices menus
@@ -37,13 +38,13 @@ public:
   void init_statst(std::string mode); //stats top 10
   void init_statsp(std::string name); //stats personelles
 
-  void update_stats(int number, std::string first_column, int wins, int loses, int draws);
+  void update_stats(int number, std::string first_column, std::string wins, std::string loses, std::string draws, std::string elo);
 
   //friends list / invites menu
   void init_friendsw(const std::vector<std::string> friends);
 
   //chat
-  void init_chatw();
+  void print_top(std::string);
   void update_chatw(int, std::string, std::string);
 
   //windows utilites

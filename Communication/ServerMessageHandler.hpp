@@ -5,6 +5,7 @@
 #include "ServerHandler.hpp"
 #include "Matchmaking.hpp"
 #include "Data.hpp"
+#include "ExecInfoThread.hpp"
 #include "../Code/Player.hpp"
 #include <vector>
 #include <string>
@@ -15,13 +16,13 @@
 typedef std::map<std::string, Player*> PlayersMap;
 
 
-void inline receiveMessageHandler(Socket* socket, Data* data, PlayersMap* players_map, Matchmaking* matchmaking){
+void inline receiveMessageHandler(Socket* socket, Data* data, PlayersMap* players_map, std::mutex* playerMapMutex, Matchmaking* matchmaking, ExecInfoThread* infoThread){
   bool quit = false;
   std::vector<std::string> msg;
   Player* player = new Player(socket);
+
   try {
     while (!quit){
-      player->getSocket()->lockMutex();
       msg = splitString(socket->receiveMessage(), '~');
 
       std::cout << "[ServerMessageHandler] Received Message " << msg[0] + " " + msg[1] << std::endl;
@@ -30,54 +31,59 @@ void inline receiveMessageHandler(Socket* socket, Data* data, PlayersMap* player
 
       switch (choice){
         case 0 : // [0]
-          disconnect(&quit);
+          disconnect(socket, &quit);
           break;
         case 1 : // [1] [username] [password]
           signUpHandler(socket, data, msg[1], msg[2]);
-          player->getSocket()->unlockMutex();
           break;
         case 2 : // [2] [username] [password]
-          signInHandler(socket, players_map, data, player, msg[1], msg[2]);
-          player->getSocket()->unlockMutex();
+          signInHandler(socket, players_map, playerMapMutex, data, player, msg[1], msg[2]);
           break;
         case 3 : // [3] [sender] [target] [text]
-          //chatHandler(players_map, msg[1], msg[2], vectorToString(msg, 3));
-          player->getSocket()->unlockMutex();
+          chatHandler(players_map, playerMapMutex, player, msg[1], msg[2]);
           break;
         case 4 :
           playGameHandler(matchmaking, player, msg[1]);
           break;
         case 5 :
           leaveQueueHandler(matchmaking, player);
-          player->getSocket()->unlockMutex();
           break;
         case 7 :
           myStatHandler(player, data);
-          player->getSocket()->unlockMutex();
           break;
         case 8 :
           ladderHandler(socket, data, msg[1]);
-          player->getSocket()->unlockMutex();
           break;
         case 9 :
           viewFriendsHandler(player, data);
-          player->getSocket()->unlockMutex();
           break;
         case 10 :
           viewFriendRequestHandler(player, data);
-          player->getSocket()->unlockMutex();
           break;
         case 11 :
-          acceptRefuseRequestHandler(player, data, msg[1], msg[2]);
-          player->getSocket()->unlockMutex();
+          acceptRefuseRequestHandler(player, players_map,playerMapMutex, data, msg[1], msg[2]);
           break;
         case 12 :
-          sendFriendRequestHandler(player, data, msg[1]);
-          player->getSocket()->unlockMutex();
+          sendFriendRequestHandler(player, players_map, playerMapMutex, data, msg[1]);
           break;
         case 13 :
-          removeFriendHandler(player, data, msg[1]);
-          player->getSocket()->unlockMutex();
+          removeFriendHandler(player, players_map, playerMapMutex, data, msg[1]);
+          break;
+        case 14 :
+          viewSentRequestHandler(player, data);
+          break;
+        case 15 :
+          cancelRequestHandler(player, players_map, playerMapMutex, data, msg[1]);
+          break;
+        case 20 :
+          socket->sendMessage("20~stopChat");
+          break;
+        case 30 :
+          std::cout<<msg[1]<<std::endl;
+          if (player->isInGame()){
+          	player->writeControlPipe(msg[1]);
+          	player->activateControlRecv();
+          }
           break;
       }
     }
@@ -86,18 +92,25 @@ void inline receiveMessageHandler(Socket* socket, Data* data, PlayersMap* player
     std::cout << error.what() << std::endl;
     // Supprime l'entrée username : Player()
   }
-
+  player->surrend();
+  player->waitEndGame();
   std::cout << "Deconnexion de " << player->getName() << std::endl;
 
   if (player->getQueueNumber() != -1)
     matchmaking->removePlayer(player);
 
+  playerMapMutex->lock();
   players_map->erase(player->getName());
+  playerMapMutex->unlock();
 
-  if (player->getName() != "Guest")
+  if (player->getName() != "Guest"){
+    data->lockMutex(player->getName());
     data->saveUserData(player->getName());
+    data->unlockMutex(player->getName());
+  }
 
   delete player;
+  infoThread->setFinished(true);
 }
 
 #endif

@@ -11,15 +11,16 @@ class Pawn : public BasicPawn {
 
 	protected :
 		GhostPawn *_ghost;
+		int _ghostPlacement;
 
 	public :
 
-		Pawn(const char color, Coordinate coords, bool moved = false) noexcept : BasicPawn(color, coords, moved), _ghost(nullptr) {}
-		Pawn(const char color, const char column , const char row, bool moved = false) : BasicPawn(color, column, row, moved), _ghost(nullptr) {}
+		Pawn(const char color, Coordinate coords, bool moved = false) noexcept : BasicPawn(color, coords, moved), _ghost(nullptr), _ghostPlacement(0) {}
+		Pawn(const char color, const char column , const char row, bool moved = false) : BasicPawn(color, column, row, moved), _ghost(nullptr), _ghostPlacement(0) {}
 
 		Pawn(const Pawn& original) noexcept;
 
-		Pawn(Pawn&& original) noexcept : BasicPawn(original), _ghost(original._ghost) {
+		Pawn(Pawn&& original) noexcept : BasicPawn(original), _ghost(original._ghost), _ghostPlacement(original._ghostPlacement) {
 			original._ghost = nullptr;
 		}
 
@@ -28,7 +29,9 @@ class Pawn : public BasicPawn {
 		Pawn& operator= (Pawn&&);
 
 		bool move(Coordinate, Board*, Game&) override;
-		bool _checkMove(Coordinate, Board*, Game&) override;
+		bool _checkMove(Coordinate, Board*, Game&, bool careOfMoving = true) override;
+		void startMovingTo(Game&, Coordinate) override;
+		void stopMoving(Game&, Board*) override;
 };
 
 #endif

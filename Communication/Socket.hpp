@@ -8,7 +8,7 @@ class Socket {
 private:
   int file_descriptor;
   char recv_buffer[MSG_LENGTH];
-  std::mutex monMutex;
+  std::mutex sendMutex;
 
 public:
   Socket();
@@ -17,16 +17,13 @@ public:
 
   int getFileDescriptor();
   bool connectToServer(std::string);
-  void closeSocket();
+  bool isConnected();
+  // void closeSocket();
 
   void printSend(std::string);
   void sendMessage(std::string);
   bool parseBuffer(std::string&);
   std::string receiveMessage();
-
-  void lockMutex();
-  void unlockMutex();
-
 };
 
 #endif

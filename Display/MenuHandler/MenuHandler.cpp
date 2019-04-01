@@ -37,12 +37,13 @@ void MenuHandler::init_dataw()
   int y_max, x_max;
 
   getmaxyx(stdscr, y_max, x_max);
-  data_menu = newwin(5, x_max-12, y_max - y_max/3, 5);
+  data_menu = newwin(5, x_max - 12, y_max - y_max/3+3 , 5);
   box(data_menu,0,0);
 
   refresh();
   wrefresh(data_menu);
 }
+
 
 std::string MenuHandler::get_infos(std::string type)
 /** permet d'obtenir l'input du joueur **/
@@ -72,6 +73,7 @@ void MenuHandler::print_warning(std::string warning)
   int y_max, x_max;
   getmaxyx(stdscr, y_max, x_max);
 
+  mvprintw(y_max-2,1, std::string(70,' ').c_str());
   mvprintw(y_max-2,1,warning.c_str());
   refresh();
 }
@@ -82,7 +84,19 @@ void MenuHandler::print_warning2(std::string warning)
   int y_max, x_max;
   getmaxyx(stdscr, y_max, x_max);
 
+  mvprintw(y_max-1,1,std::string(70,' ').c_str());
   mvprintw(y_max-1,1,warning.c_str());
+  refresh();
+}
+
+void MenuHandler::print_warning3(std::string warning)
+/** print le message d'erreur **/
+{
+  int y_max, x_max;
+  getmaxyx(stdscr, y_max, x_max);
+
+  mvprintw(y_max-3,1, std::string(70,' ').c_str());
+  mvprintw(y_max-3,1,warning.c_str());
   refresh();
 }
 
@@ -96,7 +110,7 @@ void MenuHandler::init_choicesw()
   int y_max, x_max;
   getmaxyx(stdscr,y_max,x_max);
 
-  choices_menu = newwin(7, x_max - 12, y_max - y_max/3 , 5);
+  choices_menu = newwin(8, x_max - 12, y_max - y_max/3  , 5);
   box(choices_menu, 0, 0);
   refresh();
   wrefresh(choices_menu);
@@ -181,15 +195,16 @@ void MenuHandler::init_statst(std::string mode)
   int y_box , x_box;
   getmaxyx(stats_w, y_box, x_box);
 
-  int x_split = (x_box/4) + 2;
+  int x_split = (x_box/5);
   int y_split = (y_box/10);
 
-  mvwprintw(stats_w, 1, x_title + x_title/2, "%s : Top 10 ", mode.c_str());
+  mvwprintw(stats_w, 1, x_title + x_title/3, "%s : Top 10 ", mode.c_str());
 
   mvwprintw(stats_w, 3, 5, "Username");
   mvwprintw(stats_w, 3, 5+1*x_split,"Wins");
   mvwprintw(stats_w, 3, 5+2*x_split, "Loses");
   mvwprintw(stats_w, 3, 5+3*x_split, "Draws");
+  mvwprintw(stats_w, 3, 5+4*x_split, "Elo");
 
   for (int k=0; k<10 ; k++)
   {
@@ -210,32 +225,34 @@ void MenuHandler::init_statsp(std::string name)
   int y_box, x_box;
   getmaxyx(stats_w, y_box, x_box);
 
-  int x_split = (x_box/4) + 2;
+  int x_split = (x_box/5);
   int y_split = (y_box/10);
 
-  mvwprintw(stats_w,1,x_title+x_title/2, "%s's stats", name.c_str());
+  mvwprintw(stats_w,1,x_title+x_title/3, "%s's stats", name.c_str());
   mvwprintw(stats_w, 3, 5, "Mode");
   mvwprintw(stats_w, 3, 5+1*x_split,"Wins");
   mvwprintw(stats_w, 3, 5+2*x_split, "Loses");
   mvwprintw(stats_w, 3, 5+3*x_split, "Draws");
+  mvwprintw(stats_w, 3, 5+4*x_split, "Elo");
 
   refresh_board();
 
 }
 
-void MenuHandler::update_stats(int number, std::string name, int wins, int loses, int draws)
+void MenuHandler::update_stats(int number, std::string name, std::string wins, std::string loses, std::string draws, std::string elo)
 /** update ligne joueur du menu stats (number commence en 0) **/
 {
   int y_box, x_box;
   int x_split;
 
   getmaxyx(stats_w, y_box, x_box);
-  x_split = (x_box/4)+2;
+  x_split = (x_box/5);
 
   mvwprintw(stats_w, 5+number, 5, name.c_str());
-  mvwprintw(stats_w, 5+number, 5+x_split, "%d", wins);
-  mvwprintw(stats_w, 5+number, 5+2*x_split, "%d", loses);
-  mvwprintw(stats_w, 5+number, 5+3*x_split, "%d", draws);
+  mvwprintw(stats_w, 5+number, 5+x_split, "%s", wins.c_str());
+  mvwprintw(stats_w, 5+number, 5+2*x_split, "%s", loses.c_str());
+  mvwprintw(stats_w, 5+number, 5+3*x_split, "%s", draws.c_str());
+  mvwprintw(stats_w, 5+number, 5+4*x_split, "%s", elo.c_str());
 
   refresh_board();
 }
@@ -278,7 +295,7 @@ void MenuHandler::init_friendsw(const std::vector<std::string> friends)
 
   while (!end && !empty)
   {
-    mvwprintw(stats_w, 1+j, 5+i*x_split, friends[count].c_str());
+    mvwprintw(stats_w, 3+j, 5+i*x_split, friends[count].c_str());
     i += 1;
     count += 1;
 
@@ -288,7 +305,7 @@ void MenuHandler::init_friendsw(const std::vector<std::string> friends)
       i = 0;
     }
 
-    if (j>=y_box-2 || count>max_count-1)
+    if (j>=y_box-4 || count>max_count-1)
     {
       end = true;
     }
@@ -298,12 +315,12 @@ void MenuHandler::init_friendsw(const std::vector<std::string> friends)
 
 }
 
-void MenuHandler::init_chatw()
+void MenuHandler::print_top(std::string msg)
 {
   init_statsw();
   int y_max, x_max;
   getmaxyx(stats_w, y_max, x_max);
-  mvwprintw(stats_w, 1, 1,"Messages recus");
+  mvwprintw(stats_w, 1, 2, "%s", msg.c_str());
   refresh_board();
 }
 
@@ -312,9 +329,13 @@ void MenuHandler::update_chatw(int number, std::string sender, std::string messa
   int y_max, x_max;
   getmaxyx(stats_w, y_max, x_max);
 
-  if (number < y_max-4)
+  int length_max = x_max - sender.size() - 5;
+
+
+  if (number < y_max-7)
   {
-    mvwprintw(stats_w, 3+number, 1, "%s : %s", sender.c_str(), message.c_str());
+    // space to avoir bug
+    mvwprintw(stats_w, 3+number, 1, "%s %s", sender.c_str(), message.substr(0,length_max).c_str());
   }
 
 }

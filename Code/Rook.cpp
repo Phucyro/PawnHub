@@ -10,7 +10,7 @@ Rook& Rook::operator= (const Rook& original){
 	return *this;
 }
 
-bool Rook::_checkMove(Coordinate end, Board* board, Game& game){
+bool Rook::_checkMove(Coordinate end, Board* board, Game& game, bool careOfMoving){
 	int rowMove = int(end.getRealRow()) - int(_coords.getRealRow());
 	int rowDirection = rowMove == 0 ? 0 : rowMove/std::abs(rowMove);
 	int columnMove = int(end.getRealColumn()) - int(_coords.getRealColumn());
@@ -21,17 +21,17 @@ bool Rook::_checkMove(Coordinate end, Board* board, Game& game){
 
 		// check if there is no piece in the way
 		for (int i = int(_coords.getRealRow()) + rowDirection; i != int(end.getRealRow()); i += rowDirection){
-			if (!_isPlaceFree(Coordinate(end.getRealColumn(), unsigned(i)), board)) return false;
+			if (!_isPlaceFree(Coordinate(end.getRealColumn(), unsigned(i)), board, careOfMoving)) return false;
 		}
 	}
 	else if(columnMove){
 		// check if there is no piece in the way
 		for (int i = int(_coords.getRealColumn()) + columnDirection; i != int(end.getRealColumn()); i += columnDirection){
-			if (!_isPlaceFree(Coordinate(unsigned(i), end.getRealRow()), board)) return false;
+			if (!_isPlaceFree(Coordinate(unsigned(i), end.getRealRow()), board, careOfMoving)) return false;
 		}
 	}
 	else return false;
-	if ((!_isPlaceFree(end, board)) && board->getCase(end)->getColor() == this->getColor()) return false;
+	if ((!_isPlaceFree(end, board, careOfMoving)) && board->getCase(end)->getColor() == this->getColor()) return false;
 	return true;
 }
 
@@ -56,6 +56,11 @@ bool Rook::_isMovePossible(Coordinate dest, Board* board, Game& game){
 	bool res = this->Piece::_isMovePossible(dest, board, game);
 	_moved = moved;
 	return res;
+}
+
+void Rook::startMovingTo(Game& game, Coordinate end){
+	this->Piece::startMovingTo(game, end);
+	_moved = true;
 }
 
 #endif

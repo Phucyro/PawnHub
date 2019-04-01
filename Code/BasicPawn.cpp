@@ -18,7 +18,7 @@ BasicPawn& BasicPawn::operator= (BasicPawn&& original){
 	return *this;
 }
 
-bool BasicPawn::_checkMove(Coordinate end, Board* board, Game& game){
+bool BasicPawn::_checkMove(Coordinate end, Board* board, Game& game, bool careOfMoving){
 	int rowMove = int(end.getRealRow()) - int(_coords.getRealRow());
 	int columnMove = int(end.getRealColumn()) - int(_coords.getRealColumn());
 
@@ -26,7 +26,7 @@ bool BasicPawn::_checkMove(Coordinate end, Board* board, Game& game){
 	if (this->getColor() == 'w'){
 		if (std::abs(columnMove) == 1){
 			if (rowMove != 1) return false;
-			if (_isPlaceFree(end, board)) return false;
+			if (_isPlaceFree(end, board, careOfMoving)) return false;
 			if (board->getCase(end)->getColor() == 'w') return false;
 		}
 		else{
@@ -35,13 +35,13 @@ bool BasicPawn::_checkMove(Coordinate end, Board* board, Game& game){
 				if (this->hasMoved()) return false;
 				if (board->getCase(end)) return false;
 			}
-			if (!_isPlaceFree(Coordinate(_coords.getRealColumn(), _coords.getRealRow() + 1), board)) return false;
+			if (!_isPlaceFree(Coordinate(_coords.getRealColumn(), _coords.getRealRow() + 1), board, careOfMoving)) return false;
 		}
 	}
 	else {
 		if (std::abs(columnMove) == 1){
 			if (rowMove != -1) return false;
-			if (_isPlaceFree(end, board)) return false;
+			if (_isPlaceFree(end, board, careOfMoving)) return false;
 			if (board->getCase(end)->getColor() == 'b') return false;
 		}
 		else{
@@ -50,7 +50,7 @@ bool BasicPawn::_checkMove(Coordinate end, Board* board, Game& game){
 				if (this->hasMoved()) return false;
 				if (board->getCase(end)) return false;
 			}
-			if (!_isPlaceFree(Coordinate(_coords.getRealColumn(), _coords.getRealRow() - 1), board)) return false;
+			if (!_isPlaceFree(Coordinate(_coords.getRealColumn(), _coords.getRealRow() - 1), board, careOfMoving)) return false;
 		}
 	}
 	return true;
@@ -84,6 +84,11 @@ bool BasicPawn::_isMovePossible(Coordinate dest, Board* board, Game& game){
 
 void BasicPawn::_promote(Game& game){
 	game.promote(this);
+}
+
+void BasicPawn::startMovingTo(Game& game, Coordinate end){
+	this->Piece::startMovingTo(game, end);
+	_moved = true;
 }
 
 #endif

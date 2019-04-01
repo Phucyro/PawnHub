@@ -10,21 +10,32 @@ Player& Player::operator= (Player&& original) {
 		_sock = original._sock;
 		_control = original._control;
 		_pipe = original._pipe;
+		_pipeControl = original._pipeControl;
 		original._pipe = nullptr;
 		_name = original._name;
 		_recvActive = original._recvActive;
+		_realTime = original._realTime;
+		_color = original._color;
+		_premoves = original._premoves;
 		return *this;
 	}
 
 
 std::string Player::askMove(){
-	_control->sendAskMove(getSocket());
-	_recvActive = true;
-	_control->handleMessage(getSocket());
-	char res[5];
-	read(_pipe[0], &res, sizeof(char)*4);
-	res[4] = '\0';
-	return std::string(res);
+	if (_premoves.empty()){
+		_recvActive = true;
+		_control->sendAskMove(getSocket());
+		char res[5];
+		read(_pipe[0], &res, sizeof(char)*4);
+		res[4] = '\0';
+		return std::string(res);
+	}
+	else {
+		std::string res = _premoves.front();
+		_premoves.pop();
+		transferGoodPremove();
+		return res;
+	}
 }
 
 void Player::showBoard(std::string board){
@@ -34,7 +45,6 @@ void Player::showBoard(std::string board){
 char Player::askPromotion(){
 	_control->sendAskPromotion(getSocket());
 	_recvActive = true;
-	_control->handleMessage(getSocket());
 	char res;
 	read(_pipe[0], &res, sizeof(char));
 	return res;
@@ -68,6 +78,14 @@ void Player::setQueueNumber(int queueNumber){
 	_queueNumber = queueNumber;
 }
 
+void Player::setColor(char color){
+	_color = color;
+}
+
+
+void Player::transferFirstMsg(){
+	_control->sendFirstMsg(getSocket());
+}
 
 void Player::transferStart() {
 	_control->sendStart(getSocket());
@@ -89,6 +107,14 @@ void Player::transferStalemate() {
 	_control->sendStalemate(getSocket());
 }
 
+void Player::transferSurrend(){
+	_control->sendSurrend(getSocket());
+}
+
+void Player::transferTimeout(){
+	_control->sendTimeout(getSocket());
+}
+
 void Player::transferGameMode(std::string& game) {
 	_control->sendGameMode(getSocket(), game);
 }
@@ -101,12 +127,38 @@ void Player::transferTurn(unsigned turn) {
 	_control->sendTurn(getSocket(), turn);
 }
 
+void Player::transferTime(int time) {
+	_control->sendTime(getSocket(), time);
+}
+
+void Player::transferGoodMove() {
+	_control->sendGoodMove(getSocket());
+}
+
+void Player::transferGoodPremove() {
+	_control->sendGoodPremove(getSocket());
+}
+
 void Player::receiveMove(std::string& message){
-	if (_recvActive){
-		_recvActive = false;
-		char str[4+1];				// 4 characters for a move, 1 for \0
-		std::strcpy(str, message.c_str());
-		write(_pipe[1], str, 4*sizeof(char));
+	if (message[0] == _color){
+		if (!(_realTime || _recvActive)) {
+			if ((message[1] == '/' && message[2] == 'e' && message[3] == 'n' && message[4] == 'd') || (message[1] == '/' && message[2] == 't' && message[3] == 'i' && message[4] == 'm')){
+				this->cleanPreMove();
+				message.erase(0, 1);
+				_premoves.push(message);
+			}
+			else if (message[1] == '/' && message[2] == 'd' && message[3] == 'e' && message[4] == 'l') this->cleanPreMove();
+			else {
+				message.erase(0, 1);
+				_premoves.push(message);
+			}
+		}
+		else{
+			_recvActive = false;
+			char str[5+1];				// 4 characters for a move, 1 for \0
+			std::strcpy(str, message.c_str());	
+			write(_pipe[1], &(str[1]), 4*sizeof(char));
+		}
 	}
 }
 
@@ -117,6 +169,46 @@ void Player::receivePromotion(std::string& message){
 		std::strcpy(str, message.c_str());
 		write(_pipe[1], str, sizeof(char));
 	}
+}
+
+void Player::surrend(){
+	char message[5]="/end";
+	write(_pipe[1], message, 4*sizeof(char));
+}
+
+
+void Player::activateControlRecv(){
+	if (_control) _control->handleMessage(this);
+}
+
+std::string Player::readControlPipe(){
+	char buffer[MSG_LENGTH+1];
+
+	read(_pipeControl[0], buffer, sizeof(buffer));
+	std::string msg = buffer;
+	return msg;
+}
+
+void Player::writeControlPipe(std::string msg){
+	char buffer[MSG_LENGTH+1];
+
+	std::strcpy(buffer, msg.c_str());
+	write(_pipeControl[1], buffer, sizeof(buffer));
+}
+
+void Player::startGame(){
+	_inGameMutex->lock();
+}
+void Player::endGame(){
+	cleanPreMove();
+	_recvActive = false;
+	_inGameMutex->unlock();
+}
+
+bool Player::isInGame(){
+	if (!_inGameMutex->try_lock()) return true;
+	_inGameMutex->unlock();
+	return false;
 }
 
 #endif
