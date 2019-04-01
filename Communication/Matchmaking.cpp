@@ -20,9 +20,7 @@ void delFinishedThread(std::list<ExecInfoThread*>&);
 void matchScheduling(const bool& end, Matchmaking* mm){
   int gamemode = 0;
   while (!end){
-    _mutex.lock();
     mm->check(gamemode);
-    _mutex.unlock();
     usleep(TIME_BETWEEN_MATCH/8);
     if (gamemode >= 7) gamemode = 0;
     else gamemode++;
@@ -72,39 +70,6 @@ void Matchmaking::removePlayer(Player* player){
   _mutex.unlock();
   player->setQueueNumber(-1);
 }
-/*
-void Matchmaking::check(int gamemode){
-  bool empty = false;
-  Player* player1,player2;
-  int delta = 0;
-  _mutex.lock();
-  if (_queues[gamemode].size() < 2) return;
-
-  while(!found){
-    if (_queues[gamemode].size() < 2) return;
-    delta+=10;
-
-
-    for (unsigned int i = 0; j < _queues[gamemode].size(); ++i) {
-      Player* player1temp = _queues[gamemode][i];
-      for (unsigned int j = i+1; j < _queues[gamemode].size(); ++j){
-        Player* player2temp = _queues[gamemode][j];
-        double eloDiff = abs(data->getEloRating(player1->getName(), gamemode) - data->getEloRating(player2->getName(), gamemode));
-        if (eloDiff < delta){
-          player1 = player1temp;
-          player2 = player2temp;
-          enter(gamemode,player1,player2);
-          break;
-        }
-      }
-    }
-    if(_queues[gamemode].size()==0){
-      empty == true;
-    }
-  }
-  _mutex.unlock();
-}
-*/
 
 void Matchmaking::check(int gamemode){
   Player *player1, *player2;
@@ -149,9 +114,6 @@ void Matchmaking::enter(int gamemode,Player* player1, Player* player2){
 
   player2->setQueueNumber(-1);
   player2->getSocket()->sendMessage("4");
-
-  //_queues[gamemode].erase(std::remove(_queues[gamemode].begin(), _queues[gamemode].end(), player1), _queues[gamemode].end());
-  //_queues[gamemode].erase(std::remove(_queues[gamemode].begin(), _queues[gamemode].end(), player2), _queues[gamemode].end());
 
 // Cherche le mode de jeu
   switch(gamemode){

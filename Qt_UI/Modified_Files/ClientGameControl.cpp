@@ -87,7 +87,6 @@ void ClientGameControl::receiveGoodPremove(QString) {
 
 void ClientGameControl::sendMove(QString move) {
   std::string header = headerSendMap["move"];
-  std::cout << "Sending: " << move.toStdString() << std::endl;
   client->getSocket()->sendMessage("30~" + header + colour + move.toStdString());
 }
 
