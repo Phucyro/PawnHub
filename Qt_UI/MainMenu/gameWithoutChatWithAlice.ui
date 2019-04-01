@@ -60,6 +60,18 @@
      <height>151</height>
     </rect>
    </property>
+   <property name="minimumSize">
+    <size>
+     <width>211</width>
+     <height>151</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>221</width>
+     <height>151</height>
+    </size>
+   </property>
    <property name="text">
     <string/>
    </property>
