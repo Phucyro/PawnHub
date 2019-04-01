@@ -54,7 +54,7 @@ void ClientGameControl::receiveBoard(QString message) {
       }
       message.remove(0,1);
   }
-  if ((previous_board != message) || (second_previous_board != message))
+  if (!(previous_board == message) && !(second_previous_board == message))
   {
       if (is_second_board) second_previous_board = message;
       else previous_board = message;
