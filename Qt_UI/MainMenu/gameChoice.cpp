@@ -58,7 +58,6 @@ void GameChoice::on_classicPushButton_pressed()
     send_game_request("0");
     if(!cancel){
         run_game(game);
-        //delete game;
     }
 }
 void GameChoice::on_darkPushButton_pressed()
@@ -68,7 +67,6 @@ void GameChoice::on_darkPushButton_pressed()
     send_game_request("1");
     if(!cancel){
         run_game(game);
-        //delete game;
     }
 }
 void GameChoice::on_hordePushButton_pressed()
@@ -79,7 +77,6 @@ void GameChoice::on_hordePushButton_pressed()
 
     if(!cancel){
         run_game(game);
-        //delete game;
     }
 }
 void GameChoice::on_alicePushButton_pressed()
@@ -89,7 +86,6 @@ void GameChoice::on_alicePushButton_pressed()
 
     if(!cancel){
         run_game(game);
-        //delete game;
     }
 }
 
@@ -101,7 +97,6 @@ void GameChoice::on_realTimeClassicPushButton_pressed()
 
     if(!cancel){
         run_game(game);
-        //delete game;
     }
 }
 
@@ -109,11 +104,10 @@ void GameChoice::on_realTimeDarkPushButton_pressed()
 {
     GameWithoutChat* game = new GameWithoutChat(nullptr, client);
     game->setWindowTitle("Dark Chess - Real Time");
-    send_game_request("5");
+    send_game_request("6");
 
     if(!cancel){
         run_game(game);
-        //delete game;
     }
 }
 
@@ -121,11 +115,10 @@ void GameChoice::on_realTimeHordePushButton_pressed()
 {
     GameWithoutChat* game = new GameWithoutChat(nullptr, client);
     game->setWindowTitle("Horde Chess - Real Time");
-    send_game_request("6");
+    send_game_request("5");
 
     if(!cancel){
         run_game(game);
-        //delete game;
     }
 }
 
@@ -137,7 +130,6 @@ void GameChoice::on_realTimeAlicePushButton_pressed()
 
     if(!cancel){
         run_game(game);
-        //delete game;
     }
 }
 

@@ -40,10 +40,8 @@ SOURCES += \
     ../Modified_Files/ClientGameControl.cpp \
     passwordrepeat.cpp \
     message.cpp \
-    game.cpp \
     gameWithoutChat.cpp \
     gameWithoutChatWithAlice.cpp \
-    gameWithAlice.cpp \
     gameChoiceStatistics.cpp \
     gameChoice.cpp \
     friendTab.cpp \
@@ -66,10 +64,8 @@ HEADERS += \
     ../Modified_Files/BoardParsing.hpp \
     passwordrepeat.h \
     message.h \
-    game.h \
     gameWithoutChat.h \
     gameWithoutChatWithAlice.h \
-    gameWithAlice.h \
     gameChoice.h \
     gameChoiceStatistics.h \
     friendTab.h \
@@ -84,10 +80,8 @@ FORMS += \
     passwordrepeat.ui \
     message.ui \
     mainmenu.ui \
-    game.ui \
     gameWithoutChat.ui \
     gameWithoutChatWithAlice.ui \
-    gameWithAlice.ui \
     gameChoiceStatistics.ui \
     friendTab.ui \
     statisticsTab.ui \

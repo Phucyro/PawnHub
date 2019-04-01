@@ -90,7 +90,6 @@ void GameWithoutChat::set_time(QString time)
 
 void GameWithoutChat::set_piece(QIcon pieceIcon, QString piecePosition, QString pieceName) {
     findChild<QPushButton*>(piecePosition)->setIcon(pieceIcon);
-//    findChild<QPushButton*>(piecePosition)->setEnabled(true);
     findChild<QPushButton*>(piecePosition)->setToolTip(pieceName);
 }
 
@@ -100,7 +99,7 @@ void GameWithoutChat::show_update(QString message)
       message = "Game has started.";
      }
     else if (message == "alice") {
-////        not sure yet
+      message = "How did we end up in here?";
     }
     else if (message == "realtime") {
       message = "Game has started.";
@@ -177,7 +176,7 @@ void GameWithoutChat::reduce_timer(int time)
 {
     *remainingTime = remainingTime->addMSecs(-time);
     display_time();
-    if (*remainingTime == done)      // NOT GREAT _ CHECK WITH SOMEONE WHO STILL HAS A BRAIN
+    if (*remainingTime == done)
     {
         timer->stop();
         control->sendMove("/tim");
@@ -208,15 +207,9 @@ void GameWithoutChat::boardButton_pressed(QAbstractButton* origin)
     else
     {
         move += position;
-        on_initialPosition_chosen(origin);
     }
 
     ui->chgMoveLabel->setText(move);
-}
-
-void GameWithoutChat::on_initialPosition_chosen(QAbstractButton*)
-{
-    // get potential moves for piece here and enable relevant buttons
 }
 
 void GameWithoutChat::on_surrendButton_pressed()

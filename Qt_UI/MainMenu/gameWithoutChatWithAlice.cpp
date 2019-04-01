@@ -100,7 +100,6 @@ void GameWithoutChatWithAlice::set_time(QString time)
 
 void GameWithoutChatWithAlice::set_piece(QIcon pieceIcon, QString piecePosition, QString pieceName) {
     findChild<QPushButton*>(piecePosition)->setIcon(pieceIcon);
-//    findChild<QPushButton*>(piecePosition)->setEnabled(true);
     findChild<QPushButton*>(piecePosition)->setToolTip(pieceName);
 }
 
@@ -188,7 +187,7 @@ void GameWithoutChatWithAlice::reduce_timer(int time)
 {
     *remainingTime = remainingTime->addMSecs(-time);
     display_time();
-    if (*remainingTime == done)      // NOT GREAT _ CHECK WITH SOMEONE WHO STILL HAS A BRAIN
+    if (*remainingTime == done)
     {
         timer->stop();
         control->sendMove("/tim");
@@ -219,15 +218,9 @@ void GameWithoutChatWithAlice::boardButton_pressed(QAbstractButton* origin)
     else
     {
         move += position;
-        on_initialPosition_chosen(origin);
     }
 
     ui->chgMoveLabel->setText(move);
-}
-
-void GameWithoutChatWithAlice::on_initialPosition_chosen(QAbstractButton*)
-{
-    // get potential moves for piece here and enable relevant buttons
 }
 
 void GameWithoutChatWithAlice::on_surrendButton_pressed()

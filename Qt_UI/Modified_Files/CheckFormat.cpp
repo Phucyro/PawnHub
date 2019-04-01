@@ -33,11 +33,9 @@ bool checkInputFormat(std::string message){
 bool checkFriendInputFormat(std::string input){
   bool correct = true;
   if (input.size() > 10){
-//    menu->print_warning("La taille des noms est limitée à 10 caractères");
     correct = false;
   }
   else if (!checkInputFormat(input)){
-//    menu->print_warning("Les caractères | et ~ sont interdits");
     correct = false;
   }
   return correct;

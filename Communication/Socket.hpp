@@ -18,7 +18,6 @@ public:
   int getFileDescriptor();
   bool connectToServer(std::string);
   bool isConnected();
-  // void closeSocket();
 
   void printSend(std::string);
   void sendMessage(std::string);

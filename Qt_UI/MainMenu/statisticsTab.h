@@ -16,18 +16,19 @@ class StatisticsTab : public QDialog
 public:
     explicit StatisticsTab(int type,Client *client,int gamemode, QWidget *parent = nullptr);
     ~StatisticsTab();
+
     int getGamemode();
 
 private slots:
     void on_returnPushButton_pressed();
-    void setupMyStats();
-    void setupGlobalStats();
 
 private:
     Ui::StatisticsTab *ui;
     int type;
     Client* client;
     int gamemode;
+
+    void setupStats(bool);
 };
 
 #endif // STATISTICSTAB_H

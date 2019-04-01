@@ -82,7 +82,6 @@ private:
   void receiveGoodMove(QString);
   void receiveFirstMessage(QString);
   void receiveGoodPremove(QString);
-  void cleanOldMsg();
 
   std::map<char, void(ClientGameControl::*)(QString)> headerReceiveMap = {
     {'B', &ClientGameControl::receiveBoard},

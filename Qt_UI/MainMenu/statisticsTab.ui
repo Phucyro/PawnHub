@@ -29,7 +29,7 @@
    <iconset resource="pawnhub.qrc">
     <normaloff>:/icon/pawnhub_icon.png</normaloff>:/icon/pawnhub_icon.png</iconset>
   </property>
-  <widget class="QTableWidget" name="staisticsTableWidget">
+  <widget class="QTableWidget" name="statisticsTableWidget">
    <property name="geometry">
     <rect>
      <x>10</x>

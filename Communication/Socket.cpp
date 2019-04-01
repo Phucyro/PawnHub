@@ -5,10 +5,6 @@
 #include <iostream>
 #include <unistd.h>
 
-// void handleSignal(int signum){
-// 	std::cout<<"signal handling: "<<signum<<std::endl;
-// }
-
 Socket::Socket() : file_descriptor(0) {
   file_descriptor = socket(AF_INET, SOCK_STREAM, 0);
   if (file_descriptor < 0) {
@@ -47,19 +43,12 @@ bool Socket::connectToServer(std::string hostname) {
   return true;
 }
 
-// void Socket::closeSocket() {
-//   close(getFileDescriptor());
-// }
-
-
 void Socket::printSend(std::string message) {
   std::cout<< "Message sent: " << message <<std::endl;
   sendMessage(message);
 }
 
 void Socket::sendMessage(std::string message) {
-  // signal(SIGPIPE, handleSignal);
-
   size_t message_size = message.length();
   if ((message_size % MSG_LENGTH) == 0) {
     message.append(MSG_LENGTH, PADDING);
@@ -94,7 +83,6 @@ bool Socket::parseBuffer(std::string& message) {
 }
 
 std::string Socket::receiveMessage() {
-  // signal(SIGPIPE, handleSignal);
   std::string message;
 
   bool message_done = false;
@@ -106,7 +94,6 @@ std::string Socket::receiveMessage() {
     }
     else if (bytes_received == 0) { // L'utilisateur s'est deconnecte
       throw std::runtime_error("Socket shutdown");
-      // closeSocket();
     }
     else {
       message_done = parseBuffer(message);

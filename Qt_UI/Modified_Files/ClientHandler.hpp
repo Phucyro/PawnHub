@@ -2,7 +2,6 @@
 #define CLIENTHANDLER_H
 
 #include "../../Communication/Socket.hpp"
-//#include "../../Communication/ClientGameControl.hpp"
 #include "../../Communication/Client.hpp"
 #include "chat.h"
 #include <string>
