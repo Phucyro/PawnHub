@@ -21,22 +21,22 @@ Data::~Data(){
 
 
 bool Data::containsAccount(const std::string username){
-  /*
-  Renvoie true si un compte avec username comme identifiant existe sur le
-  serveur sinon false
-  */
-  const std::string full_path = _path + "/" + username + ".txt";
-  std::ifstream file(full_path.c_str());
-  bool exist = file.good();
-  file.close();
-  return exist;
+	/*
+	Renvoie true si un compte avec username comme identifiant existe sur le
+	serveur sinon false
+	*/
+	const std::string full_path = _path + "/" + username + ".txt";
+	std::ifstream file(full_path.c_str());
+	bool exist = file.good();
+	file.close();
+	return exist;
 }
 
 bool Data::isConnected(const std::string username){
-  if (_dataMap.find(username) != _dataMap.end())
-    return true;
-  else
-    return false;
+	if (_dataMap.find(username) != _dataMap.end())
+		return true;
+	else
+		return false;
 }
 
 
@@ -85,97 +85,97 @@ bool Data::createUserAccount(const std::string username, const std::string passw
 
 
 void Data::loadUserData(const std::string username){
-  /*
-  Charge les données de l'utilisateur se trouvant dans un fichier texte
-  */
-  const std::string full_path = _path + "/" + username + ".txt";
+	/*
+	Charge les données de l'utilisateur se trouvant dans un fichier texte
+	*/
+	const std::string full_path = _path + "/" + username + ".txt";
 
-  std::ifstream file(full_path.c_str());
+	std::ifstream file(full_path.c_str());
 
-  if (file){
-    std::string data_line;
-    std::string password;
-    Stat classic, dark, horde, alice,realTimeClassic,realTimeDark,realTimeHorde,realTimeAlice;
-    std::vector<std::string> friends, their_requests, my_requests;
-    std::vector<double> eloRank;
+	if (file){
+		std::string data_line;
+		std::string password;
+		Stat classic, dark, horde, alice,realTimeClassic,realTimeDark,realTimeHorde,realTimeAlice;
+		std::vector<std::string> friends, their_requests, my_requests;
+		std::vector<double> eloRank;
 
-    std::getline(file, data_line);
-    password = data_line;
+		std::getline(file, data_line);
+		password = data_line;
 
-    std::getline(file, data_line);
-    classic = toUIVector(splitString(data_line, ' '));
+		std::getline(file, data_line);
+		classic = toUIVector(splitString(data_line, ' '));
 
-    std::getline(file, data_line);
-    dark = toUIVector(splitString(data_line, ' '));
+		std::getline(file, data_line);
+		dark = toUIVector(splitString(data_line, ' '));
 
-    std::getline(file, data_line);
-    horde = toUIVector(splitString(data_line, ' '));
+		std::getline(file, data_line);
+		horde = toUIVector(splitString(data_line, ' '));
 
-    std::getline(file, data_line);
-    alice = toUIVector(splitString(data_line, ' '));
+		std::getline(file, data_line);
+		alice = toUIVector(splitString(data_line, ' '));
 
-    std::getline(file, data_line);  // RT Classic
-    realTimeClassic = toUIVector(splitString(data_line, ' '));
+		std::getline(file, data_line);  // RT Classic
+		realTimeClassic = toUIVector(splitString(data_line, ' '));
 
-    std::getline(file, data_line); // RT Dark
-    realTimeDark = toUIVector(splitString(data_line, ' '));
+		std::getline(file, data_line); // RT Dark
+		realTimeDark = toUIVector(splitString(data_line, ' '));
 
-    std::getline(file, data_line); // RT Horde
-    realTimeHorde = toUIVector(splitString(data_line, ' '));
+		std::getline(file, data_line); // RT Horde
+		realTimeHorde = toUIVector(splitString(data_line, ' '));
 
-    std::getline(file, data_line); // Rt Alice
-    realTimeAlice = toUIVector(splitString(data_line, ' '));
+		std::getline(file, data_line); // Rt Alice
+		realTimeAlice = toUIVector(splitString(data_line, ' '));
 
-    std::getline(file, data_line);
-    friends = splitString(data_line, ' ');
+		std::getline(file, data_line);
+		friends = splitString(data_line, ' ');
 
-    std::getline(file, data_line);
-    their_requests = splitString(data_line, ' ');
+		std::getline(file, data_line);
+		their_requests = splitString(data_line, ' ');
 
-    std::getline(file, data_line);
-    my_requests = splitString(data_line, ' ');
+		std::getline(file, data_line);
+		my_requests = splitString(data_line, ' ');
 
-    std::getline(file, data_line);
-    eloRank = toDoubleVector(splitString(data_line, ' '));
+		std::getline(file, data_line);
+		eloRank = toDoubleVector(splitString(data_line, ' '));
 
-    _dataMap[username] = UserData(password, classic, dark, horde, alice, realTimeClassic,realTimeDark,realTimeHorde,realTimeAlice, friends, their_requests, my_requests, eloRank);
-  }
-  else {
-    std::cerr << "[Error] Data open file read" << std::endl;
-  }
+		_dataMap[username] = UserData(password, classic, dark, horde, alice, realTimeClassic,realTimeDark,realTimeHorde,realTimeAlice, friends, their_requests, my_requests, eloRank);
+	}
+	else {
+		std::cerr << "[Error] Data open file read" << std::endl;
+	}
 
-  file.close();
+	file.close();
 }
 
 
 void Data::saveUserData(const std::string username){
-  /*
-  Sauvegarde les donnees de l'utilisateur en les copiant dans un fichier texte
-  */
-  const std::string full_path = _path + "/" + username + ".txt";
-  std::ofstream file(full_path.c_str());
+	/*
+	Sauvegarde les donnees de l'utilisateur en les copiant dans un fichier texte
+	*/
+	const std::string full_path = _path + "/" + username + ".txt";
+	std::ofstream file(full_path.c_str());
 
-  if (file){
-    file << std::get<0>(_dataMap[username]) << std::endl; // Mot de passe
-    file << unsignedIntVectorToStr(std::get<1>(_dataMap[username])) << std::endl; // Classic
-    file << unsignedIntVectorToStr(std::get<2>(_dataMap[username])) << std::endl; // Dark
-    file << unsignedIntVectorToStr(std::get<3>(_dataMap[username])) << std::endl; // Horde
-    file << unsignedIntVectorToStr(std::get<4>(_dataMap[username])) << std::endl; // Alice
-    file << unsignedIntVectorToStr(std::get<5>(_dataMap[username])) << std::endl; // RealTimeClassic
-    file << unsignedIntVectorToStr(std::get<6>(_dataMap[username])) << std::endl; // RealTimeDark
-    file << unsignedIntVectorToStr(std::get<7>(_dataMap[username])) << std::endl; // RealTimeHorde
-    file << unsignedIntVectorToStr(std::get<8>(_dataMap[username])) << std::endl; // RealTimeAlice
-    file << strVectorToStr(std::get<9>(_dataMap[username])) << std::endl; // Liste amis
-    file << strVectorToStr(std::get<10>(_dataMap[username])) << std::endl; // Demande ami
-    file << strVectorToStr(std::get<11>(_dataMap[username])) << std::endl; // Mes demandes
-    file << doubleVectorToStr(std::get<12>(_dataMap[username])) << std::endl;
-    _dataMap.erase(username);
-  }
-  else {
-    std::cerr << "[Error] Data open file write" << std::endl;
-  }
+	if (file){
+		file << std::get<0>(_dataMap[username]) << std::endl; // Mot de passe
+		file << unsignedIntVectorToStr(std::get<1>(_dataMap[username])) << std::endl; // Classic
+		file << unsignedIntVectorToStr(std::get<2>(_dataMap[username])) << std::endl; // Dark
+		file << unsignedIntVectorToStr(std::get<3>(_dataMap[username])) << std::endl; // Horde
+		file << unsignedIntVectorToStr(std::get<4>(_dataMap[username])) << std::endl; // Alice
+		file << unsignedIntVectorToStr(std::get<5>(_dataMap[username])) << std::endl; // RealTimeClassic
+		file << unsignedIntVectorToStr(std::get<6>(_dataMap[username])) << std::endl; // RealTimeDark
+		file << unsignedIntVectorToStr(std::get<7>(_dataMap[username])) << std::endl; // RealTimeHorde
+		file << unsignedIntVectorToStr(std::get<8>(_dataMap[username])) << std::endl; // RealTimeAlice
+		file << strVectorToStr(std::get<9>(_dataMap[username])) << std::endl; // Liste amis
+		file << strVectorToStr(std::get<10>(_dataMap[username])) << std::endl; // Demande ami
+		file << strVectorToStr(std::get<11>(_dataMap[username])) << std::endl; // Mes demandes
+		file << doubleVectorToStr(std::get<12>(_dataMap[username])) << std::endl;
+		_dataMap.erase(username);
+	}
+	else {
+		std::cerr << "[Error] Data open file write" << std::endl;
+	}
 
-  file.close();
+	file.close();
 }
 
 
@@ -618,19 +618,19 @@ void Data::init(){
 }
 
 std::vector<UserLadderData> Data::getLadder(const std::string gamemode){
-  return _ladders[gamemode];
+	return _ladders[gamemode];
 }
 
 
 void Data::printLadder(const std::string gamemode){
-  std::cout << "Classement du mode : " << gamemode << std::endl;
-  for (unsigned int a = 0; a < _ladders[gamemode].size(); ++a){
-    std::cout << a << ") " << std::get<0>(_ladders[gamemode][a]) << " " <<
-    std::get<1>(_ladders[gamemode][a])[0] << " " <<
-    std::get<1>(_ladders[gamemode][a])[1] << " " <<
-    std::get<1>(_ladders[gamemode][a])[2] << " " <<
-    std::get<2>(_ladders[gamemode][a]) << std::endl;
-   }
+	std::cout << "Classement du mode : " << gamemode << std::endl;
+	for (unsigned int a = 0; a < _ladders[gamemode].size(); ++a){
+		std::cout << a << ") " << std::get<0>(_ladders[gamemode][a]) << " " <<
+		std::get<1>(_ladders[gamemode][a])[0] << " " <<
+		std::get<1>(_ladders[gamemode][a])[1] << " " <<
+		std::get<1>(_ladders[gamemode][a])[2] << " " <<
+		std::get<2>(_ladders[gamemode][a]) << std::endl;
+	 }
 }
 
 Stat Data::getUserStat(const std::string username, const std::string gamemode){
@@ -701,8 +701,12 @@ double Data::getEloRating(std::string username, unsigned int mode){
 
 
 double Data::getExpectedWin(double ratingA,double ratingB){
-  //formula to calculate expected win depending on ELO rating
-  return 1/(1+pow(10,((ratingB-ratingA)/400)));
+	//formula to calculate expected win depending on ELO rating
+	return 1/(1+pow(10,((ratingB-ratingA)/400)));
+}
+
+int Data::getRank(std::string username, unsigned int mode){
+  return getEloRating(username, mode)/50;
 }
 
 void Data::updateRating(const std::string username, double expectedWin, double score, unsigned int mode){

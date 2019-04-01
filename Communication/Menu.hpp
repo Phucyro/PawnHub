@@ -635,7 +635,6 @@ void chatMenu(MenuHandler* menu, Client* client){
     }
     else {
       if (command == "/quit") continue;
-
       // Envoi du message (command = msg)
       if (command.length() > MSG_LENGTH-24){ // Raccourci le msg si trop long
         command = command.substr(0,MSG_LENGTH-24);
