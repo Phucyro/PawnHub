@@ -17,10 +17,10 @@ void quitHandler(bool* stop_receive){
 void signUpHandler(Client* client, char msg){
   switch (msg){
     case '0' :
-      client->writePipe("The account name is already taken");
+      client->writePipe("Someone already has this account name");
       break;
     case '1' :
-      client->writePipe("Account created successfully");
+      client->writePipe("Successfully created account");
       break;
   }
 }
@@ -29,17 +29,17 @@ void signUpHandler(Client* client, char msg){
 void signInHandler(Client* client, char msg){
   switch (msg){
     case '0' :
-      client->writePipe("Account name inexistant");
+      client->writePipe("Account name does not exist");
       break;
     case '1' :
       client->setIdentified(); // Ne sera pas affiche
-      client->writePipe("Connection successful");
+      client->writePipe("Connected");
       break;
     case '2' :
-      client->writePipe("Password is wrong");
+      client->writePipe("Wrong password");
       break;
     case '3' :
-      client->writePipe("This account is already used by someone");
+      client->writePipe("Someone is already logged into this account");
       break;
   }
 }
@@ -101,19 +101,19 @@ void acceptRefuseRequestHandler(Client* client, std::string option, std::string 
 void sendFriendRequestHandler(Client* client, std::string res){
   switch (res[0]){
     case '0' :
-      client->writePipe("User inexistant");
+      client->writePipe("0User not found");
       break;
     case '1' : // Gere du cote client actuellement
-      client->writePipe("User already in you friend list");
+      client->writePipe("1Already in your friend list");
       break;
     case '2' : // Gere du cote client actuellement
-      client->writePipe("2Friend request sent");
+      client->writePipe("2You already sent a request to this person");
       break;
     case '3' :
-      client->writePipe("3You both became friends");
+      client->writePipe("3Both of you are friends now");
       break;
     case '4' :
-      client->writePipe("4Friend request sent");
+      client->writePipe("4Request sent");
       break;
   }
 }
@@ -121,10 +121,10 @@ void sendFriendRequestHandler(Client* client, std::string res){
 void removeFriendHandler(Client* client, std::string res){
   switch (res[0]){
     case '0' : // Gere actuellement du cote client
-      client->writePipe("0This user isn't anymore one of your friends");
+      client->writePipe("0This person is not in your friend list");
       break;
     case '1' :
-      client->writePipe("1User has been taken away from your friend list");
+      client->writePipe("1Removed from your friend list");
       break;
   }
 }
@@ -135,9 +135,9 @@ void viewSentRequestHandler(Client* client, std::string username){
 
 void cancelRequestHandler(Client* client, std::string res){
   if (res == "0") // Gere actuellement du cote client
-    client->writePipe("0No request has been sent to that user");
+    client->writePipe("0You didn't send a request to this player");
   else
-    client->writePipe("1Friend request has been canceled");
+    client->writePipe("1Outgoing request cancelled");
 }
 
 void updateFriendsListHandler(Client* client, std::string friend_name, std::string option){

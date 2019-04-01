@@ -77,7 +77,7 @@ void inline chatHandler(PlayersMap* players_map, std::mutex* playerMapMutex, Pla
     (*players_map)[target]->getSocket()->sendMessage(std::string("3~") + player->getName() + "~" + player->getName() + "~" + text);
   }
   else { // Si target est deconnecte alors previens sender
-    player->getSocket()->sendMessage(std::string("3~[Server]~") + target + "~" + target + " is deconnected currently");
+    player->getSocket()->sendMessage(std::string("3~[Server]~") + target + "~" + target + " is offline");
   }
   playerMapMutex->unlock();
 }
