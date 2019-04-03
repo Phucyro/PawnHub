@@ -29,7 +29,7 @@ class RealTimeBoard: public Board{
 	std::list<Piece*>& getMovingPiecesAt(Coordinate place) const {return _movingPieces[place.getRealColumn()][place.getRealRow()];}
 	void addTo(Coordinate place, Piece* piece) {getMovingPiecesAt(place).push_back(piece);}
 	void remove(Piece*);
-	void moveTo(Coordinate, Piece*);
+	void moveTo(Coordinate, Coordinate, Piece*);
 	void stopMoving(Piece*);
 	void startMoving(Piece*);
 	

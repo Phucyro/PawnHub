@@ -85,8 +85,8 @@ void RealTimeBoard::remove(Piece* piece){
 	else getMovingPiecesAt(place).remove(piece);
 }
 
-void RealTimeBoard::moveTo(Coordinate place, Piece* piece){
-	getMovingPiecesAt(piece->getCoord()).remove(piece);
+void RealTimeBoard::moveTo(Coordinate place, Coordinate start, Piece* piece){
+	getMovingPiecesAt(start).remove(piece);
 	getMovingPiecesAt(place).push_back(piece);
 }
 
