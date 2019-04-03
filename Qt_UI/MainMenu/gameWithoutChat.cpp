@@ -29,8 +29,6 @@ GameWithoutChat::GameWithoutChat(QWidget *parent, Client* client_) :
 
 GameWithoutChat::~GameWithoutChat()
 {
-    if (timer != nullptr) timer->deleteLater();
-    if (remainingTime != nullptr) delete remainingTime;
     delete ui;
 }
 

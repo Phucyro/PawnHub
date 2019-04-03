@@ -31,8 +31,6 @@ GameWithoutChatWithAlice::GameWithoutChatWithAlice(QWidget *parent, Client* clie
 
 GameWithoutChatWithAlice::~GameWithoutChatWithAlice()
 {
-    if (timer != nullptr) timer->deleteLater();
-    if (remainingTime != nullptr) delete remainingTime;
     delete ui;
 }
 
