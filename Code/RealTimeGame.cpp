@@ -255,7 +255,7 @@ void RealTimeGame::_executeMove(Piece* movingPiece, Coordinate end){
 		}
 	}
 	if (!movingPiece->isTaken()){
-		board->moveTo(end, movingPiece);
+		board->moveTo(end, start, movingPiece);
 	}
 }
 
