@@ -96,5 +96,6 @@ bool Message::getCancel()
 void Message::closeEvent(QCloseEvent* event)
 {
     if (is_promotion && promotion == "") event->ignore();
+    else if (cancel) event->ignore();
     else event->accept();
 }
